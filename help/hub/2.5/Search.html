@@ -1,0 +1,96 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="robots" content="noindex"><title>Hub 2.5 Help :: Search</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Search"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search Hub Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>Hub 2.5 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="Introduction-to-HUB.html">Introduction to Hub</a><a class="navigation-links__next" href="Search-Query-Grammar.html">Search Query Grammar</a></div><h1>Search</h1><a name="d76815e3"></a><p>In Hub, a search box lets you <a name="d76815e5"></a><i id="d76815e5">filter</i> the list of entities that you currently view. The context of
+        the search query is the type of the entity that you search for.
+        For example, when you use the search box on the <a name="d76815e8"></a><span class="control">Users</span> page, you can search only for user
+        accounts with parameters that are specific to user accounts in Hub. To search for, let's say, a connected service, you need to open the
+        <a name="d76815e11"></a><span class="control">More settings &gt; Services</span> page and use the search box there.
+    </p><a name="d76815e15"></a><p>To get started, open the desired page in Hub and <a name="d76815e17"></a><i id="d76815e17">move the focus to the search box</i>. Then, enter a search
+        query.
+    </p><a name="d76815e21"></a><h2>Search Queries</h2>
+
+        <a name="d76815e23"></a><p>Search queries are applied only within the context of the current page. This means that the list of available
+            search attributes and options depends on the type of entity that you search for.
+        </p>
+
+        <a name="d76815e26"></a><p>In Hub 1.0, the search query syntax only supported complex queries with logical operators OR, AND, and NOT.
+            Hub 2.0 does not have this limitation.
+        </p>
+        <a name="d76815e29"></a><p>Hub processes a search query without a logical operator as follows:</p>
+        <ul class="list _ul"><li class="list__item"><a name="d76815e34"></a>Attributes of the same type are "joined" with the OR operator.</li><li class="list__item"><a name="d76815e37"></a>Attributes of the different type are "joined" with the AND operator.</li></ul>
+        <a name="d76815e41"></a><p>For example, all of the following queries return users that have a Google login and are members of
+            either the "Stormtroopers" or "Ewoks" user group.
+        </p>
+
+        <a name="d76815e45"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="nl">authModule:</span> <span class="n">Google</span> <span class="n">group</span><span class="o">:</span> <span class="n">Stormtroopers</span><span class="o">,</span> <span class="n">Ewoks</span>
+<span class="nl">authModule:</span> <span class="n">Google</span> <span class="n">group</span><span class="o">:</span> <span class="n">Stormtroopers</span> <span class="n">group</span><span class="o">:</span> <span class="n">Ewoks</span>
+<span class="nl">authModule:</span> <span class="n">Google</span> <span class="n">and</span> <span class="n">group</span><span class="o">:</span> <span class="n">Stormtroopers</span><span class="o">,</span> <span class="n">Ewoks</span>
+<span class="nl">authModule:</span> <span class="n">Google</span> <span class="nf">and</span> <span class="o">(</span><span class="n">group</span><span class="o">:</span> <span class="n">Stormtroopers</span> <span class="n">or</span> <span class="n">group</span><span class="o">:</span> <span class="n">Ewoks</span><span class="o">)</span></code></div>
+
+        <a name="d76815e48"></a><p>In general, a search query contains one or more of the following:</p>
+        <aside class="tip sideblock">
+            <a name="d76815e53"></a><p>Query Syntax</p>
+            <ul class="list _ul"><li class="list__item"><a name="d76815e58"></a>Follow attributes with a colon:
+                    <br>
+                    <code class="code" data-lang="Java">name:</code>
+                </li><li class="list__item"><a name="d76815e66"></a>Enclose values that contain spaces with braces:
+                    <br>
+                    <code class="code" data-lang="xml">name: {George Lucas}</code>
+                </li></ul>
+        </aside>
+
+        <ul class="list _ul"><li class="list__item"><a name="d76815e78"></a>An attribute-value pair. For example,<code class="code" data-lang="xml">login: g.lucas</code>.
+            </li><li class="list__item"><a name="d76815e84"></a>A specific property of an entity. For example,<code class="code" data-lang="Java">is: trusted</code>.
+            </li><li class="list__item"><a name="d76815e90"></a>A special sub-query that lets search for an entity by a complex property of an entity. For example,
+                <code class="code" data-lang="Java">access(project: {Clone Wars}, role: Darth)</code>
+                sub-query to search for users who have the Darth role granted in the "Clone Wars" project.
+            </li><li class="list__item"><a name="d76815e96"></a>An arbitrary text string to search for in an attribute of an entity.</li></ul>
+
+        <a name="d76815e100"></a><p>
+            For the formal description of the grammar, refer to the <a name="d76815e102"></a><a href="Search-Query-Grammar.html"><span>Search Query Grammar</span></a> page.
+        </p>
+
+    <a name="d76815e106"></a><h2>Query Completion</h2>
+        <a name="d76815e108"></a><p>Hub provides
+            <a name="d76815e110"></a><i id="d76815e110">query completion</i>
+            in the search box. Query completion helps you select suggested keywords and values based on your current
+            input.
+            <br>
+            To display query completion at any caret position in the search box, press
+            <kbd>Ctrl</kbd>+<kbd>Space</kbd> or
+            <kbd>Alt</kbd>+<kbd>Down</kbd>.
+        </p>
+
+    <a name="d76815e130"></a><h2>Sample Search Queries</h2>
+        <a name="d76815e132"></a><p>The following table provides a few examples of search queries.
+             
+        </p>
+        <table class=" wide" width="100%" id="d76815e137"><thead><tr id="d76815e139" class="ijRowHead"><a name="d76815e139"></a><th><a name="d76815e141"></a>Search Query</th><th><a name="d76815e144"></a>Context (UI Page)</th><th><a name="d76815e147"></a>Result</th></tr></thead><tbody><tr id="d76815e151" class="ijRowOdd"><a name="d76815e151"></a><td><a name="d76815e153"></a>
+                    <code class="code" data-lang="Java">name: {George Lucas}</code>
+                    <br>
+                </td><td><a name="d76815e161"></a><a name="d76815e162"></a><span class="control">Users</span></td><td><a name="d76815e165"></a>Returns all user accounts with the full name "George Lucas".</td></tr><tr id="d76815e169" class="ijRowEven"><a name="d76815e169"></a><td><a name="d76815e171"></a>
+                    <code class="code" data-lang="Java">access(project: {Death Star)</code>
+                </td><td><a name="d76815e177"></a><a name="d76815e178"></a><span class="control">Users</span></td><td><a name="d76815e181"></a>Returns all users that have access to the project "Death Star"</td></tr><tr id="d76815e185" class="ijRowOdd"><a name="d76815e185"></a><td><a name="d76815e187"></a>
+                    <code class="code" data-lang="Java">access(project: {Death Star)</code>
+                </td><td><a name="d76815e193"></a><a name="d76815e194"></a><span class="control">Users</span></td><td><a name="d76815e197"></a>Returns all groups that have access to the project "Death Star"</td></tr><tr id="d76815e201" class="ijRowEven"><a name="d76815e201"></a><td><a name="d76815e202"></a>
+                <code class="code" data-lang="Java">access(project: {Death Star)</code>
+            </td><td><a name="d76815e208"></a><a name="d76815e209"></a><span class="control">Services</span></td><td><a name="d76815e212"></a>Returns all services that have access to the project "Death Star"</td></tr><tr id="d76815e217" class="ijRowOdd"><a name="d76815e217"></a><td><a name="d76815e219"></a>
+                    <code class="code" data-lang="Java">user: Vader access(project:{Death Star} with: Darth)</code>
+                </td><td><a name="d76815e225"></a><a name="d76815e226"></a><span class="control">Groups</span></td><td><a name="d76815e229"></a>Returns all groups that contain the user "Vader" and have "Darth" role granted for the "Death Star"
+                    project.
+                </td></tr><tr id="d76815e233" class="ijRowEven"><a name="d76815e233"></a><td><a name="d76815e235"></a>
+                    <code class="code" data-lang="Java">resource(service: {Galactic Empire}) accessible(for: Vader)</code>
+                </td><td><a name="d76815e241"></a><a name="d76815e242"></a><span class="control">Projects</span></td><td><a name="d76815e245"></a>Returns all projects that contain resources from the service "Galactic Empire" and are accessible for
+                    the user "Vader".
+                </td></tr><tr id="d76815e249" class="ijRowOdd"><a name="d76815e249"></a><td><a name="d76815e251"></a><code class="code" data-lang="Java">permission: {Create Project}</code>
+                </td><td><a name="d76815e256"></a>
+                    <a name="d76815e258"></a><span class="control">Roles</span>
+                </td><td><a name="d76815e262"></a>Returns all roles that contain the "Create Project" permission.</td></tr><tr id="d76815e266" class="ijRowEven"><a name="d76815e266"></a><td><a name="d76815e268"></a>
+                    <code class="code" data-lang="Java">defaultRole: {Military Executor}</code>
+                </td><td><a name="d76815e274"></a><a name="d76815e275"></a><span class="control">Services</span></td><td><a name="d76815e278"></a>Returns all services that provide the default "Military Executor" role.</td></tr></tbody></table>
+    <div class="last-modified">Last modified: 31 January 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

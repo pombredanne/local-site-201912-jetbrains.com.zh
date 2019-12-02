@@ -1,0 +1,2377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+                                            
+        <!-- Error reporting -->
+<script>(function(){
+  window.reportError = function(msg, file, line, col, err, isUnhandledRejection){};
+  var prevOnError = window.onerror;
+  var onError = function(msg, file, line, col, err) {
+    reportError(msg, file, line, col, err, false);
+    prevOnError && prevOnError.apply(window, arguments);
+    return false;
+  };
+  window.onerror = onError;
+  // Setup reporting for unhandled Promise rejection errors
+  window.addEventListener("unhandledrejection", function(e) {
+    if (!e.reason) return;
+    var l = getSrcLocation(e.reason);
+    reportError(e.reason.message, l.file, l.line, l.col, e.reason, true);
+  });
+  // Setup reporting for console.error and console.warn calls
+  patchConsole('error');
+  patchConsole('warn');
+  // Utility functions
+  function patchConsole(fnName) {
+    var fn = console[fnName];
+    console[fnName] = function() {
+      fn.apply(console, arguments);
+      var l; try {
+        throw new Error('_');
+      } catch (err) {
+        l = getSrcLocation(err, 1);
+      }
+      var msg = 'console.' + fnName + ': ' + Array.prototype.join.call(arguments, ' ');
+      reportError(msg, l.file, l.line, l.col, undefined, false);
+    };
+  }
+  function getSrcLocation(err, sd) {
+    var s = err && err.stack;
+    var l = s && s.split("\n")[1 + (sd|0)];
+    var r = l && (/^\s*at [^(]*\((.*?):(\d+)(:\d+)?\)$/.exec(l) || /^\s*at (.*?):(\d+)(:\d+)?$/.exec(l));
+    return r ? {file: r[1], line: r[2], col: r[3]} : {};
+  }
+})();</script>
+<!-- Error reporting -->        <!-- Google Tag Manager -->
+<script>(function() {
+  // Initialize Tag Manager queue
+  window.dataLayer = window.dataLayer || [];
+  window.gtmLoaded = false;
+  // Setup reporting for errors that occurred before Tag Manager initialized
+  var prevReportError = window.reportError;
+  var reportError = function(msg, file, line, col, err, isUnhandledRejection) {
+    if (!window.gtmLoaded || isUnhandledRejection) {
+      // Reproduce the behavior of the Tag Manager error handler
+      window.dataLayer.push(makeEvt(msg, file, line));
+    }
+    prevReportError && prevReportError.apply(window, arguments);
+  };
+  window.reportError = reportError;
+  // Utility functions
+  function makeEvt(msg, file, line) {
+    return {
+      event: "gtm.pageError", "gtm.errorMessage": msg,
+      "gtm.errorUrl": file, "gtm.errorLineNumber": line
+    };
+  }
+})();</script>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;j.addEventListener(
+    'load', function(){window.gtmLoaded=true});f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5P98');</script>
+<!-- End Google Tag Manager -->        <!-- Sentry -->
+<script>
+    (function() {
+        window.sentryLoaded = false;
+        window.errorsForSentry = [];
+        var prevReportError = window.reportError;
+        var reportError = function(
+            msg,
+            file,
+            line,
+            col,
+            err,
+            isUnhandledRejection
+        ) {
+            if (!window.sentryLoaded) {
+                window.errorsForSentry.push(err);
+            }
+            prevReportError && prevReportError.apply(window, arguments);
+        };
+        window.reportError = reportError;
+    })();
+</script>
+<script>
+    window.sentryLoad = function() {
+        window.sentryLoaded = true;
+        Sentry.init({
+            dsn: 'https://1adb2a61713144eda0786e5af50ddc51@sentry.io/1423069',
+            release:
+                "jetbrainscom@a6ccaa6ddb",
+            beforeSend: function(event) {
+                Object.keys(event).forEach(function(key) {
+                    var value = event[key];
+                    if (isEmail(value)) {
+                        delete event[key];
+                    }
+                });
+                return event;
+            }
+        });
+        Sentry.configureScope(function(scope) {
+            scope.setTag('page_locale', 'en-us');
+            scope.setTag('browser.locale', getPageLocale());
+
+            scope.setTag('http.urlFull', location.href);
+            var protocol = location.protocol || '';
+            //omit `:` from location.protocol string
+            var protocolString = protocol.substring(0, protocol.length - 1);
+
+            scope.setTag('http.protocol', protocolString);
+
+            scope.setTag('http.hostname', location.hostname);
+
+            var search = location.search || '';
+            //omit ? from location.search string
+            var searchString = search.substr(1);
+            if (searchString !== '') {
+                scope.setTag('http.query', searchString || '1');
+            }
+            var hash = location.hash || '';
+            //omit # from location.hash string
+            var hashString = hash.substr(1);
+            if (hashString !== '') {
+                scope.setTag('http.fragment', hashString);
+            }
+        });
+        window.errorsForSentry.forEach(Sentry.captureException);
+
+        function getPageLocale() {
+            return (
+                (navigator.languages && navigator.languages[0]) ||
+                navigator.language
+            );
+        }
+        function isEmail(value) {
+            var emailRegex = /[\+\-\_\.a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+\.[a-zA-Z0-9]+/g;
+            return emailRegex.test(value);
+        }
+    };
+</script>
+<script src="https://browser.sentry-cdn.com/5.7.1/bundle.min.js" crossorigin="anonymous" onload="sentryLoad()" async></script>
+<!-- End Sentry -->    
+                <title>Major News &amp; Materials - Press Room | JetBrains</title>
+    
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, maximum-scale=1">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#000000">
+<meta name="apple-mobile-web-app-title" content="JetBrains">
+<meta name="application-name" content="JetBrains">
+<meta name="msapplication-TileColor" content="#000000">
+<meta name="theme-color" content="#000000">    <link rel="canonical" href="https://www.jetbrains.com/company/press/" />    <!-- .61-->
+                
+        
+                    <meta name="description" content="JetBrains is a cutting-edge software vendor specializing in the creation of intelligent development tools, including IntelliJ IDEA – the leading Java IDE, and the Kotlin programming language."/>
+            <meta name="keywords" content="JetBrains, IntelliJ, IntelliJ IDEA, java, Java IDE, C#, .NET, refactoring, productivity, Visual Studio plugins, developer productivity tools."/>
+            
+        <link rel="alternate" hreflang="x-default" href="https://www.jetbrains.com/company/press/" />
+
+                        <link rel="alternate" hreflang="en" href="https://www.jetbrains.com/company/press/" />
+                                <link rel="alternate" hreflang="de" href="https://www.jetbrains.com/de-de/company/press/" />
+                                <link rel="alternate" hreflang="es" href="https://www.jetbrains.com/es-es/company/press/" />
+                                <link rel="alternate" hreflang="fr" href="https://www.jetbrains.com/fr-fr/company/press/" />
+                                <link rel="alternate" hreflang="ja" href="https://www.jetbrains.com/ja-jp/company/press/" />
+                                <link rel="alternate" hreflang="ko" href="https://www.jetbrains.com/ko-kr/company/press/" />
+                                <link rel="alternate" hreflang="ru" href="https://www.jetbrains.com/ru-ru/company/press/" />
+                                <link rel="alternate" hreflang="zh-CN" href="https://www.jetbrains.com/zh-cn/company/press/" />
+                                            <link rel="alternate" hreflang="x-klingon" href="https://www.jetbrains.com/tl-aa/company/press/" />
+            
+    
+    
+        
+    
+    
+    <script>
+        var current_lang = 'en-us';
+                                    var i18n_info = {"current_lang": "en-us", "languages": [{"canonical": "en", "code": "en-us", "label": "English", "page_translated": true, "url": "/company/press/"}, {"canonical": "de", "code": "de-de", "label": "Deutsch", "page_translated": true, "url": "/de-de/company/press/"}, {"canonical": "es", "code": "es-es", "label": "Espa\u00f1ol", "page_translated": true, "url": "/es-es/company/press/"}, {"canonical": "fr", "code": "fr-fr", "label": "Fran\u00e7ais", "page_translated": true, "url": "/fr-fr/company/press/"}, {"canonical": "ja", "code": "ja-jp", "label": "\u65e5\u672c\u8a9e", "page_translated": true, "url": "/ja-jp/company/press/"}, {"canonical": "ko", "code": "ko-kr", "label": "\ud55c\uad6d\uc5b4", "page_translated": true, "url": "/ko-kr/company/press/"}, {"canonical": "ru", "code": "ru-ru", "label": "\u0420\u0443\u0441\u0441\u043a\u0438\u0439", "page_translated": true, "url": "/ru-ru/company/press/"}, {"canonical": "zh-CN", "code": "zh-cn", "label": "\u7b80\u4f53\u4e2d\u6587", "page_translated": true, "url": "/zh-cn/company/press/"}, {"canonical": "pt-BR", "code": "pt-br", "label": "Portugu\u00eas do Brasil", "page_translated": false, "url": "/pt-br/company/press/"}, {"canonical": "x-klingon", "code": "tl-aa", "label": "tlhIngan Hol", "page_translated": true, "url": "/tl-aa/company/press/"}]};
+                            var navigationMenu = {"primary": {"id": "main_v2", "items": [{"id": "tools", "title": "Tools", "descriptionTitle": "Toolbox App", "descriptionLogoId": "toolbox", "descriptionLink": "Learn more", "descriptionUrl": "/toolbox-app/", "description": "Manage your tools the easy way", "src": "/img/banners-menu-main/toolbox-vertical.png", "horisontalSrc": "/img/banners-menu-main/toolbox-horisontal.png", "bgColor": "#3E0598", "isVisible": true, "hasCategories": true, "items": [{"title": "IDEs", "items": [{"isActive": false, "id": "appcode", "title": "AppCode", "url": "/objc/", "logoLeftActionId": "appcode", "items": [], "cleaned_url": "/objc/"}, {"isActive": false, "id": "clion", "title": "CLion", "url": "/clion/", "logoLeftActionId": "clion", "items": [], "cleaned_url": "/clion/"}, {"isActive": false, "id": "datalore", "title": "Datalore", "url": "https://datalore.io/", "isExternalLink": true, "logoLeftActionId": "datalore", "items": [], "cleaned_url": "https://datalore.io/"}, {"isActive": false, "id": "datagrip", "title": "DataGrip", "url": "/datagrip/", "logoLeftActionId": "datagrip", "items": [], "cleaned_url": "/datagrip/"}, {"isActive": false, "id": "goland", "title": "GoLand", "url": "/go/", "logoLeftActionId": "goland", "items": [], "cleaned_url": "/go/"}, {"isActive": false, "id": "idea", "title": "IntelliJ IDEA", "url": "/idea/", "logoLeftActionId": "intellij-idea", "items": [], "cleaned_url": "/idea/"}, {"isActive": false, "id": "phpstorm", "title": "PhpStorm", "url": "/phpstorm/", "logoLeftActionId": "phpstorm", "items": [], "cleaned_url": "/phpstorm/"}, {"isActive": false, "id": "pycharm", "title": "PyCharm", "url": "/pycharm/", "logoLeftActionId": "pycharm", "items": [], "cleaned_url": "/pycharm/"}, {"isActive": false, "id": "rider", "title": "Rider", "url": "/rider/", "logoLeftActionId": "rider", "items": [], "cleaned_url": "/rider/"}, {"isActive": false, "id": "rubymine", "title": "RubyMine", "url": "/ruby/", "logoLeftActionId": "rubymine", "items": [], "cleaned_url": "/ruby/"}, {"isActive": false, "id": "webstorm", "title": "WebStorm", "url": "/webstorm/", "logoLeftActionId": "webstorm", "items": [], "cleaned_url": "/webstorm/"}, {"isActive": false, "id": "toolbox", "type": "special", "title": "Toolbox App", "url": "/toolbox-app/", "logoLeftId": "toolbox", "description": "A control panel for your tools and projects", "items": [], "cleaned_url": "/toolbox-app/"}]}, {"title": ".NET & VISUAL STUDIO", "items": [{"isActive": false, "id": "resharper", "title": "ReSharper", "url": "/resharper/", "logoLeftActionId": "resharper", "items": [], "cleaned_url": "/resharper/"}, {"isActive": false, "id": "rider", "title": "Rider", "url": "/rider/", "logoLeftActionId": "rider", "items": [], "cleaned_url": "/rider/"}, {"isActive": false, "id": "resharper-cpp", "title": "ReSharper C++", "url": "/resharper-cpp/", "logoLeftActionId": "resharper-cpp", "items": [], "cleaned_url": "/resharper-cpp/"}, {"isActive": false, "id": "dotcover", "title": "dotCover", "url": "/dotcover/", "logoLeftActionId": "dotcover", "items": [], "cleaned_url": "/dotcover/"}, {"isActive": false, "id": "dotmemory", "title": "dotMemory", "url": "/dotmemory/", "logoLeftActionId": "dotmemory", "items": [], "cleaned_url": "/dotmemory/"}, {"isActive": false, "id": "dotpeek", "title": "dotPeek", "url": "/decompiler/", "logoLeftActionId": "dotpeek", "items": [], "cleaned_url": "/decompiler/"}, {"isActive": false, "id": "dottrace", "title": "dotTrace", "url": "/profiler/", "logoLeftActionId": "dottrace", "items": [], "cleaned_url": "/profiler/"}]}, {"title": "TEAM TOOLS", "items": [{"isActive": false, "id": "teamcity", "title": "TeamCity", "url": "/teamcity/", "logoLeftActionId": "teamcity", "items": [], "cleaned_url": "/teamcity/"}, {"isActive": false, "id": "upsource", "title": "Upsource", "url": "/upsource/", "logoLeftActionId": "upsource", "items": [], "cleaned_url": "/upsource/"}, {"isActive": false, "id": "youtrack", "title": "YouTrack", "url": "/youtrack/", "logoLeftActionId": "youtrack", "items": [], "cleaned_url": "/youtrack/"}, {"isActive": false, "id": "hub", "title": "Hub", "url": "/hub/", "logoLeftActionId": "hub", "items": [], "cleaned_url": "/hub/"}]}, {"title": "PLUGIN MARKETPLACE", "items": [{"isActive": false, "id": "bigdata", "title": "Big Data Tools", "url": "https://plugins.jetbrains.com/plugin/12494-big-data-tools", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/plugin/12494-big-data-tools"}, {"isActive": false, "id": "rustsupport", "title": "Rust", "url": "https://plugins.jetbrains.com/plugin/8182-rust", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/plugin/8182-rust"}, {"isActive": false, "id": "scalaplugin", "title": "Scala", "url": "https://plugins.jetbrains.com/plugin/1347-scala", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/plugin/1347-scala"}, {"isActive": false, "id": "idethemes", "title": "IDE Themes", "url": "https://plugins.jetbrains.com/search?tags=Theme", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/search?tags=Theme"}, {"isActive": false, "id": "plugins", "title": "All Plugins", "url": "https://plugins.jetbrains.com/", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/"}]}, {"title": "EDUCATION", "items": [{"isActive": false, "id": "pycharm-edu", "title": "PyCharm Edu", "url": "/education/", "urlHash": "#lang=python&role=learner", "logoLeftActionId": "pycharm-edu", "items": [], "cleaned_url": "/education/"}, {"isActive": false, "id": "idea-edu", "title": "IntelliJ IDEA Edu", "url": "/education/", "urlHash": "#lang=java&role=learner", "logoLeftActionId": "intellij-idea", "items": [], "cleaned_url": "/education/"}, {"isActive": false, "id": "jb-academy", "title": "JB Academy", "url": "/academy/", "items": [], "cleaned_url": "/academy/"}]}]}, {"id": "languages", "title": "Languages", "descriptionTitle": "Kotlin/Everywhere", "descriptionLogoId": "header-kotlin-everywhere", "descriptionLink": "Join in!", "descriptionUrl": "//everywhere.kotlinlang.org", "description": "A worldwide event series for learning the best Kotlin practices on all platforms", "descriptionBig": true, "src": "/img/banners-menu-main/kotlin-vertical.png", "horisontalSrc": "/img/banners-menu-main/kotlin-horisontal.png", "bgColor": "#D6721C", "isExternalLink": true, "isVisible": true, "hasCategories": false, "items": [{"isActive": false, "id": "kotlin", "title": "Kotlin", "url": "https://kotlinlang.org/", "isExternalLink": true, "logoLeftId": "header-kotlin-grayscale", "logoLeftActionId": "kotlin", "logoLeftSize": "50", "description": "Programming language \n for JVM & Android", "items": [], "cleaned_url": "https://kotlinlang.org/"}, {"isActive": false, "id": "mps", "title": "MPS", "url": "/mps/", "logoLeftId": "header-mps-grayscalse", "logoLeftActionId": "mps", "logoLeftSize": "50", "description": "Create your own domain-specific language", "items": [], "cleaned_url": "/mps/"}]}, {"id": "solutions", "title": "Solutions", "descriptionTitle": "JetBrains Academy", "descriptionLogoId": "academy-logo", "descriptionLink": "Join in!", "descriptionUrl": "/academy", "description": "An educational platform for future professionals", "src": "/img/banners-menu-main/academy-vertical.png", "horisontalSrc": "/img/banners-menu-main/academy-horisontal.png", "bgColor": "#53288E", "hasCategories": false, "isVisible": true, "items": [{"isActive": false, "title": "C++ Tools", "url": "/cpp/", "logoLeftId": "header-cpp-grayscale", "logoLeftActionId": "header-cpp", "description": "Tools for C/C++ development \nfor any platform", "items": [], "cleaned_url": "/cpp/"}, {"isActive": false, "title": "For Business", "url": "/store/business/", "logoLeftId": "header-for-business-grayscale", "logoLeftActionId": "header-for-business", "description": "Wide range of tools. \nAll major technologies covered", "items": [], "cleaned_url": "/store/business/"}, {"isActive": false, "title": "Game Development", "url": "/gamedev/", "logoLeftId": "header-gamedev-grayscale", "logoLeftActionId": "header-gamedev", "description": "Tools for game development \nfor any platform", "items": [], "cleaned_url": "/gamedev/"}, {"isActive": false, "title": "DevOps", "url": "/devops/", "logoLeftId": "header-devops-grayscale", "logoLeftActionId": "header-devops", "description": "Tools and integrations \nfor any infrastructure", "items": [], "cleaned_url": "/devops/"}, {"isActive": false, "title": "Education", "url": "/education/", "logoLeftId": "header-education-grayscale", "logoLeftActionId": "header-education", "description": "Products to learn and teach programming", "items": [], "cleaned_url": "/education/"}]}, {"id": "support", "title": "Support", "description": "Pricing and licensing for businesses and individuals", "descriptionTitle": "JetBrains Store", "descriptionLogoId": "header-store", "descriptionUrl": "/store/?fromMenu#edition=commercial", "descriptionLink": "visit store", "isVisible": true, "hasCategories": true, "items": [{"title": "CUSTOMERS", "items": [{"isActive": false, "title": "Sales Support", "url": "/support/sales/", "description": "Orders, payments", "items": [], "cleaned_url": "/support/sales/"}, {"isActive": false, "title": "Product Support", "url": "/support/", "description": "Tech support, documentation", "items": [], "cleaned_url": "/support/"}]}, {"title": "COMMUNITY PROGRAMS", "items": [{"isActive": false, "title": "Education", "url": "/community/education/", "description": "Students, classrooms, training", "items": [], "cleaned_url": "/community/education/"}, {"isActive": false, "title": "Open Source", "url": "/community/opensource/", "description": "Projects support", "items": [], "cleaned_url": "/community/opensource/"}, {"isActive": false, "title": "Sponsorship", "url": "/community/support/", "description": "User groups, events, technology experts", "items": [], "cleaned_url": "/community/support/"}]}]}, {"id": "company", "title": "Company", "isVisible": true, "hasCategories": true, "items": [{"title": "INITIATIVES", "items": [{"isActive": false, "title": "Open Source", "url": "/opensource/", "description": "Projects, contributions", "items": [], "cleaned_url": "/opensource/"}, {"isActive": false, "title": "Research", "url": "/research/", "description": "Market, Scientific", "items": [], "cleaned_url": "/research/"}]}, {"title": "COMPANY", "items": [{"isActive": false, "title": "About", "url": "/company/", "description": "People, customers, awards", "items": [], "cleaned_url": "/company/"}, {"isActive": false, "title": "Brand Assets", "url": "/company/brand/", "description": "Guidelines, logos", "items": [], "cleaned_url": "/company/brand/"}, {"isActive": false, "title": "Careers", "url": "/careers/apply/", "description": "Jobs, internships", "items": [], "cleaned_url": "/careers/apply/"}, {"isActive": false, "title": "Events", "url": "/company/events/", "description": "Conferences, meetups", "items": [], "cleaned_url": "/company/events/"}, {"isActive": false, "title": "Contacts", "url": "/company/contacts/", "description": "Partners, resellers, Kotlin training", "items": [], "cleaned_url": "/company/contacts/"}]}, {"title": "RESOURCES", "items": [{"isActive": false, "title": "Newsletters", "url": "/resources/newsletters/", "items": [], "cleaned_url": "/resources/newsletters/"}, {"isActive": false, "title": "Webinars", "url": "/resources/webinars/", "items": [], "cleaned_url": "/resources/webinars/"}, {"isActive": false, "title": "Early Access", "url": "/resources/eap/", "items": [], "cleaned_url": "/resources/eap/"}, {"isActive": false, "title": "Blog", "url": "//blog.jetbrains.com/", "isExternalLink": true, "items": [], "cleaned_url": "//blog.jetbrains.com/"}]}]}, {"isActive": false, "id": "store", "url": "/store/?fromNavMenu", "title": "Store", "isVisible": true, "hasCategories": false, "items": [], "cleaned_url": "/store/?fromNavMenu"}]}, "secondary": {"isActive": true, "id": "about", "url": "/company/", "title": "About", "items": [{"isActive": false, "title": "People", "url": "/company/people/", "items": [], "cleaned_url": "/company/people/"}, {"isActive": true, "title": "News", "url": "/company/press/", "items": [], "cleaned_url": "/company/press/"}, {"isActive": false, "title": "Customers & Awards", "url": "/company/customers/", "items": [], "cleaned_url": "/company/customers/"}], "cleaned_url": "/company/"}};
+        
+        var is_layout_adaptive = false;
+                    is_layout_adaptive = true;
+        
+        var disable_language_picker = false;
+        
+        var english_only_url_prefixes = [];
+            </script>
+    
+            <script></script>
+    
+        
+    
+            <link href="/_assets/common.d44d81f300d3bff87efe.css" rel="stylesheet" type="text/css">
+<link href="/_assets/default-page.fabf52db4bf34ea78af0.css" rel="stylesheet" type="text/css">
+<link href="/_assets/company/press/index.entry.b21f24d1c80d64e3e2c8.css" rel="stylesheet" type="text/css">
+        <script src="/_assets/common.34604685b633d15ae3ed.js" type="text/javascript"></script>
+<script src="/_assets/default-page.2e180fc15a6b94fe7fa3.js" type="text/javascript"></script>
+<script src="/_assets/company/press/index.entry.2bb7b763fd00f01aed1b.js" type="text/javascript"></script>
+    
+            <!-- Social Media tag Starts -->
+    <!-- Open Graph data -->
+            <meta property="og:title" content="Major News &amp; Materials - Press Room | JetBrains"/>
+    
+                    <meta property="og:description" content="JetBrains is a cutting-edge software vendor specializing in the creation of intelligent development tools, including IntelliJ IDEA – the leading Java IDE, and the Kotlin programming language."/>
+    <meta property="og:image" content="http://resources.jetbrains.com/storage/products/jetbrains/img/meta/jetbrains_1280x800.png"/>
+
+    <meta property="og:site_name" content="JetBrains"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="https://www.jetbrains.com/company/press/"/>
+    <!-- Social Media tag Ends -->
+</head>
+
+<body class="nojs  body-adaptive">
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<script>
+/*! modernizr 3.2.0 (Custom Build) | MIT *
+ * http://modernizr.com/download/?-flexbox-flexboxtweener !*/
+!function(e,n,t){function r(e,n){return typeof e===n}function o(){var e,n,t,o,i,s,l;for(var f in v)if(v.hasOwnProperty(f)){if(e=[],n=v[f],n.name&&(e.push(n.name.toLowerCase()),n.options&&n.options.aliases&&n.options.aliases.length))for(t=0;t<n.options.aliases.length;t++)e.push(n.options.aliases[t].toLowerCase());for(o=r(n.fn,"function")?n.fn():n.fn,i=0;i<e.length;i++)s=e[i],l=s.split("."),1===l.length?Modernizr[l[0]]=o:(!Modernizr[l[0]]||Modernizr[l[0]]instanceof Boolean||(Modernizr[l[0]]=new Boolean(Modernizr[l[0]])),Modernizr[l[0]][l[1]]=o),C.push((o?"":"no-")+l.join("-"))}}function i(e,n){return!!~(""+e).indexOf(n)}function s(e){return e.replace(/([a-z])-([a-z])/g,function(e,n,t){return n+t.toUpperCase()}).replace(/^-/,"")}function l(e,n){return function(){return e.apply(n,arguments)}}function f(e,n,t){var o;for(var i in e)if(e[i]in n)return t===!1?e[i]:(o=n[e[i]],r(o,"function")?l(o,t||n):o);return!1}function a(e){return e.replace(/([A-Z])/g,function(e,n){return"-"+n.toLowerCase()}).replace(/^ms-/,"-ms-")}function u(){return"function"!=typeof n.createElement?n.createElement(arguments[0]):b?n.createElementNS.call(n,"http://www.w3.org/2000/svg",arguments[0]):n.createElement.apply(n,arguments)}function d(){var e=n.body;return e||(e=u(b?"svg":"body"),e.fake=!0),e}function p(e,t,r,o){var i,s,l,f,a="modernizr",p=u("div"),c=d();if(parseInt(r,10))for(;r--;)l=u("div"),l.id=o?o[r]:a+(r+1),p.appendChild(l);return i=u("style"),i.type="text/css",i.id="s"+a,(c.fake?c:p).appendChild(i),c.appendChild(p),i.styleSheet?i.styleSheet.cssText=e:i.appendChild(n.createTextNode(e)),p.id=a,c.fake&&(c.style.background="",c.style.overflow="hidden",f=_.style.overflow,_.style.overflow="hidden",_.appendChild(c)),s=t(p,e),c.fake?(c.parentNode.removeChild(c),_.style.overflow=f,_.offsetHeight):p.parentNode.removeChild(p),!!s}function c(n,r){var o=n.length;if("CSS"in e&&"supports"in e.CSS){for(;o--;)if(e.CSS.supports(a(n[o]),r))return!0;return!1}if("CSSSupportsRule"in e){for(var i=[];o--;)i.push("("+a(n[o])+":"+r+")");return i=i.join(" or "),p("@supports ("+i+") { #modernizr { position: absolute; } }",function(e){return"absolute"==getComputedStyle(e,null).position})}return t}function m(e,n,o,l){function f(){d&&(delete E.style,delete E.modElem)}if(l=r(l,"undefined")?!1:l,!r(o,"undefined")){var a=c(e,o);if(!r(a,"undefined"))return a}for(var d,p,m,h,y,v=["modernizr","tspan"];!E.style;)d=!0,E.modElem=u(v.shift()),E.style=E.modElem.style;for(m=e.length,p=0;m>p;p++)if(h=e[p],y=E.style[h],i(h,"-")&&(h=s(h)),E.style[h]!==t){if(l||r(o,"undefined"))return f(),"pfx"==n?h:!0;try{E.style[h]=o}catch(g){}if(E.style[h]!=y)return f(),"pfx"==n?h:!0}return f(),!1}function h(e,n,t,o,i){var s=e.charAt(0).toUpperCase()+e.slice(1),l=(e+" "+x.join(s+" ")+s).split(" ");return r(n,"string")||r(n,"undefined")?m(l,n,o,i):(l=(e+" "+S.join(s+" ")+s).split(" "),f(l,n,t))}function y(e,n,r){return h(e,t,t,n,r)}var v=[],g={_version:"3.2.0",_config:{classPrefix:"",enableClasses:!0,enableJSClass:!0,usePrefixes:!0},_q:[],on:function(e,n){var t=this;setTimeout(function(){n(t[e])},0)},addTest:function(e,n,t){v.push({name:e,fn:n,options:t})},addAsyncTest:function(e){v.push({name:null,fn:e})}},Modernizr=function(){};Modernizr.prototype=g,Modernizr=new Modernizr;var C=[],w="Moz O ms Webkit",x=g._config.usePrefixes?w.split(" "):[];g._cssomPrefixes=x;var S=g._config.usePrefixes?w.toLowerCase().split(" "):[];g._domPrefixes=S;var _=n.documentElement,b="svg"===_.nodeName.toLowerCase(),z={elem:u("modernizr")};Modernizr._q.push(function(){delete z.elem});var E={style:z.elem.style};Modernizr._q.unshift(function(){delete E.style}),g.testAllProps=h,g.testAllProps=y,Modernizr.addTest("flexbox",y("flexBasis","1px",!0)),Modernizr.addTest("flexboxtweener",y("flexAlign","end",!0)),o(),delete g.addTest,delete g.addAsyncTest;for(var P=0;P<Modernizr._q.length;P++)Modernizr._q[P]();e.Modernizr=Modernizr}(window,document);
+
+if (!Modernizr.flexbox && !Modernizr.flexboxtweener) {
+
+  var $body = $('body');
+
+  var nodesClasses = {
+    wrapper: 'not-supported-browser',
+    container: 'not-supported-browser__container',
+
+    title: 'not-supported-browser__title',
+    content: 'not-supported-browser__content',
+    logo: 'not-supported-browser__logo'
+  };
+
+  var nodes = {
+    wrapper: $('<div class="' + nodesClasses.wrapper + '"></div>'),
+    title: $('<div class="' + nodesClasses.title + '">Sorry, your browser is not fully supported</div>'),
+    content: $('<div class="' + nodesClasses.content + '">There may be some issues with pages layout in your current browser.<br/>Please use an alternate browser until we resolve the issues.<br/>Thank you.</div>'),
+    container: $('<div class="' + nodesClasses.container + '"></div>'),
+    logo: $('<div class="' + nodesClasses.logo + '"><svg class="sprite-img _jetbrains" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#jetbrains"></use></svg></div>')
+  };
+
+  $body.addClass('overflow-hidden');
+
+
+  nodes.content
+    .prepend(nodes.title)
+    .prepend(nodes.logo);
+
+  nodes.container
+    .append(nodes.content);
+
+  nodes.wrapper
+    .append(nodes.container)
+    .appendTo($body);
+}
+</script>
+<div class="page">
+                <div class="page__header">
+                <header class="menu-main header"  id="js-menu-main">
+    <div class="wt-container">
+        <div class="wt-row wt-row_nowrap wt-row_size_s wt-row_align-items_center">
+            <div class="wt-col-auto-fill">
+                <a href="/" class="menu-main__logo-link"><svg class="_jetbrains-simple sprite-img menu-main__logo" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#jetbrains-simple"></use></svg></a>
+            </div>
+            <div class="wt-col-inline wt-display-md-none menu-main-skeleton-text-1" style="min-width: 69px"></div>
+            <div class="wt-col-inline wt-display-md-none menu-main-skeleton-text-1" style="min-width: 81px"></div>
+            <div class="wt-col-inline wt-display-md-none menu-main-skeleton-text-1" style="min-width: 46px"></div>
+            <div class="wt-col-inline menu-main-skeleton-button"></div>
+            <div class="wt-col-inline menu-main-skeleton-button"></div>
+        </div>
+    </div>
+</header>
+
+
+
+  <div class="menu-second" id="js-menu-second">
+    <div class="wt-container">
+        <div id="js-menu-second-mobile-wrapper" class="wt-display-none">
+            <div id="js-menu-second-mobile" >
+                <div class="menu-second-mobile wt-row wt-row_size_m wt-row_align-items_center wt-row_justify_between">
+                    <div class="wt-col-inline menu-second-skeleton-text-2" style="max-width: 120px"></div>
+                    <div class="wt-col-inline menu-second-skeleton-button" style="max-width: 80px"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="js-menu-second-desktop" class="menu-second-desktop
+                       wt-row wt-row_size_0 wt-row_align-items_center">
+            <div class="wt-col-auto-fill">
+                <a class="menu-second-title-box"
+                   href="/company/">
+                    
+                    <span class="menu-second-title-box__title wt-h3">About</span>
+                </a>
+            </div>
+
+                            
+                                                        <a href="/company/people/"
+                       class="wt-col-inline wt-text-2 wt-text-2_hardness_average menu-second__link
+                                                                ">
+                        People
+                                            </a>
+                                            
+                                                        <a href="/company/press/"
+                       class="wt-col-inline wt-text-2 wt-text-2_hardness_average menu-second__link
+                                                                wt-text-2_hardness_primary">
+                        News
+                                            </a>
+                                            
+                                                        <a href="/company/customers/"
+                       class="wt-col-inline wt-text-2 wt-text-2_hardness_average menu-second__link
+                                                                ">
+                        Customers &amp; Awards
+                                            </a>
+                            
+                        
+                    </div>
+
+    </div>
+</div>
+
+            </div>
+    
+    <div class="page__content ">
+        <section class="wt-section wt-section_bg_gray-dark bg-beam">
+<div class="wt-container">
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-9 wt-col-sm-12">
+<h1 class="wt-h1 wt-h1_flow wt-h1_theme_dark">Major News</h1>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-row_align-items_stretch">
+<a class="wt-col-4 wt-col-sm-12 wt-card wt-card_theme_dark wt-card_link wt-offset-top-24" href="https://blog.jetbrains.com/kotlin/2019/07/kotlin-wins-breakout-project-of-the-year-award-at-oscon-19/">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">July 18, 2019</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            Kotlin wins Breakout Project of the Year award at OSCON ’19
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-link_external wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-card_link wt-col-4 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24" href="https://blog.jetbrains.com/blog/2019/06/26/get-more-out-of-your-jetbrains-tools-with-commercial-third-party-plugins-from-jetbrains-marketplace/">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">June 26, 2019</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Marketplace is now live
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-link_external wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="https://blog.jetbrains.com/blog/2018/09/18/free-jetbrains-licenses-as-part-of-github-student-developer-pack/">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">September 18, 2018</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            Free JetBrains Licenses as Part of GitHub Student Developer Pack
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-link_external wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+</div>
+<h2 class="wt-h2 wt-h2_flow wt-h2_theme_dark">All News & Press Releases</h2>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-48">2019</h3>
+<div class="wt-row wt-row_size_m">
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-card_link wt-offset-top-24" href="https://blog.jetbrains.com/kotlin/2019/07/kotlin-wins-breakout-project-of-the-year-award-at-oscon-19/">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">July 18, 2019</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            Kotlin wins Breakout Project of the Year award at OSCON ’19
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-link_external wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-offset-top-24 wt-card wt-card_theme_dark wt-card_link" href="https://blog.jetbrains.com/blog/2019/06/26/get-more-out-of-your-jetbrains-tools-with-commercial-third-party-plugins-from-jetbrains-marketplace/">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">June 26, 2019</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Marketplace is now live
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-link_external wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-offset-top-24 wt-card wt-card_theme_dark wt-card_link" href="https://blog.jetbrains.com/blog/2019/06/11/the-state-of-developer-ecosystem-2019-how-the-world-of-code-is-evolving/">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">June 11, 2019</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            The State of Developer Ecosystem 2019 Infographic reveals how the world of code is evolving in 2019
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-link_external wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-offset-top-24 wt-card wt-card_theme_dark wt-card_link" href="https://blog.jetbrains.com/blog/2019/05/30/jetbrains-supports-the-apache-software-foundation/">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">May 30, 2019</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Supports the Apache Software Foundation
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-link_external wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-offset-top-24 wt-card wt-card_theme_dark wt-card_link" href="https://blog.jetbrains.com/blog/2019/04/09/jetbrains-is-a-proud-sponsor-of-the-icpc/">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">April 9, 2019</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                                JetBrains is a proud sponsor of the ICPC
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-link_external wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-offset-top-24 wt-card wt-card_theme_dark wt-card_link" href="https://blog.jetbrains.com/blog/2019/02/27/jetbrains-academy-eap/">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">February, 27 2019</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                                Welcome JetBrains Academy – an educational platform for future professionals.
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-link_external wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+</div>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-48">2018</h3>
+<div class="wt-row wt-row_size_m">
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-card_link wt-offset-top-24" href="https://blog.jetbrains.com/blog/2018/10/17/datalore-1-0-intelligent-web-application-for-data-analysis/">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">October 17, 2018</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            Datalore 1.0: Intelligent Web Application for Data Analysis
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-link_external wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-offset-top-24 wt-card wt-card_theme_dark wt-card_link" href="https://blog.jetbrains.com/blog/2018/09/25/ring-ui-1-0-is-released/">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">September 25, 2018</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            Announcing Ring UI 1.0, an open-source library for web-based products
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-link_external wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-offset-top-24 wt-card wt-card_theme_dark wt-card_link" href="https://blog.jetbrains.com/blog/2018/09/18/free-jetbrains-licenses-as-part-of-github-student-developer-pack/">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">September 18, 2018</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            Free JetBrains Licenses as Part of GitHub Student Developer Pack
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-link_external wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="https://blog.jetbrains.com/platform/2018/09/introducing-jetbrains-marketplace/">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">September 7, 2018</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            Introducing JetBrains Marketplace
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-link_external wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="https://blog.jetbrains.com/blog/2018/04/05/educational-products-by-jetbrains/">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">April 5, 2018</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains releases Educational Products, tools to learn and teach programming
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-link_external wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+</div>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-48">2017</h3>
+<div class="wt-row wt-row_size_m">
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="https://blog.jetbrains.com/blog/2017/08/04/official-support-for-open-source-rust-plugin-for-intellij-idea-clion-and-other-jetbrains-ides/">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">August 4, 2017</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            Supporting Open-Source Rust Plugin in JetBrains IDEs
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-link_external wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="https://blog.jetbrains.com/blog/2017/05/23/jetbrains-to-support-the-acm-icpc/">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">May 23, 2017</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains becomes an official Global ACM-ICPC Sponsor
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-link_external wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="https://blog.jetbrains.com/kotlin/2017/05/kotlin-on-android-now-official/">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">May 17, 2017</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            Kotlin named an official programming language for Android
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-link_external wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+</div>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-48">2016</h3>
+<div class="wt-row wt-row_size_m">
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-card_link wt-offset-top-24" href="https://blog.jetbrains.com/go/2016/12/15/announcing-gogland-brand-new-go-ide-from-jetbrains/">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">December 15, 2016</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            Announcing GoLand – Brand New Go (Golang) IDE from JetBrains
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-link_external wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="http://blog.jetbrains.com/blog/2016/04/28/jetbrains-toolbox-2016-1-release-is-complete/">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">April 28, 2016</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains rolls out the 2016.1 update for JetBrains Toolbox products
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-link_external wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_160216.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">February 15, 2016</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains brings a pragmatic object oriented functional language to the JVM
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="https://blog.jetbrains.com/dotnet/2016/01/13/project-rider-a-csharp-ide/">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">January 13, 2016</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            Project Rider: A new C# IDE by JetBrains
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-link_external wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+</div>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-48">2015</h3>
+<div class="wt-row wt-row_size_m">
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-card_link wt-offset-top-24" href="http://blog.jetbrains.com/datagrip/2015/12/16/datagrip-1-0-formerly-0xdbe-a-new-ide-for-dbs-and-sql/">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">December 16, 2015</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            DataGrip 1.0.: A new IDE for DBs and SQL
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-link_external wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="http://blog.jetbrains.com/blog/2015/12/10/the-drive-to-develop/">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">December 10, 2015</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains unveils its new brand identity
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-link_external wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="http://blog.jetbrains.com/blog/2015/11/02/jetbrains-toolbox-launches-with-simultaneous-updates-for-all-desktop-products/">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">November 2, 2015</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Toolbox launches with simultaneous updates for all desktop products
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-link_external wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_180915.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">September 18, 2015</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            Final update on the JetBrains Toolbox announcement. Open letter by Maxim Shafirov, JetBrains
+                            CEO
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_030915.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">September 3, 2015</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains switches its desktop products to subscription model under the JetBrains Toolbox
+                            umbrella
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_140415.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">April 14, 2015</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Reaches Out to C/C++ Developers With Two Brand New Products
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+</div>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-48">2014</h3>
+<div class="wt-row wt-row_size_m">
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-card_link wt-offset-top-24" href="/company/press/press-archive/pr_111214.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">December 11, 2014</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            TeamCity 9: Your 24/7 Build Engineer
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_091214.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">December 9, 2014</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Releases Upsource: Code Review Tool and Repository Browser That Knows Java Code
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_041214.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">December 4, 2014</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            ReSharper 9.0 Supports C#6 and Visual Studio 2015 Preview
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_051114.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">November 5, 2014</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            IntelliJ IDEA 14: Where your finest code is forged
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_281014.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">October 28, 2014</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            YouTrack 6: A Bird's Eye View of Your Team Tasks and Projects
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_160914.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">September 16, 2014</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            PhpStorm 8: Evolving with You
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_200514.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">May 20, 2014</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            Switch to AppCode 3.0 and into Top Gear of iOS Development
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_240414.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">April 24, 2014</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            dotMemory 4: Make More Sense of .NET Memory Usage
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_260314.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">March 26, 2014</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            WebStorm 8: Web Intelligence at Your Service
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+</div>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-48">2013</h3>
+<div class="wt-row wt-row_size_m">
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-card_link wt-offset-top-24" href="/company/press/press-archive/pr_031213.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">December 3, 2013</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            Leading Java IDE Caps 2013 with a Major Planned Update
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_261113.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">November 26, 2013</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Releases RubyMine 6: a Faster, More Insightful Ruby & Rails IDE
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_221013.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">October 22, 2013</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            PhpStorm 7: Beyond the Language
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_240913.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">September 24, 2013</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Delights the Python Community with a Free Edition of its PyCharm IDE
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_250713.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">July 25, 2013</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            YouTrack 5: Your Language, Your Agile, Your Rules
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_180713.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">July 18, 2013</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            ReSharper 8 Supports Latest Visual Studio, Gets Refined in Every Way
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_200613.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">June 20, 2013</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            TeamCity Invites You to the Light Side of Continuous Integration
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_200313.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">March 20, 2013</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            AppCode 2.0, Objective-C IDE Done Right
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_120313.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">March 12, 2013</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            PhpStorm 6 Gives You More Tools to Develop Smarter, Not Harder
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_060313.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">March 6, 2013</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            WebStorm 6.0: Full Access To Web Development Innovations
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_060213.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">February 6, 2013</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            Experience the Full Versatility of Ruby with RubyMine 5
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+</div>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-48">2012</h3>
+<div class="wt-row wt-row_size_m">
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-card_link wt-offset-top-24" href="/company/press/press-archive/pr_051212.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">December 5, 2012</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            IntelliJ IDEA 12 Reveals the Darker Side of Productive Coding
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_301012.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">October 30, 2012</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Headquarters on the Move
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_130912.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">September 12, 2012</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            PhpStorm 5.0: PHP Coding at Its Finest
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_060912.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">September 6, 2012</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            WebStorm 5.0: Web Coding with Instant Feedback
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_260712.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">July 26, 2012</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            ReSharper 7 Strikes First, Supports Visual Studio 2012 and Metro Style Application
+                            Development
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_280612.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">June 28, 2012</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains YouTrack 4 — No More Excuses Not to Be Agile
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_180612.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">June 18, 2012</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Releases dotCover 2.0 With Integrated Unit Test Runner
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_100512.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">May 10, 2012</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Rolls Out Free .NET Decompiler
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link ] wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_240412.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">April 24, 2012</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains PhpStorm 4.0: Do It Right From The First Time
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_170412.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">April 17, 2012</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains WebStorm 4.0 in Harmony with ECMAScript
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_190312.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">March 19, 2012</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Streamlines Profiling of Mission-Critical .NET Applications
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_220212.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">February 22, 2012</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains TeamCity 7.0: Control the Power
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_150212.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">February 15, 2012</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Redefines Ruby Developers' Productivity
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+</div>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-48">2011</h3>
+<div class="wt-row wt-row_size_m">
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-card_link wt-offset-top-24" href="/company/press/press-archive/pr_201211.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">December 20, 2011</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            WebStorm 3.0: The JavaScript IDE, by JetBrains
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_131211.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">December 13, 2011</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains PyCharm 2.0 Goes All Out to Extend Technology Support
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_081211.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">December 8, 2011</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            Issue Tracker by JetBrains Goes to Cloud
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_061211.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">December 6, 2011</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            IntelliJ IDEA 11 is Out: Get Ready for a Productivity Takeoff
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_291111.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">November 29, 2011</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            PhpStorm 3.0: Keep Your Code in Its Best Shape!
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_251011.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">October 25, 2011</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Sets a New Standard for iOS and Mac OS Development, Introduces AppCode
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_300611.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">June 30, 2011</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            ReSharper 6: A New Benchmark for Developer Productivity in Visual Studio
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_150611.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">June 15, 2011</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Hits a Perfect Three-Pointer With YouTrack 3.0
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_090611.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">June 09, 2011</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            Double Update from JetBrains on .NET Performance Optimization and Code Coverage
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_260511.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">May 26, 2011</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Sets TeamCity Free For Unlimited Number of Users
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_120511.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">May 16, 2011</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            New IntelliJ IDEA: Java 7, New Features, New Pricing
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_240211.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">February 24, 2011</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            WebStorm 2.0 Supports Latest Standards of the World Wide Web
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_140211.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">February 14, 2011</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            PhpStorm 2.0: Take PHP by Storm!
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+</div>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-48">2010</h3>
+<div class="wt-row wt-row_size_m">
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-card_link wt-offset-top-24" href="/company/press/press-archive/pr_091210.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">December 9, 2010</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            IntelliJ IDEA Turns 10, Enters New Evolutionary Decade
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_011210.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">December 1, 2010</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains TeamCity 6: Let It Build!
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_291110.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">November 29, 2010</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains RubyMine 3.0 — the Natural Choice for Rails 3.0
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_131010.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">October 13, 2010</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            With PyCharm, Python Developers Finally Get a Powerful IDE
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_140910.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">September 14, 2010</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            Fresh .NET Tools from JetBrains for Code Coverage and Performance Profiling
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_050810.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">August 5, 2010</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains, Industrial Logic Marry Agile Tools and Training
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_270510.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">May 27, 2010</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Empowers Web Developers with PhpStorm 1.0 and WebStorm 1.0
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_260510.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">May 26, 2010</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains YouTrack 2.0 More Customizable yet Amazingly Easy To Use
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_130410.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">April 13, 2010</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Releases ReSharper 5.0
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+</div>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-48">2009</h3>
+<div class="wt-row wt-row_size_m">
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-card_link wt-offset-top-24" href="/company/press/press-archive/pr_081209.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">December 08, 2009</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            Newest Release of the Famous IntelliJ IDEA Available to Public
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_031209.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">December 03, 2009</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Releases TeamCity 5.0
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_161109.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">November 16, 2009</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains RubyMine 2.0 — Dynamic IDE for Dynamic Development with Ruby and Rails
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_291009.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">October 29, 2009</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Releases YouTrack 1.0 — Brand New Bug'n' Issue Tracker
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_151009.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">October 15, 2009</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains' IntelliJ IDEA Goes Open Source
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_020909.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">September 2, 2009</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Releases YouTrack 1.0 Beta — New Bug and Issue Tracker
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_230709.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">July 23, 2009</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Releases MPS 1.0 — Meta Programming System
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_280409.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">April 28, 2009</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Releases RubyMine 1.0 — Brand New Ruby and Rails IDE
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_230409.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">April 23, 2009</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Releases TeamCity 4.5 — The distributed build management and continuous
+                            integration server from JetBrains gets a major feature update
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_080409.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">April 8, 2009</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains releases ReSharper 4.5 — Faster and Sharper Than Ever
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+</div>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-48">2008</h3>
+<div class="wt-row wt-row_size_m">
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-card_link wt-offset-top-24" href="/company/press/press-archive/pr_101208.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">December 10, 2008</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Introduces a New Programming Paradigm With Beta of Its Meta Programming System
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_271108.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">November 27, 2008</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Releases TeamCity 4.0
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_061108.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">November 6, 2008</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Releases IntelliJ IDEA 8
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_060808.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">August 6, 2008</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Recognized for Leadership in the Software Development Industry
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_100608.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">June 10, 2008</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Releases ReSharper 4.0
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_260208.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">February 26, 2008</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            Structure101 Joins IntelliJ IDEA Companion Products
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+</div>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-48">2007</h3>
+<div class="wt-row wt-row_size_m">
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-card_link wt-offset-top-24" href="/company/press/press-archive/pr_171207.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">December 17, 2007</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetGroovy and Ruby plugins for IntelliJ IDEA are released, score an instant hit with
+                            users
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_061207.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">December 6, 2007</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Announces Free Professional Edition of its Newly Released TeamCity 3.0
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_151007.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">October 15, 2007</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Introduces the New Generation of IntelliJ IDEA
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_181007.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">September 18, 2007</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Announces Next Annual Plugin Contest
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_130807.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">August 13, 2007</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Releases IntelliJ IDEA Milestone 2.
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_130807_01.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">August 13, 2007</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains announces the first Public Preview of JetGroovy.
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_210607.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">June 21, 2007</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Releases ReSharper 3.0. Popular Visual Studio add-in extends C# functionality,
+                            covers several new languages
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_140507.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">May 14, 2007</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Releases dotTrace Profiler 3.0 The Simple And Super Fast Profiler For .NET.
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_100407.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">April 11, 2007</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Releases TeamCity 2.0 Innovative Solution for Continuous Integration & Build
+                            Management.
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_100407_2.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">April 11, 2007</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Releases the First Milestone of IntelliJ IDEA 7.0 with Spring and Hibernate
+                            Support
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_011507.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">January 15, 2007</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Releases TeamCity 1.2 Integrated Team Environment.
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+</div>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-48">2006</h3>
+<div class="wt-row wt-row_size_m">
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-card_link wt-offset-top-24" href="/company/press/press-archive/pr_111206_1.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">December 11, 2006</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            New ReSharper release is avaialable
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_111206_2.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">December 11, 2006</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Announces Winning Authors of "IntelliJ IDEAL Plugin" Contest
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_110106a.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">November 1, 2006</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Releases dotTrace Profiler 2.0
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_110106.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">November 1, 2006</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Offers Free Unit Test Runner for Microsoft Visual Studio 2005
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_021006tc.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">October 2, 2006</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Introduces TeamCity — A Powerful New Integrated Team Environment
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_021006i.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">October 2, 2006</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Announces IntelliJ IDEA 6.0 Groundbreaking Java IDE Moves Forward
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_140906.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">September 14, 2006</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Announces dotTrace™ Profiler 2.0 Beta
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_300806.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">August 30, 2006</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Challenges Java Developers: " Plug in and Win!" in IntelliJ IDEAL Plugin Contest
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_270706.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">July 27, 2006</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Announces Public Beta Releases: IntelliJ® IDEA 6.0 and Innovative New TeamCity™
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_220506.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">May 22, 2006</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Releases ReSharper 2.0 for Microsoft Visual Studio .NET
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_270206.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">February 27, 2006</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            Best-of-breed Java Tools Team Up In JetBrains Companion Products Program
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_060206.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">February 06, 2006</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Releases IntelliJ IDEA 5.1 Java IDE.
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_060206_02.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">February 06, 2006</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Launches New Companion Products Web Site and Products
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_011606.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">January 16, 2006</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JDJ Readers Name JetBrains IntelliJ IDEA Best Java IDE.
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+</div>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-48">2005</h3>
+<div class="wt-row wt-row_size_m">
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-card_link wt-offset-top-24" href="/company/press/press-archive/pr_111005.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">October 11, 2005</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Releases dotTrace Profiling Tool for Microsoft .NET Platform
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_061005.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">October 6, 2005</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Announces TMate: Advanced CVS/Subversion Management for IntelliJ IDEA
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_300905.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">September 30, 2005</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains IntelliJ IDEA Wins 2005 Software Development Magazine Readers' Choice Award
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_120905.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">September 12, 2005</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Previews ReSharper 2.0, Demos New dotTrace Profiler at Microsoft PDC Show
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_060905.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">September 6, 2005</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Releases Omea Pro 2.0
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_010805.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">August 1, 2005</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Releases IntelliJ IDEA 5.0
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_270505.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">May 27, 2005</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Recognized for Second Year Running With SD Times 100 "Tools and Environments"
+                            Award
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_190505.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">May 19, 2005</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            Open Source Community Embraces JetBrains Support Initiative
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_180305_01.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">March 18, 2005</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains IntelliJ IDEA Honored with Productivity Award by Software Development Magazine
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_180305_02.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">March 18, 2005</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Omea Pro Wins Productivity Award from Software Development Magazine
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_070305.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">March 7, 2005</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains releases ReSharper 1.5 for Visual Studio .NET 2003
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_150205_2.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">February 15, 2005</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Continues Support of Apache Software Projects with Free IntelliJ IDEA Licenses
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_080205.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">February 8, 2005</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            Seapine Software Completes Integration with Popular JetBrains Java IDE
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_150205.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">February 15, 2005</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Issues Free IntelliJ IDEA User Licenses to Codehaus for Open Source Projects
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_070205.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">February 7, 2005</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Provides Free IntelliJ IDEA Licenses to Open Source Community
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+</div>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-48">2004</h3>
+<div class="wt-row wt-row_size_m">
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-card_link wt-offset-top-24" href="/company/press/press-archive/pr_151204.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">December 15, 2004</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Introduces Omea Pro
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_101204.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">December 10, 2004</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Shares Holiday Spirit With Developers
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_231104.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">Novmber 23, 2004</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Launches Online Magazine for Global Developer Community
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_041004.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">October 04, 2004</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Releases Omea Reader
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_270704.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">July 27, 2004</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Announces General Release of Flagship IntelliJ™ IDEA 4.5 Java IDE
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_210704.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">July 21, 2004</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains releases ReSharper, a new productivity tool for Visual Studio .NET 2003
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_280604_B.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">June 28, 2004</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Announces Integration Agreement With Compuware
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_280604_A.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">June 28, 2004</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains IntelliJ IDEA 4.5 Sneak Peek at JavaOne
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_220604.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">June 22, 2004</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains to Hold "Happy Hour" At JavaOne
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_210604.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">June 21, 2004</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Introduces New Intelligence into Application Development at JavaOne
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_010604.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">June 01, 2004</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Launches ReSharper Early Access Program for all Visual Studio .NET 2003 Users
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_042104.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">April 21, 2004</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Launches Worldwide Early Access Program for JetBrains Fabrique
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_022604.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">February 26, 2004</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            Java Developer's Journal Readers Name IntelliJ IDEA Most Innovative Java Product of 2003
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_021704.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">February 17, 2004</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Releases IntelliJ IDEA 4.0
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_020204.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">February 02, 2004</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Continues Expansion in US with New Development Office in Boston
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_210104.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">January 21, 2004</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains IntelliJ IDEA 3.0 Named Finalist for 14th Annual Jolt Product Excellence and
+                            Productivity Awards
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+</div>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-48">2003</h3>
+<div class="wt-row wt-row_size_m">
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-card_link wt-offset-top-24" href="/company/press/press-archive/pr_100603.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">June 10, 2003</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains IntelliJ IDEA 3.0 Wins 2003 JavaWorld Editors' Choice Award
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_100603_2.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">June 10, 2003</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains IntelliJ IDEA 3.0 Wins 2003 Java Developer's Journal Editors' Choice Award
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_030603.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">June 03, 2003</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Debuts New IntelliJ IDEA at JavaOne
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_130503.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">May 13, 2003</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">\
+                            JetBrains IntelliJ IDEA 3.0 Named Finalist for 2003 JavaWorld Editors' Choice Award
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_280103.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">January 28, 2003</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains IntelliJ IDEA 3.0 Named Finalist for Jolt Product Excellence and Productivity
+                            Awards
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_270103.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">January 27, 2003</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            JetBrains Expands Presence into North America with the Release of IntelliJ IDEA 3.0.
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+</div>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-48">2002</h3>
+<div class="wt-row wt-row_size_m">
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-card_link wt-offset-top-24" href="/company/press/press-archive/pr_111102.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">November 11, 2002</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            IntelliJ IDEA 3.0 Unleashed! - JetBrains' Award Winning Java IDE Has Just Evolved Into The
+                            Industry's Most Complete Productivity Package, Now With J2EE Support!
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-offset-top-24 wt-card_link" href="/company/press/press-archive/pr_030602.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">June 03, 2002</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            IntelliJ IDEA 2.6 Now Shipping, now with Jdk 1.4 Support.
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+</div>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-48">2001</h3>
+<div class="wt-row wt-row_size_m">
+<a class="wt-col-4 wt-col-md-6 wt-col-sm-12 wt-card wt-card_theme_dark wt-card_link wt-offset-top-24" href="/company/press/press-archive/pr_131201.html">
+<div class="wt-card__section company-card">
+<time class="wt-text-3 wt-text-3_theme_dark">December 13, 2001</time>
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24 company-card__title">
+                            IntelliJ IDEA 2.5 Now Shipping.
+                        </h3>
+<span class="wt-link wt-link_theme_dark company-card__link wt-offset-top-24">
+                            Read more
+                        </span>
+</div>
+</a>
+</div>
+</div>
+</section>    </div>
+
+            
+<div class="page__footer">
+    <footer class="footer" id="footer">
+        <div class="wt-container">
+            <div class="footer__main wt-row wt-row_size_m wt-row-sm_direction_column-reverse">
+                <div class="footer__logo wt-col-inline wt-display-md-none">
+                    <div class="jetbrains-logo _size-3 _full-block">
+                        <svg class="sprite-img jetbrains">
+                            <use xlink:href="#jetbrains" />
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="wt-col-auto-fill wt-col-sm-12">
+                    <div class="wt-row wt-row_size_xs wt-row-sm_size_m wt-offset-top-12">
+                        <div class="wt-col-inline footer-skeleton-button"></div>
+                        <div class="wt-col-inline footer-skeleton-button"></div>
+                        <div class="wt-col-inline footer-skeleton-button"></div>
+                        <div class="wt-col-inline footer-skeleton-button"></div>
+                    </div>
+
+                    <div class="footer-skeleton-text-2 wt-offset-top-24" style="max-width: 45%"></div>
+                    <div class="footer-skeleton-text-2 wt-offset-top-12" style="max-width: 70%"></div>
+                </div>
+
+                <div class="wt-col-inline wt-col-sm-12 wt-col_align-self_end wt-col-sm_align-self_start">
+                    <div class="wt-row wt-row_size_m wt-row_justify_end wt-row-sm_justify_start">
+                        <div class="wt-col-inline footer-skeleton-button" style="min-width: 180px"></div>
+                        <div class="wt-col-inline footer-skeleton-button" style="min-width: 80px"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+    </div>
+
+<script>
+(function () {
+  function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+      results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+  }
+
+  function updateQueryStringParameter(uri, key, value) {
+    var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+    var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+    if (uri.match(re)) {
+      return uri.replace(re, '$1' + key + "=" + value + '$2');
+    }
+    else {
+      return uri + separator + key + "=" + value;
+    }
+  }
+
+  var downloadLink = document.getElementById("download-link");
+  if (downloadLink != null) {
+    var platform = getParameterByName('platform');
+    platform = platform != null ? platform : "windows";
+    var href = downloadLink.getAttribute("href");
+    var code = getParameterByName("code");
+
+    if(code != null) {
+      href = updateQueryStringParameter(href, "code", code)
+    }
+    href = updateQueryStringParameter(href, "platform", platform);
+    downloadLink.setAttribute("href", href);
+  }
+})();
+</script><script>
+(function() {
+  var STORAGE_KEY_NAME = 'firefoxDisappearedSVGWorkaround';
+  var STORAGE_KEY_VALUE = '1';
+
+  var isFirefox = /firefox/i.test(navigator.userAgent);
+  if (!isFirefox || isFirefox && sessionStorage.getItem(STORAGE_KEY_NAME) === STORAGE_KEY_VALUE) {
+    return;
+  }
+
+  var arrayFrom = function (arrayLike) {
+    return Array.prototype.slice.call(arrayLike, 0);
+  };
+
+  function workaround() {
+    var uses = document.querySelectorAll('.page svg use');
+    var badNodesCount = 0;
+
+    arrayFrom(uses).forEach(function (node) {
+      var rect = node.getBoundingClientRect();
+      if (rect.width === 0 && rect.height === 0)
+        badNodesCount++;
+    });
+
+    if (badNodesCount === uses.length) {
+      sessionStorage.setItem(STORAGE_KEY_NAME, STORAGE_KEY_VALUE);
+      if (typeof dataLayer !== 'undefined')
+        dataLayer.push({'firefoxDisappearedSVGWorkaround': STORAGE_KEY_VALUE});
+
+      window.location.replace(window.location.href);
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', workaround);
+
+})();
+</script>      <link href="/_assets/banner-rotator.entry.07ac548a2a68a7922693.css" rel="stylesheet" type="text/css">
+      <script src="/_assets/banner-rotator.entry.b9ea3aaba598786010f0.js" type="text/javascript"></script>
+      
+      
+  <script>
+(function () {
+
+  'use strict';
+
+  function ImagesSrcReplacer () {
+
+    var attribute = 'data-src';
+    var matches = document.querySelectorAll('img[' + attribute + ']');
+
+    for (var i = 0, n = matches.length; i < n; i++) {
+
+      var attrValue = matches[i].getAttribute(attribute);
+
+      if (_isHighDensity ()) {
+
+        var name = attrValue.substring(0, attrValue.lastIndexOf('.'));
+        var extention = attrValue.substring(attrValue.lastIndexOf('.'), attrValue.length);
+
+        matches[i].setAttribute('src', name + '@2x' + extention);
+
+      } else {
+        matches[i].setAttribute('src', attrValue)
+      }
+    }
+
+    /**
+     * Detect high density
+     * @returns {*|boolean}
+     */
+    function _isHighDensity () {
+      return (
+      (window.matchMedia &&
+      (window.matchMedia('only screen and (min-resolution: 124dpi), only screen and (min-resolution: 1.3dppx), only screen and (min-resolution: 48.8dpcm)').matches ||
+       window.matchMedia('only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (-o-min-device-pixel-ratio: 2.6/2), only screen and (min--moz-device-pixel-ratio: 1.3), only screen and (min-device-pixel-ratio: 1.3)').matches)) ||
+      (window.devicePixelRatio &&
+       window.devicePixelRatio > 1.3));
+    }
+  }
+
+  return new ImagesSrcReplacer()
+
+}(document, window));
+</script></body>
+</html>

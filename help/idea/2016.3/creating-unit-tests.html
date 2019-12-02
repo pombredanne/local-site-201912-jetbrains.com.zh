@@ -1,0 +1,158 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta class="swiftype" name="product" data-type="string" content="/idea/2016.3/"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><meta charset="UTF-8"><meta name="robots" content="noindex"><title>IntelliJ IDEA 2016.3 Help :: Creating Unit Tests</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Creating_unit_tests"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-swiftype-index="false"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.3 Help</h3><div class="shortcuts-switcher" data-swiftype-index="false"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Windows/Linux Default</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWin</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">Mac OS X</option><option data-group="secondary" value="eclipse_mac_os_x">Eclipse (Mac OS X)</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (Mac OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper (Mac OS X)</option><option data-group="secondary" value="emacs">Emacs (Mac OS X)</option></select></div><div class="panel-trigger" data-swiftype-index="false"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="packaging-the-application.html">Packaging the Application</a></div><h1>Creating Unit Tests</h1><a name="d69991e3"></a><p>
+        In Android, unit testing is based on <a name="d69991e5"></a><a href="http://junit.org/" data-external="true"><span>JUnit</span></a>, and plane use of JUnit is enough to test the
+        features that are exclusively based on Java code.
+    </p><a name="d69991e9"></a><p>
+        However, to test Android-specific functionality you need a bunch of wrapper classes built on top of JUnit.
+        IntelliJ IDEA streamlines most of the tasks around the build of an Android test project.
+    </p><a name="d69991e12"></a><h2>1. Make sure your code is testable</h2>
+        <a name="d69991e14"></a><p>
+            Unit testing requires that the source code is composed in such a way that dependencies between modules can be easily
+            neutralized with mocks. In addition, unit testing requires that functions are well isolated from each other.
+        </p>
+        <a name="d69991e17"></a><p>
+            As is, the code of the
+            <code class="code" data-lang="Java">HelloDroid</code> class is not easy to test. Let's first apply a quick refactoring before we proceed with unit tests.
+        </p>
+        <ol class="list _decimal"><li class="list__item"><a name="d69991e25"></a>
+                Open the <code class="code" data-lang="Java">HelloDroid</code> class and select the portion of the code in the <code class="code" data-lang="Java">TapDroid</code> method
+                that refers to the production of the display message:
+                <figure><img alt="/help/img/idea/2016.3/android_HelloDroid_refactoring.png" title="/help/img/idea/2016.3/android_HelloDroid_refactoring.png" src="/help/img/idea/2016.3/android_HelloDroid_refactoring.png" width="587" height="313"></figure>
+            </li><li class="list__item"><a name="d69991e36"></a>
+                Rewrite the <code class="code" data-lang="Java">TapDroid</code> method in such a way so that it calls into a newly created public helper method
+                (<code class="code" data-lang="Java">GetStringFor Display</code>) as shown below:
+                <a name="d69991e44"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kd">private</span> <span class="kt">void</span> <span class="nf">TapDroid</span><span class="o">()</span> <span class="o">{</span>
+<span class="n">counter</span><span class="o">++;</span>
+<span class="n">String</span> <span class="n">temp</span> <span class="o">=</span> <span class="n">getStringForDisplay</span><span class="o">(</span><span class="n">counter</span><span class="o">);</span>
+<span class="n">message</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;You touched the droid %s&quot;</span><span class="o">,</span> <span class="n">temp</span><span class="o">));</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="n">String</span> <span class="nf">getStringForDisplay</span><span class="o">(</span><span class="kt">int</span> <span class="n">count</span><span class="o">)</span> <span class="o">{</span>
+<span class="n">String</span> <span class="n">temp</span><span class="o">;</span>
+<span class="k">switch</span><span class="o">(</span><span class="n">count</span><span class="o">)</span>
+<span class="o">{</span>
+<span class="k">case</span> <span class="mi">1</span><span class="o">:</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="s">&quot;once&quot;</span><span class="o">;</span>
+<span class="k">break</span><span class="o">;</span>
+<span class="k">case</span> <span class="mi">2</span><span class="o">:</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="s">&quot;twice&quot;</span><span class="o">;</span>
+<span class="k">break</span><span class="o">;</span>
+<span class="k">default</span><span class="o">:</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="n">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;%d times&quot;</span><span class="o">,</span> <span class="n">count</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="k">return</span> <span class="n">temp</span><span class="o">;</span>
+<span class="o">}</span></code></div>
+            </li></ol>
+        <a name="d69991e49"></a><p>
+            The <code class="code" data-lang="Java">getStringForDisplay</code> method is now much easier to test, and the body of the <code class="code" data-lang="Java">TapDroid</code> method
+            has been greatly simplified.
+        </p>
+    <a name="d69991e59"></a><h2>2. Create a test module</h2>
+        <a name="d69991e61"></a><p>
+            Now let's create a new test module and set <code class="code" data-lang="Java">HelloDroid</code> as the tested module.
+            This ensures that the test module holds a reference onto the module that contains the source code you are going to test.
+        </p>
+        <ol class="list _decimal"><li class="list__item"><a name="d69991e69"></a>
+                From the main menu, select <a name="d69991e71"></a><span class="control">File | New | Module</span> to launch the <a name="d69991e74"></a><a href="new-module-wizard.html"><span>New Module wizard</span></a>.
+            </li><li class="list__item"><a name="d69991e78"></a>
+                On the first page of the wizard, select <a name="d69991e80"></a><span class="control">Android</span> in the left pane, and <a name="d69991e83"></a><span class="control">Test Module</span> on the right:
+                <figure><img alt="/help/img/idea/2016.3/android_new_module_step1.png" title="/help/img/idea/2016.3/android_new_module_step1.png" src="/help/img/idea/2016.3/android_new_module_step1.png" width="849" height="648"></figure>
+            </li><li class="list__item"><a name="d69991e89"></a>
+                On the second page, specify the new module name, for example, <code class="code" data-lang="Java">Tests</code>. Leave the other fields unchanged. The <code class="code" data-lang="Java">HelloDroid</code> module
+                is specified as the tested module automatically, as at this point, this is the only module in the project.
+                <figure><img alt="/help/img/idea/2016.3/android_new_module_step2.png" title="/help/img/idea/2016.3/android_new_module_step2.png" src="/help/img/idea/2016.3/android_new_module_step2.png" width="849" height="648"></figure>
+            </li></ol>
+        <a name="d69991e101"></a><p>
+            A new node will be appended to the project named <a name="d69991e103"></a><span class="control">Tests</span>. This module has its own <code class="code" data-lang="Java">manifest</code> file
+            and and <a name="d69991e109"></a><span class="control">src</span> directory. The <code class="code" data-lang="Java">manifest</code> file links against the <code class="code" data-lang="Java">android.test</code> library in order to build test classes.
+        </p>
+        <figure><img alt="/help/img/idea/2016.3/android_test_module_structure.png" title="/help/img/idea/2016.3/android_test_module_structure.png" src="/help/img/idea/2016.3/android_test_module_structure.png" width="349" height="669"></figure>
+        <a name="d69991e121"></a><p>
+            The newly created module has a test file named <code class="code" data-lang="Java">HelloDroidTest</code> in the <a name="d69991e126"></a><span class="control">src</span> folder. You can add more test files
+            simply by adding more Java classes as shown below:
+        </p>
+        <a name="d69991e131"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">HelloDroidTest</span> <span class="kd">extends</span> <span class="n">ActivityInstrumentationTestCase2</span><span class="o">&lt;</span><span class="n">HelloDroid</span><span class="o">&gt;</span> <span class="o">{</span>
+
+<span class="kd">public</span> <span class="nf">HelloDroidTest</span><span class="o">()</span> <span class="o">{</span>
+<span class="kd">super</span><span class="o">(</span><span class="s">&quot;com.example.HelloDroid&quot;</span><span class="o">,</span> <span class="n">HelloDroid</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="o">}</span></code></div>
+        <a name="d69991e134"></a><p>
+            The test class inherits from <code class="code" data-lang="Java">ActivityInstrumentationTestCase2&lt;T&gt;</code> where <code class="code" data-lang="Java">T</code> is the name
+            of the activity you are going to test.
+        </p>
+        <a name="d69991e143"></a><p>
+            Note that adding a constructor is required, as there is no default constructor defined for the parent class.
+        </p>
+    <a name="d69991e147"></a><h2>3. Add a test method</h2>
+        <a name="d69991e149"></a><p>
+            In the editor, right-click the <code class="code" data-lang="Java">HelloDroid</code> test class and click <a name="d69991e154"></a><span class="control">Generate</span> (alternatively, click <kbd data-default="Alt+Insert" data-default_for_gnome="Alt+Insert" data-default_for_kde="Alt+Insert" data-default_for_xwin="Alt+Insert" data-emacs="Alt+Insert" data-jbuilder="Alt+Insert" data-visual_studio="Ctrl+N" data-netbeans_6.5="N/A" data-eclipse="Alt+Insert" data-mac_os_x_10.5_="&#x2318;N" data-mac_os_x="&#x2303;N" data-eclipse_mac_os_x="&#x2318;N" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Insert</kbd>).
+            From the popup menu that opens, select <a name="d69991e159"></a><span class="control">Test Method</span>:
+        </p>
+        <figure><img alt="/help/img/idea/2016.3/android_generate_test_method.png" title="/help/img/idea/2016.3/android_generate_test_method.png" src="/help/img/idea/2016.3/android_generate_test_method.png" width="689" height="446"></figure>
+        <a name="d69991e165"></a><p>
+            IntelliJ IDEA creates a new method stub named <code class="code" data-lang="Java">testName</code> where you can easily change the <code class="code" data-lang="Java">Name</code> suffix into
+            something more meaningful in the context:
+        </p>
+        <figure><img alt="/help/img/idea/2016.3/android_new_test_method.png" title="/help/img/idea/2016.3/android_new_test_method.png" src="/help/img/idea/2016.3/android_new_test_method.png" width="464" height="43"></figure>
+        <a name="d69991e176"></a><p>
+            The <code class="code" data-lang="Java">test</code> prefix in the method name is required if you are using <a name="d69991e181"></a><a href="http://junit.sourceforge.net/junit3.8.1/" data-external="true"><span>JUnit 3</span></a>,
+            the default testing framework in Android.
+            With <a name="d69991e184"></a><a href="http://junit.org/" data-external="true"><span>JUnit 4</span></a>, you have to use method name annotations to indicate that a given method must be processed as a test method.
+        </p>
+    <a name="d69991e190"></a><h2>4. Write the logic for a test method</h2>
+        <a name="d69991e192"></a><p>
+            Internally, the test method first gets a reference to the activity it is trying to test, then it calls the target method, and, finally, compares the effective
+            results with the expected results.
+        </p>
+        <a name="d69991e195"></a><p>
+            Add the following code to the test method:
+        </p>
+        <a name="d69991e198"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">testStringForDisplay</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+<span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+<span class="n">HelloDroid</span> <span class="n">activity</span> <span class="o">=</span> <span class="n">getActivity</span><span class="o">();</span>
+<span class="n">String</span> <span class="n">result</span> <span class="o">=</span> <span class="n">activity</span><span class="o">.</span><span class="na">getStringForDisplay</span><span class="o">(</span><span class="n">count</span><span class="o">);</span>
+<span class="n">Assert</span><span class="o">.</span><span class="na">assertEquals</span><span class="o">(</span><span class="n">result</span><span class="o">,</span> <span class="s">&quot;once&quot;</span><span class="o">);</span>
+
+<span class="o">}</span></code></div>
+        <a name="d69991e201"></a><p>
+            Assertions are implemented through the services of the JUnit framework and need to be properly referenced in the source file.
+            Press <kbd data-default="Alt+Enter" data-default_for_gnome="Alt+Enter" data-default_for_kde="Alt+Enter" data-default_for_xwin="Alt+Enter" data-emacs="Alt+Enter" data-jbuilder="Alt+Enter" data-visual_studio="Alt+Enter" data-netbeans_6.5="N/A" data-eclipse="Alt+Enter" data-mac_os_x_10.5_="&#x2325;⏎" data-mac_os_x="&#x2325;⏎" data-eclipse_mac_os_x="&#x2318;1" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Enter</kbd> when the intention action pops up to reference it:
+        </p>
+        <figure><img alt="/help/img/idea/2016.3/android_test_assertion.png" title="/help/img/idea/2016.3/android_test_assertion.png" src="/help/img/idea/2016.3/android_test_assertion.png" width="647" height="209"></figure>
+    <a name="d69991e209"></a><h2>5. Create a run/debug configuration for tests</h2>
+        <a name="d69991e211"></a><p>
+            In order to run tests, you need to create a dedicated run/debug configuration. A default configuration is created for you
+            automatically when you set up a test module.
+        </p>
+        <a name="d69991e214"></a><p>
+            To edit its settings, in the main menu select <a name="d69991e216"></a><span class="control">Run | Edit Configurations</span> and select <a name="d69991e219"></a><span class="control">Tests</span> under
+            <a name="d69991e222"></a><span class="control">Android Tests</span> in the left pane:
+        </p>
+        <figure><img alt="/help/img/idea/2016.3/android_run_debug_config_tests.png" title="/help/img/idea/2016.3/android_run_debug_config_tests.png" src="/help/img/idea/2016.3/android_run_debug_config_tests.png" width="1092" height="702"></figure>
+        <a name="d69991e228"></a><p>
+            You can select to run all tests in the module, or limit the test to the methods in a given class.
+        </p>
+    <a name="d69991e232"></a><h2>6. Run a test</h2>
+        <a name="d69991e234"></a><p>
+            To run your tests, make sure the appropriate run/debug configuration is selected in the drop-down list in the top-right corner of the editor,
+            and click the <a name="d69991e236"></a><span class="control">Run</span> button <img alt="/help/img/idea/2016.3/run.png" title="/help/img/idea/2016.3/run.png" src="/help/img/idea/2016.3/run.png" width="11" height="14" class="inline-icon-14"> next to it:
+        </p>
+        <figure><img alt="/help/img/idea/2016.3/android_run_test.png" title="/help/img/idea/2016.3/android_run_test.png" src="/help/img/idea/2016.3/android_run_test.png" width="211" height="177"></figure>
+        <a name="d69991e244"></a><p>
+            Test results are displayed in the <a name="d69991e246"></a><a href="test-runner-tab.html"><span>Test Runner tab</span></a> of the <a name="d69991e249"></a><a href="run-tool-window.html"><span>Run tool window</span></a> that is activated automatically.
+            If a test is completed successfully, a green square icon appears in the top right corner of the editor. If there are warnings,
+            the icon is yellow, and if a test fails - it is red. You can click the icon to get more details.
+        </p>
+        <a name="d69991e253"></a><p>
+            You can export a test report to a variety of formats by clicking the <a name="d69991e255"></a><span class="control">Export Test Results</span> icon <img alt="/help/img/idea/2016.3/exportToTextFile.png" title="/help/img/idea/2016.3/exportToTextFile.png" src="/help/img/idea/2016.3/exportToTextFile.png" width="16" height="19" class="inline-icon-19">
+            in the <a name="d69991e260"></a><span class="control">Tests</span> tab <a name="d69991e263"></a><a href="test-runner-tab.html#testingToolbar"><span>toolbar</span></a>.
+        </p>
+    <div class="navigation-links _bottom"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="packaging-the-application.html">Packaging the Application</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content">```
+                <div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d69991e287"></a><a href="testing.html"><span>Testing</span></a></li></ul></div><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d69991e272"></a><a href="run-tool-window.html"><span>Run Tool Window</span></a></li><li class="list__item"><a name="d69991e276"></a><a href="test-runner-tab.html"><span>Test Runner Tab</span></a></li><li class="list__item"><a name="d69991e280"></a><a href="run-debug-configurations.html"><span>Run/Debug Configurations</span></a></li></ul></div></div></section><div class="last-modified" data-swiftype-index="false">Last modified: 21 March 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

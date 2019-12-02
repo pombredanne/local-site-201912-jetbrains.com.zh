@@ -1,0 +1,116 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"></meta><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><title>IntelliJ IDEA 2016.1 Help :: Tutorial: Configuring Generic Task Server</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Tutorial_Configuring_Generic_Task_Server"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.1 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWindow</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="switching-between-contexts.html">Switching Between Contexts</a><a class="navigation-links__next" href="using-command-line-tools.html">Using Command Line Tools</a></div><h1>Tutorial: Configuring Generic Task Server</h1><a name="d758316e3"></a><p>In this section:</p><ul><li class="list__item"><a href="#d758316e8">Overview</a></li><li class="list__item"><a href="#d758316e54">Prerequisites</a></li><li class="list__item"><a href="#d758316e104">Specifying the Task Server</a></li><li class="list__item"><a href="#d758316e158">Configuring the Task Server</a></li><li class="list__item"><a href="#d758316e288">Choosing the Response Type and Using Selectors</a></li><li class="list__item"><a href="#d758316e361">Obtaining Issues from the Server</a></li><li class="list__item"><a href="#d758316e396">Summary</a></li></ul><a name="d758316e8"></a><h2>Overview</h2>
+        <a name="d758316e10"></a><p>The Generic connector has been developed as a mechanism enabling the users to configure integration with the servers that IntelliJ IDEA does not officially support.
+            At the moment, this mechanism:</p>
+        <ul class="list _ul"><li class="list__item"><a name="d758316e15"></a>Supports the services with REST API.</li><li class="list__item"><a name="d758316e18"></a>Does not support pagination in server responses.</li><li class="list__item"><a name="d758316e21"></a>Allows the following ways of client authentication:
+                <ul class="list _ul"><li class="list__item"><a name="d758316e25"></a><a name="d758316e26"></a><a href="https://en.wikipedia.org/wiki/Basic_access_authentication" data-external="true"><span>Basic HTTP authentication</span></a></li><li class="list__item"><a name="d758316e29"></a>Sending a preliminary request to the specified address (which is required, for example, by <a name="d758316e31"></a><a href="https://youtrack.jetbrains.com/" data-external="true"><span>YouTrack</span></a>).</li></ul>
+                </li><li class="list__item"><a name="d758316e37"></a>Supports GET and POST requests. At this moment POST requests can contain only
+                <a name="d758316e39"></a><a href="https://en.wikipedia.org/wiki/Percent-encoding#The_.3Ccode.3Eapplication.2Fx-www-form-urlencoded.3C.2Fcode.3E_type" data-external="true"><span>form-encoded data</span></a>,
+                specified as query parameters in the corresponding URL</li></ul>
+        <a name="d758316e44"></a><p>Note that a client can only send requests to a server and retrieve responses according to a certain template.</p>
+        <a name="d758316e47"></a><p>This tutorial is created for the <a name="d758316e49"></a><a href="https://developer.atlassian.com/static/rest/jira/5.0.html" data-external="true"><span>JIRA 5.0</span></a> server.
+        However, configuring a generic server described below is valid for any higher version of JIRA, including JIRA OnDemand.</p>
+    <a name="d758316e54"></a><h2>Prerequisites</h2>
+        <a name="d758316e56"></a><p>Make sure that the following prerequisites are met:</p>
+        <ul class="list _ul"><li class="list__item"><a name="d758316e61"></a>You are working with IntelliJ IDEA version  14  
+                  or later.
+            <a name="d758316e77"></a><p>If you still do not have IntelliJ IDEA, download it from <a name="d758316e80"></a><a href="https://www.jetbrains.com/idea/download/" data-external="true"><span>this page</span></a>
+                 
+                 
+                . To install IntelliJ IDEA, follow the <a name="d758316e94"></a><a href="installing-and-launching.html"><span>instructions</span></a>, depending on your platform.</p>
+            </li><li class="list__item"><a name="d758316e99"></a>You have an account in a tracking system, the example on this page uses JIRA.</li></ul>
+    <a name="d758316e104"></a><h2>Specifying the Task Server</h2>
+        <ol class="list _decimal"><li class="list__item"><a name="d758316e108"></a>
+                 
+         
+            Open the <a name="d2333e7876"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by choosing <a name="d2333e7878"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d2333e7881"></a><span class="menupath">IntelliJ IDEA | Preferences</span> for OS X.
+         
+         
+     
+                 
+         
+        Expand the <a name="d2333e7923"></a><span class="control">Tools</span> node, and then
+     
+                 
+         
+         
+         
+        click <a name="d2333e7972"></a><span class="control">Servers</span> under <a name="d2333e7975"></a><span class="control">Tasks</span>.
+     
+            </li><li class="list__item"><a name="d758316e125"></a>
+                On the <a name="d758316e127"></a><a href="servers-2.html"><span>Servers</span></a> page that opens, click <img alt="add" width="12" height="12" title="add" src="/help/img/idea/2016.1/new.png" class="inline-icon-12"> and choose <a name="d758316e131"></a><span class="control">Generic</span>:
+                <figure><img alt="task_generic_server" width="494" height="390" title="task_generic_server" src="/help/img/idea/2016.1/task_generic_server.png"></figure>
+            </li><li class="list__item"><a name="d758316e137"></a>
+                In the <a name="d758316e139"></a><span class="control">General</span> tab, specify URL of the server, select the check box <a name="d758316e142"></a><span class="control">Use HTTP Authentication</span>,
+                and type your user name and password.
+            </li><li class="list__item"><a name="d758316e146"></a>
+                Leave the <a name="d758316e148"></a><span class="control">Commit Message</span> tab as is, and then click the <a name="d758316e151"></a><span class="control">Server Configuration</span> tab.
+            </li></ol>
+    <a name="d758316e158"></a><h2>Configuring the Task Server</h2>
+        <a name="d758316e160"></a><p>The <a name="d758316e162"></a><span class="control">Server Configuration</span> tab contains three fields: </p>
+        <ul class="list _ul"><li class="list__item"><a name="d758316e168"></a>The <a name="d758316e170"></a><span class="control">Login URL</span> field is disabled,
+                because the check box <a name="d758316e173"></a><span class="control">Use HTTP authentication</span> in the <a name="d758316e176"></a><span class="control">General</span> tab has been selected.
+            </li><li class="list__item"><a name="d758316e180"></a>The <a name="d758316e182"></a><span class="control">Tasks list URL</span> field makes it possible to obtain the list of issues from the server
+                (this list is asked for when you <a name="d758316e185"></a><a href="opening-and-creating-tasks.html"><span>open a task</span></a>).
+            <a name="d758316e188"></a><p>In this field, specify the variable <code class="code" data-lang="Java">{serverUrl}</code> that corresponds to the server
+                URL, specified in the <a name="d758316e193"></a><span class="control">General</span> tab, then type the path <code class="code" data-lang="Java">/rest/api/2/search</code> and expression
+                <code class="code" data-lang="Java">?maxResults={max}&amp;jql={JQL_Query}</code> .</p>
+                <a name="d758316e203"></a><p>Pay attention to the template variable <code class="code" data-lang="Java">{JQL_Query}</code>, which is not defined
+                    so far. To define it, click the button <a name="d758316e208"></a><span class="control">Manage Template Variables</span>, then in the
+                    <a name="d758316e211"></a><span class="control">Template Variables</span> dialog box that opens, click <img alt="add" width="12" height="12" title="add" src="/help/img/idea/2016.1/new.png" class="inline-icon-12"> and type the name
+                    and value of this template variable:</p>
+                <figure><img alt="task_generic_server_template_variables1" width="598" height="647" title="task_generic_server_template_variables1" src="/help/img/idea/2016.1/task_generic_server_template_variables1.png"></figure>
+                <aside class="warning "><a name="d758316e221"></a><p>This is important! For an undefined template variable, the test connection will fail!</p></aside>
+                    <a name="d758316e224"></a><p>Defining a template variable leads to including it in the suggestion list: </p>
+                <figure><img alt="task_generic_server_template_variables" width="544" height="375" title="task_generic_server_template_variables" src="/help/img/idea/2016.1/task_generic_server_template_variables.png"></figure>
+                <a name="d758316e229"></a><p>Mind the check box <a name="d758316e231"></a><span class="control">Show on first tab</span> in the <a name="d758316e234"></a><span class="control">Template Variables</span> dialog box.
+                    If this check box is selected (as it's done in this tutorial),
+                    the template variable and its value shows on the <a name="d758316e237"></a><span class="control">General</span> tab of the <a name="d758316e240"></a><a href="servers-2.html"><span>Servers</span></a> page.</p>
+            <aside class="note ">
+                <a name="d758316e245"></a><p>It is also possible to use an absolute path in the format <code class="code" data-lang="Java">http://&lt;server URL&gt;:&lt;port&gt;/rest/api/2/search&lt;expression&gt;</code>.</p>
+            </aside>
+            </li><li class="list__item"><a name="d758316e253"></a>The <a name="d758316e255"></a><span class="control">Single task URL</span> field makes it possible to obtain a detailed information about a specific issue by its ID.
+                This field is optional, when the check box <a name="d758316e258"></a><span class="control">Each task in separate request</span> is cleared.
+            <a name="d758316e261"></a><p>To fill in the field, use the following format<br>
+                &lt;variable <code class="code" data-lang="Java">{serverUrl}</code> that corresponds to the server URL, specified in the
+                <a name="d758316e268"></a><span class="control">General</span> tab&gt; &lt;the path <code class="code" data-lang="Java">/rest/api/2/issue/</code>&gt;
+                &lt;variable <code class="code" data-lang="Java">{id}</code>&gt;
+            </p>
+            </li></ul>
+        <a name="d758316e280"></a><p><a name="d758316e281"></a><a href="auto-completing-code.html"><span>Code completion</span></a> is available in all these fields.</p>
+        <figure><img alt="task_server_code_completion" width="302" height="300" title="task_server_code_completion" src="/help/img/idea/2016.1/task_server_code_completion.png"></figure>
+    <a name="d758316e288"></a><h2>Choosing the Response Type and Using Selectors</h2>
+        <a name="d758316e290"></a><p>You also need to choose the response type and to specify how information about an issue will be extracted from the server response.
+            This is done in the table of selectors in the lower part of the
+            <a name="d758316e292"></a><span class="control">Server Configuration</span> tab.</p>
+            <a name="d758316e296"></a><p>IntelliJ IDEA suggests three response types: XML, JSON and text.</p>
+        <ul class="list _ul"><li class="list__item"><a name="d758316e301"></a>Choose <a name="d758316e303"></a><span class="control">XML</span> if the server responds in the XML format, the selectors are described in XPath.</li><li class="list__item"><a name="d758316e307"></a>Choose <a name="d758316e309"></a><span class="control">JSON</span> if the server responds in the JSON format, the selectors are described in <a name="d758316e312"></a><a href="http://goessner.net/articles/JsonPath/" data-external="true"><span>JSONPath</span></a>.</li><li class="list__item"><a name="d758316e316"></a>Choose <a name="d758316e318"></a><span class="control">Text</span> if the server responds in the plain text format, the selectors are described as regular expressions.</li></ul>
+        <a name="d758316e323"></a><p>In this tutorial, for example, let's choose <a name="d758316e325"></a><span class="control">JSON</span> and describe the selectors
+            using <a name="d758316e328"></a><a href="http://goessner.net/articles/JsonPath/" data-external="true"><span>JSONPath</span></a>.</p>
+         <a name="d758316e332"></a><p>The first three selectors are mandatory:</p>
+        <ul class="list _ul"><li class="list__item"><a name="d758316e338"></a><a name="d758316e339"></a><span class="control">tasks</span>: this selector denotes the path in the server response to the descriptions of specific issues.</li><li class="list__item"><a name="d758316e343"></a><a name="d758316e344"></a><span class="control">id</span>: this selector denotes the path to a unique ID in the description of a specific issue.</li><li class="list__item"><a name="d758316e348"></a><a name="d758316e349"></a><span class="control">summary</span>:  this selector denotes the path to a title  of an issue within its description.</li></ul>
+        <a name="d758316e354"></a><p>To fill out the table, use the server responses. For JIRA, for example, one can observe the server responses immediately in the browser, following
+            a link in the format <code class="code" data-lang="Java">http://&lt;server URL&gt;:&lt;port&gt;/rest/api/2/search</code> .</p>
+    <a name="d758316e361"></a><h2>Obtaining Issues from the Server</h2>
+        <ol class="list _decimal"><li class="list__item"><a name="d758316e365"></a>
+                To check that the specified settings ensure successful integration with the tracking system, click <a name="d758316e367"></a><span class="control">Test</span>:
+                <figure><img alt="task_generic_server_connection_successful" width="546" height="469" title="task_generic_server_connection_successful" src="/help/img/idea/2016.1/task_generic_server_connection_successful.png"></figure>
+                If the connection is successful, click <a name="d758316e372"></a><span class="control">OK</span> and close the Settings dialog.
+            </li><li class="list__item"><a name="d758316e376"></a>
+                On the main menu, choose <a name="d758316e378"></a><span class="menupath">Tools | Tasks &amp; Contexts | Open Task</span>, or click the <a name="d758316e381"></a><span class="control">Open task</span> button:
+                <figure><img alt="task_generic_server_open_task" width="192" height="132" title="task_generic_server_open_task" src="/help/img/idea/2016.1/task_generic_server_open_task.png"></figure>
+            </li><li class="list__item"><a name="d758316e387"></a>
+                In the list of tasks, choose the one you want to open, and hit <kbd data-default="Enter" data-default_for_gnome="Enter" data-default_for_kde="Enter" data-default_for_xwin="Enter" data-emacs="Enter" data-jbuilder="Enter" data-visual_studio="Enter" data-netbeans_6.5="N/A" data-eclipse="Enter" data-mac_os_x_10.5_="⏎" data-mac_os_x="⏎" data-eclipse_mac_os_x="⏎" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Enter</kbd>:
+                <figure><img alt="task_generic_server_open_task1" width="350" height="431" title="task_generic_server_open_task1" src="/help/img/idea/2016.1/task_generic_server_open_task1.png"></figure>
+            </li></ol>
+    <a name="d758316e396"></a><h2>Summary</h2>
+        <a name="d758316e398"></a><p>In this tutorial, we have:</p>
+        <ul class="list _ul"><li class="list__item"><a name="d758316e403"></a>assigned JIRA as the generic task server.</li><li class="list__item"><a name="d758316e406"></a>configured this task server.</li><li class="list__item"><a name="d758316e409"></a>specified response type and selectors.</li><li class="list__item"><a name="d758316e412"></a>made sure that connection is successful.</li><li class="list__item"><a name="d758316e415"></a>retrieved issues from the configured server.</li></ul>
+    <div class="navigation-links _bottom"><a class="navigation-links__prev" href="switching-between-contexts.html">Switching Between Contexts</a><a class="navigation-links__next" href="using-command-line-tools.html">Using Command Line Tools</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content"><div class="seealso__col"><h3>External Links:</h3><ul class="list"><li class="list__item"><a name="d758316e424"></a><a href="https://en.wikipedia.org/wiki/Basic_access_authentication" data-external="true"><span>Basic Authentication</span></a></li><li class="list__item"><a name="d758316e427"></a><a href="https://en.wikipedia.org/wiki/Percent-encoding#The_.3Ccode.3Eapplication.2Fx-www-form-urlencoded.3C.2Fcode.3E_type" data-external="true"><span>Percent-encoding</span></a></li><li class="list__item"><a name="d758316e430"></a><a href="https://developer.atlassian.com/static/rest/jira/5.0.html" data-external="true"><span>JIRA 5.0 REST API Documentation</span></a></li><li class="list__item"><a name="d758316e433"></a><a href="http://goessner.net/articles/JsonPath/" data-external="true"><span>JSONPath</span></a></li></ul></div></div></section><div class="last-modified">Last modified: 13 July 2016 </div></article><div id="disqus_thread"></div></div></section></main></div><script src="/help/app/app.js"></script></body></html>

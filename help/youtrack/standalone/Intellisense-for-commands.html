@@ -1,0 +1,57 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta charset="UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="//resources.jetbrains.com/storage/help-app/v3/analytics.js"></script><title>Intellisense for commands - Help | YouTrack Standalone</title><link rel="stylesheet" href="//resources.jetbrains.com/storage/help-app/v3/app.css"></head><body data-id="Intellisense-for-commands" data-breadcrumbs="Resources-for-Developers.xml|Resources for Developers/deprecated-rest-api-reference.xml|Old REST API/General-REST-API.xml|General REST API/Issues-Related-Methods.xml|Issues Related Methods/Intellisense-for-commands.xml|Intellisense for commands" data-main-title="Intellisense for commands"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack Standalone Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>YouTrack Standalone 2019.2 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="Intellisense-for-commands" id="Intellisense-for-commands.xml">Intellisense for commands</h1>   <a name="GET_/issue/{issue}/execute/intellisense"></a>   <h2 id="56ca66b4">GET /issue/{issue}/execute/intellisense</h2>   <p id="5bbbb572">Get highlight and suggestions for command</p>   <p id="ce10627f">      <div class="code-block" data-lang="none">GET /rest/issue/{issue}/execute/intellisense?{command}&amp;{runAs}&amp;{caret}&amp;{optionsLimit}</div>   </p>   <p id="29cd1f3c">         <b id="4fae041f">Parameters:</b></p><div class="table-wrapper"><table class=" wide" width="100%" id="255ef16b"><thead><tr id="eb4b8491" class="ijRowHead"><th id="4976c5b2"><p> Name </p></th><th id="7cdaa0da"><p> Type </p></th><th id="d379f104"><p> Description </p></th></tr></thead><tbody><tr id="2119b4c0" class="ijRowOdd"><td id="28019bdc"><p> issue </p></td><td id="e1a529b0"><p> issueById </p></td><td id="0c17a9e8"><p> A command will be applied to an issue with this issueID. </p></td></tr><tr id="7343173a" class="ijRowEven"><td id="ce0c9834"><p> command </p></td><td id="7ef29d74"><p> string </p></td><td id="db6c7aaf"><p> Current command. </p></td></tr><tr id="201bf1ec" class="ijRowOdd"><td id="069f233d"><p> runAs </p></td><td id="a0ad47ae"><p> string (optional) </p></td><td id="0adf5c3c"><p> Suggest for the given user. Low-level admin permissions are required. </p></td></tr><tr id="00d09bbb" class="ijRowEven"><td id="8d8b5fba"><p> caret </p></td><td id="aa7dd61e"><p> Integer (optional) </p></td><td id="f587f845"><p> Current caret position. End of current command by default. </p></td></tr><tr id="5f5c158f" class="ijRowOdd"><td id="45005296"><p> optionsLimit </p></td><td id="804ca59a"><p> Integer (optional) </p></td><td id="04fe860e"><p> Maximum amount of suggested options </p></td></tr></tbody></table></div>   <h3 id="1b162773">Sample</h3>   <p id="b2c09f5d">         <b id="9c3671ce">Request</b></p>   <div class="code-block" data-lang="none">
+GET https://example.com/youtrack/rest/issue/TST-2/execute/intellisense?command=Subsystem+Backend+State+Ope&amp;optionsLimit=5
+Cookie: $Version=0; JSESSIONID=1a62diy56jbak1731yheey3pv9; $Path=/; jetbrains.charisma.main.security.PRINCIPAL=NDgxMzQ5NGQxMzdlMTYzMWJiYTMwMWQ1YWNhYjZlN2JiN2FhNzRjZTExODVkNDU2NTY1ZWY1MWQ3Mzc2NzdiMjpyb290; $Path=/
+</div>   <p id="1d312bcf">         <b id="43810cda">Response</b></p>   <div class="code-block" data-lang="none">
+HTTP/1.1 200 OK
+Content-Type: application/xml;charset=UTF-8
+Content-Length: 669
+
+&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+&lt;IntelliSense&gt;
+&lt;highlight&gt;
+  &lt;range&gt;
+    &lt;end&gt;9&lt;/end&gt;
+    &lt;start&gt;0&lt;/start&gt;
+    &lt;styleClass&gt;field&lt;/styleClass&gt;
+  &lt;/range&gt;
+  &lt;range&gt;
+    &lt;end&gt;17&lt;/end&gt;
+    &lt;start&gt;10&lt;/start&gt;
+    &lt;styleClass&gt;field&lt;/styleClass&gt;
+  &lt;/range&gt;
+  &lt;range&gt;
+    &lt;end&gt;18&lt;/end&gt;
+    &lt;start&gt;17&lt;/start&gt;
+  &lt;/range&gt;
+  &lt;range&gt;
+    &lt;end&gt;23&lt;/end&gt;
+    &lt;start&gt;18&lt;/start&gt;
+    &lt;styleClass&gt;field&lt;/styleClass&gt;
+  &lt;/range&gt;
+  &lt;range&gt;
+    &lt;end&gt;27&lt;/end&gt;
+    &lt;start&gt;24&lt;/start&gt;
+    &lt;styleClass&gt;error&lt;/styleClass&gt;
+  &lt;/range&gt;
+&lt;/highlight&gt;
+&lt;recent/&gt;
+&lt;suggest&gt;
+  &lt;item&gt;
+    &lt;match start="0" end="3"/&gt;
+    &lt;completion start="24" end="27"/&gt;
+    &lt;caret&gt;29&lt;/caret&gt;
+    &lt;description&gt;States&lt;/description&gt;
+    &lt;suffix&gt;&lt;/suffix&gt;
+    &lt;option&gt;Open&lt;/option&gt;
+    &lt;styleClass&gt;field&lt;/styleClass&gt;
+  &lt;/item&gt;
+&lt;/suggest&gt;
+&lt;/IntelliSense&gt;
+</div><div class="last-modified" data-skip-index="skip">Last modified: 29 November 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="Apply-Command-to-an-Issue.html">Apply Command to an Issue</a><a class="navigation-links__next" href="Attach-File-to-an-Issue.html">Attach File to an Issue</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="//resources.jetbrains.com/storage/help-app/v3/app.js"></script></body></html>

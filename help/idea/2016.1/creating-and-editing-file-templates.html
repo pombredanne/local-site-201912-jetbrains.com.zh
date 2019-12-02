@@ -1,0 +1,128 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"></meta><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><title>IntelliJ IDEA 2016.1 Help :: Creating and Editing File Templates</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="procedures.createfiletemplates"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.1 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWindow</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="parse-directive.html">#Parse Directive</a><a class="navigation-links__next" href="live-templates.html">Live Templates</a></div><h1>Creating and Editing File Templates</h1><a name="d1548976e5"></a><p>IntelliJ IDEA supports several ways of creating <a name="d1548976e7"></a><a href="file-and-code-templates.html"><span>file templates</span></a>:</p><ul><li class="list__item"><a href="#d1548976e15">Creating a file template from scratch</a></li><li class="list__item"><a href="#d1548976e88">Creating a file template from an existing one</a></li><li class="list__item"><a href="#d1548976e112">Creating a file template from a file</a></li><li class="list__item"><a href="#d1548976e138">Creating and referencing include templates</a></li></ul><a name="scratch"></a><a name="d1548976e15"></a><a name="dynaProc0"></a><section class="procedure-steps"><h2>Creating a file template from scratch</h2><ol class=".list _decimal"><li class="list__item">
+          <a name="d1548976e19"></a><a href="accessing-settings.html"><span>Open Settings/Preferences dialog</span></a>
+          and under the Editor node, select <a name="d1548976e24"></a><a href="file-and-code-templates-2.html"><span>File and Code Templates page</span></a>.
+      </li><li class="list__item">
+          Switch to the
+          <a name="d1548976e30"></a><span class="control">Files</span> tab.
+      </li><li class="list__item">
+                Click <img alt="add.png" width="12" height="12" title="add.png" src="/help/img/idea/2016.1/new.png" class="inline-icon-12"> on the toolbar and specify the template name,
+                file extension, and the body of the template, which can contain:
+                <ol class="list _decimal"><li class="list__item"><a name="d1548976e40"></a>Plain text.</li><li class="list__item"><a name="d1548976e43"></a><code class="code" data-lang="Java">#parse</code> directives to work with <a name="d1548976e47"></a><a href="#inc"><span>includes</span></a>.</li><li class="list__item"><a name="d1548976e51"></a>Predefined variables to be expanded into corresponding values in the format <code class="code" data-lang="Java">${&lt;variable_name&gt;}</code>.
+                           
+                        <a name="d915169e45"></a><p>The available predefined file template variables are:</p>
+
+                         
+                        <ul class="list _bullet"><li class="list__item"><a name="d915169e52"></a>
+            <code class="code" data-lang="Java">${PACKAGE_NAME}</code> - the name of the target package where the new class or
+                            interface will be created.</li><li class="list__item"><a name="d915169e58"></a>
+            <a name="project_name"></a>
+            <code class="code" data-lang="Java">${PROJECT_NAME}</code> - the name of the current project.</li><li class="list__item"><a name="d915169e66"></a>
+            <code class="code" data-lang="Java">${FILE_NAME}</code> - the name of the PHP file that will be created.</li><li class="list__item"><a name="d915169e72"></a>
+            <code class="code" data-lang="Java">${NAME}</code> - the name of the new file which you specify in the <a name="d915169e77"></a><span class="control">New File</span> dialog box during the file creation.</li><li class="list__item"><a name="d915169e81"></a>
+            <code class="code" data-lang="Java">${USER}</code> - the login name of the current user.</li><li class="list__item"><a name="d915169e88"></a>
+            <code class="code" data-lang="Java">${DATE}</code> - the current system date.</li><li class="list__item"><a name="d915169e94"></a>
+            <code class="code" data-lang="Java">${TIME}</code> - the current system time.</li><li class="list__item"><a name="d915169e100"></a>
+            <code class="code" data-lang="Java">${YEAR}</code> - the current year.</li><li class="list__item"><a name="d915169e106"></a>
+            <code class="code" data-lang="Java">${MONTH}</code> - the current month.</li><li class="list__item"><a name="d915169e112"></a>
+            <code class="code" data-lang="Java">${DAY}</code> - the current day of the month.</li><li class="list__item"><a name="d915169e118"></a>
+            <code class="code" data-lang="Java">${HOUR}</code> - the current hour.</li><li class="list__item"><a name="d915169e125"></a>
+            <code class="code" data-lang="Java">${MINUTE}</code> - the current minute.</li><li class="list__item"><a name="d915169e131"></a>
+            <code class="code" data-lang="Java">${PRODUCT_NAME}</code> - the name of the IDE in which the file will be created.</li><li class="list__item"><a name="d915169e137"></a>
+            <a name="new_vars"></a>
+                                <code class="code" data-lang="Java">${MONTH_NAME_SHORT}</code> - the first 3 letters of the month name. Example: Jan, Feb, etc.</li><li class="list__item"><a name="d915169e145"></a>
+            <code class="code" data-lang="Java">${MONTH_NAME_FULL}</code> - full name of a month. Example: January, February, etc.</li></ul>
+                         
+                            <a name="d915169e233"></a><p>
+                                IntelliJ IDEA provides a set of additional variables for <a name="d915169e235"></a><a href="file-and-code-templates-2.html#tabsIncludes"><span>PHP include templates</span></a>, that is,
+                                templates of reusable fragments that can be included in other <a name="d915169e238"></a><span class="emphasis">PHP file template</span>.
+                                The built-in <a name="d915169e241"></a><span class="emphasis">PHP include templates</span> are intended for generating file headers and
+                                <a name="d915169e244"></a><a href="creating-php-documentation-comments.html"><span>PHPDoc documentation comments</span></a>.
+                                The following variables are available in <a name="d915169e247"></a><span class="emphasis">PHP include templates</span>:
+                            </p>
+                            <ul class="list _bullet"><li class="list__item"><a name="d915169e253"></a>
+                                    <code class="code" data-lang="Java">${NAME}</code> - the name of the class, field, or function (method) for which the PHPDoc comment will be generated.
+                                </li><li class="list__item"><a name="d915169e259"></a>
+                                    <code class="code" data-lang="Java">${NAMESPACE}</code> - the fully qualified name (without a leading slash) of the class or field namespace.
+                                </li><li class="list__item"><a name="d915169e265"></a>
+                                    <code class="code" data-lang="Java">${CLASS_NAME}</code> - the name of the class where the field to generate the PHPDoc comment for is defined.
+                                </li><li class="list__item"><a name="d915169e271"></a>
+                                    <code class="code" data-lang="Java">${STATIC}</code> - gets the value <code class="code" data-lang="Java">static</code> if the function (method) or field to generate the comment for is <code class="code" data-lang="Java">static</code>.
+                                    Otherwise evaluates to an <code class="code" data-lang="Java">empty string</code>.
+                                </li><li class="list__item"><a name="d915169e286"></a>
+                                    <code class="code" data-lang="Java">${TYPE_HINT}</code> - a prompt for the <code class="code" data-lang="Java">return</code> value of the function (method) to generate the comment for. If the return type cannot be detected
+                                    through the static analysis of the function (method), evaluates to <code class="code" data-lang="Java">void</code>.
+                                </li><li class="list__item"><a name="d915169e299"></a>
+                                    <code class="code" data-lang="Java">${PARAM_DOC}</code> - - a documentation comment for parameters. Evaluates to a set of lines <code class="code" data-lang="Java">@param type name</code>.
+                                    If the function to generate comments for does not contain any parameters, the variable evaluates to empty content.
+                                </li><li class="list__item"><a name="d915169e308"></a>
+                                    <code class="code" data-lang="Java">${THROWS_DOC}</code> - a documentation comment for exceptions. Evaluates to a set of lines <code class="code" data-lang="Java">@throws type</code>.
+                                    If the function to generate comments for does not throw any exceptions, the variable evaluates to empty content.
+                                </li><li class="list__item"><a name="d915169e317"></a>
+                                    <code class="code" data-lang="Java">${DS}</code> - a dollar character (<code class="code" data-lang="Java">$</code>). The variable evaluates to a plain dollar character (<code class="code" data-lang="Java">$</code>) and is used when you need to escape this symbol
+                                    so it is not treated as a prefix of a variable.
+                                </li><li class="list__item"><a name="d915169e329"></a>
+                                    <code class="code" data-lang="Java">${CARET}</code> - indicated the position of the caret after generating and adding the comment.
+
+                                        <a name="d915169e334"></a><p>
+                                            This <code class="code" data-lang="Java">${CARET}</code> variable is applied only when a PHPDoc comment is generated and inserted during file creation.
+                                            When a PHPDoc comment is created through <a name="d915169e339"></a><span class="menupath">Code | Generate | PHPDoc block</span>,
+                                            multiple selection of functions or methods is available so documentation comments can be created to several classes, functions, methods, or fields.
+                                            As a result, IntelliJ IDEA cannot "choose" the block to apply the <code class="code" data-lang="Java">${CARET}</code> variable in, therefore in this case the <code class="code" data-lang="Java">${CARET}</code> variable is ignored.
+                                        </p>
+
+                                </li></ul>
+                         
+                     
+                    </li><li class="list__item"><a name="d1548976e59"></a>Custom variables. Their names can be defined right in the template through the <code class="code" data-lang="Java">#set</code>
+                        directive or will be defined during the file creation.</li></ol>
+      </li><li class="list__item">To have the dollar character (<code class="code" data-lang="Java">$</code>) in a variable rendered "as is", use the <code class="code" data-lang="Java">${DS}</code>
+          variable instead. This variable evaluates to a plain dollar character (<code class="code" data-lang="Java">$</code>).</li><li class="list__item">Apply the changes and close the dialog box.</li></ol></section><a name="copy"></a><a name="d1548976e88"></a><a name="dynaProc1"></a><section class="procedure-steps"><h2>Creating a file template from an existing one</h2><ol class=".list _decimal"><li class="list__item">Open the<a name="d1548976e92"></a><a href="file-and-code-templates-2.html"><span>File Templates</span></a> settings page and switch to the <a name="d1548976e95"></a><span class="control">Files</span> tab.</li><li class="list__item">Click <img alt="copy" width="14" height="16" title="copy" src="/help/img/idea/2016.1/copy.gif" class="inline-icon-16"> on the toolbar and change the template name,
+          extension, and source code as required.</li><li class="list__item">Apply the changes and close the dialog box.</li></ol></section><a name="file"></a><a name="d1548976e112"></a><a name="dynaProc2"></a><section class="procedure-steps"><h2>Creating a file template from a file</h2><ol class=".list _decimal"><li class="list__item">Open the desired file in the editor.</li><li class="list__item">On the main menu, choose <a name="d1548976e119"></a><span class="menupath">Tools | Save File as Template</span>.</li><li class="list__item">In the <a name="d1548976e125"></a><a href="file-and-code-templates-2.html"><span>File and Code Templates</span></a>
+            dialog box that opens specify the new template name and edit
+            the source code, if necessary.</li><li class="list__item">Apply the changes and close the dialog box.</li></ol></section><a name="inc"></a><a name="d1548976e138"></a><a name="dynaProc3"></a><section class="procedure-steps"><h2>Creating and referencing include templates</h2><p>
+            <a name="d1548976e142"></a><p>Include templates are used to define reusable pieces of code to be inserted in file templates through
+                <code class="code" data-lang="Java">#parse</code> directives.
+                 
+            </p>
+        </p><ol class=".list _decimal"><li class="list__item">
+          In the <a name="d1548976e160"></a><a href="file-and-code-templates-2.html"><span>File and Code Templates</span></a> settings page,
+          switch to the <a name="d1548976e163"></a><span class="control">Includes</span> tab.
+      </li><li class="list__item">
+          Click <img alt="add.png" width="12" height="12" title="add.png" src="/help/img/idea/2016.1/new.png" class="inline-icon-12"> on the toolbar and specify the template name,
+          extension, and the source code. Do one of the following:
+          <ul class="list _bullet"><li class="list__item"><a name="d1548976e173"></a>
+                  Use the
+                  <a name="d1548976e175"></a><a href="file-template-variables.html#predefined_template_variables"><span>predefined file template variables</span></a>.
+              </li><li class="list__item"><a name="d1548976e179"></a>
+                  Create custom template variables and define their values right in the include template using the
+                  <code class="code" data-lang="Java">#set</code> VTL directive.
+                  <a name="d1548976e184"></a><p>
+                      For example, if you want to your full name inserted in the file header instead of your
+                      login name defined through the <code class="code" data-lang="Java">${USER}</code>, write the following construct:
+                  <a name="d1548976e189"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+#set( $MyName = "John Smith" )
+                  </code></div>
+                  </p>
+                  <a name="d1548976e193"></a><p>
+                      If, when applying a template, the values of certain template variable are not known,
+                      IntelliJ IDEA will ask you to specify them.
+                  </p>
+              </li></ul>
+          <a name="d1548976e198"></a><p>
+               
+              You can prevent treating dollar characters (<code class="code" data-lang="Java">$</code>) in template variables as prefixes. If you need a dollar character (<code class="code" data-lang="Java">$</code> inserted as is,
+              use the <code class="code" data-lang="Java">${DS}</code> file template variable instead. When the template is applied, this variable evaluates to a plain dollar character (<code class="code" data-lang="Java">$</code>).
+               
+          </p>
+      </li><li class="list__item">To use the include template, switch to the
+          <a name="d1548976e219"></a><span class="control">Templates</span> tab, select the desired template and click
+          <a name="d1548976e222"></a><span class="control">Edit</span>.
+      </li><li class="list__item">To include a template, insert the
+          <a name="d1548976e228"></a><a href="parse-directive.html"><span>#parse directive</span></a> in the source code.</li></ol></section><div class="navigation-links _bottom"><a class="navigation-links__prev" href="parse-directive.html">#Parse Directive</a><a class="navigation-links__next" href="live-templates.html">Live Templates</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content"><div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d1548976e246"></a><a href="creating-template-based-files.html"><span>Creating Template-based Files</span></a></li></ul></div><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d1548976e253"></a><a href="file-and-code-templates-2.html"><span>File and Code Templates</span></a></li></ul></div><div class="seealso__col"><h3>Concepts:</h3><ul class="list"><li class="list__item"><a name="d1548976e239"></a><a href="file-and-code-templates.html"><span>File and Code Templates</span></a></li></ul></div></div></section><div class="last-modified">Last modified: 13 July 2016 </div></article><div id="disqus_thread"></div></div></section></main></div><script src="/help/app/app.js"></script></body></html>

@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+                                                    <!-- Error reporting -->
+<script>(function(){
+  window.reportError = function(msg, file, line, col, err, isUnhandledRejection){};
+  var prevOnError = window.onerror;
+  var onError = function(msg, file, line, col, err) {
+    reportError(msg, file, line, col, err, false);
+    prevOnError && prevOnError.apply(window, arguments);
+    return false;
+  };
+  window.onerror = onError;
+  // Setup reporting for unhandled Promise rejection errors
+  window.addEventListener("unhandledrejection", function(e) {
+    if (!e.reason) return;
+    var l = getSrcLocation(e.reason);
+    reportError(e.reason.message, l.file, l.line, l.col, e.reason, true);
+  });
+  // Setup reporting for console.error and console.warn calls
+  patchConsole('error');
+  patchConsole('warn');
+  // Utility functions
+  function patchConsole(fnName) {
+    var fn = console[fnName];
+    console[fnName] = function() {
+      fn.apply(console, arguments);
+      var l; try {
+        throw new Error('_');
+      } catch (err) {
+        l = getSrcLocation(err, 1);
+      }
+      var msg = 'console.' + fnName + ': ' + Array.prototype.join.call(arguments, ' ');
+      reportError(msg, l.file, l.line, l.col, undefined, false);
+    };
+  }
+  function getSrcLocation(err, sd) {
+    var s = err && err.stack;
+    var l = s && s.split("\n")[1 + (sd|0)];
+    var r = l && (/^\s*at [^(]*\((.*?):(\d+)(:\d+)?\)$/.exec(l) || /^\s*at (.*?):(\d+)(:\d+)?$/.exec(l));
+    return r ? {file: r[1], line: r[2], col: r[3]} : {};
+  }
+})();</script>
+<!-- Error reporting -->        <!-- Google Tag Manager -->
+<script>(function() {
+  // Initialize Tag Manager queue
+  window.dataLayer = window.dataLayer || [];
+  window.gtmLoaded = false;
+  // Setup reporting for errors that occurred before Tag Manager initialized
+  var prevReportError = window.reportError;
+  var reportError = function(msg, file, line, col, err, isUnhandledRejection) {
+    if (!window.gtmLoaded || isUnhandledRejection) {
+      // Reproduce the behavior of the Tag Manager error handler
+      window.dataLayer.push(makeEvt(msg, file, line));
+    }
+    prevReportError && prevReportError.apply(window, arguments);
+  };
+  window.reportError = reportError;
+  // Utility functions
+  function makeEvt(msg, file, line) {
+    return {
+      event: "gtm.pageError", "gtm.errorMessage": msg,
+      "gtm.errorUrl": file, "gtm.errorLineNumber": line
+    };
+  }
+})();</script>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;j.addEventListener(
+    'load', function(){window.gtmLoaded=true});f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5P98');</script>
+<!-- End Google Tag Manager -->        <!-- Sentry -->
+<script>
+    (function() {
+        window.sentryLoaded = false;
+        window.errorsForSentry = [];
+        var prevReportError = window.reportError;
+        var reportError = function(
+            msg,
+            file,
+            line,
+            col,
+            err,
+            isUnhandledRejection
+        ) {
+            if (!window.sentryLoaded) {
+                window.errorsForSentry.push(err);
+            }
+            prevReportError && prevReportError.apply(window, arguments);
+        };
+        window.reportError = reportError;
+    })();
+</script>
+<script>
+    window.sentryLoad = function() {
+        window.sentryLoaded = true;
+        Sentry.init({
+            dsn: 'https://1adb2a61713144eda0786e5af50ddc51@sentry.io/1423069',
+            release:
+                "jetbrainscom@a6ccaa6ddb",
+            beforeSend: function(event) {
+                Object.keys(event).forEach(function(key) {
+                    var value = event[key];
+                    if (isEmail(value)) {
+                        delete event[key];
+                    }
+                });
+                return event;
+            }
+        });
+        Sentry.configureScope(function(scope) {
+            scope.setTag('page_locale', 'en-us');
+            scope.setTag('browser.locale', getPageLocale());
+
+            scope.setTag('http.urlFull', location.href);
+            var protocol = location.protocol || '';
+            //omit `:` from location.protocol string
+            var protocolString = protocol.substring(0, protocol.length - 1);
+
+            scope.setTag('http.protocol', protocolString);
+
+            scope.setTag('http.hostname', location.hostname);
+
+            var search = location.search || '';
+            //omit ? from location.search string
+            var searchString = search.substr(1);
+            if (searchString !== '') {
+                scope.setTag('http.query', searchString || '1');
+            }
+            var hash = location.hash || '';
+            //omit # from location.hash string
+            var hashString = hash.substr(1);
+            if (hashString !== '') {
+                scope.setTag('http.fragment', hashString);
+            }
+        });
+        window.errorsForSentry.forEach(Sentry.captureException);
+
+        function getPageLocale() {
+            return (
+                (navigator.languages && navigator.languages[0]) ||
+                navigator.language
+            );
+        }
+        function isEmail(value) {
+            var emailRegex = /[\+\-\_\.a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+\.[a-zA-Z0-9]+/g;
+            return emailRegex.test(value);
+        }
+    };
+</script>
+<script src="https://browser.sentry-cdn.com/5.7.1/bundle.min.js" crossorigin="anonymous" onload="sentryLoad()" async></script>
+<!-- End Sentry -->    
+                <title>Python Developers Survey 2017 - Results</title>
+    
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, maximum-scale=1">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#000000">
+<meta name="apple-mobile-web-app-title" content="JetBrains">
+<meta name="application-name" content="JetBrains">
+<meta name="msapplication-TileColor" content="#000000">
+<meta name="theme-color" content="#000000">    <link rel="canonical" href="https://www.jetbrains.com/research/python-developers-survey-2017/" />    <!-- .61-->
+        <meta class="local" content="At the very end of 2017, the Python Software Foundation together with JetBrains conducted an official Python Developers Survey. We set out to identify the latest trends and gather insight into how the Python development world looks today. Over 9,500 developers from almost 150 different countries participated to help us map out an accurate landscape of the Python community." name="description"><meta class="local" content="http://resources.jetbrains.com/storage/products/research/img/meta/python-developers-survey-2017/python-developers-survey-2017.png" name="image">
+        <link rel="alternate" hreflang="x-default" href="https://www.jetbrains.com/research/python-developers-survey-2017/" />
+
+                        <link rel="alternate" hreflang="en" href="https://www.jetbrains.com/research/python-developers-survey-2017/" />
+                                                                                                                        
+    
+    
+        
+    <!-- Twitter Card data -->
+<meta content="summary_large_image" name="twitter:card">
+<meta content="@pycharm" name="twitter:site">
+<meta content="Python Developers Survey 2017 - Results" name="twitter:title">
+<meta content="At the very end of 2017, the Python Software Foundation together with JetBrains conducted an official Python Developers Survey. We set out to identify the latest trends and gather insight into how the Python development world looks today. Over 9,500 developers from almost 150 different countries participated to help us map out an accurate landscape of the Python community." name="twitter:description">
+<meta content="@pycharm" name="twitter:creator">
+<meta content="http://resources.jetbrains.com/storage/products/research/img/meta/python-developers-survey-2017/python-developers-survey-2017.png" name="twitter:image:src">
+<!--<meta name="twitter:label1" content="Python Frameworks and Technologies:">
+<meta name="twitter:data1" content="Django, NumPy, Requests, Flask, Keras, etc.">
+<meta name="twitter:label2" content="Python 3 vs Python 2:">
+<meta name="twitter:data2" content="75% use Python 3 as the main interpreter.">--><!-- End Twitter Card data -->
+<!-- Start Schema.org -->
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "WebPage",
+        "@id": "https://www.jetbrains.com/research/python-developers-survey-2017/#webpage",
+        "url": "https://www.jetbrains.com/research/python-developers-survey-2017/",
+        "name": "Python Developers Survey 2017 - Results",
+        "description": "At the very end of 2017, the Python Software Foundation together with JetBrains conducted an official Python Developers Survey. We set out to identify the latest trends and gather insight into how the Python development world looks today. Over 9,500 developers from almost 150 different countries participated to help us map out an accurate landscape of the Python community.",
+        "image": "http://resources.jetbrains.com/storage/products/research/img/meta/python-developers-survey-2017/python-developers-survey-2017.png"
+    }
+</script><!-- End Schema.org -->
+    
+    <script>
+        var current_lang = 'en-us';
+                                    var i18n_info = {"current_lang": "en-us", "languages": [{"canonical": "en", "code": "en-us", "label": "English", "page_translated": true, "url": "/research/python-developers-survey-2017/"}, {"canonical": "de", "code": "de-de", "label": "Deutsch", "page_translated": false, "url": "/de-de/research/python-developers-survey-2017/"}, {"canonical": "es", "code": "es-es", "label": "Espa\u00f1ol", "page_translated": false, "url": "/es-es/research/python-developers-survey-2017/"}, {"canonical": "fr", "code": "fr-fr", "label": "Fran\u00e7ais", "page_translated": false, "url": "/fr-fr/research/python-developers-survey-2017/"}, {"canonical": "ja", "code": "ja-jp", "label": "\u65e5\u672c\u8a9e", "page_translated": false, "url": "/ja-jp/research/python-developers-survey-2017/"}, {"canonical": "ko", "code": "ko-kr", "label": "\ud55c\uad6d\uc5b4", "page_translated": false, "url": "/ko-kr/research/python-developers-survey-2017/"}, {"canonical": "ru", "code": "ru-ru", "label": "\u0420\u0443\u0441\u0441\u043a\u0438\u0439", "page_translated": false, "url": "/ru-ru/research/python-developers-survey-2017/"}, {"canonical": "zh-CN", "code": "zh-cn", "label": "\u7b80\u4f53\u4e2d\u6587", "page_translated": false, "url": "/zh-cn/research/python-developers-survey-2017/"}, {"canonical": "pt-BR", "code": "pt-br", "label": "Portugu\u00eas do Brasil", "page_translated": false, "url": "/pt-br/research/python-developers-survey-2017/"}, {"canonical": "x-klingon", "code": "tl-aa", "label": "tlhIngan Hol", "page_translated": false, "url": "/tl-aa/research/python-developers-survey-2017/"}]};
+                            var navigationMenu = {"primary": {"id": "main_v2", "items": [{"id": "tools", "title": "Tools", "descriptionTitle": "Toolbox App", "descriptionLogoId": "toolbox", "descriptionLink": "Learn more", "descriptionUrl": "/toolbox-app/", "description": "Manage your tools the easy way", "src": "/img/banners-menu-main/toolbox-vertical.png", "horisontalSrc": "/img/banners-menu-main/toolbox-horisontal.png", "bgColor": "#3E0598", "isVisible": true, "hasCategories": true, "items": [{"title": "IDEs", "items": [{"isActive": false, "id": "appcode", "title": "AppCode", "url": "/objc/", "logoLeftActionId": "appcode", "items": [], "cleaned_url": "/objc/"}, {"isActive": false, "id": "clion", "title": "CLion", "url": "/clion/", "logoLeftActionId": "clion", "items": [], "cleaned_url": "/clion/"}, {"isActive": false, "id": "datalore", "title": "Datalore", "url": "https://datalore.io/", "isExternalLink": true, "logoLeftActionId": "datalore", "items": [], "cleaned_url": "https://datalore.io/"}, {"isActive": false, "id": "datagrip", "title": "DataGrip", "url": "/datagrip/", "logoLeftActionId": "datagrip", "items": [], "cleaned_url": "/datagrip/"}, {"isActive": false, "id": "goland", "title": "GoLand", "url": "/go/", "logoLeftActionId": "goland", "items": [], "cleaned_url": "/go/"}, {"isActive": false, "id": "idea", "title": "IntelliJ IDEA", "url": "/idea/", "logoLeftActionId": "intellij-idea", "items": [], "cleaned_url": "/idea/"}, {"isActive": false, "id": "phpstorm", "title": "PhpStorm", "url": "/phpstorm/", "logoLeftActionId": "phpstorm", "items": [], "cleaned_url": "/phpstorm/"}, {"isActive": false, "id": "pycharm", "title": "PyCharm", "url": "/pycharm/", "logoLeftActionId": "pycharm", "items": [], "cleaned_url": "/pycharm/"}, {"isActive": false, "id": "rider", "title": "Rider", "url": "/rider/", "logoLeftActionId": "rider", "items": [], "cleaned_url": "/rider/"}, {"isActive": false, "id": "rubymine", "title": "RubyMine", "url": "/ruby/", "logoLeftActionId": "rubymine", "items": [], "cleaned_url": "/ruby/"}, {"isActive": false, "id": "webstorm", "title": "WebStorm", "url": "/webstorm/", "logoLeftActionId": "webstorm", "items": [], "cleaned_url": "/webstorm/"}, {"isActive": false, "id": "toolbox", "type": "special", "title": "Toolbox App", "url": "/toolbox-app/", "logoLeftId": "toolbox", "description": "A control panel for your tools and projects", "items": [], "cleaned_url": "/toolbox-app/"}]}, {"title": ".NET & VISUAL STUDIO", "items": [{"isActive": false, "id": "resharper", "title": "ReSharper", "url": "/resharper/", "logoLeftActionId": "resharper", "items": [], "cleaned_url": "/resharper/"}, {"isActive": false, "id": "rider", "title": "Rider", "url": "/rider/", "logoLeftActionId": "rider", "items": [], "cleaned_url": "/rider/"}, {"isActive": false, "id": "resharper-cpp", "title": "ReSharper C++", "url": "/resharper-cpp/", "logoLeftActionId": "resharper-cpp", "items": [], "cleaned_url": "/resharper-cpp/"}, {"isActive": false, "id": "dotcover", "title": "dotCover", "url": "/dotcover/", "logoLeftActionId": "dotcover", "items": [], "cleaned_url": "/dotcover/"}, {"isActive": false, "id": "dotmemory", "title": "dotMemory", "url": "/dotmemory/", "logoLeftActionId": "dotmemory", "items": [], "cleaned_url": "/dotmemory/"}, {"isActive": false, "id": "dotpeek", "title": "dotPeek", "url": "/decompiler/", "logoLeftActionId": "dotpeek", "items": [], "cleaned_url": "/decompiler/"}, {"isActive": false, "id": "dottrace", "title": "dotTrace", "url": "/profiler/", "logoLeftActionId": "dottrace", "items": [], "cleaned_url": "/profiler/"}]}, {"title": "TEAM TOOLS", "items": [{"isActive": false, "id": "teamcity", "title": "TeamCity", "url": "/teamcity/", "logoLeftActionId": "teamcity", "items": [], "cleaned_url": "/teamcity/"}, {"isActive": false, "id": "upsource", "title": "Upsource", "url": "/upsource/", "logoLeftActionId": "upsource", "items": [], "cleaned_url": "/upsource/"}, {"isActive": false, "id": "youtrack", "title": "YouTrack", "url": "/youtrack/", "logoLeftActionId": "youtrack", "items": [], "cleaned_url": "/youtrack/"}, {"isActive": false, "id": "hub", "title": "Hub", "url": "/hub/", "logoLeftActionId": "hub", "items": [], "cleaned_url": "/hub/"}]}, {"title": "PLUGIN MARKETPLACE", "items": [{"isActive": false, "id": "bigdata", "title": "Big Data Tools", "url": "https://plugins.jetbrains.com/plugin/12494-big-data-tools", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/plugin/12494-big-data-tools"}, {"isActive": false, "id": "rustsupport", "title": "Rust", "url": "https://plugins.jetbrains.com/plugin/8182-rust", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/plugin/8182-rust"}, {"isActive": false, "id": "scalaplugin", "title": "Scala", "url": "https://plugins.jetbrains.com/plugin/1347-scala", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/plugin/1347-scala"}, {"isActive": false, "id": "idethemes", "title": "IDE Themes", "url": "https://plugins.jetbrains.com/search?tags=Theme", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/search?tags=Theme"}, {"isActive": false, "id": "plugins", "title": "All Plugins", "url": "https://plugins.jetbrains.com/", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/"}]}, {"title": "EDUCATION", "items": [{"isActive": false, "id": "pycharm-edu", "title": "PyCharm Edu", "url": "/education/", "urlHash": "#lang=python&role=learner", "logoLeftActionId": "pycharm-edu", "items": [], "cleaned_url": "/education/"}, {"isActive": false, "id": "idea-edu", "title": "IntelliJ IDEA Edu", "url": "/education/", "urlHash": "#lang=java&role=learner", "logoLeftActionId": "intellij-idea", "items": [], "cleaned_url": "/education/"}, {"isActive": false, "id": "jb-academy", "title": "JB Academy", "url": "/academy/", "items": [], "cleaned_url": "/academy/"}]}]}, {"id": "languages", "title": "Languages", "descriptionTitle": "Kotlin/Everywhere", "descriptionLogoId": "header-kotlin-everywhere", "descriptionLink": "Join in!", "descriptionUrl": "//everywhere.kotlinlang.org", "description": "A worldwide event series for learning the best Kotlin practices on all platforms", "descriptionBig": true, "src": "/img/banners-menu-main/kotlin-vertical.png", "horisontalSrc": "/img/banners-menu-main/kotlin-horisontal.png", "bgColor": "#D6721C", "isExternalLink": true, "isVisible": true, "hasCategories": false, "items": [{"isActive": false, "id": "kotlin", "title": "Kotlin", "url": "https://kotlinlang.org/", "isExternalLink": true, "logoLeftId": "header-kotlin-grayscale", "logoLeftActionId": "kotlin", "logoLeftSize": "50", "description": "Programming language \n for JVM & Android", "items": [], "cleaned_url": "https://kotlinlang.org/"}, {"isActive": false, "id": "mps", "title": "MPS", "url": "/mps/", "logoLeftId": "header-mps-grayscalse", "logoLeftActionId": "mps", "logoLeftSize": "50", "description": "Create your own domain-specific language", "items": [], "cleaned_url": "/mps/"}]}, {"id": "solutions", "title": "Solutions", "descriptionTitle": "JetBrains Academy", "descriptionLogoId": "academy-logo", "descriptionLink": "Join in!", "descriptionUrl": "/academy", "description": "An educational platform for future professionals", "src": "/img/banners-menu-main/academy-vertical.png", "horisontalSrc": "/img/banners-menu-main/academy-horisontal.png", "bgColor": "#53288E", "hasCategories": false, "isVisible": true, "items": [{"isActive": false, "title": "C++ Tools", "url": "/cpp/", "logoLeftId": "header-cpp-grayscale", "logoLeftActionId": "header-cpp", "description": "Tools for C/C++ development \nfor any platform", "items": [], "cleaned_url": "/cpp/"}, {"isActive": false, "title": "For Business", "url": "/store/business/", "logoLeftId": "header-for-business-grayscale", "logoLeftActionId": "header-for-business", "description": "Wide range of tools. \nAll major technologies covered", "items": [], "cleaned_url": "/store/business/"}, {"isActive": false, "title": "Game Development", "url": "/gamedev/", "logoLeftId": "header-gamedev-grayscale", "logoLeftActionId": "header-gamedev", "description": "Tools for game development \nfor any platform", "items": [], "cleaned_url": "/gamedev/"}, {"isActive": false, "title": "DevOps", "url": "/devops/", "logoLeftId": "header-devops-grayscale", "logoLeftActionId": "header-devops", "description": "Tools and integrations \nfor any infrastructure", "items": [], "cleaned_url": "/devops/"}, {"isActive": false, "title": "Education", "url": "/education/", "logoLeftId": "header-education-grayscale", "logoLeftActionId": "header-education", "description": "Products to learn and teach programming", "items": [], "cleaned_url": "/education/"}]}, {"id": "support", "title": "Support", "description": "Pricing and licensing for businesses and individuals", "descriptionTitle": "JetBrains Store", "descriptionLogoId": "header-store", "descriptionUrl": "/store/?fromMenu#edition=commercial", "descriptionLink": "visit store", "isVisible": true, "hasCategories": true, "items": [{"title": "CUSTOMERS", "items": [{"isActive": false, "title": "Sales Support", "url": "/support/sales/", "description": "Orders, payments", "items": [], "cleaned_url": "/support/sales/"}, {"isActive": false, "title": "Product Support", "url": "/support/", "description": "Tech support, documentation", "items": [], "cleaned_url": "/support/"}]}, {"title": "COMMUNITY PROGRAMS", "items": [{"isActive": false, "title": "Education", "url": "/community/education/", "description": "Students, classrooms, training", "items": [], "cleaned_url": "/community/education/"}, {"isActive": false, "title": "Open Source", "url": "/community/opensource/", "description": "Projects support", "items": [], "cleaned_url": "/community/opensource/"}, {"isActive": false, "title": "Sponsorship", "url": "/community/support/", "description": "User groups, events, technology experts", "items": [], "cleaned_url": "/community/support/"}]}]}, {"id": "company", "title": "Company", "isVisible": true, "hasCategories": true, "items": [{"title": "INITIATIVES", "items": [{"isActive": false, "title": "Open Source", "url": "/opensource/", "description": "Projects, contributions", "items": [], "cleaned_url": "/opensource/"}, {"isActive": false, "title": "Research", "url": "/research/", "description": "Market, Scientific", "items": [], "cleaned_url": "/research/"}]}, {"title": "COMPANY", "items": [{"isActive": false, "title": "About", "url": "/company/", "description": "People, customers, awards", "items": [], "cleaned_url": "/company/"}, {"isActive": false, "title": "Brand Assets", "url": "/company/brand/", "description": "Guidelines, logos", "items": [], "cleaned_url": "/company/brand/"}, {"isActive": false, "title": "Careers", "url": "/careers/apply/", "description": "Jobs, internships", "items": [], "cleaned_url": "/careers/apply/"}, {"isActive": false, "title": "Events", "url": "/company/events/", "description": "Conferences, meetups", "items": [], "cleaned_url": "/company/events/"}, {"isActive": false, "title": "Contacts", "url": "/company/contacts/", "description": "Partners, resellers, Kotlin training", "items": [], "cleaned_url": "/company/contacts/"}]}, {"title": "RESOURCES", "items": [{"isActive": false, "title": "Newsletters", "url": "/resources/newsletters/", "items": [], "cleaned_url": "/resources/newsletters/"}, {"isActive": false, "title": "Webinars", "url": "/resources/webinars/", "items": [], "cleaned_url": "/resources/webinars/"}, {"isActive": false, "title": "Early Access", "url": "/resources/eap/", "items": [], "cleaned_url": "/resources/eap/"}, {"isActive": false, "title": "Blog", "url": "//blog.jetbrains.com/", "isExternalLink": true, "items": [], "cleaned_url": "//blog.jetbrains.com/"}]}]}, {"isActive": false, "id": "store", "url": "/store/?fromNavMenu", "title": "Store", "isVisible": true, "hasCategories": false, "items": [], "cleaned_url": "/store/?fromNavMenu"}]}, "secondary": {"isActive": true, "id": "research", "url": "/research/", "title": "Research", "items": [], "cleaned_url": "/research/"}};
+        
+        var is_layout_adaptive = false;
+        
+        var disable_language_picker = false;
+        
+        var english_only_url_prefixes = [];
+            </script>
+    
+            <script></script>
+    
+        
+    
+    <link href="/_assets/common.d44d81f300d3bff87efe.css" rel="stylesheet" type="text/css">
+<link href="/_assets/default-page.fabf52db4bf34ea78af0.css" rel="stylesheet" type="text/css">
+<link href="/_assets/landing-page.8b6edb42023719387891.css" rel="stylesheet" type="text/css">
+<link href="/_assets/research/python-developers-survey-2017/index.entry.90e61e7ec4262cfd27d3.css" rel="stylesheet" type="text/css">
+    <script src="/_assets/common.34604685b633d15ae3ed.js" type="text/javascript"></script>
+<script src="/_assets/default-page.2e180fc15a6b94fe7fa3.js" type="text/javascript"></script>
+<script src="/_assets/landing-page.82c83c95d1b792922f23.js" type="text/javascript"></script>
+<script src="/_assets/research/python-developers-survey-2017/index.entry.03116abef6fb7a13a969.js" type="text/javascript"></script>
+
+            <!-- Social Media tag Starts -->
+    <!-- Open Graph data -->
+            <meta property="og:title" content="Python Developers Survey 2017 - Results"/>
+    
+                    <meta property="og:description" content="At the very end of 2017, the Python Software Foundation together with JetBrains conducted an official Python Developers Survey. We set out to identify the latest trends and gather insight into how the Python development world looks today. Over 9,500 developers from almost 150 different countries participated to help us map out an accurate landscape of the Python community."/>
+    <meta property="og:image" content="http://resources.jetbrains.com/storage/products/research/img/meta/python-developers-survey-2017/python-developers-survey-2017.png"/>
+
+    <meta property="og:site_name" content="JetBrains"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="https://www.jetbrains.com/research/python-developers-survey-2017/"/>
+    <!-- Social Media tag Ends -->
+</head>
+<body class="landing-page  ">
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<div class="page">
+    <header class="page__header landing-header">
+    <div class="wt-container">
+      <a href="/"><svg class="_jetbrains-simple sprite-img landing-header__logo" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#jetbrains-simple"></use></svg></a>
+    </div>
+</header>
+
+    <div class="page__content">
+        <section class="section-content _header">
+<div class="wt-container article-content">
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-8 margin-top-vertical-unit">
+<img src="/research/python-developers-survey-2017/img/python-logo-inkscape.svg">
+</div>
+</div>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<h1 class="_extra-big">Python Developers Survey 2017 Results</h1>
+<p class="sub-title">At the very end of 2017, the Python Software Foundation together with JetBrains conducted an official Python Developers Survey. We set out to identify the latest trends and gather insight into how the Python development world looks today. Over 9,500 developers from almost 150 different countries participated to help us map out an accurate landscape of the Python community.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="wt-section wt-section_bg_gray-light _to-2018">
+<div class="wt-container">
+<p class="wt-text-2 wt-offset-top-24">Check out the
+                <a class="link-to-2018 wt-text-2" href="/research/python-developers-survey-2018">Python Developers Survey 2018 Results</a>.
+            </p>
+</div>
+</section>
+<section class="section-content _bg-extra-dark">
+<div class="wt-container article-content">
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-8">
+<h2 class="_color-light" title="General Python Usage">General Python Usage</h2>
+<h3 class="_color-light margin-bottom-vertical-unit">Python as Main vs Secondary Language</h3>
+</div>
+</div>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-4 mini-pie-group">
+<div class="js-usage-chart-main mini-pie-chart _active"></div>
+<div class="js-usage-chart-secondary mini-pie-chart"></div>
+</div>
+<div class="wt-col-4 wt-offset-left-2">
+<div class="js-quick-share _hanging" data-section="general-python-usage" data-text="Did you know 4 out of 5 Python developers use it as their main language?"></div>
+<p class="sub-title">Almost 4 out of 5 Python developers use it as their main language, while for 21% it’s only a secondary language.</p>
+<div class="quote features-block">
+<p><strong>Interesting fact</strong></p>
+<p>This statistic is up 4% from 75% in 2016, when JetBrains conducted a <a href="/pycharm/python-developers-survey-2016/">similar survey</a>.</p>
+</div>
+</div>
+</div>
+<h3 class="_color-light margin-bottom-vertical-unit">Python Usage with Other Languages</h3>
+<div class="js-diagram-switcher-general margin-bottom-vertical-unit-half">
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-4 _nowrap diagram-switcher">
+<div class="switcher-link text-nowrap diagram-switcher__link" data-switcher-content="main-general"><span>Python is main</span></div>
+<div class="switcher-link text-nowrap diagram-switcher__link" data-switcher-content="secondary-general"><span>Python is secondary</span></div>
+<div class="switcher-link text-nowrap diagram-switcher__link" data-switcher-content="all-general"><span>Combined</span></div>
+</div>
+</div>
+<div class="switcher-content" data-id="main-general">
+<div class="js-placeholder" data-key="main_general"></div>
+<div class="collapse js-collapse-key">
+<div class="collapse__header">
+<div class="collapse__button">
+                                See all the results
+                            </div>
+</div>
+<div>
+<div class="margin-bottom-vertical-unit-half">
+<div class="js-placeholder" data-key="main_general_all"></div>
+</div>
+<div class="wt-row wt-row_size_m features-block">
+<div class="wt-col-4">
+<p>We couldn’t list all existing languages, but respondents had the option to choose “Other” and type in something. This answer option collected 10% of all responses, with the top “other” languages being Matlab, Lua, Fortran, Powershell, Elixir, and Haskell.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="switcher-content" data-id="secondary-general">
+<div class="js-placeholder" data-key="secondary_general"></div>
+<div class="collapse js-collapse-key">
+<div class="collapse__header">
+<div class="collapse__button">
+                                See all the results
+                            </div>
+</div>
+<div>
+<div class="margin-bottom-vertical-unit-half">
+<div class="js-placeholder" data-key="secondary_general_all"></div>
+</div>
+<div class="wt-row wt-row_size_m features-block">
+<div class="wt-col-4">
+<p>We couldn’t list all existing languages, but respondents had the option to choose “Other” and type in something. This answer option collected 10% of all responses, with the top “other” languages being Matlab, Lua, Fortran, Powershell, Elixir, and Haskell.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="switcher-content" data-id="all-general">
+<div class="js-placeholder" data-key="all_general"></div>
+<div class="collapse js-collapse-key">
+<div class="collapse__header">
+<div class="collapse__button">
+                                See all the results
+                            </div>
+</div>
+<div>
+<div class="margin-bottom-vertical-unit-half">
+<div class="js-placeholder" data-key="all_general_all"></div>
+</div>
+<div class="wt-row wt-row_size_m features-block">
+<div class="wt-col-4">
+<p>We couldn’t list all existing languages, but respondents had the option to choose “Other” and type in something. This answer option collected 10% of all responses, with the top “other” languages being Matlab, Lua, Fortran, Powershell, Elixir, and Haskell.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-4">
+<p class="sub-title no-margin-bottom">Half of all developers using Python as their main language also use JavaScript.</p>
+<div class="js-quick-share margin-top-vertical-unit-half" data-section="general-python-usage" data-text="Wow, half of all developers using Python as their main language also use JavaScript!"></div>
+</div>
+<div class="wt-col-6">
+<p>JavaScript is used by 79% of web developers, but only by 39% of those primarily involved in data analysis or machine learning. See the next section for insights into types of development.</p>
+<p>The breakdown of languages is slightly different for those who use Python as their secondary
+                        language, with a little fewer developers using JavaScript (46%) but far more also using C/C++
+                        (42%), Java (41%), and C# (24%).</p>
+</div>
+</div>
+</div>
+</section>
+<section class="section-content">
+<div class="wt-container article-content">
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<h2 title="Types of Development">Types of Python Development</h2>
+<p class="margin-bottom-vertical-unit">To identify the most popular types of Python development (a.k.a. developer roles) and how they are combined, we asked two similar but different questions: “What do you use Python for?” with multiple answers, followed by a single-answer “What do you use Python for the most?”.</p>
+<h3 class="margin-bottom-vertical-unit">What do you use Python for? (multiple answers)</h3>
+</div>
+</div>
+<div class="js-diagram-switcher-development-multi features-block">
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-4 _nowrap diagram-switcher">
+<div class="switcher-link text-nowrap diagram-switcher__link" data-switcher-content="combined-development"><span>Combined</span></div>
+<div class="switcher-link text-nowrap diagram-switcher__link" data-switcher-content="main-development"><span>Python is main</span></div>
+<div class="switcher-link text-nowrap diagram-switcher__link" data-switcher-content="secondary-development"><span>Python is secondary</span></div>
+</div>
+</div>
+<div class="switcher-content" data-id="combined-development">
+<div class="js-placeholder" data-key="combined_development"></div>
+<div class="collapse js-collapse-key">
+<div class="collapse__header">
+<div class="collapse__button">
+                                See all the results
+                            </div>
+</div>
+<div>
+<div class="js-placeholder" data-key="combined_development_all"></div>
+</div>
+</div>
+</div>
+<div class="switcher-content" data-id="main-development">
+<div class="js-placeholder" data-key="main_development"></div>
+<div class="collapse js-collapse-key">
+<div class="collapse__header">
+<div class="collapse__button">
+                                See all the results
+                            </div>
+</div>
+<div>
+<div class="js-placeholder" data-key="main_development_all"></div>
+</div>
+</div>
+</div>
+<div class="switcher-content" data-id="secondary-development">
+<div class="js-placeholder" data-key="secondary_development"></div>
+<div class="collapse js-collapse-key">
+<div class="collapse__header">
+<div class="collapse__button">
+                                See all the results
+                            </div>
+</div>
+<div>
+<div class="js-placeholder" data-key="secondary_development_all"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m features-block">
+<div class="wt-col-4">
+<p class="sub-title">Data analysis is as popular as web development with Python.</p>
+<p>Web development is the only category with a large gap (54% vs 33%) separating those using Python as their main language vs as a supplementary language. For other types of development, the differences are far less significant.</p>
+</div>
+<div class="wt-col-4">
+<div class="quote">
+<p><strong>Interesting fact</strong></p>
+<p>Various studies show that the number of Python developers is growing steadily year by year. The rapid growth of Python popularity can be explained by the fact that many people are starting to use Python for data science and machine learning. This is the fastest-growing segment of Python users.</p>
+</div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m features-block">
+<div class="wt-col-4">
+<p class="margin-bottom-vertical-unit-half">Many Python developers wear multiple hats. We’ve identified the roles that they combine most often (not necessarily as their main ones):</p>
+</div>
+<div class="wt-col-10">
+<div class="js-placeholder" data-key="multi_choice"></div>
+</div>
+<div class="wt-col-4">
+<p class="margin-top-vertical-unit-half">The intersection of data analysis and machine learning was expected, but the overlaps between web development and data analysis / machine learning are definitely noteworthy.</p>
+</div>
+</div>
+<h3 class="margin-bottom-vertical-unit">What do you use Python for the most? (single answer)</h3>
+<div class="js-diagram-switcher-development-single features-block">
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-4 _nowrap diagram-switcher">
+<div class="switcher-link text-nowrap diagram-switcher__link" data-switcher-content="all-single"><span>Combined</span></div>
+<div class="switcher-link text-nowrap diagram-switcher__link" data-switcher-content="main-single"><span>Python is main</span></div>
+<div class="switcher-link text-nowrap diagram-switcher__link" data-switcher-content="secondary-single"><span>Python is secondary</span></div>
+</div>
+</div>
+<div class="switcher-content" data-id="all-single">
+<div class="js-placeholder" data-key="all_single"></div>
+<div class="collapse js-collapse-key">
+<div class="collapse__header">
+<div class="collapse__button">
+                                See all the results
+                            </div>
+</div>
+<div>
+<div class="js-placeholder" data-key="all_single_all"></div>
+</div>
+</div>
+</div>
+<div class="switcher-content" data-id="main-single">
+<div class="js-placeholder" data-key="main_single"></div>
+<div class="collapse js-collapse-key">
+<div class="collapse__header">
+<div class="collapse__button">
+                                See all the results
+                            </div>
+</div>
+<div>
+<div class="js-placeholder" data-key="main_single_all"></div>
+</div>
+</div>
+</div>
+<div class="switcher-content" data-id="secondary-single">
+<div class="js-placeholder" data-key="secondary_single"></div>
+<div class="collapse js-collapse-key">
+<div class="collapse__header">
+<div class="collapse__button">
+                                See all the results
+                            </div>
+</div>
+<div>
+<div class="js-placeholder" data-key="secondary_single_all"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m features-block">
+<div class="wt-col-4">
+<p>In this question, respondents could only select one option. At first glance, the results suggest that web development is a strong leader with 26%, beating Data analysis (18%) by a large margin. But if we take a closer look, there’s also Machine learning with 9%. If we bundle Data analysis and Machine learning together into a single ‘Data science’ category, this amounts to a stunning 27%.</p>
+</div>
+<div class="wt-col-4">
+<p>Comparing the trends among those using Python as their main language vs a secondary language, web development has the biggest gap (29% vs 15%). For Data analysis and Machine learning, the difference is much smaller. Conversely, more DevOps and System administrators are using Python as a secondary language (13%) than as main language (8%).</p>
+</div>
+</div>
+<div class="wt-row wt-row_size_m features-block">
+<div class="wt-col-10">
+<table class="quantity _no-border">
+<colgroup>
+<col width="15%">
+<col width="5%">
+<col width="15%">
+<col>
+</colgroup>
+<tr>
+<th class="_is-active no-padding-right">26%</th>
+<th class="_comment no-padding-left no-padding-right">≈</th>
+<th class="_is-active no-padding-left no-padding-right">27%</th>
+<th class="_comment no-padding-left">(18%&nbsp;+&nbsp;9%)</th>
+</tr>
+<tr>
+<td class="_is-active">Web developers</td>
+<td></td>
+<td class="_is-active no-padding-left no-padding-right">Data scientists</td>
+<td>(Data Analysis + Machine Learning)</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="wt-row wt-row_size_m features-block">
+<div class="wt-col-4">
+<div class="quote">
+<p><strong>Interesting fact</strong></p>
+<p>In a <a href="https://www.jetbrains.com/pycharm/python-developers-survey-2016/">similar survey</a> that JetBrains ran in 2016, 38% of respondents identified as web developers and only 21% as data scientists.</p>
+</div>
+</div>
+<div class="wt-col-4">
+<p class="sub-title no-margin-bottom">There are as many Python web developers as Python data scientists.</p>
+<div class="js-quick-share margin-top-vertical-unit-half" data-section="types-of-development" data-text="Who would have thought? There are just as many Python web developers as Python data scientists out there now!"></div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m features-block">
+<div class="wt-col-6">
+<h3>Is data science taking Python by storm? </h3>
+<p>The most intriguing question in this survey concerned the ratio of web developers to data scientists in the Python world.
+                        We asked respondents to think about the ratio between the total number of Python web developers in the world and the total number
+                        of data scientists using Python. Respondents could answer based on their own experience, beliefs, and general ‘gut feeling’.
+                        Because in this same survey we explicitly asked about types of development, and the sample size is large enough to be statistically
+                        significant, we could compare and check if the community was right about the correct ratio. Here’s what we got:</p>
+</div>
+</div>
+<div class="wt-row wt-row_size_m margin-bottom-vertical-unit-half">
+<div class="wt-col-12">
+<p class="margin-bottom-vertical-unit-half"><strong>What do you think is the ratio of these two numbers?</strong></p>
+<div class="wt-row wt-row_size_m wt-row_align-items_center">
+<!-- TODO: change to circles -->
+<div class="wt-col-4">
+<div class="progress-bar">
+<div class="progress-bar__description">
+<div class="progress-bar__buttons">
+<div class="progress-bar__buttons-button">Web&nbsp;developers</div>
+<div class="progress-bar__buttons-union">:</div>
+<div class="progress-bar__buttons-button">Data&nbsp;scientists</div>
+</div>
+</div>
+</div>
+</div>
+<div class="wt-col-8">
+<div class="js-placeholder _ratio" data-key="ratio"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-row_align-items_end margin-bottom-vertical-unit-half">
+<div class="wt-col-4">
+<p>As you can see, the most popular ratio is <strong>5:1</strong>. You can also notice that a larger part of respondents (57%) thought there are more web developers than data scientists, while only 33% assumed the opposite.</p>
+</div>
+<div class="wt-col-4">
+<p class="_color-gray-light">Note: Percentages total 101%<br>because of rounding</p>
+</div>
+</div>
+<div class="wt-row wt-row_size_m features-block">
+<div class="wt-col-10">
+<div class="js-placeholder" data-key="ratio_numbers"></div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m features-block">
+<div class="wt-col-6">
+<p class="sub-title margin-top-vertical-unit-half">Now, let’s revisit the types of development stats mentioned earlier. With <strong>26%</strong> doing web development as their primary activity, and <strong>18%</strong> primarily involved in data analysis <strong>+ 9%</strong> primarily doing machine learning, the ratio is in fact <strong>1:1</strong>! Only one in nine respondents guessed this correctly.</p>
+</div>
+<div class="wt-col-4">
+<div class="quote">
+<p><strong>Interesting fact</strong></p>
+<p>Most respondents underestimated the total number of developers involved in data science. It's generally perceived that web development is the major application for Python. While this was true a couple of years ago, today the number of Python data scientists is growing rapidly and is already on par with the number of web developers.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="section-content _bg-extra-dark">
+<div class="wt-container article-content">
+<div class="wt-row wt-row_size_m features-block">
+<div class="wt-col-6">
+<h2 class="_color-light" title="Python 3 Adoption">Python 3 vs Python 2</h2>
+</div>
+</div>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-4 mini-pie-group margin-bottom-vertical-unit">
+<div class="js-version-chart-py3 mini-pie-chart _active"></div>
+<div class="js-version-chart-py2 mini-pie-chart"></div>
+</div>
+<div class="wt-col-4 wt-offset-left-2">
+<div class="js-quick-share _hanging" data-section="python-3-adoption" data-text="PSF survey says top Python editors are PyCharm, Sublime, Vim, IDLE, Atom, and VS Code. Which one is your favorite?"></div>
+<p class="sub-title">We asked, “Which version of Python do you use the most?”. Python 3 is a strong leader with 75% and Python 2 is used as the main interpreter by only 25%.</p>
+</div>
+</div>
+<div class="wt-row wt-row_size_m features-block">
+<div class="wt-col-6">
+<div class="quote">
+<p><strong>Interesting fact</strong></p>
+<p>The primary use of Python 3 is growing rapidly. According to the latest research in 2016, 60% were using Python 2 compared with 40% for Python 3. Use of Python 2 is declining as it’s not actively developed, doesn’t get new features, and its <a href="https://www.python.org/dev/peps/pep-0373/">maintenance is going to be stopped in 2020</a>.</p>
+</div>
+</div>
+<div class="wt-col-4">
+</div>
+</div>
+<div class="wt-row wt-row_size_m features-block">
+<div class="wt-col-8">
+<p class="margin-bottom-vertical-unit-half"><strong>Python 3 Adoption</strong></p>
+</div>
+</div>
+<div class="wt-row wt-row_size_m features-block">
+<div class="wt-col-6 wt-offset-left-1">
+<div id="python2-vs-3"></div>
+</div>
+<div class="wt-col-6 wt-offset-left-1 margin-top-vertical-unit python-graph-note">
+<p><strong class="_color-yellow">Note:</strong> The adoption data for Python 3 covering previous years are derived from publicly available surveys: <a class="_color-yellow" href="https://wiki.python.org/moin/2.x-vs-3.x-survey">2014</a>, <a class="_color-yellow" href="http://zqpythonic.qiniucdn.com/data/20150131181628/index.html">2015</a>, and <a class="_color-yellow" href="https://www.jetbrains.com/pycharm/python-developers-survey-2016/">2016</a>.</p>
+</div>
+</div>
+<div class="wt-row wt-row_size_m features-block">
+<div class="wt-col-8">
+<table class="quantity">
+<tr>
+<td class="_no-border"><p class="margin-bottom-vertical-unit-half"><strong>Python 3</strong></p></td>
+<td class="_no-border"><p class="margin-bottom-vertical-unit-half"><strong>Python 2</strong></p></td>
+</tr>
+<tr>
+<th class="_is-active">75%</th>
+<th class="_is-active">25%</th>
+<td>All Python</td>
+</tr>
+<tr>
+<th>70%</th>
+<th>30%</th>
+<td>Web developers</td>
+</tr>
+<tr>
+<th>80%</th>
+<th>20%</th>
+<td>Data scientists</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="wt-row wt-row_size_m features-block">
+<div class="wt-col-4">
+<div class="quote">
+<p><strong>Probable cause</strong></p>
+<p>A probable explanation is that some web developers still have lots of legacy code to maintain while transitioning to Python 3. On the other hand, many data analysts and machine learning specialists have joined the Python ecosystem just recently and went straight to the latest Python 3.</p>
+</div>
+</div>
+<div class="wt-col-4">
+<p class="sub-title margin-top-vertical-unit-half">Another interesting finding is that only 70% of those mainly doing web development are using Python 3, while for data analysts this goes up to 77%, and for Machine learning specialists an even higher 83%.</p>
+</div>
+</div>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-8">
+<h3 class="_color-light margin-bottom-vertical-unit">Python Installation and Upgrade</h3>
+</div>
+<div class="wt-col-10 margin-bottom-vertical-unit-half">
+<div class="js-placeholder" data-key="installation"></div>
+<div class="collapse js-collapse-key">
+<div class="collapse__header">
+<div class="collapse__button">
+                                See all the results
+                            </div>
+</div>
+<div>
+<div class="js-placeholder" data-key="installation_all"></div>
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<p>70% install Python from python.org or with OS-provided package managers like APT and Homebrew.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="section-content">
+<div class="wt-container article-content">
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-10">
+<h2 title="Technologies">Python Frameworks, Libraries and Technologies</h2>
+<p class="margin-bottom-vertical-unit">This section highlights the popularity of various Python frameworks, libraries and technologies that Python developers use.</p>
+</div>
+</div>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-10">
+<h3 class="margin-bottom-vertical-unit">What frameworks do you use in addition to Python? (multiple answers)</h3>
+</div>
+</div>
+<div class="js-diagram-switcher-frameworks-multi features-block">
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-4 _nowrap diagram-switcher">
+<div class="switcher-link text-nowrap diagram-switcher__link" data-switcher-content="frameworks-multi-all"><span>All respondents</span></div>
+<div class="switcher-link text-nowrap diagram-switcher__link" data-switcher-content="frameworks-multi-web"><span>Web developers</span></div>
+<div class="switcher-link text-nowrap diagram-switcher__link" data-switcher-content="frameworks-multi-data"><span>Data scientists</span></div>
+</div>
+</div>
+<div class="switcher-content" data-id="frameworks-multi-all">
+<div class="js-placeholder" data-key="frameworks_multi_all"></div>
+<div class="collapse js-collapse-key">
+<div class="collapse__header">
+<div class="collapse__button">
+                                See all the results
+                            </div>
+</div>
+<div>
+<div class="js-placeholder" data-key="frameworks_multi_all_all"></div>
+</div>
+</div>
+</div>
+<div class="switcher-content" data-id="frameworks-multi-web">
+<div class="js-placeholder" data-key="frameworks_multi_web"></div>
+<div class="collapse js-collapse-key">
+<div class="collapse__header">
+<div class="collapse__button">
+                                See all the results
+                            </div>
+</div>
+<div>
+<div class="js-placeholder" data-key="frameworks_multi_web_all"></div>
+</div>
+</div>
+</div>
+<div class="switcher-content" data-id="frameworks-multi-data">
+<div class="js-placeholder" data-key="frameworks_multi_data"></div>
+<div class="collapse js-collapse-key">
+<div class="collapse__header">
+<div class="collapse__button">
+                                See all the results
+                            </div>
+</div>
+<div>
+<div class="js-placeholder" data-key="frameworks_multi_data_all"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m features-block">
+<div class="wt-col-4">
+<p class="sub-title no-margin-bottom">Django is the most popular framework used by 41% of Python developers.</p>
+<div class="js-quick-share margin-top-vertical-unit-half" data-section="technologies" data-text="Apparently, Django is the most popular framework for Python – 41% of developers use it. NumPy, Pandas, and Matplotlib are in close second together, with 39%."></div>
+</div>
+<div class="wt-col-6">
+<p>Scientific packages such as NumPy/Pandas/Matplotlib, taken together, are in close second with 39%. In terms of roles, Django was selected by 76% of web developers, but only by 31% of those involved primarily in data science. Curiously, 29% of web developers are using scientific libraries. This corroborates a strong overlap between the two roles.</p>
+</div>
+</div>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-10">
+<h3 class="margin-bottom-vertical-unit">What additional technology(s) do you use in addition to Python? (multiple answers)</h3>
+</div>
+</div>
+<div class="js-diagram-switcher-technologys-multi features-block">
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-4 _nowrap diagram-switcher">
+<div class="switcher-link text-nowrap diagram-switcher__link" data-switcher-content="technologys-multi-all"><span>All developers</span></div>
+<div class="switcher-link text-nowrap diagram-switcher__link" data-switcher-content="technologys-multi-web"><span>Web developers</span></div>
+<div class="switcher-link text-nowrap diagram-switcher__link" data-switcher-content="technologys-multi-data"><span>Data scientists</span></div>
+</div>
+</div>
+<div class="switcher-content" data-id="technologys-multi-all">
+<div class="js-placeholder" data-key="technologys_multi_all"></div>
+<div class="collapse js-collapse-key">
+<div class="collapse__header">
+<div class="collapse__button">
+                                See all the results
+                            </div>
+</div>
+<div>
+<div class="js-placeholder" data-key="technologys_multi_all_all"></div>
+</div>
+</div>
+</div>
+<div class="switcher-content" data-id="technologys-multi-web">
+<div class="js-placeholder" data-key="technologys_multi_web"></div>
+<div class="collapse js-collapse-key">
+<div class="collapse__header">
+<div class="collapse__button">
+                                See all the results
+                            </div>
+</div>
+<div>
+<div class="js-placeholder" data-key="technologys_multi_web_all"></div>
+</div>
+</div>
+</div>
+<div class="switcher-content" data-id="technologys-multi-data">
+<div class="js-placeholder" data-key="technologys_multi_data"></div>
+<div class="collapse js-collapse-key">
+<div class="collapse__header">
+<div class="collapse__button">
+                                See all the results
+                            </div>
+</div>
+<div>
+<div class="js-placeholder" data-key="technologys_multi_data_all"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m features-block">
+<div class="wt-col-4">
+<p class="sub-title no-margin-bottom">Jupyter Notebook is the most popular technology used together with Python.</p>
+<div class="js-quick-share margin-top-vertical-unit-half" data-section="technologies" data-text="Did you know that Jupyter Notebook and Docker are the two most popular technologies used together with Python?"></div>
+</div>
+<div class="wt-col-6">
+<p>This is expected given the large number of developers involved in data science. Docker trails it by only 2%, at 29%. Breaking this down by roles, Docker is used by 47% of those mostly involved in web development, but only by 23% of data scientists. Similarly, cloud platforms such as AWS, Google App Engine, Heroku and others are used twice as often by web developers than by data scientists.</p>
+</div>
+</div>
+<h3 class="margin-bottom-vertical-unit">Top Cloud Platform(s)</h3>
+<div class="wt-row wt-row_size_m features-block">
+<div class="wt-col-2 cloud-platform">
+<img src="/research/python-developers-survey-2017/img/aws.svg">
+<h3 class="_color-violet">67%</h3>
+<p class="_color-violet"><strong>AWS</strong></p>
+</div>
+<div class="wt-col-2 cloud-platform">
+<img src="/research/python-developers-survey-2017/img/google.svg">
+<h3>29%</h3>
+<p><strong>Google App Engine</strong></p>
+</div>
+<div class="wt-col-2 cloud-platform">
+<img src="/research/python-developers-survey-2017/img/heroku.svg">
+<h3>26%</h3>
+<p><strong>Heroku</strong></p>
+</div>
+<div class="wt-col-2 cloud-platform">
+<img src="/research/python-developers-survey-2017/img/digitalOcean.svg">
+<h3>23%</h3>
+<p><strong>DigitalOcean</strong></p>
+</div>
+<div class="wt-col-2 cloud-platform">
+<img src="/research/python-developers-survey-2017/img/microsoftAzure.svg">
+<h3>16%</h3>
+<p><strong>Microsoft Azure</strong></p>
+</div>
+</div>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<p class="sub-title _color-gray">AWS is the most popular cloud platform used by 67% of those who selected Cloud platforms in the previous question. GAE, Heroku, and DigitalOcean fall behind AWS with far smaller shares.</p>
+</div>
+<div class="wt-col-2">
+<div class="js-quick-share" data-section="technologies" data-text="Did you know that AWS is the most popular cloud platform among Python developers?"></div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-2">
+<table class="quantity">
+<tr>
+<th class="_no-border"><div class="text-center">13%</div></th>
+</tr>
+<tr>
+<td><div class="text-center"><strong>Other</strong></div></td>
+</tr>
+</table>
+</div>
+<div class="wt-col-4">
+<p>We couldn’t list all the cloud platforms as answer options for this question, but the “Other” field collected 13% of all responses. The top “other” platforms, not included in main results included Linode, PythonAnywhere, OpenShift, and OpenStack.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="section-content _bg-extra-dark">
+<div class="wt-container article-content">
+<div class="wt-row wt-row_size_m margin-bottom-vertical-unit-half">
+<div class="wt-col-10">
+<h2 class="_color-light" title="Tools and Features">Tools and Features for Python Development</h2>
+</div>
+</div>
+<div class="diagram-tools-features-multi features-block">
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-4">
+<div class="diagram-links">
+<div class="diagram-links__item _color-yellow">Often + from time to time</div>
+<div class="diagram-links__item">Never or almost never</div>
+</div>
+</div>
+</div>
+<div class="js-placeholder-new" data-key="tools_features"></div>
+</div>
+<div class="wt-row wt-row_size_m features-block">
+<div class="wt-col-4">
+<p class="sub-title no-margin-bottom">We’ve identified the relative popularity of tools and features used to develop in Python:
+                        Code autocompletion, code refactorings, writing unit tests, and
+                        using virtual environments for Python projects occupy the top spots.</p>
+<div class="js-quick-share margin-top-vertical-unit-half" data-section="tools-and-features" data-text="Did you know that top-used practices of top Python developers include code autocompletion, code refactorings, virtual environments for Python projects, and unit testing."></div>
+</div>
+<div class="wt-col-4">
+<p>Other popular tools and features included SQL databases, VCS, and Python code debugging and linting.</p>
+<p>NoSQL databases, Python profilers, and code coverage tools were some of the most rarely used.</p>
+</div>
+</div>
+<div class="wt-row wt-row_size_m margin-bottom-vertical-unit-half">
+<div class="wt-col-8">
+<h3 class="_color-light margin-bottom-vertical-unit">Editors and IDEs</h3>
+<p>To identify the most popular editors and IDEs, we asked two questions: “What editors/IDEs have you considered
+                        for use in your Python development?” with multiple answers, and a single-answer
+                        “What is the main editor you use for your current Python development?”
+                        Here are the answers for the latter question as it shows actual editors and IDEs in use more precisely:
+                    </p>
+</div>
+</div>
+<div class="js-diagram-switcher-editors-multi features-block">
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-4 _nowrap diagram-switcher">
+<div class="switcher-link text-nowrap diagram-switcher__link" data-switcher-content="editors-multi-all"><span>All Developers</span></div>
+<div class="switcher-link text-nowrap diagram-switcher__link" data-switcher-content="editors-multi-web"><span>Web Developers</span></div>
+<div class="switcher-link text-nowrap diagram-switcher__link" data-switcher-content="editors-multi-science"><span>Scientific Developers</span></div>
+</div>
+</div>
+<div class="switcher-content" data-id="editors-multi-all">
+<div class="js-placeholder" data-key="editors_all"></div>
+<div class="collapse js-collapse-key">
+<div class="collapse__header">
+<div class="collapse__button">
+                                See all the results
+                            </div>
+</div>
+<div>
+<div class="js-placeholder" data-key="editors_all_all"></div>
+</div>
+</div>
+</div>
+<div class="switcher-content" data-id="editors-multi-web">
+<div class="js-placeholder" data-key="editors_web"></div>
+<div class="collapse js-collapse-key">
+<div class="collapse__header">
+<div class="collapse__button">
+                                See all the results
+                            </div>
+</div>
+<div>
+<div class="js-placeholder" data-key="editors_web_all"></div>
+</div>
+</div>
+</div>
+<div class="switcher-content" data-id="editors-multi-science">
+<div class="js-placeholder" data-key="editors_science"></div>
+<div class="collapse js-collapse-key">
+<div class="collapse__header">
+<div class="collapse__button">
+                                See all the results
+                            </div>
+</div>
+<div>
+<div class="js-placeholder" data-key="editors_science_all"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m features-block">
+<div class="wt-col-8">
+<p class="_color-gray">Disclaimer:  A number of steps were taken to eliminate bias and ensure that the survey was not slanted in favor
+                        of any specific tool mentioned in the survey. To learn more about the survey methodology and the channels used
+                        to distribute the survey, please refer to the <a class="_color-gray underline" href="#raw-data">Raw Data</a> section</p>
+</div>
+</div>
+<div class="wt-row wt-row_size_m features-block">
+<div class="wt-col-6">
+<p class="sub-title no-margin-bottom">Based on more than 8,000 replies to this question, PyCharm with its two editions is the most popular tool for
+                        Python development, followed by Sublime, Vim, IDLE, Atom, and VS Code.</p>
+<div class="js-quick-share margin-top-vertical-unit-half" data-section="tools-and-features" data-text="PSF survey says top Python editors are PyCharm, Sublime, Vim, IDLE, Atom, and VS Code. Which one is your favorite?"></div>
+</div>
+<div class="wt-col-3">
+<p>Web developers have slightly different editor preferences from data scientists. They prefer PyCharm Professional
+                        Edition, Sublime text and Vim much more than data scientists do, while data scientists clearly prefer PyCharm Community
+                        Edition, Jupyter Notebook and Spyder.
+                    </p>
+</div>
+</div>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-8">
+<p class="sub-title"><strong>Top considered* Editors and IDEs used by Python development, broken down by web and scientific types of development:</strong></p>
+</div>
+</div>
+<div class="wt-row wt-row_size_m features-block">
+<div class="wt-col-4">
+<p><strong>Web Developers</strong></p>
+<table class="quantity">
+<tr>
+<th class="_is-active">47%</th>
+<td class="_is-active"><div class="_nowrap">Sublime Text</div></td>
+</tr>
+<tr>
+<th>39%</th>
+<td>Vim</td>
+</tr>
+<tr>
+<th>32%</th>
+<td>Atom</td>
+</tr>
+</table>
+</div>
+<div class="wt-col-4">
+<p><strong>Data Scientists</strong></p>
+<table class="quantity">
+<tr>
+<th class="_is-active">42%</th>
+<td class="_is-active">Jupyter Notebook</td>
+</tr>
+<tr>
+<th>39%</th>
+<td><span class="text-nowrap">PyCharm Community Edition</span></td>
+</tr>
+<tr>
+<th>26%</th>
+<td>Sublime Text</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="wt-row wt-row_size_m features-block">
+<div class="wt-col-8">
+<p class="_color-gray-dark">*We asked, “What editor(s)/IDE(s) have you considered for use in your Python development?” where respondents
+                        could choose multiple editors and IDEs.</p>
+</div>
+</div>
+<h3 class="_color-light margin-bottom-vertical-unit">Frequency of Editor Usage</h3>
+<div class="wt-row wt-row_size_m features-block">
+<div class="wt-col-8 margin-bottom-vertical-unit-half mini-pie-group">
+<div class="js-frequency-chart-daily mini-pie-chart _active"></div>
+<div class="js-frequency-chart-weekly mini-pie-chart"></div>
+<div class="js-frequency-chart-monthly mini-pie-chart"></div>
+<div class="js-frequency-chart-less mini-pie-chart"></div>
+</div>
+<div class="wt-col-6">
+<p>Most use their editor daily, and about one in five does it every week.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="section-content">
+<div class="wt-container article-content">
+<div class="wt-row wt-row_size_m margin-bottom-vertical-unit-half">
+<div class="wt-col-8">
+<h2 title="Developer Profile">Python Developer Profile</h2>
+</div>
+</div>
+<h3 class="margin-bottom-vertical-unit-half">Employment status</h3>
+<div class="wt-row wt-row_size_m features-block">
+<div class="wt-col-10 margin-bottom-vertical-unit-half">
+<div class="js-placeholder" data-key="employment_status"></div>
+</div>
+<div class="wt-col-6">
+<p>Half of developers are employed full-time,
+                        a little over a quarter are students, while 13% are self-employed or freelancing.</p>
+</div>
+</div>
+<h3 class="margin-bottom-vertical-unit-half">Job Roles</h3>
+<div class="wt-row wt-row_size_m features-block">
+<div class="wt-col-10 margin-bottom-vertical-unit-half">
+<div class="js-placeholder" data-key="job_roles"></div>
+</div>
+<div class="wt-col-6">
+<p>For job roles, we provided for multiple answers,
+                        so the total is greater than 100%. About three-quarters of respondents identify as developers,
+                        and almost 1 in 5 double as data analysts, architects, or team leads. In “Others”, which collected
+                        a total of 9%, the top write-in answers included data scientist, DevOps, researcher, and teacher.</p>
+</div>
+</div>
+<h3 class="margin-bottom-vertical-unit">Experience in the IT Industry</h3>
+<div class="wt-row wt-row_size_m margin-bottom-vertical-unit-half">
+<div class="wt-col-10">
+<!-- <div class="js-experience-chart"></div> -->
+<table class="quantity">
+<colgroup>
+<col width="20%">
+<col width="20%">
+<col width="20%">
+<col width="20%">
+<col width="20%">
+</colgroup>
+<tr>
+<th>22%</th>
+<th>19%</th>
+<th>21%</th>
+<th>16%</th>
+<th>22%</th>
+</tr>
+<tr>
+<td>Less than 1 year</td>
+<td>1–2 years</td>
+<td>3–5 years</td>
+<td>6–10 years</td>
+<td>11+ years</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="wt-row wt-row_size_m features-block">
+<div class="wt-col-4">
+<p class="sub-title">The field we surveyed turned out rather diverse, with no clear leading categories.</p>
+</div>
+<div class="wt-col-4">
+<p>There are just as many beginning Python developers as there are veterans.</p>
+</div>
+</div>
+<h3 class="margin-bottom-vertical-unit">Working in a Team vs Working Independently</h3>
+<div class="wt-row wt-row_size_m margin-bottom-vertical-unit-half">
+<div class="wt-col-8">
+<div class="js-teamwork-chart-team mini-pie-chart"></div>
+<div class="js-teamwork-chart-own mini-pie-chart _active"></div>
+<div class="js-teamwork-chart-external mini-pie-chart"></div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m features-block">
+<div class="wt-col-6">
+<p class="sub-title">Interestingly, three out of five developers work on independent projects.</p>
+</div>
+</div>
+<h3 class="margin-bottom-vertical-unit">Team Size</h3>
+<div class="wt-row wt-row_size_m margin-bottom-vertical-unit-half">
+<div class="wt-col-10">
+<table class="quantity">
+<colgroup>
+<col width="20%">
+<col width="20%">
+<col width="20%">
+<col width="20%">
+<col width="20%">
+</colgroup>
+<tr>
+<th class="_is-active">74%</th>
+<th>16%</th>
+<th>5%</th>
+<th>2%</th>
+<th>2%</th>
+</tr>
+<tr>
+<td class="_is-active">2-7 people</td>
+<td>8-12 people</td>
+<td>13-20 people</td>
+<td>21-40 people</td>
+<td>> 40 people</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="wt-row wt-row_size_m features-block">
+<div class="wt-col-4">
+<p class="sub-title">About three-quarters of developers who work in teams work in very small teams.</p>
+</div>
+<div class="wt-col-4">
+<p>16% have up to 12 teammates, and only 9% working in mid-size or large teams.</p>
+</div>
+</div>
+<h3 class="margin-bottom-vertical-unit">Working on Projects</h3>
+<div class="wt-row wt-row_size_m features-block">
+<div class="wt-col-6">
+<table class="quantity">
+<colgroup>
+<col width="33%">
+<col width="33%">
+<col width="33%">
+</colgroup>
+<tr>
+<th class="_is-active">43%</th>
+<th>35%</th>
+<th class="no-padding-right">22%</th>
+</tr>
+<tr>
+<td class="_is-active">Yes, I work on one main and several side projects</td>
+<td>Yes, I work on many different projects</td>
+<td class="no-padding-right">No, I only work on one project</td>
+</tr>
+</table>
+</div>
+<div class="wt-col-4">
+<p>The vast majority seem to be developing multiple different projects at the same time.</p>
+</div>
+</div>
+<h3 class="margin-bottom-vertical-unit-half">Age Ranges</h3>
+<div class="wt-row wt-row_size_m features-block">
+<div class="wt-col-8 margin-bottom-vertical-unit-half">
+<div class="js-placeholder" data-key="age_ranges"></div>
+</div>
+<div class="wt-col-6">
+<p class="sub-title">Twenty-something was the prevalent age range among our respondents, with a quarter being in their thirties.
+                        Lots of young people also seem to be into Python.</p>
+</div>
+</div>
+<h3 class="margin-bottom-vertical-unit">Global Community</h3>
+<div class="wt-row wt-row_size_m features-block">
+<div class="wt-col-8">
+<svg class="_map sprite-img js-global-map" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#map"></use></svg>
+</div>
+<div class="wt-col-2 js-country-list">
+<ul class="_list-style-none">
+<li data-cc="us"><span>18%</span> United States</li>
+<li data-cc="in"><span>13%</span> India</li>
+<li data-cc="cn"><span>7%</span> China</li>
+<li data-cc="gb"><span>6%</span> United Kingdom</li>
+<li data-cc="de"><span>5%</span> Germany</li>
+<li data-cc="br"><span>4%</span> Brazil</li>
+<li data-cc="fr"><span>3%</span> France</li>
+<li data-cc="ru"><span>3%</span> Russia</li>
+<li data-cc="pl"><span>2%</span> Poland</li>
+<li data-cc="ca"><span>2%</span> Canada</li>
+<li data-cc="au"><span>2%</span> Australia</li>
+<li data-cc="es"><span>2%</span> Spain</li>
+<li><span>33%</span> Others</li>
+</ul>
+</div>
+</div>
+<div class="wt-row wt-row_size_m features-block">
+<div class="wt-col-6">
+<p>We reached Python users living in 150+ different countries.<br>“Others” includes countries with fewer than 2%.</p>
+</div>
+</div>
+<h3 class="margin-bottom-vertical-unit">Operating Systems</h3>
+<div class="wt-row wt-row_size_m features-block">
+<div class="wt-col-2 cloud-platform">
+<img src="/research/python-developers-survey-2017/img/win.svg">
+<h3 class="no-margin-bottom">49%</h3>
+<p>Windows</p>
+</div>
+<div class="wt-col-2 cloud-platform">
+<img src="/research/python-developers-survey-2017/img/linux.svg">
+<h3 class="no-margin-bottom">19%</h3>
+<p>Linux</p>
+</div>
+<div class="wt-col-2 cloud-platform">
+<img src="/research/python-developers-survey-2017/img/mac.svg">
+<h3 class="no-margin-bottom">15%</h3>
+<p>MacOS</p>
+</div>
+<div class="wt-col-2 cloud-platform _other">
+<h3 class="no-margin-bottom">17%</h3>
+<p>Other</p>
+</div>
+</div>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-4">
+<p>Unfortunately, in this survey we didn’t ask respondents what operating systems they use for development.
+                        However, we did track what OS they were using to complete the survey, and we believe there’s a strong correlation
+                        between the two.</p>
+</div>
+<div class="wt-col-4">
+<p>Around half of all respondents used Windows, while macOS and Linux accounted for 15% and 19%, respectively.
+                        That said, devices used to complete the survey may differ from one’s usual development environment.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="section-content _bg-extra-dark">
+<div class="wt-container article-content">
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-8">
+<h2 class="_color-light">Raw Data</h2>
+</div>
+</div>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-8">
+<p class="sub-title"><strong>Want to dig into the results yourself? Download the anonymized survey responses and see what you can find!
+                        Share your findings and conclusions mentioning <a class="_color-yellow" href="https://twitter.com/jetbrains">@jetbrains</a> and <a class="_color-yellow" href="https://twitter.com/ThePSF">@ThePSF</a> on Twitter
+                        with the #pythondevsurvey2017 hashtag.</strong></p>
+<p>Before dissecting these data, please note the following important information:</p>
+</div>
+</div>
+<div class="wt-row wt-row_size_m margin-bottom-vertical-unit-half">
+<div class="wt-col-4">
+<div class="count _color-yellow">1</div>
+<p>The data include responses only from official Python Software Foundation channels.
+                        After filtering out duplicate responses, the data-set includes all of the 9,500+ responses collected
+                        during October, 2017, via promoting the survey on python.org, the <a class="_color-yellow underline" href="http://pyfound.blogspot.de/2017/09/join-python-developers-survey-2017.html">PSF blog</a>, the PSF’s
+                        Twitter and LinkedIn accounts, official Python mailing lists, and Python-related subreddits.
+                        No product-, service-, or vendor-related channels were used, in order to prevent the survey from being slanted
+                        in favor of any specific tool or technology.</p>
+</div>
+<div class="wt-col-4">
+<div class="count _color-yellow">2</div>
+<p>The data are anonymized, with no personal information or geolocation details.
+                        Moreover, to prevent identification of any individual respondents by their verbatim comments,
+                        all open-ended fields have been pruned.</p>
+<div class="count _color-yellow">3</div>
+<p>To help you better understand the logic of the survey, we are sharing with you: the data-set, the survey questions, and all the survey logic, in English. We used different ordering methods for answer options (alphabetic, randomize, direct). The order the answer options used is specified in each question.</p>
+</div>
+</div>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-8">
+<p class="margin-bottom-vertical-unit-half"><a class="_color-yellow underline" href="http://jb.gg/pythondevsurvey2017raw">Get Python Developer Survey 2017 Raw Data</a></p>
+<p>Once again, on behalf of both the Python Software Foundation and JetBrains, we’d like to thank everyone who took part
+                        in this survey. With your help we’re able to map out an accurate landscape of the Python community!</p>
+</div>
+</div>
+</div>
+</section>
+<section class="section-content">
+<div class="wt-container article-content">
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-8">
+<h2>Key Takeaways</h2>
+</div>
+</div>
+<div class="wt-row wt-row_size_m margin-bottom-vertical-unit-half">
+<div class="wt-col-4">
+<div class="count _color-violet">1</div>
+<p>The adoption rate of Python 3 is quickly growing and already at 75%, while Python 2 is used by only 25% of developers.</p>
+<div class="js-quick-share" data-section="key-takeaways" data-text="I just found out 75% of Python developers are already using Python 3. Goodbye, Python 2!"></div>
+</div>
+<div class="wt-col-4">
+<div class="count _color-violet">2</div>
+<p>There are as many Python developers doing primarily data science as those focused on web development.</p>
+<div class="js-quick-share" data-section="key-takeaways" data-text="Who would have thought? There are just as many Python web developers as Python data scientists out there now!"></div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m margin-bottom-vertical-unit-half">
+<div class="wt-col-4">
+<div class="count _color-violet">3</div>
+<p>For 4 out of 5 developers using Python, it is their main language. </p>
+<div class="js-quick-share" data-section="key-takeaways" data-text="Did you know 4 out of 5 Python developers use it as their main language?"></div>
+</div>
+<div class="wt-col-4">
+<div class="count _color-violet">4</div>
+<p>Half of all developers using Python as their main language also use JavaScript.
+                        Python is also used with HTML/CSS, SQL, Bash/Shell, C/C++ and Java. </p>
+<div class="js-quick-share" data-section="key-takeaways" data-text="Wow, half of all developers using Python as their main language also use JavaScript!"></div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m features-block">
+<div class="wt-col-4">
+<div class="count _color-violet">5</div>
+<p>Django, NumPy, pandas, and Matplotlib are the most popular frameworks and libraries
+                        among Python developers. Jupyter Notebook and Docker are the most popular technologies
+                        used together with Python. AWS is the most popular cloud platform.</p>
+<div class="js-quick-share" data-section="key-takeaways" data-text="Apparently, Django is the most popular framework for Python – 41% of developers use it. NumPy, Pandas, and Matplotlib are in close second together, with 39%."></div>
+</div>
+<div class="wt-col-4">
+<div class="count _color-violet">6</div>
+<p>PyCharm with its two editions is the most popular tool for Python development,
+                        followed by Sublime, Vim, IDLE, Atom, and VS Code.</p>
+<div class="js-quick-share" data-section="key-takeaways" data-text="PSF survey says top Python editors are PyCharm, Sublime, Vim, IDLE, Atom, and VS Code. Which one is your favorite?"></div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-8">
+<p class="sub-title"><strong><span class="_color-violet">Disclaimer:</span> The Python Software Foundation doesn’t endorse any of the products,
+                        tools, or services mentioned in the survey and this report.
+                    </strong></p>
+</div>
+</div>
+</div>
+</section>
+<section class="wt-section wt-section_bg_gray-light _to-2018">
+<div class="wt-container">
+<p class="wt-text-2 wt-offset-top-24">Check out the
+                <a class="link-to-2018" href="/research/python-developers-survey-2018">Python Developers Survey 2018 Results</a>.
+            </p>
+</div>
+</section>
+<section class="section-content _bg-extra-dark">
+<div class="wt-container article-content">
+<div class="wt-row wt-row_size_m features-block">
+<div class="wt-col-6">
+<h2 class="_color-light js-exclude-from-toc" title="Feedback">Thank you for your time!</h2>
+<p class="sub-title">Enjoyed going through the survey findings?<br>
+                        Share this report with your friends and colleagues</p>
+<div class="margin-top-vertical-unit-half">
+<div class="share _dark js-share-buttons">
+<div class="share__button _twitter twitter"></div>
+<div class="share__button _facebook facebook"></div>
+</div>
+</div>
+</div>
+</div>
+<p class="margin-bottom-vertical-unit-half"><strong>Participate in future surveys:</strong></p>
+<div class="social-footer">
+<form class="form js-marketo-form">
+<div class="form__fields-wrapper">
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-4">
+<div class="form__field self-submit-input">
+<input autocomplete="email" class="input" name="Email" placeholder="Your Email" required="" type="email">
+</div>
+<div class="form__field">
+<label class="checkbox">
+<input checked="" class="js-consent" data-consent="marketo" id="PyCharm_Version" name="PyCharm_Version" type="checkbox" value="yes">
+<span class="checkbox__icon"></span>
+<span class="checkbox__label">I want to participate in the next Python Developers Survey</span>
+</label>
+</div>
+<div class="form__field">
+<label class="checkbox">
+<input checked="" class="js-consent" data-consent="survey" id="surveyPanel" name="surveyPanel" type="checkbox" value="yes">
+<span class="checkbox__icon"></span>
+<span class="checkbox__label">I want to be invited to future JetBrains or PSF surveys</span>
+</label>
+</div>
+<div class="form-privacy-checkbox" data-form-id="3120"></div>
+</div>
+</div>
+<input class="button" type="submit" value="Submit">
+</div>
+<input name="subId" type="hidden" value="62">
+<input name="formid" type="hidden" value="3120">
+</form>
+<div class="form__after-submit margin-bottom-vertical-unit-half" data-form-id="3120">
+<p>Thanks for your request!</p>
+</div>
+</div>
+<p>If you have any questions about this survey or suggestions for future ones, please contact us at <a class="_color-yellow underline" href="mailto:surveys@python.org">surveys@python.org</a>.</p>
+<p>We’re also extremely open to any suggestions and feedback related to this survey so we can run an even better one next time. <br> Feel free to open issues <a class="_color-yellow underline" href="https://github.com/python/python-dev-survey/issues">here</a> with any comments or questions.</p>
+</div>
+</section>
+<div id="toc"></div>    </div>
+
+    <footer class="page__footer landing-footer">
+    <div class="wt-container">
+        <div class="landing-footer__logo jetbrains-logo _full-block">
+            <a href="/"><svg class="_jetbrains-simple sprite-img" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#jetbrains-simple"></use></svg></a>
+        </div>
+        <div class="landing-footer__copy">
+            <span class="text-nowrap">Copyright &copy; 2000&ndash;2019 JetBrains s.r.o.</span>
+        </div>
+    </div>
+</footer></div>
+<script>
+(function() {
+  var STORAGE_KEY_NAME = 'firefoxDisappearedSVGWorkaround';
+  var STORAGE_KEY_VALUE = '1';
+
+  var isFirefox = /firefox/i.test(navigator.userAgent);
+  if (!isFirefox || isFirefox && sessionStorage.getItem(STORAGE_KEY_NAME) === STORAGE_KEY_VALUE) {
+    return;
+  }
+
+  var arrayFrom = function (arrayLike) {
+    return Array.prototype.slice.call(arrayLike, 0);
+  };
+
+  function workaround() {
+    var uses = document.querySelectorAll('.page svg use');
+    var badNodesCount = 0;
+
+    arrayFrom(uses).forEach(function (node) {
+      var rect = node.getBoundingClientRect();
+      if (rect.width === 0 && rect.height === 0)
+        badNodesCount++;
+    });
+
+    if (badNodesCount === uses.length) {
+      sessionStorage.setItem(STORAGE_KEY_NAME, STORAGE_KEY_VALUE);
+      if (typeof dataLayer !== 'undefined')
+        dataLayer.push({'firefoxDisappearedSVGWorkaround': STORAGE_KEY_VALUE});
+
+      window.location.replace(window.location.href);
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', workaround);
+
+})();
+</script>      <link href="/_assets/banner-rotator.entry.07ac548a2a68a7922693.css" rel="stylesheet" type="text/css">
+      <script src="/_assets/banner-rotator.entry.b9ea3aaba598786010f0.js" type="text/javascript"></script>
+      
+      
+  <script>
+(function () {
+
+  'use strict';
+
+  function ImagesSrcReplacer () {
+
+    var attribute = 'data-src';
+    var matches = document.querySelectorAll('img[' + attribute + ']');
+
+    for (var i = 0, n = matches.length; i < n; i++) {
+
+      var attrValue = matches[i].getAttribute(attribute);
+
+      if (_isHighDensity ()) {
+
+        var name = attrValue.substring(0, attrValue.lastIndexOf('.'));
+        var extention = attrValue.substring(attrValue.lastIndexOf('.'), attrValue.length);
+
+        matches[i].setAttribute('src', name + '@2x' + extention);
+
+      } else {
+        matches[i].setAttribute('src', attrValue)
+      }
+    }
+
+    /**
+     * Detect high density
+     * @returns {*|boolean}
+     */
+    function _isHighDensity () {
+      return (
+      (window.matchMedia &&
+      (window.matchMedia('only screen and (min-resolution: 124dpi), only screen and (min-resolution: 1.3dppx), only screen and (min-resolution: 48.8dpcm)').matches ||
+       window.matchMedia('only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (-o-min-device-pixel-ratio: 2.6/2), only screen and (min--moz-device-pixel-ratio: 1.3), only screen and (min-device-pixel-ratio: 1.3)').matches)) ||
+      (window.devicePixelRatio &&
+       window.devicePixelRatio > 1.3));
+    }
+  }
+
+  return new ImagesSrcReplacer()
+
+}(document, window));
+</script></body>
+</html>

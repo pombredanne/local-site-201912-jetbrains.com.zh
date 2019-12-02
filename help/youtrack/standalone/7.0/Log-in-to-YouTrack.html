@@ -1,0 +1,34 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="robots" content="noindex"><title>YouTrack Standalone 7.0 Help :: Log in to YouTrack</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Log-in-to-YouTrack"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack Standalone Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>YouTrack Standalone 7.0 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="Resources-for-Developers.html">Resources for Developers</a><a class="navigation-links__next" href="OAuth-Authorization.html">OAuth 2.0 Authorization</a></div><h1>Log in to YouTrack</h1><aside class="warning sideblock">
+
+         <a name="d89381e5"></a><p>API method described in this page has been deprecated. Instead of relying on cookie-based authorization, scripts or other clients should be adapted to Hub OAuth 2.0 auth instead.</p>
+         <a name="d89381e8"></a><p>All YouTrack REST methods support this token-based authorization (see Hub Oauth 2.0 <a name="d89381e10"></a><a href="https://www.jetbrains.com/hub/help/2.5/OAuth-2.0-Authorization.html" data-external="true"><span>documentation</span></a>), thus you will not need to maintain both schemes once migrated.</p>
+
+   </aside><a name="d89381e15"></a><h2>POST /user/login</h2><a name="d89381e18"></a><p>Log in to YouTrack server using specified credentials.</p><a name="d89381e21"></a><p>
+      <a name="d89381e23"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">POST /rest/user/login</code></div>
+   </p><a name="d89381e27"></a><p>
+            <a name="d89381e29"></a><b id="d89381e29">Parameters:</b>
+         </p><table class=" wide" width="100%" id="d89381e34"><thead><tr id="d89381e36" class="ijRowHead"><a name="d89381e36"></a><th><a name="d89381e38"></a>Name</th><th><a name="d89381e41"></a>Type</th><th><a name="d89381e44"></a>Description</th></tr></thead><tbody><tr id="d89381e48" class="ijRowOdd"><a name="d89381e48"></a><td><a name="d89381e50"></a>login</td><td><a name="d89381e53"></a>string</td><td><a name="d89381e56"></a>User name to log in.</td></tr><tr id="d89381e60" class="ijRowEven"><a name="d89381e60"></a><td><a name="d89381e62"></a>password</td><td><a name="d89381e65"></a>string</td><td><a name="d89381e68"></a>Password for provided user name.</td></tr></tbody></table><a name="d89381e73"></a><p>Reuse cookie information from the response to the method (<code class="code" data-lang="xml">'Set-Cookie'</code> parameter) with in the <code class="code" data-lang="xml">'Cookie'</code> header of any subsequent requests.</p><a name="d89381e82"></a><h3>Sample</h3><a name="d89381e85"></a><p>
+      <a name="d89381e87"></a><b id="d89381e87">Request:</b>
+   </p><a name="d89381e91"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">POST http://localhost:8081/rest/user/login
+Content-Length: 24
+Connection: keep-alive
+Content-Type: application/x-www-form-urlencoded
+Cookie: 
+
+login=root<span class="err">&amp;</span>password=root</code></div><a name="d89381e94"></a><p>
+      <a name="d89381e96"></a><b id="d89381e96">Response:</b>
+   </p><a name="d89381e101"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">HTTP/1.1 200 OK
+Expires: Thu, 01-Jan-1970 00:00:00 GMT
+Set-Cookie: JSESSIONID=n7hq7t8o49ae15sgbq5hn9ic;Path=/
+Set-Cookie: jetbrains.charisma.main.security.PRINCIPAL=NDgxMzQ5NGQxMzdlMTYzMWJiYTMwMWQ1YWNhYjZlN2JiN2FhNzRjZTExODVkNDU2NTY1ZWY1MWQ3Mzc2NzdiMjpyb290;Path=/;Expires=Thu, 12-May-2011 16:37:10 GMT
+Content-Type: application/xml;charset=UTF-8
+Transfer-Encoding: chunked
+
+<span class="nt">&lt;login&gt;</span>ok<span class="nt">&lt;/login&gt;</span></code></div><div class="last-modified">Last modified: 2 February 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

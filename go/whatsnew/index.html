@@ -1,0 +1,2768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+                                            
+        <!-- Error reporting -->
+<script>(function(){
+  window.reportError = function(msg, file, line, col, err, isUnhandledRejection){};
+  var prevOnError = window.onerror;
+  var onError = function(msg, file, line, col, err) {
+    reportError(msg, file, line, col, err, false);
+    prevOnError && prevOnError.apply(window, arguments);
+    return false;
+  };
+  window.onerror = onError;
+  // Setup reporting for unhandled Promise rejection errors
+  window.addEventListener("unhandledrejection", function(e) {
+    if (!e.reason) return;
+    var l = getSrcLocation(e.reason);
+    reportError(e.reason.message, l.file, l.line, l.col, e.reason, true);
+  });
+  // Setup reporting for console.error and console.warn calls
+  patchConsole('error');
+  patchConsole('warn');
+  // Utility functions
+  function patchConsole(fnName) {
+    var fn = console[fnName];
+    console[fnName] = function() {
+      fn.apply(console, arguments);
+      var l; try {
+        throw new Error('_');
+      } catch (err) {
+        l = getSrcLocation(err, 1);
+      }
+      var msg = 'console.' + fnName + ': ' + Array.prototype.join.call(arguments, ' ');
+      reportError(msg, l.file, l.line, l.col, undefined, false);
+    };
+  }
+  function getSrcLocation(err, sd) {
+    var s = err && err.stack;
+    var l = s && s.split("\n")[1 + (sd|0)];
+    var r = l && (/^\s*at [^(]*\((.*?):(\d+)(:\d+)?\)$/.exec(l) || /^\s*at (.*?):(\d+)(:\d+)?$/.exec(l));
+    return r ? {file: r[1], line: r[2], col: r[3]} : {};
+  }
+})();</script>
+<!-- Error reporting -->        <!-- Google Tag Manager -->
+<script>(function() {
+  // Initialize Tag Manager queue
+  window.dataLayer = window.dataLayer || [];
+  window.gtmLoaded = false;
+  // Setup reporting for errors that occurred before Tag Manager initialized
+  var prevReportError = window.reportError;
+  var reportError = function(msg, file, line, col, err, isUnhandledRejection) {
+    if (!window.gtmLoaded || isUnhandledRejection) {
+      // Reproduce the behavior of the Tag Manager error handler
+      window.dataLayer.push(makeEvt(msg, file, line));
+    }
+    prevReportError && prevReportError.apply(window, arguments);
+  };
+  window.reportError = reportError;
+  // Utility functions
+  function makeEvt(msg, file, line) {
+    return {
+      event: "gtm.pageError", "gtm.errorMessage": msg,
+      "gtm.errorUrl": file, "gtm.errorLineNumber": line
+    };
+  }
+})();</script>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;j.addEventListener(
+    'load', function(){window.gtmLoaded=true});f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5P98');</script>
+<!-- End Google Tag Manager -->        <!-- Sentry -->
+<script>
+    (function() {
+        window.sentryLoaded = false;
+        window.errorsForSentry = [];
+        var prevReportError = window.reportError;
+        var reportError = function(
+            msg,
+            file,
+            line,
+            col,
+            err,
+            isUnhandledRejection
+        ) {
+            if (!window.sentryLoaded) {
+                window.errorsForSentry.push(err);
+            }
+            prevReportError && prevReportError.apply(window, arguments);
+        };
+        window.reportError = reportError;
+    })();
+</script>
+<script>
+    window.sentryLoad = function() {
+        window.sentryLoaded = true;
+        Sentry.init({
+            dsn: 'https://1adb2a61713144eda0786e5af50ddc51@sentry.io/1423069',
+            release:
+                "jetbrainscom@a6ccaa6ddb",
+            beforeSend: function(event) {
+                Object.keys(event).forEach(function(key) {
+                    var value = event[key];
+                    if (isEmail(value)) {
+                        delete event[key];
+                    }
+                });
+                return event;
+            }
+        });
+        Sentry.configureScope(function(scope) {
+            scope.setTag('page_locale', 'en-us');
+            scope.setTag('browser.locale', getPageLocale());
+
+            scope.setTag('http.urlFull', location.href);
+            var protocol = location.protocol || '';
+            //omit `:` from location.protocol string
+            var protocolString = protocol.substring(0, protocol.length - 1);
+
+            scope.setTag('http.protocol', protocolString);
+
+            scope.setTag('http.hostname', location.hostname);
+
+            var search = location.search || '';
+            //omit ? from location.search string
+            var searchString = search.substr(1);
+            if (searchString !== '') {
+                scope.setTag('http.query', searchString || '1');
+            }
+            var hash = location.hash || '';
+            //omit # from location.hash string
+            var hashString = hash.substr(1);
+            if (hashString !== '') {
+                scope.setTag('http.fragment', hashString);
+            }
+        });
+        window.errorsForSentry.forEach(Sentry.captureException);
+
+        function getPageLocale() {
+            return (
+                (navigator.languages && navigator.languages[0]) ||
+                navigator.language
+            );
+        }
+        function isEmail(value) {
+            var emailRegex = /[\+\-\_\.a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+\.[a-zA-Z0-9]+/g;
+            return emailRegex.test(value);
+        }
+    };
+</script>
+<script src="https://browser.sentry-cdn.com/5.7.1/bundle.min.js" crossorigin="anonymous" onload="sentryLoad()" async></script>
+<!-- End Sentry -->    
+                <title>What’s New in GoLand</title>
+    
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, maximum-scale=1">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#000000">
+<meta name="apple-mobile-web-app-title" content="JetBrains">
+<meta name="application-name" content="JetBrains">
+<meta name="msapplication-TileColor" content="#000000">
+<meta name="theme-color" content="#000000">    <link rel="canonical" href="https://www.jetbrains.com/go/whatsnew/" />    <!-- .61-->
+                
+        
+                    <meta name="description" content="JetBrains is a cutting-edge software vendor specializing in the creation of intelligent development tools, including IntelliJ IDEA – the leading Java IDE, and the Kotlin programming language."/>
+            <meta name="keywords" content="JetBrains, IntelliJ, IntelliJ IDEA, java, Java IDE, C#, .NET, refactoring, productivity, Visual Studio plugins, developer productivity tools."/>
+            
+        <link rel="alternate" hreflang="x-default" href="https://www.jetbrains.com/go/whatsnew/" />
+
+                        <link rel="alternate" hreflang="en" href="https://www.jetbrains.com/go/whatsnew/" />
+                                <link rel="alternate" hreflang="de" href="https://www.jetbrains.com/de-de/go/whatsnew/" />
+                                <link rel="alternate" hreflang="es" href="https://www.jetbrains.com/es-es/go/whatsnew/" />
+                                <link rel="alternate" hreflang="fr" href="https://www.jetbrains.com/fr-fr/go/whatsnew/" />
+                                <link rel="alternate" hreflang="ja" href="https://www.jetbrains.com/ja-jp/go/whatsnew/" />
+                                <link rel="alternate" hreflang="ko" href="https://www.jetbrains.com/ko-kr/go/whatsnew/" />
+                                <link rel="alternate" hreflang="ru" href="https://www.jetbrains.com/ru-ru/go/whatsnew/" />
+                                <link rel="alternate" hreflang="zh-CN" href="https://www.jetbrains.com/zh-cn/go/whatsnew/" />
+                                            <link rel="alternate" hreflang="x-klingon" href="https://www.jetbrains.com/tl-aa/go/whatsnew/" />
+            
+    
+    
+        
+    
+    
+    <script>
+        var current_lang = 'en-us';
+                                    var i18n_info = {"current_lang": "en-us", "languages": [{"canonical": "en", "code": "en-us", "label": "English", "page_translated": true, "url": "/go/whatsnew/"}, {"canonical": "de", "code": "de-de", "label": "Deutsch", "page_translated": true, "url": "/de-de/go/whatsnew/"}, {"canonical": "es", "code": "es-es", "label": "Espa\u00f1ol", "page_translated": true, "url": "/es-es/go/whatsnew/"}, {"canonical": "fr", "code": "fr-fr", "label": "Fran\u00e7ais", "page_translated": true, "url": "/fr-fr/go/whatsnew/"}, {"canonical": "ja", "code": "ja-jp", "label": "\u65e5\u672c\u8a9e", "page_translated": true, "url": "/ja-jp/go/whatsnew/"}, {"canonical": "ko", "code": "ko-kr", "label": "\ud55c\uad6d\uc5b4", "page_translated": true, "url": "/ko-kr/go/whatsnew/"}, {"canonical": "ru", "code": "ru-ru", "label": "\u0420\u0443\u0441\u0441\u043a\u0438\u0439", "page_translated": true, "url": "/ru-ru/go/whatsnew/"}, {"canonical": "zh-CN", "code": "zh-cn", "label": "\u7b80\u4f53\u4e2d\u6587", "page_translated": true, "url": "/zh-cn/go/whatsnew/"}, {"canonical": "pt-BR", "code": "pt-br", "label": "Portugu\u00eas do Brasil", "page_translated": false, "url": "/pt-br/go/whatsnew/"}, {"canonical": "x-klingon", "code": "tl-aa", "label": "tlhIngan Hol", "page_translated": true, "url": "/tl-aa/go/whatsnew/"}]};
+                            var navigationMenu = {"primary": {"id": "main_v2", "items": [{"id": "tools", "title": "Tools", "descriptionTitle": "Toolbox App", "descriptionLogoId": "toolbox", "descriptionLink": "Learn more", "descriptionUrl": "/toolbox-app/", "description": "Manage your tools the easy way", "src": "/img/banners-menu-main/toolbox-vertical.png", "horisontalSrc": "/img/banners-menu-main/toolbox-horisontal.png", "bgColor": "#3E0598", "isVisible": true, "hasCategories": true, "items": [{"title": "IDEs", "items": [{"isActive": false, "id": "appcode", "title": "AppCode", "url": "/objc/", "logoLeftActionId": "appcode", "items": [], "cleaned_url": "/objc/"}, {"isActive": false, "id": "clion", "title": "CLion", "url": "/clion/", "logoLeftActionId": "clion", "items": [], "cleaned_url": "/clion/"}, {"isActive": false, "id": "datalore", "title": "Datalore", "url": "https://datalore.io/", "isExternalLink": true, "logoLeftActionId": "datalore", "items": [], "cleaned_url": "https://datalore.io/"}, {"isActive": false, "id": "datagrip", "title": "DataGrip", "url": "/datagrip/", "logoLeftActionId": "datagrip", "items": [], "cleaned_url": "/datagrip/"}, {"isActive": false, "id": "goland", "title": "GoLand", "url": "/go/", "logoLeftActionId": "goland", "items": [], "cleaned_url": "/go/"}, {"isActive": false, "id": "idea", "title": "IntelliJ IDEA", "url": "/idea/", "logoLeftActionId": "intellij-idea", "items": [], "cleaned_url": "/idea/"}, {"isActive": false, "id": "phpstorm", "title": "PhpStorm", "url": "/phpstorm/", "logoLeftActionId": "phpstorm", "items": [], "cleaned_url": "/phpstorm/"}, {"isActive": false, "id": "pycharm", "title": "PyCharm", "url": "/pycharm/", "logoLeftActionId": "pycharm", "items": [], "cleaned_url": "/pycharm/"}, {"isActive": false, "id": "rider", "title": "Rider", "url": "/rider/", "logoLeftActionId": "rider", "items": [], "cleaned_url": "/rider/"}, {"isActive": false, "id": "rubymine", "title": "RubyMine", "url": "/ruby/", "logoLeftActionId": "rubymine", "items": [], "cleaned_url": "/ruby/"}, {"isActive": false, "id": "webstorm", "title": "WebStorm", "url": "/webstorm/", "logoLeftActionId": "webstorm", "items": [], "cleaned_url": "/webstorm/"}, {"isActive": false, "id": "toolbox", "type": "special", "title": "Toolbox App", "url": "/toolbox-app/", "logoLeftId": "toolbox", "description": "A control panel for your tools and projects", "items": [], "cleaned_url": "/toolbox-app/"}]}, {"title": ".NET & VISUAL STUDIO", "items": [{"isActive": false, "id": "resharper", "title": "ReSharper", "url": "/resharper/", "logoLeftActionId": "resharper", "items": [], "cleaned_url": "/resharper/"}, {"isActive": false, "id": "rider", "title": "Rider", "url": "/rider/", "logoLeftActionId": "rider", "items": [], "cleaned_url": "/rider/"}, {"isActive": false, "id": "resharper-cpp", "title": "ReSharper C++", "url": "/resharper-cpp/", "logoLeftActionId": "resharper-cpp", "items": [], "cleaned_url": "/resharper-cpp/"}, {"isActive": false, "id": "dotcover", "title": "dotCover", "url": "/dotcover/", "logoLeftActionId": "dotcover", "items": [], "cleaned_url": "/dotcover/"}, {"isActive": false, "id": "dotmemory", "title": "dotMemory", "url": "/dotmemory/", "logoLeftActionId": "dotmemory", "items": [], "cleaned_url": "/dotmemory/"}, {"isActive": false, "id": "dotpeek", "title": "dotPeek", "url": "/decompiler/", "logoLeftActionId": "dotpeek", "items": [], "cleaned_url": "/decompiler/"}, {"isActive": false, "id": "dottrace", "title": "dotTrace", "url": "/profiler/", "logoLeftActionId": "dottrace", "items": [], "cleaned_url": "/profiler/"}]}, {"title": "TEAM TOOLS", "items": [{"isActive": false, "id": "teamcity", "title": "TeamCity", "url": "/teamcity/", "logoLeftActionId": "teamcity", "items": [], "cleaned_url": "/teamcity/"}, {"isActive": false, "id": "upsource", "title": "Upsource", "url": "/upsource/", "logoLeftActionId": "upsource", "items": [], "cleaned_url": "/upsource/"}, {"isActive": false, "id": "youtrack", "title": "YouTrack", "url": "/youtrack/", "logoLeftActionId": "youtrack", "items": [], "cleaned_url": "/youtrack/"}, {"isActive": false, "id": "hub", "title": "Hub", "url": "/hub/", "logoLeftActionId": "hub", "items": [], "cleaned_url": "/hub/"}]}, {"title": "PLUGIN MARKETPLACE", "items": [{"isActive": false, "id": "bigdata", "title": "Big Data Tools", "url": "https://plugins.jetbrains.com/plugin/12494-big-data-tools", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/plugin/12494-big-data-tools"}, {"isActive": false, "id": "rustsupport", "title": "Rust", "url": "https://plugins.jetbrains.com/plugin/8182-rust", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/plugin/8182-rust"}, {"isActive": false, "id": "scalaplugin", "title": "Scala", "url": "https://plugins.jetbrains.com/plugin/1347-scala", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/plugin/1347-scala"}, {"isActive": false, "id": "idethemes", "title": "IDE Themes", "url": "https://plugins.jetbrains.com/search?tags=Theme", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/search?tags=Theme"}, {"isActive": false, "id": "plugins", "title": "All Plugins", "url": "https://plugins.jetbrains.com/", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/"}]}, {"title": "EDUCATION", "items": [{"isActive": false, "id": "pycharm-edu", "title": "PyCharm Edu", "url": "/education/", "urlHash": "#lang=python&role=learner", "logoLeftActionId": "pycharm-edu", "items": [], "cleaned_url": "/education/"}, {"isActive": false, "id": "idea-edu", "title": "IntelliJ IDEA Edu", "url": "/education/", "urlHash": "#lang=java&role=learner", "logoLeftActionId": "intellij-idea", "items": [], "cleaned_url": "/education/"}, {"isActive": false, "id": "jb-academy", "title": "JB Academy", "url": "/academy/", "items": [], "cleaned_url": "/academy/"}]}]}, {"id": "languages", "title": "Languages", "descriptionTitle": "Kotlin/Everywhere", "descriptionLogoId": "header-kotlin-everywhere", "descriptionLink": "Join in!", "descriptionUrl": "//everywhere.kotlinlang.org", "description": "A worldwide event series for learning the best Kotlin practices on all platforms", "descriptionBig": true, "src": "/img/banners-menu-main/kotlin-vertical.png", "horisontalSrc": "/img/banners-menu-main/kotlin-horisontal.png", "bgColor": "#D6721C", "isExternalLink": true, "isVisible": true, "hasCategories": false, "items": [{"isActive": false, "id": "kotlin", "title": "Kotlin", "url": "https://kotlinlang.org/", "isExternalLink": true, "logoLeftId": "header-kotlin-grayscale", "logoLeftActionId": "kotlin", "logoLeftSize": "50", "description": "Programming language \n for JVM & Android", "items": [], "cleaned_url": "https://kotlinlang.org/"}, {"isActive": false, "id": "mps", "title": "MPS", "url": "/mps/", "logoLeftId": "header-mps-grayscalse", "logoLeftActionId": "mps", "logoLeftSize": "50", "description": "Create your own domain-specific language", "items": [], "cleaned_url": "/mps/"}]}, {"id": "solutions", "title": "Solutions", "descriptionTitle": "JetBrains Academy", "descriptionLogoId": "academy-logo", "descriptionLink": "Join in!", "descriptionUrl": "/academy", "description": "An educational platform for future professionals", "src": "/img/banners-menu-main/academy-vertical.png", "horisontalSrc": "/img/banners-menu-main/academy-horisontal.png", "bgColor": "#53288E", "hasCategories": false, "isVisible": true, "items": [{"isActive": false, "title": "C++ Tools", "url": "/cpp/", "logoLeftId": "header-cpp-grayscale", "logoLeftActionId": "header-cpp", "description": "Tools for C/C++ development \nfor any platform", "items": [], "cleaned_url": "/cpp/"}, {"isActive": false, "title": "For Business", "url": "/store/business/", "logoLeftId": "header-for-business-grayscale", "logoLeftActionId": "header-for-business", "description": "Wide range of tools. \nAll major technologies covered", "items": [], "cleaned_url": "/store/business/"}, {"isActive": false, "title": "Game Development", "url": "/gamedev/", "logoLeftId": "header-gamedev-grayscale", "logoLeftActionId": "header-gamedev", "description": "Tools for game development \nfor any platform", "items": [], "cleaned_url": "/gamedev/"}, {"isActive": false, "title": "DevOps", "url": "/devops/", "logoLeftId": "header-devops-grayscale", "logoLeftActionId": "header-devops", "description": "Tools and integrations \nfor any infrastructure", "items": [], "cleaned_url": "/devops/"}, {"isActive": false, "title": "Education", "url": "/education/", "logoLeftId": "header-education-grayscale", "logoLeftActionId": "header-education", "description": "Products to learn and teach programming", "items": [], "cleaned_url": "/education/"}]}, {"id": "support", "title": "Support", "description": "Pricing and licensing for businesses and individuals", "descriptionTitle": "JetBrains Store", "descriptionLogoId": "header-store", "descriptionUrl": "/store/?fromMenu#edition=commercial", "descriptionLink": "visit store", "isVisible": true, "hasCategories": true, "items": [{"title": "CUSTOMERS", "items": [{"isActive": false, "title": "Sales Support", "url": "/support/sales/", "description": "Orders, payments", "items": [], "cleaned_url": "/support/sales/"}, {"isActive": false, "title": "Product Support", "url": "/support/", "description": "Tech support, documentation", "items": [], "cleaned_url": "/support/"}]}, {"title": "COMMUNITY PROGRAMS", "items": [{"isActive": false, "title": "Education", "url": "/community/education/", "description": "Students, classrooms, training", "items": [], "cleaned_url": "/community/education/"}, {"isActive": false, "title": "Open Source", "url": "/community/opensource/", "description": "Projects support", "items": [], "cleaned_url": "/community/opensource/"}, {"isActive": false, "title": "Sponsorship", "url": "/community/support/", "description": "User groups, events, technology experts", "items": [], "cleaned_url": "/community/support/"}]}]}, {"id": "company", "title": "Company", "isVisible": true, "hasCategories": true, "items": [{"title": "INITIATIVES", "items": [{"isActive": false, "title": "Open Source", "url": "/opensource/", "description": "Projects, contributions", "items": [], "cleaned_url": "/opensource/"}, {"isActive": false, "title": "Research", "url": "/research/", "description": "Market, Scientific", "items": [], "cleaned_url": "/research/"}]}, {"title": "COMPANY", "items": [{"isActive": false, "title": "About", "url": "/company/", "description": "People, customers, awards", "items": [], "cleaned_url": "/company/"}, {"isActive": false, "title": "Brand Assets", "url": "/company/brand/", "description": "Guidelines, logos", "items": [], "cleaned_url": "/company/brand/"}, {"isActive": false, "title": "Careers", "url": "/careers/apply/", "description": "Jobs, internships", "items": [], "cleaned_url": "/careers/apply/"}, {"isActive": false, "title": "Events", "url": "/company/events/", "description": "Conferences, meetups", "items": [], "cleaned_url": "/company/events/"}, {"isActive": false, "title": "Contacts", "url": "/company/contacts/", "description": "Partners, resellers, Kotlin training", "items": [], "cleaned_url": "/company/contacts/"}]}, {"title": "RESOURCES", "items": [{"isActive": false, "title": "Newsletters", "url": "/resources/newsletters/", "items": [], "cleaned_url": "/resources/newsletters/"}, {"isActive": false, "title": "Webinars", "url": "/resources/webinars/", "items": [], "cleaned_url": "/resources/webinars/"}, {"isActive": false, "title": "Early Access", "url": "/resources/eap/", "items": [], "cleaned_url": "/resources/eap/"}, {"isActive": false, "title": "Blog", "url": "//blog.jetbrains.com/", "isExternalLink": true, "items": [], "cleaned_url": "//blog.jetbrains.com/"}]}]}, {"isActive": false, "id": "store", "url": "/store/?fromNavMenu", "title": "Store", "isVisible": true, "hasCategories": false, "items": [], "cleaned_url": "/store/?fromNavMenu"}]}, "secondary": {"isActive": true, "id": "product_goland", "logoId": "goland", "url": "/go/", "title": "GoLand", "items": [{"isActive": true, "title": "What's New", "url": "/go/whatsnew/", "items": [], "cleaned_url": "/go/whatsnew/"}, {"isActive": false, "title": "Features", "url": "/go/features/", "items": [], "cleaned_url": "/go/features/"}, {"isActive": false, "title": "Quick Start", "url": "/go/learn/", "items": [], "cleaned_url": "/go/learn/"}, {"isActive": false, "title": "Buy", "url": "/go/buy/", "items": [], "cleaned_url": "/go/buy/"}, {"isActive": false, "title": "Download ", "url": "/go/download/", "type": "button", "items": [], "cleaned_url": "/go/download/"}], "cleaned_url": "/go/"}};
+        
+        var is_layout_adaptive = false;
+        
+        var disable_language_picker = false;
+        
+        var english_only_url_prefixes = [];
+            </script>
+    
+            <script></script>
+    
+        
+    
+            <link href="/_assets/common.d44d81f300d3bff87efe.css" rel="stylesheet" type="text/css">
+<link href="/_assets/default-page.fabf52db4bf34ea78af0.css" rel="stylesheet" type="text/css">
+<link href="/_assets/go/whatsnew/index.entry.7f48b1e6248aba4e66e9.css" rel="stylesheet" type="text/css">
+        <script src="/_assets/common.34604685b633d15ae3ed.js" type="text/javascript"></script>
+<script src="/_assets/default-page.2e180fc15a6b94fe7fa3.js" type="text/javascript"></script>
+<script src="/_assets/go/whatsnew/index.entry.8ec77829064b86c2eb59.js" type="text/javascript"></script>
+    
+            <!-- Social Media tag Starts -->
+    <!-- Open Graph data -->
+            <meta property="og:title" content="What’s New in GoLand"/>
+    
+                    <meta property="og:description" content="JetBrains is a cutting-edge software vendor specializing in the creation of intelligent development tools, including IntelliJ IDEA – the leading Java IDE, and the Kotlin programming language."/>
+    <meta property="og:image" content="http://resources.jetbrains.com/storage/products/jetbrains/img/meta/jetbrains_1280x800.png"/>
+
+    <meta property="og:site_name" content="JetBrains"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="https://www.jetbrains.com/go/whatsnew/"/>
+    <!-- Social Media tag Ends -->
+</head>
+
+<body class="nojs  ">
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<script>
+/*! modernizr 3.2.0 (Custom Build) | MIT *
+ * http://modernizr.com/download/?-flexbox-flexboxtweener !*/
+!function(e,n,t){function r(e,n){return typeof e===n}function o(){var e,n,t,o,i,s,l;for(var f in v)if(v.hasOwnProperty(f)){if(e=[],n=v[f],n.name&&(e.push(n.name.toLowerCase()),n.options&&n.options.aliases&&n.options.aliases.length))for(t=0;t<n.options.aliases.length;t++)e.push(n.options.aliases[t].toLowerCase());for(o=r(n.fn,"function")?n.fn():n.fn,i=0;i<e.length;i++)s=e[i],l=s.split("."),1===l.length?Modernizr[l[0]]=o:(!Modernizr[l[0]]||Modernizr[l[0]]instanceof Boolean||(Modernizr[l[0]]=new Boolean(Modernizr[l[0]])),Modernizr[l[0]][l[1]]=o),C.push((o?"":"no-")+l.join("-"))}}function i(e,n){return!!~(""+e).indexOf(n)}function s(e){return e.replace(/([a-z])-([a-z])/g,function(e,n,t){return n+t.toUpperCase()}).replace(/^-/,"")}function l(e,n){return function(){return e.apply(n,arguments)}}function f(e,n,t){var o;for(var i in e)if(e[i]in n)return t===!1?e[i]:(o=n[e[i]],r(o,"function")?l(o,t||n):o);return!1}function a(e){return e.replace(/([A-Z])/g,function(e,n){return"-"+n.toLowerCase()}).replace(/^ms-/,"-ms-")}function u(){return"function"!=typeof n.createElement?n.createElement(arguments[0]):b?n.createElementNS.call(n,"http://www.w3.org/2000/svg",arguments[0]):n.createElement.apply(n,arguments)}function d(){var e=n.body;return e||(e=u(b?"svg":"body"),e.fake=!0),e}function p(e,t,r,o){var i,s,l,f,a="modernizr",p=u("div"),c=d();if(parseInt(r,10))for(;r--;)l=u("div"),l.id=o?o[r]:a+(r+1),p.appendChild(l);return i=u("style"),i.type="text/css",i.id="s"+a,(c.fake?c:p).appendChild(i),c.appendChild(p),i.styleSheet?i.styleSheet.cssText=e:i.appendChild(n.createTextNode(e)),p.id=a,c.fake&&(c.style.background="",c.style.overflow="hidden",f=_.style.overflow,_.style.overflow="hidden",_.appendChild(c)),s=t(p,e),c.fake?(c.parentNode.removeChild(c),_.style.overflow=f,_.offsetHeight):p.parentNode.removeChild(p),!!s}function c(n,r){var o=n.length;if("CSS"in e&&"supports"in e.CSS){for(;o--;)if(e.CSS.supports(a(n[o]),r))return!0;return!1}if("CSSSupportsRule"in e){for(var i=[];o--;)i.push("("+a(n[o])+":"+r+")");return i=i.join(" or "),p("@supports ("+i+") { #modernizr { position: absolute; } }",function(e){return"absolute"==getComputedStyle(e,null).position})}return t}function m(e,n,o,l){function f(){d&&(delete E.style,delete E.modElem)}if(l=r(l,"undefined")?!1:l,!r(o,"undefined")){var a=c(e,o);if(!r(a,"undefined"))return a}for(var d,p,m,h,y,v=["modernizr","tspan"];!E.style;)d=!0,E.modElem=u(v.shift()),E.style=E.modElem.style;for(m=e.length,p=0;m>p;p++)if(h=e[p],y=E.style[h],i(h,"-")&&(h=s(h)),E.style[h]!==t){if(l||r(o,"undefined"))return f(),"pfx"==n?h:!0;try{E.style[h]=o}catch(g){}if(E.style[h]!=y)return f(),"pfx"==n?h:!0}return f(),!1}function h(e,n,t,o,i){var s=e.charAt(0).toUpperCase()+e.slice(1),l=(e+" "+x.join(s+" ")+s).split(" ");return r(n,"string")||r(n,"undefined")?m(l,n,o,i):(l=(e+" "+S.join(s+" ")+s).split(" "),f(l,n,t))}function y(e,n,r){return h(e,t,t,n,r)}var v=[],g={_version:"3.2.0",_config:{classPrefix:"",enableClasses:!0,enableJSClass:!0,usePrefixes:!0},_q:[],on:function(e,n){var t=this;setTimeout(function(){n(t[e])},0)},addTest:function(e,n,t){v.push({name:e,fn:n,options:t})},addAsyncTest:function(e){v.push({name:null,fn:e})}},Modernizr=function(){};Modernizr.prototype=g,Modernizr=new Modernizr;var C=[],w="Moz O ms Webkit",x=g._config.usePrefixes?w.split(" "):[];g._cssomPrefixes=x;var S=g._config.usePrefixes?w.toLowerCase().split(" "):[];g._domPrefixes=S;var _=n.documentElement,b="svg"===_.nodeName.toLowerCase(),z={elem:u("modernizr")};Modernizr._q.push(function(){delete z.elem});var E={style:z.elem.style};Modernizr._q.unshift(function(){delete E.style}),g.testAllProps=h,g.testAllProps=y,Modernizr.addTest("flexbox",y("flexBasis","1px",!0)),Modernizr.addTest("flexboxtweener",y("flexAlign","end",!0)),o(),delete g.addTest,delete g.addAsyncTest;for(var P=0;P<Modernizr._q.length;P++)Modernizr._q[P]();e.Modernizr=Modernizr}(window,document);
+
+if (!Modernizr.flexbox && !Modernizr.flexboxtweener) {
+
+  var $body = $('body');
+
+  var nodesClasses = {
+    wrapper: 'not-supported-browser',
+    container: 'not-supported-browser__container',
+
+    title: 'not-supported-browser__title',
+    content: 'not-supported-browser__content',
+    logo: 'not-supported-browser__logo'
+  };
+
+  var nodes = {
+    wrapper: $('<div class="' + nodesClasses.wrapper + '"></div>'),
+    title: $('<div class="' + nodesClasses.title + '">Sorry, your browser is not fully supported</div>'),
+    content: $('<div class="' + nodesClasses.content + '">There may be some issues with pages layout in your current browser.<br/>Please use an alternate browser until we resolve the issues.<br/>Thank you.</div>'),
+    container: $('<div class="' + nodesClasses.container + '"></div>'),
+    logo: $('<div class="' + nodesClasses.logo + '"><svg class="sprite-img _jetbrains" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#jetbrains"></use></svg></div>')
+  };
+
+  $body.addClass('overflow-hidden');
+
+
+  nodes.content
+    .prepend(nodes.title)
+    .prepend(nodes.logo);
+
+  nodes.container
+    .append(nodes.content);
+
+  nodes.wrapper
+    .append(nodes.container)
+    .appendTo($body);
+}
+</script>
+<div class="page">
+                <div class="page__header">
+                <header class="menu-main header"  id="js-menu-main">
+    <div class="wt-container">
+        <div class="wt-row wt-row_nowrap wt-row_size_s wt-row_align-items_center">
+            <div class="wt-col-auto-fill">
+                <a href="/" class="menu-main__logo-link"><svg class="_jetbrains-simple sprite-img menu-main__logo" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#jetbrains-simple"></use></svg></a>
+            </div>
+            <div class="wt-col-inline wt-display-md-none menu-main-skeleton-text-1" style="min-width: 69px"></div>
+            <div class="wt-col-inline wt-display-md-none menu-main-skeleton-text-1" style="min-width: 81px"></div>
+            <div class="wt-col-inline wt-display-md-none menu-main-skeleton-text-1" style="min-width: 46px"></div>
+            <div class="wt-col-inline menu-main-skeleton-button"></div>
+            <div class="wt-col-inline menu-main-skeleton-button"></div>
+        </div>
+    </div>
+</header>
+
+
+
+  <div class="menu-second" id="js-menu-second">
+    <div class="wt-container">
+        <div id="js-menu-second-mobile-wrapper" class="wt-display-none">
+            <div id="js-menu-second-mobile" >
+                <div class="menu-second-mobile wt-row wt-row_size_m wt-row_align-items_center wt-row_justify_between">
+                    <div class="wt-col-inline menu-second-skeleton-text-2" style="max-width: 120px"></div>
+                    <div class="wt-col-inline menu-second-skeleton-button" style="max-width: 80px"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="js-menu-second-desktop" class="menu-second-desktop
+                       wt-row wt-row_size_0 wt-row_align-items_center">
+            <div class="wt-col-auto-fill">
+                <a class="menu-second-title-box"
+                   href="/go/">
+                                            <span class="menu-second-title-box__logo jetbrains-logo">
+                            <svg class="_goland sprite-img" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#goland"></use></svg>
+                        </span>
+                    
+                    <span class="menu-second-title-box__title wt-h3">GoLand</span>
+                </a>
+            </div>
+
+                            
+                                                        <a href="/go/whatsnew/"
+                       class="wt-col-inline wt-text-2 wt-text-2_hardness_average menu-second__link
+                                                                wt-text-2_hardness_primary">
+                        What&#39;s New
+                                            </a>
+                                            
+                                                        <a href="/go/features/"
+                       class="wt-col-inline wt-text-2 wt-text-2_hardness_average menu-second__link
+                                                                ">
+                        Features
+                                            </a>
+                                            
+                                                        <a href="/go/learn/"
+                       class="wt-col-inline wt-text-2 wt-text-2_hardness_average menu-second__link
+                                                                ">
+                        Quick Start
+                                            </a>
+                                            
+                                                        <a href="/go/buy/"
+                       class="wt-col-inline wt-text-2 wt-text-2_hardness_average menu-second__link
+                                                                ">
+                        Buy
+                                            </a>
+                                            
+                            
+                                                    
+                            <a href="/go/download/"
+                   class="wt-col-inline menu-second__download-button wt-button wt-button_size_s wt-button_mode_primary">
+                    Download 
+                </a>
+                    </div>
+
+    </div>
+</div>
+
+            </div>
+    
+    <div class="page__content ">
+        <nav class="js-add-side-toc"></nav>
+<header class="whatsnew-header">
+<div class="whatsnew-header__top wt-container article-content">
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-10">
+<h1 class="no-margin-top _big">What′s New in GoLand</h1>
+<p class="sub-title"><strong>GoLand 2019.3</strong> consumes less CPU and performs faster, boosts
+                        its Go Modules support, adds a set of new quick-fixes, and enhances the refactorings. It’s
+                        possible to call a method of an embedded field via <em>Evaluate Expression</em> and debug your
+                        applications remotely using Mozilla rr.</p>
+<p class="sub-title">You can also enable a Global File Watcher for every new
+                        project, work with MongoDB, and more!</p>
+<div class="button-group _align-left">
+<div class="button-with-note">
+<div class="button-dropdown js-button-dropdown">
+<a class="button button-dropdown__link" href="/go/download/download-thanks.html">Download</a>
+<button class="button button-dropdown__action js-button-dropdown-action">.exe</button>
+<ul class="dropdown-link-list js-button-dropdown-content">
+<li><a class="dropdown-link-list__link" data-windows=".exe" href="/go/download/download-thanks.html?platform=windows">Windows (.exe)</a>
+</li>
+<li><a class="dropdown-link-list__link" data-mac=".dmg" href="/go/download/download-thanks.html?platform=mac">macOS (.dmg)</a></li>
+<li><a class="dropdown-link-list__link" data-linux=".tar.gz" href="/go/download/download-thanks.html?platform=linux">Linux (.tar.gz)</a>
+</li>
+</ul>
+</div>
+<div class="button-with-note__note">Free 30-day trial</div>
+</div>
+<!--<a href="https://youtu.be/7yaJfyF6KO4"-->
+<!--class="button _icon-video js-popup">Take a short tour</a>-->
+</div>
+</div>
+</div>
+</div>
+</header>
+<!--region 2019.3-->
+<div class="section-content _bg-medium version-2019-3" id="v2019-3">
+<div class="wt-container article-content">
+<div class="wt-row wt-row_size_m version-label">
+<span class="version-label__text">2019.3 Nov 29</span>
+<span class="version-label__slope"></span>
+</div>
+<h2 data-title="Performance">Performance</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="A chart with the startup times measurement of GoLand 2019.3 on different operating systems" src="/go/whatsnew/img/2019.3/startup-performance.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<p>Since releasing GoLand 2019.2 this summer, we’ve been working hard to make GoLand perform
+                faster and consume less CPU. One of the major performance improvements is reducing the
+                startup times, when the IDE prepares everything under the hood, displays the welcome screen,
+                and indexes a project.</p>
+<p>Please note that results may vary depending on the size of your project and your device’s
+                age, RAM, and disk space. We will keep working on this, so you can expect even faster
+                startup times in future releases.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Go Modules improvement">Go Modules improvements</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Navigation from go.mod file to the Project View" class="js-gif" data-gif-src="/go/whatsnew/img/2019.3/go-modules-navigation.gif" src="/go/whatsnew/img/2019.3/go-modules-navigation.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<p>GoLand 2019.3 provides <strong>syntax highlighting and navigation for <code>go.mod</code>
+                files</strong>. Press <kbd>⌘+B</kbd> on
+                macOS or <kbd>Ctrl+B</kbd> on Windows/Linux on a specific dependency import path, and GoLand
+                will
+                navigate you to its sources in the <em>Project View</em>.
+            </p>
+<p>Also, in the <em>Project View</em>, the Go Modules will be displayed with their full import
+                path
+                instead of just the last segment of it. The version of each Go Module will also be shown in
+                a more muted font color than the import path, to help you easily distinguish between them.
+            </p>
+</div>
+</div>
+</div>
+<h2 data-title="Debugger updates">Debugger updates</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Evaluate Expression dialog with the result of call" src="/go/whatsnew/img/2019.3/call-method-embedded-field.png" width="605">
+</div>
+<h3 class="features-block__title">Call Method of an Embedded Field</h3>
+<p><em>Evaluate Expression</em> in the debugger now lets you call a method of an embedded field
+                directly.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Debugging with Mozilla rr" class="js-gif" data-gif-src="/go/whatsnew/img/2019.3/mozilla-rr.gif" src="/go/whatsnew/img/2019.3/mozilla-rr.png" width="605">
+</div>
+<h3 class="features-block__title">Remote debugging with Mozilla rr</h3>
+<p>Many production services written in Go run on Linux and Mozilla rr can help investigate bugs
+                that are difficult to reproduce. Mozilla rr debugging is supported starting from GoLand
+                2018.3, but it used to work only on developer machines running Linux. Now, it is possible to
+                <strong>start a debug server on a Linux machine and to debug the trace remotely from macOS and
+                    Windows</strong>. Follow these steps:</p>
+<ul>
+<li>Collect an rr trace on the remote machine.</li>
+<li>Start the debugger on the remote machine like this:
+                    <code>dlv --headless --api-version 2 -l localhost:2345 replay /path/to/trace/dir
+                        /path/to/binary</code>.
+                </li>
+<li>Connect to the remote machine via the <em>Go Remote</em> configuration.</li>
+</ul>
+<p>Please note Mozilla rr is available only on Linux machines.</p>
+</div>
+</div>
+</div>
+<h2 data-title="New quick-fixes ">New quick-fixes </h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Delete unused parameter name from the expression via Alt+Enter" class="js-gif" data-gif-src="/go/whatsnew/img/2019.3/quick-fixes-for-unused-parameters.gif" src="/go/whatsnew/img/2019.3/quick-fixes-for-unused-parameters.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">Handling unused parameters</h3>
+<p>For an unused parameter, GoLand now highlights its name and type if both can be removed, or
+                only the name if the type is used for implementing a method specification.
+            </p>
+<p>In the latter case, the IDE provides two quick-fixes for you to choose from: <em>Delete
+                parameter
+                names</em> or <em>Rename to_</em>. The same behavior is provided for functions that are used
+                as a
+                function type
+            </p>
+<p>Also, now it’s possible to remove all the unused parameters in one go. Press
+                <kbd>Alt+Enter</kbd> and
+                use the <em>Delete all unused parameters</em> quick-fix.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Create a missing function" class="js-gif" data-gif-src="/go/whatsnew/img/2019.3/create-method-function-quick-fix.gif" src="/go/whatsnew/img/2019.3/create-method-function-quick-fix.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">Create missing method or function</h3>
+<p>GoLand provides a quick-fix to create a missing function or method <strong>when it's used in
+                a function type</strong>. Just press <kbd>Alt+Enter</kbd> and choose <em>Create
+                method/function</em>.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="GoLand suggest to import package" class="js-gif" data-gif-src="/go/whatsnew/img/2019.3/enhanced-handling-package-aliases.gif" src="/go/whatsnew/img/2019.3/enhanced-handling-package-aliases.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">Enhanced handling of package aliases</h3>
+<p>GoLand now suggests importing packages based on their used aliases via <kbd>Alt+Enter</kbd> in any file in your project.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Refactorings">Refactorings</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Types of parameters are shown in the Parameters and Result Parameters tabs" class="js-gif" data-gif-src="/go/whatsnew/img/2019.3/change-signature.gif" src="/go/whatsnew/img/2019.3/change-signature.png" width="605">
+</div>
+<h3 class="features-block__title">Change Signature</h3>
+<p><em>Change Signature</em> now always shows the type of parameters in the <em>Parameters</em>
+                and <em>Result
+                    parameters</em> tabs. Tick the new <em>Reuse types</em> checkbox to collapse consequence
+                types in the
+                <em>Signature Preview</em> and the result.</p>
+<p>In addition, you will find two new intention actions, <em>Reuse signature types</em> which
+                merges
+                parameter definitions in a single declaration, and <em>Expand signature types</em> which
+                adds types
+                to each parameter via <kbd>Alt+Enter</kbd>.
+            </p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Extract Variable suggests err for expression of type error" class="js-gif" data-gif-src="/go/whatsnew/img/2019.3/extract-variable-rename.gif" src="/go/whatsnew/img/2019.3/extract-variable-rename.png" width="605">
+</div>
+<h3 class="features-block__title">Extract Variable & Rename</h3>
+<p><em>Extract Variable</em> and <em>Rename</em> are now better at suggesting names. For
+                example, <code>err</code> is suggested
+                for expressions of type error, <code>ctx</code> is suggested for
+                <code>context.Context</code>, and so on.
+            </p>
+</div>
+</div>
+</div>
+<h2 data-title="Improved behavior of Code Inspections">Improved behavior of Code Inspections</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Comparison of code inspections behavior between 2019.2 and 2019.3 versions" class="js-gif" data-gif-src="/go/whatsnew/img/2019.3/improved-behavior-code-inspections.gif" src="/go/whatsnew/img/2019.3/improved-behavior-code-inspections.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<p>GoLand’s code inspections are more focused now. We've reduced the highlighting range of the
+                detected issues in the code editor, to help show the most relevant quick-fixes and intention
+                actions for a particular piece of code when you invoke the context menu via
+                <kbd>Alt+Enter</kbd>.
+            </p>
+</div>
+</div>
+</div>
+<h2 data-title="Code Editing">Code Editing</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="An example of the error message for rune literal" src="/go/whatsnew/img/2019.3/rune-literal.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">Improved rune literal lexer</h3>
+<p>We’ve improved the rune literal lexer in several ways:</p>
+<ul>
+<li>GoLand provides a clearer and more concise error message explaining why the expression
+                    is incorrect.
+                </li>
+<li>GoLand doesn’t highlight a valid rune literal as an error after editing.</li>
+<li>Parsing of invalid rune literals is more stable.</li>
+</ul>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="GoLand highlights reassignment in the left-hand side of declaration" src="/go/whatsnew/img/2019.3/syntax-highlighting-reassignments.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">Highlighting for reassignments</h3>
+<p>Go allows using existing variables on the left-hand side of short var declarations. Thus, two
+                constructs that look the same can have different meanings. To make this easier to spot,
+                we’ve added syntax highlighting for such reassignments.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="An example of code folding for composite literals" src="/go/whatsnew/img/2019.3/code-folding-composite-literals.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">Code folding for composite literals</h3>
+<p>GoLand 2019.3 provides code folding for composite literals. Use the code folding toggles to
+                fold or expand the code fragment, or press <kbd>Ctrl+NumPad Minus</kbd>/<kbd>Ctrl+NumPad
+                    Plus</kbd> on Windows or
+                <kbd>⌘+NumPad Minus/⌘+NumPad Plus</kbd> on macOS. To configure the default code folding
+                behavior, go to
+                <em>Settings/Preferences | Editor | General | Code Folding</em>.
+            </p>
+</div>
+</div>
+</div>
+<h2 data-title="Live templates enhanced">Live templates enhanced</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="forr live template suggests line as a value" class="js-gif" data-gif-src="/go/whatsnew/img/2019.3/live-templates.gif" src="/go/whatsnew/img/2019.3/live-templates.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<p>The live templates <em>for</em> and <em>forr</em> now suggest relevant variable names. For
+                example, names like
+                <code>i</code> and <code>index</code> are suggested for an index; <code>s</code>, <code>string</code>,
+                and <code>line</code> are suggested for a value.
+            </p>
+<p>The live template <em>meth</em> now provides code suggestions for receiver names.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Navigation">Navigation</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Search only in the selected area" class="js-gif" data-gif-src="/go/whatsnew/img/2019.3/find-action.gif" src="/go/whatsnew/img/2019.3/find-action.png" width="605">
+</div>
+<h3 class="features-block__title">Search only in a selected area</h3>
+<p>Search only in a selected area when using <em>Find</em> (<kbd>⌘+F</kbd> on macOS and <kbd>Ctrl+F</kbd> on Windows/Linux).
+                Simply select the piece of code you need in the editor and invoke <em>Find</em> – the IDE will then
+                perform the search only in the selected area. To easily switch to searching within the whole
+                file, press <kbd>⌘+F</kbd>/ <kbd>Ctrl+F</kbd> a second time, or toggle the <em>In Selection</em> option in the bar.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Searching with ‘Find in Path’ with a file mask option in action" src="/go/whatsnew/img/2019.3/find-in-path-update.png" width="605">
+</div>
+<h3 class="features-block__title">Using ‘Find in Path’ with a file mask option</h3>
+<p>Now, when you search in the <em>Find in Path</em> dialog using a file mask, GoLand shows the file
+                extensions in the search results accordingly. This makes it easier for you to distinguish
+                between files with the same name but with different file extensions.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Enable Global File Watcher for all new projects">Enable Global File Watcher for all new projects</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Enabling golangci-lint for all new projects" src="/go/whatsnew/img/2019.3/global-file-watcher-new-projects.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<p>In GoLand 2018.2, we added an option to share a file watcher configuration among different
+                projects using the options <em>Project</em> and <em>Global</em> – it’s called a <em>Global File Watcher</em>.
+            </p>
+<p>However, you would have still needed to enable this watcher in each new project. Now, it’s
+                possible to enable this watcher by default in all new projects you create or open.</p>
+<p>In the menu <em>File</em>, select <em>Other Settings | Settings for new projects</em>, then go to <em>Tools | File
+                Watchers</em>, add a new global watcher, and then select the checkbox next to it to enable it in
+                all new projects.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Tutorials">Tutorials</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="An exercise for the new feature of Extract Variable refactoring" class="js-gif" data-gif-src="/go/whatsnew/img/2019.3/tutorials.gif" src="/go/whatsnew/img/2019.3/tutorials.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<p>Often there’s not enough time to read the What’s New pages, release notes, and blog posts
+                about the product you use, while you need to finish your project and meet the deadline.
+                That’s why we’ve added <em>Tutorials</em> for you to learn about GoLand features when you are ready.
+            </p>
+<p>You can find <em>Tutorials</em> on the welcome screen, above your project list. When you
+                upgrade the IDE to a new version, there will be a lesson covering the features from the new
+                release. Alternatively, you can access <em>Tutorials</em> via a corresponding tool window from any
+                project.</p>
+</div>
+</div>
+</div>
+<h2 data-title="More changes">More changes</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Switching between the callers and callees in the Hierarchy tool window" class="js-gif" data-gif-src="/go/whatsnew/img/2019.3/hierarchy-tool-window.gif" src="/go/whatsnew/img/2019.3/hierarchy-tool-window.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">Hierarchy tool window</h3>
+<p>There is a new option to analyze the callees’ method hierarchy in the <em>Hierarchy</em> tool window.
+                We’ve added two dedicated buttons that let you switch between the callers and callees of the
+                selected method. Also, now you can sort the elements within a tree alphabetically, by
+                clicking a special button in the menu. To see the <em>Hierarchy</em> tool window in the <em>Tool Windows</em>
+                list, you need to build a hierarchy first and then go to <em>Navigate | Call Hierarchy or
+                    Navigate | Type Hierarchy</em>.
+            </p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Switching theme plugin without restarting the IDE" class="js-gif" data-gif-src="/go/whatsnew/img/2019.3/switch-theme-on-the-fly.gif" src="/go/whatsnew/img/2019.3/switch-theme-on-the-fly.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">Switch theme and keymap plugins on the fly</h3>
+<p>In GoLand 2019.3, you can install and uninstall any theme plugins and keymap plugins without
+                restarting the IDE.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Select ‘Add Keyboard Shortcut’ in the settings for ‘Focus Editor’ action" src="/go/whatsnew/img/2019.3/focus-editor.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">A custom shortcut for returning the focus to the editor</h3>
+<p>Set your custom shortcut for the action that takes the focus back to the editor, instead of
+                using <kbd>ESC</kbd>. Find the <em>Focus Editor</em> action in <em>references/Settings | Keymap</em>, right-click it,
+                and select <em>Add Keyboard Shortcut</em> from the drop-down.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="More visible scrollbars in the editor" class="js-gif" data-gif-src="/go/whatsnew/img/2019.3/contrast-scrollbars.gif" src="/go/whatsnew/img/2019.3/contrast-scrollbars.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">More visible scrollbars</h3>
+<p>We've added an option to make the scrollbars more visible. To do this, select the <em>Use
+                contrast scrollbars</em> checkbox in <em>Preferences/Settings | Appearance & Behavior |
+                Appearance</em>.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Version control improvements">Version control improvements</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="New Clone dialog with the list of repositories" src="/go/whatsnew/img/2019.3/clone-dialog.png" width="605">
+</div>
+<h3 class="features-block__title">Reworked Clone dialog</h3>
+<p>The <em>Clone</em> dialog is located under <em>VCS | Get from Version control</em>. Now you can log in from
+                this dialog, or, if you’re already logged in, the IDE will instantly preview the lists of
+                all repositories grouped by accounts or organizations.
+            </p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="‘Show Details’ opens a window with conflict changes" class="js-gif" data-gif-src="/go/whatsnew/img/2019.3/vcs-show-the-details.gif" src="/go/whatsnew/img/2019.3/vcs-show-the-details.png" width="605">
+</div>
+<h3 class="features-block__title">More insight into merge conflicts</h3>
+<p>Now it is easier to investigate a conflict during a merge, rebase, or cherry-pick operation.
+                Simply click the <em>Show Details</em> link to get the list of commits that led to the resulting code
+                state, and get more information about the source of the changes displayed in the <em>Merge</em>
+                dialog.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Databases updates">Databases updates</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="View collections and fields in the database explorer" src="/go/whatsnew/img/2019.3/mongodb-support.png" width="605">
+</div>
+<h3 class="features-block__title">MongoDB support</h3>
+<p>GoLand 2019.3 provides basic support for MongoDB. Now you can:</p>
+<ul>
+<li>View collections and fields in the database explorer.</li>
+<li>Open any collection or observe the query result. It’s also possible to sort by columns
+                    or filter the values.
+                </li>
+<li>Run queries and get the results. Select a statement and run it by pressing <kbd>Ctrl/⌘+Enter</kbd>
+                    or by using the <em>Play</em> button on the toolbar.
+                </li>
+</ul>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="An example of the connection error" src="/go/whatsnew/img/2019.3/search-with-google-connection-error.png" width="605">
+</div>
+<h3 class="features-block__title">Search for connection error</h3>
+<p>It’s now easier to explore connection errors. When a connection fails, you can just click the
+                dedicated button in the IDE to move to the search results for your error using the Google
+                search engine.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Web development">Web development</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Code completion for the class name from CSS library" src="/go/whatsnew/img/2019.3/completion-for-css-libraries.png" width="605">
+</div>
+<h3 class="features-block__title">Completion for CSS libraries on CDN</h3>
+<p>If you’re using Bootstrap or another CSS library and have it linked from a CDN in your HTML
+                file, you can now get completion for the class names from that library, without adding its
+                sources to the project.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Code suggestions for new variable" src="/go/whatsnew/img/2019.3/name-suggestions-new-symbols.png" width="605">
+</div>
+<h3 class="features-block__title">Name suggestions for new symbols</h3>
+<p>When adding new variable and parameter names in JavaScript or TypeScript, you’ll now get name
+                suggestions based on the names of classes, interfaces, and type aliases defined in the
+                project, standard libraries, and dependencies you’re using.</p>
+<p>For new variables, functions, classes, and interfaces, you’ll also get suggestions for names
+                that were already used in the same scope but haven’t been defined yet.</p>
+</div>
+</div>
+</div></div>
+</div>
+<!--region 2019.2-->
+<div class="section-content _bg-medium version-2019-2" id="v2019-2">
+<div class="wt-container article-content">
+<div class="wt-row wt-row_size_m version-label">
+<span class="version-label__text">2019.2 Jul 25</span>
+<span class="version-label__slope"></span>
+</div>
+<h2 data-title="Function calls support">Function calls support</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Call function in the Evaluate Expression dialog" class="js-gif" data-gif-src="/go/whatsnew/img/2019.2/function-calls-support.gif" src="/go/whatsnew/img/2019.2/function-calls-support.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<p>Examine in detail what is going on inside your expression at any specific point in your program’s
+                            execution.</p>
+<p>Note, that this feature relies on the experimental function call support feature from
+                            Delve and the Go
+                            Runtime.</p>
+<p>If you encounter any bugs or issues with function calls support, please report them to <a href="https://youtrack.jetbrains.com/oauth?state=%2Fissues%3Fq%3DSubsystem:%2520%257BGo%2520Debugger%257D%2520">our
+                            issue tracker</a>.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Improved Default & Darcula color schemes">Improved Default & Darcula color schemes</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Updated Darcula color scheme" src="/go/whatsnew/img/2019.2/default-datcula-color-schemes.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<p>GoLand 2019.2 adds <strong>variety to the semantic code highlighting</strong> in the <em>Default</em>
+                            and <em>Darcula</em> color schemes.</p>
+<p>This will help you better understand your code and follow its logic faster. Easily distinguish package names from variables,
+                            built-in code constructions from your own ones, and type conversions from function calls.
+                            Methods’ receivers and functions/function calls now have their own colors, too.
+
+                        </p><p>As usual, change everything to your taste in <em>Settings/Preferences | Editor | Color
+                            Scheme</em>.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Debugger updates">Debugger updates</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="The debugger shows the results of String() method implementations in the Variables pane" src="/go/whatsnew/img/2019.2/more-info-about-string-error-in-the-debugger.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">More info about variables with String() method</h3>
+<p>The debugger now shows the results of simple <code>String()</code>, <code>Error()</code>, and
+                            <code>DebugString()</code> method
+                            implementations in the <em>Variables</em> pane. It supports methods with a single return
+                            statement without calls.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Presentation of time.Time and net.IP in the Variables pane" src="/go/whatsnew/img/2019.2/better-view-of-special-types.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">Better presentation of special types</h3>
+<p>GoLand 2019.2 displays the value of struct derived from <code>time.Time</code>, <code>time.Duration</code>
+                            and net.IP
+                            types <strong>in a human-readable format</strong> in the debugger’s <em>Variables</em> pane.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Select decimal format in the settings" src="/go/whatsnew/img/2019.2/int-as-binary-decimal-by-default.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">Default format for integers</h3>
+<p>Choose how to display integer variables in the debugger by default: in binary, decimal, or
+                            hex format. Set
+                            the format in <em>Settings/Preferences | Build, Execution, Deployment | Debugger | Data
+                                Views | Go</em>.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Support for Go 1.13 features">Support for Go 1.13 features</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Result of new number literals in the Console" src="/go/whatsnew/img/2019.2/go-1-13-support.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<p>GoLand 2019.2 supports number literals and signed integers as shift counts. These changes are
+                            related to the steps we’re making towards Go 2. Head to <a href="https://blog.golang.org/go2-here-we-come">the official Go blog</a> to learn
+                            more.</p>
+<p>GoLand’s code highlighting will alert you to any mistakes, and it will correctly show you the
+                            output in the <em>Console</em>.</p>
+<p><a href="https://blog.jetbrains.com/go/2019/06/27/new-go-1-13-language-features-in-goland-2019-2/">Read this article</a> to learn more about the new Go
+                            1.13 features and how GoLand 2019.2 supports them.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Custom Postfix Completion templates">Custom Postfix Completion templates</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Using custom .forrev template" class="js-gif" data-gif-src="/go/whatsnew/img/2019.2/custom-postfix-completion.gif" src="/go/whatsnew/img/2019.2/custom-postfix-completion.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<p>GoLand 2019.2 lets you <strong>create your own</strong> custom <em>Postfix Completion</em>
+                            templates.</p>
+<p>Navigate to <em>Settings/Preferences | Editor | General
+                            | Postfix Completion</em>, click <em>+</em>, select <em>Go</em>, define your template, and
+                            choose the scopes where
+                            the template will be applicable.</p>
+<p>To learn more about creating custom templates, see <a href="https://www.jetbrains.com/help/go/auto-completing-code.html#custom_postfix_templates/">this
+                            article</a>.</p>
+<p>In addition, you can find <strong>new predefined</strong> <em>Postfix Completion</em>
+                            template —
+                            <em>.aappend</em>. It prepends an expression with a built-in <em>append</em>
+                            function call and
+                            assigns its result to this expression.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Quick-fixes based on Change Signature">Quick-fixes based on Change Signature</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="New quick-fixes in action" class="js-gif" data-gif-src="/go/whatsnew/img/2019.2/quick-fixes-change-signature.gif" src="/go/whatsnew/img/2019.2/quick-fixes-change-signature.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<p>We have added many quick-fixes based on the <em>Change Signature</em> refactoring. For
+                            example,
+                            with the simple press of <kbd>Alt+Enter</kbd>, you can automatically infer and add a
+                            parameter to the
+                            function call, or add missing return parameters in a signature.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Extract Method refactoring with returns">Extract Method refactoring with returns</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Extract Method extracts code with return statements" class="js-gif" data-gif-src="/go/whatsnew/img/2019.2/extract-method-with-returns.gif" src="/go/whatsnew/img/2019.2/extract-method-with-returns.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<p>The <em>Extract Method</em> refactoring now handles code with return statements. If the code
+                            always
+                            exits via returns, it will be extracted as is. However, if it contains execution paths
+                            without returns, the extracted method will have an additional boolean flag as a return
+                            value. The flag will be used to perform an early return on the call side.
+                        </p>
+</div>
+</div>
+</div>
+<h2 data-title="Code Completion improvements">Code Completion improvements</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Code completion suggestions for a receiver member without a receiver" src="/go/whatsnew/img/2019.2/code-completion-for-fields.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<p>Code completion now provides suggestions for receiver members even if there’s no receiver.
+                            Receiver names like <code>this</code> or <code>self</code> are discouraged. As a result
+                            methods have different
+                            receiver names. This code completion feature allows you to ignore the difference.
+                        </p>
+</div>
+</div>
+</div>
+<h2 data-title="Cleverer Go Modules and dep integration">Cleverer Go Modules and dep integration</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Go Modules integration enables automatically" class="js-gif" data-gif-src="/go/whatsnew/img/2019.2/go-modules-integration.gif" src="/go/whatsnew/img/2019.2/go-modules-integration.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<p>GoLand 2019.2 enables <em>Go Modules</em>/<em>dep</em> integration automatically when it
+                            detects that a
+                            project uses Go Modules or dep. Previously, it disabled GOPATH indexing and showed only a
+                            notification about enabling <em>Go Modules</em>/<em>dep</em> integration. We noticed that
+                            was not enough
+                            though, because it was easy to miss or ignore the notification and thus get a project in a
+                            semi-configured state.</p>
+<p>If this doesn’t work for you, you can disable the integration manually in <em>Settings/Preferences
+                            | Go | Go Modules (vgo)</em> at any time.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Code inspections">Code inspections</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Inspection warns about redundant type conversions" class="js-gif" data-gif-src="/go/whatsnew/img/2019.2/redundunt-type-conversion-inspection.gif" src="/go/whatsnew/img/2019.2/redundunt-type-conversion-inspection.png" width="605">
+</div>
+<h3 class="features-block__title">Redundant type conversions</h3>
+<p>A code inspection called <em>Redundant type conversions</em> helps you keep your project more
+                            readable
+                            and neat. It warns you about redundant type conversions that can be omitted.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="IDE warns about a non-negative integer constant in the editor" src="/go/whatsnew/img/2019.2/validation-slice-indices-composite-literals.png" width="605">
+</div>
+<h3 class="features-block__title">Validation of slice indices in literals</h3>
+<p>We’ve added validation of slice indices in composite literals! This means that the editor
+                            will warn you that your index must be a non-negative integer constant before you compile
+                            your project.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Code Editing">Code Editing</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="code highlighting, an inspection, and smart editing in action" class="js-gif" data-gif-src="/go/whatsnew/img/2019.2/support-for-escape-sequences.gif" src="/go/whatsnew/img/2019.2/support-for-escape-sequences.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">Support for escape sequences</h3>
+<p>Support for escape sequences in string literals is fully equipped with:</p>
+<ul>
+<li>Code highlighting.</li>
+<li>An inspection that will warn you about potential problems.</li>
+<li>Smart editing that understands the location of escape sequences.</li>
+<li>More precise spell-checking.</li>
+</ul>
+<p>Also, formatting placeholders are now highlighted in a different color so you can more
+                            easily spot them in long strings. You can customize the color via <em>Settings/Preferences |
+                                Editor | Color Scheme | Language Defaults | String | Escape Sequence | Valid</em>. Or,
+                            for Go
+                            only, go to <em>Settings/Preferences | Editor | Color Scheme | Go | String | Valid
+                                escape</em>.
+                        </p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Using Fill Fields via code completion" class="js-gif" data-gif-src="/go/whatsnew/img/2019.2/fill-fields-completion.gif" src="/go/whatsnew/img/2019.2/fill-fields-completion.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">Fill Fields action</h3>
+<p>It is now easier to fill the fields of structs. First, you can choose which fields you want to fill
+                            in a dedicated window. Second, generated values can now be edited. Finally, this action is
+                            now available via <em>Code Completion</em>.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Using Fill Fields via code completion" class="js-gif" data-gif-src="/go/whatsnew/img/2019.2/improved-extend-selection.gif" src="/go/whatsnew/img/2019.2/improved-extend-selection.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">Improved Extend Selection</h3>
+<p><em>Extend Selection</em> now extends the code in a semantically correct way, from a line to a block of
+                            code separated by empty lines (instead of selecting the whole method body).</p>
+</div>
+</div>
+</div>
+<h2 data-title="UI enhancements">UI enhancements</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="New | File dialog" src="/go/whatsnew/img/2019.2/fresh-look-for-new-file-dialog.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">Fresh look for New | File dialog</h3>
+<p>The <em>New | File</em> dialog has been turned into a popup with a list of all the possible
+                            options
+                            for a particular file type to create. Previously, you had to expand the list to choose an
+                            alternative, but now all the available options are immediately visible.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Plugins page" src="/go/whatsnew/img/2019.2/reworked-plugins-page.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">Improved Plugins page</h3>
+<p>Now GoLand shows the plugin details right away, without any need to open the plugin’s detail
+                            pages one by one. We’ve added more options under the gear icon, so you can disable or enable
+                            all the downloaded plugins all at once. The <em>Update</em> button is now placed near the
+                            plugin name
+                            in the <em>Installed</em> tab. The <em>Updates</em> tab is gone as it isn’t necessary
+                            anymore.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Difference between an old Find tool window and the new one" src="/go/whatsnew/img/2019.2/tidy-find-tool-window.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">Tidy Find tool window</h3>
+<p>In the <em>Find</em> tool window, we have grouped together some rarely used icons and removed
+                            others altogether.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Handy general changes">Handy general changes</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Select Recently Viewed Files scope" src="/go/whatsnew/img/2019.2/new-scope-chooser-options.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">More Scope chooser options</h3>
+<p>New scopes such as <em>Recently Changed</em> and <em>Recently Viewed Files</em>, <em>Files in
+                            Previous Search
+                            Result</em>, and <em>Selection</em> are all now added to the <em>Scope</em> chooser. You
+                            will also be able to
+                            select the <em>Data Sources</em> scopes. In addition to this, we’ve added an ability to
+                            select a
+                            scope for <em>Rename</em> refactoring. Double press <kbd>Shift</kbd>+<kbd>F6</kbd> to invoke
+                            the <em>Rename</em> refactoring window,
+                            and choose the scopes where the renaming will be performed.
+                        </p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Settings of Move Caret to Next Word action" src="/go/whatsnew/img/2019.2/move-caret-to-next-word.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">New option to control caret movement</h3>
+<p>The default behavior of the <em>Move Caret to Next Word</em> action in GoLand 2019.2 has
+                            changed: the
+                            IDE now moves the caret to the end of the current word. However, you can adjust it as
+                            you see fit. Go to <em>Settings/Preferences/Settings | Editor | General</em> and select where the
+                            IDE
+                            should place the caret: at the end of the word, at the beginning of the next word, or even
+                            between both boundaries.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="File size, date and time of modification in the Project View" src="/go/whatsnew/img/2019.2/more-info-project-view.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">More info in the Project View</h3>
+<p>Toggle <em>In-place Descriptions</em> under the <em>View</em> menu to get a preview of the
+                            file size, and date and time modifications in the <em>Project View</em>.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Version control improvements">Version control improvements</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="File size, date and time of modification in the Project View" src="/go/whatsnew/img/2019.2/commit-from-local-changes.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">Commit from the Local Changes</h3>
+<p>GoLand 2019.2 provides a way to commit directly from the <em>Local Changes</em>.</p>
+<p>Now while working on a commit, you can browse through the source code, view the
+                            history for a specific file, view the diff for the file in the same area as the commit, or
+                            use the other features of the IDE.</p>
+<p>To enable this functionality and commit from the <em>Local Changes</em> without a dialog,
+                            go to <em>Settings/Preferences | Version Control | Commit Dialog</em> and select the
+                            checkbox <em>Commit from the Local Changes without showing a dialog</em>.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Adding a file to .gitignore via context menu" src="/go/whatsnew/img/2019.2/vcs-ignore.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">Improvements for .gitignore files</h3>
+<p>GoLand correctly highlights all the ignored files and offers code completion suggestions for
+                            file and folder name. You can now quickly add a file to <code>.gitignore</code> using
+                            the context menu from the <em>Local Changes</em> tab of the VCS tool window: right-click it
+                            in the <em>Unversioned</em> files group and select <em>Add to .gitignore</em>.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Abort Cherry-Pick option via context menu" src="/go/whatsnew/img/2019.2/vcs-abort-merge-option.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">Abort Merge option</h3>
+<p>We've added an <em>Abort Merge</em> option that will be available in the <em>Branches</em> popup
+                            when there is an
+                            ongoing merge. This is the future many of us have dreamed of, where you don’t need to switch
+                            to the terminal anymore to abort things.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Select Hash column " src="/go/whatsnew/img/2019.2/customize-vcs-log-columns.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">Customizable VCS Log columns</h3>
+<p>Click on the eye icon to choose the columns to display in the <em>Log</em> tab, select the
+                            <em>Show Columns</em> item from the context menu and choose the columns you want to see:
+                            <em>Author</em>, <em>Date</em>, or <em>Hash</em>.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Tools">Tools</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Path completion for Shell Script" src="/go/whatsnew/img/2019.2/shell-script-support.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">Shell Script support</h3>
+<p>GoLand 2019.2 provides support for shell scripts, including word and path completion,
+                            <em>Quick documentation</em> preview, and even text-based rename.</p>
+<p>On top of that, we’ve added integrations with <a href="https://github.com/koalaman/shellcheck">Shellcheck</a>, and <a href="https://github.com/mvdan/sh">shfmt</a>.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="The debugger displays int as binary via View as action" class="js-gif" data-gif-src="/go/whatsnew/img/2019.2/kustomize-support.gif" src="/go/whatsnew/img/2019.2/kustomize-support.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">Kustomize support for Kubernetes</h3>
+<p>With the Kubernetes plugin, GoLand 2019.2 provides editing support, code completion for keys
+                            and paths, many inspections, and the <em>Rename</em> refactoring. It will also let you
+                            navigate from a declared path to the associated packages or files in the project view for Kustomize
+                            resource files.
+                        </p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="The services tool window with the file system of the running Docker container" src="/go/whatsnew/img/2019.2/docker-browser.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">Browser for Docker container file system</h3>
+<p>Now you can view the file system of the running Docker container. The file system is
+                            displayed in the <em>File</em> tab of the <em>Docker</em> node in the <em>Services</em> tool
+                            window.
+                        </p>
+</div>
+</div>
+</div>
+<h2 data-title="Web development">Web development</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Propagate to destructuring declaration intention in action" src="/go/whatsnew/img/2019.2/propagate-to-destructuring-intention.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">Smart intentions for JavaScript and TypeScript</h3>
+<p>With the new <em>Propagate to destructuring declaration</em> intention, you can replace an extra variable
+                            if it’s possible with another destructuring. To remove a destructuring completely, use the
+                            intention action called <em>Replace destructuring with property or index access</em>.</p>
+<p>The IDE will now warn you if a boolean expression in a condition has some unnecessary parts and will suggest simplifying it.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Grouped and excluded dynamic usages in the Refactoring Preview tool window" src="/go/whatsnew/img/2019.2/improved-rename-js.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">Improved Rename refactoring for JavaScript</h3>
+<p>When you rename a symbol in a JavaScript or TypeScript file, the IDE now groups together
+                            dynamic usages and, by default, excludes them from the refactoring. This makes the
+                            refactoring more accurate and gives you more control over what exactly should be renamed in
+                            the <em>Refactoring Preview</em> tool window.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Code completion for components" src="/go/whatsnew/img/2019.2/improved-support-vue.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">Improved support for Vue.js</h3>
+<p>Using Vuetify or BootstrapVue in your Vue.js application? Code completion for components and
+                            their props from these and some other Vue component libraries is now more precise. This was
+                            made possible by a new approach we’ve adopted to work with these libraries in the IDE.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!--region 2019.1-->
+<div class="section-content _bg-medium version-2019-1" id="v2019-1">
+<div class="wt-container article-content">
+<div class="wt-row wt-row_size_m version-label">
+<span class="version-label__text">2019.1 Nov 21</span>
+<span class="version-label__slope"></span>
+</div>
+<h2 data-title="Memory, CPU, Mutex, and Block profilers">Memory, CPU, Mutex, and Block profilers</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Using Memory profiler in GoLand" class="js-gif" data-gif-src="/go/whatsnew/img/2019.1/integration-with-profilers.gif" src="/go/whatsnew/img/2019.1/integration-with-profilers.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<p>GoLand has expanded its tooling support by integrating Memory, CPU, Mutex, and Block
+                            profilers. You can
+                            start profiling your application right from the IDE, and then review the
+                            analysis results in a dedicated tool window (<em>View | Tool Windows | Profiler</em>).</p>
+<p>To run the profiler, click the new <em>Run with Profiler</em> button and choose the required
+                            configuration in the navigation toolbar. Alternatively, select any of new actions in the run
+                            menu, which appears when you click on the run icon in the left gutter.</p>
+<p>To get a better understanding of the possible performance issues in your code, sort the
+                            results by available metrics for each particular profiler type; use the <em>Flame Chart</em>,
+                            <em>Call
+                                Tree</em> and <em>Method List</em> tabs; or even navigate to the source code to inspect
+                            the issues.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Smart Step Into">Smart Step Into</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Smart Step Into in action" class="js-gif" data-gif-src="/go/whatsnew/img/2019.1/smart-step-into.gif" src="/go/whatsnew/img/2019.1/smart-step-into.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<p>Debugging a chain of calls and nested method calls is easier with the new debugger
+                            action, <em>Smart Step Into</em>. It lets you step into arbitrary calls in an expression,
+                            automatically stepping over the methods that you are not interested in.</p>
+<p>For example, when debugging code like <code>fmt.Printf("My name is %s, I am %d!",
+                            me.FullName(),
+                            me.Age())</code>, you can opt to specifically step into <code>Age()</code>.</p>
+<p>To invoke <em>Smart Step Into</em>, press <kbd>Shift+F7</kbd> or select <em>Smart Step
+                            Into</em> in the <em>Run</em> menu.</p>
+<p>To learn more, see <a href="https://blog.jetbrains.com/go/2019/02/21/debugging-in-goland-improvements-in-2019-1/">Debugging
+                            in GoLand – Improvements in 2019.1</a>.</p>
+</div>
+</div>
+</div>
+<h2 data-title="New refactorings">New refactorings</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Extract Interface refactoring dialog" src="/go/whatsnew/img/2019.1/extract-interface-refactoring.png" width="605">
+</div>
+<h3 class="features-block__title">Extract Interface</h3>
+<p>The <em>Extract Interface</em> refactoring helps you quickly create a new interface based on
+                            the selected type. To invoke it, call up <em>Refactor This</em>, press
+                            <kbd>Ctrl+Alt+Shift+T</kbd>
+                            on Windows/Linux or <kbd>^T</kbd> on macOS and choose <em>Extract Interface</em> in the
+                            pop-up menu.</p>
+<p>The refactoring dialog shows a list of suggested members to be transferred to the new
+                            interface. You can
+                            specify a name for the interface and choose the
+                            file, directory, or package where it should be placed. If the type already implements any
+                            interfaces, it will be automatically excluded from the list.</p>
+<p>To learn more, see <a href="https://blog.jetbrains.com/go/2019/03/08/refactorings-in-goland-extract-interface/">Refactorings
+                            in GoLand — Extract Interface</a>.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Rename refactoring asks to rename method specifications and all implementations in the interface or only current method" class="js-gif" data-gif-src="/go/whatsnew/img/2019.1/more-capable-rename.gif" src="/go/whatsnew/img/2019.1/more-capable-rename.png" width="605">
+</div>
+<h3 class="features-block__title">More capable Rename</h3>
+<p>The <em>Rename</em> refactoring also helps rename methods declared in interfaces. When
+                            renaming
+                            such methods, GoLand will offer to rename their implementations as well.</p>
+<p>The <em>Refactoring Preview</em> panel in the <em>Find</em> tool window lets you see what the
+                            current
+                            refactoring will affect, with usages grouped by their type and location in the project.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Nilness Analyzer">Nilness Analyzer</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="js-carousel-dots features-block__image _no-shadow _two-block-in-row">
+<div>
+<img alt="" src="/go/whatsnew/img/2019.1/nilness-analyzer-inspection-1.png" width="605">
+</div>
+<div>
+<img alt="" src="/go/whatsnew/img/2019.1/nilness-analyzer-inspection-2.png" width="605">
+</div>
+<div>
+<img alt="" src="/go/whatsnew/img/2019.1/nilness-analyzer-inspection-3.png" width="605">
+</div>
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<p>Go gives us many ways to make the zero value useful, but the more opportunities we have, the
+                            easier it is to fall into a trap.</p>
+<p>Our brand new <em>Nilness Analyzer</em> is a set of code inspections designed to instantly
+                            detect
+                            whether variables might have nil or not nil values in a variety of cases, and alerts you
+                            about
+                            potential errors and problems.</p>
+<p>To learn more, see <a href="https://blog.jetbrains.com/go/2019/03/22/nilness-analyzer-inspection/">Nilness
+                            Analyzer Inspection</a>.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Debugger improvements">Debugger improvements</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Switching between goroutines and threads in the debugger" class="js-gif" data-gif-src="/go/whatsnew/img/2019.1/goroutines-instead-threads.gif" src="/go/whatsnew/img/2019.1/goroutines-instead-threads.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">Goroutines instead of threads</h3>
+<p>The debugger output now displays goroutines instead of threads. Switch between them, quickly
+                            navigate to standard Go libraries, and get more information about how your code is being
+                            executed.</p>
+<p>Also, use <em>Copy Stack</em> (right-click on the goroutine list) to copy
+                            the whole frame stack to the clipboard.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="The debugger displays int as binary via View as action" class="js-gif" data-gif-src="/go/whatsnew/img/2019.1/view-int-as-binary.gif" src="/go/whatsnew/img/2019.1/view-int-as-binary.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">View int as binary, decimal, or hex</h3>
+<p>You can now choose whether to display int variables in the debugger views as binary, decimal,
+                            or hex. Right-click a variable and select the appropriate or preferred option under <em>View
+                                as</em>.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Debugging with Run to Cursor as mouse gesture" class="js-gif" data-gif-src="/go/whatsnew/img/2019.1/run-to-cursor.gif" src="/go/whatsnew/img/2019.1/run-to-cursor.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">Run to Cursor as mouse gestures</h3>
+<p>The <em>Run to Cursor</em> action is now available by clicking on a line number while
+                            debugging.
+                            <strong>Hover</strong>
+                            over a line to highlight it. <strong>Click</strong> a line number to <em>Run to Cursor</em>.
+                        </p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Debugging windows minidumps on macOS" class="js-gif" data-gif-src="/go/whatsnew/img/2019.1/core-dump.gif" src="/go/whatsnew/img/2019.1/core-dump.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<h3 class="features-block__title">Support for minidumps</h3>
+<p>In addition to exploring core dumps, now you can also open and analyze windows minidumps right in
+                        the IDE. Like with core dumps, it’s as easy as selecting <em>Run | Open Core Dump</em>.</p>
+<p>To learn more, see <a href="https://blog.jetbrains.com/go/2019/03/13/debugging-in-goland-windows-minidumps/">Debugging
+                        in GoLand — Windows Minidumps</a>.</p>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Run/Debug configuration window with new sudo checkbox" src="/go/whatsnew/img/2019.1/run-debug-with-sudo.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<h3 class="features-block__title">Run Go configurations with sudo</h3>
+<p><em>Run/Debug Configurations</em> can now be run with sudo. It allows you to debug applications
+                        which require privileged operations as a user.</p>
+</div>
+</div>
+<h2 data-title="Support for theme customization">Support for theme customization</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="GoLand in new Dark Purple theme" src="/go/whatsnew/img/2019.1/theme-customization.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<p>Say hello to the brand new UI themes! <a href="https://plugins.jetbrains.com/plugin/12100-dark-purple-theme">Dark Purple</a>, <a href="https://plugins.jetbrains.com/plugin/12102-cyan-light-theme">Cyan
+                            Light</a>, and <a href="https://plugins.jetbrains.com/plugin/12103-gray-theme">Gray</a>
+                            themes are now available, via plugins.</p>
+<p>Not enough purple? Too boring? Too fun? No problem any more! Starting with
+                            2019.1, all IntelliJ-IDEA-based IDEs get fully customizable colors of all their UI elements.
+                            You can literally change the color of anything!</p>
+<p>We've made this customization pretty easy to do. Learn how
+                            to create and share your own themes in <a href="http://www.jetbrains.org/intellij/sdk/docs/reference_guide/ui_themes/themes_intro.html">this
+                                tutorial</a>.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Install any Go SDK right from the IDE">Install any Go SDK right from the IDE</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="GoLand's welcome screen with the new option to download and install any
+                            required version of the Go SDK" src="/go/whatsnew/img/2019.1/download-sdk.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<p>When creating a new project in GoLand, there is now the option to download and install any
+                            required version of the SDK, including Beta and RC versions. You don’t have to leave the IDE
+                            or go surfing through the Web anymore.</p>
+<p>As soon as the selected SDK version is installed, GoLand will notify you in the <em>Event
+                            Log</em> window.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Go Modules updates">Go Modules updates</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Vendoring mode checkbox in Go Modules settings" src="/go/whatsnew/img/2019.1/go-modules-vendoring.png" width="605">
+</div>
+<h3 class="features-block__title">Vendoring mode</h3>
+<p>The Go Modules projects template gets a new <em>Vendoring mode</em> checkbox, which lets you
+                            use
+                            libraries from the vendor folder without any external dependencies or connection to the
+                            Internet. The same checkbox is also available via settings in <em>Preferences | Go | Go
+                                Modules
+                                (vgo)</em>.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Code completion for non-imported modules" class="js-gif" data-gif-src="/go/whatsnew/img/2019.1/go-modules-code-completion.gif" src="/go/whatsnew/img/2019.1/go-modules-code-completions.png" width="605">
+</div>
+<h3 class="features-block__title">Completion for non-imported modules</h3>
+<p>GoLand provides code completion suggestions for all modules in the modules cache as you type.
+                            This means that, <strong>even if a module has never been imported and used</strong> in your
+                            project, GoLand
+                            is still aware of it.</p>
+</div>
+</div>
+</div>
+<h2 data-title="New Intention Actions">New Intention Actions</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Set of declaration intention actions" class="js-gif" data-gif-src="/go/whatsnew/img/2019.1/declaration-intention-action.gif" src="/go/whatsnew/img/2019.1/declaration-intention-action.png" width="605">
+</div>
+<h3 class="features-block__title">Set of declaration intention actions</h3>
+<p>We’ve added a set of intention actions to help you reformat declarations the way you want:
+                            add/remove parentheses to/from a declaration, merge a declaration up, split a declaration
+                            into
+                            two groups, by comma, and more.</p>
+<p>For the complete list of available actions and their detailed descriptions, go to the
+                            <em>Declaration</em> section of Go in <em>Settings/Preferences | Editor | Intentions</em>.
+                        </p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Export intention action" class="js-gif" data-gif-src="/go/whatsnew/img/2019.1/export-intention-action.gif" src="/go/whatsnew/img/2019.1/export-intention-action.png" width="605">
+</div>
+<h3 class="features-block__title">Export intention action</h3>
+<p>A new <em>Export</em> intention action lets you export a private function, type, or field
+                            without
+                            switching between packages.</p>
+<p>In addition, GoLand now resolves references to unexported
+                            symbols, but it will still notify you that it’s an error.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Handy general changes">Handy general changes</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Choosing Sublime Text keymap in settings" src="/go/whatsnew/img/2019.1/sublime-text-keymap.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">Sublime Text keymap</h3>
+<p>The new pre-configured <em>Sublime Text</em> keymap is available at <em>Preferences
+                            | Settings | Keymap</em>.</p>
+<p>Note you can also use the pre-configured <em>VS Code</em> keymap, available via
+                            this <a href="https://plugins.jetbrains.com/plugin/12062-vs-code-keymap">plugin</a>.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Recent Locations popu" src="/go/whatsnew/img/2019.1/recent-location-popup.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<h3 class="features-block__title">Recent Locations popup</h3>
+<p>The <em>Recent Locations</em> popup (<kbd>Cmd-Shift-E</kbd> /<kbd>Ctrl+Shift+E</kbd>) is a new
+                        way to navigate around the project. It shows a list of recently visited/changed code locations
+                        as code
+                        snippets with a couple of lines before and after the location. To filter the results, start
+                        typing and jump matching piece of code.</p>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Welcome screen with new project templates for web development" class="js-gif" data-gif-src="/go/whatsnew/img/2019.1/project-templates-web-development.gif" src="/go/whatsnew/img/2019.1/project-templates-web-development.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<h3 class="features-block__title">Project templates for web development</h3>
+<p>Project templates for web development, such as <em>React App</em>, <em>React Native</em>, <em>HTML
+                        5
+                        Boilerplate</em>, and
+                        <em>Foundation</em>, are available from the Welcome screen.</p>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Export 'Code Style' settings to JSON option in settings" src="/go/whatsnew/img/2019.1/code-style-settings-export-to-json.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<h3 class="features-block__title">Export 'Code Style' settings to JSON</h3>
+<p>Now it is possible to export <em>Code Style</em> settings to JSON. This is in addition to the
+                        already
+                        available option of exporting to XML, available under <em>Preferences /Settings | Editor | Code
+                            Style.</em></p>
+</div>
+</div>
+<h2 data-title="Version control improvements">Version control improvements</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="'Uncheck all' checkbox for Partial Git in action" class="js-gif" data-gif-src="/go/whatsnew/img/2019.1/vcs-uncheck-all.gif" src="/go/whatsnew/img/2019.1/vcs-uncheck-all.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">'Uncheck all' checkbox for Partial Git</h3>
+<p>The new <em>Uncheck all</em> checkbox for <em>Partial Git</em> commits (<code>git add
+                            -p</code>) lets you uncheck all the
+                            code chunks at once, and lets you choose the ones you want to commit, too.
+                        </p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Fixup and Squash Into actions" src="/go/whatsnew/img/2019.1/fixup-and-squash-action.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">'Fixup' and 'Squash Into' actions</h3>
+<p>The <em>Log</em> tab in VCS gets <em>Fixup</em> and <em>Squash Into</em> actions to create
+                            commits with the correct fixup! and squash! messages.</p>
+<p>Also, you can now use the context menu on the <em>Log</em> tab to cherry-pick selected files
+                            from the commit.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="New checkbox for incoming and outgoing commits in settings" src="/go/whatsnew/img/2019.1/incoming-outgoing-commits.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<h3 class="features-block__title">Indication of incoming & outgoing commits</h3>
+<p>If you go to <em>Preferences/Settings | Version Control | Git</em> and select <em>Mark Branches
+                        that have
+                        incoming/outgoing commits in the Branches</em> popup, the IDE will indicate if the incoming and
+                        outgoing commits are available for individual branches.</p>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Author initials in annotations" src="/go/whatsnew/img/2019.1/author-initials-vcs-annotations.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<h3 class="features-block__title">Author initials in annotations</h3>
+<p>In addition, the IDE gives you a choice to display the initials of authors instead or their full
+                        names in VCS annotations.</p>
+</div>
+</div>
+<h2 data-title="Even more changes">Even more changes</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Multiple defaults in switch code inspection" src="/go/whatsnew/img/2019.1/multiple-defaults-switch.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<ul>
+<li><em>Multiple defaults in switch</em> code inspection warns you about redundant default
+                                cases in a switch
+                                statement and lets you quickly navigate to the duplicated default.
+                            </li>
+<li>The <em>Duplicate names</em> code inspection now notifies you if dot import introduces a
+                                duplicate.
+                            </li>
+<li>In the <em>Project</em> view, the files and folders that are ignored now use olive-green
+                                to help you distinguish them from other files. You can modify the color of these in
+                                <em>Preferences/Settings | Version Control | File Status Color</em>.
+                            </li>
+<li>Settings of JetBrains-made plugins are searchable in the <em>Preferences/Settings</em>
+                                dialog.
+                            </li>
+<li>Copy & paste text to the Blank Diff window by dragging a file to it. Alternatively, you
+                                can do the same through file navigation.
+                            </li>
+</ul>
+</div>
+</div>
+</div>
+<h2 data-title="Web development">Web development</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Using JavaScript destructuring" src="/go/whatsnew/img/2019.1/js-destructing.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">Destructuring in JavaScript and TypeScript</h3>
+<p>Destructuring lets you unpack values from arrays and objects into variables using a very
+                            concise syntax.</p>
+<p>GoLand 2019.1 delivers a new set of refactorings, intention actions, and quick-fixes to help
+                            you
+                            start easily destructuring objects and arrays in your code.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Convert function with Promise to async/await" class="js-gif" data-gif-src="/go/whatsnew/img/2019.1/js-convert-to-async-await.gif" src="/go/whatsnew/img/2019.1/js-convert-to-async-await.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">Convert Promise to async/await</h3>
+<p>The new <em>Convert to async function</em> intention action automatically changes a function
+                            that
+                            returns a promise with <code>.then()</code> and <code>.catch()</code> calls to an async
+                            function that uses the
+                            async/await syntax. This is available in TypeScript, JavaScript, and Flow files. Simply
+                            press <kbd>Alt+Enter</kbd> on the name of the function you want to convert.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Highlighting for failed line in test" src="/go/whatsnew/img/2019.1/failed-tests-highlighting.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<h3 class="features-block__title">Highlighting for failed line in test</h3>
+<p>GoLand lets you quickly determine where the problem with the failed test has occurred.
+                        IDE highlights related code in the editor, and on hover, you’ll see the error message from the
+                        test runner.</p>
+<p>This works with Jest, Karma, Mocha, and Protractor.</p>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Updated docs and browser compatibility" src="/go/whatsnew/img/2019.1/updated-docs-css.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<h3 class="features-block__title">Updated docs for CSS</h3>
+<p>The documentation (<kbd>F1</kbd>) for CSS properties, HTML tags, and attributes shows actual
+                        descriptions and information about the browser support from MDN.</p>
+<p>Also, now you can use a new compatibility inspection via Browser compatibility in <em>Preferences/Settings
+                        | Editor |
+                        Inspections – CSS</em>. Simply select the minimum browser version you want to
+                        target.</p>
+</div>
+</div>
+<h2 data-title="Databases updates">Databases updates</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="New supported databases" src="/go/whatsnew/img/2019.1/new-databases.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<ul>
+<li>Greenplum, Vertica, and Apache Hive databases are supported.</li>
+<li>The <em>Remember password</em> feature now has two options for storing passwords:
+                                <em>Forever</em> and <em>For session</em>.
+                            </li>
+<li>We've completely reworked the connection dialog.</li>
+<li>New keep-alive and auto-disconnect options.</li>
+<li>The filter in the data editor suggests the clipboard.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!--region 2019.1-->
+<!--region 2018.3-->
+<div class="section-content _bg-medium version-2018-3" id="v2018-3">
+<div class="wt-container article-content">
+<div class="wt-row wt-row_size_m version-label">
+<span class="version-label__text">2018.3 Nov 21</span>
+<span class="version-label__slope"></span>
+</div>
+<h2 data-title="New Change Signature refactoring">New Change Signature refactoring</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Change Signature refactoring in action" class="js-gif" data-gif-src="/go/whatsnew/img/2018.3/change-signature-refactoring.gif" src="/go/whatsnew/img/2018.3/change-signature-refactoring.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<p>The new <em>Change Signature</em> refactoring gives you <strong>many ways to modify a
+                            function, method, or method specification signature</strong> in just a few clicks!</p>
+<p>You can easily change their names and add, remove, reorder, and rename parameters.
+                            When you refactor a method specification,
+                            GoLand will even ask you if you want implementations to be updated as well.</p>
+<p>To learn more, see the detailed blog post on <a href="https://blog.jetbrains.com/go/2018/10/19/refactorings-change-signature/">how to use
+                            Change Signature efficiently</a>.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Improved refactorings">Improved refactorings</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Problems Detected dialog" src="/go/whatsnew/img/2018.3/rename-refactoring-updates.png" width="605">
+</div>
+<h3 class="features-block__title">Rename refactoring</h3>
+<p>The <em>Rename</em> refactoring gives you <strong>an insight into the potential
+                            conflicts</strong> that might be
+                            introduced by the renaming, if any.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Inline refactoring highlights code after applying" class="js-gif" data-gif-src="/go/whatsnew/img/2018.3/Inline-refactoring-highlighting.gif" src="/go/whatsnew/img/2018.3/inline-refactoring-highlighting.png" width="605">
+</div>
+<h3 class="features-block__title">Inline refactoring</h3>
+<p>GoLand now highlights inlined code after applying the <em>Inline</em> refactoring, to help
+                            you
+                            <strong>catch what has actually happened</strong>.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Debugging GAE apps">Debugging GAE apps</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Debugging Google App Engine application" src="/go/whatsnew/img/2018.3/debugging_google-app-engine.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<p>GoLand now lets you easily <strong>run and debug</strong> Google App Engine applications
+                            <strong>locally</strong>.</p>
+<p>We’ve also added a new <em>App Engine</em> project template.</p>
+<p>To learn more, see <a href="https://blog.jetbrains.com/go/2018/10/02/goland-2018-3-early-access-program/#google-app-engine/">debugging
+                            Google App Engine applications</a>.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Core dumps support">Core dumps support</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Exploring core dumps in the Debugger pane" class="js-gif" data-gif-src="/go/whatsnew/img/2018.3/go-core-dump.gif" src="/go/whatsnew/img/2018.3/go-core-dump.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<p>Sometimes standard debugging instruments fail to help you understand what’s wrong with the
+                            code. This is where core dumps come to the rescue!</p>
+<p>GoLand makes <strong>exploring core dumps easier without any third-party tools</strong>,
+                            because all you need
+                            to do is to select <em>Run | Open Core Dump</em>.</p>
+<p>To create crash dumps automatically, just enter <code>GOTRACEBACK=crash</code> in the <em>Environment</em>
+                            field in the <em>Run</em> configuration settings.</p>
+<p>Note that core dumps are available only on Linux machines by default. However, you can
+                            analyze memory dumps on any flavor of macOS, Windows, or Linux.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Testify support">Testify support</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Run suites from the editor" class="js-gif" data-gif-src="/go/whatsnew/img/2018.3/support-testify.gif" src="/go/whatsnew/img/2018.3/support-testify.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<p>Now you can <strong>run suites and methods as regular test
+                            functions</strong>, directly
+                            from the editor.</p>
+<p>The <em>Comparison Failure</em> window helps explore diffs between expected and actual
+                            values for failed assertions.</p>
+<p>In a related change, <em>Empty test file</em>, <em>Test for function</em>, <em>Tests for
+                            file</em>, and <em>Tests for package</em> are available via the <em>Generate</em> popup
+                            menu.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Code inspections">Code inspections</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Unhandled Error warning in the editor" src="/go/whatsnew/img/2018.3/unhandled-error.png" width="605">
+</div>
+<h3 class="features-block__title">Unhandled Error</h3>
+<p>The <em>Unhandled Error</em> code inspection alerts you about functions or methods that
+                            return an error whenever <strong>the error isn’t being checked</strong>.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Unreachable Code warning in the editor" src="/go/whatsnew/img/2018.3/unreachable_code.png" width="605">
+</div>
+<h3 class="features-block__title">Unreachable Code</h3>
+<p>The <em>Unreachable Code</em> inspection detects <strong>parts of code that can never be
+                            executed</strong>.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Add format string argument">Add format string argument</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Add format string generates a placeholder via popup" class="js-gif" data-gif-src="/go/whatsnew/img/2018.3/add-format-string-argument.gif" src="/go/whatsnew/img/2018.3/add-format-string-argument.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<p>The <em>Add format string argument</em> intention action <strong>generates a placeholder for
+                            any provided
+                            expression</strong> via a popup. It inserts the placeholder into a format string and passes
+                            the
+                            expression as an argument for the placeholder.</p>
+<p>Also, you can enable code folding for format strings that will replace placeholders with the
+                            corresponding arguments.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Generate intention actions">Generate intention actions</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Generate Constructor adds functions" class="js-gif" data-gif-src="/go/whatsnew/img/2018.3/generate-constructor.gif" src="/go/whatsnew/img/2018.3/generate-constructor.png" width="605">
+</div>
+<h3 class="features-block__title">Generate Constructor</h3>
+<p>The <em>Generate Constructor</em> intention action generates <strong>functions for creating
+                            values of
+                            the struct type</strong>.</p>
+<p><em>Generate Constructor</em>, as well as <em>Generate getter/setter</em> and <em>Generate
+                            getter and setter</em> are available via the <em>Generate</em> popup menu.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Generate getter and setter adds template" class="js-gif" data-gif-src="/go/whatsnew/img/2018.3/getter-setter-intention-actions.gif" src="/go/whatsnew/img/2018.3/getter-setter-actions.png" width="605">
+</div>
+<h3 class="features-block__title">Generate getter and setter</h3>
+<p>The intention actions <em>Generate getter/setter</em> and <em>Generate getter and setter</em>
+                            now <strong>create
+                                boilerplate code and let you customize</strong> the pointer/non-pointer receiver type
+                            and its name.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Code completion">Code completion</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Code completion provides a set of functions which accept value of type as the first argument" class="js-gif" data-gif-src="/go/whatsnew/img/2018.3/method-like-completion-for-functions.gif" src="/go/whatsnew/img/2018.3/method-like-completion-for-functions.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<p>
+                            GoLand 2018.3 adds <strong>method-like completion for functions</strong>. When you have
+                            value <code>t</code> of type <code>T</code> and
+                            write <code>t.Foo</code>, you can look through functions that accept value of type
+                            <code>T</code> as the first
+                            argument.
+                        </p><p>Invoke the <em>Basic completion</em> (<kbd>Ctrl + Space + Space</kbd>) twice to see all of
+                            the available completion options.
+                        </p>
+</div>
+</div>
+</div>
+<h2 data-title="Code editor">Code editor</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Complete Current Statement inserts trailing comma" class="js-gif" data-gif-src="/go/whatsnew/img/2018.3/complete-current-statement.gif" src="/go/whatsnew/img/2018.3/complete-current-statement.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">Complete Current Statement</h3>
+<p><em>Complete Current Statement</em> now <strong>inserts the required trailing comma
+                            automatically in
+                            any composite literals</strong> (such as struct, slice, etc.) and puts the caret on the
+                            position of the
+                            next statement. Just press <kbd>Cmd + Shift + Enter</kbd> on macOS or <kbd>Ctrl + Shift +
+                                Enter</kbd> on Windows/Linux.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Navigation between shadowed and shadowing methods" class="js-gif" data-gif-src="/go/whatsnew/img/2018.3/go-to-shadowed-methods.gif" src="/go/whatsnew/img/2018.3/go-to-shadowed-methods.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">Spot shadowed/shadowing methods</h3>
+<p>New gutter icons let you better spot shadowed/shadowing methods of embedded types. You can
+                            also navigate back and forth in one click, or by pressing <kbd>Cmd+U</kbd> on macOS or <kbd>Ctrl+U</kbd>
+                            on
+                            Windows/Linux.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Excluding a specific set of files from the formatting actions" src="/go/whatsnew/img/2018.3/do-not-format.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<h3 class="features-block__title">Don't format this set of files</h3>
+<p>In GoLand 2018.3 and further versions, you can <strong>exclude a specific set of files</strong>
+                        from the code
+                        actions <em>Reformat code</em>, <em>Optimize imports</em>, and <em>Rearrange</em>.</p>
+</div>
+</div>
+<h2 data-title="Go templates (html/template)">Go templates (html/template)</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Code completion and Rename refactoring in html/template" class="js-gif" data-gif-src="/go/whatsnew/img/2018.3/go-templates.gif" src="/go/whatsnew/img/2018.3/go-templates.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<p>As you work with Go templates (<em>html/template</em>), enjoy code completion, find usages,
+                            the <em>Rename</em> refactoring,
+                            and improved code formatting.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Debugger updates">Debugger updates</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Evaluate Expression warns about invalid array index and provides code completion" class="js-gif" data-gif-src="/go/whatsnew/img/2018.3/2018-3-debugger-updates.gif" src="/go/whatsnew/img/2018.3/2018-3-debugger-updates.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<p>The debugger provides <strong>code completion, inspections, and quick-fixes</strong> for the
+                            <em>Evaluate
+                                Expression</em> dialog and the <em>Watchers</em> panel.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Support for Mozilla rr">Support for Mozilla rr</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Debugging with Mozilla rr" class="js-gif" data-gif-src="/go/whatsnew/img/2018.3/mozilla-rr.gif" src="/go/whatsnew/img/2018.3/mozilla-rr.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<p>We’ve added support for Mozilla rr in the debugger on Linux. It records program executions
+                            until you see a
+                            failure, so that you can then replay the failing execution as many times as you need under a
+                            debugger.</p>
+<p>As soon as you install <a href="https://github.com/mozilla/rr/wiki/Building-And-Installing">Mozilla
+                            rr</a>, <strong>everything works in a click</strong>. Put a breakpoint and choose the <em>Record
+                            and
+                            Debug</em> option from the <em>Run/Debug</em> gutter icon in the
+                            editor. This action opens the <em>Debugger</em> tab in the <em>Run</em> window with
+                            a dedicated <em>Rewind</em> button,
+                            which allows you to run the program backwards until the previous breakpoint is reached.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Diagrams support">Diagrams support</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Go module dependencies diagram" src="/go/whatsnew/img/2018.3/go-modules-dependency-diagram.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<p>Diagrams allow you to visualize and explore:</p>
+<ul>
+<li>Go module dependencies (available only in the context menu of a <code>go.mod</code>
+                                file).
+                            </li>
+<li>Imports and exports in-context in JavaScript and TypeScript projects.</li>
+<li>Tables and their relationships in Databases and SQL.</li>
+</ul>
+<p>
+</p><p>To learn more, see this <a href="https://blog.jetbrains.com/go/2018/10/11/goland-2018-3-eap-2-is-here/">blog post about
+                            diagrams support</a>.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Search & navigation">Search & navigation</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<div>
+<img alt="Search Everywhere popup shows search results" class="js-gif" data-gif-src="/go/whatsnew/img/2018.3/search-everywhere-popup.gif" src="/go/whatsnew/img/2018.3/search-everywhere-popup.png" width="605">
+</div>
+</div>
+<h3 class="features-block__title">Improved Search Everywhere popup</h3>
+<p>The <em>Search Everywhere</em> popup (<em>Double Shift</em>) has a new UI and works faster
+                            thanks to an
+                            asynchronous approach.</p>
+<p>It also provides quick access to <em>Go to type</em>, <em>Go to file</em>, <em>Go to
+                            symbol</em>, and <em>Find</em>. Use the <kbd>TAB</kbd> key to switch between them.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Searching multiline code snippet via Find in Path dialog" src="/go/whatsnew/img/2018.3/find-in-path-replace.png" width="605">
+</div>
+<h3 class="features-block__title">Find and Replace in Path dialogs</h3>
+<p>The <em>Find in Path</em> and <em>Replace in Path</em> dialogs are better at supporting
+                            multiline code snippets.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Multiline TODO comments">Multiline TODO comments</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Multiline TODO in Go project." src="/go/whatsnew/img/2018.3/golang-multiline-todo.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<p>GoLand 2018.3 supports multiline TODO comments for Go, JavaScript, TypeScript, CSS, and
+                            SCSS.</p>
+</div>
+</div>
+</div>
+<h2 data-title="GitHub Pull Requests">GitHub Pull Requests</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="GitHub Pull Requests shows searching results by state:close and RP description" class="js-gif" data-gif-src="/go/whatsnew/img/2018.3/github-pull-requests.gif" src="/go/whatsnew/img/2018.3/github-pull-requests.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<p>The new <em>GitHub Pull Requests</em> tool window shows all pull requests from GitHub with
+                            their descriptions, current labels, changed files, and assignees. There, you can search by
+                            state,
+                            assignee, author, after, before, or use sorting. The IDE also helps you create a new local
+                            branch or open a pull request on GitHub. To open a new tool window, select <em>View Pull
+                                Requests</em> in the menu <em>VCS | Git</em>.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Tools">Tools</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="--pull in Build options field in the Dockerfiles run configuration" src="/go/whatsnew/img/2018.3/docker-build-config.png" width="605">
+</div>
+<h3 class="features-block__title">Docker plugin</h3>
+<p>You can now use CLI options for the build part: in the <em>Dockerfiles</em>
+                            run configuration, you will find the new <em>Build options</em> field. For now, the
+                            following CLI
+                            options are supported: <code>cache-from</code>, <code>cpu-shares</code>,
+                            <code>cpuset-cpus</code>, <code>force-rm</code>, <code></code>label,
+                            <code>memory</code>,
+                            <code>memory-swap</code>, <code>shm-size</code>, <code>no-cache</code>, <code>pull</code>,
+                            <code>quiet</code>, and <code>rm</code>.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Code completion in Helm template" src="/go/whatsnew/img/2018.3/k8sCompletion.png" width="605">
+</div>
+<h3 class="features-block__title">Kubernetes plugin update</h3>
+<p>As you work with Helm resource template files, enjoy code completion, the <em>Rename</em>
+                            refactoring,
+                            code inspections, and quick-fixes.</p>
+<p>For more details, please <a href="https://blog.jetbrains.com/idea/2018/10/intellij-idea-2018-3-helm-support">read this
+                            blog post</a>.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Accessibility">Accessibility</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="High-contrast theme" src="/go/whatsnew/img/2018.3/high-contrast-theme.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<p>We strive to make our IDEs accessible to everyone, and this update takes a big step in that
+                            direction.</p>
+<p>We’ve added new a <strong>High-contrast theme</strong>, which can be accessed using the
+                            drop-down list from
+                            the theme options under <em>Settings | Appearance & Behavior</em> or just press
+                            <kbd>Ctrl</kbd>&nbsp;+&nbsp; <kbd>`</kbd>.</p>
+<p>Also, the IDE gets <strong>better support for screen readers</strong>. GoLand now allows line
+                            numbers, VCS annotations, breakpoints, and other gutter icons to be read by a screen reader.
+                        </p>
+</div>
+</div>
+</div>
+<h2 data-title="JavaScript and TypeScript">JavaScript and TypeScript</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Autoimports in JavaScript" class="js-gif" data-gif-src="/go/whatsnew/img/2018.3/autoimports.gif" src="/go/whatsnew/img/2018.3/autoimports.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">Autoimports in JavaScript</h3>
+<p>GoLand now automatically adds imports not only for symbols defined in your project, but
+                            also for symbols from the project’s dependencies.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Parameter hints in JavaScrip" src="/go/whatsnew/img/2018.3/parameter-hints-for-javascript.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">Parameter hints in JavaScript</h3>
+<p>As you may know, we have parameter hints in Go, TypeScript, and SQL, so they've come to
+                            JavaScript as well.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="The inspection notifies that method if null or undefined" src="/go/whatsnew/img/2018.3/object-is-null-or-undefined.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<h3 class="features-block__title">Better 'null' and 'undefined' check</h3>
+<p>The inspection <em>Object is null or undefined</em> notifies you when you get a TypeError because
+                        a
+                        method is
+                        invoked on a value that is <code>undefined</code> or <code>null</code>, or it is passed to a
+                        function, or its property is
+                        used.</p>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Code completion in package.json" src="/go/whatsnew/img/2018.3/latest-version-package-json.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<h3 class="features-block__title">Completion in package.json</h3>
+<p>GoLand provides suggestions for the latest version, as well as previous ones for the dependencies
+                        in <code>package.json</code>.</p>
+</div>
+</div>
+<h2 data-title="Cassandra database support">Cassandra database support</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Cassandra database support" src="/go/whatsnew/img/2018.3/cassandra-database.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<p>Thanks to our wonderful colleagues on the DataGrip team, GoLand now supports Cassandra
+                            databases.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Even more changes">Even more changes</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Reworked Plugins page" src="/go/whatsnew/img/2018.3/plugins-page.png" width="605">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<ul>
+<li>The <em>Attach</em> action is available via the <em>Open Project</em> popup. It lets you
+                                attach a
+                                directory to already opened projects. Click <em>File | Open</em>, and
+                                choose the
+                                project you want to attach.
+                            </li>
+<li>Drag files and projects to the Welcome screen to open them.</li>
+<li>The <em>Activity Monitor</em> shows how much CPU the various subsystems and plugins are
+                                consuming: <em>Help | Activity Monitor</em>.
+                            </li>
+<li>The <em>Plugins</em> page in <em>Settings | Plugins</em> has been completely
+                                reworked, including all the functionality and UI.
+                            </li>
+<li>Indexing is now significantly faster.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>    </div>
+
+            
+<div class="page__footer">
+    <footer class="footer" id="footer">
+        <div class="wt-container">
+            <div class="footer__main wt-row wt-row_size_m wt-row-sm_direction_column-reverse">
+                <div class="footer__logo wt-col-inline wt-display-md-none">
+                    <div class="jetbrains-logo _size-3 _full-block">
+                        <svg class="sprite-img jetbrains">
+                            <use xlink:href="#jetbrains" />
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="wt-col-auto-fill wt-col-sm-12">
+                    <div class="wt-row wt-row_size_xs wt-row-sm_size_m wt-offset-top-12">
+                        <div class="wt-col-inline footer-skeleton-button"></div>
+                        <div class="wt-col-inline footer-skeleton-button"></div>
+                        <div class="wt-col-inline footer-skeleton-button"></div>
+                        <div class="wt-col-inline footer-skeleton-button"></div>
+                    </div>
+
+                    <div class="footer-skeleton-text-2 wt-offset-top-24" style="max-width: 45%"></div>
+                    <div class="footer-skeleton-text-2 wt-offset-top-12" style="max-width: 70%"></div>
+                </div>
+
+                <div class="wt-col-inline wt-col-sm-12 wt-col_align-self_end wt-col-sm_align-self_start">
+                    <div class="wt-row wt-row_size_m wt-row_justify_end wt-row-sm_justify_start">
+                        <div class="wt-col-inline footer-skeleton-button" style="min-width: 180px"></div>
+                        <div class="wt-col-inline footer-skeleton-button" style="min-width: 80px"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+    </div>
+
+<script>
+(function () {
+  function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+      results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+  }
+
+  function updateQueryStringParameter(uri, key, value) {
+    var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+    var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+    if (uri.match(re)) {
+      return uri.replace(re, '$1' + key + "=" + value + '$2');
+    }
+    else {
+      return uri + separator + key + "=" + value;
+    }
+  }
+
+  var downloadLink = document.getElementById("download-link");
+  if (downloadLink != null) {
+    var platform = getParameterByName('platform');
+    platform = platform != null ? platform : "windows";
+    var href = downloadLink.getAttribute("href");
+    var code = getParameterByName("code");
+
+    if(code != null) {
+      href = updateQueryStringParameter(href, "code", code)
+    }
+    href = updateQueryStringParameter(href, "platform", platform);
+    downloadLink.setAttribute("href", href);
+  }
+})();
+</script><script>
+(function() {
+  var STORAGE_KEY_NAME = 'firefoxDisappearedSVGWorkaround';
+  var STORAGE_KEY_VALUE = '1';
+
+  var isFirefox = /firefox/i.test(navigator.userAgent);
+  if (!isFirefox || isFirefox && sessionStorage.getItem(STORAGE_KEY_NAME) === STORAGE_KEY_VALUE) {
+    return;
+  }
+
+  var arrayFrom = function (arrayLike) {
+    return Array.prototype.slice.call(arrayLike, 0);
+  };
+
+  function workaround() {
+    var uses = document.querySelectorAll('.page svg use');
+    var badNodesCount = 0;
+
+    arrayFrom(uses).forEach(function (node) {
+      var rect = node.getBoundingClientRect();
+      if (rect.width === 0 && rect.height === 0)
+        badNodesCount++;
+    });
+
+    if (badNodesCount === uses.length) {
+      sessionStorage.setItem(STORAGE_KEY_NAME, STORAGE_KEY_VALUE);
+      if (typeof dataLayer !== 'undefined')
+        dataLayer.push({'firefoxDisappearedSVGWorkaround': STORAGE_KEY_VALUE});
+
+      window.location.replace(window.location.href);
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', workaround);
+
+})();
+</script>      <link href="/_assets/banner-rotator.entry.07ac548a2a68a7922693.css" rel="stylesheet" type="text/css">
+      <script src="/_assets/banner-rotator.entry.b9ea3aaba598786010f0.js" type="text/javascript"></script>
+      
+      
+  <script>
+(function () {
+
+  'use strict';
+
+  function ImagesSrcReplacer () {
+
+    var attribute = 'data-src';
+    var matches = document.querySelectorAll('img[' + attribute + ']');
+
+    for (var i = 0, n = matches.length; i < n; i++) {
+
+      var attrValue = matches[i].getAttribute(attribute);
+
+      if (_isHighDensity ()) {
+
+        var name = attrValue.substring(0, attrValue.lastIndexOf('.'));
+        var extention = attrValue.substring(attrValue.lastIndexOf('.'), attrValue.length);
+
+        matches[i].setAttribute('src', name + '@2x' + extention);
+
+      } else {
+        matches[i].setAttribute('src', attrValue)
+      }
+    }
+
+    /**
+     * Detect high density
+     * @returns {*|boolean}
+     */
+    function _isHighDensity () {
+      return (
+      (window.matchMedia &&
+      (window.matchMedia('only screen and (min-resolution: 124dpi), only screen and (min-resolution: 1.3dppx), only screen and (min-resolution: 48.8dpcm)').matches ||
+       window.matchMedia('only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (-o-min-device-pixel-ratio: 2.6/2), only screen and (min--moz-device-pixel-ratio: 1.3), only screen and (min-device-pixel-ratio: 1.3)').matches)) ||
+      (window.devicePixelRatio &&
+       window.devicePixelRatio > 1.3));
+    }
+  }
+
+  return new ImagesSrcReplacer()
+
+}(document, window));
+</script></body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta charset="UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="//resources.jetbrains.com/storage/help-app/v3/analytics.js"></script><title>Fields Syntax - Help | Hub</title><link rel="stylesheet" href="//resources.jetbrains.com/storage/help-app/v3/app.css"></head><body data-id="Fields-Syntax"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search Hub Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>Hub 2019.1 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="Fields-Syntax" id="Fields-Syntax.xml">Fields Syntax</h1>    <p id="72dd7b96">Fields request syntax is based on <a href="https://developers.google.com/google-apps/calendar/performance#partial-response" data-external="true" target="_blank" rel="noopener noreferrer">Google Partial request</a> syntax.        The following text is an applicable to the Hub API quote from the Google API documentation.    </p>    <p id="1410f5c8">By default, the server sends back all immediate fields of a resource after processing requests.        For nested objects, only the basic info (for example, <code class="code">id</code>) is returned by default.        To enhance the performance, you can request the server to return only the fields you really need, and get a <span class="emphasis">partial response</span> instead.    </p>    <p id="16903f05">To request a partial response, use the <code class="code">fields</code> request parameter to specify the fields        you want returned. You can use this parameter with any request that returns response data.    </p>    <div class="chapter"><h2 id="Example" data-toc="Fields-Syntax#Example">Example</h2>        <p id="2ffa3315">The following example shows the use of the <code class="code">fields</code> parameter with a sample API.</p>        <div class="chapter"><h3 id="SimpleRequest">Simple Request</h3>            <p id="5ea8bd4e">                <b id="765c2dc1">Simple request:</b>                This HTTP GET request omits the <code class="code">fields</code> parameter and returns the full resource.            </p>            <div class="code-block" data-lang="none">GET https://sso.jetbrains.com/api/rest/users/6109acd8-598b-44db-9e85-e99f3adca355</div>            <p id="19eec215">                <b id="f5ceea32">Full resource response:</b>                The full resource data includes the following fields, along with many others that have been omitted for                brevity.            </p>            <div class="code-block" data-lang="json">
+                {
+                    "id": "6109acd8-598b-44db-9e85-e99f3adca355",
+                    "url": "http://hub-dev.labs.intellij.net:8080/accounts/api/rest/users/6109acd8-598b-44db-9e85-e99f3adca355",
+                    "name": "John Smith",
+                    "banned": false,
+                    "avatar": {
+                        "url": "http://hub-dev.labs.intellij.net:8080/accounts/api/rest/avatar/6109acd8-598b-44db-9e85-e99f3adca355",
+                        "pictureUrl": "http://www.gravatar.com/avatar/3cc02cb9c88aada5761bdf22786e76f6.jpg?d=retro"
+                    },
+                    "contacts": [
+                        {
+                            "type": "EmailJSON",
+                            "verified": true,
+                            "email": "john.smith@example.com"
+                        },
+                        ...
+                    ],
+                    "groups": [
+                        {
+                            "id": "309ffb10-1cd4-4e90-9b86-1dbaded92319",
+                            "url":
+                            "http://hub-dev.labs.intellij.net:8080/accounts/api/rest/usergroups/309ffb10-1cd4-4e90-9b86-1dbaded92319"
+                        },
+                        ...
+                    ],
+                    "details": [
+                        {
+                            "type": "EmailuserdetailsJSON",
+                            "id": "c6903529-7f85-4d9c-b9c5-52fe38f07a37"
+                        },
+                        ...
+                    ],
+                    "aliasIds": [
+                        "43e730f8-56cd-4957-8e15-c6ce17c49276",
+                        ...
+                    ]
+                }
+            </div>        </div>        <div class="chapter"><h3 id="Request for a partial response">Request for a partial response</h3>            <p id="9b931501">Request for a partial response:</p>            <p id="4aa1b2ec">The following request for this same resource uses the fields parameter to significantly reduce the amount                of                data returned and the number of requests required to get details about nested objects.            </p>            <div class="code-block" data-lang="none">
+                GET https://sso.jetbrains.com/api/rest/users/6109acd8-598b-44db-9e85-e99f3adca355?fields=name,banned,avatar/pictureUrl,groups(id,name)
+    </div>            <p id="d13af5e7">Partial response</p>            <p id="253a2bda">In response to the request above, the server sends back a response that contains only the basic user                information with a list of named user groups.            </p>            <div class="code-block" data-lang="json">
+                {
+                    "name": "John Smith",
+                    "banned": false,
+                    "avatar": {
+                        "url": "http://hub-dev.labs.intellij.net:8080/accounts/api/rest/avatar/6109acd8-598b-44db-9e85-e99f3adca355",
+                        "pictureUrl": "http://www.gravatar.com/avatar/3cc02cb9c88aada5761bdf22786e76f6.jpg?d=retro"
+                    },
+                    "groups": [
+                        {
+                            "id": "309ffb10-1cd4-4e90-9b86-1dbaded92319",
+                            "name": "New Users"
+                        },
+                        {
+                            "id": "51ab66f5-bbfe-4345-9447-93ea8b5db3ee",
+                            "name": "Admins"
+                        },
+                        ...
+                    ]
+                }
+            </div>            <p id="f1b598a9">Note that the response is a JSON object that includes only the selected fields and their enclosing parent                objects.            </p>            <p id="d6fbf8e4">Details on how to format the fields parameter is covered next, followed by more details about what                exactly gets returned in the response.            </p>        </div>    </div>    <div class="chapter"><h2 id="Fields parameter syntax summary" data-toc="Fields-Syntax#Fields parameter syntax summary">Summary of Fields Parameter Syntax</h2>        <p id="021ff752">The format of the fields request parameter value is loosely based on XPath syntax.            The supported syntax is summarized below, and additional examples are provided in the following section.        </p>        <ol class="list _decimal"><li class="list__item" id="c4f1a067"><p>Use a comma-separated list to select multiple fields.</p></li><li class="list__item" id="ec26f9b9"><p>Use <code class="code">a/b</code> to select a field <code class="code">b</code> that is nested under the field <code class="code">a</code>;                use <code class="code">a/b/c</code> to select a field <code class="code">c</code> nested under the <code class="code">b</code>.            </p></li><li class="list__item" id="6105b14a"><p>Use a sub-selector to request a set of specific sub-fields of arrays or objects by placing expressions                in parentheses <code class="code">"( )"</code>.            </p></li><li class="list__item" id="99c08db8"><p>Use wildcards in field selections, if needed.</p></li></ol>    </div><div class="last-modified" data-skip-index="skip">Last modified: 9 September 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="Partial-Requests.html">Partial Requests</a><a class="navigation-links__next" href="Sort-Syntax.html">Sort Syntax</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="//resources.jetbrains.com/storage/help-app/v3/app.js"></script></body></html>

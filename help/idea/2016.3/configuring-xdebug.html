@@ -1,0 +1,343 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta class="swiftype" name="product" data-type="string" content="/idea/2016.3/"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><meta charset="UTF-8"><meta name="robots" content="noindex"><title>IntelliJ IDEA 2016.3 Help :: Configuring Xdebug</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Configuring_XDebug"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-swiftype-index="false"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.3 Help</h3><div class="shortcuts-switcher" data-swiftype-index="false"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Windows/Linux Default</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWin</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">Mac OS X</option><option data-group="secondary" value="eclipse_mac_os_x">Eclipse (Mac OS X)</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (Mac OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper (Mac OS X)</option><option data-group="secondary" value="emacs">Emacs (Mac OS X)</option></select></div><div class="panel-trigger" data-swiftype-index="false"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="configuring-zend-debugger.html">Configuring Zend Debugger</a></div><h1>Configuring Xdebug</h1><a name="d766e18"></a><p><a name="d766e19"></a><span class="emphasis">This feature is supported in the Ultimate edition only.</span></p>
+             
+                <aside class="warning ">
+                    <a name="d1646e280"></a><p><a name="d1646e281"></a><span class="emphasis">
+                        The following is only valid when PHP Plugin is installed and enabled!
+                    </span></p>
+                </aside>
+             
+        <a name="d49491e13"></a><p>In this section:</p><ul><li class="list__item"><a href="#d49491e21">Downloading and installing the Xdebug debugging engine</a></li><li class="list__item"><a href="#updatingPhpIni">Enabling Xdebug integration with the PHP engine</a></li><li class="list__item"><a href="#integrationWithProduct">Integrating Xdebug with  IntelliJ IDEA</a></li><li class="list__item"><a href="#on_demand_mode">Configuring Xdebug for using in the On-Demand mode</a></li><li class="list__item"><a href="#d49491e313">Configuring Xdebug for using in the Just-In-Time mode</a><ul class="list _bullet"><li class="list__item"><a href="#d49491e323">Command-line scripts</a></li><li class="list__item"><a href="#d49491e408">Web server debugging</a></li></ul></li></ul><a name="downloadAndInstall"></a><a name="d49491e21"></a><h2>Downloading and installing the Xdebug debugging engine</h2>
+
+              <a name="d49491e23"></a><p>Download the <a name="d49491e25"></a><a href="http://www.xdebug.org/" data-external="true"><span>Xdebug</span></a> extension compatible with your version of PHP
+                  and save it in the <code class="code" data-lang="Java">php/</code> folder.
+                  <ul class="list _bullet"><li class="list__item"><a name="d49491e33"></a>
+                          The location of the <code class="code" data-lang="Java">php/</code> folder is defined
+                          during the <a name="d49491e38"></a><a href="configuring-php-development-environment.html#installPHP"><span>installation of the PHP engine</span></a>.
+                      </li><li class="list__item"><a name="d49491e42"></a>
+                          If you are using an <a name="d49491e44"></a><a href="configuring-php-development-environment.html"><span>AMP package</span></a>, the Xdebug extension may be already installed.
+                          Follow the instructions in the <code class="code" data-lang="Java">xdebug.txt</code>.
+                      </li></ul>
+              </p>
+          <a name="updatingPhpIni"></a><h2>Enabling Xdebug integration with the PHP engine</h2>
+              <ol class="list _decimal"><li class="list__item"><a name="d49491e58"></a>Open the active <code class="code" data-lang="Java">php.ini</code> file in the editor:
+                   
+        <ol class="list _decimal"><li class="list__item"><a name="d604e882"></a>
+                 
+         
+            Open the <a name="d831e8187"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by pressing <kbd data-default="Ctrl+Alt+S" data-default_for_gnome="Ctrl+Alt+S" data-default_for_kde="Ctrl+Alt+S" data-default_for_xwin="Ctrl+Alt+S" data-emacs="Ctrl+Alt+S" data-jbuilder="N/A" data-visual_studio="Alt+F7" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Alt+S" data-mac_os_x_10.5_="&#x2318;," data-mac_os_x="&#x2318;," data-eclipse_mac_os_x="&#x2318;," data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+S</kbd> or by choosing <a name="d831e8191"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d831e8194"></a><span class="menupath">IntelliJ IDEA | Preferences</span> for OS X,
+         
+         
+            and  
+         
+         
+         
+        click <a name="d831e8217"></a><span class="control">PHP</span> under <a name="d831e8220"></a><span class="control">Languages&amp;Frameworks</span>.
+     
+     
+            </li><li class="list__item"><a name="d604e894"></a>
+                On the <a name="d604e896"></a><a href="php.html"><span>PHP</span></a> page that opens, click <img alt="browseButton.png" title="browseButton.png" src="/help/img/idea/2016.3/browseButton.png" width="15" height="15" class="inline-icon-15"> next to the <a name="d604e900"></a><span class="control">CLI Interpreter</span> field.
+            </li><li class="list__item"><a name="d604e904"></a>
+                In the <a name="d604e906"></a><span class="control">CLI Interpreters</span> dialog box that opens, the <a name="d604e909"></a><span class="control">Configuration File</span> read-only field
+                shows the path to the active <code class="code" data-lang="Java">php.ini</code> file. Click <a name="d604e915"></a><span class="control">Open in Editor</span>.
+            </li></ol>
+     
+              </li><li class="list__item"><a name="d49491e66"></a>To disable the <a name="d49491e68"></a><span class="emphasis">Zend Debugger</span> and <a name="d49491e71"></a><span class="emphasis">Zend Optimizer</span> tools, that blocks Xdebug,
+                  remove or comment the following lines in the <code class="code" data-lang="Java">php.ini</code> file:
+<a name="d49491e77"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+    zend_extension=&lt;path_to_zend_debugger&gt;
+    zend_extension=&lt;path_to_zend_optimizer&gt;
+</code></div>
+ 
+              </li><li class="list__item"><a name="d49491e83"></a>To enable Xdebug, locate the <code class="code" data-lang="Java">[Xdebug]</code> section in the <code class="code" data-lang="Java">php.ini</code> file
+                  and update it as follows:
+                  <a name="d49491e91"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+[Xdebug]
+zend_extension="&lt;path to php_xdebug.dll&gt;"
+xdebug.remote_enable=1
+xdebug.remote_port="&lt;the port for Xdebug to listen to&gt;" (the default port is 9000)
+xdebug.profiler_enable=1
+xdebug.profiler_output_dir="&lt;AMP home\tmp&gt;"
+                  </code></div>
+
+ 
+              </li><li class="list__item"><a name="d49491e97"></a>
+                  To enable <a name="d49491e99"></a><a href="multiuser-debugging-via-xdebug-proxies.html"><span>multiuser debugging via Xdebug proxies</span></a>,
+                  locate the <code class="code" data-lang="Java">xdebug.idekey</code> setting and assign it a value of your choice.
+                  This value will be used to register your IDE on Xdebug proxy servers.
+              </li><li class="list__item"><a name="d49491e106"></a>Save and close the <code class="code" data-lang="Java">php.ini</code> file.</li></ol>
+          <a name="integrationWithProduct"></a><h2>Integrating Xdebug with  IntelliJ IDEA</h2>
+          <ol class="list _decimal"><li class="list__item"><a name="d49491e120"></a>
+                
+         
+            Open the <a name="d831e8187"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by pressing <kbd data-default="Ctrl+Alt+S" data-default_for_gnome="Ctrl+Alt+S" data-default_for_kde="Ctrl+Alt+S" data-default_for_xwin="Ctrl+Alt+S" data-emacs="Ctrl+Alt+S" data-jbuilder="N/A" data-visual_studio="Alt+F7" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Alt+S" data-mac_os_x_10.5_="&#x2318;," data-mac_os_x="&#x2318;," data-eclipse_mac_os_x="&#x2318;," data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+S</kbd> or by choosing <a name="d831e8191"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d831e8194"></a><span class="menupath">IntelliJ IDEA | Preferences</span> for OS X,
+         
+         
+            and  
+         
+         
+         
+        click <a name="d831e8217"></a><span class="control">PHP</span> under <a name="d831e8220"></a><span class="control">Languages&amp;Frameworks</span>.
+     
+     
+           </li><li class="list__item"><a name="d49491e132"></a>
+              Check the <a name="d49491e134"></a><span class="emphasis">Xdebug</span> installation associated with the selected PHP interpreter:
+              <ol class="list _decimal"><li class="list__item"><a name="d49491e139"></a>
+                       
+        On the <a name="d604e140"></a><span class="control">PHP</span> page, choose the relevant PHP installation from the <a name="d604e143"></a><span class="control">CLI Interpreter</span> drop-down list
+        and click the <a name="d604e146"></a><span class="control">Browse</span> button <img alt="/help/img/idea/2016.3/browseButton.png" title="/help/img/idea/2016.3/browseButton.png" src="/help/img/idea/2016.3/browseButton.png" width="15" height="15" class="inline-icon-15"> next to the field.
+        The list shows all the PHP installations available in IntelliJ IDEA, see <a name="d604e151"></a><a href="enabling-php-support.html"><span>Enabling PHP support</span></a>.  
+     
+                  </li><li class="list__item"><a name="d49491e144"></a>
+                       
+        The <a name="d604e263"></a><span class="control">CLI Interpreters</span> dialog box that opens shows the following:
+        <ul class="list _bullet"><li class="list__item"><a name="d604e268"></a>
+                The version of the selected PHP installation.
+            </li><li class="list__item"><a name="d604e271"></a>
+                The name and version of the debugging engine associated with the selected PHP installation (Xdebug or Zend Debugger).
+                If no debugger is configured, IntelliJ IDEA shows <code class="code" data-lang="Java">Debugger: Not installed</code>.
+            </li></ul>
+     
+                  </li></ol>
+              <a name="d49491e150"></a><p>
+                  Alternatively, open the <a name="d49491e152"></a><a href="http://xdebug.org/find-binary.php" data-external="true"><span>Xdebug checker</span></a>, paste the output of the <code class="code" data-lang="Java">phpinfo()</code>,
+                  and click <a name="d49491e158"></a><span class="control">Analyze my phpinfo() output</span>.
+              </p>
+              <a name="d49491e162"></a><p>
+                  Learn more about checking the <a name="d49491e164"></a><span class="emphasis">Xdebug</span> installation in <a name="d49491e167"></a><a href="validating-the-configuration-of-a-debugging-engine.html"><span>Validating the Configuration of a Debugging Engine</span></a>.
+              </p>
+          </li><li class="list__item"><a name="d49491e171"></a>Define the Xdebug behaviour. Click <a name="d49491e173"></a><span class="control">Debug</span> under the <a name="d49491e176"></a><span class="control">PHP</span> node.
+              On the <a name="d49491e179"></a><a href="debug.html"><span>Debug</span></a> page that opens, specify the following settings in the <a name="d49491e181"></a><span class="control">Xdebug</span> area:
+              <ul class="list _bullet"><li class="list__item"><a name="d49491e186"></a>
+                      In the <a name="d49491e188"></a><span class="control">Debug Port</span> text box, appoint the port through which the tool will communicate with IntelliJ IDEA.
+                       
+                      This must be exactly the same port number as specified in the <code class="code" data-lang="Java">php.ini</code> file:
+                      <a name="d49491e196"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+xdebug.remote_port = &lt;port_number&gt;
+                      </code></div>
+                      <a name="d49491e199"></a><p>By default, Xdebug listens on port 9000.</p>
+                       
+                  </li><li class="list__item"><a name="d49491e204"></a>To have IntelliJ IDEA accept any incoming connections from Xdebug engines through the port specified in the <a name="d49491e206"></a><span class="control">Debug port</span> text box,
+                      select the <a name="d49491e209"></a><span class="control">Can accept external connections</span> check box.
+                  </li><li class="list__item"><a name="d49491e213"></a>
+                      Select the <a name="d49491e215"></a><span class="control">Force break at the first line when no path mapping is specified</span> check box
+                       
+            to have the debugger stop as soon as it reaches and opens a file that is not mapped to any file in the project
+            on the <a name="d604e3206"></a><a href="servers.html"><span>Servers</span></a> page. The debugger stops at the first line of this file and <a name="d604e3208"></a><a href="debug-tool-window-variables.html"><span>Debug Tool Window. Variables</span></a> shows the following error message:
+            <a name="d604e3210"></a><span class="emphasis">Cannot find a local copy of the file on server &lt;path to the file on the server&gt;</span> and a link <a name="d604e3213"></a><span class="emphasis">Click to set up mappings</span>.
+            Click the link to open the <a name="d604e3216"></a><span class="control">Resolve Path Mappings Problem</span> dialog box and map the problem file to its local copy.
+        <a name="d604e3220"></a><p>
+            When this check box cleared, the debugger does not stop upon reaching and opening an unmapped file, the file is just processed,
+            and no error messages are displayed.
+        </p>
+     
+                  </li><li class="list__item"><a name="d49491e221"></a>
+                      Select the <a name="d49491e223"></a><span class="control">Force break at the first line when the script is outside the project</span> check box
+                       
+            to have the debugger stop at the first line as soon as it reaches and opens a file outside the current project.
+            With this check box cleared, the debugger continues upon opening a file outside the current project.
+     
+                  </li></ul>
+          </li><li class="list__item"><a name="d49491e237"></a>
+                  In the <a name="d49491e239"></a><span class="control">External Connections</span> area,
+                   
+        specify how you want IntelliJ IDEA to treat connections received from hosts and through ports that are not registered as <a name="d604e1998"></a><a href="servers.html"><span>server configurations</span></a>.
+     
+                  <ul class="list _bullet"><li class="list__item"><a name="d604e2004"></a>
+            <a name="d604e2006"></a><span class="control">Ignore external connections through unregistered server configurations:</span> Select this check box to have IntelliJ IDEA ignore connections received from hosts and through ports
+            that are not registered as <a name="d604e2009"></a><a href="servers.html"><span>server configurations</span></a>.
+            When this check box is selected, IntelliJ IDEA does not attempt to create a server configuration automatically.
+        </li><li class="list__item"><a name="d604e2013"></a>
+            <a name="d604e2015"></a><span class="control">Detect path mappings from deployment configurations:</span>
+            <ul class="list _bullet"><li class="list__item"><a name="d604e2020"></a>
+                    When this check box is selected, IntelliJ IDEA attempts to retrieve <a name="d604e2022"></a><span class="emphasis">path mappings</span>
+                    for debugging in a remote environment
+                    from the <a name="d604e2025"></a><span class="emphasis">server access configuration</span> (<a name="d604e2028"></a><span class="emphasis">deployment configuration</span>).
+                </li><li class="list__item"><a name="d604e2032"></a>
+                    When the check box is cleared, you have to specify the path mappings manually.
+                </li></ul>
+            See <a name="d604e2036"></a><a href="validating-the-configuration-of-a-debugging-engine.html"><span>Validating the Configuration of a Debugging Engine</span></a>,  <a name="d604e2038"></a><a href="web-server-debug-validation-dialog.html"><span>Web Server Debug Validation Dialog</span></a>,
+            and <a name="d604e2040"></a><a href="configuring-remote-php-interpreters.html"><span>Configuring Remote PHP Interpreters</span></a> for details.
+        </li><li class="list__item"><a name="d604e2043"></a>
+            <a name="d604e2045"></a><span class="control">Break at first line in PHP scripts:</span>
+            Select this check box
+             
+        to have the debugger stop as soon as connection between it and IntelliJ IDEA is established
+        (instead of running automatically until the first breakpoint is reached).
+        Alternatively turn on the <a name="d604e1992"></a><span class="menupath">Run | Break at first line in PHP scripts</span> option on the main menu.
+     
+        </li><li class="list__item"><a name="d604e2051"></a>
+            <a name="d604e2053"></a><span class="control">Max. simultaneous connections:</span> Use this spin box to limit the number of external connections that can be processed simultaneously.
+        </li></ul>
+              </li></ol>
+      <a name="on_demand_mode"></a><h2>Configuring Xdebug for using in the On-Demand mode</h2>
+        <a name="d49491e254"></a><p>
+             
+         
+        Starting with version 2016.2, IntelliJ IDEA supports the <a name="d604e2305"></a><span class="emphasis">On-Demand</span> mode where you can disable Xdebug for your global PHP installation,
+        and have it enabled automatically on demand only when you are debugging your command-line scripts or when you need code coverage reports.
+        This lets your command line scripts (including Composer and unit tests) run much faster.
+     
+        </p>
+        <ol class="list _decimal"><li class="list__item"><a name="d49491e264"></a>
+                Disable Xdebug for command-line scripts:
+                <ol class="list _decimal"><li class="list__item"><a name="d604e2311"></a>
+             
+         
+            Open the <a name="d831e8187"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by pressing <kbd data-default="Ctrl+Alt+S" data-default_for_gnome="Ctrl+Alt+S" data-default_for_kde="Ctrl+Alt+S" data-default_for_xwin="Ctrl+Alt+S" data-emacs="Ctrl+Alt+S" data-jbuilder="N/A" data-visual_studio="Alt+F7" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Alt+S" data-mac_os_x_10.5_="&#x2318;," data-mac_os_x="&#x2318;," data-eclipse_mac_os_x="&#x2318;," data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+S</kbd> or by choosing <a name="d831e8191"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d831e8194"></a><span class="menupath">IntelliJ IDEA | Preferences</span> for OS X,
+         
+         
+            and  
+         
+         
+         
+        click <a name="d831e8217"></a><span class="control">PHP</span> under <a name="d831e8220"></a><span class="control">Languages&amp;Frameworks</span>.
+     
+     
+        </li><li class="list__item"><a name="d604e2323"></a>
+            From the <a name="d604e2325"></a><span class="control">PHP executable</span> drop-down list, choose the relevant PHP interpreter and click <img alt="/help/img/idea/2016.3/browseButton.png" title="/help/img/idea/2016.3/browseButton.png" src="/help/img/idea/2016.3/browseButton.png" width="15" height="15" class="inline-icon-15"> next to it.
+            In the <a name="d604e2330"></a><a href="cli-interpreters.html"><span>CLI Interpreters</span></a> dialog box that opens, click the <a name="d604e2332"></a><span class="control">Open in Editor</span> link
+            next to the <a name="d604e2335"></a><span class="control">Configuration file: &lt;path to php.ini&gt;</span> file.
+            Close all the dialog boxes and switch to the tab where the <code class="code" data-lang="Java">php.ini</code> file is opened.
+        </li><li class="list__item"><a name="d49491e277"></a>
+                        In the <code class="code" data-lang="Java">php.ini</code> file, find the <code class="code" data-lang="Java">[XDebug]</code> section and comment the following line in it
+                        by adding <code class="code" data-lang="Java">;</code> in preposition:
+                        <a name="d49491e288"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+;[XDebug]
+ 
+;zend_extension = "&lt;full_path_to_xdebug&gt;"
+ 
+                        </code></div>
+                    </li><li class="list__item"><a name="d49491e296"></a>
+                         
+        Open the <a name="d604e2346"></a><a href="cli-interpreters.html"><span>CLI Interpreters</span></a> dialog box and click <img alt="/help/img/idea/2016.3/refresh.png" title="/help/img/idea/2016.3/refresh.png" src="/help/img/idea/2016.3/refresh.png" width="14" height="14" class="inline-icon-14"> next to the <a name="d604e2350"></a><span class="control">PHP executable</span> field.
+        IntelliJ IDEA informs you that debugger is not installed:
+        <figure><img alt="ps_interpreters_debugger_not_installed.png" title="ps_interpreters_debugger_not_installed.png" src="/help/img/idea/2016.3/ps_interpreters_debugger_not_installed.png" width="446" height="129"></figure>
+     
+                    </li></ol>
+            </li><li class="list__item"><a name="d49491e303"></a>
+                 
+         
+        To enable IntelliJ IDEA to activate Xdebug when it is necessary, specify the path to it in the <a name="d604e2360"></a><span class="control">Debugger extension</span> text box,
+        in the <a name="d604e2363"></a><span class="control">Additional</span> area. Type the path manually or click <img alt="/help/img/idea/2016.3/browseButton.png" title="/help/img/idea/2016.3/browseButton.png" src="/help/img/idea/2016.3/browseButton.png" width="15" height="15" class="inline-icon-15">
+        and select the location in the dialog box that opens.
+     
+            </li></ol>
+    <a name="d49491e313"></a><h2>Configuring Xdebug for using in the Just-In-Time mode</h2>
+        <a name="d49491e315"></a><p>
+             
+        IntelliJ IDEA supports the use of Xdebug in the <a name="d604e3226"></a><span class="emphasis">Just-In-Time (JIT)</span> mode so it is not attached to your code all the time
+        but connects to IntelliJ IDEA only when an error occurs or an exception is thrown. The Xdebug operation mode is toggled
+        through the <a name="d604e3229"></a><a href="https://xdebug.org/docs/all_settings#remote_mode" data-external="true"><span>xdebug.remote_mode</span></a> setting, which is by default set to <code class="code" data-lang="Java">req</code>.
+        The mode is available both for debugging command-line scripts and for web server debugging.
+     
+        </p>
+        <a name="d49491e320"></a><p>
+            Depending on whether you are going to debug command-line scripts or use a Web server, use one of the scenarios below.
+        </p>
+
+        <a name="d49491e323"></a><h3>Command-line scripts</h3>
+                For debugging command-line scripts, specify the custom <code class="code" data-lang="Java">-dxdebug.remote_mode=jit</code> directive as an <a name="d49491e328"></a><span class="emphasis">additional configuration option</span>:
+                <ol class="list _decimal"><li class="list__item"><a name="d49491e333"></a>
+                         
+         
+            Open the <a name="d831e8187"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by pressing <kbd data-default="Ctrl+Alt+S" data-default_for_gnome="Ctrl+Alt+S" data-default_for_kde="Ctrl+Alt+S" data-default_for_xwin="Ctrl+Alt+S" data-emacs="Ctrl+Alt+S" data-jbuilder="N/A" data-visual_studio="Alt+F7" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Alt+S" data-mac_os_x_10.5_="&#x2318;," data-mac_os_x="&#x2318;," data-eclipse_mac_os_x="&#x2318;," data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+S</kbd> or by choosing <a name="d831e8191"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d831e8194"></a><span class="menupath">IntelliJ IDEA | Preferences</span> for OS X,
+         
+         
+            and  
+         
+         
+         
+        click <a name="d831e8217"></a><span class="control">PHP</span> under <a name="d831e8220"></a><span class="control">Languages&amp;Frameworks</span>.
+     
+     
+                    </li><li class="list__item"><a name="d49491e345"></a>
+                        From the <a name="d49491e347"></a><span class="control">PHP executable</span> drop-down list, choose the relevant PHP interpreter and click <img alt="/help/img/idea/2016.3/browseButton.png" title="/help/img/idea/2016.3/browseButton.png" src="/help/img/idea/2016.3/browseButton.png" width="15" height="15" class="inline-icon-15"> next to it.
+                    </li><li class="list__item"><a name="d49491e353"></a>
+                        In the <a name="d49491e355"></a><a href="cli-interpreters.html"><span>CLI Interpreters</span></a> dialog box that opens, click <img alt="/help/img/idea/2016.3/browseButton.png" title="/help/img/idea/2016.3/browseButton.png" src="/help/img/idea/2016.3/browseButton.png" width="15" height="15" class="inline-icon-15"> next to the <a name="d49491e359"></a><span class="control">Configuration options</span> text box
+                        in the <a name="d49491e362"></a><span class="control">Additional</span> area.
+                    </li><li class="list__item"><a name="d49491e366"></a>
+                        In the <a name="d49491e368"></a><span class="control">Configuration options</span> dialog that opens, click <img alt="add.png" title="add.png" src="/help/img/idea/2016.3/new.png" width="12" height="12" class="inline-icon-12"> to add a new entry, then type <code class="code" data-lang="Java">-dxdebug.remote_mode</code> in the <a name="d49491e376"></a><span class="control">Configuration directive</span> field
+                        and <code class="code" data-lang="Java">jit</code> in the <a name="d49491e383"></a><span class="control">Value</span> field.
+                        <a name="d49491e386"></a><p>
+                            When you click <a name="d49491e388"></a><span class="control">OK</span>, you return to the <a name="d49491e391"></a><span class="control">CLI Interpreters</span> dialog box where the <a name="d49491e394"></a><span class="control">Configuration options</span> text box
+                            shows <code class="code" data-lang="Java">-dxdebug.remote_mode=jit</code>.
+                        </p>
+                    </li></ol>
+ 
+ 
+             
+            <a name="d49491e408"></a><h3>Web server debugging</h3>
+                <ol class="list _decimal"><li class="list__item"><a name="d604e3313"></a>
+            On the main menu, choose <a name="d604e3315"></a><span class="menupath">Run | Web Server Debug Validation</span>.
+        </li><li class="list__item"><a name="d604e3319"></a>
+            In the <a name="d604e3321"></a><a href="web-server-debug-validation-dialog.html"><span>Web Server Debug Validation Dialog</span></a> that opens, choose the Web server to validate the debugger on.
+            <ul class="list _bullet"><li class="list__item"><a name="d604e3325"></a>
+                    Choose <a name="d604e3327"></a><span class="control">Local Web Server or Shared Folder</span>
+                     
+        to check a debugger associated with a local Web server.
+        <ul class="list _bullet"><li class="list__item"><a name="d604e1231"></a>
+                <a name="d604e1233"></a><span class="control">Path to Create Validation Script:</span>
+                In this field, specify the absolute path to the folder under the server document root where the validation script will be created.
+                For Web servers of the type <a name="d604e1236"></a><span class="emphasis">Inplace</span>, the folder is under the project root.
+                <a name="d604e1239"></a><p>
+                    The folder must be accessible through <a name="d604e1241"></a><span class="emphasis">http</span>.
+                </p>
+            </li><li class="list__item"><a name="d604e1246"></a>
+                <a name="d604e1248"></a><span class="control">URL to Validation Script:</span>
+                In this text box, type the URL address of the folder where the validation script will be created.
+                If the project root is mapped to a folder accessible through <code class="code" data-lang="Java">http</code>,
+                you can specify the project root or any other folder under it.
+            </li></ul>
+     
+                </li><li class="list__item"><a name="d604e3333"></a>
+                    Choose <a name="d604e3335"></a><span class="control">Remote Web Server</span>
+                     
+        to check a debugger associated with a remote server.
+        <ul class="list _bullet"><li class="list__item"><a name="d604e1261"></a>
+                <a name="d604e1263"></a><span class="control">Path to Create Validation Script:</span>
+                In this field, specify the absolute path to the folder under the server document root where the validation script will be created.
+                The folder must be accessible through <a name="d604e1266"></a><span class="emphasis">http</span>.
+            </li><li class="list__item"><a name="d604e1270"></a>
+                <a name="d604e1272"></a><span class="control">Deployment Server:</span>
+                In this field, specify the server access configuration of the type <a name="d604e1275"></a><a href="creating-a-local-server-configuration.html"><span>Local Server</span></a>
+                or <a name="d604e1278"></a><a href="creating-a-remote-server-configuration.html"><span>Remote Server</span></a> to access the target environment.
+                For details  see <a name="d604e1281"></a><a href="configuring-synchronization-with-a-web-server.html"><span>Configuring Synchronization with a Web Server</span></a>.
+                <a name="d604e1283"></a><p>
+                    Choose  a configuration from the drop-down list or click the <a name="d604e1285"></a><span class="control">Browse</span> button <img alt="/help/img/idea/2016.3/browseButton.png" title="/help/img/idea/2016.3/browseButton.png" src="/help/img/idea/2016.3/browseButton.png" width="15" height="15" class="inline-icon-15">
+                    in the <a name="d604e1290"></a><a href="deployment.html"><span>Deployment dialog</span></a>.
+                </p>
+            </li></ul>
+     
+                </li></ul>
+        </li><li class="list__item"><a name="d604e3343"></a>
+            Click <a name="d604e3345"></a><span class="control">Validate</span>
+             
+        to have IntelliJ IDEA create a validation script, deploy it to the target remote environment, and run it there.
+     
+        </li><li class="list__item"><a name="d604e3351"></a>
+            Open the <code class="code" data-lang="Java">php.ini</code> file which is reported as loaded and associated with Xdebug.
+        </li><li class="list__item"><a name="d49491e414"></a>
+                        In the <code class="code" data-lang="Java">php.ini</code> file,
+                         
+        find the <code class="code" data-lang="Java">[XDebug]</code> section and change the value of the <code class="code" data-lang="Java">xdebug.remote_mode</code>
+        from the default <code class="code" data-lang="Java">req</code> to <code class="code" data-lang="Java">jit</code>.
+     
+                    </li></ol>
+             
+
+                <a name="d49491e424"></a><p>
+            See also <a name="d49491e426"></a><a href="https://blog.jetbrains.com/phpstorm/2013/12/just-in-time-debugging-and-php-exception-breakpoints-with-phpstorm-and-xdebug/" data-external="true"><span>Just-In-Time debugging and PHP Exception Breakpoints with PhpStorm and Xdebug</span></a>
+        </p>
+    <div class="navigation-links _bottom"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="configuring-zend-debugger.html">Configuring Zend Debugger</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content">```
+                <div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d49491e438"></a><a href="configuring-php-development-environment.html"><span>Configuring PHP Development Environment</span></a></li><li class="list__item"><a name="d49491e442"></a><a href="creating-and-editing-run-debug-configurations.html"><span>Creating and Editing Run/Debug Configurations</span></a></li><li class="list__item"><a name="d49491e446"></a><a href="multiuser-debugging-via-xdebug-proxies.html"><span>Multiuser Debugging via Xdebug Proxies</span></a></li><li class="list__item"><a name="d49491e449"></a><a href="configuring-zend-debugger.html"><span>Configuring Zend Debugger</span></a></li></ul></div><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d49491e454"></a><a href="debug.html"><span>Debug</span></a></li><li class="list__item"><a name="d49491e458"></a><a href="php.html"><span>PHP</span></a></li></ul></div><div class="seealso__col"><h3>External Links:</h3><ul class="list"><li class="list__item"><a name="d49491e465"></a><a href="https://blog.jetbrains.com/phpstorm/2016/06/xdebug-on-demand-for-cli-php-scripts-in-phpstorm-2016-2-eap/" data-external="true"><span>https://blog.jetbrains.com/phpstorm/2016/06/xdebug-on-demand-for-cli-php-scripts-in-phpstorm-2016-2-eap/</span></a></li><li class="list__item"><a name="d49491e467"></a><a href="http://www.xdebug.org/" data-external="true"><span>http://www.xdebug.org/</span></a></li></ul></div></div></section><div class="last-modified" data-swiftype-index="false">Last modified: 21 March 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

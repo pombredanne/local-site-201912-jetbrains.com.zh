@@ -1,0 +1,457 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta class="swiftype" name="product" data-type="string" content="/idea/2016.3/"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><meta charset="UTF-8"><meta name="robots" content="noindex"><title>IntelliJ IDEA 2016.3 Help :: Writing and Executing SQL Statements</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Writing_and_Executing_SQL_Commands"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-swiftype-index="false"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.3 Help</h3><div class="shortcuts-switcher" data-swiftype-index="false"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Windows/Linux Default</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWin</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">Mac OS X</option><option data-group="secondary" value="eclipse_mac_os_x">Eclipse (Mac OS X)</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (Mac OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper (Mac OS X)</option><option data-group="secondary" value="emacs">Emacs (Mac OS X)</option></select></div><div class="panel-trigger" data-swiftype-index="false"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="working-with-query-results.html">Working with Query Results</a></div><h1>Writing and Executing SQL Statements</h1><a name="d766e18"></a><p><a name="d766e19"></a><span class="emphasis">This feature is supported in the Ultimate edition only.</span></p><a name="d513291e14"></a><p>
+        Use the input pane of the database console to compose and execute your SQL statements, and
+        also to perform other, associated tasks. (The input pane is shown as a tab in the editor.)</p><ul><li class="list__item"><a href="#selecting_schema">Selecting the default schema or database</a></li><li class="list__item"><a href="#controlling_search_path">Controlling the schema search path for PostgreSQL</a></li><li class="list__item"><a href="#compose_statement">Composing SQL statements</a></li><li class="list__item"><a href="#edit_data_for_insert">Editing data for INSERT statements in table format</a></li><li class="list__item"><a href="#nav_to_db_tool_window">Navigating to a table or column view in the Database tool window</a></li><li class="list__item"><a href="#configure_execute">Configuring the Execute command</a></li><li class="list__item"><a href="#execute_statement">Executing an SQL statement</a></li><li class="list__item"><a href="#executing_parameterized_statements">Executing parameterized statements</a></li><li class="list__item"><a href="#executing_group_of_statements">Executing a group of statements</a></li><li class="list__item"><a href="#executing_all_statements">Executing all statements</a></li><li class="list__item"><a href="#d513291e346">Executing a part of a statement (e.g. a subquery)</a></li><li class="list__item"><a href="#executing_memorized_statements">Executing auto-memorized statements</a></li><li class="list__item"><a href="#d513291e375">Outputting the result of a SELECT statement into a file</a></li><li class="list__item"><a href="#using_error_notification_bar">Using the error notification bar</a></li><li class="list__item"><a href="#disconnecting">Canceling running statements</a></li><li class="list__item"><a href="#d513291e473">Managing database transactions</a></li><li class="list__item"><a href="#d513291e486">Showing execution plans</a></li><li class="list__item"><a href="#d513291e516">Showing DBMS_OUTPUT for Oracle</a></li></ul><a name="selecting_schema"></a><h2>Selecting the default schema or database</h2>
+        <a name="d513291e22"></a><p>
+            You can select the default schema or database by using the list in the right-hand part of the toolbar.
+            If you do so, you'll be able to omit the name of that schema or database in your statements.</p>
+        <figure><img alt="/help/img/idea/2016.3/DBConsoleSchemaSelector.png" title="/help/img/idea/2016.3/DBConsoleSchemaSelector.png" src="/help/img/idea/2016.3/DBConsoleSchemaSelector.png" width="147" height="127"></figure>
+        <a name="d513291e27"></a><p>
+            Note that you cannot switch schemas like this for read-only MySQL data sources,
+            see <a href="data-sources-and-drivers-dialog.html#readonly">Read-only</a>.</p>
+        <a name="d513291e32"></a><p>
+            See also, <a href="#controlling_search_path">Controlling the schema search path for PostgreSQL</a>.</p>
+    <a name="controlling_search_path"></a><h2>Controlling the schema search path for PostgreSQL</h2>
+        <a name="d513291e40"></a><p>
+            When working with a PostgreSQL data source,
+            you can use the <a name="d513291e42"></a><span class="control">Search Path</span> popup to control the schema search path.
+            To open this popup, click the <a name="d513291e45"></a><span class="control">&lt;schema&gt;</span> button
+            in the right-hand part of the toolbar.</p>
+        <a name="d513291e49"></a><p>
+            If the search path isn't set and should include only one schema,
+            open the popup and click the necessary schema.
+            In the same way you can replace a schema with another one in a single-schema search path.</p>
+        <a name="d513291e52"></a><p>
+            To form a search path that includes two or more schemas, open the popup and use:</p>
+        <ul class="list _ul"><li class="list__item"><a name="d513291e57"></a>
+                <kbd data-default="Space" data-default_for_gnome="Space" data-default_for_kde="Space" data-default_for_xwin="Space" data-emacs="Space" data-jbuilder="Space" data-visual_studio="Space" data-netbeans_6.5="N/A" data-eclipse="Space" data-mac_os_x_10.5_="Space" data-mac_os_x="Space" data-eclipse_mac_os_x="Space" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Space</kbd> to
+                add a highlighted schema to the search path and also to remove a schema from the search path.</li><li class="list__item"><a name="d513291e62"></a>
+                <kbd data-default="Alt+Up" data-default_for_gnome="Alt+Up" data-default_for_kde="Alt+Up" data-default_for_xwin="Alt+Up" data-emacs="Alt+Up" data-jbuilder="Alt+Up" data-visual_studio="Alt+Up" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Shift+Up" data-mac_os_x_10.5_="&#x2303;&#x2191;" data-mac_os_x="&#x2303;&#x2191;" data-eclipse_mac_os_x="&#x2303;&#x2325;&#x2191;" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Up</kbd> and <kbd data-default="Alt+Down" data-default_for_gnome="Alt+Down" data-default_for_kde="Alt+Down" data-default_for_xwin="Alt+Down" data-emacs="Alt+Down" data-jbuilder="Alt+Down" data-visual_studio="Alt+Down" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Shift+Down" data-mac_os_x_10.5_="&#x2303;&#x2193;" data-mac_os_x="&#x2303;&#x2193;" data-eclipse_mac_os_x="&#x2303;&#x2325;&#x2193;" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Down</kbd> to
+                reorder the schemas within the search path.</li><li class="list__item"><a name="d513291e69"></a>
+                <kbd data-default="Enter" data-default_for_gnome="Enter" data-default_for_kde="Enter" data-default_for_xwin="Enter" data-emacs="Enter" data-jbuilder="Enter" data-visual_studio="Enter" data-netbeans_6.5="N/A" data-eclipse="Enter" data-mac_os_x_10.5_="⏎" data-mac_os_x="⏎" data-eclipse_mac_os_x="⏎" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Enter</kbd> to apply the changes, i.e. to set the search path.</li></ul>
+        <figure><img alt="/help/img/idea/2016.3/DBConsoleSchemaSearchPath.png" title="/help/img/idea/2016.3/DBConsoleSchemaSearchPath.png" src="/help/img/idea/2016.3/DBConsoleSchemaSearchPath.png" width="160" height="218"></figure>
+        <a name="d513291e77"></a><p>
+            More instructions and usage hints are available right in the popup.</p>
+    <a name="compose_statement"></a><h2>Composing SQL statements</h2>
+        <a name="d513291e83"></a><p>
+            When composing your SQL statements, use:</p>
+        <ul class="list _ul"><li class="list__item"><a name="d513291e88"></a>
+                Predefined patterns
+                (<kbd data-default="Ctrl+J" data-default_for_gnome="Ctrl+J" data-default_for_kde="Ctrl+J" data-default_for_xwin="Ctrl+J" data-emacs="Ctrl+J" data-jbuilder="Ctrl+J" data-visual_studio="Ctrl+J" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Shift+Alt+J" data-mac_os_x_10.5_="&#x2318;J" data-mac_os_x="&#x2318;J" data-eclipse_mac_os_x="N/A" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+J</kbd> or <a name="d513291e92"></a><span class="control">Code | Insert Live Template</span>).
+                <figure><img alt="/help/img/idea/2016.3/sqlConsoleLiveTemplates.png" title="/help/img/idea/2016.3/sqlConsoleLiveTemplates.png" src="/help/img/idea/2016.3/sqlConsoleLiveTemplates.png" width="615" height="235"></figure>
+            </li><li class="list__item"><a name="d513291e98"></a>
+                Auto-completion and highlighting of SQL keywords, and table and column names.
+                <figure><img alt="/help/img/idea/2016.3/sqlConsoleAutocompletion.png" title="/help/img/idea/2016.3/sqlConsoleAutocompletion.png" src="/help/img/idea/2016.3/sqlConsoleAutocompletion.png" width="615" height="225"></figure></li><li class="list__item"><a name="d513291e104"></a>
+                Data type prompts for columns
+                (<kbd data-default="Ctrl+P" data-default_for_gnome="Ctrl+P" data-default_for_kde="Ctrl+P" data-default_for_xwin="Ctrl+P" data-emacs="Alt+Shift+P" data-jbuilder="N/A" data-visual_studio="Ctrl+Shift+Space" data-netbeans_6.5="N/A" data-eclipse="N/A" data-mac_os_x_10.5_="&#x2318;P" data-mac_os_x="&#x2318;P" data-eclipse_mac_os_x="&#x2303;&#x21E7;Space" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+P</kbd> or <a name="d513291e108"></a><span class="menupath">View | Parameter Info</span>).
+                <figure><img alt="/help/img/idea/2016.3/sqlConsoleParameterInfoTooltip.png" title="/help/img/idea/2016.3/sqlConsoleParameterInfoTooltip.png" src="/help/img/idea/2016.3/sqlConsoleParameterInfoTooltip.png" width="615" height="163"></figure></li><li class="list__item"><a name="d513291e113"></a>
+                Advanced find and replace capabilities
+                (<kbd data-default="Ctrl+F" data-default_for_gnome="Ctrl+F" data-default_for_kde="Ctrl+F" data-default_for_xwin="Ctrl+F" data-emacs="Ctrl+Alt+S" data-jbuilder="Ctrl+F" data-visual_studio="Ctrl+F" data-netbeans_6.5="N/A" data-eclipse="N/A" data-mac_os_x_10.5_="&#x2318;F" data-mac_os_x="&#x2318;F" data-eclipse_mac_os_x="N/A" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+F</kbd> or <a name="d513291e117"></a><span class="menupath">Edit | Find | Find</span>, and
+                <kbd data-default="Ctrl+R" data-default_for_gnome="Ctrl+R" data-default_for_kde="Ctrl+R" data-default_for_xwin="Ctrl+R" data-emacs="Alt+Shift+5" data-jbuilder="Ctrl+R" data-visual_studio="Ctrl+H" data-netbeans_6.5="N/A" data-eclipse="Ctrl+F" data-mac_os_x_10.5_="&#x2318;R" data-mac_os_x="&#x2318;R" data-eclipse_mac_os_x="N/A" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+R</kbd> or <a name="d513291e122"></a><span class="menupath">Edit | Find | Replace</span>).
+                <figure><img alt="/help/img/idea/2016.3/sqlConsoleFindAndReplace.png" title="/help/img/idea/2016.3/sqlConsoleFindAndReplace.png" src="/help/img/idea/2016.3/sqlConsoleFindAndReplace.png" width="615" height="244"></figure></li><li class="list__item"><a name="d513291e128"></a>
+                The console history (<img alt="/help/img/idea/2016.3/consoleHistory.png" title="/help/img/idea/2016.3/consoleHistory.png" src="/help/img/idea/2016.3/consoleHistory.png" width="15" height="15" class="inline-icon-15"> or <kbd data-default="Ctrl+Alt+E" data-default_for_gnome="Ctrl+Alt+E" data-default_for_kde="Ctrl+Alt+E" data-default_for_xwin="Ctrl+Alt+E" data-emacs="Ctrl+Alt+E" data-jbuilder="Ctrl+Alt+E" data-visual_studio="Ctrl+Alt+E" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Alt+E" data-mac_os_x_10.5_="&#x2325;&#x2318;E" data-mac_os_x="&#x2325;&#x2318;E" data-eclipse_mac_os_x="&#x2325;&#x2318;E" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+E</kbd>).
+                See <a href="#executing_memorized_statements">Executing auto-memorized statements</a>.
+                <figure><img alt="/help/img/idea/2016.3/sqlConsoleHistory.png" title="/help/img/idea/2016.3/sqlConsoleHistory.png" src="/help/img/idea/2016.3/sqlConsoleHistory.png" width="615" height="196"></figure>
+            </li></ul>
+        <a name="d513291e139"></a><p>
+            See also, <a href="#nav_to_db_tool_window">Navigating to a table or column view in the Database tool window</a>.</p>
+    <a name="edit_data_for_insert"></a><h2>Editing data for INSERT statements in table format</h2>
+        <ol class="list _decimal"><li class="list__item"><a name="d513291e149"></a>
+                Select the <code class="code" data-lang="Java">INSERT</code> statement of interest.</li><li class="list__item"><a name="d513291e155"></a>
+                Select <a name="d513291e157"></a><span class="control">Edit as Table</span> from the context menu.
+                As a result, the table editor opens.
+                <figure><img alt="/help/img/idea/2016.3/sqlConsoleTableEditorForInsert.png" title="/help/img/idea/2016.3/sqlConsoleTableEditorForInsert.png" src="/help/img/idea/2016.3/sqlConsoleTableEditorForInsert.png" width="615" height="207"></figure></li><li class="list__item"><a name="d513291e162"></a>
+                Use context menu commands and associated shortcuts for working with the data in the table editor.</li></ol>
+    <a name="nav_to_db_tool_window"></a><h2>Navigating to a table or column view in the Database tool window</h2>
+         
+        <a name="d71751e3051"></a><p>
+            When composing a statement, it's sometimes useful to take a look at the structure of a table, or
+            to see the info about a column (field) in the context of the table to which it belongs.
+            For such purposes, IntelliJ IDEA provides the ability
+            to switch from the name of a table or column in the input pane to its view
+            in the <a name="d71751e3053"></a><span class="control">Database</span> tool window.</p>
+        <a name="d71751e3057"></a><p>
+            The following ways are available for using this feature:</p>
+         
+        <ul class="list _ul"><li class="list__item"><a name="d71751e3065"></a>
+                Place the cursor within the name of
+                 
+                    the table or column of interest. 
+                 
+                Then use <kbd data-default="Ctrl+B" data-default_for_gnome="Ctrl+B" data-default_for_kde="Ctrl+B" data-default_for_xwin="Ctrl+B" data-emacs="Ctrl+Alt+G" data-jbuilder="Ctrl+B" data-visual_studio="F12" data-netbeans_6.5="N/A" data-eclipse="F3" data-mac_os_x_10.5_="&#x2318;B" data-mac_os_x="&#x2318;B" data-eclipse_mac_os_x="F3" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+B</kbd>.
+                (Alternatively, you can use
+                 
+                    <a name="d71751e3077"></a><span class="menupath">Navigate | Declaration</span> from the main menu or
+                    <a name="d71751e3080"></a><span class="menupath">Go To | Declaration</span> from the context menu.) 
+                </li><li class="list__item"><a name="d71751e3090"></a>
+                Press and hold the <kbd>Ctrl</kbd> key, and point to the name of interest.
+                When the text turns into a hyperlink, click the hyperlink.
+                <figure><img alt="/help/img/idea/2016.3/sqlConsole1.png" title="/help/img/idea/2016.3/sqlConsole1.png" src="/help/img/idea/2016.3/sqlConsole1.png" width="615" height="129"></figure>
+                 
+                </li></ul>
+         
+     
+    <a name="configure_execute"></a><h2>Configuring the Execute command</h2>
+        <a name="d513291e176"></a><p>
+            The <a name="d513291e178"></a><span class="control">Execute</span> command
+            (<img alt="/help/img/idea/2016.3/run.png" title="/help/img/idea/2016.3/run.png" src="/help/img/idea/2016.3/run.png" width="11" height="14" class="inline-icon-14"> on the toolbar, <kbd data-default="Ctrl+Enter" data-default_for_gnome="Ctrl+Enter" data-default_for_kde="Ctrl+Enter" data-default_for_xwin="Ctrl+Enter" data-emacs="Ctrl+Enter" data-jbuilder="Ctrl+Enter" data-visual_studio="Ctrl+Enter" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Enter" data-mac_os_x_10.5_="&#x2318;⏎" data-mac_os_x="&#x2318;⏎" data-eclipse_mac_os_x="&#x2318;⏎" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Enter</kbd> or
+            <a name="d513291e185"></a><span class="control">Execute</span> from the context menu)
+            is used to run your statements.</p>
+        <a name="d513291e189"></a><p>
+            IntelliJ IDEA provides many options for the Execute command
+            depending on the cursor position and on whether there is a selection.</p>
+        <a name="d513291e192"></a><p>
+            The options are specified on the
+             
+            <a name="d513291e199"></a><span class="menupath">Tools | Database</span>
+            page in the <a name="d513291e202"></a><span class="control">Settings / Preferences</span> dialog
+             
+             (<a name="d513291e216"></a><span class="menupath">File | Settings | Tools | Database</span> on Windows and Linux;
+                <a name="d513291e219"></a><span class="menupath">IntelliJ IDEA | Preferences | Tools | Database</span> on OS X). 
+            For more information,
+            see
+             
+            <a href="database.html#execute_on_caret">Execute in Console</a>. 
+        </p>
+    <a name="execute_statement"></a><h2>Executing an SQL statement</h2>
+        <ol class="list _decimal"><li class="list__item"><a name="d513291e238"></a>
+                Place the cursor within the statement.</li><li class="list__item"><a name="d513291e241"></a>
+                Do one of the following:
+                 
+                    <ul class="list _ul"><li class="list__item"><a name="d513291e247"></a>
+                            Click <img alt="/help/img/idea/2016.3/run.png" title="/help/img/idea/2016.3/run.png" src="/help/img/idea/2016.3/run.png" width="11" height="14" class="inline-icon-14"> on the toolbar.</li><li class="list__item"><a name="d513291e252"></a>
+                            Press
+                            <kbd data-default="Ctrl+Enter" data-default_for_gnome="Ctrl+Enter" data-default_for_kde="Ctrl+Enter" data-default_for_xwin="Ctrl+Enter" data-emacs="Ctrl+Enter" data-jbuilder="Ctrl+Enter" data-visual_studio="Ctrl+Enter" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Enter" data-mac_os_x_10.5_="&#x2318;⏎" data-mac_os_x="&#x2318;⏎" data-eclipse_mac_os_x="&#x2318;⏎" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Enter</kbd>.</li><li class="list__item"><a name="d513291e257"></a>
+                            Select <a name="d513291e259"></a><span class="control">Execute</span> from the context menu.</li></ul>
+                 
+            </li><li class="list__item"><a name="d513291e266"></a>
+                Select the statement or statements to be run.
+                (The suggestion list always contains an item for running all the statements.)</li></ol>
+        <figure><img alt="/help/img/idea/2016.3/DBSelectStatementToExecute.png" title="/help/img/idea/2016.3/DBSelectStatementToExecute.png" src="/help/img/idea/2016.3/DBSelectStatementToExecute.png" width="615" height="141"></figure>
+        <a name="d513291e272"></a><p>
+            See also,
+             
+            <a href="database.html#execute_on_caret">Execute in Console</a>. 
+        </p>
+    <a name="executing_parameterized_statements"></a><h2>Executing parameterized statements</h2>
+         
+        <a name="d71751e3147"></a><p>
+            Your
+             
+                statements 
+             
+            can contain parameters, however, by the time you
+             
+                execute such statements 
+             
+            the values of the parameters must be specified.
+            There are the following ways of specifying the parameter values:</p>
+        <ul class="list _ul"><li class="list__item"><a name="d71751e3164"></a>
+                Click <img alt="/help/img/idea/2016.3/run.png" title="/help/img/idea/2016.3/run.png" src="/help/img/idea/2016.3/run.png" width="11" height="14" class="inline-icon-14"> on the toolbar or press
+                 
+                    <kbd data-default="Ctrl+Enter" data-default_for_gnome="Ctrl+Enter" data-default_for_kde="Ctrl+Enter" data-default_for_xwin="Ctrl+Enter" data-emacs="Ctrl+Enter" data-jbuilder="Ctrl+Enter" data-visual_studio="Ctrl+Enter" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Enter" data-mac_os_x_10.5_="&#x2318;⏎" data-mac_os_x="&#x2318;⏎" data-eclipse_mac_os_x="&#x2318;⏎" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Enter</kbd>
+                    to execute the statement. 
+                 
+                In the dialog that opens, specify the parameter values and click <a name="d71751e3178"></a><span class="control">OK</span>.
+                <figure><img alt="/help/img/idea/2016.3/sqlConsoleParams.png" title="/help/img/idea/2016.3/sqlConsoleParams.png" src="/help/img/idea/2016.3/sqlConsoleParams.png" width="615" height="261"></figure>
+                 
+                 
+                 
+                <a name="editing_cell_value"></a><p>
+                    ( 
+        To start editing a value,
+        switch to the corresponding table cell and start typing.
+        To indicate that you have finished editing a value,
+        press <kbd data-default="Enter" data-default_for_gnome="Enter" data-default_for_kde="Enter" data-default_for_xwin="Enter" data-emacs="Enter" data-jbuilder="Enter" data-visual_studio="Enter" data-netbeans_6.5="N/A" data-eclipse="Enter" data-mac_os_x_10.5_="⏎" data-mac_os_x="⏎" data-eclipse_mac_os_x="⏎" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Enter</kbd> or switch to a different cell.
+        To quit the editing mode and restore an initial value, press <kbd data-default="Escape" data-default_for_gnome="Escape" data-default_for_kde="Escape" data-default_for_xwin="Escape" data-emacs="Escape, Escape" data-jbuilder="Escape" data-visual_studio="Escape" data-netbeans_6.5="N/A" data-eclipse="Escape" data-mac_os_x_10.5_="&#x238B;" data-mac_os_x="&#x238B;" data-eclipse_mac_os_x="&#x238B;" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Escape</kbd>. )</p></li><li class="list__item"><a name="d71751e3195"></a>
+                Alternatively, you can open the <a name="d71751e3197"></a><span class="control">Parameters</span> pane
+                 
+                    in the <a name="d71751e3202"></a><span class="control">Database Console</span> tool window 
+                (<img alt="/help/img/idea/2016.3/property_yellow.png" title="/help/img/idea/2016.3/property_yellow.png" src="/help/img/idea/2016.3/property_yellow.png" width="14" height="14" class="inline-icon-14"> on the toolbar) and specify the corresponding values there.
+                (The values are edited in the same way as in the corresponding dialog.)
+                 
+                    Then execute the statement 
+                 
+                (<img alt="/help/img/idea/2016.3/run.png" title="/help/img/idea/2016.3/run.png" src="/help/img/idea/2016.3/run.png" width="11" height="14" class="inline-icon-14"> on the toolbar or
+                 
+                    <kbd data-default="Ctrl+Enter" data-default_for_gnome="Ctrl+Enter" data-default_for_kde="Ctrl+Enter" data-default_for_xwin="Ctrl+Enter" data-emacs="Ctrl+Enter" data-jbuilder="Ctrl+Enter" data-visual_studio="Ctrl+Enter" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Enter" data-mac_os_x_10.5_="&#x2318;⏎" data-mac_os_x="&#x2318;⏎" data-eclipse_mac_os_x="&#x2318;⏎" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Enter</kbd>). 
+                 
+                <figure><img alt="/help/img/idea/2016.3/sqlConsoleParamsPane.png" title="/help/img/idea/2016.3/sqlConsoleParamsPane.png" src="/help/img/idea/2016.3/sqlConsoleParamsPane.png" width="322" height="100"></figure>
+                 
+                 
+                <a name="d71751e3234"></a><p>
+                    For more information, see <a href="database-console.html#parameters">Parameters pane</a>.</p></li></ul>
+        <a name="d71751e3239"></a><p>
+            See also,
+            <a name="d71751e3241"></a><a href="user-parameters.html"><span>User Parameters</span></a> and
+             
+            <a href="database.html#always_review_parameters">Always review parameters before execution</a>. 
+ 
+        </p>
+
+         
+
+     
+    <a name="executing_group_of_statements"></a><h2>Executing a group of statements</h2>
+            <a name="d513291e291"></a><p>
+                To execute a group of statements that follow one another in the console,
+                select (highlight) the statements
+                (to select all the statements, use <kbd data-default="Ctrl+A" data-default_for_gnome="Ctrl+A" data-default_for_kde="Ctrl+A" data-default_for_xwin="Ctrl+A" data-emacs="Ctrl+X, H" data-jbuilder="Ctrl+A" data-visual_studio="Ctrl+A" data-netbeans_6.5="N/A" data-eclipse="Ctrl+A" data-mac_os_x_10.5_="&#x2318;A" data-mac_os_x="&#x2318;A" data-eclipse_mac_os_x="&#x2318;A" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+A</kbd>) and
+                do one of the following:</p>
+             
+                    <ul class="list _ul"><li class="list__item"><a name="d74463e247"></a>
+                            Click <img alt="/help/img/idea/2016.3/run.png" title="/help/img/idea/2016.3/run.png" src="/help/img/idea/2016.3/run.png" width="11" height="14" class="inline-icon-14"> on the toolbar.</li><li class="list__item"><a name="d74463e252"></a>
+                            Press
+                            <kbd data-default="Ctrl+Enter" data-default_for_gnome="Ctrl+Enter" data-default_for_kde="Ctrl+Enter" data-default_for_xwin="Ctrl+Enter" data-emacs="Ctrl+Enter" data-jbuilder="Ctrl+Enter" data-visual_studio="Ctrl+Enter" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Enter" data-mac_os_x_10.5_="&#x2318;⏎" data-mac_os_x="&#x2318;⏎" data-eclipse_mac_os_x="&#x2318;⏎" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Enter</kbd>.</li><li class="list__item"><a name="d74463e257"></a>
+                            Select <a name="d74463e259"></a><span class="control">Execute</span> from the context menu.</li></ul>
+                 
+            <a name="d513291e298"></a><p>
+                See also, <a href="#using_error_notification_bar">Using the error notification bar</a> and
+                 
+                <a href="database.html#execute_on_caret">Execute in Console</a>. 
+            </p>
+    <a name="executing_all_statements"></a><h2>Executing all statements</h2>
+        <a name="d513291e314"></a><p>
+            To execute all the statements contained in a console,
+            as an alternative to the <a name="d513291e316"></a><span class="control">Execute</span> command,
+            you can use the <a name="d513291e319"></a><span class="control">Run console.sql</span> command.</p>
+        <a name="d513291e323"></a><p>
+            This command is available in the context menu, and its keyboard equivalent is <kbd data-default="Ctrl+Shift+F10" data-default_for_gnome="Ctrl+Shift+F10" data-default_for_kde="Ctrl+Shift+F10" data-default_for_xwin="Ctrl+Shift+F10" data-emacs="Ctrl+Shift+F10" data-jbuilder="Ctrl+Shift+F10" data-visual_studio="Ctrl+F9" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Shift+F10" data-mac_os_x_10.5_="&#x2303;&#x21E7;R" data-mac_os_x="&#x2303;&#x21E7;F10" data-eclipse_mac_os_x="&#x2303;&#x21E7;R" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Shift+F10</kbd>.</p>
+        <a name="d513291e328"></a><p>
+            The <a name="d513291e330"></a><span class="control">Run console.sql</span> command, generally, runs faster but:</p>
+        <ul class="list _ul"><li class="list__item"><a name="d513291e336"></a>
+                The statements with parameters don't run.</li><li class="list__item"><a name="d513291e339"></a>
+                Retrieved data for the <code class="code" data-lang="Java">SELECT</code> statements are not shown.</li></ul>
+    <a name="d513291e346"></a><h2>Executing a part of a statement (e.g. a subquery)</h2>
+        <a name="d513291e348"></a><p>
+            To execute a part of a statement (e. g. a subquery),
+            select (highlight) the fragment that you want to execute and do one of the following:</p>
+         
+                    <ul class="list _ul"><li class="list__item"><a name="d74463e247"></a>
+                            Click <img alt="/help/img/idea/2016.3/run.png" title="/help/img/idea/2016.3/run.png" src="/help/img/idea/2016.3/run.png" width="11" height="14" class="inline-icon-14"> on the toolbar.</li><li class="list__item"><a name="d74463e252"></a>
+                            Press
+                            <kbd data-default="Ctrl+Enter" data-default_for_gnome="Ctrl+Enter" data-default_for_kde="Ctrl+Enter" data-default_for_xwin="Ctrl+Enter" data-emacs="Ctrl+Enter" data-jbuilder="Ctrl+Enter" data-visual_studio="Ctrl+Enter" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Enter" data-mac_os_x_10.5_="&#x2318;⏎" data-mac_os_x="&#x2318;⏎" data-eclipse_mac_os_x="&#x2318;⏎" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Enter</kbd>.</li><li class="list__item"><a name="d74463e257"></a>
+                            Select <a name="d74463e259"></a><span class="control">Execute</span> from the context menu.</li></ul>
+                 
+ 
+        <a name="d513291e355"></a><p>
+            See also,
+             
+            <a href="database.html#execute_on_caret">Execute in Console</a>. 
+ 
+        </p>
+    <a name="executing_memorized_statements"></a><h2>Executing auto-memorized statements</h2>
+         
+        <a name="d71751e3284"></a><p>
+            As you run
+             
+                SQL statements in the consoles, 
+             
+             
+            IntelliJ IDEA memorizes them.
+            So, at a later time, you can view the
+             
+                statements 
+             
+            you have already run and,
+            if necessary, run them again.</p>
+        <a name="d71751e3302"></a><p>
+            To open the dialog where the auto-memorized
+             
+                statements 
+             
+            are shown (the <a name="d71751e3310"></a><span class="control">History</span> dialog),
+            do one of the following:</p>
+        <ul class="list _ul"><li class="list__item"><a name="d71751e3316"></a>
+                Click <img alt="/help/img/idea/2016.3/consoleHistory.png" title="/help/img/idea/2016.3/consoleHistory.png" src="/help/img/idea/2016.3/consoleHistory.png" width="15" height="15" class="inline-icon-15"> on the toolbar.</li><li class="list__item"><a name="d71751e3321"></a>
+                Press <kbd data-default="Ctrl+Alt+E" data-default_for_gnome="Ctrl+Alt+E" data-default_for_kde="Ctrl+Alt+E" data-default_for_xwin="Ctrl+Alt+E" data-emacs="Ctrl+Alt+E" data-jbuilder="Ctrl+Alt+E" data-visual_studio="Ctrl+Alt+E" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Alt+E" data-mac_os_x_10.5_="&#x2325;&#x2318;E" data-mac_os_x="&#x2325;&#x2318;E" data-eclipse_mac_os_x="&#x2325;&#x2318;E" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+E</kbd>.</li></ul>
+        <a name="d71751e3326"></a><p>
+            There are two panes in the <a name="d71751e3328"></a><span class="control">History</span> dialog.
+            The left-hand pane shows the list of the
+             
+                statements 
+             
+            that you have run.
+            For "long"
+             
+                statements, 
+             
+            only their beginnings are shown.
+            When you select a
+             
+                statement 
+             
+            in this pane,
+            the overall
+             
+                statement 
+             
+            is shown in the pane to the right.</p>
+        <a name="d71751e3357"></a><p>
+            You can filter the information: just start typing. As a result, only the
+             
+                statements 
+             
+            that contain the typed text will be shown.</p>
+        <a name="d71751e3367"></a><p>
+            You can copy the
+             
+                statements 
+             
+            from the <a name="d71751e3375"></a><span class="control">History</span> dialog
+            into the input pane of the console.
+            To copy a
+             
+                statement, 
+             
+            do one of the following:</p>
+        <ul class="list _ul"><li class="list__item"><a name="d71751e3387"></a>
+                Double-click the
+                 
+                    statement 
+                 
+                to be copied.</li><li class="list__item"><a name="d71751e3396"></a>
+                Select the
+                 
+                    statement 
+                 
+                of interest and press <kbd data-default="Enter" data-default_for_gnome="Enter" data-default_for_kde="Enter" data-default_for_xwin="Enter" data-emacs="Enter" data-jbuilder="Enter" data-visual_studio="Enter" data-netbeans_6.5="N/A" data-eclipse="Enter" data-mac_os_x_10.5_="⏎" data-mac_os_x="⏎" data-eclipse_mac_os_x="⏎" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Enter</kbd>.</li><li class="list__item"><a name="d71751e3407"></a>
+                Select the
+                 
+                    statement 
+                 
+                and click <a name="d71751e3415"></a><span class="control">OK</span>.</li></ul>
+        <a name="d71751e3420"></a><p>(Once the
+             
+                statement 
+             
+            is in the input pane, you can run it straight away.)</p>
+        <a name="d71751e3429"></a><p>
+            You can delete unnecessary memorized
+             
+                statements. 
+             
+            To delete a
+             
+                statement, 
+             
+            select the
+             
+                statement 
+             
+            in the <a name="d71751e3450"></a><span class="control">History</span> dialog and press <kbd data-default="Delete" data-default_for_gnome="Delete" data-default_for_kde="Delete" data-default_for_xwin="Delete" data-emacs="Delete" data-jbuilder="Delete" data-visual_studio="Delete" data-netbeans_6.5="N/A" data-eclipse="Delete" data-mac_os_x_10.5_="&#x2326;" data-mac_os_x="&#x2326;" data-eclipse_mac_os_x="&#x2326;" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Delete</kbd>.</p>
+ 
+
+ 
+
+     
+    <a name="d513291e375"></a><h2>Outputting the result of a SELECT statement into a file</h2>
+        <a name="d513291e377"></a><p>
+            Instead of the Result pane of the <a name="d513291e379"></a><span class="control">Database Console</span> tool window,
+            you can output the result of a <code class="code" data-lang="Java">SELECT</code> statement into a file.</p>
+        <ol class="list _decimal"><li class="list__item"><a name="d513291e388"></a>Right-click the <code class="code" data-lang="Java">SELECT</code> statement of interest.</li><li class="list__item"><a name="d513291e394"></a>Point to <a name="d513291e396"></a><span class="control">Execute to File</span> and select the output format.</li><li class="list__item"><a name="d513291e400"></a>Specify the output file location and name.</li></ol>
+    <a name="using_error_notification_bar"></a><h2>Using the error notification bar</h2>
+        <a name="d513291e406"></a><p>
+            If when running a statement an error occurs,
+            an error notification bar appears in the lower part of the input pane.</p>
+        <a name="d513291e409"></a><p>
+            This bar may be particularly useful when executing a sequence of statements
+            (see <a href="#executing_group_of_statements">Executing a group of statements</a>)
+            because in such a case it lets you select how to react.</p>
+        <figure><img alt="/help/img/idea/2016.3/DBConsoleErrorNotificationBar.png" title="/help/img/idea/2016.3/DBConsoleErrorNotificationBar.png" src="/help/img/idea/2016.3/DBConsoleErrorNotificationBar.png" width="615" height="185"></figure>
+        <a name="d513291e416"></a><p>
+            The options are:</p>
+        <ul class="list _ul"><li class="list__item"><a name="d513291e421"></a>
+                <a name="d513291e423"></a><span class="control">Retry.</span>
+                Execute the sequence of statements starting from the one that caused the error.</li><li class="list__item"><a name="d513291e427"></a>
+                <a name="d513291e429"></a><span class="control">Ignore.</span>
+                Skip the erroneous statement and execute the sequence starting from the next statement.
+                If another error occurs, the error notification bar will appear again.</li><li class="list__item"><a name="d513291e433"></a>
+                <a name="d513291e435"></a><span class="control">Ignore All.</span>
+                Skip the erroneous statement and execute the sequence starting from the next statement.
+                If other errors occur, all the erroneous statements will be skipped and
+                the error notification bar won't appear for these statements.</li><li class="list__item"><a name="d513291e439"></a>
+                <a name="d513291e441"></a><span class="control">Stop.</span>
+                Stop the execution of the sequence.</li></ul>
+        <a name="d513291e446"></a><p>
+            Showing the error notification bar in the input pane is enabled or disabled
+            in the <a name="d513291e448"></a><span class="control">Settings</span> dialog
+             (the <a href="database.html#error_notification_bar">
+                    Show error notifications in editor</a> check box
+                on the <a name="d513291e455"></a><a href="database.html"><span>Database page</span></a>). 
+             
+        </p>
+    <a name="disconnecting"></a><h2>Canceling running statements</h2>
+         
+        <a name="d71751e2785"></a><p>
+            To terminate execution of the current
+             
+             statement or statements, 
+            do one of the following:</p>
+        <ul class="list _ul"><li class="list__item"><a name="d71751e2796"></a>
+                Click <img alt="/help/img/idea/2016.3/stop.gif" title="/help/img/idea/2016.3/stop.gif" src="/help/img/idea/2016.3/stop.gif" width="12" height="12" class="inline-icon-12">
+                 
+                 
+                    on the toolbar of the input pane, or
+                    on the toolbar of the <a name="d71751e2805"></a><span class="control">Dababase Console</span> tool window.</li><li class="list__item"><a name="d71751e2809"></a>
+                Press
+                <kbd data-default="Ctrl+F2" data-default_for_gnome="Ctrl+F2" data-default_for_kde="Ctrl+2" data-default_for_xwin="Ctrl+F2" data-emacs="Ctrl+F2" data-jbuilder="Ctrl+F2" data-visual_studio="Shift+F5" data-netbeans_6.5="N/A" data-eclipse="Ctrl+F2" data-mac_os_x_10.5_="&#x2318;F2" data-mac_os_x="&#x2318;F2" data-eclipse_mac_os_x="&#x2318;F2" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+F2</kbd>
+                 .</li></ul><a name="d513291e473"></a><h2>Managing database transactions</h2>
+        <a name="d513291e475"></a><p>
+             
+        The <a name="d71751e2358"></a><span class="control">Auto-commit</span> check box, and
+        the <a name="d71751e2361"></a><span class="control">Commit</span>&nbsp;<img alt="/help/img/idea/2016.3/DBCommit.png" title="/help/img/idea/2016.3/DBCommit.png" src="/help/img/idea/2016.3/DBCommit.png" width="14" height="10" class="inline-icon-10"> and
+        <a name="d71751e2366"></a><span class="control">Rollback</span>&nbsp;<img alt="/help/img/idea/2016.3/DBRollback.png" title="/help/img/idea/2016.3/DBRollback.png" src="/help/img/idea/2016.3/DBRollback.png" width="12" height="11" class="inline-icon-11"> icons on the toolbar
+        let you manage database transactions.</p>
+        <a name="d513291e479"></a><p>
+             
+                     
+                     
+                        The <a name="d71751e749"></a><span class="control">Auto-commit</span> check box is used 
+                    to turn the autocommit mode for the database connection on or off.</p>
+         
+                    <a name="d71751e756"></a><p>
+                        In the autocommit mode, each SQL statement is executed in its own transaction that is implicitly committed.
+                        Consequently, the SQL statements executed in this mode cannot be rolled back.</p>
+                     
+                    <a name="d71751e762"></a><p>
+                        If the autocommit mode is off, transactions are committed or rolled back explicitly by means of
+                         
+                         
+                            the <a name="d71751e775"></a><span class="control">Commit</span> (<img alt="/help/img/idea/2016.3/DBCommit.png" title="/help/img/idea/2016.3/DBCommit.png" src="/help/img/idea/2016.3/DBCommit.png" width="14" height="10" class="inline-icon-10">) or
+                            <a name="d71751e780"></a><span class="control">Rollback</span> (<img alt="/help/img/idea/2016.3/DBRollback.png" title="/help/img/idea/2016.3/DBRollback.png" src="/help/img/idea/2016.3/DBRollback.png" width="12" height="11" class="inline-icon-11">) command. 
+                        Each commit or rollback starts a new transaction which provides grouping
+                        for a series of subsequent SQL statements.</p>
+                    <a name="d71751e787"></a><p>
+                        In this case, the data manipulations in the transaction scope are committed or rolled back all at once
+                        when the transaction is committed or rolled back.</p>
+                 
+    <a name="d513291e486"></a><h2>Showing execution plans</h2>
+        <a name="d513291e488"></a><p>
+            The following context menu commands let you show
+            an <a name="d513291e490"></a><a href="https://en.wikipedia.org/wiki/Query_plan" data-external="true"><span>execution plan</span></a>
+            (a.k.a. explain plan) for a statement:</p>
+        <ul class="list _ul"><li class="list__item"><a name="d513291e496"></a>
+                <a name="d513291e498"></a><span class="control">Explain Plan.</span>
+                The result is shown in a mixed tree/table format
+                on a dedicated <a name="d513291e501"></a><span class="control">Plan</span> tab.
+            </li><li class="list__item"><a name="d513291e505"></a>
+                <a name="d513291e507"></a><span class="control">Explain Plan (Raw).</span>
+                The result is shown in table format.
+                (Technically, <code class="code" data-lang="Java">EXPLAIN &lt;CURRENT_STATEMENT&gt;</code> or
+                similar statement is executed.)
+            </li></ul>
+    <a name="d513291e516"></a><h2>Showing DBMS_OUTPUT for Oracle</h2>
+        <a name="d513291e518"></a><p>
+            For Oracle, you can enable or disable showing the contents of the DBMS_OUTPUT buffer in the output pane.
+            To do that, use <img alt="/help/img/idea/2016.3/DBConsoleEnableDBMSOutputIcon.png" title="/help/img/idea/2016.3/DBConsoleEnableDBMSOutputIcon.png" src="/help/img/idea/2016.3/DBConsoleEnableDBMSOutputIcon.png" width="13" height="13" class="inline-icon-13"> on the toolbar of
+            the <a name="d513291e522"></a><span class="control">Database Console</span> tool window
+            (<kbd data-default="Ctrl+F8" data-default_for_gnome="Ctrl+F8" data-default_for_kde="Ctrl+8" data-default_for_xwin="Ctrl+F8" data-emacs="Ctrl+F8" data-jbuilder="Ctrl+F8" data-visual_studio="F9" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Shift+B" data-mac_os_x_10.5_="&#x2318;F8" data-mac_os_x="&#x2318;F8" data-eclipse_mac_os_x="&#x21E7;&#x2318;B" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+F8</kbd>).</p>
+        <figure><img alt="/help/img/idea/2016.3/DBConsoleDBMSOutput.png" title="/help/img/idea/2016.3/DBConsoleDBMSOutput.png" src="/help/img/idea/2016.3/DBConsoleDBMSOutput.png" width="615" height="136"></figure><div class="navigation-links _bottom"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="working-with-query-results.html">Working with Query Results</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content">```
+                <div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d513291e551"></a><a href="configuring-third-party-tools.html"><span>Configuring Third-Party Tools</span></a></li><li class="list__item"><a name="d513291e555"></a><a href="viewing-method-parameter-information.html"><span>Viewing Method Parameter Information</span></a></li></ul></div><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d513291e562"></a><a href="database-console.html"><span>Database Console</span></a></li><li class="list__item"><a name="d513291e566"></a><a href="data-sources-and-drivers-dialog.html"><span>Data Sources and Drivers dialog</span></a></li><li class="list__item"><a name="d513291e570"></a><a href="database-tool-window.html"><span>Database Tool Window</span></a></li><li class="list__item"><a name="d513291e575"></a><a href="table-editor.html"><span>Table Editor</span></a></li></ul></div><div class="seealso__col"><h3>Language and Framework-Specific Guidelines:</h3><ul class="list"><li class="list__item"><a name="d513291e536"></a><a href="databases-and-sql.html"><span>Databases and SQL</span></a></li><li class="list__item"><a name="d513291e540"></a><a href="working-with-the-table-editor.html"><span>Working with the Table Editor</span></a></li><li class="list__item"><a name="d513291e544"></a><a href="running-injected-sql-statements.html"><span>Running Injected SQL Statements</span></a></li></ul></div></div></section><div class="last-modified" data-swiftype-index="false">Last modified: 21 March 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

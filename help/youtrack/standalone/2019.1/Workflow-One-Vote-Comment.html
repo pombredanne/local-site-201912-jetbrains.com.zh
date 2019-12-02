@@ -1,0 +1,34 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="/help/app/v2/analytics.js"></script><meta charset="UTF-8"><meta name="robots" content="noindex"><title>One Vote Comment - Help | YouTrack Standalone</title><link rel="stylesheet" href="/help/app/v2/app.css"></head><body data-id="Workflow-One-Vote-Comment"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack Standalone Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>YouTrack Standalone 2019.1 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="Workflow-One-Vote-Comment" id="Workflow-One-Vote-Comment.xml">One Vote Comment</h1>  <p id="1df34bb9">This workflow adds a vote to an issue if the comment contains "+1".</p>  <div class="table-wrapper"><table class="left_header                 " width="100%" id="272e1ddb"><tbody><tr id="57394fd4" class="ijRowOdd"><th id="cb2a3728" width="20%"><p>Name</p></th><td id="0b0f1e09"><p>@jetbrains/youtrack-workflow-one-vote-comment</p></td></tr><tr id="fe756b23" class="ijRowEven"><th id="27d8f587"><p>Auto-attached</p></th><td id="87c8438a"><p>yes</p></td></tr><tr id="c1a32ca7" class="ijRowOdd"><th id="7171b9ed"><p>Modules</p></th><td id="da881df2"><p>        <a href="#vote-plus-one">Add vote to issue when comment contains "+1"</a>        (on-change rule)      </p></td></tr></tbody></table></div>  <div class="chapter"><h2 id="bccd1979">Use Case</h2>    <p id="72e0e84b">This workflow helps you track the popularity of an issue by combining feedback in an issue comment with the      actual votes applied to an issue.    </p>  </div>  <div class="chapter"><h2 id="6368b820">Modules</h2>    <p id="611f82a8">This module contains an on-change rule that scans the content of a comment that is added to an issue. If the comment contains the text "+1", a vote      is added to the issue.    </p>    <div class="chapter"><h3 id="vote-plus-one">Add vote to issue when comment contains "+1"</h3>      <div class="code-block" data-lang="javascript">var entities = require('@jetbrains/youtrack-scripting-api/entities');
+var workflow = require('@jetbrains/youtrack-scripting-api/workflow');
+var regex = /\s|,|;|\.|\?|!/;
+
+exports.rule = entities.Issue.onChange({
+  title: workflow.i18n('Add vote to issue when comment contains "+1"'),
+  guard: function(ctx) {
+    return ctx.issue.comments.added.isNotEmpty();
+  },
+  action: function(ctx) {
+    var issue = ctx.issue;
+
+    var index = -1;
+    issue.comments.added.forEach(function(comment) {
+      if (index &lt; 0) {
+        index = comment.text.split(regex).indexOf('+1');
+      }
+    });
+    if (index &gt;= 0) {
+      ctx.currentUser.voteIssue(issue);
+      if (issue.isChanged('votes')) {
+        workflow.message(workflow.i18n('The single vote is added.'));
+      }
+    }
+  },
+  requirements: {}
+});</div>    </div>  </div><div class="last-modified" data-skip-index="skip">Last modified: 8 July 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="Workflow-Notify-Dependant.html">Notify When Dependency Resolved</a><a class="navigation-links__next" href="Workflow-Pomodoro-Timer.html">Pomodoro Timer</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="/help/app/v2/app.js"></script></body></html>

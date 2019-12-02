@@ -1,0 +1,266 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"></meta><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><title>IntelliJ IDEA 2016.1 Help :: WordPress Specific Coding Assistance</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="WordPress-Aware_Coding_Assistance"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.1 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWindow</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="preparing-to-use-wordpress.html">Preparing to Use WordPress</a><a class="navigation-links__next" href="using-the-wordpress-command-line-tool-wp-cli.html">Using the WordPress Command Line Tool WP-CLI </a></div><h1>WordPress Specific Coding Assistance</h1><a name="d868139e3"></a><p>
+         
+        IntelliJ IDEA provides full coding assistance for developing <a name="d3392e440"></a><span class="emphasis">WordPress</span> including <a name="d3392e443"></a><span class="emphasis">WordPress</span>-aware code completion,
+        search for hook registration functions and functions specified as hook registration parameters,
+        navigation between hook registrations and the hook invocations, callbacks,
+        the possibility to configure the coding style in accordance with the <a name="d3392e446"></a><span class="emphasis">WordPress</span> code style,
+        viewing the official <a name="d3392e449"></a><span class="emphasis">WordPress</span> documentation from the IntelliJ IDEA editor, etc.
+     
+    </p><a name="d868139e8"></a><p>
+    On this page:
+</p><ul><li class="list__item"><a href="#d868139e13">Adding the WordPress to the project </a><ul class="list _bullet"><li class="list__item"><a href="#d868139e42">Configuring the WordPress installation as a project include path</a></li><li class="list__item"><a href="#d868139e76">Adding the wp-content folder to the project</a></li></ul></li><li class="list__item"><a href="#d868139e183">Configuring WordPress Code Style</a></li><li class="list__item"><a href="#d868139e265">WordPress Hooks Support</a><ul class="list _bullet"><li class="list__item"><a href="#d868139e273">Completion for WordPress Action and Filter functions parameters</a></li><li class="list__item"><a href="#d868139e304">Navigation from a Hook Registration to the Hook Invocation</a></li><li class="list__item"><a href="#d868139e332">Callbacks from Hook Registration</a></li><li class="list__item"><a href="#d868139e357">Navigating to Hook Invocations</a></li><li class="list__item"><a href="#d868139e434">Searching for Hook Registration Functions</a></li></ul></li><li class="list__item"><a href="#d868139e501">Viewing Official WordPress Documentation from IntelliJ IDEA</a></li></ul><a name="d868139e13"></a><h2>Adding the WordPress to the project </h2>
+        <a name="d868139e15"></a><p>
+            To take advantage of coding assistance provided by IntelliJ IDEA, the <a name="d868139e17"></a><span class="emphasis">WordPress</span> installation you are working with should be configured in the project
+            as an <a name="d868139e20"></a><span class="emphasis">external library</span>. As a result, the <a name="d868139e23"></a><span class="emphasis">WordPress</span> core file will be involved in indexing
+            which is the basis for resolving references and providing code completion, navigation, search. etc.
+        </p>
+        <a name="d868139e27"></a><p>
+            If the <code class="code" data-lang="Java">wp-content</code> folder is outside the <a name="d868139e32"></a><span class="emphasis">WordPress</span> installation, it has to be added either as an <a name="d868139e35"></a><span class="emphasis">include path</span> or as a <a name="d868139e38"></a><span class="emphasis">content root</span>.
+        </p>
+        <a name="d868139e42"></a><a name="dynaProc0"></a><section class="procedure-steps"><h2>Configuring the WordPress installation as a project include path</h2><p>
+                <a name="d868139e46"></a><p>
+                    To add <a name="d868139e48"></a><span class="emphasis">WordPress</span> to your project as an external library, you need to add it to the list of <a name="d868139e51"></a><span class="emphasis">include paths</span>.
+                     
+        Learn more in <a name="d3392e413"></a><a href="configuring-include-paths.html"><span>Configuring Include Paths</span></a>.
+     
+                </p>
+            </p><ol class=".list _decimal"><li class="list__item">
+                 
+         
+            Open the <a name="d2333e7944"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by choosing <a name="d2333e7946"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d2333e7949"></a><span class="menupath">IntelliJ IDEA | Preferences</span> for OS X,
+         
+         
+            and  
+         
+         
+         
+        click <a name="d2333e7972"></a><span class="control">PHP</span> under <a name="d2333e7975"></a><span class="control">Languages&amp;Frameworks</span>.
+     
+     
+            </li><li class="list__item">
+                 
+        On the <a name="d3392e400"></a><a href="php.html"><span>PHP</span></a> page that opens, add the path to the <a name="d3392e402"></a><span class="emphasis">WordPress</span> installation folder to the <a name="d3392e405"></a><span class="control">Include Paths</span> list:
+        click the <img alt="add" width="12" height="12" title="add" src="/help/img/idea/2016.1/new.png" class="inline-icon-12"> button and specify the path to the installation folder in the dialog box that opens.
+     
+            </li></ol></section>
+
+        <a name="d868139e76"></a><a name="dynaProc1"></a><section class="procedure-steps"><h2>Adding the wp-content folder to the project</h2><p>
+                <a name="d868139e80"></a><p>
+                    If the <code class="code" data-lang="Java">wp-content</code> folder is located outside the <a name="d868139e85"></a><span class="emphasis">WordPress</span> installation, you need to add it to the project
+                    individually, apart from the <a name="d868139e88"></a><span class="emphasis">WordPress</span> core files. This can be done in two ways:
+                </p>
+            </p><ul class=".list "><li class="list__item">
+                To have the <code class="code" data-lang="Java">wp-content</code> folder involved in indexing without putting it under the project version control, add it to the list of include paths:
+                <ol class="list _decimal"><li class="list__item"><a name="d868139e100"></a>
+                         
+         
+            Open the <a name="d2333e7944"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by choosing <a name="d2333e7946"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d2333e7949"></a><span class="menupath">IntelliJ IDEA | Preferences</span> for OS X,
+         
+         
+            and  
+         
+         
+         
+        click <a name="d2333e7972"></a><span class="control">PHP</span> under <a name="d2333e7975"></a><span class="control">Languages&amp;Frameworks</span>.
+     
+     
+                    </li><li class="list__item"><a name="d868139e112"></a>
+                        On the <a name="d868139e114"></a><span class="control">PHP</span> page that opens, add the path to the <code class="code" data-lang="Java">wp-content</code> folder to the <a name="d868139e120"></a><span class="control">Include Paths</span> list:
+                        click the <img alt="add" width="12" height="12" title="add" src="/help/img/idea/2016.1/new.png" class="inline-icon-12"> button and specify the path to the folder in the dialog box that opens.
+                    </li></ol>
+            </li><li class="list__item">
+                To have the <code class="code" data-lang="Java">wp-content</code> folder involved in indexing and put it under the project version control, add it as a <a name="d868139e133"></a><span class="emphasis">content root</span>:
+                <ol class="list _decimal"><li class="list__item"><a name="d868139e138"></a>
+                         
+         
+            Open the <a name="d2333e7944"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by choosing <a name="d2333e7946"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d2333e7949"></a><span class="menupath">IntelliJ IDEA | Preferences</span> for OS X,
+         
+         
+            and  
+         
+         
+         
+        click <a name="d2333e7972"></a><span class="control">Directories</span> under <a name="d2333e7975"></a><span class="control">Project:&lt;project name&gt;</span>.
+     
+     
+                    </li><li class="list__item"><a name="d868139e150"></a>
+                        On the <a name="d868139e152"></a><a href="topicId245046.html"><span>Directories</span></a> page that opens, click the <a name="d868139e154"></a><span class="control">Add Content Root</span> button <img alt="addRoot" width="10" height="10" title="addRoot" src="/help/img/idea/2016.1/addRoot.png" class="inline-icon-10">.
+                        In the <a name="d868139e159"></a><a href="select-path-dialog.html"><span>dialog that opens</span></a>, locate the <code class="code" data-lang="Java">wp-content</code> directory and click <a name="d868139e168"></a><span class="control">OK</span>.
+                    </li></ol>
+                <a name="d868139e173"></a><p>
+                    Learn more about configuring content roots in <a name="d868139e175"></a><a href="configuring-content-roots.html"><span>Configuring Content Roots</span></a>. For information about adding files and folders to version control,
+                    see <a name="d868139e177"></a><a href="enabling-version-control.html"><span>Enabling Version Control</span></a>.
+                </p>
+            </li></ul></section>
+    <a name="d868139e183"></a><a name="dynaProc2"></a><section class="procedure-steps"><h2>Configuring WordPress Code Style</h2><p>
+            <a name="d868139e187"></a><p>
+                In IntelliJ IDEA, you can use the <a name="d868139e189"></a><span class="emphasis">WordPress Code Style</span> in accordance with the <a name="d868139e192"></a><a href="http://codex.wordpress.org/WordPress_Coding_Standards" data-external="true"><span>WordPress coding standards</span></a>.
+                To configure the native <a name="d868139e195"></a><span class="emphasis">WordPress</span> code style, do one of the following:
+            </p>
+        </p><ul class=".list "><li class="list__item">
+            <ol class="list _decimal"><li class="list__item"><a name="d868139e214"></a>
+                     
+         
+         
+         
+            Open the <a name="d2333e7876"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by choosing <a name="d2333e7878"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d2333e7881"></a><span class="menupath">IntelliJ IDEA | Preferences</span> for OS X.
+         
+         
+     
+        Expand the Editor node, and then  
+         
+         
+         
+        click <a name="d2333e7972"></a><span class="control">PHP</span> under <a name="d2333e7975"></a><span class="control">Code Style</span>.
+     
+     
+                </li><li class="list__item"><a name="d868139e228"></a>
+                    On the <a name="d868139e230"></a><a href="settings_code_style_PHP.html"><span>Code Style. PHP page</span></a> that opens, click the <a name="d868139e233"></a><span class="control">Set from...</span> link.
+                </li><li class="list__item"><a name="d868139e237"></a>
+                    On the context menu, choose <a name="d868139e239"></a><span class="control">Predefined Style</span>, then choose <a name="d868139e242"></a><span class="control">WordPress</span>.
+                </li></ol>
+        </li><li class="list__item">
+            Upon activating of the <a name="d868139e250"></a><span class="emphasis">WordPress</span> integration, IntelliJ IDEA displays a pop-up window offering you to set the <a name="d868139e253"></a><span class="emphasis">WordPress</span> code style.
+            Click  the <a name="d868139e256"></a><span class="control">Set it</span> link in the pop-up window and set the code style on the <a name="d868139e259"></a><span class="control">Code Style. PHP</span> page that opens.
+        </li></ul><p class="procIntro">
+            <a name="d868139e202"></a><p>
+                Learn more in <a name="d868139e204"></a><a href="configuring-code-style.html"><span>Configuring Code Style</span></a>.  
+            </p>
+        </p></section><a name="d868139e265"></a><h2>WordPress Hooks Support</h2>
+        <a name="d868139e267"></a><p>
+            IntelliJ IDEA indexes all hooks declared in the <a name="d868139e269"></a><span class="emphasis">WordPress core</span> and in the included plugins. This makes the basis for coding assistance when working with hooks.
+        </p>
+
+            <a name="d868139e273"></a><a name="dynaProc3"></a><section class="procedure-steps"><h2>Completion for WordPress Action and Filter functions parameters</h2><p>
+                    <a name="d868139e277"></a><p>
+                        Hook names are available in code completion of standard parameters for action and filter functions (<code class="code" data-lang="Java">add_action()</code> and <code class="code" data-lang="Java">add_filter()</code>).
+                        To invoke completion for a parameter:
+                    </p>
+                </p><ol class=".list _decimal"><li class="list__item">
+                    Start typing the declaration of an <code class="code" data-lang="Java">add_action()</code> or <code class="code" data-lang="Java">add_filter()</code> function.
+                </li><li class="list__item">
+                    Press <kbd data-default="Ctrl+Space" data-default_for_gnome="Ctrl+Space" data-default_for_kde="Ctrl+Space" data-default_for_xwin="Ctrl+Space" data-emacs="Alt+Slash" data-jbuilder="Ctrl+Space" data-visual_studio="Ctrl+Space" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Space" data-mac_os_x_10.5_="&#x2303;Space" data-mac_os_x="&#x2303;Space" data-eclipse_mac_os_x="&#x2303;Space" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Space</kbd> and choose the relevant parameter from the list.
+                    <figure><img alt="ps_wp_hooks_completion.png" width="349" height="146" title="ps_wp_hooks_completion.png" src="/help/img/idea/2016.1/ps_wp_hooks_completion.png"></figure>
+                </li></ol></section>
+
+
+        <a name="d868139e304"></a><a name="dynaProc4"></a><section class="procedure-steps"><h2>Navigation from a Hook Registration to the Hook Invocation</h2><p>
+                <a name="d868139e308"></a><p>
+                    To navigate from a hook registration (<code class="code" data-lang="Java">add_action()</code> or <code class="code" data-lang="Java">add_filter()</code> function) to the hook invocation:
+                </p>
+            </p><ul class=".list "><li class="list__item">
+                Click the <img alt="ps_wp_hooks_navigation_gutter_icon.png" width="14" height="13" title="ps_wp_hooks_navigation_gutter_icon.png" src="/help/img/idea/2016.1/ps_wp_hooks_navigation_gutter_icon.png" class="inline-icon-13"> icon in the gutter area next to the hook registration to navigate from.
+                <figure><img alt="ps_wp_hooks_navigation.png" width="359" height="61" title="ps_wp_hooks_navigation.png" src="/help/img/idea/2016.1/ps_wp_hooks_navigation.png"></figure>
+                <a name="d868139e324"></a><p>
+                    IntelliJ IDEA opens the file where the hook is invoked and positions the cursor at the invocation method, in the current example it is <code class="code" data-lang="Java">do_action</code>.
+                </p>
+            </li></ul></section>&gt;
+
+        <a name="d868139e332"></a><a name="dynaProc5"></a><section class="procedure-steps"><h2>Callbacks from Hook Registration</h2><p>
+                <a name="d868139e336"></a><p>
+                    You can navigate to the declaration of the function or method specified as the second parameter of a hook registration (<code class="code" data-lang="Java">add_action()</code> or <code class="code" data-lang="Java">add_filter()</code> function).
+                    To do that:
+                </p>
+            </p><ul class=".list "><li class="list__item">
+                With the <kbd>Ctrl</kbd> keyboard key pressed, hover the cursor over the parameter of interest.
+                IntelliJ IDEA displays a pop-up information message with the definition of the function or method specified as this parameter:
+                <figure><img alt="ps_wp_hooks_callback.png" width="432" height="90" title="ps_wp_hooks_callback.png" src="/help/img/idea/2016.1/ps_wp_hooks_callback.png"></figure>
+                The parameter turns into a link. When you click this link, IntelliJ IDEA opens the file where the function or method was declared and positions the cursor and declaration.
+            </li></ul></section>&gt;
+
+        <a name="d868139e357"></a><a name="dynaProc6"></a><section class="procedure-steps"><h2>Navigating to Hook Invocations</h2><p>
+                <a name="d868139e361"></a><p>
+                    To search for a hook invocation and navigate to it, do one of the following:
+                </p>
+            </p><ul class=".list "><li class="list__item">
+                Use the <a name="d868139e379"></a><span class="emphasis">Navigate to Symbol</span> functionality:
+                <ol class="list _decimal"><li class="list__item"><a name="d868139e384"></a>
+                        Choose <a name="d868139e386"></a><span class="menupath">Navigate | Symbol</span> on the main menu.
+                    </li><li class="list__item"><a name="d868139e390"></a>
+                        In the <a name="d868139e392"></a><span class="control">Enter symbol name</span> pop-up window that appears,
+                         
+        start typing the hook name in the search field.
+        If necessary, select the <a name="d3392e431"></a><span class="control">Include non-project items</span> check box.
+        The contents of the list below the search field change as you type.
+     
+                        <figure><img alt="ps_wp_hooks_navigate_to_symbol.png" width="" height="" title="ps_wp_hooks_navigate_to_symbol.png" src="/help/img/idea/2016.1/"></figure>
+                    </li><li class="list__item"><a name="d868139e400"></a>
+                         
+        Click the relevant hook from the list. %product" opens the file where it is invoked and positions the cursor at the invocation.
+     
+                    </li></ol>
+            </li><li class="list__item">
+                Use the <a name="d868139e409"></a><span class="emphasis">Search Everywhere</span> functionality:
+                <ol class="list _decimal"><li class="list__item"><a name="d868139e414"></a>
+                        Press the <a name="d868139e416"></a><span class="control">Shift</span>  keyboard key twice.
+                    </li><li class="list__item"><a name="d868139e420"></a>
+                         
+        start typing the hook name in the search field.
+        If necessary, select the <a name="d3392e431"></a><span class="control">Include non-project items</span> check box.
+        The contents of the list below the search field change as you type.
+     
+                    </li><li class="list__item"><a name="d868139e425"></a>
+                         
+        Click the relevant hook from the list. %product" opens the file where it is invoked and positions the cursor at the invocation.
+     
+                    </li></ol>
+            </li></ul><p class="procIntro">
+                <a name="d868139e367"></a><p>
+                    Learn more about search and navigation in <a name="d868139e369"></a><a href="searching-through-the-source-code.html"><span>Searching Through the Source Code</span></a> and <a name="d868139e371"></a><a href="navigating-through-the-source-code.html"><span>Navigating Through the Source Code</span></a>.  
+                </p>
+            </p></section>
+
+        <a name="d868139e434"></a><a name="dynaProc7"></a><section class="procedure-steps"><h2>Searching for Hook Registration Functions</h2><p>
+                <a name="d868139e438"></a><p>
+                    You can search for occurrences of a hook registration function and for occurrences of a function or method specified as the second parameter of a hook registration.
+                </p>
+            </p><ul class=".list "><li class="list__item">
+                To get a list of usages for a hook registration function:
+                <ol class="list _decimal"><li class="list__item"><a name="d868139e456"></a>
+                        Position the cursor at the name of the desired hook registration function and press <kbd data-default="Alt+F7" data-default_for_gnome="Shift+Alt+7" data-default_for_kde="Shift+Alt+7" data-default_for_xwin="Alt+F7" data-emacs="Alt+F7" data-jbuilder="Alt+F7" data-visual_studio="Alt+Shift+F7" data-netbeans_6.5="N/A" data-eclipse="Ctrl+G" data-mac_os_x_10.5_="&#x2325;F7" data-mac_os_x="&#x2325;F7" data-eclipse_mac_os_x="&#x21E7;&#x2318;G" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+F7</kbd> or choose <a name="d868139e460"></a><span class="menupath">Edit | Find | Find Usages</span> on the main menu.
+                    </li><li class="list__item"><a name="d868139e464"></a>
+                        From the pop-up list that shows the available options in terms of hook/function name, choose the relevant option.
+                        The <a name="d868139e466"></a><span class="control">Find</span> tool window opens with a new tab showing all the detected occurrences of the selected function.
+                    </li><li class="list__item"><a name="d868139e470"></a>
+                         
+        Explore the listed occurrences. To navigate to the relevant one, click it. IntelliJ IDEA opens the  file with the selected function or method and positions the cursor at it.
+     
+                    </li></ol>
+            </li><li class="list__item">
+                To get a list of occurrences of a function or method specified as the second parameter of a hook registration:
+                <ol class="list _decimal"><li class="list__item"><a name="d868139e481"></a>
+                        Position the cursor at the parameter of interest and press <kbd data-default="Alt+F7" data-default_for_gnome="Shift+Alt+7" data-default_for_kde="Shift+Alt+7" data-default_for_xwin="Alt+F7" data-emacs="Alt+F7" data-jbuilder="Alt+F7" data-visual_studio="Alt+Shift+F7" data-netbeans_6.5="N/A" data-eclipse="Ctrl+G" data-mac_os_x_10.5_="&#x2325;F7" data-mac_os_x="&#x2325;F7" data-eclipse_mac_os_x="&#x21E7;&#x2318;G" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+F7</kbd> or choose <a name="d868139e485"></a><span class="menupath">Edit | Find | Find Usages</span> on the main menu.
+                        The <a name="d868139e488"></a><span class="control">Find</span> tool window opens with a new tab showing all the detected occurrences of the function or method specified as the parameter on which the search was invoked.
+                    </li><li class="list__item"><a name="d868139e492"></a>
+                         
+        Explore the listed occurrences. To navigate to the relevant one, click it. IntelliJ IDEA opens the  file with the selected function or method and positions the cursor at it.
+     
+                    </li></ol>
+            </li></ul><p class="procIntro">
+                <a name="d868139e444"></a><p>
+                    Learn more in <a name="d868139e446"></a><a href="finding-usages-2.html"><span>Finding Usages</span></a>.  
+                </p>
+            </p></section>
+    <a name="d868139e501"></a><a name="dynaProc8"></a><section class="procedure-steps"><h2>Viewing Official WordPress Documentation from IntelliJ IDEA</h2><p>
+            <a name="d868139e505"></a><p>
+                You can view the official <a name="d868139e507"></a><span class="emphasis">WordPress Documentation</span> at <a name="d868139e510"></a><a href="http://wordpress.org/" data-external="true"><span>http://wordpress.org/</span></a> right from the IntelliJ IDEA editor.
+            </p>
+        </p><ol class=".list _decimal"><li class="list__item">
+            Select the text you are interested in.
+        </li><li class="list__item">
+            On the context menu of the selection, choose <a name="d868139e520"></a><span class="control">Search on WordPress.org</span>.
+            <a name="d868139e523"></a><p>
+               IntelliJ IDEA opens the page with the relevant documentation  in the default browser.
+            </p>
+        </li></ol></section><div class="navigation-links _bottom"><a class="navigation-links__prev" href="preparing-to-use-wordpress.html">Preparing to Use WordPress</a><a class="navigation-links__next" href="using-the-wordpress-command-line-tool-wp-cli.html">Using the WordPress Command Line Tool WP-CLI </a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content"><div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d868139e532"></a><a href="preparing-to-use-wordpress.html"><span>Preparing to Use WordPress</span></a></li></ul></div><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d868139e537"></a><a href="wordpress.html"><span>WordPress</span></a></li><li class="list__item"><a name="d868139e539"></a><a href="WP-CLI_Dialog.html"><span>Command Line Tool Support: WP-CLI </span></a></li></ul></div><div class="seealso__col"><h3>External Links:</h3><ul class="list"><li class="list__item"><a name="d868139e544"></a><a href="http://confluence.jetbrains.com/display/PhpStorm/WordPress+Development+using+PhpStorm" data-external="true"><span>http://confluence.jetbrains.com/display/PhpStorm/WordPress+Development+using+PhpStorm</span></a></li></ul></div></div></section><div class="last-modified">Last modified: 13 July 2016 </div></article><div id="disqus_thread"></div></div></section></main></div><script src="/help/app/app.js"></script></body></html>

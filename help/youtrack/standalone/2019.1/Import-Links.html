@@ -1,0 +1,63 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="/help/app/v2/analytics.js"></script><meta charset="UTF-8"><meta name="robots" content="noindex"><title>Import Links - Help | YouTrack Standalone</title><link rel="stylesheet" href="/help/app/v2/app.css"></head><body data-id="Import-Links"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack Standalone Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>YouTrack Standalone 2019.1 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="Import-Links" id="Import-Links.xml">Import Links</h1>   <a name="PUT_/import/links"></a>   <h2 id="b1eafd35">PUT /import/links</h2>   <p id="2d9da6b1">Bulk links import</p>         <div class="code-block" data-lang="none">PUT /rest/import/links?{test}</div>               <b id="af0aeb24">Parameters:</b><div class="table-wrapper"><table class=" wide                 " width="100%" id="14b940e8"><thead><tr id="d34d61b6" class="ijRowHead"><th id="fb9c4974"><p> Name </p></th><th id="9bb4d2ac"><p> Type </p></th><th id="22e67b38"><p> Description </p></th></tr></thead><tbody><tr id="7340e336" class="ijRowOdd"><td id="eab1c469"><p> test </p></td><td id="aa472449"><p> boolean </p></td><td id="05c31a1f"><p> If true, links are not saved, but imported data is validated. </p></td></tr></tbody></table></div>            <b id="9caec363">Request body xsd:</b>         <div class="code-block" data-lang="none">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;xs:element name="list"&gt;
+    &lt;xs:complexType&gt;
+    &lt;xs:sequence&gt;
+    &lt;xs:element name="link" minOccurs="0" maxOccurs="unbounded"&gt;
+    &lt;xs:complexType&gt;
+    &lt;xs:attribute type="xs:string" name="typeName" use="required"/&gt;
+    &lt;xs:attribute type="xs:string" name="source" use="required"/&gt;
+    &lt;xs:attribute type="xs:string" name="target" use="required"/&gt;
+    &lt;/xs:complexType&gt;
+    &lt;/xs:element&gt;
+    &lt;/xs:sequence&gt;
+    &lt;/xs:complexType&gt;
+  &lt;/xs:element&gt;
+&lt;/xs:schema&gt;
+</div>            <b id="5be90f20">Response body xsd:</b>         <div class="code-block" data-lang="none">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;xs:element name="importReport"&gt;
+    &lt;xs:complexType&gt;
+    &lt;xs:sequence&gt;
+    &lt;xs:element name="item" minOccurs="0" maxOccurs="unbounded"&gt;
+    &lt;xs:complexType&gt;
+    &lt;xs:sequence&gt;
+    &lt;xs:element name="error" minOccurs="0" maxOccurs="unbounded"&gt;
+    &lt;xs:complexType&gt;
+    &lt;xs:simpleContent&gt;
+    &lt;xs:extension base="xs:string"&gt;
+    &lt;xs:attribute type="xs:string" name="fieldName" use="optional"/&gt;
+    &lt;xs:attribute type="xs:string" name="value" use="optional"/&gt;
+    &lt;/xs:extension&gt;
+    &lt;/xs:simpleContent&gt;
+    &lt;/xs:complexType&gt;
+    &lt;/xs:element&gt;
+    &lt;/xs:sequence&gt;
+    &lt;xs:attribute type="xs:boolean" name="imported"/&gt;
+    &lt;/xs:complexType&gt;
+    &lt;/xs:element&gt;
+    &lt;/xs:sequence&gt;
+    &lt;/xs:complexType&gt;
+  &lt;/xs:element&gt;
+&lt;/xs:schema&gt;
+</div>   <h3 id="024e250b">Sample</h3>         <b id="85487063">Request:</b>      <div class="code-block" data-lang="none">PUT /rest/import/links?test=false
+&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+&lt;list&gt;
+  &lt;link typeName="depend" source="CMN-1928" target="CMN-1917"/&gt;
+  &lt;link typeName="rescind" source="CMN-1987" target="CMN-1928"/&gt;
+&lt;/list&gt;</div>         <b id="699964fa">Response:</b>      <div class="code-block" data-lang="none">
+&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+&lt;importReport&gt;
+  &lt;item imported="true"/&gt;
+  &lt;item imported="true"/&gt;
+&lt;/importReport&gt;
+</div><div class="last-modified" data-skip-index="skip">Last modified: 8 July 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="Import-Issues.html">Import Issues</a><a class="navigation-links__next" href="REST-Import-Sample.html">REST Import Sample</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="/help/app/v2/app.js"></script></body></html>

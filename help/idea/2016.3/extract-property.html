@@ -1,0 +1,95 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta class="swiftype" name="product" data-type="string" content="/idea/2016.3/"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><meta charset="UTF-8"><meta name="robots" content="noindex"><title>IntelliJ IDEA 2016.3 Help :: Extract Property</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="topicId54"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-swiftype-index="false"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.3 Help</h3><div class="shortcuts-switcher" data-swiftype-index="false"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Windows/Linux Default</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWin</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">Mac OS X</option><option data-group="secondary" value="eclipse_mac_os_x">Eclipse (Mac OS X)</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (Mac OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper (Mac OS X)</option><option data-group="secondary" value="emacs">Emacs (Mac OS X)</option></select></div><div class="panel-trigger" data-swiftype-index="false"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="extract-variable.html">Extract Variable</a></div><h1>Extract Property</h1><a name="d850961e7"></a><p>
+                In <a name="d850961e9"></a><a href="maven.html"><span>Maven projects</span></a>, while editing <code class="code" data-lang="Java">pom.xml</code>,
+                one needs to define a property and replace the occurrences of some value - artifact version, for example, - with this property.
+            </p><a name="d850961e16"></a><p>
+                For these purposes, IntelliJ IDEA provides the <a name="d850961e18"></a><span class="keyword">Extract Property</span> refactoring.
+            </p><a name="d850961e22"></a><p>
+                <a name="d850961e24"></a><span class="keyword">Extract Property</span> refactoring creates a new property definition in the specified
+                    <code class="code" data-lang="Java">pom.xml</code> file, finds all the occurrences of the selected string in
+                    the hierarchy of <code class="code" data-lang="Java">pom.xml</code> files, and replaces them with the above property in the format:
+                <code class="code" data-lang="Java">${&lt;property_name&gt;}</code>
+            </p><a name="d850961e38"></a><p>
+                The
+                <a name="d850961e40"></a><span class="keyword">Extract Property</span>
+                refactoring lets you move expressions and local declarations to properties.
+            </p><a name="d850961e46"></a><h2>Examples</h2><table class="             " width="100%" id="d850961e49"><thead><tr id="d850961e51" class="ijRowHead"><a name="d850961e51"></a><th><a name="d850961e53"></a>Before</th><th><a name="d850961e56"></a>After</th></tr></thead><tbody><tr id="d850961e60" class="ijRowOdd"><a name="d850961e60"></a><td colspan="2"><a name="d850961e62"></a>
+ In this example, artifact version is replaced with a property, which is declared in the same <code class="code" data-lang="Java">pom.xml</code> file:
+        </td></tr><tr id="d850961e69" class="ijRowEven"><a name="d850961e69"></a><td><a name="d850961e71"></a>
+               <a name="d850961e73"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+&lt;artifactId&gt;submodule&lt;artifactId&gt;
+        </code></div>
+            </td><td><a name="d850961e77"></a>
+               <a name="d850961e79"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+&lt;artifactId&gt;${submodule}&lt;/artifactId&gt;
+&lt;properties&gt;
+    &lt;submodule&gt;submodule&lt;/submodule&gt;
+&lt;/properties&gt;
+        </code></div>
+            </td></tr><tr id="d850961e84" class="ijRowOdd"><a name="d850961e84"></a><td colspan="2"><a name="d850961e86"></a>
+ In this example, artifact version in a <code class="code" data-lang="Java">pom.xml</code> file is replaced with a property, which is declared in its parent <code class="code" data-lang="Java">pom.xml</code> file:
+        </td></tr><tr id="d850961e96" class="ijRowEven"><a name="d850961e96"></a><td><a name="d850961e98"></a>
+<a name="d850961e100"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+&lt;parent&gt;
+    &lt;artifactId&gt;HelloWorld&lt;/artifactId&gt;
+    &lt;version&gt;1.0&lt;/version&gt;
+&lt;/parent&gt;
+&lt;artifactId&gt;submodule&lt;artifactId&gt;
+        </code></div>
+            </td><td><a name="d850961e104"></a>
+<a name="d850961e106"></a><span class="emphasis">Parent</span>:
+<a name="d850961e109"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+&lt;artifactId&gt;HelloWorld&lt;/artifactId&gt;
+...
+&lt;modules&gt;
+    &lt;module&gt;${submodule}&lt;/module&gt;
+&lt;/modules&gt;
+...
+&lt;properties&gt;
+    &lt;submodule&gt;submodule&lt;/submodule&gt;
+&lt;/properties&gt;
+    </code></div>
+<a name="d850961e112"></a><span class="emphasis">Child:</span>
+<a name="d850961e115"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+&lt;parent&gt;
+    &lt;artifactId&gt;HelloWorld&lt;/artifactId&gt;
+    &lt;version&gt;1.0&lt;/version&gt;
+&lt;/parent&gt;
+&lt;artifactId&gt;${submodule}&lt;/artifactId&gt;
+</code></div>
+            </td></tr></tbody></table><a name="d850961e121"></a><a name="dynaProc0"></a><section class="procedure-steps"><h2>To extract a property in a pom.xml file</h2><ol class=".list _decimal"><li class="list__item">Open the desired <code class="code" data-lang="Java">pom.xml</code> file for editing, and place the caret somewhere
+                inside the value you want to replace.
+                <aside class="tip sideblock">
+                    <a name="d850961e130"></a><p>
+                        You can also select a certain substring; in this case the refactoring will apply to the selection.
+                    </p>
+                </aside>
+            </li><li class="list__item">Press <kbd data-default="Ctrl+Alt+V" data-default_for_gnome="Ctrl+Alt+V" data-default_for_kde="Shift+Alt+V" data-default_for_xwin="Ctrl+Alt+V" data-emacs="Ctrl+Alt+V" data-jbuilder="Ctrl+Alt+V" data-visual_studio="Ctrl+Alt+V" data-netbeans_6.5="N/A" data-eclipse="Shift+Alt+L" data-mac_os_x_10.5_="&#x2325;&#x2318;V" data-mac_os_x="&#x2325;&#x2318;V" data-eclipse_mac_os_x="&#x2325;&#x2318;L" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+V</kbd>, or choose <a name="d850961e139"></a><span class="menupath">Refactor | Extract | Property</span>
+            on the context menu, or on the main menu. Note that selection will be automatically expanded up to the enclosing tags.
+             </li><li class="list__item">In the <a name="d850961e145"></a><a href="extract-property-dialog.html"><span>Extract Property</span></a> dialog box, do the following:
+                <ul class="list _ul"><li class="list__item"><a name="d850961e150"></a>In the <a name="d850961e152"></a><span class="control">Name</span> field, specify the name you want to assign to the new property. IntelliJ IDEA suggests a number of suitable names.
+            You can select one from the drop-down list, or type the desired name manually.</li><li class="list__item"><a name="d850961e156"></a>In the <a name="d850961e158"></a><span class="control">Project</span> drop-down list, select the project where the new property will be declared.</li></ul>
+                Click <a name="d850961e163"></a><span class="control">OK</span>.
+            </li><li class="list__item">The subsequent workflow depends on the specific <code class="code" data-lang="Java">pom.xml</code> file the refactoring has been invoked from.
+                <ul class="list _ul"><li class="list__item"><a name="d850961e174"></a>The occurrence, for which the refactoring has been invoked, will be replaced silently. If the string
+                    occurs several times, the replace usage dialog will be displayed for these occurrences. You have to specify whether you want to replace each occurrence.
+                    </li><li class="list__item"><a name="d850961e177"></a>
+                        If the <code class="code" data-lang="Java">pom.xml</code> is a parent file and the new property will be declared in it,
+                        IntelliJ IDEA replaces the values in the parent file silently,
+                        and displays the other occurrences in the <a name="d850961e182"></a><a href="find-tool-window.html"><span>Find tool window</span></a>.
+                        You have to specify whether you want to replace each occurrence.
+                    </li><li class="list__item"><a name="d850961e186"></a>
+                        If the <code class="code" data-lang="Java">pom.xml</code> is inherited from a parent file, IntelliJ IDEA replaces
+                        the occurrence in the child file silently. This change is not propagated to the parent <code class="code" data-lang="Java">pom.xml</code>.
+                    </li></ul>
+                <a name="d850961e196"></a><p>
+                    In each case, IntelliJ IDEA adds new property declaration to the specified <code class="code" data-lang="Java">pom.xml</code> file.
+                </p>
+            </li></ol></section><div class="navigation-links _bottom"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="extract-variable.html">Extract Variable</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content">```
+                <div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d850961e249"></a><a href="extract-property-dialog.html"><span>Extract Property Dialog</span></a></li></ul></div><div class="seealso__col"><h3>Language and Framework-Specific Guidelines:</h3><ul class="list"><li class="list__item"><a name="d850961e256"></a><a href="maven.html"><span>Maven</span></a></li></ul></div></div></section><div class="last-modified" data-swiftype-index="false">Last modified: 21 March 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

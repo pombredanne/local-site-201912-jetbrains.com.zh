@@ -1,0 +1,84 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="robots" content="noindex"><title>YouTrack Standalone 7.0 Help :: Import from AgileZen</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Import-from-AgileZen"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack Standalone Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>YouTrack Standalone 7.0 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="Import-Projects-from-JIRA.html">Import Projects from JIRA</a><a class="navigation-links__next" href="Import-from-Bugzilla.html">Import from Bugzilla</a></div><h1>Import from AgileZen</h1><aside class="note sideblock"><a name="d58999e4"></a><p>
+
+        Before you begin:</p>
+        <a name="d58999e7"></a><p>Please note that if you try to re-import same project several times, then you must delete previously imported data before the next attempt.</p>
+
+    </aside><a name="Importing_Data_from_AgileZen"></a><a name="d58999e13"></a><p>This document covers importing issues from <a name="d58999e15"></a><a href="http://www.agilezen.com" data-external="true"><span>AgileZen</span></a> instance to YouTrack server using the <a name="d58999e18"></a><a href="Python-Client-Library.html"><span>Python Client Library</span></a>.</p><a name="d58999e21"></a><p><a name="d58999e22"></a><b id="d58999e22">Version compatibility note</b></p><a name="d58999e25"></a><p>Current implementation of the <a name="d58999e27"></a><a href="Python-Client-Library.html"><span>Python Client Library</span></a> and the script for importing data from AgileZen is compatible with
+        YouTrack 4.x (aka Fascination) REST API only and Python 2.6.</p><a name="d58999e31"></a><a name="dynaProc0"></a><section class="procedure-steps"><h2>To import data from a AgileZen server to YouTrack:</h2><ol class=".list _decimal"><li class="list__item">Download <a name="d58999e35"></a><a href="http://www.jetbrains.com/youtrack/tools/index.html" data-external="true"><span>the latest version</span></a> of YouTrack's <a name="d58999e38"></a><a href="Python-Client-Library.html"><span>Python Client Library</span></a> and unzip it.</li><li class="list__item">Ensure that <a name="d58999e43"></a><a href="http://www.python.org/download/" data-external="true"><span>Python</span></a> is installed in your system.</li><li class="list__item">In the file <code class="code" data-lang="xml">agilezen2youtrack.py</code>, which is located in the unzipped folder with the Python Client Library, specify the following parameters:
+            <table class="" width="100%" id="d58999e52"><thead><tr id="d58999e54" class="ijRowHead"><a name="d58999e54"></a><th width="15%"><a name="d58999e56"></a>
+                        Parameter
+                    </th><th><a name="d58999e59"></a>
+                        Description
+                    </th></tr></thead><tbody><tr id="d58999e63" class="ijRowOdd"><a name="d58999e63"></a><td><a name="d58999e65"></a>
+
+                        <code class="code" data-lang="xml">source_token</code>
+
+                    </td><td><a name="d58999e71"></a>
+                        Your AgileZen API Key. Please refer to the AgileZen help server for details on <a name="d58999e73"></a><a href="http://help.agilezen.com/kb/getting-started/api-overview" data-external="true"><span>how to enable API Key</span></a>.
+
+                    </td></tr><tr id="d58999e78" class="ijRowEven"><a name="d58999e78"></a><td><a name="d58999e80"></a>
+
+                        <code class="code" data-lang="xml">target_url</code>
+
+                    </td><td><a name="d58999e86"></a>
+                        The URL of your YouTrack server, to which the data should be imported.
+                    </td></tr><tr id="d58999e90" class="ijRowOdd"><a name="d58999e90"></a><td><a name="d58999e92"></a>
+
+                        <code class="code" data-lang="xml">target_login</code>
+
+                    </td><td><a name="d58999e98"></a>
+                        YouTrack administrator's login name for the target YouTRack server (for example, "root").
+                    </td></tr><tr id="d58999e102" class="ijRowEven"><a name="d58999e102"></a><td><a name="d58999e104"></a>
+
+                        <code class="code" data-lang="xml">target_password</code>
+
+                    </td><td><a name="d58999e110"></a>
+                        YouTrack administrator's password for the target YouTrack server.
+                    </td></tr></tbody></table>
+        </li><li class="list__item">When done configuring the script, execute the following command:
+            <code class="code" data-lang="xml">python agilezen2youtrack.py</code>
+            <a name="d58999e121"></a><p>That's it! Your data from your AgileZen instance will be imported into your YouTrack instance.</p>
+        </li></ol></section><a name="d58999e126"></a><h2>How AgileZen Stories are Imported to YouTrack</h2>
+        <a name="How_Your_AgileZen_Stories_are_Imported_to_YouTrack"></a>
+
+        <a name="d58999e130"></a><p>When you import your data from AgileZen to YouTrack, your AgileZen projects, stories and tasks are imported according to the following rules:</p>
+        <ul class="list _ul"><li class="list__item"><a name="d58999e135"></a>For each of your AgileZen project, a new project with the same name is created in YouTrack.</li><li class="list__item"><a name="d58999e138"></a>A story becomes an issue with the "Type" field set to "Feature". In YouTrack Agile mode, by default, a feature (that is, AgileZen story) forms a <a name="d58999e140"></a><i id="d58999e140">swimlane</i>.</li><li class="list__item"><a name="d58999e144"></a>A task becomes an issue with the "Type" field set to "Task", which is linked to the imported story as "subtask".</li><li class="list__item"><a name="d58999e147"></a>Story comments are imported as corresponding issue's comments.</li></ul>
+        <a name="d58999e151"></a><p>Please note that the current version does not support import of attachments from AgileZen!</p>
+        <a name="d58999e154"></a><p>For each imported project in YouTrack the following issue fields are created and attached:</p>
+        <table class="" width="100%" id="d58999e158"><thead><tr id="d58999e160" class="ijRowHead"><a name="d58999e160"></a><th width="20%"><a name="d58999e162"></a>
+                    AgileZen Story Field
+                </th><th><a name="d58999e165"></a>
+                    YouTrack Issue Field
+                </th></tr></thead><tbody><tr id="d58999e169" class="ijRowOdd"><a name="d58999e169"></a><td><a name="d58999e171"></a>
+                    Story Phase
+                </td><td><a name="d58999e174"></a>
+                    The default issue field "State". In YouTrack Agile mode, States (that is, imported Phases) are the board columns.
+                    You can later configure which states you want to see on the board, and customize their parameters in the board's Settings.
+                </td></tr><tr id="d58999e178" class="ijRowEven"><a name="d58999e178"></a><td><a name="d58999e180"></a>
+                    Story Color
+                </td><td><a name="d58999e183"></a>
+                    A new custom issue field "Color". When the import is finished, you can rename values in its bundle with a name that you associate with particular color).
+                    You can also use this field as the source field to colorize cards on the board. To do so, you should select this field in the board's Settings.
+                </td></tr><tr id="d58999e187" class="ijRowOdd"><a name="d58999e187"></a><td><a name="d58999e189"></a>
+                    Story Status
+                </td><td><a name="d58999e192"></a>
+                    A new field "Status" is created. This is a field of <code class="code" data-lang="xml">enum[1]</code> type, and the bundle contains values like
+                    AgileZen statuses "Blocked", "Ready to pull", etc.
+                </td></tr><tr id="d58999e199" class="ijRowEven"><a name="d58999e199"></a><td><a name="d58999e201"></a>
+                    Story Size
+                </td><td><a name="d58999e204"></a>
+                    Story size is imported to a new integer custom issue field Size.
+                    To use it consistently in YouTrack Agile mode, you should select it as Estimation field in the board's Settings.
+                </td></tr><tr id="d58999e209" class="ijRowOdd"><a name="d58999e209"></a><td><a name="d58999e211"></a>
+                    Story Deadline
+                </td><td><a name="d58999e214"></a>
+                    A custom issue field "Deadline", which is a <a name="d58999e216"></a><i id="d58999e216">date</i> type field.
+                </td></tr></tbody></table>
+    <div class="last-modified">Last modified: 2 February 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

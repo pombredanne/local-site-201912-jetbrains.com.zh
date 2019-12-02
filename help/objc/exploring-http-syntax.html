@@ -1,0 +1,91 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta charset="UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="//resources.jetbrains.com/storage/help-app/v3/analytics.js"></script><title>Exploring the HTTP request in Editor syntax - Help | AppCode</title><link rel="stylesheet" href="//resources.jetbrains.com/storage/help-app/v3/app.css"></head><body data-id="Exploring_HTTP_Syntax"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search AppCode Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>AppCode 2019.2 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="secondary" value="secondary_default" selected>Default</option><option data-group="secondary" value="secondary_eclipse">Eclipse</option><option data-group="secondary" value="secondary_eclipse_mac_os_x">Eclipse (Mac OS X)</option><option data-group="secondary" value="secondary_emacs">Emacs</option><option data-group="secondary" value="secondary_intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="secondary_intellij_idea_classic_windows">IntelliJ IDEA Classic (Windows)</option><option data-group="secondary" value="secondary_resharper">ReSharper</option><option data-group="secondary" value="secondary_resharper_osx">ReSharper OSX</option><option data-group="secondary" value="secondary_visual_studio">Visual Studio</option><option data-group="secondary" value="secondary_xcode">Xcode</option><option data-group="secondary" value="secondary_xcode_copy">Xcode copy</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="Exploring_HTTP_Syntax" id="Exploring_HTTP_Syntax.xml">Exploring the HTTP request in Editor syntax</h1>    <p id="f6ab940d">        To compose an HTTP request in the AppCode code editor, use the following general syntax:    </p>    <div class="code-block" data-lang="shell">
+        Method Request-URI HTTP-Version
+        Header-field: Header-value
+
+        Request-Body
+    </div>    <p id="a67632c4">        The <span class="emphasis">HTTP request in Editor</span> format introduces additional capabilities, as demonstrated by        the following        examples.        For details on working with HTTP requests, see <a href="http-client-in-product-code-editor.html">HTTP client in AppCode code editor</a>.    </p>    <section class="procedure-steps"><h3 id="comments-in-http-requests" data-toc="Exploring_HTTP_Syntax#comments-in-http-requests">Use comments in HTTP requests</h3><ul class="list "><li class="list__item" id="ec5e4dc8">            <p id="e6cb5773">Within a request, start any line with with <code class="code">//</code> or <code class="code">#</code> to make it a comment line.</p>            <div class="code-block" data-lang="shell">
+                // A basic request
+                GET http://example.com/a/
+    </div>        </li></ul></section>    <section class="procedure-steps"><h3 id="short-form-for-get-requests" data-toc="Exploring_HTTP_Syntax#short-form-for-get-requests">Use short form for GET requests</h3><ul class="list "><li class="list__item" id="d0084fc5">            <p id="e2922dc4">                For <span class="emphasis">GET</span> requests, you can omit the request method and only specify the URI.            </p>            <div class="code-block" data-lang="shell">
+                // A basic request
+                http://example.com/a/
+    </div>                    </li></ul></section>    <section class="procedure-steps"><h3 id="compose-several-requests-in-a-file" data-toc="Exploring_HTTP_Syntax#compose-several-requests-in-a-file">Compose several requests in a single file</h3><ol class="list _decimal"><li class="list__item" id="8c44a313">            <p id="31a99aaf">                Mark the end of a request by typing the <code class="code">###</code> separator below it.            </p>            <div class="code-block" data-lang="shell">
+                // A basic request
+                http://example.com/a/
+
+                ###
+    </div>        </li><li class="list__item" id="fed98b68">            <p id="83de2718">Compose another request below the separator.</p>            <div class="code-block" data-lang="shell">
+                // A basic request
+                http://example.com/a/
+
+                ###
+
+                // A second request using the GET method
+                http://example.com:8080/api/html/get?id=123&amp;value=content
+    </div>        </li></ol></section>    <section class="procedure-steps"><h3 id="break-long-requests-into-several-lines" data-toc="Exploring_HTTP_Syntax#break-long-requests-into-several-lines">Break long requests into several lines</h3><ul class="list "><li class="list__item" id="b079e81f">            <p id="866c6ee7">                Indent all query string lines but the first one.            </p>            <div class="code-block" data-lang="shell">
+                // Using line breaks with indent
+                GET http://example.com:8080
+                    /api
+                    /html
+                    /get
+                    ?id=123
+                    &amp;value=content
+    </div>        </li></ul></section>    <section class="procedure-steps"><h3 id="access-web-service-with-authentication" data-toc="Exploring_HTTP_Syntax#access-web-service-with-authentication">Access a web service with authentication</h3><ul class="list "><li class="list__item" id="b09519b3">            <p id="72a47ad9">                Depending on the web service you are accessing, provide the <a href="https://en.wikipedia.org/wiki/Basic_access_authentication" data-external="true" target="_blank" rel="noopener noreferrer">basic</a> or <a href="https://en.wikipedia.org/wiki/Digest_access_authentication" data-external="true" target="_blank" rel="noopener noreferrer">digest</a> <span class="emphasis">Authorization</span> header.            </p>            <div class="code-block" data-lang="shell">
+                // Basic authentication
+                GET http://example.com
+                Authorization: Basic username password
+
+                ###
+
+                // Digest authentication
+                GET http://example.com
+                Authorization: Digest username password
+    </div>        </li></ul><aside class="note " data-title="" rel="b09519b3" id="af03c990">            <p id="ee420d49">                Similarly to other HTTP request's elements, the provided <code class="code">username</code> and <code class="code">password</code> can                be parameterized by means of <a href="http-client-in-product-code-editor.html#using_env_vars">                environment variables</a>.            </p>        </aside></section>    <section class="procedure-steps"><h3 id="provide-request-body" data-toc="Exploring_HTTP_Syntax#provide-request-body">Provide the request message body</h3><p id="d5f5c466">            Inside the request, prepend the request body with a blank line and do one of the following:        </p><ul class="list "><li class="list__item" id="b7265b74">                            <p id="261f8120">                    Type the request body in place:                </p>                <div class="code-block" data-lang="shell">
+                    // The request body is provided in place
+                    POST http://example.com:8080/api/html/post HTTP/1.1
+                    Content-Type: application/json Cookie: key=first-value
+
+                    { "key" : "value", "list": [1, 2, 3] }
+    </div>                <p id="106fb674">                    If you set the <span class="emphasis">Content-Type</span> header field value to one of the                                            <a href="supported-languages.html">languages supported by AppCode</a>, then the corresponding language                    fragment will be auto-injected into the HTTP request message body. If <span class="emphasis">Content-Type</span> is                    not specified, you can inject a language fragment manually. For more information, see <span>Language Injections</span>.                </p>                                                    <p id="c942bad1">To read the request body from a file, type the <code class="code">&lt;</code> symbol followed by the path to the                    file.</p>                <div class="code-block" data-lang="shell">
+                    // The request body is read from a file
+                    POST http://example.com:8080/api/html/post
+                    Content-Type: application/json
+
+                    &lt; ./input.json
+    </div>                    </li></ul></section>    <section class="procedure-steps"><h3 id="use-multipart-form-data" data-toc="Exploring_HTTP_Syntax#use-multipart-form-data">Use multipart/form-data content type</h3><ul class="list "><li class="list__item" id="45709cc8">            <p id="multipart">                Set the request's <span class="emphasis">Content-Type</span> to <span class="emphasis">multipart/form-data</span>. To send a file as                part of the <span class="emphasis">multipart/form-data</span> message, include the <code class="code">filename</code> parameter in                the <span class="emphasis">Content-Disposition</span> header.            </p>            <div class="code-block" data-lang="shell">
+                POST http://example.com/api/upload HTTP/1.1
+                Content-Type: multipart/form-data; boundary=boundary
+
+                --boundary
+                Content-Disposition: form-data; name="first"; filename="input.txt"
+
+                // The 'input.txt' file will be uploaded
+                &lt; ./input.txt
+
+                --boundary
+                Content-Disposition: form-data; name="second"; filename="input-second.txt"
+
+                // A temporary 'input-second.txt' file with the 'Text' content will be created and uploaded
+                Text
+                --boundary
+                Content-Disposition: form-data; name="third";
+
+                // The 'input.txt' file contents will be sent as plain text.
+                &lt; ./input.txt --boundary--
+    </div>        </li></ul><aside class="note " data-title="" rel="45709cc8" id="244a7018">                            <p id="65f16735">To speed up creating a <span class="emphasis">multipart/form-data</span> request, use the <span class="control">mptr</span> <a href="using-live-templates.html">live template</a>.</p>        </aside></section>    <section class="procedure-steps"><h3 id="enable-disable-redirects" data-toc="Exploring_HTTP_Syntax#enable-disable-redirects">Enable or disable following redirects</h3><p id="43fc5933">Depending on the web service you are accessing, you may want HTTP requests to either follow redirects or not.            When a redirect is followed, the redirected page response is returned; otherwise, the actual redirect            response header (such as <span class="emphasis">301</span> or <span class="emphasis">302</span>) is returned.</p><ul class="list "><li class="list__item" id="6c29c9f8">            <p id="fb36f7e7">Before the request, add a comment line with the <code class="code">@no-redirect</code> tag.</p>            <div class="code-block" data-lang="shell">
+                // @no-redirect
+                example.com/status/301
+    </div>        </li></ul></section>    <section class="procedure-steps"><h3 id="enable-disable-saving-request" data-toc="Exploring_HTTP_Syntax#enable-disable-saving-request">Enable or disable saving requests to requests history</h3><p id="d9419e42">            If necessary, you can prevent saving a request to the <a href="http-client-in-product-code-editor.html#requests_history">requests history</a>.            This can be helpful in case a request contains some sensitive data, and you don't want to log it.        </p><ul class="list "><li class="list__item" id="a07f7cbd">            <p id="5081933e">Before the request, add a comment line with the <code class="code">@no-log</code> tag.</p>            <div class="code-block" data-lang="shell">
+                // @no-log
+                GET example.com/api
+    </div>        </li></ul></section>    <section class="procedure-steps"><h3 id="enable-disable-saving-cookies" data-toc="Exploring_HTTP_Syntax#enable-disable-saving-cookies">Enable or disable saving received cookies to the cookies jar</h3><p id="bb454e1a">            If necessary, you can prevent saving the received cookie <a href="http-client-in-product-code-editor.html#cookies-support">to the cookies jar</a>.            This way, you will avoid removing the unwanted cookies from the  <span class="filepath">http-client.cookies</span> file manually.        </p><ul class="list "><li class="list__item" id="1e37dacc">            <p id="d1d5ab34">Before the request, add a comment line with the <code class="code">@no-cookie-jar</code> tag.</p>            <div class="code-block" data-lang="shell">
+                // @no-cookie-jar
+                GET example.com/api
+    </div>        </li></ul></section><div class="last-modified" data-skip-index="skip">Last modified: 10 October 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="http-client-in-product-code-editor.html">HTTP client in AppCode code editor</a><a class="navigation-links__next" href="http-response-handling-api-reference.html">HTTP Response handling API reference</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="//resources.jetbrains.com/storage/help-app/v3/app.js"></script></body></html>

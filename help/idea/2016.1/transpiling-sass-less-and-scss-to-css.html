@@ -1,0 +1,327 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"></meta><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><title>IntelliJ IDEA 2016.1 Help :: Transpiling Sass, Less, and SCSS to CSS</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Transpiling_SASS_LESS_and_SCSS_to_CSS"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.1 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWindow</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="minifying-css.html">Minifying CSS</a><a class="navigation-links__next" href="working-with-sass-and-scss-in-compass-projects.html">Working with Sass and SCSS in Compass Projects</a></div><h1>Transpiling Sass, Less, and SCSS to CSS</h1><a name="d753074e14"></a><p>
+                <a name="d753074e16"></a><span class="emphasis">Sass</span>, <a name="d753074e19"></a><span class="emphasis">Less</span>, and <a name="d753074e22"></a><span class="emphasis">SCSS</span> code is not processed by browsers that work with CSS code. Therefore to be executed, <a name="d753074e25"></a><span class="emphasis">Sass</span>, <a name="d753074e28"></a><span class="emphasis">Less</span>, or <a name="d753074e32"></a><span class="emphasis">SCSS</span> code
+                has to be translated into CSS.
+                This operation is referred to as <a name="d753074e35"></a><span class="emphasis">transpilation</span> and the tools that perform it are called <a name="d753074e38"></a><span class="emphasis">transpilers</span>.
+            </p><a name="d753074e42"></a><p>
+                IntelliJ IDEA supports integration with transpiler tools that translate <a name="d753074e44"></a><span class="emphasis">Sass</span>, <a name="d753074e47"></a><span class="emphasis">Less</span>, and <a name="d753074e50"></a><span class="emphasis">SCSS</span> code into CSS.
+            </p><a name="d753074e54"></a><p>
+                 
+         
+        In IntelliJ IDEA, transpiler configurations are called <a name="d75433e21"></a><span class="emphasis">File Watchers</span>.
+        For each supported transpiler, IntelliJ IDEA provides a predefined <a name="d75433e24"></a><span class="emphasis">File Watcher</span> template.
+        Predefined <a name="d75433e27"></a><span class="emphasis">File Watcher</span> templates are available at the IntelliJ IDEA level. To run a transpiler against your project files, you need to
+        create a project-specific <a name="d75433e30"></a><span class="emphasis">File Watcher</span> based on the relevant template, at least, specify the path to the transpiler to use on your machine.
+
+     
+            </p><a name="d753074e59"></a><p>
+                On this page:
+            </p><ul><li class="list__item"><a href="#d753074e80">Installing the Sass/SCSS Transpiler</a></li><li class="list__item"><a href="#d753074e140">Installing the Less Transpiler</a></li><li class="list__item"><a href="#d753074e147">Installing the Less Transpiler Globally</a></li><li class="list__item"><a href="#d753074e160">Installing the Less Transpiler in a Project</a></li><li class="list__item"><a href="#d753074e183">Creating a File Watcher</a></li><li class="list__item"><a href="#d753074e312">Transpiling the Code</a></li></ul><a name="d753074e80"></a><h2>Installing the Sass/SCSS Transpiler</h2>
+
+                <a name="d753074e82"></a><p>
+                    <a name="d753074e84"></a><span class="emphasis">Sass</span> and <a name="d753074e87"></a><span class="emphasis">SCSS</span> transpilers are managed through the <a name="d753074e90"></a><span class="emphasis">Ruby Gem manager</span>.
+                </p>
+            <ol class="list _decimal"><li class="list__item"><a name="d753074e96"></a>
+                <a name="d753074e98"></a><a href="http://www.ruby-lang.org/en/downloads/" data-external="true"><span>Download and install Ruby</span></a>.
+            </li><li class="list__item"><a name="d753074e102"></a>
+                Specify a <code class="code" data-lang="Java">path</code> variable for the folder where the Ruby executable file and the <code class="code" data-lang="Java">gem.bat</code> file are stored.
+                 
+                This lets you launch <a name="d753074e112"></a><span class="emphasis">Ruby</span> and <a name="d753074e115"></a><span class="emphasis">Gem Manager</span> from any folder and ensures that <a name="d753074e118"></a><span class="emphasis">Ruby</span> is successfully launched during transpilation.
+                 
+            </li><li class="list__item"><a name="d753074e123"></a>
+                Type one of the following commands at the command line prompt:
+                <a name="d753074e125"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="n">gem</span> <span class="n">install</span> <span class="n">sass</span></code></div>
+                or
+                <a name="d753074e128"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="n">gem</span> <span class="n">install</span> <span class="n">scss</span></code></div>
+                <a name="d753074e131"></a><p>
+                    The tool is installed to the folder where Ruby executable file and the <code class="code" data-lang="Java">gem.bat</code> file are stored.
+                </p>
+            </li></ol>
+        <a name="d753074e140"></a><h2>Installing the Less Transpiler</h2>
+     
+ 
+        <a name="d45527e4576"></a><p>
+            The easiest way to install the Less transpiler is to use the <a name="d45527e4578"></a><span class="emphasis">Node Package Manager (npm)</span>,
+            which is a part of <a name="d45527e4581"></a><a href="http://nodejs.org/" data-external="true"><span>Node.js</span></a>. See <a name="d45527e4584"></a><a href="installing-and-removing-external-software-using-node-package-manager.html"><span>Installing and Removing External Software Using Node Package Manager</span></a> for details.
+        </p>
+         
+ 
+        <a name="d45527e4611"></a><p>
+            Depending on the desired location of the Less transpiler executable file, choose one of the following methods:
+            <ul class="list _bullet"><li class="list__item"><a name="d45527e4615"></a>
+                    Install the transpiler <a name="d45527e4617"></a><span class="emphasis">globally</span> at the IntelliJ IDEA level so it can be used in any IntelliJ IDEA project.
+                </li><li class="list__item"><a name="d45527e4621"></a>
+                    Install the transpiler in a specific project and thus restrict its use to this project.
+                </li><li class="list__item"><a name="d45527e4624"></a>
+                    Install the transpiler in a project as a <a name="d45527e4626"></a><a href=""><span>development dependency</span></a>.
+                </li></ul>
+        </p>
+        <a name="d45527e4632"></a><p>
+            In either installation mode, make sure that the parent folder of the Less transpiler is added to the <code class="code" data-lang="Java">PATH</code> variable.
+            This enables you to launch the transpiler from any folder.
+        </p>
+     
+        <a name="d45527e4592"></a><p>
+         
+            IntelliJ IDEA provides user interface both for <a name="d45527e4600"></a><span class="emphasis">global</span> and <a name="d45527e4603"></a><span class="emphasis">project</span> installation as well as supports installation through the command line.
+     
+        </p>
+     
+
+        <a name="d753074e147"></a><h3>Installing the Less Transpiler Globally</h3>
+            <a name="d753074e149"></a><p>
+                 
+         
+         
+            <a name="d45527e4299"></a><span class="emphasis">Global</span> installation makes a transpiler available at the IntelliJ IDEA level so it can be used in any IntelliJ IDEA project.
+            Moreover, during installation the parent folder of the transpiler is automatically added to the <code class="code" data-lang="Java">PATH</code> variable,
+            which enables you to launch the transpiler from any folder.
+            To install the transpiler <a name="d45527e4305"></a><span class="emphasis">globally</span>, do one of the following:
+     
+            </p>
+            <ul class="list _bullet"><li class="list__item"><a name="d45527e4191"></a>
+            Run the installation from the command line in the <a name="d45527e4193"></a><span class="emphasis">global</span> mode:
+            <ol class="list _decimal"><li class="list__item"><a name="d45527e4198"></a>
+                     
+ 
+        Launch the embedded <a name="d45527e48"></a><span class="control">Terminal</span>
+        by hovering  your mouse pointer over <img alt="show_tool_window_bars" width="14" height="14" title="show_tool_window_bars" src="/help/img/idea/2016.1/show_tool_window_bars.png" class="inline-icon-14"> in the lower left corner of IntelliJ IDEA and choosing  <a name="d45527e53"></a><span class="control">Terminal</span> from the menu
+        (see <a name="d45527e56"></a><a href="working-with-embedded-local-terminal.html"><span>Working with Embedded Local Terminal</span></a> for details).
+     
+                </li><li class="list__item"><a name="d45527e4206"></a>
+                     
+        Switch to the directory where <a name="d45527e1467"></a><span class="emphasis">NPM</span> is stored or define a <code class="code" data-lang="Java">PATH</code> variable for it so it is available from any folder,
+        see <a name="d45527e1473"></a><a href="installing-and-removing-external-software-using-node-package-manager.html#installingNodeJs"><span>Installing NodeJs</span></a>.
+     
+                </li><li class="list__item"><a name="d45527e4211"></a>
+                    Type the following command at the command line prompt:
+                    <a name="d45527e4213"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+npm install -g less 
+                    </code></div>
+                    <a name="d45527e4216"></a><p>
+                         
+        The <code class="code" data-lang="Java">-g</code> key makes the transpiler run in the <a name="d23502e178"></a><span class="emphasis">global</span> mode.
+        Because the installation is performed through <a name="d23502e181"></a><span class="emphasis">NPM</span>, the Less transpiler is installed in the <code class="code" data-lang="Java">npm</code> folder.
+        Make sure this parent folder is added to the <code class="code" data-lang="Java">PATH</code> variable. This enables you to launch the transpiler from any folder.
+     
+                    </p>
+                    <a name="d45527e4221"></a><p>
+                        For more details on the <a name="d45527e4223"></a><span class="emphasis">NPM</span> operation modes, see <a name="d45527e4226"></a><a href="https://docs.npmjs.com/" data-external="true"><span>npm documentation</span></a>.
+                        For more information about installing the Less transpiler, see <a name="d45527e4229"></a><a href="https://npmjs.org/package/less" data-external="true"><span>https://npmjs.org/package/less</span></a>.
+                    </p>
+                </li></ol>
+        </li><li class="list__item"><a name="d45527e4235"></a>
+            Run <a name="d45527e4237"></a><span class="emphasis">NPM</span> from IntelliJ IDEA using the <a name="d45527e4240"></a><span class="control">Node.js and NPM</span> page of the <a name="d45527e4243"></a><span class="control">Settings</span> dialog box.
+            <ol class="list _decimal"><li class="list__item"><a name="d45527e4248"></a>
+                     
+         
+            Open the <a name="d2333e7944"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by choosing <a name="d2333e7946"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d2333e7949"></a><span class="menupath">IntelliJ IDEA | Preferences</span> for OS X,
+         
+         
+            and  
+         
+         
+         
+        click <a name="d2333e7972"></a><span class="control">Node.js and NPM</span> under <a name="d2333e7975"></a><span class="control">Languages&amp;Frameworks</span>.
+     
+     
+                </li><li class="list__item"><a name="d45527e4260"></a>
+                     
+         
+         
+        On the <a name="d23502e127"></a><span class="control">packagePage</span> page that opens, the <a name="d23502e130"></a><span class="control">Packages</span> area shows all the engineDependent packages
+        that are currently installed on your computer, both at the <a name="d23502e133"></a><span class="emphasis">global</span> and at the <a name="d23502e137"></a><span class="emphasis">project</span> level.
+        Click <img alt="add" width="12" height="12" title="add" src="/help/img/idea/2016.1/new.png" class="inline-icon-12">.
+     
+                </li><li class="list__item"><a name="d45527e4268"></a>
+                    In the <a name="d45527e4270"></a><span class="control">Available Packages</span> dialog box that opens, select the required package to install.
+                </li><li class="list__item"><a name="d45527e4274"></a>
+                    Select the <a name="d45527e4276"></a><span class="control">Options</span> check box and type <code class="code" data-lang="Java">-g</code> in the text box next to it.
+                </li><li class="list__item"><a name="d45527e4283"></a>
+                    Optionally specify the product version and click <a name="d45527e4285"></a><span class="control">Install Package</span> to start installation.
+                </li></ol>
+        </li></ul>
+     
+
+    <a name="d753074e160"></a><h3>Installing the Less Transpiler in a Project</h3>
+        <a name="d753074e162"></a><p>
+             
+         
+         
+            Installing a transpiler in a specific project restricts its use to this project.
+            To run <a name="d45527e4315"></a><span class="emphasis">project</span> installation, do one of the following:
+     
+        </p>
+        <ul class="list _bullet"><li class="list__item"><a name="d45527e4397"></a>
+            Run the installation from the command line:
+            <ol class="list _decimal"><li class="list__item"><a name="d45527e4401"></a>
+                     
+ 
+        Launch the embedded <a name="d45527e48"></a><span class="control">Terminal</span>
+        by hovering  your mouse pointer over <img alt="show_tool_window_bars" width="14" height="14" title="show_tool_window_bars" src="/help/img/idea/2016.1/show_tool_window_bars.png" class="inline-icon-14"> in the lower left corner of IntelliJ IDEA and choosing  <a name="d45527e53"></a><span class="control">Terminal</span> from the menu
+        (see <a name="d45527e56"></a><a href="working-with-embedded-local-terminal.html"><span>Working with Embedded Local Terminal</span></a> for details).
+     
+                </li><li class="list__item"><a name="d45527e4409"></a>
+                    Switch to the project root folder and type the following command at the command line prompt:
+                    <a name="d45527e4411"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+npm install less 
+                    </code></div>
+                </li></ol>
+        </li><li class="list__item"><a name="d45527e4417"></a>
+            Run <a name="d45527e4419"></a><span class="emphasis">NPM</span> from IntelliJ IDEA using the <a name="d45527e4422"></a><span class="control">Node.js and NPM</span> page of the <a name="d45527e4425"></a><span class="control">Settings</span> dialog box.
+            <ol class="list _decimal"><li class="list__item"><a name="d45527e4430"></a>
+                     
+         
+            Open the <a name="d2333e7944"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by choosing <a name="d2333e7946"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d2333e7949"></a><span class="menupath">IntelliJ IDEA | Preferences</span> for OS X,
+         
+         
+            and  
+         
+         
+         
+        click <a name="d2333e7972"></a><span class="control">Node.js and NPM</span> under <a name="d2333e7975"></a><span class="control">Languages &amp; Frameworks</span>.
+     
+     
+                </li><li class="list__item"><a name="d45527e4442"></a>
+                     
+        On the <a name="d45527e82"></a><span class="control">Node.js and NPM</span> page that opens, the <a name="d45527e85"></a><span class="control">Packages</span> area shows all the Node.js-dependent packages
+        that are currently installed on your computer, both at the <a name="d45527e88"></a><span class="emphasis">global</span> and at the <a name="d45527e91"></a><span class="emphasis">project</span> level.
+        Click <img alt="add" width="12" height="12" title="add" src="/help/img/idea/2016.1/new.png" class="inline-icon-12">.
+     
+                </li><li class="list__item"><a name="d45527e4447"></a>
+                    In the <a name="d45527e4449"></a><span class="control">Available Packages</span> dialog box that opens, select the required package.
+                </li><li class="list__item"><a name="d45527e4453"></a>
+                    Optionally specify the product version and click <a name="d45527e4455"></a><span class="control">Install Package</span> to start installation.
+                </li></ol>
+        </li></ul>
+         
+         
+         
+        <a name="d45527e4325"></a><p>
+            <a name="d45527e4327"></a><span class="emphasis">Project level</span> installation is helpful and reliable in <a name="d45527e4330"></a><a href="generating-a-project-from-a-framework-template.html"><span>template-based projects</span></a>
+             
+            of the type <a name="d45527e4336"></a><span class="emphasis">Node Boilerplate</span> or <a name="d45527e4339"></a><span class="emphasis">Node.js Express</span>, which already have the <code class="code" data-lang="Java">node_modules</code> folder.
+            The latter is important because <a name="d45527e4346"></a><span class="emphasis">NPM</span> installs the Less transpiler
+            in a <code class="code" data-lang="Java">node_modules</code> folder. If your project already contains such folder, the  Less transpiler is installed there.
+        </p>
+        <a name="d45527e4353"></a><p>
+            Projects of other types or <a name="d45527e4355"></a><span class="emphasis">empty</span> projects may not have a <code class="code" data-lang="Java">node_modules</code> folder.
+            In this case <a name="d45527e4361"></a><span class="emphasis">npm</span> goes upwards in the folder tree and installs the  Less transpiler
+            in the first detected <code class="code" data-lang="Java">node_modules</code> folder. Keep in mind that this detected <code class="code" data-lang="Java">node_modules</code> folder may be <a name="d45527e4371"></a><span class="emphasis">outside</span> your current project root.
+        </p>
+ 
+        <a name="d45527e4378"></a><p>
+            Finally, if no <code class="code" data-lang="Java">node_modules</code> folder is detected in the folder tree either,
+            the folder is created right under the current project root and the Less transpiler is installed there.
+        </p>
+        <a name="d45527e4384"></a><p>
+            In either case, make sure that the parent folder of the Less transpiler is added to the <code class="code" data-lang="Java">PATH</code> variable.
+            This enables you to launch the transpiler from any folder.
+        </p>
+     
+     
+
+ 
+<a name="d753074e183"></a><h2>Creating a File Watcher</h2>
+                <a name="d753074e185"></a><p>
+                     
+            IntelliJ IDEA provides a common procedure and user interface for creating <a name="d75433e93"></a><span class="emphasis">File Watchers</span> of all types.
+            The only difference is in the predefined templates you choose in each case.
+     
+                </p>
+            <ol class="list _decimal"><li class="list__item"><a name="d753074e192"></a>
+                 
+
+             
+                Install and enable the <a name="d75433e317"></a><span class="keyword">File Watchers</span> repository plugin.
+                <a name="d75433e320"></a><p>
+                    The plugin is&nbsp;<a name="d75433e322"></a><u id="d75433e322">not</u>&nbsp;bundled with IntelliJ IDEA, but it is available from the <a name="d75433e325"></a><a href="http://plugins.jetbrains.com/ruby" data-external="true"><span>IntelliJ IDEA plugin repository</span></a>
+                    <a name="d75433e328"></a><a href="https://plugins.jetbrains.com/plugin/7177?pr=idea" data-external="true"><span>plugin repository</span></a>.
+                    See <a name="d75433e331"></a><a href="installing-updating-and-uninstalling-repository-plugins.html"><span>Installing, Updating and Uninstalling Repository Plugins</span></a> and <a name="d75433e333"></a><a href="enabling-and-disabling-plugins.html"><span>Enabling and Disabling Plugins</span></a> for details.
+                </p>
+             
+             
+
+     
+            </li><li class="list__item"><a name="d753074e197"></a>
+                 
+
+            To start creating a <a name="d75433e100"></a><span class="emphasis">File Watcher</span>, open the <a name="d75433e103"></a><span class="control">Settings</span> dialog box  by choosing
+             
+            <a name="d75433e109"></a><span class="menupath">File | Settings</span>
+             
+             
+            on the main menu, and then click <a name="d75433e125"></a><span class="control">File Watchers</span> under the <a name="d75433e128"></a><span class="control">Tools</span> node.
+            The <a name="d75433e131"></a><a href="file-watchers.html"><span>File Watchers page</span></a> that opens, shows the list of <a name="d75433e134"></a><span class="emphasis">File Watchers</span> that are already configured in the project.
+
+     
+            </li><li class="list__item"><a name="d753074e202"></a>
+                Click the <a name="d753074e204"></a><span class="control">Add</span> button <img alt="new.png" width="12" height="12" title="new.png" src="/help/img/idea/2016.1/new.png" class="inline-icon-12"> or press <kbd data-default="Alt+Insert" data-default_for_gnome="Alt+Insert" data-default_for_kde="Alt+Insert" data-default_for_xwin="Alt+Insert" data-emacs="Alt+Insert" data-jbuilder="Alt+Insert" data-visual_studio="Alt+Insert" data-netbeans_6.5="N/A" data-eclipse="Alt+Insert" data-mac_os_x_10.5_="&#x2318;N" data-mac_os_x="&#x2303;N" data-eclipse_mac_os_x="&#x2318;N" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Insert</kbd>.
+                Depending on the tool you are going to use,  choose the appropriate predefined template from the pop-up list:
+                <ul class="list _bullet"><li class="list__item"><a name="d753074e213"></a>
+                        <a name="d753074e215"></a><span class="control">Less</span>
+                    </li><li class="list__item"><a name="d753074e219"></a>
+                        <a name="d753074e221"></a><span class="control">Sass</span>
+                    </li><li class="list__item"><a name="d753074e225"></a>
+                        <a name="d753074e227"></a><span class="control">SCSS</span>
+                    </li></ul>
+            </li><li class="list__item"><a name="d753074e233"></a>
+                In the <a name="d753074e235"></a><span class="control">Program</span> text box, specify the path to the compiler executable file or archive depending on the chosen predefined template.
+                <ul class="list _bullet"><li class="list__item"><a name="d753074e240"></a>
+                        <code class="code" data-lang="Java">lessc.cmd</code> for <a name="d753074e245"></a><span class="control">Less</span>
+                        If you installed the tool through the <a name="d753074e248"></a><span class="emphasis">Node Package Manager</span>,  IntelliJ IDEA locates the required file itself at <code class="code" data-lang="Java">&lt;node.js_home&gt;/node_modules/bin/lessc.cmd</code>
+                        and fills in the field automatically.
+                        Otherwise, type the path manually or click the <a name="d753074e254"></a><span class="control">Browse</span> button <img alt="browseButton.png" width="15" height="15" title="browseButton.png" src="/help/img/idea/2016.1/browseButton.png" class="inline-icon-15"> and choose the file location in the dialog box that opens.
+                    </li><li class="list__item"><a name="d753074e261"></a>
+                        <code class="code" data-lang="Java">sass.bat</code> for <a name="d753074e266"></a><span class="control">Sass</span>
+                    </li><li class="list__item"><a name="d753074e270"></a>
+                        <code class="code" data-lang="Java">scss.bat</code> for <a name="d753074e275"></a><span class="control">SCSS</span>
+                    </li></ul>
+                <a name="d753074e280"></a><p>
+                    If you installed the <a name="d753074e282"></a><span class="emphasis">Sass</span> and <a name="d753074e285"></a><span class="emphasis">SCSS</span> tools through <a name="d753074e288"></a><span class="emphasis">Ruby</span>,
+                    IntelliJ IDEA locates the required files itself at <code class="code" data-lang="Java">&lt;ruby_home&gt;/bin/sass.bat</code> 
+            <code class="code" data-lang="Java">&lt;ruby_home&gt;/bin/scss.bat</code> respectively
+                    and fills in the field automatically.
+                    Otherwise, type the path manually or click the <a name="d753074e298"></a><span class="control">Browse</span> button <img alt="browseButton.png" width="15" height="15" title="browseButton.png" src="/help/img/idea/2016.1/browseButton.png" class="inline-icon-15"> and choose the file location in the dialog box that opens.
+                </p>
+            </li><li class="list__item"><a name="d753074e305"></a>
+                 
+            Proceed as described on page <a name="d75433e140"></a><a href="using-file-watchers.html"><span>Using File Watchers</span></a>.
+     
+            </li></ol>
+        <a name="d753074e312"></a><h2>Transpiling the Code</h2>
+         
+         
+         
+         
+        <a name="d75433e147"></a><p>
+            When you open a TypeScript file, IntelliJ IDEA checks whether an applicable file watcher is available in the current project. If such file watcher is configured but disabled,
+            IntelliJ IDEA displays a pop-up window that informs you about the configured file watcher and suggests to enable it.
+        </p>
+         
+        <a name="d75433e153"></a><p>
+            If an applicable file watcher is configured and enabled in the current project, IntelliJ IDEA starts it automatically
+            upon the event specified in the <a name="d75433e155"></a><a href="new-watcher-dialog.html"><span>New Watcher dialog</span></a>.
+            <ul class="list _bullet"><li class="list__item"><a name="d75433e160"></a>
+                    If the <a name="d75433e162"></a><span class="control">Immediate file synchronization</span> check box is selected, the <a name="d75433e165"></a><span class="emphasis">File Watcher</span> is invoked as soon as any changes are made to the source code.
+                </li><li class="list__item"><a name="d75433e169"></a>
+                    If the <a name="d75433e171"></a><span class="control">Immediate file synchronization</span> check box is cleared,
+                    the <a name="d75433e174"></a><span class="emphasis">File Watcher</span>  is started upon save (<a name="d75433e177"></a><span class="menupath">File | Save All</span>, <kbd data-default="Ctrl+S" data-default_for_gnome="Ctrl+S" data-default_for_kde="Ctrl+S" data-default_for_xwin="Ctrl+S" data-emacs="Ctrl+X, Ctrl+S" data-jbuilder="Ctrl+S" data-visual_studio="Ctrl+S" data-netbeans_6.5="N/A" data-eclipse="Ctrl+S" data-mac_os_x_10.5_="&#x2318;S" data-mac_os_x="&#x2318;S" data-eclipse_mac_os_x="&#x2318;S" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+S</kbd>) or when you move focus from IntelliJ IDEA
+                    (upon frame deactivation).
+                </li></ul>
+        </p>
+     
+        <a name="d753074e320"></a><p>
+            IntelliJ IDEA creates a separate file with the generated output. The file has the name of the source <a name="d753074e322"></a><span class="emphasis">Sass</span>, <a name="d753074e325"></a><span class="emphasis">Less</span>, or <a name="d753074e328"></a><span class="emphasis">SCSS</span> file
+            and the extension <code class="code" data-lang="Java">css</code>. The location of the generated files is defined in the <a name="d753074e334"></a><span class="control">Output paths to refresh</span> text box of the <a name="d753074e338"></a><a href="new-watcher-dialog.html"><span>New Watcher dialog</span></a>.
+            However, in the <a name="d753074e341"></a><span class="control">Project Tree</span>, they are shown under the source file which is now displayed as a node.
+        </p>
+    <div class="navigation-links _bottom"><a class="navigation-links__prev" href="minifying-css.html">Minifying CSS</a><a class="navigation-links__next" href="working-with-sass-and-scss-in-compass-projects.html">Working with Sass and SCSS in Compass Projects</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content"><div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d753074e350"></a><a href="using-file-watchers.html"><span>Using File Watchers</span></a></li><li class="list__item"><a name="d753074e352"></a><a href="minifying-css.html"><span>Minifying CSS</span></a></li></ul></div><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d753074e357"></a><a href="file-watchers.html"><span>File Watchers</span></a></li><li class="list__item"><a name="d753074e359"></a><a href="new-watcher-dialog.html"><span>New Watcher Dialog</span></a></li></ul></div><div class="seealso__col"><h3>External Links:</h3><ul class="list"><li class="list__item"><a name="d753074e364"></a><a href="http://sass-lang.com/" data-external="true"><span>http://sass-lang.com/</span></a></li><li class="list__item"><a name="d753074e366"></a><a href="http://lesscss.org/" data-external="true"><span>http://lesscss.org/</span></a></li><li class="list__item"><a name="d753074e368"></a><a href="http://www.nongnu.org/scss/" data-external="true"><span>http://www.nongnu.org/scss/</span></a></li></ul></div></div></section><div class="last-modified">Last modified: 13 July 2016 </div></article><div id="disqus_thread"></div></div></section></main></div><script src="/help/app/app.js"></script></body></html>

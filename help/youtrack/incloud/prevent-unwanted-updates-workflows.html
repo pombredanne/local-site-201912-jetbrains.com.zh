@@ -1,0 +1,111 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta charset="UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="//resources.jetbrains.com/storage/help-app/v3/analytics.js"></script><title>Prevent Unwanted Updates - Help | YouTrack InCloud</title><link rel="stylesheet" href="//resources.jetbrains.com/storage/help-app/v3/app.css"></head><body data-id="prevent-unwanted-updates-workflows" data-breadcrumbs="Administration.xml|Administration/Workflow-Guide.xml|Workflows/Workflow-Use-Cases.xml|Use Cases for Workflows/prevent-unwanted-updates-workflows.xml|Prevent Unwanted Updates" data-main-title="Prevent Unwanted Updates"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack InCloud Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>YouTrack InCloud 2019.2 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="prevent-unwanted-updates-workflows" id="prevent-unwanted-updates-workflows.xml">Prevent Unwanted Updates</h1>    <p id="5eb95854">To block specific users from viewing or changing the values in a custom field, you have the option to <a href="Private-and-Public-Issue-Fields.html#make-field-private">make the field private</a>.        However, there are a few limitations to this solution.        Users can either read and/or update all private custom fields in a project or none of them.</p>    <p id="c5327c7b">With workflows, you can prevent unwanted updates to changes in public fields.        You can support a wide variety of update restrictions. For example:</p>    <ul class="list _ul"><li class="list__item" id="dc77db09"><p>Prohibit anyone but members of the QA team from changing the state for reported bugs from <span class="control">Fixed</span> to <span class="control">Verified</span>.</p></li><li class="list__item" id="fa6f8c60"><p>Mark an issue as <span class="control">Fixed</span> only when the <span class="control">Spent time</span> field is not empty.</p></li><li class="list__item" id="5af23025"><p>Block users from changing the value for the <span class="control">Assignee</span> field once an issue is resolved.</p></li></ul>    <div class="chapter"><h2 id="restrict-updates-to-specific-group" data-toc="prevent-unwanted-updates-workflows#restrict-updates-to-specific-group">Restrict Updates to a Specific Group of Users</h2>        <p id="1248308d">Let's assume that you have a group of accountants who process payment requests.        Your company doesn't want the accounting team to accept payment requests without the approval from a manager.</p>        <p id="942b7cdf">To support this restriction, you need two custom fields:</p>        <div class="table-wrapper"><table width="100%" id="412305c6"><thead><tr id="c88ebc70" class="ijRowHead"><th id="392f6ac6"><p>Field</p></th><th id="ec00a2f9"><p>Description</p></th></tr></thead><tbody><tr id="dddd0c57" class="ijRowOdd"><td id="2b7eaeae"><p>Authorization status</p></td><td id="00351490"><p>Stores two enumerated values: <span class="control">Required</span> (the default value) and <span class="control">Authorized</span>.</p></td></tr><tr id="4943938c" class="ijRowEven"><td id="722ff653"><p>Authorizer</p></td><td id="303dc7a0"><p>Stores a user type. It contains a list of managers who can approve payment requests.</p></td></tr></tbody></table></div>        <p id="65e84eab">You want to apply a restriction to the <span class="control">Authorization status</span> field so that it can only be changed to <span class="control">Authorized</span> by the user who is selected as the <span class="control">Authorizer</span>.          This means that:</p>        <ul class="list _ul"><li class="list__item" id="ffe50fa8"><p>The <span class="control">Authorizer</span> must have permission to read the issue.</p></li><li class="list__item" id="6b5475d9"><p>The <span class="control">Authorizer</span> must have permission to update the <span class="control">Authorization status</span> field.</p></li><li class="list__item" id="b4941b16"><p>No other user should be able to update the value for the <span class="control">Authorization status</span> field.</p></li></ul>        <p id="0232b841">To support the first and the second points, either use the permission scheme in the project or use a workflow that adds the <span class="control">Authorizer</span> to the visibility list.            For details, see <a href="restrict-issue-visibility-workflow.html">Restrict Issue Visibility with Workflows</a>.            You should also perform the following setup:</p>        <ul class="list _ul"><li class="list__item" id="9452cd84"><p>Create a separate <span class="control">Authorizers</span> group and add all of the managers as members.</p></li><li class="list__item" id="a93deee6"><p>Grant the same level of access that is available to users who have permission to create issues in the project.</p></li><li class="list__item" id="c11aa7a5"><p>Set this group as the source for values in the <span class="control">Authorizer</span> field.</p></li></ul>        <p id="0a19c36c">Now you can restrict who can set the value for the <span class="control">Authorization status</span> field.          This rule is triggered when someone tries to set the <span class="control">Authorization status</span> to <span class="control">Authorized</span>.          It verifies that the current user is the same person who is set as the <span class="control">Authorizer</span>.</p>        <div class="code-block" data-lang="javascript">var entities = require('@jetbrains/youtrack-scripting-api/entities');
+var workflow = require('@jetbrains/youtrack-scripting-api/workflow');
+
+exports.rule = entities.Issue.onChange({
+  title: 'Only Authorizers can update value for Authorization status field',
+  guard: function(ctx) {
+    return ctx.issue.fields.becomes(ctx.AuthStatus,
+                                    ctx.AuthStatus.Authorized);
+  },
+  action: function(ctx) {
+    var authBy = ctx.issue.fields.AuthBy;
+    workflow.check(authBy &amp;&amp; authBy.login === ctx.currentUser.login,
+                  'Only Authorizers can update this field!');
+  },
+  requirements: {
+    AuthBy: {
+      type: entities.User.fieldType,
+      name: 'Authorizer'
+    },
+    AuthStatus: {
+      type: entities.EnumField.fieldType,
+      name: 'Authorization status',
+      Authorized: {}
+    }
+  }
+});</div>        <p id="7d9020e3">This limitation is very strict.          However, you can write the rule differently to make the policy more lenient.          The rule that follows lets members of the accounting team choose another value for the <span class="control">Authorizer</span> field, even after the <span class="control">Authorization status</span> field has been set to <span class="control">Authorized</span>.          When a new authorizer is selected, the value of the <span class="control">Authorization status</span> field switches back to <span class="control">Required</span>.          This lets you handle cases where, for example, an authorizer leaves the company or is no longer the manager for the person who submitted the payment request.</p>        <div class="code-block" data-lang="javascript">var entities = require('@jetbrains/youtrack-scripting-api/entities');
+var workflow = require('@jetbrains/youtrack-scripting-api/workflow');
+
+exports.rule = entities.Issue.onChange({
+  title: 'Only Executors can change Authorizer in authorized requests',
+  guard: function(ctx) {
+    var fs = ctx.issue.fields;
+    return fs.isChanged(ctx.AuthBy) &amp;&amp;
+           fs.AuthStatus.name === ctx.AuthStatus.Authorized.name;
+  },
+  action: function(ctx) {
+    workflow.check(ctx.currentUser.isInGroup(ctx.executors.name),
+                  'Only Executors can change the Authorizer ' +
+                  'after the request has been authorized!');
+    ctx.issue.fields.AuthStatus = ctx.AuthStatus.Required;
+  },
+  requirements: {
+    AuthBy: {
+      type: entities.User.fieldType,
+      name: 'Authorizer'
+    },
+    AuthStatus: {
+      type: entities.EnumField.fieldType,
+      name: 'Authorization status',
+      Authorized: {},
+      Required: {}
+    },
+    executors: {
+      type: entities.UserGroup
+    }
+  }
+});</div>    </div>    <div class="chapter"><h2 id="add-restrictions-based-on-field-combinations" data-toc="prevent-unwanted-updates-workflows#add-restrictions-based-on-field-combinations">Add Restrictions Based on Field Combinations</h2>        <p id="94828463">The restrictions described in the previous section determine which users can update different fields.          You can also add restrictions that are based on field and value combinations.          For example, here’s a rule that won’t let anyone change the value for the <span class="control">State</span> field to <span class="control">Paid</span> unless the <span class="control">Authorization status</span> is <span class="control">Authorized</span>.</p>        <div class="code-block" data-lang="javascript">var entities = require('@jetbrains/youtrack-scripting-api/entities');
+var workflow = require('@jetbrains/youtrack-scripting-api/workflow');
+
+exports.rule = entities.Issue.onChange({
+  title: 'Request must be authorized to be marked as paid',
+  guard: function(ctx) {
+    return ctx.issue.fields.becomes(ctx.State, ctx.State.Paid);
+  },
+  action: function(ctx) {
+    var fs = ctx.issue.fields;
+    workflow.check(fs.AuthStatus &amp;&amp;
+                   fs.AuthStatus.name === ctx.AuthStatus.Authorized.name,
+                   'Only authorized requests can be marked as paid!');
+  },
+  requirements: {
+    AuthStatus: {
+      type: entities.EnumField.fieldType,
+      name: 'Authorization status',
+      Authorized: {},
+    },
+    State: {
+      type: entities.State.fieldType,
+      Paid: {}
+    }
+  }
+});</div>        <p id="8bc22bb1">Here’s another variant. When the <span class="control">State</span> has been set to <span class="control">Paid</span>, the value that is stored in the <span class="control">Amount</span> field cannot be modified.</p>        <div class="code-block" data-lang="javascript">var entities = require('@jetbrains/youtrack-scripting-api/entities');
+var workflow = require('@jetbrains/youtrack-scripting-api/workflow');
+
+exports.rule = entities.Issue.onChange({
+  title: 'Block changes to Amount for paid requests',
+  guard: function(ctx) {
+    return ctx.issue.fields.isChanged(ctx.Amount);
+  },
+  action: function(ctx) {
+    var fs = ctx.issue.fields;
+    workflow.check(fs.State &amp;&amp; fs.State.name !== ctx.State.Paid.name,
+                  'You cannot change the Amount for paid requests!');
+  },
+  requirements: {
+    Amount: {
+      type: entities.Field.floatType
+    },
+    State: {
+      type: entities.State.fieldType,
+      Paid: {}
+    }
+  }
+});</div>    </div><div class="last-modified" data-skip-index="skip">Last modified: 29 November 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="restrict-issue-visibility-workflow.html">Restrict Issue Visibility with Workflows</a><a class="navigation-links__next" href="streamline-issue-reporting-workflows.html">Streamline Issue Reporting</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="//resources.jetbrains.com/storage/help-app/v3/app.js"></script></body></html>

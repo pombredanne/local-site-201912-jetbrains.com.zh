@@ -1,0 +1,52 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"></meta><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><title>IntelliJ IDEA 2016.1 Help :: @Nullable and @NotNull Annotations</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="procedures.inspecting.examples.annotation.nullable"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.1 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWindow</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="enabling-annotations.html">Enabling Annotations</a><a class="navigation-links__next" href="nonnls-annotation.html">@NonNls Annotation</a></div><h1>@Nullable and @NotNull Annotations</h1><a name="d1470352e3"></a><h2>Overview</h2>
+            <a name="d1470352e5"></a><p>This section describes <a name="d1470352e7"></a><a href="#nullable"><span>@Nullable</span></a> and <a name="d1470352e10"></a><a href="#notnull"><span>@NotNull</span></a> annotations introduced in IntelliJ IDEA
+                for catching NullPointerException's (NPE's) through the <a name="d1470352e13"></a><span class="control">Constant Conditions &amp; Exceptions</span>
+                and @Nullable problem inspections.</p>
+            <a name="d1470352e17"></a><p>These annotations are designed to help you watch contracts throughout method hierarchies to avoid emergence of NPE's. Moreover,
+                IntelliJ IDEA provides another benefit for them: the Code Inspection mechanism informs you on such contracts' discrepancies in places where
+                annotated methods are called and provides automated solutions in some cases.</p>
+		<a name="d1470352e20"></a><p>Two annotations - @Nullable and @NotNull - handle method invocations and field dereferences outside methods.</p>
+<a name="nullable"></a><a name="d1470352e26"></a><h2>@Nullable</h2>
+		<a name="d1470352e28"></a><p>The @Nullable Annotation reminds you about the necessity to introduce an NPE check when:</p>
+		<ul class="list _bullet"><li class="list__item"><a name="d1470352e33"></a>Calling methods that can return null.</li><li class="list__item"><a name="d1470352e36"></a>Dereferencing variables (fields, local variables, parameters) that can be null.</li></ul>
+<a name="notnull"></a><a name="d1470352e43"></a><h2>@NotNull</h2>
+<a name="d1470352e45"></a><p>The @NotNull Annotation is, actually, an explicit contract declaring the following:</p>
+		<ul class="list _bullet"><li class="list__item"><a name="d1470352e50"></a>A method should not return null.</li><li class="list__item"><a name="d1470352e53"></a>A variable (like fields, local variables, and parameters) cannot hold null
+                    value.
+                </li></ul>
+<a name="d1470352e59"></a><p>IntelliJ IDEA warns you if these contracts are violated.
+            </p><aside class="tip sideblock">
+            <a name="d1470352e64"></a><p>For more information and code examples,
+                refer to online <a name="d1470352e66"></a><a href="http://www.jetbrains.com/idea/documentation/howto.html" data-external="true"><span>how-to</span></a>.
+            </p>
+        </aside><a name="d1470352e71"></a><h2>Formal Semantics</h2>
+		<a name="d1470352e73"></a><p>An element annotated with @Nullable claims null value is perfectly valid to return (for methods), pass to
+            (for parameters) and hold (for local variables and fields).
+        </p>
+		<a name="d1470352e76"></a><p>An element annotated with @NotNull claims null value is forbidden to return (for methods), pass to (for
+            parameters) and hold (for local variables and fields).
+        </p>
+		<a name="d1470352e79"></a><p>There is a covariance-contravariance relationship between @Nullable and @NotNull when overriding/implementing
+            methods with annotated declaration or parameters.
+        </p>
+		<ul class="list _ul"><li class="list__item"><a name="d1470352e84"></a>Overriding/implementing methods with an annotated declaration:
+                <ul class="list _ul"><li class="list__item"><a name="d1470352e88"></a>The @NotNull annotation of the parent method requires the @NotNull annotation for the child
+                        class method.
+                    </li><li class="list__item"><a name="d1470352e91"></a>Methods with the @Nullable annotation in the parent method can have either @Nullable or @NotNull
+                        annotations in the child class method.
+                    </li></ul>
+			   </li><li class="list__item"><a name="d1470352e96"></a>Overriding/implementing methods with annotated parameters:
+                <ul class="list _ul"><li class="list__item"><a name="d1470352e100"></a>The @Nullable annotation of the parameter in the parent method requires the @Nullable annotation
+                        for the child class method parameter.
+                    </li><li class="list__item"><a name="d1470352e103"></a>Methods with the @NotNull annotation of the parameter in the parent method can have either
+                        @Nullable or @NotNull annotations (or none of them) for the child class method parameter.
+                    </li></ul>
+			   </li></ul>
+<div class="navigation-links _bottom"><a class="navigation-links__prev" href="enabling-annotations.html">Enabling Annotations</a><a class="navigation-links__next" href="nonnls-annotation.html">@NonNls Annotation</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content"><div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d1470352e121"></a><a href="annotating-source-code-directly.html"><span>Annotating Source Code Directly</span></a></li></ul></div><div class="seealso__col"><h3>Concepts:</h3><ul class="list"><li class="list__item"><a name="d1470352e114"></a><a href="external-annotations.html"><span>External Annotations</span></a></li><li class="list__item"><a name="d1470352e116"></a><a href="nonnls-annotation.html"><span>@NonNls Annotation</span></a></li></ul></div></div></section><div class="last-modified">Last modified: 13 July 2016 </div></article><div id="disqus_thread"></div></div></section></main></div><script src="/help/app/app.js"></script></body></html>

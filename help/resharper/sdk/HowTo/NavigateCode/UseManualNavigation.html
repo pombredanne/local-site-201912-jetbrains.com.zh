@@ -1,0 +1,174 @@
+
+
+
+<!doctype html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>Use Manual Navigation / ReSharper  DevGuide</title>
+    <link rel="stylesheet" href="/help/resharper/sdk/app/app.css">
+    <link rel="shortcut icon" href="/help/resharper/sdk/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="57x57" href="/help/resharper/sdk/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/help/resharper/sdk/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/help/resharper/sdk/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/help/resharper/sdk/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/help/resharper/sdk/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/help/resharper/sdk/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/help/resharper/sdk/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/help/resharper/sdk/apple-touch-icon-180x180.png">
+    <link rel="mask-icon" href="/help/resharper/sdk/apple-mask-icon.svg" color="black">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-square70x70logo" content="/help/resharper/sdk/mstile-70x70.png">
+    <meta name="msapplication-TileImage" content="/help/resharper/sdk/mstile-144x144.png">
+    <meta name="msapplication-square150x150logo" content="/help/resharper/sdk/mstile-150x150.png">
+    <meta name="msapplication-wide310x150logo" content="/help/resharper/sdk/mstile-310x150.png">
+    <meta name="msapplication-square310x310logo" content="/help/resharper/sdk/mstile-310x310.png">
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="Documentation for writing extensions for ReSharper" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.jetbrains.com/help/resharper/sdk//HowTo/NavigateCode/UseManualNavigation.html" />
+    <meta property="og:site_name" content="JetBrains ReSharper" />
+    <meta property="og:title" content="Use Manual Navigation" />
+    <meta property="og:description" content="Documentation for writing extensions for ReSharper" />
+    <meta property="og:image" content="https://www.jetbrains.com/help/resharper/sdk/jetbrains.png" />
+    <meta property="article:modified_time" content="2017-07-12T17:29:51+00:00" />
+    <!-- <meta property="article:section" content="" /> 
+    <meta property="article:tag" content="" /> -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@JBPlatform" />
+    <meta name="twitter:title" content="Use Manual Navigation" />
+    <meta name="twitter:description" content="Documentation for writing extensions for ReSharper" />
+    <meta name="twitter:image" content="https://www.jetbrains.com/help/resharper/sdk/jetbrains.png" />
+    <meta class="swiftype" name="product" data-type="string" content="/help/resharper/sdk/"></meta>
+<link  rel="stylesheet" href="/help/resharper/sdk/app/styles.css"></head>
+<body data-id="HowTo/NavigateCode/UseManualNavigation">
+<div class="wrapper">
+    <section class="panel _nav">
+        <header class="panel__header">
+            <div class="container">
+                <form class="search-box">
+                    <label for="search-box__input" class="search-box__label">
+                        <input type="text" class="search-box__input" id="search-box__input" placeholder="Search ReSharper  DevGuide">
+                    </label>
+                    <div class="search-box__clear" title="Clear"></div>
+                </form>
+            </div>
+        </header>
+        <nav class="panel__content">
+            <div class="container _nav">
+                <menu class="nav-tree"></menu>
+            </div>
+            <div class="container _footer panel__footer">
+                <p><a data-bypass="true" href="//youtrack.jetbrains.com/issues/IJSDK">Send feedback</a></p>
+                <p>&copy; 2000&ndash;2018 <a href="//www.jetbrains.com">JetBrains</a> s.r.o.<br>
+                    All rights reserved.</p>
+            </div>
+        </nav>
+    </section>
+
+    <main class="panel _main" role="main">
+        <header class="panel__header">
+            <div class="container">
+                <h3>ReSharper DevGuide</h3>
+                
+                <div class="panel-trigger"></div>
+            </div>
+        </header>
+        <section class="panel__content">
+            <div class="container">
+                <article class="article" data-shortcut-switcher="false">
+                    <div class="navigation-links _top" data-swiftype-index="false">
+                        <a class="navigation-links__prev" href="/HowTo/NavigateCode/GetTreeNodeByReference.html">Get a Tree Node by Reference</a>
+                        <a class="navigation-links__next" href="/HowTo/NavigateCode/NavigateToParticularTreeNode.html">Navigate to a Particular Tree Node</a>
+                    </div>
+                    <a data-bypass="true" href="https://github.com/JetBrains/resharper-devguide/edit/master/HowTo/NavigateCode/UseManualNavigation.md" class="page-link-to-github" target="_blank" rel="noopener noreferrer" title="Edit this page on GitHub">
+                        <i class="github-icon"></i>
+                        <span class="text">Edit page</span>
+                    </a>
+
+                    <h1>Use Manual Navigation</h1>
+                    <p><strong>What you should know beforehand:</strong></p>
+<ul>
+  <li><a href="/help/resharper/sdk/HowTo/NavigateCode/NavigateCode.html#psi-basics"><span>PSI</span></a></li>
+  <li>ShellLocks</li>
+</ul>
+
+<p><strong>Examples (<a href="/help/resharper/sdk/HowTo/HowTo.html#sample-solution"><span>?</span></a>):</strong></p>
+<ul>
+  <li><a href="https://github.com/JetBrains/sample-resharper-plugin/blob/master/SampleReSharperPlugin/src/PsiNavigation/PsiExtensionMethods.cs" data-external="true" target="_blank" rel="noopener noreferrer"><span>PsiExtensionMethods.cs</span></a></li>
+  <li><a href="https://github.com/JetBrains/sample-resharper-plugin/blob/master/SampleReSharperPlugin/src/PsiNavigation/NodeUnderCaretDetector.cs" data-external="true" target="_blank" rel="noopener noreferrer"><span>NodeUnderCaretDetector.cs</span></a></li>
+</ul>
+
+<p>In some cases it might be useful to manually navigate the syntax tree (relatively to a particular tree node). For this purpose, any tree node has a number of properties and methods, like:</p>
+<ul>
+  <li><code class="code highlight language-text">Parent</code>: returns a parent tree node;</li>
+  <li><code class="code highlight language-text">Children</code>: returns <code class="code highlight language-text">IEnumerable</code> with children nodes;</li>
+  <li><code class="code highlight language-text">NextSibling</code>, <code class="code highlight language-text">PrevSibling</code>: next and previous sibling tree nodes;</li>
+  <li>lots of them.</li>
+</ul>
+
+<p>For example, let’s create an <code class="code highlight language-text">ITreeNode</code> extension method that walks up the syntax tree and finds (if there are any) a parent tree node of a particular type:</p>
+
+<div class="code-block" data-lang="csharp"><code class="code-block__wrapper"><span class="na">[CanBeNull]</span>
+<span class="k">public</span> <span class="k">static</span> <span class="n">T</span> <span class="n">GetParentOfType</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;(</span><span class="k">this</span> <span class="n">ITreeNode</span> <span class="n">node</span><span class="p">)</span> <span class="k">where</span> <span class="n">T</span> <span class="p">:</span> <span class="k">class</span><span class="err">,</span> <span class="nc">ITreeNode</span>
+<span class="p">{</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">node</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">typedNode</span> <span class="p">=</span> <span class="n">node</span> <span class="k">as</span> <span class="n">T</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">typedNode</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">typedNode</span><span class="p">;</span>
+
+        <span class="n">node</span> <span class="p">=</span> <span class="n">node</span><span class="p">.</span><span class="n">Parent</span><span class="p">;</span>                                                                
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="k">null</span><span class="p">;</span>
+<span class="p">}</span>
+</code></div>
+
+<p>For example, we can use it to navigate to the method declaration while standing anywhere inside a method:</p>
+
+<div class="code-block" data-lang="csharp"><code class="code-block__wrapper"><span class="k">private</span> <span class="n">IShellLocks</span> <span class="n">_shellLocks</span><span class="p">;</span>
+<span class="k">private</span> <span class="n">NodeUnderCaretNavigator</span> <span class="n">_navigator</span><span class="p">;</span>
+  
+<span class="p">...</span>
+  
+<span class="k">public</span> <span class="k">void</span> <span class="nf">NavigateToParentMethod</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">_shellLocks</span><span class="p">.</span><span class="nf">ExecuteOrQueueReadLock</span><span class="p">(</span><span class="n">_lifetime</span><span class="p">,</span> <span class="s">"NavigateToParent"</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span>
+    <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">node</span> <span class="p">=</span> <span class="n">_navigator</span><span class="p">.</span><span class="n">GetTreeNodeUnderCaret</span><span class="p">;</span>
+        <span class="kt">var</span> <span class="n">parentMethod</span> <span class="p">=</span> <span class="n">node</span><span class="p">.</span><span class="n">GetParentOfType</span><span class="p">&lt;</span><span class="n">IMethodDeclaration</span><span class="p">&gt;();</span>
+        <span class="n">parentMethod</span><span class="p">?.</span><span class="nf">NavigateToTreeNode</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
+    <span class="p">});</span>
+<span class="p">}</span>
+</code></div>
+
+<a name="notes" class="elem-anchor"></a>
+<h2>Notes<a href="#notes" class="anchor-link"><span></span></a></h2>
+<ul>
+  <li>We use the <code class="code highlight language-text">GetTreeNodeUnderCaret()</code> method of the <code class="code highlight language-text">NodeUnderCaretNavigator</code> class shown in <a href="GetTreeNodeUnderCaret.html"><span>Get a Tree Node Under Caret</span></a>.</li>
+  <li>Note that to prevent conflicts with user input during the navigation, we must obtain the read lock before calculating the node under the caret. This is done by means of the special method of the <code class="code highlight language-text">IShellLocks</code> interface: <code class="code highlight language-text">_shellLocks.QueueReadLock(...)</code>.</li>
+</ul>
+
+
+                    <div class="navigation-links _bottom" data-swiftype-index="false">
+                        <a class="navigation-links__prev" href="/HowTo/NavigateCode/GetTreeNodeByReference.html">Get a Tree Node by Reference</a>
+                        <a class="navigation-links__next" href="/HowTo/NavigateCode/NavigateToParticularTreeNode.html">Navigate to a Particular Tree Node</a>
+                    </div>
+                    <div class="last-modified">
+                        Last modified: 12 July 2017
+                    </div>
+                </article>
+
+                <section class="disqus">
+                    <div id="disqus_thread"></div>
+                </section>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="/help/resharper/sdk/app/app.js" data-baseurl="/help/resharper/sdk/"></script>
+
+</body>
+</html>
+

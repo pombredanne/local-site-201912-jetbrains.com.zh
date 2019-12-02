@@ -1,0 +1,165 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta charset="UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="//resources.jetbrains.com/storage/help-app/v3/analytics.js"></script><title>Create an Issue and Set Custom Fields - Help | YouTrack InCloud</title><link rel="stylesheet" href="//resources.jetbrains.com/storage/help-app/v3/app.css"></head><body data-id="api-howto-create-issue-with-fields" data-breadcrumbs="Resources-for-Developers.xml|Resources for Developers/youtrack-rest-api-reference.xml|REST API/api-use-cases.xml|REST API Use Cases/api-howto-create-issue-with-fields.xml|Create an Issue and Set Custom Fields" data-main-title="Create an Issue and Set Custom Fields"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack InCloud Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>YouTrack InCloud 2019.2 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="api-howto-create-issue-with-fields" id="api-howto-create-issue-with-fields.xml">Create an Issue and Set Custom Fields</h1>    <h4 id="a110654e">Use Case:</h4>    <p id="41630442">Use the REST API to create a new issue and set values for one or more custom fields.</p>    <a name="version-note"></a>        <aside data-type="note" class="prompt" data-title="" rel="api-howto-create-issue-with-fields.xml" id="3d9827de"><p>Please notice that this example is valid for YouTrack 2019.1 and later versions. In the previous versions, though            the principle is the same, query parameters and entity attributes may differ. Also, a number of features, like            addressing an entity by its name, were introduced in 2019.1 and are not supported in the previous versions.        </p></aside>        <div class="chapter"><h2 id="summary" data-toc="api-howto-create-issue-with-fields#summary">Summary</h2>            <p id="a284c0b2">To create an issue with a set value for a custom field, you need to preliminary obtain the following                parameters:            </p>            <ul class="list _ul"><li class="list__item" id="bae730d0"><p>The entity ID of the project, to which the new issue should belong.</p></li><li class="list__item" id="9a3bd4b3"><p>                    <code class="code">name</code> and <code class="code">$type</code> of the custom field that you need to set.                </p></li><li class="list__item" id="8f4abb14"><p>                    <code class="code">name</code> of the value that you set for the custom field.                </p></li></ul>            <aside data-type="tip" class="prompt" data-title="" rel="b1ba47aa" id="7616a989">                <p id="0293e347">Read the <a href="api-concept-custom-fields.html">Custom Fields in REST API</a>                    page for more info about the custom fields in REST API.                </p>            </aside>    </div>    <div class="chapter"><h2 id="step-by-step" data-toc="api-howto-create-issue-with-fields#step-by-step">Step-by-Step</h2>        <p id="a8fc1743">The following procedure shows how to create a new issue and set values for a couple of issue fields. For                the sample, we decided to set "Priority" and "Assignee" fields.            </p>            <section class="procedure-steps"><h3 id="6b9140c0">To create an issue and set a value for a custom field</h3><ol class="list _decimal"><li class="list__item" id="977b24b4">                    <p id="e2e25a07">Get a list of available projects.</p>                    <div class="code-block" data-lang="http">
+                        curl -X GET \
+                        'https://example.myjetbrains.com/youtrack/api/admin/projects?fields=id,name,shortName' \
+                        -H 'Accept: application/json' \
+                        -H 'Authorization: Bearer perm:amFuZS5kb2U=.UkVTVCBBUEk=.wcKuAok8cHmAtzjA6xlc4BrB4hleaX' \
+                        -H 'Content-Type: application/json'
+                    </div>                    <p id="89c54c60">For such request, you get response from the server with the following body:</p>                    <div class="code-block" data-lang="json">
+                        [
+                            {
+                                "shortName": "GRP",
+                                "name": "GRA Project",
+                                "id": "0-7",
+                                "$type": "Project"
+                            },
+                            {
+                                "shortName": "RAP",
+                                "name": "Rest Api Project",
+                                "id": "0-2",
+                                "$type": "Project"
+                            },
+                            {
+                                "shortName": "RP",
+                                "name": "Rest Project",
+                                "id": "0-6",
+                                "$type": "Project"
+                            },
+                            {
+                                "shortName": "SP",
+                                "name": "Sample Project",
+                                "id": "0-0",
+                                "$type": "Project"
+                            },
+                            {
+                                "shortName": "SNBX",
+                                "name": "Sandbox",
+                                "id": "0-3",
+                                "$type": "Project"
+                            }
+                        ]
+                    </div>                    <p id="0eea5812">You can also filter the list of projects by <code class="code">shortName</code> or a <code class="code">name</code> of the                        required project.                    </p>                    <p id="00e357bb">Sample request with the filter by a project's <code class="code">name</code>:                    </p>                    <div class="code-block" data-lang="http">
+                        curl -X GET \
+                        'https://example.myjetbrains.com/youtrack/api/admin/projects?fields=id,name,shortName&amp;query=Sample+Project'
+                        \
+                        -H 'Accept: application/json' \
+                        -H 'Authorization: Bearer perm:amFuZS5kb2U=.UkVTVCBBUEk=.wcKuAok8cHmAtzjA6xlc4BrB4hleaX' \
+                        -H 'Content-Type: application/json'
+                    </div>                    <p id="433fab67">Sample request with the filter by a project's <code class="code">shortName</code>:                    </p>                    <div class="code-block" data-lang="http">
+                        curl -X GET \
+                        'https://example.myjetbrains.com/youtrack/api/admin/projects?fields=id,name,shortName&amp;query=sp'
+                        \
+                        -H 'Accept: application/json' \
+                        -H 'Authorization: Bearer perm:amFuZS5kb2U=.UkVTVCBBUEk=.wcKuAok8cHmAtzjA6xlc4BrB4hleaX' \
+                        -H 'Content-Type: application/json'
+                    </div>                    <p id="eb45a930">To the sample request with the <code class="code">query</code> parameter, the response body contains data only for                        the matching project:                    </p>                    <div class="code-block" data-lang="json">
+                        [
+                            {
+                                "shortName": "SP",
+                                "name": "Sample Project",
+                                "id": "0-0",
+                                "$type": "Project"
+                            }
+                        ]
+                    </div>                    <p id="1141f23b">In the response from the server, locate the id of the target project. In our sample, the required                        project <code class="code">id</code> is <code class="code">0-0</code>.                    </p>                </li><li class="list__item" id="1e41ad47">                    <p id="de3ba70a">Obtain the name and <code class="code">$type</code> of the custom field that you need to set. You can send a                        GET request to the <code class="code">/api/issues</code> endpoint with query parameters:                    </p>                    <ul class="list _ul"><li class="list__item" id="ab7178dc"><p><code class="code">fields</code> parameter with a list of the issue attributes to return. For our case, we are particularly interested in custom fields.                        So, we can use the following string:                        <div class="code-block" data-lang="none">
+                            fields=project(name),idReadable,customFields(name,$type,value(name,login))
+    </div>                        </p></li><li class="list__item" id="69ddc059"><p>To narrow the results to issues in the target project, you can use the <code class="code">query</code> parameter. For example, <code class="code">query=in:SP</code> narrows the results for our particular target project.</p></li><li class="list__item" id="70834a15"><p>Optionally, use the <code class="code">$top</code> query parameter to get a limited number of issue.</p></li></ul>                    <p id="33c1c348">Here's the resulting request:</p>                    <div class="code-block" data-lang="bash">
+                        curl -X GET \
+                          'https://example.myjetbrains.com/youtrack/api/issues?fields=idReadable,id,project%28id,name%29,summary,description,customFields%28name,$type,value%28name,login%29%29&amp;query=in:SP&amp;$top=1' \
+                          -H 'Accept: application/json' \
+                          -H 'Content-Type: application/json' \
+                          -H 'Authorization: Bearer perm:am9obi5kb2U=.UG9zdG1hbiBKb2huIERvZQ==.jJe0eYhhkV271j1lCpfknNYOEakNk7' \
+    </div>                    <p id="d77c4afe">In response, server returned the following data:</p>                    <div class="code-block" data-lang="json">
+                        [
+                            {
+                                "idReadable": "SP-47",
+                                "project": {
+                                    "name": "Sample Project",
+                                    "id": "0-0",
+                                    "$type": "Project"
+                                },
+                                "customFields": [
+                                    {
+                                        "value": {
+                                            "name": "Show-stopper",
+                                            "$type": "EnumBundleElement"
+                                        },
+                                        "name": "Priority",
+                                        "$type": "SingleEnumIssueCustomField"
+                                    },
+                                    {
+                                        "value": {
+                                            "name": "Task",
+                                            "$type": "EnumBundleElement"
+                                        },
+                                        "name": "Type",
+                                        "$type": "SingleEnumIssueCustomField"
+                                    },
+                                    {
+                                        "value": {
+                                            "name": "Open",
+                                            "$type": "StateBundleElement"
+                                        },
+                                        "name": "State",
+                                        "$type": "StateIssueCustomField"
+                                    },
+                                    {
+                                        "value": {
+                                            "login": "jane.doe",
+                                            "name": "Jane Doe",
+                                            "$type": "User"
+                                        },
+                                        "name": "Assignee",
+                                        "$type": "SingleUserIssueCustomField"
+                                    },
+                                    {
+                                        "value": null,
+                                        "name": "Subsystem",
+                                        "$type": "SingleOwnedIssueCustomField"
+                                    },
+                                    {
+                                        "value": [],
+                                        "name": "Fix versions",
+                                        "$type": "MultiVersionIssueCustomField"
+                                    },
+                                    {
+                                        "value": [],
+                                        "name": "Affected versions",
+                                        "$type": "MultiVersionIssueCustomField"
+                                    },
+                                    {
+                                        "value": null,
+                                        "name": "Fixed in build",
+                                        "$type": "SingleBuildIssueCustomField"
+                                    }
+                                ],
+                                "$type": "Issue"
+                            }
+                        ]
+                    </div>                    <p id="cd86dff3">From this response you can see the list of available fields and their types. You can also get the complete list of the available types for the issue custom fields on the <a href="api-concept-custom-fields.html#type-issue-custom-fields">page</a>.</p>                </li><li class="list__item" id="4ca04345"><p>Obtain the name of the value that you want to set for the target custom field. In general, it's enough to just know the name of the value - the way they are presented in the UI. For example, Show-stopper or Major for the Priority field, or In progress or Fixed for the State field.                However, for some fields, like Fix version or Assignee, the list of available values might not be obvious. In this case, you need to get the set of values (bundle) that is used for this particular field in the target project.</p></li><li class="list__item" id="9b8801f2">                    <p id="ef89b128">To create a new issue, assign it to a specific user, and set its "Priority" field to <code class="code">Show-stopper</code>, send a                        <code class="code">POST</code>                        request with the body that contains ID of the project, summary of the new issue, and a json                        object for the <code class="code">customFields</code> attribute that contains:</p>                    <ul class="list _ul"><li class="list__item" id="254c13ad"><p>The <code class="code">name</code>, <code class="code">$type</code>, and <code class="code">value</code> of the Priority field.</p></li><li class="list__item" id="d29dc526"><p>The <code class="code">name</code>, <code class="code">$type</code>, and <code class="code">value</code> of the Assignee field.</p></li></ul>                        <p id="19f8110c">Though the <code class="code">description</code> attribute is not mandatory, we opted to specify it as well.                        Here's the resulting request:                    </p>                    <div class="code-block" data-lang="http">
+                        curl -X POST \
+                        https://example.myjetbrains.com/youtrack/api/issues \
+                        -H 'Accept: application/json' \
+                        -H 'Authorization: Bearer perm:amFuZS5kb2U=.UkVTVCBBUEk=.wcKuAok8cHmAtzjA6xlc4BrB4hleaX' \
+                        -H 'Content-Type: application/json' \
+                        -d '{
+                        "project":{"id":"0-0"},
+                        "summary":"REST API lets you create issues!",
+                        "description":"Let'\''s create a new issue using YouTrack'\''s REST API.",
+                        ”customFields”:[
+                        { "name":"Priority","$type":"SingleEnumIssueCustomField","value":{"name":"Show-stopper"}},
+                        { "name": "Assignee","$type": "SingleUserIssueCustomField","value": {"login":"jane.doe"}}
+                        ]
+                        }'
+                    </div>                    <p id="e5f3ada5">In the response, the server returns only the entity id of the created issue and its $type,                        because we did not specify any <code class="code">fields</code> parameters in the request:                    </p>                    <div class="code-block" data-lang="json">
+                        {
+                            "id": "2-38",
+                            "$type": "Issue"
+                        }
+                    </div>                </li></ol></section>            <aside data-type="note" class="prompt" data-title="" rel="6b9140c0" id="08a923c9">                <p id="b8c5ac51">Please note that you cannot simultaneously create a new issue and add attachments to it. You can attach                    files only to an already existing issue.                </p>            </aside>        </div><div class="last-modified" data-skip-index="skip">Last modified: 29 November 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="api-howto-create-issue.html">Create an Issue</a><a class="navigation-links__next" href="api-howto-get-issues-with-all-values.html">Get Issues List with All Values</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="//resources.jetbrains.com/storage/help-app/v3/app.js"></script></body></html>

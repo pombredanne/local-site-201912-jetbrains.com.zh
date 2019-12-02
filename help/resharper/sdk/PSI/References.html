@@ -1,0 +1,126 @@
+
+
+
+<!doctype html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>References / ReSharper  DevGuide</title>
+    <link rel="stylesheet" href="/help/resharper/sdk/app/app.css">
+    <link rel="shortcut icon" href="/help/resharper/sdk/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="57x57" href="/help/resharper/sdk/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/help/resharper/sdk/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/help/resharper/sdk/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/help/resharper/sdk/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/help/resharper/sdk/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/help/resharper/sdk/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/help/resharper/sdk/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/help/resharper/sdk/apple-touch-icon-180x180.png">
+    <link rel="mask-icon" href="/help/resharper/sdk/apple-mask-icon.svg" color="black">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-square70x70logo" content="/help/resharper/sdk/mstile-70x70.png">
+    <meta name="msapplication-TileImage" content="/help/resharper/sdk/mstile-144x144.png">
+    <meta name="msapplication-square150x150logo" content="/help/resharper/sdk/mstile-150x150.png">
+    <meta name="msapplication-wide310x150logo" content="/help/resharper/sdk/mstile-310x150.png">
+    <meta name="msapplication-square310x310logo" content="/help/resharper/sdk/mstile-310x310.png">
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="Documentation for writing extensions for ReSharper" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.jetbrains.com/help/resharper/sdk//PSI/References.html" />
+    <meta property="og:site_name" content="JetBrains ReSharper" />
+    <meta property="og:title" content="References" />
+    <meta property="og:description" content="Documentation for writing extensions for ReSharper" />
+    <meta property="og:image" content="https://www.jetbrains.com/help/resharper/sdk/jetbrains.png" />
+    <meta property="article:modified_time" content="2017-07-10T19:28:42+00:00" />
+    <!-- <meta property="article:section" content="" /> 
+    <meta property="article:tag" content="" /> -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@JBPlatform" />
+    <meta name="twitter:title" content="References" />
+    <meta name="twitter:description" content="Documentation for writing extensions for ReSharper" />
+    <meta name="twitter:image" content="https://www.jetbrains.com/help/resharper/sdk/jetbrains.png" />
+    <meta class="swiftype" name="product" data-type="string" content="/help/resharper/sdk/"></meta>
+<link  rel="stylesheet" href="/help/resharper/sdk/app/styles.css"></head>
+<body data-id="PSI/References">
+<div class="wrapper">
+    <section class="panel _nav">
+        <header class="panel__header">
+            <div class="container">
+                <form class="search-box">
+                    <label for="search-box__input" class="search-box__label">
+                        <input type="text" class="search-box__input" id="search-box__input" placeholder="Search ReSharper  DevGuide">
+                    </label>
+                    <div class="search-box__clear" title="Clear"></div>
+                </form>
+            </div>
+        </header>
+        <nav class="panel__content">
+            <div class="container _nav">
+                <menu class="nav-tree"></menu>
+            </div>
+            <div class="container _footer panel__footer">
+                <p><a data-bypass="true" href="//youtrack.jetbrains.com/issues/IJSDK">Send feedback</a></p>
+                <p>&copy; 2000&ndash;2018 <a href="//www.jetbrains.com">JetBrains</a> s.r.o.<br>
+                    All rights reserved.</p>
+            </div>
+        </nav>
+    </section>
+
+    <main class="panel _main" role="main">
+        <header class="panel__header">
+            <div class="container">
+                <h3>ReSharper DevGuide</h3>
+                
+                <div class="panel-trigger"></div>
+            </div>
+        </header>
+        <section class="panel__content">
+            <div class="container">
+                <article class="article" data-shortcut-switcher="false">
+                    <div class="navigation-links _top" data-swiftype-index="false">
+                        <a class="navigation-links__prev" href="/PSI/DeclaredElements.html">Declared Elements</a>
+                        <a class="navigation-links__next" href="/PSI/TypeSystem.html">Type System</a>
+                    </div>
+                    <a data-bypass="true" href="https://github.com/JetBrains/resharper-devguide/edit/master/PSI/References.md" class="page-link-to-github" target="_blank" rel="noopener noreferrer" title="Edit this page on GitHub">
+                        <i class="github-icon"></i>
+                        <span class="text">Edit page</span>
+                    </a>
+
+                    <h1>References</h1>
+                    <p>References are a very powerful mechanism that allow any tree node to link to a declared element. The reference might be from a type name in a variable declaration, and would link to the declared element of that type. ReSharper makes ubiquitous use of references, and enables many of ReSharper’s features. For example, Ctrl+Click navigation is simply a matter of following a reference, Find Usages can be performed by listing all incoming references on a declared element, and renaming can be accomplished by renaming a declared element’s declaration, and all incoming references.</p>
+
+<p>Most powerfully, references are language agnostic - they are simply a reference from an <code class="code highlight language-text">ITreeNode</code> to an <code class="code highlight language-text">IDeclaredElement</code>. This allows for cross-language refactoring, navigation and analysis, e.g. a XAML file can refer to C# code, or web pages refer to JavaScript or CSS classes.</p>
+
+<p>A reference must be resolved before use, and can return either zero, one or more declared elements. Returning a single element means the reference is resolved successfully. When zero elements are returned, this is an error, and ReSharper will highlight the tree node that owns the reference as an error. This is likely if e.g. the reference is intended to be a method call to a method that hasn’t yet been written. Resolving to more than one element typically means an error - perhaps trying to call a method overload without providing enough information as to which overload.</p>
+
+<p>When resolving, two values are returned for each result or candidate result - a declared element, and a <em>substitution</em>. A declared element represents a semantic view of a declaration, and cannot represent all usages. For CLR generic types, to be able to provide full information about the target of a reference, a declared element must be coupled with an instance of <code class="code highlight language-text">ISubstitution</code>, which provides information for substituting type parameters for actual types. For example, a reference that targets <code class="code highlight language-text">List&lt;string&gt;</code> must return a declared element that represents <code class="code highlight language-text">List&lt;T&gt;</code> and a substitution that converts <code class="code highlight language-text">T</code> into <code class="code highlight language-text">string</code>. For reference targets that don’t require substitutions, the <code class="code highlight language-text">EmptySubstitution</code> is used.</p>
+
+<p>References can also provide a symbol table for completion, providing all of the candidate values that are possible at that location. For example, ASP.NET MVC support adds a reference where an MVC action can be used. The generated symbol table returns a list of known actions that are valid at that point.</p>
+
+<p>References can be defined directly on an <code class="code highlight language-text">ITreeNode</code>, and are known as “first class references”. These are references that are syntax dependent, rather than semantic. A simple example of a syntactic reference is the reference added to the type usage <code class="code highlight language-text">Foo</code> in the expression <code class="code highlight language-text">Foo f = GetFoo()</code>. This can be handled purely by looking at the syntax (it’s obvious it’s a type usage), and so can be handled by the tree node directly, and is a first class reference.</p>
+
+<p>ReSharper also support reference providers, which can examine the code at a higher level, and provide references based on semantic information. The MVC action sample provided above is a good example, as this requires knowing that a particular string literal argument in a method call should be the name of an MVC action.</p>
+
+
+                    <div class="navigation-links _bottom" data-swiftype-index="false">
+                        <a class="navigation-links__prev" href="/PSI/DeclaredElements.html">Declared Elements</a>
+                        <a class="navigation-links__next" href="/PSI/TypeSystem.html">Type System</a>
+                    </div>
+                    <div class="last-modified">
+                        Last modified: 10 July 2017
+                    </div>
+                </article>
+
+                <section class="disqus">
+                    <div id="disqus_thread"></div>
+                </section>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="/help/resharper/sdk/app/app.js" data-baseurl="/help/resharper/sdk/"></script>
+
+</body>
+</html>
+

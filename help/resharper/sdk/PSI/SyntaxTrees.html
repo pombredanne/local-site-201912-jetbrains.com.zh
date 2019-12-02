@@ -1,0 +1,124 @@
+
+
+
+<!doctype html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>Abstract Syntax Trees / ReSharper  DevGuide</title>
+    <link rel="stylesheet" href="/help/resharper/sdk/app/app.css">
+    <link rel="shortcut icon" href="/help/resharper/sdk/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="57x57" href="/help/resharper/sdk/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/help/resharper/sdk/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/help/resharper/sdk/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/help/resharper/sdk/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/help/resharper/sdk/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/help/resharper/sdk/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/help/resharper/sdk/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/help/resharper/sdk/apple-touch-icon-180x180.png">
+    <link rel="mask-icon" href="/help/resharper/sdk/apple-mask-icon.svg" color="black">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-square70x70logo" content="/help/resharper/sdk/mstile-70x70.png">
+    <meta name="msapplication-TileImage" content="/help/resharper/sdk/mstile-144x144.png">
+    <meta name="msapplication-square150x150logo" content="/help/resharper/sdk/mstile-150x150.png">
+    <meta name="msapplication-wide310x150logo" content="/help/resharper/sdk/mstile-310x150.png">
+    <meta name="msapplication-square310x310logo" content="/help/resharper/sdk/mstile-310x310.png">
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="Documentation for writing extensions for ReSharper" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.jetbrains.com/help/resharper/sdk//PSI/SyntaxTrees.html" />
+    <meta property="og:site_name" content="JetBrains ReSharper" />
+    <meta property="og:title" content="Abstract Syntax Trees" />
+    <meta property="og:description" content="Documentation for writing extensions for ReSharper" />
+    <meta property="og:image" content="https://www.jetbrains.com/help/resharper/sdk/jetbrains.png" />
+    <meta property="article:modified_time" content="2017-07-10T19:28:42+00:00" />
+    <!-- <meta property="article:section" content="" /> 
+    <meta property="article:tag" content="" /> -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@JBPlatform" />
+    <meta name="twitter:title" content="Abstract Syntax Trees" />
+    <meta name="twitter:description" content="Documentation for writing extensions for ReSharper" />
+    <meta name="twitter:image" content="https://www.jetbrains.com/help/resharper/sdk/jetbrains.png" />
+    <meta class="swiftype" name="product" data-type="string" content="/help/resharper/sdk/"></meta>
+<link  rel="stylesheet" href="/help/resharper/sdk/app/styles.css"></head>
+<body data-id="PSI/SyntaxTrees">
+<div class="wrapper">
+    <section class="panel _nav">
+        <header class="panel__header">
+            <div class="container">
+                <form class="search-box">
+                    <label for="search-box__input" class="search-box__label">
+                        <input type="text" class="search-box__input" id="search-box__input" placeholder="Search ReSharper  DevGuide">
+                    </label>
+                    <div class="search-box__clear" title="Clear"></div>
+                </form>
+            </div>
+        </header>
+        <nav class="panel__content">
+            <div class="container _nav">
+                <menu class="nav-tree"></menu>
+            </div>
+            <div class="container _footer panel__footer">
+                <p><a data-bypass="true" href="//youtrack.jetbrains.com/issues/IJSDK">Send feedback</a></p>
+                <p>&copy; 2000&ndash;2018 <a href="//www.jetbrains.com">JetBrains</a> s.r.o.<br>
+                    All rights reserved.</p>
+            </div>
+        </nav>
+    </section>
+
+    <main class="panel _main" role="main">
+        <header class="panel__header">
+            <div class="container">
+                <h3>ReSharper DevGuide</h3>
+                
+                <div class="panel-trigger"></div>
+            </div>
+        </header>
+        <section class="panel__content">
+            <div class="container">
+                <article class="article" data-shortcut-switcher="false">
+                    <div class="navigation-links _top" data-swiftype-index="false">
+                        <a class="navigation-links__prev" href="/Architecture/PSI.html">PSI</a>
+                        <a class="navigation-links__next" href="/PSI/NavigatingSyntaxTrees.html">Navigating syntax trees</a>
+                    </div>
+                    <a data-bypass="true" href="https://github.com/JetBrains/resharper-devguide/edit/master/PSI/SyntaxTrees.md" class="page-link-to-github" target="_blank" rel="noopener noreferrer" title="Edit this page on GitHub">
+                        <i class="github-icon"></i>
+                        <span class="text">Edit page</span>
+                    </a>
+
+                    <h1>Abstract Syntax Trees</h1>
+                    <p>An <a href="http://en.wikipedia.org/wiki/Abstract_syntax_tree" data-external="true" target="_blank" rel="noopener noreferrer"><span>abstract syntax tree</span></a> (AST) is a data structure used to represent the contents of a file, where each node in the tree denotes a construct in the source code. For example, a node might represent a method declaration, with child nodes that provide information on accessibility, return type, method name, parameters and the method body, which itself has child nodes representing the method instructions and any nested code blocks. Equally, a node might represent whitespace, or a comment, or string literals.</p>
+
+<p>The PSI defines common base interfaces for creating an AST. These interfaces are shared across all languages that ReSharper supports, providing a common base for sharing information across files and languages. ReSharper provides utility methods for walking and manipulating the tree, including deleting and adding nodes and moving nodes around the tree.</p>
+
+<p>Each node in the tree implements the <code class="code highlight language-text">ITreeNode</code> interface, and the root file node also implements the <code class="code highlight language-text">IFile</code> interface. Each supported file type is parsed and an AST is constructed. The AST maps directly to the underlying text buffer, and the PSI is responsible for keeping the two in sync, updating the text buffer when the tree is manipulated, and updating the tree when the text file changes. ReSharper supports error resilient and incremental parsers, meaning a valid AST is generated even if the code is invalid, with special error nodes indicating where the syntax is incorrect, and, whenever possible, will only parse code blocks that have changed, rather than parsing the whole file. For example, when a C# method body changes, only the method body is re-parsed, and not the whole containing file.</p>
+
+<p>ReSharper’s ASTs are based primarily on file contents, but can also work with <em>secondary</em> and <em>injected</em> ASTs, commonly referred to as secondary and injected PSIs.</p>
+
+<p>A secondary PSI is a PSI syntax tree built from a secondary file - an in-memory “code-behind” file generated by ReSharper from the primary code file. Areas of the secondary PSI are mapped to the original file. This is how ReSharper handles .aspx and Razor files. It maintains a primary PSI tree of the main file, but also generates an in-memory representation of the file that is generated when the .aspx or Razor template is compiled. (This generated file is referred to by ReSharper as a code-behind file, but shouldn’t be confused with ASP.NET code behind files.) A second PSI tree is created for the generated C# file, and the areas of C# in the .aspx or Razor file are mapped to the equivalent areas in the generated file. Because the generated file has full context of the class it belongs to, code completion and navigation are possible, simply by mapping between the areas of the files.</p>
+
+<p>An injected PSI serves a different purpose. Instead of providing extra context for a whole file, or for “islands” of content within a file, it creates a new AST by parsing the contents of a single node of a host AST. For example, ReSharper 9.0 introduces support for regular expressions by creating an AST for the regular expression represented by a string literal in a C# file. The intent of injected PSIs is to handle the “embedded DSLs” of languages written inside a string literal of another language, such as regular expressions, SQL, or even Angular JS expressions.</p>
+
+
+                    <div class="navigation-links _bottom" data-swiftype-index="false">
+                        <a class="navigation-links__prev" href="/Architecture/PSI.html">PSI</a>
+                        <a class="navigation-links__next" href="/PSI/NavigatingSyntaxTrees.html">Navigating syntax trees</a>
+                    </div>
+                    <div class="last-modified">
+                        Last modified: 10 July 2017
+                    </div>
+                </article>
+
+                <section class="disqus">
+                    <div id="disqus_thread"></div>
+                </section>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="/help/resharper/sdk/app/app.js" data-baseurl="/help/resharper/sdk/"></script>
+
+</body>
+</html>
+

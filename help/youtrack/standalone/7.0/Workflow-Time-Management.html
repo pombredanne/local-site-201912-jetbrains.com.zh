@@ -1,0 +1,150 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="robots" content="noindex"><title>YouTrack Standalone 7.0 Help :: Time Management</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Workflow-Time-Management"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack Standalone Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>YouTrack Standalone 7.0 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="Workflow-Assignee-Visibility-Group.html">Assignee Visibility Group</a><a class="navigation-links__next" href="Workflow-Untag-on-Reopen.html">Untag on Reopen</a></div><h1>Time Management</h1><a name="Time_Management"></a><a name="d228031e5"></a><p>This workflow defines state transitions and notifications based on the amount of time an issue spends in a specific state.</p><table class="left_header" width="100%" id="d228031e8"><tbody><tr id="d228031e10" class="ijRowOdd"><a name="d228031e10"></a><th><a name="d228031e12"></a>File Name</th><td><a name="d228031e15"></a>jetbrains-youtrack-timeManagement</td></tr><tr id="d228031e19" class="ijRowEven"><a name="d228031e19"></a><th><a name="d228031e21"></a>Auto-attached</th><td><a name="d228031e24"></a>no</td></tr><tr id="d228031e28" class="ijRowOdd"><a name="d228031e28"></a><th><a name="d228031e30"></a>Rules</th><td><a name="d228031e33"></a><a href="#Time_Management">Time Management</a> (state-machine)</td></tr></tbody></table><a name="d228031e39"></a><h2>Use Case</h2>
+        <a name="d228031e41"></a><p>This workflow was originally taken from a submitted request (<a name="d228031e43"></a><a href="http://youtrack.jetbrains.net/issue/JT-6331" data-external="true"><span>JT-6331</span></a>).</p>
+        <a name="d228031e47"></a><p>The user who submitted this issue wanted to track issues reported by customers, prospects and team members and make sure issues are resolved within a specific time frame.</p>
+        <a name="d228031e50"></a><p>When a customer reports an issue:</p>
+        <ul class="list _bullet"><li class="list__item"><a name="d228031e55"></a>The support engineers have one hour to acknowledge the issue.</li><li class="list__item"><a name="d228031e58"></a>The support engineers then have four hours to reproduce the case or to engage in a discussion to reproduce it
+                <ul class="list _ul"><li class="list__item"><a name="d228031e62"></a>If the issue is not reproduced within a day, then the support manager is involved and the sales department is notified.</li><li class="list__item"><a name="d228031e65"></a>After three days, the sales department organizes a customer visit to verify the issue on-site.</li></ul>
+            </li><li class="list__item"><a name="d228031e70"></a>If the issue is classified as a bug, the issue is assigned to the R&amp;D department.</li></ul>
+    <a name="d228031e75"></a><h2>Rules</h2>
+        <a name="d228031e77"></a><p>This rule defines the state transitions for issue in the project and determines the amount of time an issue can spend in each state.</p>
+        <a name="Time_Management"></a><h3>Time Management</h3>
+        <ol class="list _decimal"><li class="list__item"><a name="d228031e84"></a>The initial state is <a name="d228031e86"></a><span class="control">Submitted</span>.</li><li class="list__item"><a name="d228031e90"></a>When the issue enters the <a name="d228031e92"></a><span class="control">Submitted</span> state, the <a name="d228031e95"></a><span class="control">Subsystem</span> field is set to <a name="d228031e98"></a><span class="control">Support</span>.
+                The support engineer is set as the <a name="d228031e101"></a><span class="control">Assignee</span>.</li><li class="list__item"><a name="d228031e105"></a>From the <a name="d228031e107"></a><span class="control">Submitted</span> state, the issue can transition to one of the following states:
+                <ul class="list _ul"><li class="list__item"><a name="d228031e112"></a>If the state is unchanged after one hour, the state is automatically set to <a name="d228031e114"></a><span class="control">Overdue</span>.</li><li class="list__item"><a name="d228031e118"></a>On event (action) <a name="d228031e120"></a><span class="control">reproducing</span>, the state is set to <a name="d228031e123"></a><span class="control">Open</span>.</li><li class="list__item"><a name="d228031e127"></a>On event (action) <a name="d228031e129"></a><span class="control">incomplete</span>, the state is set to <a name="d228031e132"></a><span class="control">Incomplete</span>.</li></ul>
+            </li><li class="list__item"><a name="d228031e138"></a>When the state is set to <a name="d228031e140"></a><span class="control">Overdue</span>, a notification is sent to the <a name="d228031e143"></a><span class="control">Assignee</span> (if the issue is assigned),
+                subsystem owner (if the owner of the <a name="d228031e146"></a><span class="control">Support</span> subsystem is defined), or the Project Lead (if none of the previous conditions are true).</li><li class="list__item"><a name="d228031e150"></a>From the <a name="d228031e152"></a><span class="control">Overdue</span> state, the issue can transition to one of the following states:
+                <ul class="list _ul"><li class="list__item"><a name="d228031e157"></a>On event (action) <a name="d228031e159"></a><span class="control">reproducing</span> the state is set to <a name="d228031e162"></a><span class="control">Open</span>.</li><li class="list__item"><a name="d228031e166"></a>On event (action) <a name="d228031e168"></a><span class="control">incomplete</span> the state is set to <a name="d228031e171"></a><span class="control">Incomplete</span>.</li></ul>
+            </li><li class="list__item"><a name="d228031e178"></a>From the <a name="d228031e180"></a><span class="control">Open</span> state, the issue can transition to one of the following states:
+                <ul class="list _ul"><li class="list__item"><a name="d228031e185"></a>If the state is unchanged after four hours, the state is automatically set to <a name="d228031e187"></a><span class="control">Wait for reproduce</span>.</li><li class="list__item"><a name="d228031e191"></a>On event (action) <a name="d228031e193"></a><span class="control">approved</span> the state is set to <a name="d228031e196"></a><span class="control">Approved</span>.</li><li class="list__item"><a name="d228031e200"></a>On event (action) <a name="d228031e202"></a><span class="control">incomplete</span> the state is set to <a name="d228031e205"></a><span class="control">Incomplete</span>.</li><li class="list__item"><a name="d228031e209"></a>On event (action) <a name="d228031e211"></a><span class="control">can't reproduce</span> the state is set to <a name="d228031e214"></a><span class="control">Can't Reproduce</span>.</li></ul>
+            </li><li class="list__item"><a name="d228031e220"></a>From the <a name="d228031e222"></a><span class="control">Wait for reproduce</span> state, the issue can transition to one of the following states:
+                <ul class="list _ul"><li class="list__item"><a name="d228031e227"></a>If the state is unchanged after one day, notification is sent to the owner of the <a name="d228031e229"></a><span class="control">Support</span> subsystem (if defined) or the Project Lead.</li><li class="list__item"><a name="d228031e233"></a>If the state is unchanged after three days, a separate notification is sent to the owner of the <a name="d228031e235"></a><span class="control">Support</span> subsystem (if defined) or the Project Lead.</li><li class="list__item"><a name="d228031e239"></a>On event (action) <a name="d228031e241"></a><span class="control">approved</span> the state is set to <a name="d228031e244"></a><span class="control">Approved</span>.</li><li class="list__item"><a name="d228031e248"></a>On event (action) <a name="d228031e250"></a><span class="control">incomplete</span> the state is set to <a name="d228031e253"></a><span class="control">Incomplete</span>.</li><li class="list__item"><a name="d228031e257"></a>On event (action) <a name="d228031e259"></a><span class="control">can't reproduce</span> the state is set to <a name="d228031e262"></a><span class="control">Can't Reproduce</span>.</li></ul>
+            </li><li class="list__item"><a name="d228031e268"></a>When the state is set to <a name="d228031e270"></a><span class="control">Approved</span>, the rule verifies that the <a name="d228031e273"></a><span class="control">Assignee</span> is also set.</li><li class="list__item"><a name="d228031e277"></a>From the <a name="d228031e279"></a><span class="control">Approved</span> state, the issue can transition to one of the following states:
+                <ul class="list _ul"><li class="list__item"><a name="d228031e284"></a>On event (action) <a name="d228031e286"></a><span class="control">fixed</span> the state is set to <a name="d228031e289"></a><span class="control">Fixed</span> state.</li><li class="list__item"><a name="d228031e293"></a>On event (action) <a name="d228031e295"></a><span class="control">obsolete</span> the state is set set (should transit) to <a name="d228031e298"></a><span class="control">Obsolete</span> state.</li></ul>
+            </li><li class="list__item"><a name="d228031e304"></a>From the <a name="d228031e306"></a><span class="control">Fixed</span> state,the issue can transition to one of the following states:
+                <ul class="list _ul"><li class="list__item"><a name="d228031e311"></a>On event (action) <a name="d228031e313"></a><span class="control">verify</span>, the state is set to <a name="d228031e316"></a><span class="control">Verified</span> state.</li><li class="list__item"><a name="d228031e320"></a>On event (action) <a name="d228031e322"></a><span class="control">reopen</span>, the state is set to <a name="d228031e325"></a><span class="control">Open</span> state.</li></ul>
+            </li><li class="list__item"><a name="d228031e331"></a>From <a name="d228031e333"></a><span class="control">Can't Reproduce</span>, <a name="d228031e336"></a><span class="control">Incomplete</span>, <a name="d228031e339"></a><span class="control">Obsolete</span> and <a name="d228031e342"></a><span class="control">Verified</span> states,
+                the issue can transition to the <a name="d228031e345"></a><span class="control">Open</span> state upon action <a name="d228031e349"></a><span class="control">reopen</span>.</li></ol>
+
+        <a name="d228031e354"></a><div class="code-block" data-lang="Javascript"><code class="code-block__wrapper"><span class="nx">statemachine</span> <span class="nx">Time</span> <span class="nx">Management</span> <span class="k">for</span> <span class="nx">field</span> <span class="nx">State</span> <span class="p">{</span>
+
+    <span class="nx">initial</span> <span class="nx">state</span> <span class="nx">Submitted</span> <span class="p">{</span>
+        <span class="nx">enter</span> <span class="p">{</span>
+        <span class="nx">Subsystem</span> <span class="o">=</span> <span class="p">{</span><span class="nx">Support</span><span class="p">};</span>
+        <span class="p">}</span>
+
+        <span class="nx">exit</span> <span class="p">{</span>
+            <span class="nx">Assignee</span><span class="p">.</span><span class="nx">required</span><span class="p">(</span><span class="nx">l10n</span> <span class="p">(</span> <span class="nx">Responsible</span> <span class="nx">support</span> <span class="nx">engineer</span> <span class="nx">is</span> <span class="nx">required</span><span class="o">!</span> <span class="p">));</span>
+        <span class="p">}</span>
+
+        <span class="k">in</span> <span class="mi">1</span> <span class="nx">hour</span><span class="p">[</span><span class="nx">always</span><span class="p">]</span> <span class="k">do</span> <span class="p">{</span><span class="o">&lt;</span><span class="nx">define</span> <span class="nx">statements</span><span class="o">&gt;</span><span class="p">}</span> <span class="nx">transit</span> <span class="nx">to</span> <span class="nx">Overdue</span>
+
+        <span class="nx">on</span> <span class="nx">reproducing</span><span class="p">[</span><span class="nx">always</span><span class="p">]</span> <span class="k">do</span> <span class="p">{</span><span class="o">&lt;</span><span class="nx">define</span> <span class="nx">statements</span><span class="o">&gt;</span><span class="p">}</span> <span class="nx">transit</span> <span class="nx">to</span> <span class="nx">Open</span>
+
+        <span class="nx">on</span> <span class="nx">incomplete</span><span class="p">[</span><span class="nx">always</span><span class="p">]</span> <span class="k">do</span> <span class="p">{</span><span class="o">&lt;</span><span class="nx">define</span> <span class="nx">statements</span><span class="o">&gt;</span><span class="p">}</span> <span class="nx">transit</span> <span class="nx">to</span> <span class="nx">Incomplete</span>
+    <span class="p">}</span>
+
+    <span class="nx">state</span> <span class="nx">Overdue</span> <span class="p">{</span>
+        <span class="nx">enter</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">user</span><span class="p">;</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="nx">Assignee</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">user</span> <span class="o">=</span> <span class="nx">Assignee</span><span class="p">;</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">Subsystem</span><span class="p">.</span><span class="nx">owner</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">user</span> <span class="o">=</span> <span class="nx">Subsystem</span><span class="p">.</span><span class="nx">owner</span><span class="p">;</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="nx">user</span> <span class="o">=</span> <span class="nx">project</span><span class="p">.</span><span class="nx">leader</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="nx">user</span><span class="p">.</span><span class="nx">notify</span><span class="p">(</span><span class="nx">l10n</span> <span class="p">(</span> <span class="nx">Acknowledgment</span> <span class="nx">needed</span> <span class="p">),</span> <span class="nx">l10n</span> <span class="p">(</span> <span class="nx">Issue</span> <span class="p">{</span><span class="nx">getId</span><span class="p">()}</span> <span class="nx">is</span> <span class="nx">waiting</span> <span class="k">for</span> <span class="nx">acknowledgment</span><span class="p">.</span> <span class="p">));</span>
+        <span class="p">}</span>
+
+        <span class="nx">on</span> <span class="nx">incomplete</span><span class="p">[</span><span class="nx">always</span><span class="p">]</span> <span class="k">do</span> <span class="p">{</span><span class="o">&lt;</span><span class="nx">define</span> <span class="nx">statements</span><span class="o">&gt;</span><span class="p">}</span> <span class="nx">transit</span> <span class="nx">to</span> <span class="nx">Incomplete</span>
+
+        <span class="nx">on</span> <span class="nx">reproducing</span><span class="p">[</span><span class="nx">always</span><span class="p">]</span> <span class="k">do</span> <span class="p">{</span><span class="o">&lt;</span><span class="nx">define</span> <span class="nx">statements</span><span class="o">&gt;</span><span class="p">}</span> <span class="nx">transit</span> <span class="nx">to</span> <span class="nx">Open</span>
+    <span class="p">}</span>
+
+    <span class="nx">state</span> <span class="nx">Open</span> <span class="p">{</span>
+        <span class="k">in</span> <span class="mi">4</span> <span class="nx">hours</span><span class="p">[</span><span class="nx">always</span><span class="p">]</span> <span class="k">do</span> <span class="p">{</span><span class="o">&lt;</span><span class="nx">define</span> <span class="nx">statements</span><span class="o">&gt;</span><span class="p">}</span> <span class="nx">transit</span> <span class="nx">to</span> <span class="nx">Wait</span> <span class="k">for</span> <span class="nx">reproduce</span>
+
+        <span class="nx">on</span> <span class="nx">approved</span><span class="p">[</span><span class="nx">always</span><span class="p">]</span> <span class="k">do</span> <span class="p">{</span><span class="o">&lt;</span><span class="nx">define</span> <span class="nx">statements</span><span class="o">&gt;</span><span class="p">}</span> <span class="nx">transit</span> <span class="nx">to</span> <span class="nx">Approved</span>
+
+        <span class="nx">on</span> <span class="nx">incomplete</span><span class="p">[</span><span class="nx">always</span><span class="p">]</span> <span class="k">do</span> <span class="p">{</span><span class="o">&lt;</span><span class="nx">define</span> <span class="nx">statements</span><span class="o">&gt;</span><span class="p">}</span> <span class="nx">transit</span> <span class="nx">to</span> <span class="nx">Incomplete</span>
+
+        <span class="nx">on</span> <span class="nx">can</span><span class="s1">&#39;t reproduce[always] do {&lt;define statements&gt;} transit to Can&#39;</span><span class="nx">t</span> <span class="nx">Reproduce</span>
+    <span class="p">}</span>
+
+    <span class="nx">state</span> <span class="nx">Wait</span> <span class="k">for</span> <span class="nx">reproduce</span> <span class="p">{</span>
+        <span class="k">in</span> <span class="mi">1</span> <span class="nx">day</span><span class="p">[</span><span class="nx">always</span><span class="p">]</span> <span class="k">do</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">user</span><span class="p">;</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="nx">Subsystem</span><span class="p">.</span><span class="nx">owner</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">user</span> <span class="o">=</span> <span class="nx">Subsystem</span><span class="p">.</span><span class="nx">owner</span><span class="p">;</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="nx">user</span> <span class="o">=</span> <span class="nx">project</span><span class="p">.</span><span class="nx">leader</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="nx">user</span><span class="p">.</span><span class="nx">notify</span><span class="p">(</span><span class="nx">l10n</span> <span class="p">(</span> <span class="nx">Issue</span> <span class="nx">is</span> <span class="nx">not</span> <span class="nx">reproduced</span> <span class="k">in</span> <span class="mi">1</span> <span class="nx">day</span> <span class="p">),</span>
+                <span class="nx">l10n</span> <span class="p">(</span> <span class="nx">Issue</span> <span class="p">{</span><span class="nx">getId</span><span class="p">()}</span> <span class="nx">is</span> <span class="nx">still</span> <span class="nx">waiting</span> <span class="k">for</span> <span class="nx">reproduction</span> <span class="nx">steps</span><span class="p">.</span> <span class="p">));</span>
+            <span class="c1">// Notify sales?</span>
+        <span class="p">}</span>
+
+        <span class="k">in</span> <span class="mi">3</span> <span class="nx">days</span><span class="p">[</span><span class="nx">always</span><span class="p">]</span> <span class="k">do</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">user</span><span class="p">;</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="nx">Subsystem</span><span class="p">.</span><span class="nx">owner</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">user</span> <span class="o">=</span> <span class="nx">Subsystem</span><span class="p">.</span><span class="nx">owner</span><span class="p">;</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="nx">user</span> <span class="o">=</span> <span class="nx">project</span><span class="p">.</span><span class="nx">leader</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="nx">user</span><span class="p">.</span><span class="nx">notify</span><span class="p">(</span><span class="nx">l10n</span> <span class="p">(</span> <span class="nx">Issue</span> <span class="nx">is</span> <span class="nx">not</span> <span class="nx">reproduced</span> <span class="k">in</span> <span class="mi">4</span> <span class="nx">days</span> <span class="p">),</span>
+                <span class="nx">l10n</span> <span class="p">(</span> <span class="nx">Issue</span> <span class="p">{</span><span class="nx">getId</span><span class="p">()}</span> <span class="nx">is</span> <span class="nx">not</span> <span class="nx">reproduced</span><span class="p">,</span> <span class="nx">it</span><span class="s1">&#39;s better to visit customer on his site. ));</span>
+<span class="s1">            // Notify sales?</span>
+<span class="s1">        }</span>
+
+<span class="s1">        on approved[always] do {&lt;define statements&gt;} transit to Approved</span>
+
+<span class="s1">        on can&#39;</span><span class="nx">t</span> <span class="nx">reproduce</span><span class="p">[</span><span class="nx">always</span><span class="p">]</span> <span class="k">do</span> <span class="p">{</span><span class="o">&lt;</span><span class="nx">define</span> <span class="nx">statements</span><span class="o">&gt;</span><span class="p">}</span> <span class="nx">transit</span> <span class="nx">to</span> <span class="nx">Can</span><span class="s1">&#39;t Reproduce</span>
+
+<span class="s1">        on incomplete[always] do {&lt;define statements&gt;} transit to Incomplete</span>
+<span class="s1">    }</span>
+
+<span class="s1">    state Can&#39;</span><span class="nx">t</span> <span class="nx">Reproduce</span> <span class="p">{</span>
+        <span class="nx">on</span> <span class="nx">reopen</span><span class="p">[</span><span class="nx">always</span><span class="p">]</span> <span class="k">do</span> <span class="p">{</span><span class="o">&lt;</span><span class="nx">define</span> <span class="nx">statements</span><span class="o">&gt;</span><span class="p">}</span> <span class="nx">transit</span> <span class="nx">to</span> <span class="nx">Open</span>
+    <span class="p">}</span>
+
+    <span class="nx">state</span> <span class="nx">Incomplete</span> <span class="p">{</span>
+        <span class="nx">on</span> <span class="nx">reopen</span><span class="p">[</span><span class="nx">always</span><span class="p">]</span> <span class="k">do</span> <span class="p">{</span><span class="o">&lt;</span><span class="nx">define</span> <span class="nx">statements</span><span class="o">&gt;</span><span class="p">}</span> <span class="nx">transit</span> <span class="nx">to</span> <span class="nx">Open</span>
+    <span class="p">}</span>
+
+    <span class="nx">state</span> <span class="nx">Approved</span> <span class="p">{</span>
+        <span class="nx">enter</span> <span class="p">{</span>
+            <span class="nx">Assignee</span><span class="p">.</span><span class="nx">required</span><span class="p">(</span><span class="nx">fail</span> <span class="nx">message</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="nx">on</span> <span class="nx">fixed</span><span class="p">[</span><span class="nx">always</span><span class="p">]</span> <span class="k">do</span> <span class="p">{</span><span class="o">&lt;</span><span class="nx">define</span> <span class="nx">statements</span><span class="o">&gt;</span><span class="p">}</span> <span class="nx">transit</span> <span class="nx">to</span> <span class="nx">Fixed</span>
+
+        <span class="nx">on</span> <span class="nx">obsolete</span><span class="p">[</span><span class="nx">always</span><span class="p">]</span> <span class="k">do</span> <span class="p">{</span><span class="o">&lt;</span><span class="nx">define</span> <span class="nx">statements</span><span class="o">&gt;</span><span class="p">}</span> <span class="nx">transit</span> <span class="nx">to</span> <span class="nx">Obsolete</span>
+    <span class="p">}</span>
+
+    <span class="nx">state</span> <span class="nx">Fixed</span> <span class="p">{</span>
+        <span class="nx">on</span> <span class="nx">verify</span><span class="p">[</span><span class="nx">always</span><span class="p">]</span> <span class="k">do</span> <span class="p">{</span><span class="o">&lt;</span><span class="nx">define</span> <span class="nx">statements</span><span class="o">&gt;</span><span class="p">}</span> <span class="nx">transit</span> <span class="nx">to</span> <span class="nx">Verified</span>
+
+        <span class="nx">on</span> <span class="nx">reopen</span><span class="p">[</span><span class="nx">always</span><span class="p">]</span> <span class="k">do</span> <span class="p">{</span><span class="o">&lt;</span><span class="nx">define</span> <span class="nx">statements</span><span class="o">&gt;</span><span class="p">}</span> <span class="nx">transit</span> <span class="nx">to</span> <span class="nx">Open</span>
+    <span class="p">}</span>
+
+    <span class="nx">state</span> <span class="nx">Obsolete</span> <span class="p">{</span>
+        <span class="nx">on</span> <span class="nx">reopen</span><span class="p">[</span><span class="nx">always</span><span class="p">]</span> <span class="k">do</span> <span class="p">{</span><span class="o">&lt;</span><span class="nx">define</span> <span class="nx">statements</span><span class="o">&gt;</span><span class="p">}</span> <span class="nx">transit</span> <span class="nx">to</span> <span class="nx">Open</span>
+    <span class="p">}</span>
+
+    <span class="nx">state</span> <span class="nx">Verified</span> <span class="p">{</span>
+        <span class="nx">on</span> <span class="nx">reopen</span><span class="p">[</span><span class="nx">always</span><span class="p">]</span> <span class="k">do</span> <span class="p">{</span><span class="o">&lt;</span><span class="nx">define</span> <span class="nx">statements</span><span class="o">&gt;</span><span class="p">}</span> <span class="nx">transit</span> <span class="nx">to</span> <span class="nx">Open</span>
+    <span class="p">}</span>
+
+<span class="p">}</span></code></div>
+       
+    <div class="last-modified">Last modified: 2 February 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

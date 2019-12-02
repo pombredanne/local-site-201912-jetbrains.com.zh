@@ -1,0 +1,290 @@
+
+
+
+<!doctype html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>Quick-Fixes and Context Actions / ReSharper  DevGuide</title>
+    <link rel="stylesheet" href="/help/resharper/sdk/app/app.css">
+    <link rel="shortcut icon" href="/help/resharper/sdk/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="57x57" href="/help/resharper/sdk/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/help/resharper/sdk/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/help/resharper/sdk/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/help/resharper/sdk/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/help/resharper/sdk/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/help/resharper/sdk/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/help/resharper/sdk/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/help/resharper/sdk/apple-touch-icon-180x180.png">
+    <link rel="mask-icon" href="/help/resharper/sdk/apple-mask-icon.svg" color="black">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-square70x70logo" content="/help/resharper/sdk/mstile-70x70.png">
+    <meta name="msapplication-TileImage" content="/help/resharper/sdk/mstile-144x144.png">
+    <meta name="msapplication-square150x150logo" content="/help/resharper/sdk/mstile-150x150.png">
+    <meta name="msapplication-wide310x150logo" content="/help/resharper/sdk/mstile-310x150.png">
+    <meta name="msapplication-square310x310logo" content="/help/resharper/sdk/mstile-310x310.png">
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="Documentation for writing extensions for ReSharper" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.jetbrains.com/help/resharper/sdk//Features/Actions/QuickFixes.html" />
+    <meta property="og:site_name" content="JetBrains ReSharper" />
+    <meta property="og:title" content="Quick-Fixes and Context Actions" />
+    <meta property="og:description" content="Documentation for writing extensions for ReSharper" />
+    <meta property="og:image" content="https://www.jetbrains.com/help/resharper/sdk/jetbrains.png" />
+    <meta property="article:modified_time" content="2017-07-10T19:28:42+00:00" />
+    <!-- <meta property="article:section" content="" /> 
+    <meta property="article:tag" content="" /> -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@JBPlatform" />
+    <meta name="twitter:title" content="Quick-Fixes and Context Actions" />
+    <meta name="twitter:description" content="Documentation for writing extensions for ReSharper" />
+    <meta name="twitter:image" content="https://www.jetbrains.com/help/resharper/sdk/jetbrains.png" />
+    <meta class="swiftype" name="product" data-type="string" content="/help/resharper/sdk/"></meta>
+<link  rel="stylesheet" href="/help/resharper/sdk/app/styles.css"></head>
+<body data-id="Features/Actions/QuickFixes">
+<div class="wrapper">
+    <section class="panel _nav">
+        <header class="panel__header">
+            <div class="container">
+                <form class="search-box">
+                    <label for="search-box__input" class="search-box__label">
+                        <input type="text" class="search-box__input" id="search-box__input" placeholder="Search ReSharper  DevGuide">
+                    </label>
+                    <div class="search-box__clear" title="Clear"></div>
+                </form>
+            </div>
+        </header>
+        <nav class="panel__content">
+            <div class="container _nav">
+                <menu class="nav-tree"></menu>
+            </div>
+            <div class="container _footer panel__footer">
+                <p><a data-bypass="true" href="//youtrack.jetbrains.com/issues/IJSDK">Send feedback</a></p>
+                <p>&copy; 2000&ndash;2018 <a href="//www.jetbrains.com">JetBrains</a> s.r.o.<br>
+                    All rights reserved.</p>
+            </div>
+        </nav>
+    </section>
+
+    <main class="panel _main" role="main">
+        <header class="panel__header">
+            <div class="container">
+                <h3>ReSharper DevGuide</h3>
+                
+                <div class="panel-trigger"></div>
+            </div>
+        </header>
+        <section class="panel__content">
+            <div class="container">
+                <article class="article" data-shortcut-switcher="false">
+                    <div class="navigation-links _top" data-swiftype-index="false">
+                        
+                        <a class="navigation-links__next" href="/Features/Actions/Bulk.html">Bulk Actions</a>
+                    </div>
+                    <a data-bypass="true" href="https://github.com/JetBrains/resharper-devguide/edit/master/Features/Actions/QuickFixes.md" class="page-link-to-github" target="_blank" rel="noopener noreferrer" title="Edit this page on GitHub">
+                        <i class="github-icon"></i>
+                        <span class="text">Edit page</span>
+                    </a>
+
+                    <h1>Quick-Fixes and Context Actions</h1>
+                    <aside class="warning">
+  <p> This topic relates to ReSharper 8, and has not been updated to ReSharper 9 or the ReSharper Platform.</p>
+</aside>
+
+<p>One of the ways that ReSharper offers to correct or modify your code is by using a pop-up menu that shows up on the left-hand side of the screen:</p>
+
+<p><img src="context_action.png" alt="Showing the Context Action Alt+Enter menu" /></p>
+
+<p>This menu (typically triggered with the <code class="code highlight language-text">Alt+Enter</code> shortcut) contains a set of menu items that plugin writers can provide. There are two separate ReSharper constructs that both can provide items to appear in this menu:</p>
+
+<ul>
+  <li><em>Context actions</em> are simply possible code modifications that might be applicable in a particular point in code. Context actions typically offer a chance to improve the code without dramatically changing it. CA items are displayed with pencil icons.</li>
+  <li><em>Quick-fixes</em> are possible modifications that appear associated with a particular highlighting (i.e., a warning or an error). These typically offer a chance to correct a particular problem in your code. Quick-fix items are displayed with red or yellow light bulb icons (where quick-fixes with red bulbs are meant to fix errors and quick-fixes with yellow bulbs fix warnings, suggestions and hints).</li>
+</ul>
+
+<p>In each case, a context action (CA) or quick-fix (QF) can provide zero or more menu entries for the user to act upon. As of ReSharper 7, these entries can also be hierarchical in nature, i.e. one can have nested/submenu items in addition to top-level ones.</p>
+
+<a name="bulb-action" class="elem-anchor"></a>
+<h2>Bulb Action<a href="#bulb-action" class="anchor-link"><span></span></a></h2>
+
+<p>Each item provided by a QF or CA is called a <em>bulb action</em>. A bulb action is any class that implements the <code class="code highlight language-text">IBulbAction</code> interface. This interface has two members:</p>
+
+<ul>
+  <li><code class="code highlight language-text">Text</code> - this property needs to contain the text that is displayed in the menu item.</li>
+  <li><code class="code highlight language-text">Execute()</code> - this method is called when the menu item is chosen.</li>
+</ul>
+
+<p>Whether or not to create separate classes for bulb actions (in addition to QF/CA classes) is a design decision. Typically, if your QF or CA only intends to display one item, it may not be necessary.</p>
+
+<p>In addition to ‘plain text’ offered by <code class="code highlight language-text">IBulbAction</code>, your bulb action can also provide <em>rich text</em>, i.e., text that has some formatting. For example:</p>
+
+<p><img src="rich_text.png" alt="Quick Fix with rich text" /></p>
+
+<p>To support it, your bulb action must also implement the <code class="code highlight language-text">IBulbItemRichText</code> interface. This interface has a property called <code class="code highlight language-text">RichText</code> that contains a definition of the text shown in the menu, including formatting changes such as bold text or a different text colour. Here’s an example:</p>
+
+<div class="code-block" data-lang="csharp"><code class="code-block__wrapper"><span class="k">public</span> <span class="n">RichText</span> <span class="n">RichText</span>
+<span class="p">{</span>
+  <span class="k">get</span>
+  <span class="p">{</span>
+    <span class="kt">var</span> <span class="n">style</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">TextStyle</span><span class="p">(</span><span class="n">FontStyle</span><span class="p">.</span><span class="n">Bold</span><span class="p">,</span> <span class="n">Color</span><span class="p">.</span><span class="n">Red</span><span class="p">);</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nf">RichText</span><span class="p">(</span><span class="s">"Hello, "</span><span class="p">).</span><span class="nf">Append</span><span class="p">(</span><span class="s">"World!"</span><span class="p">,</span> <span class="n">style</span><span class="p">);</span> 
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></div>
+
+<p>Check out the <code class="code highlight language-text">TextStyle</code> class for a range of possible options.</p>
+
+<a name="bulb-menu" class="elem-anchor"></a>
+<h2>Bulb Menu<a href="#bulb-menu" class="anchor-link"><span></span></a></h2>
+
+<p>A <em>bulb menu</em> is a collection of bulb actions provided by various CAs and QFs, all arranged in a particular list or hierarchy. Bulb menus are created internally by ReSharper, but they should be populated explicitly in the QFs and CAs via the <code class="code highlight language-text">CreateBulbItems</code> method.</p>
+
+<p>A bulb menu is represented by the <code class="code highlight language-text">BulbMenu</code> class. The contents of this class can be modified in several ways. The simplest way, if you want to add just one item to the root level of the menu is to call a method such as <code class="code highlight language-text">ArrangeContextAction()</code> or <code class="code highlight language-text">ArrangeQuickFix()</code>. Both of these methods takes one bulb action and puts it at the top level.</p>
+
+<p>A singular call such as <code class="code highlight language-text">ArrangeContextAction()</code> has a corresponding method <code class="code highlight language-text">ArrangeContextActions()</code> - note the <code class="code highlight language-text">s</code> at the end. This basically takes <em>several</em> bulb items and puts them at the top level.</p>
+
+<aside class="note">
+  <p> the bulb menu doesn’t just support adding ordinary QF and CA items but also other items, but also more complicated items such as refactoring quick-fixes. The fundamental difference between these is the icon that is displayed next to the item.</p>
+</aside>
+
+<p>Now let’s talk about the hierarchical aspects of menus. Essentially, a bulb menu keeps information about its structure in a property called <code class="code highlight language-text">Groups</code> which is an enumeration of <code class="code highlight language-text">BulbGroup</code> objects. Rather than creating groups, it is recommended that you use the <code class="code highlight language-text">BulbMenu.GetOrCreateGroup()</code> method to avoid creating duplicate groups. This method takes an <code class="code highlight language-text">Anchor</code> which relates to the location where the group is placed - take a look at the static members of <code class="code highlight language-text">AnchorsForBulbMenuGroups</code> for some well-known anchors.</p>
+
+<p>Having acquired or created a group, you can do one of two things:</p>
+
+<ul>
+  <li>Add a single bulb action using the <code class="code highlight language-text">AddBulbAction()</code> method. This is precisely what happens behind the scenes in <code class="code highlight language-text">ArrangeContextAction()</code> and similar methods.</li>
+  <li>Use the <code class="code highlight language-text">GetOrCreateSubmenu()</code> method in order to create a submenu for a particular menu.</li>
+</ul>
+
+<a name="hierarchical-menu-aka-submenu" class="elem-anchor"></a>
+<h2>Hierarchical Menu (a.k.a. Submenu)<a href="#hierarchical-menu-aka-submenu" class="anchor-link"><span></span></a></h2>
+
+<p>This is where an explanation of submenus is in order. You see, one of the properties of a <code class="code highlight language-text">BulbGroup</code> is called <code class="code highlight language-text">MenuItems</code> and it contains, you guessed it, a collection of <code class="code highlight language-text">BulbMenuItem</code>s. What happens behind the scenes in the <code class="code highlight language-text">GetOrCreateSubmenu()</code> method is that a new <code class="code highlight language-text">BulbMenuItem</code> is acquired or created and then added to the collection of existing items.</p>
+
+<p>Both the explicit creation of the <code class="code highlight language-text">BulbMenuItem</code> and its addition via <code class="code highlight language-text">GetOrCreateSubmenu()</code> require you to initialize and pass in a <code class="code highlight language-text">BulbMenuItemViewDescription</code> structure. For this structure, you need to define:</p>
+
+<ul>
+  <li>An anchor (as per bulb groups)</li>
+  <li>An icon. You can take one of the existing icons in ReSharper or pass <code class="code highlight language-text">null</code> to avoid having an icon altogether.</li>
+  <li>A rich text definition. Use the <code class="code highlight language-text">RichText</code> class or, if you don’t need any formatting, simply cast an ordinary string to <code class="code highlight language-text">RichText</code>.</li>
+</ul>
+
+<p>You’ll also note that the <code class="code highlight language-text">BulbMenuItem</code> constructor has two additional parameters. The <code class="code highlight language-text">bulbAction</code> parameter lets you define a bulb action to execute when this menu item is triggered. The <code class="code highlight language-text">withSubmenu</code> parameter defines whether you need to have a submenu for this menu item. If you do, it initializes the <code class="code highlight language-text">Submenu</code> property of the <code class="code highlight language-text">BulbMenuItem</code> to a new <code class="code highlight language-text">BulbMenu</code>.</p>
+
+<p>Brief recap of the way things are structured:</p>
+
+<ul>
+  <li>You have a top-level <code class="code highlight language-text">BulbMenu</code> that you can items directly to.</li>
+  <li>A <code class="code highlight language-text">BulbMenu</code> has one or more <code class="code highlight language-text">BulbGroup</code> elements in a <code class="code highlight language-text">Groups</code> collection.</li>
+  <li>Each group has one or more <code class="code highlight language-text">BulbMenuItem</code> elements in a <code class="code highlight language-text">MenuItems</code> collection.</li>
+  <li>Each <code class="code highlight language-text">BulbMenuItem</code> can itself have a <code class="code highlight language-text">Submenu</code> property of type <code class="code highlight language-text">BulbMenu</code>.</li>
+</ul>
+
+<a name="context-action" class="elem-anchor"></a>
+<h2>Context Action<a href="#context-action" class="anchor-link"><span></span></a></h2>
+
+<p>As mentioned previously, a context action is meant to offer an opportunity to change code in a particular context. For example, offering to change a number from hexadecimal to decimal should be a context action - this is a convenience method.</p>
+
+<p>A context action is a class that follows the following rules:</p>
+
+<ul>
+  <li>It implements the <code class="code highlight language-text">IContextAction</code> interface</li>
+  <li>It is decorated with the <code class="code highlight language-text">[ContextAction]</code> attribute</li>
+  <li>It has a constructor that takes the CA data provider as a parameter</li>
+</ul>
+
+<p>Let’s start with the CA constructor. As mentioned above, it should have one parameter corresponding to a <em>data provider</em> for the context action. The data provider is how we can get information about where the context action is possibly going to be displayed. In other words, it’s the context for the context action. The data provider is a language-specific interface derived from <code class="code highlight language-text">IContextActionDataProvider</code>.</p>
+
+<p>Here is an example from a C# context action:</p>
+
+<div class="code-block" data-lang="csharp"><code class="code-block__wrapper"><span class="na">[ContextAction(Description="Foo",Group="C#",Name="Foo", Priority=1)]</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">OrdinaryContextAction</span> <span class="p">:</span> <span class="n">IContextAction</span>
+<span class="p">{</span>
+  <span class="k">private</span> <span class="n">ICSharpContextActionDataProvider</span> <span class="n">dataProvider</span><span class="p">;</span>
+
+  <span class="k">public</span> <span class="nf">OrdinaryContextAction</span><span class="p">(</span><span class="n">ICSharpContextActionDataProvider</span> <span class="n">dataProvider</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="n">dataProvider</span> <span class="p">=</span> <span class="n">dataProvider</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="c1">// ...</span>
+<span class="p">}</span>
+</code></div>
+
+<p>Now it’s time to implement the interface members. The first, an <code class="code highlight language-text">IsAvailable()</code> method is used to check whether this context action is available. If it is, the <code class="code highlight language-text">CreateBulbItems()</code> method will be called. If not, it’s not called, and no items are added for this action. The <code class="code highlight language-text">IsAvailable()</code> method is implemented by looking at the context data provider we were passed in the constructor, and deciding if our action is valid for the current location. There are several properties on the method that are useful, for example, we can get at the current <code class="code highlight language-text">ITextControl</code>, <code class="code highlight language-text">Selection</code> and <code class="code highlight language-text">CaretOffset</code>. More importantly, we can look at the current node in the PSI syntax tree - the <code class="code highlight language-text">SelectedElement</code> property gives us the <code class="code highlight language-text">ITreeNode</code> of the PSI syntax tree at the current caret offset. We can downcast this to a more specific type, such as <code class="code highlight language-text">IMethodDeclaration</code> or <code class="code highlight language-text">IAssignmentExpression</code>. We can also get the tree nodes before and after the caret, using the provider’s <code class="code highlight language-text">TokenBeforeCaret</code> and <code class="code highlight language-text">TokenAfterCaret</code>. However, the <code class="code highlight language-text">GetSelectedElement&lt;T&gt;</code> method is most useful, because it will walk up the syntax tree looking for a containing node of the correct type. For example, we can use <code class="code highlight language-text">GetSelectedElement&lt;IMethodDeclaration&gt;(true, true)</code> to get the containing method declaration, even if the node we’re currently on is an expression. We can check to see if the value is null to ensure we’re in the right place, and we can walk the contents of the method declaration node to look inside the method body or parameters, etc.</p>
+
+<div class="code-block" data-lang="csharp"><code class="code-block__wrapper"><span class="k">public</span> <span class="kt">bool</span> <span class="nf">IsAvailable</span><span class="p">(</span><span class="n">IUserDataHolder</span> <span class="n">cache</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">return</span> <span class="n">provider</span><span class="p">.</span><span class="n">GetSelectedElement</span><span class="p">&lt;</span><span class="n">IMethodDeclaration</span><span class="p">&gt;(</span><span class="k">true</span><span class="p">,</span> <span class="k">true</span><span class="p">)</span> <span class="p">!=</span> <span class="k">null</span><span class="p">;</span>
+<span class="p">}</span>
+</code></div>
+
+<p>The next interface member is the one that populates the bulb menu. The method is defined as</p>
+
+<div class="code-block" data-lang="csharp"><code class="code-block__wrapper"><span class="k">public</span> <span class="k">void</span> <span class="nf">CreateBulbItems</span><span class="p">(</span><span class="n">BulbMenu</span> <span class="n">menu</span><span class="p">)</span>
+</code></div>
+
+<p>and the idea is that you use the <code class="code highlight language-text">menu</code> parameter to define the structure of the menu, as described in the previous section. For instance, the implementation can be as simple as</p>
+
+<div class="code-block" data-lang="csharp"><code class="code-block__wrapper"><span class="k">public</span> <span class="k">void</span> <span class="nf">CreateBulbItems</span><span class="p">(</span><span class="n">BulbMenu</span> <span class="n">menu</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">menu</span><span class="p">.</span><span class="nf">ArrangeContextAction</span><span class="p">(</span><span class="k">new</span> <span class="nf">FooBulbAction</span><span class="p">());</span>
+<span class="p">}</span>
+</code></div>
+
+<p>if you’ve only got one bulb action that you want to add.</p>
+
+<a name="quick-fix" class="elem-anchor"></a>
+<h2>Quick-Fix<a href="#quick-fix" class="anchor-link"><span></span></a></h2>
+
+<p>A quick-fix is just like a context action. The only difference is that a quick-fix appears in response to a highlighting. A quick-fix is called this because its purpose is to fix a particular problem, a problem typically found by a daemon and highlighted in code.</p>
+
+<p>The creation of a quick-fix is very similar to the creation of a context action. You need a class that:</p>
+
+<ul>
+  <li>Implements the <code class="code highlight language-text">IQuickFix</code> interface</li>
+  <li>Is decorated with the <code class="code highlight language-text">QuickFix</code> attribute</li>
+  <li>Has at least one constructor with one parameter corresponding to a particular highlighting</li>
+</ul>
+
+<p>The constructor parameter that the quick-fix takes must correspond to the highlighting which corresponds to this quick-fix. As far as interface members are concerned, the situation is identical to that of the context action, with the only difference that the <code class="code highlight language-text">CreateBulbItems()</code> method takes an extra parameter indicating the <code class="code highlight language-text">Severity</code> of the associated highlighting.</p>
+
+<p>Note that <code class="code highlight language-text">BulbMenu.ArrangeQuickFixes()</code> requires a set of pairs of bulb actions and severities. Thus, if you keep an internal list of <code class="code highlight language-text">IBulbAction</code> elements, you can convert it to a set of pairs using such code as:</p>
+
+<div class="code-block" data-lang="csharp"><code class="code-block__wrapper"><span class="n">menu</span><span class="p">.</span><span class="nf">ArrangeQuickFixes</span><span class="p">(</span><span class="n">_items</span><span class="p">.</span><span class="nf">Select</span><span class="p">(</span><span class="n">_</span> <span class="p">=&gt;</span> <span class="n">Pair</span><span class="p">.</span><span class="nf">Of</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">severity</span><span class="p">)));</span>
+</code></div>
+
+<a name="base-classes" class="elem-anchor"></a>
+<h2>Base Classes<a href="#base-classes" class="anchor-link"><span></span></a></h2>
+
+<p>In the majority of cases, implementing <code class="code highlight language-text">IBulbAction</code>, <code class="code highlight language-text">IQuickFix</code> or <code class="code highlight language-text">IContextAction</code> is not recommended. Instead, we suggest that you do the following:</p>
+
+<ul>
+  <li>If your QF or CA publishes only a single bulb action, consider inheriting your class from <code class="code highlight language-text">QuickFixBase</code> or <code class="code highlight language-text">ContextActionBase</code> respectively.</li>
+  <li>If you really need to have a separate class for a bulb action, inherit from <code class="code highlight language-text">BulbActionBase</code>. This class implements <code class="code highlight language-text">IBulbAction</code> and has a lot of useful plumbing necessary for modifying documents.</li>
+</ul>
+
+
+
+                    <div class="navigation-links _bottom" data-swiftype-index="false">
+                        
+                        <a class="navigation-links__next" href="/Features/Actions/Bulk.html">Bulk Actions</a>
+                    </div>
+                    <div class="last-modified">
+                        Last modified: 10 July 2017
+                    </div>
+                </article>
+
+                <section class="disqus">
+                    <div id="disqus_thread"></div>
+                </section>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="/help/resharper/sdk/app/app.js" data-baseurl="/help/resharper/sdk/"></script>
+
+</body>
+</html>
+

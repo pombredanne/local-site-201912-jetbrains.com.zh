@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+                    <!-- Error reporting -->
+<script>(function(){
+  window.reportError = function(msg, file, line, col, err, isUnhandledRejection){};
+  var prevOnError = window.onerror;
+  var onError = function(msg, file, line, col, err) {
+    reportError(msg, file, line, col, err, false);
+    prevOnError && prevOnError.apply(window, arguments);
+    return false;
+  };
+  window.onerror = onError;
+  // Setup reporting for unhandled Promise rejection errors
+  window.addEventListener("unhandledrejection", function(e) {
+    if (!e.reason) return;
+    var l = getSrcLocation(e.reason);
+    reportError(e.reason.message, l.file, l.line, l.col, e.reason, true);
+  });
+  // Setup reporting for console.error and console.warn calls
+  patchConsole('error');
+  patchConsole('warn');
+  // Utility functions
+  function patchConsole(fnName) {
+    var fn = console[fnName];
+    console[fnName] = function() {
+      fn.apply(console, arguments);
+      var l; try {
+        throw new Error('_');
+      } catch (err) {
+        l = getSrcLocation(err, 1);
+      }
+      var msg = 'console.' + fnName + ': ' + Array.prototype.join.call(arguments, ' ');
+      reportError(msg, l.file, l.line, l.col, undefined, false);
+    };
+  }
+  function getSrcLocation(err, sd) {
+    var s = err && err.stack;
+    var l = s && s.split("\n")[1 + (sd|0)];
+    var r = l && (/^\s*at [^(]*\((.*?):(\d+)(:\d+)?\)$/.exec(l) || /^\s*at (.*?):(\d+)(:\d+)?$/.exec(l));
+    return r ? {file: r[1], line: r[2], col: r[3]} : {};
+  }
+})();</script>
+<!-- Error reporting -->        <!-- Google Tag Manager -->
+<script>(function() {
+  // Initialize Tag Manager queue
+  window.dataLayer = window.dataLayer || [];
+  window.gtmLoaded = false;
+  // Setup reporting for errors that occurred before Tag Manager initialized
+  var prevReportError = window.reportError;
+  var reportError = function(msg, file, line, col, err, isUnhandledRejection) {
+    if (!window.gtmLoaded || isUnhandledRejection) {
+      // Reproduce the behavior of the Tag Manager error handler
+      window.dataLayer.push(makeEvt(msg, file, line));
+    }
+    prevReportError && prevReportError.apply(window, arguments);
+  };
+  window.reportError = reportError;
+  // Utility functions
+  function makeEvt(msg, file, line) {
+    return {
+      event: "gtm.pageError", "gtm.errorMessage": msg,
+      "gtm.errorUrl": file, "gtm.errorLineNumber": line
+    };
+  }
+})();</script>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;j.addEventListener(
+    'load', function(){window.gtmLoaded=true});f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5P98');</script>
+<!-- End Google Tag Manager -->        <!-- Sentry -->
+<script>
+    (function() {
+        window.sentryLoaded = false;
+        window.errorsForSentry = [];
+        var prevReportError = window.reportError;
+        var reportError = function(
+            msg,
+            file,
+            line,
+            col,
+            err,
+            isUnhandledRejection
+        ) {
+            if (!window.sentryLoaded) {
+                window.errorsForSentry.push(err);
+            }
+            prevReportError && prevReportError.apply(window, arguments);
+        };
+        window.reportError = reportError;
+    })();
+</script>
+<script>
+    window.sentryLoad = function() {
+        window.sentryLoaded = true;
+        Sentry.init({
+            dsn: 'https://1adb2a61713144eda0786e5af50ddc51@sentry.io/1423069',
+            release:
+                "jetbrainscom@a6ccaa6ddb",
+            beforeSend: function(event) {
+                Object.keys(event).forEach(function(key) {
+                    var value = event[key];
+                    if (isEmail(value)) {
+                        delete event[key];
+                    }
+                });
+                return event;
+            }
+        });
+        Sentry.configureScope(function(scope) {
+            scope.setTag('page_locale', 'en-us');
+            scope.setTag('browser.locale', getPageLocale());
+
+            scope.setTag('http.urlFull', location.href);
+            var protocol = location.protocol || '';
+            //omit `:` from location.protocol string
+            var protocolString = protocol.substring(0, protocol.length - 1);
+
+            scope.setTag('http.protocol', protocolString);
+
+            scope.setTag('http.hostname', location.hostname);
+
+            var search = location.search || '';
+            //omit ? from location.search string
+            var searchString = search.substr(1);
+            if (searchString !== '') {
+                scope.setTag('http.query', searchString || '1');
+            }
+            var hash = location.hash || '';
+            //omit # from location.hash string
+            var hashString = hash.substr(1);
+            if (hashString !== '') {
+                scope.setTag('http.fragment', hashString);
+            }
+        });
+        window.errorsForSentry.forEach(Sentry.captureException);
+
+        function getPageLocale() {
+            return (
+                (navigator.languages && navigator.languages[0]) ||
+                navigator.language
+            );
+        }
+        function isEmail(value) {
+            var emailRegex = /[\+\-\_\.a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+\.[a-zA-Z0-9]+/g;
+            return emailRegex.test(value);
+        }
+    };
+</script>
+<script src="https://browser.sentry-cdn.com/5.7.1/bundle.min.js" crossorigin="anonymous" onload="sentryLoad()" async></script>
+<!-- End Sentry -->    
+                <title>Code Templates - Features | ReSharper</title>
+    
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, maximum-scale=1">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#000000">
+<meta name="apple-mobile-web-app-title" content="JetBrains">
+<meta name="application-name" content="JetBrains">
+<meta name="msapplication-TileColor" content="#000000">
+<meta name="theme-color" content="#000000">    <link rel="canonical" href="https://www.jetbrains.com/resharper/features/code_templates.html" />    <!-- .61-->
+        <meta class="local" content="Use these automated code refactorings for C# 6.0, Visual Basic .NET, ASP.NET, and XAML code" name="description">
+        <link rel="alternate" hreflang="x-default" href="https://www.jetbrains.com/resharper/features/code_templates.html" />
+
+                        <link rel="alternate" hreflang="en" href="https://www.jetbrains.com/resharper/features/code_templates.html" />
+                                <link rel="alternate" hreflang="de" href="https://www.jetbrains.com/de-de/resharper/features/code_templates.html" />
+                                <link rel="alternate" hreflang="es" href="https://www.jetbrains.com/es-es/resharper/features/code_templates.html" />
+                                <link rel="alternate" hreflang="fr" href="https://www.jetbrains.com/fr-fr/resharper/features/code_templates.html" />
+                                <link rel="alternate" hreflang="ja" href="https://www.jetbrains.com/ja-jp/resharper/features/code_templates.html" />
+                                <link rel="alternate" hreflang="ko" href="https://www.jetbrains.com/ko-kr/resharper/features/code_templates.html" />
+                                <link rel="alternate" hreflang="ru" href="https://www.jetbrains.com/ru-ru/resharper/features/code_templates.html" />
+                                <link rel="alternate" hreflang="zh-CN" href="https://www.jetbrains.com/zh-cn/resharper/features/code_templates.html" />
+                                            <link rel="alternate" hreflang="x-klingon" href="https://www.jetbrains.com/tl-aa/resharper/features/code_templates.html" />
+            
+    
+    
+        
+    
+    
+    <script>
+        var current_lang = 'en-us';
+                                    var i18n_info = {"current_lang": "en-us", "languages": [{"canonical": "en", "code": "en-us", "label": "English", "page_translated": true, "url": "/resharper/features/code_templates.html"}, {"canonical": "de", "code": "de-de", "label": "Deutsch", "page_translated": true, "url": "/de-de/resharper/features/code_templates.html"}, {"canonical": "es", "code": "es-es", "label": "Espa\u00f1ol", "page_translated": true, "url": "/es-es/resharper/features/code_templates.html"}, {"canonical": "fr", "code": "fr-fr", "label": "Fran\u00e7ais", "page_translated": true, "url": "/fr-fr/resharper/features/code_templates.html"}, {"canonical": "ja", "code": "ja-jp", "label": "\u65e5\u672c\u8a9e", "page_translated": true, "url": "/ja-jp/resharper/features/code_templates.html"}, {"canonical": "ko", "code": "ko-kr", "label": "\ud55c\uad6d\uc5b4", "page_translated": true, "url": "/ko-kr/resharper/features/code_templates.html"}, {"canonical": "ru", "code": "ru-ru", "label": "\u0420\u0443\u0441\u0441\u043a\u0438\u0439", "page_translated": true, "url": "/ru-ru/resharper/features/code_templates.html"}, {"canonical": "zh-CN", "code": "zh-cn", "label": "\u7b80\u4f53\u4e2d\u6587", "page_translated": true, "url": "/zh-cn/resharper/features/code_templates.html"}, {"canonical": "pt-BR", "code": "pt-br", "label": "Portugu\u00eas do Brasil", "page_translated": false, "url": "/pt-br/resharper/features/code_templates.html"}, {"canonical": "x-klingon", "code": "tl-aa", "label": "tlhIngan Hol", "page_translated": true, "url": "/tl-aa/resharper/features/code_templates.html"}]};
+                            var navigationMenu = {"primary": {"id": "main_v2", "items": [{"id": "tools", "title": "Tools", "descriptionTitle": "Toolbox App", "descriptionLogoId": "toolbox", "descriptionLink": "Learn more", "descriptionUrl": "/toolbox-app/", "description": "Manage your tools the easy way", "src": "/img/banners-menu-main/toolbox-vertical.png", "horisontalSrc": "/img/banners-menu-main/toolbox-horisontal.png", "bgColor": "#3E0598", "isVisible": true, "hasCategories": true, "items": [{"title": "IDEs", "items": [{"isActive": false, "id": "appcode", "title": "AppCode", "url": "/objc/", "logoLeftActionId": "appcode", "items": [], "cleaned_url": "/objc/"}, {"isActive": false, "id": "clion", "title": "CLion", "url": "/clion/", "logoLeftActionId": "clion", "items": [], "cleaned_url": "/clion/"}, {"isActive": false, "id": "datalore", "title": "Datalore", "url": "https://datalore.io/", "isExternalLink": true, "logoLeftActionId": "datalore", "items": [], "cleaned_url": "https://datalore.io/"}, {"isActive": false, "id": "datagrip", "title": "DataGrip", "url": "/datagrip/", "logoLeftActionId": "datagrip", "items": [], "cleaned_url": "/datagrip/"}, {"isActive": false, "id": "goland", "title": "GoLand", "url": "/go/", "logoLeftActionId": "goland", "items": [], "cleaned_url": "/go/"}, {"isActive": false, "id": "idea", "title": "IntelliJ IDEA", "url": "/idea/", "logoLeftActionId": "intellij-idea", "items": [], "cleaned_url": "/idea/"}, {"isActive": false, "id": "phpstorm", "title": "PhpStorm", "url": "/phpstorm/", "logoLeftActionId": "phpstorm", "items": [], "cleaned_url": "/phpstorm/"}, {"isActive": false, "id": "pycharm", "title": "PyCharm", "url": "/pycharm/", "logoLeftActionId": "pycharm", "items": [], "cleaned_url": "/pycharm/"}, {"isActive": false, "id": "rider", "title": "Rider", "url": "/rider/", "logoLeftActionId": "rider", "items": [], "cleaned_url": "/rider/"}, {"isActive": false, "id": "rubymine", "title": "RubyMine", "url": "/ruby/", "logoLeftActionId": "rubymine", "items": [], "cleaned_url": "/ruby/"}, {"isActive": false, "id": "webstorm", "title": "WebStorm", "url": "/webstorm/", "logoLeftActionId": "webstorm", "items": [], "cleaned_url": "/webstorm/"}, {"isActive": false, "id": "toolbox", "type": "special", "title": "Toolbox App", "url": "/toolbox-app/", "logoLeftId": "toolbox", "description": "A control panel for your tools and projects", "items": [], "cleaned_url": "/toolbox-app/"}]}, {"title": ".NET & VISUAL STUDIO", "items": [{"isActive": false, "id": "resharper", "title": "ReSharper", "url": "/resharper/", "logoLeftActionId": "resharper", "items": [], "cleaned_url": "/resharper/"}, {"isActive": false, "id": "rider", "title": "Rider", "url": "/rider/", "logoLeftActionId": "rider", "items": [], "cleaned_url": "/rider/"}, {"isActive": false, "id": "resharper-cpp", "title": "ReSharper C++", "url": "/resharper-cpp/", "logoLeftActionId": "resharper-cpp", "items": [], "cleaned_url": "/resharper-cpp/"}, {"isActive": false, "id": "dotcover", "title": "dotCover", "url": "/dotcover/", "logoLeftActionId": "dotcover", "items": [], "cleaned_url": "/dotcover/"}, {"isActive": false, "id": "dotmemory", "title": "dotMemory", "url": "/dotmemory/", "logoLeftActionId": "dotmemory", "items": [], "cleaned_url": "/dotmemory/"}, {"isActive": false, "id": "dotpeek", "title": "dotPeek", "url": "/decompiler/", "logoLeftActionId": "dotpeek", "items": [], "cleaned_url": "/decompiler/"}, {"isActive": false, "id": "dottrace", "title": "dotTrace", "url": "/profiler/", "logoLeftActionId": "dottrace", "items": [], "cleaned_url": "/profiler/"}]}, {"title": "TEAM TOOLS", "items": [{"isActive": false, "id": "teamcity", "title": "TeamCity", "url": "/teamcity/", "logoLeftActionId": "teamcity", "items": [], "cleaned_url": "/teamcity/"}, {"isActive": false, "id": "upsource", "title": "Upsource", "url": "/upsource/", "logoLeftActionId": "upsource", "items": [], "cleaned_url": "/upsource/"}, {"isActive": false, "id": "youtrack", "title": "YouTrack", "url": "/youtrack/", "logoLeftActionId": "youtrack", "items": [], "cleaned_url": "/youtrack/"}, {"isActive": false, "id": "hub", "title": "Hub", "url": "/hub/", "logoLeftActionId": "hub", "items": [], "cleaned_url": "/hub/"}]}, {"title": "PLUGIN MARKETPLACE", "items": [{"isActive": false, "id": "bigdata", "title": "Big Data Tools", "url": "https://plugins.jetbrains.com/plugin/12494-big-data-tools", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/plugin/12494-big-data-tools"}, {"isActive": false, "id": "rustsupport", "title": "Rust", "url": "https://plugins.jetbrains.com/plugin/8182-rust", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/plugin/8182-rust"}, {"isActive": false, "id": "scalaplugin", "title": "Scala", "url": "https://plugins.jetbrains.com/plugin/1347-scala", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/plugin/1347-scala"}, {"isActive": false, "id": "idethemes", "title": "IDE Themes", "url": "https://plugins.jetbrains.com/search?tags=Theme", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/search?tags=Theme"}, {"isActive": false, "id": "plugins", "title": "All Plugins", "url": "https://plugins.jetbrains.com/", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/"}]}, {"title": "EDUCATION", "items": [{"isActive": false, "id": "pycharm-edu", "title": "PyCharm Edu", "url": "/education/", "urlHash": "#lang=python&role=learner", "logoLeftActionId": "pycharm-edu", "items": [], "cleaned_url": "/education/"}, {"isActive": false, "id": "idea-edu", "title": "IntelliJ IDEA Edu", "url": "/education/", "urlHash": "#lang=java&role=learner", "logoLeftActionId": "intellij-idea", "items": [], "cleaned_url": "/education/"}, {"isActive": false, "id": "jb-academy", "title": "JB Academy", "url": "/academy/", "items": [], "cleaned_url": "/academy/"}]}]}, {"id": "languages", "title": "Languages", "descriptionTitle": "Kotlin/Everywhere", "descriptionLogoId": "header-kotlin-everywhere", "descriptionLink": "Join in!", "descriptionUrl": "//everywhere.kotlinlang.org", "description": "A worldwide event series for learning the best Kotlin practices on all platforms", "descriptionBig": true, "src": "/img/banners-menu-main/kotlin-vertical.png", "horisontalSrc": "/img/banners-menu-main/kotlin-horisontal.png", "bgColor": "#D6721C", "isExternalLink": true, "isVisible": true, "hasCategories": false, "items": [{"isActive": false, "id": "kotlin", "title": "Kotlin", "url": "https://kotlinlang.org/", "isExternalLink": true, "logoLeftId": "header-kotlin-grayscale", "logoLeftActionId": "kotlin", "logoLeftSize": "50", "description": "Programming language \n for JVM & Android", "items": [], "cleaned_url": "https://kotlinlang.org/"}, {"isActive": false, "id": "mps", "title": "MPS", "url": "/mps/", "logoLeftId": "header-mps-grayscalse", "logoLeftActionId": "mps", "logoLeftSize": "50", "description": "Create your own domain-specific language", "items": [], "cleaned_url": "/mps/"}]}, {"id": "solutions", "title": "Solutions", "descriptionTitle": "JetBrains Academy", "descriptionLogoId": "academy-logo", "descriptionLink": "Join in!", "descriptionUrl": "/academy", "description": "An educational platform for future professionals", "src": "/img/banners-menu-main/academy-vertical.png", "horisontalSrc": "/img/banners-menu-main/academy-horisontal.png", "bgColor": "#53288E", "hasCategories": false, "isVisible": true, "items": [{"isActive": false, "title": "C++ Tools", "url": "/cpp/", "logoLeftId": "header-cpp-grayscale", "logoLeftActionId": "header-cpp", "description": "Tools for C/C++ development \nfor any platform", "items": [], "cleaned_url": "/cpp/"}, {"isActive": false, "title": "For Business", "url": "/store/business/", "logoLeftId": "header-for-business-grayscale", "logoLeftActionId": "header-for-business", "description": "Wide range of tools. \nAll major technologies covered", "items": [], "cleaned_url": "/store/business/"}, {"isActive": false, "title": "Game Development", "url": "/gamedev/", "logoLeftId": "header-gamedev-grayscale", "logoLeftActionId": "header-gamedev", "description": "Tools for game development \nfor any platform", "items": [], "cleaned_url": "/gamedev/"}, {"isActive": false, "title": "DevOps", "url": "/devops/", "logoLeftId": "header-devops-grayscale", "logoLeftActionId": "header-devops", "description": "Tools and integrations \nfor any infrastructure", "items": [], "cleaned_url": "/devops/"}, {"isActive": false, "title": "Education", "url": "/education/", "logoLeftId": "header-education-grayscale", "logoLeftActionId": "header-education", "description": "Products to learn and teach programming", "items": [], "cleaned_url": "/education/"}]}, {"id": "support", "title": "Support", "description": "Pricing and licensing for businesses and individuals", "descriptionTitle": "JetBrains Store", "descriptionLogoId": "header-store", "descriptionUrl": "/store/?fromMenu#edition=commercial", "descriptionLink": "visit store", "isVisible": true, "hasCategories": true, "items": [{"title": "CUSTOMERS", "items": [{"isActive": false, "title": "Sales Support", "url": "/support/sales/", "description": "Orders, payments", "items": [], "cleaned_url": "/support/sales/"}, {"isActive": false, "title": "Product Support", "url": "/support/", "description": "Tech support, documentation", "items": [], "cleaned_url": "/support/"}]}, {"title": "COMMUNITY PROGRAMS", "items": [{"isActive": false, "title": "Education", "url": "/community/education/", "description": "Students, classrooms, training", "items": [], "cleaned_url": "/community/education/"}, {"isActive": false, "title": "Open Source", "url": "/community/opensource/", "description": "Projects support", "items": [], "cleaned_url": "/community/opensource/"}, {"isActive": false, "title": "Sponsorship", "url": "/community/support/", "description": "User groups, events, technology experts", "items": [], "cleaned_url": "/community/support/"}]}]}, {"id": "company", "title": "Company", "isVisible": true, "hasCategories": true, "items": [{"title": "INITIATIVES", "items": [{"isActive": false, "title": "Open Source", "url": "/opensource/", "description": "Projects, contributions", "items": [], "cleaned_url": "/opensource/"}, {"isActive": false, "title": "Research", "url": "/research/", "description": "Market, Scientific", "items": [], "cleaned_url": "/research/"}]}, {"title": "COMPANY", "items": [{"isActive": false, "title": "About", "url": "/company/", "description": "People, customers, awards", "items": [], "cleaned_url": "/company/"}, {"isActive": false, "title": "Brand Assets", "url": "/company/brand/", "description": "Guidelines, logos", "items": [], "cleaned_url": "/company/brand/"}, {"isActive": false, "title": "Careers", "url": "/careers/apply/", "description": "Jobs, internships", "items": [], "cleaned_url": "/careers/apply/"}, {"isActive": false, "title": "Events", "url": "/company/events/", "description": "Conferences, meetups", "items": [], "cleaned_url": "/company/events/"}, {"isActive": false, "title": "Contacts", "url": "/company/contacts/", "description": "Partners, resellers, Kotlin training", "items": [], "cleaned_url": "/company/contacts/"}]}, {"title": "RESOURCES", "items": [{"isActive": false, "title": "Newsletters", "url": "/resources/newsletters/", "items": [], "cleaned_url": "/resources/newsletters/"}, {"isActive": false, "title": "Webinars", "url": "/resources/webinars/", "items": [], "cleaned_url": "/resources/webinars/"}, {"isActive": false, "title": "Early Access", "url": "/resources/eap/", "items": [], "cleaned_url": "/resources/eap/"}, {"isActive": false, "title": "Blog", "url": "//blog.jetbrains.com/", "isExternalLink": true, "items": [], "cleaned_url": "//blog.jetbrains.com/"}]}]}, {"isActive": false, "id": "store", "url": "/store/?fromNavMenu", "title": "Store", "isVisible": true, "hasCategories": false, "items": [], "cleaned_url": "/store/?fromNavMenu"}]}, "secondary": {"isActive": true, "id": "product_resharper", "logoId": "resharper", "url": "/resharper/", "title": "ReSharper", "items": [{"isActive": false, "title": "What's New", "url": "/resharper/whatsnew/", "label": "2019.2", "items": [{"isActive": false, "title": "What's New in ReSharper 10", "url": "/resharper/whatsnew/whatsnew_10.html", "items": [], "cleaned_url": "/resharper/whatsnew/whatsnew_10.html"}, {"isActive": false, "title": "What's New in ReSharper 9", "url": "/resharper/whatsnew/whatsnew_9.html", "items": [], "cleaned_url": "/resharper/whatsnew/whatsnew_9.html"}, {"isActive": false, "title": "What's New in ReSharper 8", "url": "/resharper/whatsnew/whatsnew_8.html", "items": [], "cleaned_url": "/resharper/whatsnew/whatsnew_8.html"}], "cleaned_url": "/resharper/whatsnew/"}, {"isActive": false, "title": "Early Access", "url": "/resharper/eap/", "items": [], "cleaned_url": "/resharper/eap/"}, {"isActive": true, "title": "Features", "url": "/resharper/features/", "items": [{"isActive": false, "title": "Code Analysis", "url": "/resharper/features/code_analysis.html", "items": [], "cleaned_url": "/resharper/features/code_analysis.html"}, {"isActive": false, "title": "Quick-Fixes", "url": "/resharper/features/quick_fixes.html", "items": [], "cleaned_url": "/resharper/features/quick_fixes.html"}, {"isActive": false, "title": "Context Actions", "url": "/resharper/features/context_actions.html", "items": [], "cleaned_url": "/resharper/features/context_actions.html"}, {"isActive": false, "title": "Refactorings", "url": "/resharper/features/code_refactoring.html", "items": [], "cleaned_url": "/resharper/features/code_refactoring.html"}, {"isActive": false, "title": "Navigation and Search", "url": "/resharper/features/navigation_search.html", "items": [], "cleaned_url": "/resharper/features/navigation_search.html"}, {"isActive": false, "title": "Coding Assistance", "url": "/resharper/features/coding_assistance.html", "items": [], "cleaned_url": "/resharper/features/coding_assistance.html"}, {"isActive": false, "title": "Code Completion", "url": "/resharper/features/code_completion.html", "items": [], "cleaned_url": "/resharper/features/code_completion.html"}, {"isActive": false, "title": "Project Level Features", "url": "/resharper/features/project_level.html", "items": [], "cleaned_url": "/resharper/features/project_level.html"}, {"isActive": false, "title": "Code Generation", "url": "/resharper/features/code_generation.html", "items": [], "cleaned_url": "/resharper/features/code_generation.html"}, {"isActive": true, "title": "Code Templates", "url": "/resharper/features/code_templates.html", "items": [], "cleaned_url": "/resharper/features/code_templates.html"}, {"isActive": false, "title": "Code Style", "url": "/resharper/features/code_formatting.html", "items": [], "cleaned_url": "/resharper/features/code_formatting.html"}, {"isActive": false, "title": "Debugging Assistance", "url": "/resharper/features/debugging_assistance.html", "items": [], "cleaned_url": "/resharper/features/debugging_assistance.html"}, {"isActive": false, "title": "Unit Testing", "url": "/resharper/features/unit_testing.html", "items": [], "cleaned_url": "/resharper/features/unit_testing.html"}, {"isActive": false, "title": "Internationalization", "url": "/resharper/features/internationalization.html", "items": [], "cleaned_url": "/resharper/features/internationalization.html"}, {"isActive": false, "title": "ASP.NET and ASP.NET MVC Tools", "url": "/resharper/features/asp_net_editor.html", "items": [], "cleaned_url": "/resharper/features/asp_net_editor.html"}, {"isActive": false, "title": "JavaScript and TypeScript Tools", "url": "/resharper/features/javascript_typescript.html", "items": [], "cleaned_url": "/resharper/features/javascript_typescript.html"}, {"isActive": false, "title": "XAML Editing Tools", "url": "/resharper/features/xaml_editor.html", "items": [], "cleaned_url": "/resharper/features/xaml_editor.html"}, {"isActive": false, "title": "NAnt and MSBuild Scripts Editing", "url": "/resharper/features/nant_msbuild_script.html", "items": [], "cleaned_url": "/resharper/features/nant_msbuild_script.html"}, {"isActive": false, "title": "Command Line Tools", "url": "/resharper/features/command-line.html", "items": [], "cleaned_url": "/resharper/features/command-line.html"}], "cleaned_url": "/resharper/features/"}, {"isActive": false, "title": "Docs", "url": "/resharper/documentation/", "items": [], "cleaned_url": "/resharper/documentation/"}, {"isActive": false, "title": "Blog & Social", "url": "/resharper/social/", "items": [], "cleaned_url": "/resharper/social/"}, {"isActive": false, "title": "Plugins", "url": "/resharper/plugins/", "items": [{"isActive": false, "title": "ReSharper Plugin Directory", "url": "/resharper/plugins/list.html", "items": [], "cleaned_url": "/resharper/plugins/list.html"}], "cleaned_url": "/resharper/plugins/"}, {"isActive": false, "title": "Buy", "url": "/resharper/buy/", "items": [], "cleaned_url": "/resharper/buy/"}, {"isActive": false, "title": "Download", "url": "/resharper/download/", "type": "button", "items": [{"isActive": false, "title": "ReSharper Ultimate System Requirements", "url": "/resharper/download/system_requirements.html", "items": [], "cleaned_url": "/resharper/download/system_requirements.html"}], "cleaned_url": "/resharper/download/"}], "cleaned_url": "/resharper/"}};
+        
+        var is_layout_adaptive = false;
+                    is_layout_adaptive = true;
+        
+        var disable_language_picker = false;
+        
+        var english_only_url_prefixes = [];
+            </script>
+    
+            <script></script>
+    
+        
+    
+        <link href="/_assets/common.d44d81f300d3bff87efe.css" rel="stylesheet" type="text/css">
+<link href="/_assets/default-page.fabf52db4bf34ea78af0.css" rel="stylesheet" type="text/css">
+    <script src="/_assets/common.34604685b633d15ae3ed.js" type="text/javascript"></script>
+<script src="/_assets/default-page.2e180fc15a6b94fe7fa3.js" type="text/javascript"></script>
+    
+            <!-- Social Media tag Starts -->
+    <!-- Open Graph data -->
+            <meta property="og:title" content="Code Templates - Features | ReSharper"/>
+    
+                    <meta property="og:description" content="Use these automated code refactorings for C# 6.0, Visual Basic .NET, ASP.NET, and XAML code"/>
+    <meta property="og:image" content="http://resources.jetbrains.com/storage/products/resharper/img/meta/resharper_1280x800.png"/>
+
+    <meta property="og:site_name" content="JetBrains"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="https://www.jetbrains.com/resharper/features/code_templates.html"/>
+    <!-- Social Media tag Ends -->
+</head>
+<body class=" body-adaptive">
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<div class="page _has-page-sidebar-left">
+        <div class="page__header">
+        <header class="menu-main header"  id="js-menu-main">
+    <div class="wt-container">
+        <div class="wt-row wt-row_nowrap wt-row_size_s wt-row_align-items_center">
+            <div class="wt-col-auto-fill">
+                <a href="/" class="menu-main__logo-link"><svg class="_jetbrains-simple sprite-img menu-main__logo" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#jetbrains-simple"></use></svg></a>
+            </div>
+            <div class="wt-col-inline wt-display-md-none menu-main-skeleton-text-1" style="min-width: 69px"></div>
+            <div class="wt-col-inline wt-display-md-none menu-main-skeleton-text-1" style="min-width: 81px"></div>
+            <div class="wt-col-inline wt-display-md-none menu-main-skeleton-text-1" style="min-width: 46px"></div>
+            <div class="wt-col-inline menu-main-skeleton-button"></div>
+            <div class="wt-col-inline menu-main-skeleton-button"></div>
+        </div>
+    </div>
+</header>
+
+
+
+  <div class="menu-second" id="js-menu-second">
+    <div class="wt-container">
+        <div id="js-menu-second-mobile-wrapper" class="wt-display-none">
+            <div id="js-menu-second-mobile" >
+                <div class="menu-second-mobile wt-row wt-row_size_m wt-row_align-items_center wt-row_justify_between">
+                    <div class="wt-col-inline menu-second-skeleton-text-2" style="max-width: 120px"></div>
+                    <div class="wt-col-inline menu-second-skeleton-button" style="max-width: 80px"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="js-menu-second-desktop" class="menu-second-desktop
+                       wt-row wt-row_size_0 wt-row_align-items_center">
+            <div class="wt-col-auto-fill">
+                <a class="menu-second-title-box"
+                   href="/resharper/">
+                                            <span class="menu-second-title-box__logo jetbrains-logo">
+                            <svg class="_resharper sprite-img" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#resharper"></use></svg>
+                        </span>
+                    
+                    <span class="menu-second-title-box__title wt-h3">ReSharper</span>
+                </a>
+            </div>
+
+                            
+                                                        <a href="/resharper/whatsnew/"
+                       class="wt-col-inline wt-text-2 wt-text-2_hardness_average menu-second__link
+                                                                ">
+                        What&#39;s New
+                         2019.2                    </a>
+                                            
+                                                        <a href="/resharper/eap/"
+                       class="wt-col-inline wt-text-2 wt-text-2_hardness_average menu-second__link
+                                                                ">
+                        Early Access
+                                            </a>
+                                            
+                                                        <a href="/resharper/features/"
+                       class="wt-col-inline wt-text-2 wt-text-2_hardness_average menu-second__link
+                                                                wt-text-2_hardness_primary">
+                        Features
+                                            </a>
+                                            
+                                                        <a href="/resharper/documentation/"
+                       class="wt-col-inline wt-text-2 wt-text-2_hardness_average menu-second__link
+                                                                ">
+                        Docs
+                                            </a>
+                                            
+                                                        <a href="/resharper/social/"
+                       class="wt-col-inline wt-text-2 wt-text-2_hardness_average menu-second__link
+                                                                ">
+                        Blog &amp; Social
+                                            </a>
+                                            
+                                                        <a href="/resharper/plugins/"
+                       class="wt-col-inline wt-text-2 wt-text-2_hardness_average menu-second__link
+                                                                ">
+                        Plugins
+                                            </a>
+                                            
+                                                        <a href="/resharper/buy/"
+                       class="wt-col-inline wt-text-2 wt-text-2_hardness_average menu-second__link
+                                                                ">
+                        Buy
+                                            </a>
+                                            
+                            
+                                                    
+                            <a href="/resharper/download/"
+                   class="wt-col-inline menu-second__download-button wt-button wt-button_size_s wt-button_mode_primary">
+                    Download
+                </a>
+                    </div>
+
+    </div>
+</div>
+
+    </div>
+    
+<div class="page__content">
+            
+                    <nav class="page-sidebar _align-left-fixed _shadow" id="pageSidebarLeft">
+            <div class="page-sidebar__toggle-btn">
+                <svg class="_hamburger sprite-img _gray" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#hamburger"></use></svg>
+                <svg class="_close sprite-img _gray" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#close"></use></svg>
+            </div>
+            <div class="page-sidebar__title">
+                <a href="/resharper/features/" class="page-sidebar__title-link">Features</a>
+            </div>
+            <ul class="page-sidebar__list">
+                                                  <li class="page-sidebar__item">
+                      <a href="/resharper/features/code_analysis.html" class="page-sidebar__link  ">Code Analysis</a>
+                  </li>
+                                                  <li class="page-sidebar__item">
+                      <a href="/resharper/features/quick_fixes.html" class="page-sidebar__link  ">Quick-Fixes</a>
+                  </li>
+                                                  <li class="page-sidebar__item">
+                      <a href="/resharper/features/context_actions.html" class="page-sidebar__link  ">Context Actions</a>
+                  </li>
+                                                  <li class="page-sidebar__item">
+                      <a href="/resharper/features/code_refactoring.html" class="page-sidebar__link  ">Refactorings</a>
+                  </li>
+                                                  <li class="page-sidebar__item">
+                      <a href="/resharper/features/navigation_search.html" class="page-sidebar__link  ">Navigation and Search</a>
+                  </li>
+                                                  <li class="page-sidebar__item">
+                      <a href="/resharper/features/coding_assistance.html" class="page-sidebar__link  ">Coding Assistance</a>
+                  </li>
+                                                  <li class="page-sidebar__item">
+                      <a href="/resharper/features/code_completion.html" class="page-sidebar__link  ">Code Completion</a>
+                  </li>
+                                                  <li class="page-sidebar__item">
+                      <a href="/resharper/features/project_level.html" class="page-sidebar__link  ">Project Level Features</a>
+                  </li>
+                                                  <li class="page-sidebar__item">
+                      <a href="/resharper/features/code_generation.html" class="page-sidebar__link  ">Code Generation</a>
+                  </li>
+                                                  <li class="page-sidebar__item">
+                      <a href="/resharper/features/code_templates.html" class="page-sidebar__link  _active">Code Templates</a>
+                  </li>
+                                                  <li class="page-sidebar__item">
+                      <a href="/resharper/features/code_formatting.html" class="page-sidebar__link  ">Code Style</a>
+                  </li>
+                                                  <li class="page-sidebar__item">
+                      <a href="/resharper/features/debugging_assistance.html" class="page-sidebar__link  ">Debugging Assistance</a>
+                  </li>
+                                                  <li class="page-sidebar__item">
+                      <a href="/resharper/features/unit_testing.html" class="page-sidebar__link  ">Unit Testing</a>
+                  </li>
+                                                  <li class="page-sidebar__item">
+                      <a href="/resharper/features/internationalization.html" class="page-sidebar__link  ">Internationalization</a>
+                  </li>
+                                                  <li class="page-sidebar__item">
+                      <a href="/resharper/features/asp_net_editor.html" class="page-sidebar__link  ">ASP.NET and ASP.NET MVC Tools</a>
+                  </li>
+                                                  <li class="page-sidebar__item">
+                      <a href="/resharper/features/javascript_typescript.html" class="page-sidebar__link  ">JavaScript and TypeScript Tools</a>
+                  </li>
+                                                  <li class="page-sidebar__item">
+                      <a href="/resharper/features/xaml_editor.html" class="page-sidebar__link  ">XAML Editing Tools</a>
+                  </li>
+                                                  <li class="page-sidebar__item">
+                      <a href="/resharper/features/nant_msbuild_script.html" class="page-sidebar__link  ">NAnt and MSBuild Scripts Editing</a>
+                  </li>
+                                                  <li class="page-sidebar__item">
+                      <a href="/resharper/features/command-line.html" class="page-sidebar__link  ">Command Line Tools</a>
+                  </li>
+                          </ul>
+        </nav>
+                                <section class="wt-section">
+<div class="wt-container">
+<div class="f-page-header f-page-header_second">
+<h1 class="f-title">Code templates</h1>
+</div>
+<div class="f-section">
+<div class="f-block f-block_1-of-1">
+<p class="f-text">
+                        ReSharper provides multiple kinds of code templates that help write common code
+                        constructs
+                        faster, surround existing code with enclosing blocks, or create new files. You can create your
+                        own templates specific to your coding habits or your code base.
+                    </p>
+</div>
+<div class="f-block f-block_1-of-1 f-block_img-right">
+<div class="f-img f-img_1-of-2 f-img_bordered">
+<img alt="ReSharper live templates in C#" class="js-gif f-img" data-gif-src="/resharper/features/screenshots/100/live_templates.gif" src="/resharper/features/screenshots/100/live_templates_thumb.png">
+</div>
+<div class="f-description">
+<h3 class="f-title" id="Live_Templates">Live templates</h3>
+<div class="f-text">
+<p>Live templates are ReSharper's far more intelligent version of Visual Studio's code
+                                snippets.</p>
+<p>To apply a
+                                live template, just type a template abbreviation, and press <kbd>Tab</kbd> in the
+                                completion list to expand the template. After that, use <kbd>Enter</kbd> or
+                                <kbd>Tab</kbd>
+                                to navigate
+                                through template parameters. (If you use Visual Studio's native code completion, press
+                                <kbd>Ctrl+E,
+                                    L</kbd> to display the list of available live
+                                templates and expand a template.)</p>
+<p>Unlike code snippets, ReSharper can predict from the context which
+                                variables, fields, and types can be used in corresponding templates. In most cases you
+                                don't
+                                need to
+                                type anything yourself. Just choose from a list of suggested values.
+                                By the way, ReSharper imports Visual Studio code snippets for C# and JavaScript
+                                and makes them available as live templates.
+                            </p>
+<p>ReSharper provides a total of 170+ predefined live templates for most supported languages
+                                and
+                                technologies. The list includes
+                                templates for iterating through collections, writing assertion methods, creating new
+                                arrays,
+                                outputting
+                                values, coding LINQ queries, generating auto-properties, and more.</p>
+</div>
+</div>
+</div>
+<div class="f-block f-block_1-of-1 f-block_img-right">
+<div class="f-img f-img_1-of-2 f-img_bordered">
+<img alt="ReSharper surround templates in C#" class="js-gif f-img" data-gif-src="/resharper/features/screenshots/100/surround_templates.gif" src="/resharper/features/screenshots/100/surround_templates_thumb.png">
+</div>
+<div class="f-description">
+<h3 class="f-title" id="Surround_Templates">Surround templates</h3>
+<div class="f-text">
+<p>Surround templates are used to quickly enclose an expression, a single statement, or an
+                                arbitrary
+                                block of code with <code>if...else</code>, <code>try...catch</code> or other code
+                                constructs. ReSharper
+                                intelligently reformats the code, adjusts the selection, and/or repositions the caret
+                                so that you can continue typing immediately after the template is applied.</p>
+<p>To surround a piece of code, select it and press <kbd>Ctrl+E, U</kbd>, which will show a
+                                dedicated pop-up with available surround templates. Alternatively, you can press <kbd>Alt+Enter</kbd>
+                                upon a selection, which will bring up a context menu that contains applicable surround
+                                templates as well as additional functionality such as code formatter and context
+                                actions.
+                            </p>
+</div>
+</div>
+</div>
+<div class="f-block f-block_1-of-1 f-block_img-right">
+<img alt="ReSharper file templates in ASP.NET" class="f-img f-img_1-of-2 f-img_bordered" src="/resharper/features/screenshots/100/file_templates.png">
+<div class="f-description">
+<h3 class="f-title" id="File_Templates">File templates</h3>
+<div class="f-text">
+<p>ReSharper lets you add new files and new sets of files with predefined code fragments.
+                                For example, you can create a new file with a class declaration, an interface, struct
+                                declaration,
+                                and so on. To choose from the list of file templates, press <kbd>Ctrl+Alt+Ins</kbd>
+                                without
+                                even leaving the text editor. </p>
+<p>
+                                If a file template is designed to create several files, ReSharper will add these
+                                files in the specified locations within your solution and initialize their content
+                                with the synchronized parameters.
+                            </p>
+</div>
+</div>
+</div>
+<div class="f-block f-block_1-of-1 f-block_img-right">
+<div class="f-img f-img_1-of-2 f-img_bordered">
+<img alt="ReSharper postfix templates in C#" class="js-gif f-img" data-gif-src="/resharper/features/screenshots/100/postfix_templates.gif" src="/resharper/features/screenshots/100/postfix_templates_thumb.png">
+</div>
+<div class="f-description">
+<h3 class="f-title" id="Postfix_Templates">Postfix templates</h3>
+<p class="f-text">
+                            Postfix templates help you transform expressions that you have already typed without
+                            jumping
+                            backwards.
+                            For example, you can wrap the current expression with <code>if</code>,
+                            <code>while</code>,
+                            <code>lock</code>, <code>using</code>, add <code>return</code>,
+                            <code>yield return</code>, <code>await</code> in front of the current expression,
+                            iterate over a collection, generate a switch statement, cast the expression to a
+                            specific
+                            type, or even introduce a field or property for the expression.
+                        </p>
+</div>
+</div>
+<div class="f-block f-block_1-of-1 f-block_img-right">
+<div class="f-img f-img_1-of-2 f-img_bordered">
+<img alt="Applying a source template with ReSharper" class="js-gif f-img" data-gif-src="/resharper/features/screenshots/100/source_templates.gif" src="/resharper/features/screenshots/100/source_templates_thumb.png">
+</div>
+<div class="f-description">
+<h3 class="f-title" id="Source_Templates">Source templates (C# Only)</h3>
+<div class="f-text">
+<p>
+                                You can easily extend the list of postfix templates with custom <em>source
+                                templates</em>,
+                                which
+                                can be created anywhere in the code of your project as extension methods.
+                                You can define them for some specific types of your project or for any standard types,
+                                as public extension methods decorated with the <code>[SourceTemplate]</code> attribute
+                                from the <a class="wt-link" href="/resharper/features/code_analysis.html#Code_Annotations">JetBrains.Annotations</a>
+                                framework.
+                            </p>
+<p>
+                                To illustrate usage of source templates, let's create a simple template that
+                                will help us check double values for equality to Pi and move your caret to the next line
+                                unit tests.
+                            </p>
+<p>
+                                Now we can type the dot after any expression that evaluates to double, and invoke the
+                                created template.
+                            </p>
+<p>
+                                When you choose the template in the completion list, the expression is replaced with the
+                                template code
+                                and the caret shifts as prescribed in the template.
+                            </p>
+</div>
+</div>
+</div>
+<div class="f-block f-block_1-of-1 f-block_img-right">
+<div class="f-img f-img_1-of-2">
+<img alt="Template editor" class="f-img" src="/resharper/features/screenshots/100/templates_editor.png">
+</div>
+<div class="f-description">
+<h3 class="f-title" id="Customizing_Configuring_and_Sharing_Templates">
+                            Customizing, configuring and sharing templates</h3>
+<div class="f-text">
+<p>You can create your own templates and modify those that come bundled with ReSharper.</p>
+<p>For editing
+                                templates, ReSharper provides Template Editor that opens in a separate
+                                Visual Studio code pane, allowing you to switch between your code and your template
+                                editing
+                                environment
+                                and make real-world testing of templates faster.</p>
+</div>
+</div>
+</div>
+<div class="f-block f-block_1-of-1 f-block_img-right">
+<div class="f-img f-img_1-of-2">
+<img alt="Templates Explorer window" class="f-img" src="/resharper/features/screenshots/100/templates_explorer.png">
+</div>
+<div class="f-description">
+<div class="f-text">
+<p>For managing templates, you can use Templates Explorer that you can call by choosing
+                                <span class="menu-path">ReSharper | Tools | Templates Explorer</span>.</p>
+<p>Once defined, any template can be easily shared among team members in two ways using the
+                                Templates
+                                Explorer.</p>
+<p>
+                                Another way of sharing templates with your team members is using the mechanism of
+                                <a class="wt-link" href="/resharper/features/project_level.html#Distributed_Storage_of_ReSharper_Settings">settings
+                                    layers</a>
+                                as code templates are saved in ReSharper settings.
+                                To make templates available to other developers who work on the same shared solution,
+                                you can either create new code templates in a team-shared settings layer or copy
+                                existing
+                                templates
+                                to a team-shared settings layer.
+                            </p>
+<p>
+                                You can also export code templates to a file and distribute or share it with other
+                                developers.
+                                Accordingly, you can import code templates created and shared by other developers.
+                            </p>
+</div>
+</div>
+</div>
+<div class="f-block f-block_1-of-1">
+<h4 class="f-title">Note on shortcuts</h4>
+<p class="f-text">All keyboard shortcuts provided in this page are available in ReSharper's default "Visual Studio" keymap. For
+        details on ReSharper's two keymaps, see <a class="wt-link" href="/resharper/documentation/">ReSharper Documentation</a>.</p>
+</div></div>
+</div>
+</section>
+</div>
+
+            
+<div class="page__footer">
+    <footer class="footer" id="footer">
+        <div class="wt-container">
+            <div class="footer__main wt-row wt-row_size_m wt-row-sm_direction_column-reverse">
+                <div class="footer__logo wt-col-inline wt-display-md-none">
+                    <div class="jetbrains-logo _size-3 _full-block">
+                        <svg class="sprite-img jetbrains">
+                            <use xlink:href="#jetbrains" />
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="wt-col-auto-fill wt-col-sm-12">
+                    <div class="wt-row wt-row_size_xs wt-row-sm_size_m wt-offset-top-12">
+                        <div class="wt-col-inline footer-skeleton-button"></div>
+                        <div class="wt-col-inline footer-skeleton-button"></div>
+                        <div class="wt-col-inline footer-skeleton-button"></div>
+                        <div class="wt-col-inline footer-skeleton-button"></div>
+                    </div>
+
+                    <div class="footer-skeleton-text-2 wt-offset-top-24" style="max-width: 45%"></div>
+                    <div class="footer-skeleton-text-2 wt-offset-top-12" style="max-width: 70%"></div>
+                </div>
+
+                <div class="wt-col-inline wt-col-sm-12 wt-col_align-self_end wt-col-sm_align-self_start">
+                    <div class="wt-row wt-row_size_m wt-row_justify_end wt-row-sm_justify_start">
+                        <div class="wt-col-inline footer-skeleton-button" style="min-width: 180px"></div>
+                        <div class="wt-col-inline footer-skeleton-button" style="min-width: 80px"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+    </div>
+<script>
+(function() {
+  var STORAGE_KEY_NAME = 'firefoxDisappearedSVGWorkaround';
+  var STORAGE_KEY_VALUE = '1';
+
+  var isFirefox = /firefox/i.test(navigator.userAgent);
+  if (!isFirefox || isFirefox && sessionStorage.getItem(STORAGE_KEY_NAME) === STORAGE_KEY_VALUE) {
+    return;
+  }
+
+  var arrayFrom = function (arrayLike) {
+    return Array.prototype.slice.call(arrayLike, 0);
+  };
+
+  function workaround() {
+    var uses = document.querySelectorAll('.page svg use');
+    var badNodesCount = 0;
+
+    arrayFrom(uses).forEach(function (node) {
+      var rect = node.getBoundingClientRect();
+      if (rect.width === 0 && rect.height === 0)
+        badNodesCount++;
+    });
+
+    if (badNodesCount === uses.length) {
+      sessionStorage.setItem(STORAGE_KEY_NAME, STORAGE_KEY_VALUE);
+      if (typeof dataLayer !== 'undefined')
+        dataLayer.push({'firefoxDisappearedSVGWorkaround': STORAGE_KEY_VALUE});
+
+      window.location.replace(window.location.href);
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', workaround);
+
+})();
+</script>      <link href="/_assets/banner-rotator.entry.07ac548a2a68a7922693.css" rel="stylesheet" type="text/css">
+      <script src="/_assets/banner-rotator.entry.b9ea3aaba598786010f0.js" type="text/javascript"></script>
+      
+      
+  
+<script>
+(function () {
+
+  'use strict';
+
+  function ImagesSrcReplacer () {
+
+    var attribute = 'data-src';
+    var matches = document.querySelectorAll('img[' + attribute + ']');
+
+    for (var i = 0, n = matches.length; i < n; i++) {
+
+      var attrValue = matches[i].getAttribute(attribute);
+
+      if (_isHighDensity ()) {
+
+        var name = attrValue.substring(0, attrValue.lastIndexOf('.'));
+        var extention = attrValue.substring(attrValue.lastIndexOf('.'), attrValue.length);
+
+        matches[i].setAttribute('src', name + '@2x' + extention);
+
+      } else {
+        matches[i].setAttribute('src', attrValue)
+      }
+    }
+
+    /**
+     * Detect high density
+     * @returns {*|boolean}
+     */
+    function _isHighDensity () {
+      return (
+      (window.matchMedia &&
+      (window.matchMedia('only screen and (min-resolution: 124dpi), only screen and (min-resolution: 1.3dppx), only screen and (min-resolution: 48.8dpcm)').matches ||
+       window.matchMedia('only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (-o-min-device-pixel-ratio: 2.6/2), only screen and (min--moz-device-pixel-ratio: 1.3), only screen and (min-device-pixel-ratio: 1.3)').matches)) ||
+      (window.devicePixelRatio &&
+       window.devicePixelRatio > 1.3));
+    }
+  }
+
+  return new ImagesSrcReplacer()
+
+}(document, window));
+</script></body>
+</html>

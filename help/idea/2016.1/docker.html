@@ -1,0 +1,179 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"></meta><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><title>IntelliJ IDEA 2016.1 Help :: Docker</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Docker"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.1 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWindow</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="testing-dart.html">Testing Dart</a><a class="navigation-links__next" href="ejb.html">EJB</a></div><h1>Docker</h1><a name="d170870e7"></a><p>You can add <a name="d170870e9"></a><a href="https://www.docker.com/" data-external="true"><span>Docker</span></a> support to IntelliJ IDEA
+        by installing the Docker integration <a name="d170870e12"></a><a href="plugins.html"><span>plugin</span></a>.</p><ul><li class="list__item"><a href="#d170870e23">Prerequisites</a></li><li class="list__item"><a href="#d170870e77">Overview of Docker support</a></li><li class="list__item"><a href="#d170870e119">Working with Docker: Process overview</a></li><li class="list__item"><a href="#d170870e231">Example: Deploying a web app into the Wildfly Docker container</a></li></ul><a name="d170870e23"></a><h2>Prerequisites</h2>
+    <a name="d170870e25"></a><p>Make sure that the following prerequisites are met:</p>
+    <ul class="list _ul"><li class="list__item"><a name="d170870e30"></a>Docker is installed, as described on the page <a name="d170870e32"></a><a href="https://docs.docker.com/" data-external="true"><span>Docker Docs</span></a>.
+            You can install Docker on the various platforms:
+            <ul class="list _ul"><li class="list__item"><a name="d170870e37"></a><a name="d170870e38"></a><a href="https://docs.docker.com/installation/windows/" data-external="true"><span>Windows</span></a></li><li class="list__item"><a name="d170870e41"></a><a name="d170870e42"></a><a href="https://docs.docker.com/installation/mac/" data-external="true"><span>Mac OS X</span></a></li><li class="list__item"><a name="d170870e45"></a><a name="d170870e46"></a><a href="https://docs.docker.com/installation/ubuntulinux/" data-external="true"><span>Linux</span></a> (Ubuntu, other
+                    distributions-related instructions are available as well);</li><li class="list__item"><a name="d170870e50"></a>Cloud platforms (e.g. here are tutorials on installing Docker on
+                    <a name="d170870e52"></a><a href="http://docs.aws.amazon.com/AmazonECS/latest/developerguide/docker-basics.html" data-external="true"><span>Amazon EC2</span></a>,
+                    <a name="d170870e55"></a><a href="https://cloud.google.com/compute/docs/containers" data-external="true"><span>Google Cloud Platform</span></a>, and
+                    <a name="d170870e58"></a><a href="https://azure.microsoft.com/en-us/documentation/articles/virtual-machines-docker-vm-extension/" data-external="true"><span>Microsoft Azure</span></a>.)</li></ul>
+        </li><li class="list__item"><a name="d170870e64"></a>Plugin Docker integration is installed.<br>
+            <a name="d170870e68"></a><p>
+            The plugin is&nbsp;<a name="d69242e180"></a><u id="d69242e180">not</u>&nbsp;bundled with IntelliJ IDEA, but it can be installed from the <a name="d69242e183"></a><span class="emphasis">JetBrains plugin repository</span>
+            as described in <a name="d69242e186"></a><a href="installing-updating-and-uninstalling-repository-plugins.html"><span>Installing, Updating and Uninstalling Repository Plugins</span></a> and <a name="d69242e188"></a><a href="enabling-and-disabling-plugins.html"><span>Enabling and Disabling Plugins</span></a>.
+    </p>
+        </li></ul>
+<a name="d170870e77"></a><h2>Overview of Docker support</h2>
+        <a name="d170870e79"></a><p>The Docker integration plugin adds the following to IntelliJ IDEA:</p>
+        <ul class="list _ul"><li class="list__item"><a name="d170870e84"></a>Docker configurations.
+                These are named sets of settings for accessing the Docker Remote API.</li><li class="list__item"><a name="d170870e87"></a>Docker Deployment <a name="d170870e89"></a><a href="run-debug-configuration.html"><span>run/debug configurations</span></a>.
+                They let you download and build Docker images,
+                 
+                 
+                    create and start Docker containers, and
+                    deploy your application <a name="d170870e97"></a><a href="artifact.html"><span>artifacts</span></a> into the containers. 
+                Application debugging is supported only for Java.</li><li class="list__item"><a name="d170870e104"></a>Docker tool window that lets you
+                manage your Docker images and containers.</li><li class="list__item"><a name="d170870e107"></a>Docker Registry configurations that represent your Docker image repository user accounts.</li></ul>
+    <a name="d170870e119"></a><h2>Working with Docker: Process overview</h2>
+        <ol class="list _decimal"><li class="list__item"><a name="d170870e123"></a>Install Docker and start the Docker daemon (on Windows and OS X - along with the Docker VM in which it
+                runs). For corresponding instructions,
+                see <a name="d170870e125"></a><a href="http://docs.docker.com/mac/started/" data-external="true"><span>Get Started with Docker</span></a>.</li><li class="list__item"><a name="d170870e129"></a>
+                 Install the Docker integration plugin. For instructions, see <a name="d170870e133"></a><a href="installing-updating-and-uninstalling-repository-plugins.html"><span>Installing, Updating and Uninstalling Repository Plugins</span></a>.
+                <a name="d170870e135"></a><p><a name="d170870e136"></a><span class="emphasis">Note:</span> For the plugin to work properly, IntelliJ IDEA should be started using Java 7
+                    or a later version.</p>
+             
+            </li><li class="list__item"><a name="d170870e144"></a>Create a Docker configuration. You can do that:
+                <ul class="list _ul"><li class="list__item"><a name="d170870e148"></a>Separately, in the <a name="d170870e150"></a><span class="control">Settings / Preferences</span> dialog:
+                        <kbd data-default="Ctrl+Alt+S" data-default_for_gnome="Ctrl+Alt+S" data-default_for_kde="Ctrl+Alt+S" data-default_for_xwin="Ctrl+Alt+S" data-emacs="Ctrl+Alt+S" data-jbuilder="N/A" data-visual_studio="Alt+F7" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Alt+S" data-mac_os_x_10.5_="&#x2318;," data-mac_os_x="&#x2318;," data-eclipse_mac_os_x="&#x2318;," data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+S</kbd>
+                        <a name="d170870e155"></a><span class="menupath">| Build, Execution, Deployment | Clouds |</span>
+                         
+                        <img alt="add" width="12" height="12" title="add" src="/help/img/idea/2016.1/new.png" class="inline-icon-12"> <a name="d170870e164"></a><span class="menupath">| Docker</span>.</li><li class="list__item"><a name="d170870e168"></a>When creating a Docker Deployment run configuration:
+                        <a name="d170870e170"></a><span class="menupath">Run | Edit Configurations |</span>
+                        <img alt="add" width="12" height="12" title="add" src="/help/img/idea/2016.1/new.png" class="inline-icon-12"> <a name="d170870e175"></a><span class="menupath">| Docker Deployment</span>, etc.</li></ul>
+                <a name="d170870e179"></a><p>See the <a name="d170870e181"></a><a href="clouds.html#docker"><span>settings for a Docker configuration</span></a>.</p>
+            </li><li class="list__item"><a name="d170870e186"></a>If you are going to deploy your application into a container,
+                create an <a name="d170870e188"></a><a href="artifact.html"><span>artifact configuration</span></a> for your application and
+                build the artifact (e.g. <a name="d170870e191"></a><span class="menupath">Build | Build Artifacts</span>).</li><li class="list__item"><a name="d170870e197"></a>Create a <a name="d170870e199"></a><a href="run-debug-configuration-docker-deployment.html"><span>Docker Deployment run configuration</span></a>.</li><li class="list__item"><a name="d170870e203"></a>Execute the run configuration.</li><li class="list__item"><a name="d170870e223"></a>Use the <a name="d170870e225"></a><a href="docker-tool-window.html"><span>Docker Tool Window</span></a> to
+                manage your Docker images, containers and deployed applications.</li></ol>
+    <a name="d170870e231"></a><h2>Example: Deploying a web app into the Wildfly Docker container</h2>
+        <a name="d170870e233"></a><p>
+            Once you have installed Docker and the Docker integration plugin,
+            you can try out some of the Docker integration features.</p>
+        <a name="d170870e236"></a><p>
+            In this example, we'll use the
+            <a name="d170870e238"></a><a href="https://hub.docker.com/r/jboss/wildfly/" data-external="true"><span>Wildfly app server Docker image</span></a>
+            to create a container and deploy a one-page JSP application into that container.</p>
+        <ol class="list _decimal"><li class="list__item"><a name="d170870e244"></a>
+                Create a project for developing a Java web application
+                (<a name="d170870e246"></a><span class="menupath">File | New | Project | Java | Web Application</span>, etc.),
+                see e.g <a href="enabling-web-application-support.html#new">Enabling Web app development support when creating a project or module</a>.
+                <figure><img alt="01_DockerNewProject" width="580" height="259" title="01_DockerNewProject" src="/help/img/idea/2016.1/01_DockerNewProject.png"></figure>
+            </li><li class="list__item"><a name="d170870e254"></a>
+                When the project is created,
+                add text (e.g. <code class="code" data-lang="Java">Hello World!</code>) to <code class="code" data-lang="Java">index.jsp</code>,
+                see e.g. <a href="developing-a-java-ee-application.html#source_code">Developing source code</a>.
+                <figure><img alt="02_DockerIndexJsp" width="580" height="243" title="02_DockerIndexJsp" src="/help/img/idea/2016.1/02_DockerIndexJsp.png"></figure>
+            </li><li class="list__item"><a name="d170870e267"></a>
+                Create a Docker configuration and specify Docker API settings:
+                <ol class="list _decimal"><li class="list__item"><a name="d170870e271"></a>
+                        Open the <a name="d170870e273"></a><span class="control">Clouds</span> page of the <a name="d170870e276"></a><span class="control">Settings / Preferences</span> dialog:
+                        <a name="d170870e279"></a><span class="menupath">File | Settings | Build, Execution, Deployment | Clouds</span> on Windows and Linux, or
+                        <a name="d170870e282"></a><span class="menupath">IntelliJ IDEA | Preferences | Build, Execution, Deployment | Clouds</span> on OS X.
+                    </li><li class="list__item"><a name="d170870e286"></a>
+                        Click <img alt="add" width="12" height="12" title="add" src="/help/img/idea/2016.1/new.png" class="inline-icon-12"> and select <a name="d170870e290"></a><span class="control">Docker</span>.
+                        <a name="d170870e293"></a><p>
+                            The default settings provided by IntelliJ IDEA should be OK:
+ 
+                        </p>
+                        <ul class="list _ul"><li class="list__item"><a name="d170870e300"></a><a name="d170870e301"></a><span class="control">API URL:</span>
+                                <code class="code" data-lang="Java">https://192.168.99.100:2376</code></li><li class="list__item"><a name="d170870e307"></a><a name="d170870e308"></a><span class="control">Certificates folder:</span>
+                                <code class="code" data-lang="Java">&lt;your_home_directory&gt;\.docker\machine\machines\default</code></li></ul>
+                        <a name="d170870e314"></a><p>The rest of the settings, at the moment, don't matter.</p>
+                        <figure><img alt="03_DockerSettings" width="580" height="284" title="03_DockerSettings" src="/help/img/idea/2016.1/03_DockerSettings.png"></figure>
+                    </li><li class="list__item"><a name="d170870e321"></a>
+                        Click <a name="d170870e323"></a><span class="control">OK</span> in the <a name="d170870e326"></a><span class="control">Settings / Preferences</span> dialog.</li></ol>
+            </li><li class="list__item"><a name="d170870e332"></a>
+                In the project root directory, create a new directory (e.g. <code class="code" data-lang="Java">docker-dir</code>):
+                <a name="d170870e337"></a><span class="menupath">File | New | Directory</span>, etc.
+                <a name="d170870e340"></a><p>
+                    We'll use this directory to store our <code class="code" data-lang="Java">Dockerfile</code>,
+                    a <code class="code" data-lang="Java">.war</code> application artifact and
+                    a container settings file.</p></li><li class="list__item"><a name="d170870e349"></a>
+                Create a file <code class="code" data-lang="Java">Dockerfile</code> in the <code class="code" data-lang="Java">docker-dir</code> directory.</li><li class="list__item"><a name="d170870e359"></a>
+                Add the following to your Dockerfile
+                (this is what the file should contain according to the Wildfly image description):
+                <a name="d170870e361"></a><div class="code-block" data-lang="Generic"><code class="code-block__wrapper">FROM jboss/wildfly
+ADD &lt;artifact-name&gt;.war /opt/jboss/wildfly/standalone/deployments/</code></div>
+                <a name="d170870e364"></a><p>
+                    Use the actual artifact name in place of &lt;artifact-name&gt;.
+                    (On the following picture, the name of the artifact is <code class="code" data-lang="Java">HelloDocker</code>.)</p>
+                <figure><img alt="04_DockerDockerFile" width="580" height="94" title="04_DockerDockerFile" src="/help/img/idea/2016.1/04_DockerDockerFile.png"></figure>
+            </li><li class="list__item"><a name="d170870e373"></a>
+                Create an artifact configuration for your &lt;artifact-name&gt;.war:
+                <ol class="list _decimal"><li class="list__item"><a name="d170870e377"></a>
+                        Open the <a name="d170870e379"></a><span class="control">Project Structure</span> dialog
+                        (e.g. <kbd data-default="Ctrl+Shift+Alt+S" data-default_for_gnome="Ctrl+Shift+Alt+S" data-default_for_kde="Ctrl+Shift+Alt+S" data-default_for_xwin="Ctrl+Shift+Alt+S" data-emacs="Ctrl+Alt+Shift+S" data-jbuilder="Ctrl+Shift+Alt+S" data-visual_studio="Ctrl+Alt+Shift+S" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Shift+Alt+S" data-mac_os_x_10.5_="&#x2318;;" data-mac_os_x="&#x2318;;" data-eclipse_mac_os_x="&#x2318;;" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Shift+Alt+S</kbd>) and
+                        select <a name="d170870e384"></a><span class="control">Artifacts</span>.</li><li class="list__item"><a name="d170870e388"></a>
+                        Click <img alt="add" width="12" height="12" title="add" src="/help/img/idea/2016.1/new.png" class="inline-icon-12">, select <a name="d170870e392"></a><span class="control">Web Application: Archive</span> and
+                        select <a name="d170870e395"></a><span class="control">For '&lt;project-name&gt;:war exploded'</span>.</li><li class="list__item"><a name="d170870e399"></a>
+                        Change the artifact name (in the <a name="d170870e401"></a><span class="control">Name</span> field).
+                        The name should be the same as in your <code class="code" data-lang="Java">Dockerfile</code>
+                        (<code class="code" data-lang="Java">&lt;artifact-name&gt;</code>) but without <code class="code" data-lang="Java">.war</code> at the end.</li><li class="list__item"><a name="d170870e414"></a>
+                        Select the <code class="code" data-lang="Java">docker-dir</code> directory as the artifact output directory
+                        (the <a name="d170870e419"></a><span class="control">Output directory</span> field.)
+                        (According to the Wildfly image description,
+                        the application <code class="code" data-lang="Java">.war</code> artifact should be in the same directory as
+                        the <code class="code" data-lang="Java">Dockerfile</code>.)
+                        <figure><img alt="05_DockerArtifact" width="583" height="230" title="05_DockerArtifact" src="/help/img/idea/2016.1/05_DockerArtifact.png"></figure>
+                    </li><li class="list__item"><a name="d170870e431"></a>
+                        Click <a name="d170870e433"></a><span class="control">OK</span> in the <a name="d170870e436"></a><span class="control">Project Structure</span> dialog.</li></ol></li><li class="list__item"><a name="d170870e440"></a>
+                Create a Docker Deployment run/debug configuration and specify its settings:
+                <ol class="list _decimal"><li class="list__item"><a name="d170870e444"></a><a name="d170870e445"></a><span class="menupath">Run | Edit Configurations |</span>
+                        <img alt="add" width="12" height="12" title="add" src="/help/img/idea/2016.1/new.png" class="inline-icon-12">
+                        <a name="d170870e450"></a><span class="menupath">| Docker Deployment</span>.</li><li class="list__item"><a name="d170870e454"></a><a name="d170870e455"></a><span class="control">Server.</span>
+                        Select your Docker configuration.</li><li class="list__item"><a name="d170870e459"></a><a name="d170870e460"></a><span class="control">Deployment.</span>
+                        Select <a name="d170870e463"></a><span class="control">docker-dir/Dockerfile</span>.
+                        This means that the application deployment will be controlled by
+                        the corresponding <code class="code" data-lang="Java">Dockerfile</code>.</li><li class="list__item"><a name="d170870e470"></a><a name="d170870e471"></a><span class="control">Before launch.</span>
+                        Click <img alt="add" width="12" height="12" title="add" src="/help/img/idea/2016.1/new.png" class="inline-icon-12">, select <a name="d170870e476"></a><span class="control">Build Artifacts</span>, and
+                        select your <code class="code" data-lang="Java">&lt;artifact-name&gt;</code> artifact.
+                        <figure><img alt="06_DockerRunConfig" width="581" height="444" title="06_DockerRunConfig" src="/help/img/idea/2016.1/06_DockerRunConfig.png"></figure></li><li class="list__item"><a name="d170870e484"></a>
+                        Select the <a name="d170870e486"></a><span class="control">Container</span> tab.</li><li class="list__item"><a name="d170870e491"></a>
+                        <a name="d170870e493"></a><span class="control">JSON file.</span>
+                        Generate a sample container settings <code class="code" data-lang="Java">.json</code> file and
+                        save it in <code class="code" data-lang="Java">docker-dir</code>: click <img alt="import_icon" width="13" height="15" title="import_icon" src="/help/img/idea/2016.1/icon_importCopyrightProfile.png" class="inline-icon-15">,
+                        select <code class="code" data-lang="Java">docker-dir</code> and click <a name="d170870e508"></a><span class="control">OK</span>.
+                        <figure><img alt="06_DockerRunConfig_Container" width="581" height="200" title="06_DockerRunConfig_Container" src="/help/img/idea/2016.1/06_DockerRunConfig_Container.png"></figure>
+                        <a name="d170870e513"></a><p>
+                            The rest of the settings are optional.</p></li><li class="list__item"><a name="d170870e516"></a>
+
+                        Click <a name="d170870e518"></a><span class="control">OK</span>
+                        in the <a name="d170870e521"></a><span class="control">Run/Debug Configurations</span> dialog.</li></ol></li><li class="list__item"><a name="d170870e525"></a>
+                Open <code class="code" data-lang="Java">container-settings.json</code> in the editor. Note this fragment:
+                <a name="d170870e530"></a><div class="code-block" data-lang="Generic"><code class="code-block__wrapper"><span class="s2">&quot;HostConfig&quot;</span>: <span class="o">{</span>
+    <span class="s2">&quot;PortBindings&quot;</span>:<span class="o">{</span> <span class="s2">&quot;8080/tcp&quot;</span>: <span class="o">[{</span> <span class="s2">&quot;HostIp&quot;</span>: <span class="s2">&quot;0.0.0.0&quot;</span>, <span class="s2">&quot;HostPort&quot;</span>: <span class="s2">&quot;18080&quot;</span> <span class="o">}]</span> <span class="o">}</span>
+<span class="o">}</span></code></div>
+                <a name="d170870e533"></a><p>
+                    This means that the TCP port 8080 inside the container will be
+                    available to the outside world as the port 18080.</p></li><li class="list__item"><a name="d170870e536"></a>
+                Execute the run/debug configuration, e.g. by clicking
+                <img alt="run" width="11" height="14" title="run" src="/help/img/idea/2016.1/run.png" class="inline-icon-14"> to the right of the run configuration selector.
+                <figure><img alt="07_DockerRun" width="328" height="103" title="07_DockerRun" src="/help/img/idea/2016.1/07_DockerRun.png"></figure>
+                <a name="d170870e542"></a><p>
+                    Wait while IntelliJ IDEA downloads and builds the Wildfly image,
+                    creates and starts the container, and deploys the artifact into the container.
+                    (The <a name="d170870e544"></a><span class="control">Docker</span> tool window opens and
+                    corresponding info is output there.)</p>
+                <figure><img alt="08_DockerAppServers" width="580" height="236" title="08_DockerAppServers" src="/help/img/idea/2016.1/08_DockerAppServers.png"></figure>
+            </li><li class="list__item"><a name="d170870e551"></a>
+                When the artifact is finally deployed,
+                open a web browser and go to <code class="code" data-lang="Java">http://192.168.99.100:18080/&lt;artifact-name&gt;/</code>
+                to see the application output.
+                <figure><img alt="09_DockerAppInBrowser" width="580" height="150" title="09_DockerAppInBrowser" src="/help/img/idea/2016.1/09_DockerAppInBrowser.png"></figure>
+            </li><li class="list__item"><a name="d170870e560"></a>
+                To get an impression of what other functionality is available,
+                look at context menu commands for various items in the <a name="d170870e562"></a><span class="control">Docker</span> tool window.
+                <figure><img alt="10_DockerAppServersContextMenu" width="580" height="353" title="10_DockerAppServersContextMenu" src="/help/img/idea/2016.1/10_DockerAppServersContextMenu.png"></figure>
+                <a name="d170870e567"></a><p>
+                    Note that you can also run Bash <code class="code" data-lang="Java">docker</code> commands.
+                    On OS X and Linux you can use the IntelliJ IDEA Terminal tool window for that.
+                    On Windows you should use the Bash command-line interpreter available in the Docker Toolbox.</p></li></ol>
+    <div class="navigation-links _bottom"><a class="navigation-links__prev" href="testing-dart.html">Testing Dart</a><a class="navigation-links__next" href="ejb.html">EJB</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content"><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d170870e871"></a><a href="clouds.html#docker"><span>Docker API settings on the Clouds page</span></a></li><li class="list__item"><a name="d170870e876"></a><a href="run-debug-configuration-docker-deployment.html"><span>Run/Debug Configuration: Docker Deployment</span></a></li><li class="list__item"><a name="d170870e878"></a><a href="docker-tool-window.html"><span>Docker Tool Window</span></a></li><li class="list__item"><a name="d170870e880"></a><a href="docker-registry.html"><span>Docker Registry</span></a></li><li class="list__item"><a name="d170870e883"></a><a href="docker-machine.html"><span>Docker Machine</span></a></li></ul></div><div class="seealso__col"><h3>Language and Framework-Specific Guidelines:</h3><ul class="list"><li class="list__item"><a name="d170870e866"></a><a href="Configuring_Remote_Interpreters_via_Docker.html"><span>Configuring Remote Interpreters via Docker</span></a></li></ul></div><div class="seealso__col"><h3>External Links:</h3><ul class="list"><li class="list__item"><a name="d170870e888"></a><a href="https://docs.docker.com/" data-external="true"><span>https://docs.docker.com/</span></a></li></ul></div></div></section><div class="last-modified">Last modified: 13 July 2016 </div></article><div id="disqus_thread"></div></div></section></main></div><script src="/help/app/app.js"></script></body></html>

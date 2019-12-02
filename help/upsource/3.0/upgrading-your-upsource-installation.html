@@ -1,0 +1,48 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"></meta><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><title>Upsource 3.0 Help :: Upgrading your Upsource installation</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="upgrade"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search Upsource Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>Upsource 3.0 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWindow</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="backing-up-and-restoring-data.html">Backing up and Restoring Data</a><a class="navigation-links__next" href="moving-your-upsource-installation-to-another-server.html">Moving Your Upsource Installation to Another Server</a></div><h1>Upgrading your Upsource installation</h1><a name="d26845e3"></a><p>Use this instruction to upgrade your existing Upsource installation to a newer one. Upgrade procedures vary significantly depending on the version increment (i.e. 2.5.1 to 3.0 vs 3.0 to 3.0.1) as outlined below.</p><aside class="note sideblock"><a name="d26845e7"></a><p>All commands listed here are Windows commands. If you're working on a Linux or Mac OS X server, simply replace <code class="code" data-lang="Java">.bat</code> with <code class="code" data-lang="Java">.sh</code>.</p></aside><a name="d26845e16"></a><a name="dynaProc0"></a><section class="procedure-steps"><ol class=".list _decimal"><li class="list__item">
+         If you are upgrading to version 3.0, please <a name="d26845e20"></a><a href="backing-up-and-restoring-data.html"><span>Create a backup</span></a> while your existing Upsource installation is running. You can omit this step for future patch updates.
+      </li><li class="list__item">
+         Stop Upsource: <code class="code" data-lang="Java">&lt;upsource_home&gt;\bin\upsource.bat stop</code>
+      </li><li class="list__item">
+         Use your operating system's tools to make sure that all Java processes launched by Upsource are no longer running. (On Windows, you can use <a name="d26845e32"></a><a href="http://technet.microsoft.com/en-us/sysinternals/bb896653.aspx" data-external="true"><span>Process Explorer</span></a>.)
+         <ul class="list _ul"><li class="list__item"><a name="d26845e37"></a> If there are no Upsource-related Java processes outstanding, proceed to step 4.</li><li class="list__item"><a name="d26845e40"></a> If there are Upsource-related Java processes still running:
+               <ul class="list _alpha-lower"><li class="list__item"><a name="d26845e44"></a>
+                     (Optional, Windows only) Please consider taking thread dumps from those processes using the <a name="d26845e46"></a><a href="http://helpx.adobe.com/experience-manager/kb/TakeThreadDump.html" data-external="true"><span>jstack</span></a> tool (on Windows, it's available under <a name="d26845e49"></a><i id="d26845e49">&lt;upsource_home&gt;/internal/java/windows-amd64/bin</i>) and <a name="d26845e52"></a><a href="mailto:upsource-support@jetbrains.com">provide the thread dumps to JetBrains</a> for investigation.
+                  </li><li class="list__item"><a name="d26845e56"></a>
+                     Kill the outstanding process trees.
+                  </li></ul>
+            </li></ul>
+      </li><li class="list__item">
+         If your <a name="d26845e65"></a><i id="d26845e65">&lt;upsource_home&gt;</i> directory name is not build-specific, rename <a name="d26845e68"></a><i id="d26845e68">&lt;upsource_home&gt;</i> to <a name="d26845e71"></a><i id="d26845e71">Upsource.old</i> (you can use another name).
+      </li><li class="list__item">
+         Download and unpack the zip archive with a new Upsource build.
+         <aside class="note sideblock"><a name="d26845e78"></a><p>The unzipped installation should not be placed inside an old <a name="d26845e80"></a><i id="d26845e80">&lt;upsource_home&gt;</i> directory that contains old files.</p></aside>
+      </li><li class="list__item">
+         <a name="d26845e88"></a><p>Start Upsource (new instance): <code class="code" data-lang="Java">&lt;upsource_home&gt;\bin\upsource.bat start</code></p>
+         <a name="d26845e93"></a><p> It will open Configuration Wizard in your default browser:</p>
+         <aside class="note sideblock"><a name="d26845e97"></a><p>The URL at which Upsource front-end is started is written to the console and can also be found in <code class="code" data-lang="Java">&lt;upsource_home&gt;\logs\upsource-stdout.log</code> </p></aside>
+         <figure><img alt="upgrade_wizard1" width="400" height="177" title="upgrade_wizard1" src="/help/img/upsource/3.0/upgrade_wizard1.png"></figure>
+      </li><li class="list__item">
+         <a name="d26845e108"></a><p>Click <a name="d26845e110"></a><span class="control">Upgrade</span>.</p>
+      </li><li class="list__item">
+         <a name="d26845e117"></a><p>In this step, select the location of your previous installation or backup to upgrade from:</p>
+         <figure><img alt="upgrade_wizard2" width="400" height="314" title="upgrade_wizard2" src="/help/img/upsource/3.0/upgrade_wizard2.png"></figure>
+         <ul class="list _ul"><li class="list__item"><a name="d26845e124"></a>If you are upgrading any older version to version 3.0 and have a backup (you should, see step 1), specify its location. It's a date-specific directory inside the <a name="d26845e126"></a><i id="d26845e126">backups</i> folder.</li><li class="list__item"><a name="d26845e130"></a>
+               If you are patch-upgrading version 3.0 to 3.0.x, then specify the location (the home directory) of your previous installation.
+            </li></ul>
+         Click <a name="d26845e134"></a><span class="control">Next</span>.
+      </li><li class="list__item">
+         <a name="d26845e140"></a><p>Now you can verify and change (if necessary) your system settings and location of system directories:</p>
+         <figure><img alt="upgrade_wizard4" width="400" height="378" title="upgrade_wizard4" src="/help/img/upsource/3.0/upgrade_wizard4.png"></figure>
+      </li><li class="list__item">
+         <a name="d26845e148"></a><p>Click <a name="d26845e150"></a><span class="control">Upgrade</span> when you're done.</p>
+         <a name="d26845e154"></a><p>Wait a little for Upsource to launch its components:</p>
+         <figure><img alt="upsource_starting" width="400" height="243" title="upsource_starting" src="/help/img/upsource/3.0/upsource_starting.png"></figure>
+         <a name="d26845e159"></a><p>As soon as it's done, it will open its welcome page.</p>
+      </li></ol></section><div class="last-modified">Last modified: 8 November 2016 </div></article><div id="disqus_thread"></div></div></section></main></div><script src="/help/app/app.js"></script></body></html>

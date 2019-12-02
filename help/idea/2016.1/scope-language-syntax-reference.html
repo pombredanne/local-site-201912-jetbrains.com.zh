@@ -1,0 +1,103 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"></meta><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta content="&#xA;        IntelliJ IDEA project scope specification using the scope language: sets of files, modifiers, logical operations, defining scopes.&#xA;    " name="description"><meta charset="UTF-8"><title>
+        IntelliJ IDEA scope language syntax reference.
+    </title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="reference.scope.syntax"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.1 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWindow</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="regular-expression-syntax-reference.html">Regular Expression Syntax Reference</a><a class="navigation-links__next" href="project-and-ide-settings.html">Project and IDE Settings</a></div><h1>Scope Language Syntax Reference</h1><a name="d1453038e11"></a><p>The <a name="d1453038e13"></a><span class="emphasis">scopes language</span> is used in specifying project <a name="d1453038e16"></a><a href="scope.html"><span>scopes</span></a> involved in various kinds of analysis.</p><a name="d1453038e20"></a><p>In this section:</p><ul><li class="list__item"><a href="#d1453038e26">Sets of Classes</a></li><li class="list__item"><a href="#d1453038e49">Sets of Files</a></li><li class="list__item"><a href="#d1453038e72">Modifiers</a></li><li class="list__item"><a href="#d1453038e149">Logical Operators</a></li><li class="list__item"><a href="#d1453038e180">Defining Scopes</a></li><li class="list__item"><a href="#d1453038e252">Examples</a></li></ul><a name="d1453038e26"></a><h2>Sets of Classes</h2>
+		    <ul class="list _ul"><li class="list__item"><a name="d1453038e30"></a>Single class is defined by a class name, i.e. <code class="code" data-lang="Java">com.intellij.openapi.MyClass</code></li><li class="list__item"><a name="d1453038e35"></a>Set of all classes in a package, not recursing into subpackages, is defined by an asterisk after
+                dot, for example: <code class="code" data-lang="Java">com.intellij.openapi.*</code></li><li class="list__item"><a name="d1453038e42"></a>Set of all classes in a package including contents of subpackages, is defined by an asterisk after
+                double dot, for example <code class="code" data-lang="Java">com.intellij.openapi..*</code></li></ul>
+<a name="d1453038e49"></a><h2>Sets of Files</h2>
+    <ul class="list _ul"><li class="list__item"><a name="d1453038e53"></a>Single file is defined by a file name, i.e. <code class="code" data-lang="Java">MyDir/MyFile.txt</code></li><li class="list__item"><a name="d1453038e58"></a>Set of all files in a directory, not recursing into subdirectories, is defined by an asterisk after
+            slash, for example: <code class="code" data-lang="Java">file:src/main/myDir/*</code>
+        </li><li class="list__item"><a name="d1453038e64"></a>Set of all files in a directory including contents of subdirectories, is defined by an asterisk after
+            double slash, for example
+            <code class="code" data-lang="Java">file:src/main/myDir//*</code>
+        </li></ul>
+<a name="d1453038e72"></a><h2>Modifiers</h2>
+		    <dl><dt>Location modifiers</dt><dd>
+                help you specify whether the desired set is located in the source files, library classes or test
+                code in the form of location modifiers <code class="code" data-lang="Java">src:</code>, <code class="code" data-lang="Java">lib:</code>, <code class="code" data-lang="Java">file:</code>,
+                or <code class="code" data-lang="Java">test:</code>.
+                <a name="d1453038e90"></a><p>For example, the following scope
+                    <a name="d1453038e92"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+src:com.intellij.openapi.*</code></div>
+                    implies all classes under the source root in the
+                <code class="code" data-lang="Java">com.intellij.openapi</code> package, excluding subpackages.</p>
+                      <a name="d1453038e100"></a><p>The default location is the module root.</p>
+            </dd><dt>Module modifiers</dt><dd>
+                help you narrow down the scope by specifying the name of the related module in one of the following ways:
+                <a name="d1453038e106"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+src[module name]:&lt;E&gt;
+lib[module name]:&lt;E&gt;
+test[module name]:&lt;E&gt;
+                </code></div>
+                <a name="d1453038e109"></a><p>For example, the following scope</p>
+                <a name="d1453038e112"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+src[MyModule]:com.intellij.openapi.*
+                </code></div>
+                <a name="d1453038e115"></a><p>implies all classes under the source folders related to the module <code class="code" data-lang="Java">MyModule</code> in the package
+                <code class="code" data-lang="Java">com.intellij.openapi</code>, excluding subpackages.</p>
+            </dd><dt>Group modifier</dt><dd>
+                    help you narrow down the scope by specifying the name of the related module group (several modules can
+                    be joined into a group in the <a name="d1453038e127"></a><a href="project-structure-dialog.html"><span>Project Structure dialog</span></a>).
+                    <a name="d1453038e130"></a><p>The group modifier has the following format:</p>
+                    <a name="d1453038e133"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+[group:&lt;group name&gt;]
+                    </code></div>
+                    <a name="d1453038e136"></a><p>For example, the following scope</p>
+                   <a name="d1453038e139"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+file[group:mygroup]:*//*
+                   </code></div>
+                        <a name="d1453038e143"></a><p>denotes a scope of all files in the group of modules with the specified name.</p>
+
+                </dd></dl>
+<a name="d1453038e149"></a><h2>Logical Operators</h2>
+		    <a name="d1453038e151"></a><p>The scope language allows you to use common logical operators: </p>
+            <a name="d1453038e154"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="o">&amp;&amp;</span> <span class="k">for</span> <span class="n">AND</span>
+ <span class="o">||</span> <span class="k">for</span> <span class="n">OR</span>
+ <span class="o">!</span> <span class="k">for</span> <span class="n">NOT</span></code></div>
+    <a name="d1453038e157"></a><p>Besides that, the parentheses can be used to join the logical operators into groups. For example, the following scope</p>
+    <a name="d1453038e160"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+(&lt;a&gt;||&lt;b&gt;)&amp;&amp;&lt;c&gt;
+    </code></div>
+    <a name="d1453038e163"></a><p>implies either &lt;a&gt; and &lt;c&gt;, or &lt;b&gt; and &lt;c&gt;.</p>
+    <a name="d1453038e167"></a><p>
+        Another example
+        <a name="d1453038e169"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+file[*web*]:src/main/java//*
+        </code></div>
+    denotes a scope of all modules whose name contains <code class="code" data-lang="Java">web</code>, and all the files recursively in the directory <code class="code" data-lang="Java">src/main/java</code>
+    </p>
+<a name="d1453038e180"></a><h2>Defining Scopes</h2>
+        <a name="d1453038e182"></a><p>
+            <a name="d1453038e184"></a><span class="emphasis">Scopes</span> are defined in the  <a name="d1453038e187"></a><a href="scopes.html"><span>Scopes</span></a> dialog box in the following ways:
+            <ul class="list _ul"><li class="list__item"><a name="d1453038e191"></a>Manually</li><li class="list__item"><a name="d1453038e194"></a>With the pointing device</li></ul>
+             
+            <dl><dt>Manually</dt><dd>
+                    Specify file masks in the <a name="d1453038e204"></a><span class="control">Pattern</span> text box, or click <img alt="editorIcon" width="18" height="18" title="editorIcon" src="/help/img/idea/2016.1/editorIcon.gif" class="inline-icon-18"> and type the pattern in the editor.  
+                </dd><dt>Using the Mouse Pointer</dt><dd>
+                    Select files and folders in the project tree view and click the buttons <a name="d1453038e214"></a><span class="control">Include</span>, <a name="d1453038e217"></a><span class="control">Include Recursively</span>, <a name="d1453038e220"></a><span class="control">Exclude</span>,
+                    and <a name="d1453038e223"></a><span class="control">Exclude Recursively</span>. For information about the controls, refer to <a name="d1453038e226"></a><a href=""><span>Scope</span></a> page description.
+                    <a name="d1453038e230"></a><p>Based on the inclusion/exclusion of file and directories, IntelliJ IDEA creates an expression and displays it in the <a name="d1453038e232"></a><span class="control">Pattern</span> field.</p>
+                    <figure><img alt="ij_scope" width="612" height="306" title="ij_scope" src="/help/img/idea/2016.1/ij_scope.png"></figure>
+                     
+                     
+                     
+                </dd></dl>
+             
+        </p>
+<a name="d1453038e252"></a><h2>Examples</h2>
+            <ul class="list _bullet"><li class="list__item"><a name="d1453038e258"></a>
+               <code class="code" data-lang="Java">file[MyMod]:src/main/java/com/example/my_package//*</code> -  include in a project all the files from module "MyMod", located in the specified directory and all subdirectories.</li><li class="list__item"><a name="d1453038e264"></a>
+               <code class="code" data-lang="Java">src[MyMod]:com.example.my_package..*</code> - recursively include all classes in a package in the source directories of the module.</li><li class="list__item"><a name="d1453038e270"></a><code class="code" data-lang="Java">lib:com.company..*||com.company..*</code>   - recursively include all classes in a package from both project and libraries.</li><li class="list__item"><a name="d1453038e275"></a><code class="code" data-lang="Java">test:com.company.*</code> - include all test classes in a package, but not in subpackages.</li><li class="list__item"><a name="d1453038e280"></a><code class="code" data-lang="Java">[MyMod]:com.company.util.*</code> - include all classes and test classes in the package of the specified module.</li><li class="list__item"><a name="d1453038e310"></a>
+                    <code class="code" data-lang="Java">file:*.js||file:*.coffee</code> - include all JavaScript and CoffeeScript files.
+                </li><li class="list__item"><a name="d1453038e316"></a>
+                    <code class="code" data-lang="Java">file:*js&amp;&amp;!file:*.min.*</code> - include all JavaScript files except those that were generated through <a name="d1453038e321"></a><span class="emphasis">minification</span>,
+                    which is indicated by the <code class="code" data-lang="Java">min</code> extension.
+                </li></ul>
+    <div class="navigation-links _bottom"><a class="navigation-links__prev" href="regular-expression-syntax-reference.html">Regular Expression Syntax Reference</a><a class="navigation-links__next" href="project-and-ide-settings.html">Project and IDE Settings</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content"><div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d1453038e335"></a><a href="validating-dependencies.html"><span>Validating Dependencies</span></a></li><li class="list__item"><a name="d1453038e339"></a><a href="analyzing-duplicates.html"><span>Analyzing Duplicates</span></a></li></ul></div><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d1453038e346"></a><a href="scopes.html"><span>Scopes</span></a></li></ul></div></div></section><div class="last-modified">Last modified: 13 July 2016 </div></article><div id="disqus_thread"></div></div></section></main></div><script src="/help/app/app.js"></script></body></html>

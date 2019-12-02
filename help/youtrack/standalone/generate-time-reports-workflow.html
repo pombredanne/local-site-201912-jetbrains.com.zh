@@ -1,0 +1,160 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta charset="UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="//resources.jetbrains.com/storage/help-app/v3/analytics.js"></script><title>Generate Time Reports - Help | YouTrack Standalone</title><link rel="stylesheet" href="//resources.jetbrains.com/storage/help-app/v3/app.css"></head><body data-id="generate-time-reports-workflow" data-breadcrumbs="Administration.xml|Administration/Workflow-Guide.xml|Workflows/Workflow-Use-Cases.xml|Use Cases for Workflows/generate-time-reports-workflow.xml|Generate Time Reports" data-main-title="Generate Time Reports"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack Standalone Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>YouTrack Standalone 2019.2 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="generate-time-reports-workflow" id="generate-time-reports-workflow.xml">Generate Time Reports</h1>  <p id="5e4c535a">YouTrack gives you the option to collect and display time tracking data on a <a href="Time-Report.html">Time Report</a>.        This report shows the total amount of time spent working on issues in one or more projects.      It displays the type of work done and the original estimation.      Time spent can be grouped by the type of work performed or by the users who performed the tasks.</p>  <p id="c28a86f2">The time report helps answer questions like:</p>  <ul class="list _ul"><li class="list__item" id="da58e27a"><p>How much work was recorded last week and who performed this work?</p></li><li class="list__item" id="e2eb30a7"><p>How was the time spent allocated between different projects?</p></li><li class="list__item" id="9f676814"><p>Are the issues that are assigned to an employee usually overestimated or underestimated?</p></li></ul>  <p id="e97fc34f">However, the main problem here is that you need to analyze this data manually.    Every time you want to monitor this activity, you need to access the report, recalculate it, then analyze the data.    If you need to do any historical analysis, you have to export the data and crunch the numbers in an external tool.</p>  <div class="chapter"><h2 id="use-workflows-reporting" data-toc="generate-time-reports-workflow#use-workflows-reporting">Use Workflows as a Reporting Tool</h2>    <p id="ac84800e">While workflows don’t have direct access to calculated report data, they have access to the raw data in the form of issues and work items.      With on-schedule rules, you can report whatever you want on a regular basis and send it to someone, whether a team lead or an employee, by email.</p>    <p id="9e4ebd22">First, start with a core module that you can use to analyze issues.      This script finds all of the work items for a given assignee in a given project that were recorded within a specific time frame.      As this module is referenced in other workflow rules, save this as a separate custom script called <code class="code">work-items</code>:</p>    <div class="code-block" data-lang="javascript">var search = require('@jetbrains/youtrack-scripting-api/search');
+var dates = require('@jetbrains/youtrack-scripting-api/date-time');
+
+function formatter(timestamp) {
+  return dates.format(timestamp, 'yyyy-MM-dd');
+}
+
+/**
+  * @param {User} [author] work items author
+  * @param {Project} [project] project to get issue from
+  * @param {Number} [from] starting date in ms from the epoch start
+  * @param {Number} [to] ending date in ms from the epoch start
+  * @return {[WorkItem]} list of work items matching the parameters
+*/
+var fetchWorkItems = function(author, project, from, to) {
+  // Generate a search string to find issues,
+  // where at least one work item was added by `author` between `from` and `to`:
+  var searchQuery = 'work author: ' + author.login + ' ';
+    searchQuery += 'work date: ' + formatter(from) + ' .. ' + formatter(to);
+
+  // Now we can traverse over these issues in a `project`
+  // and choose the work items we need:
+  var items = [];
+  var issues = search.search(project, searchQuery);
+  issues.forEach(function(issue) {
+    issue.workItems.forEach(function(item) {
+      if (item.author.login === author.login &amp;&amp;
+          item.date &gt;= from &amp;&amp; item.date &lt;= to) {
+        items.push(item);
+      }
+    })
+  });
+
+  // Return the array:
+  return items;
+};
+
+exports.fetchWorkItems = fetchWorkItems;</div>    <p id="96e9fd09">Now, help your team lead answer the following question: how much work did each developer log last week?      Extract the set of values from the <span class="control">Assignee</span> field as the list of developers, get work items for each one of them, and calculate the difference between the time logged and required work duration (say, 40 hours for each developer).</p>    <p id="25e2caa8">As you may have seen in other workflows that run on a schedule, this rule uses an <i id="7dcbcaac">anchor issue</i>.      The anchor issue lets you pull the project that the issue belongs to into the context and iterate over other issues in the project.      It also makes sure the rule runs exactly once per scheduled execution.</p>    <p id="921ab8b2">For an anchor issue, just create an issue with a description like “Please don’t ever delete this issue!” and set it to a resolved state.      You can then reference its ID in the <code class="code">search</code> property of your on-schedule rule.      This makes the rule to run exactly once per each time scheduled.      You can see this technique applied in the following rules.</p>    <div class="code-block" data-lang="javascript">var entities = require('@jetbrains/youtrack-scripting-api/entities');
+
+var wi = require('./work-items');
+
+var DAY_IN_MS = 24 * 60 * 60 * 1000;
+var HOURS_TO_WORK_A_WEEK = 40;
+
+exports.rule = entities.Issue.onSchedule({
+  title: 'Send report to the project lead every Monday',
+  cron: '0 0 10 ? * MON',
+  search: '#WI-1', // // TODO: replace with the ID of an anchor issue
+  action: function(ctx) {
+    var project = ctx.issue.project;
+
+    // Calculate start and end of the last week:
+    var from = new Date();
+    from.setHours(0, 0, 0, 0); // the start of this day
+    from = from.getTime() - 7 * DAY_IN_MS; // the start of last Monday
+    var to = from + 7 * DAY_IN_MS - 1; // the end of last Sunday
+
+    // Get a list of assignees from the Assignee field in the project,
+    // get a list of work items for each of them, and calculate sum of durations
+    // for the work items reported by each assignee:
+    var durations = {};
+    var assignees = ctx.Assignee.values;
+    assignees.forEach(function(assignee) {
+      var items = wi.fetchWorkItems(assignee, project, from, to);
+      var duration = 0; // duration in minutes
+      items.forEach(function(item) {
+        duration += item.duration;
+      });
+      durations[assignee.login] = duration / 60;
+    });
+
+    // Create email content:
+    var subject = '[YouTrack, Report] Report of work done last week';
+    var body = 'Here is the report for last week: \n\n';
+    assignees.forEach(function(assignee) {
+      var duration = durations[assignee.login];
+      var text = assignee.fullName + ' worked for ' + duration + ' hour(s)';
+      if (duration &gt; HOURS_TO_WORK_A_WEEK) {
+        text += ' (overtime for ' + (duration - HOURS_TO_WORK_A_WEEK) +
+          ' hour(s)).\n';
+      } else if (duration &lt; HOURS_TO_WORK_A_WEEK) {
+        text += ' (downtime for ' + ( HOURS_TO_WORK_A_WEEK - duration) +
+          ' hour(s)).\n';
+      } else {
+        text += '.\n';
+      }
+      body += text;
+    });
+    body += '\nSincerely yours, YouTrack\n';
+
+    // Send email to the project lead:
+    project.leader.notify(subject, body);
+  },
+  requirements: {
+    Assignee: {
+      type: entities.User.fieldType
+    }
+  }
+});</div>    <p id="a750e448">The cool thing about this rule is that it is highly customizable.      Here are just a few of the possible directions you can push this functionality:</p>    <ul class="list _ul"><li class="list__item" id="3531e8b1"><p>Instead of using the set of values for the Assignee field, generate the list of developers based on membership in one or more groups.</p></li><li class="list__item" id="7392cad8"><p>Pull data from multiple projects and calculate the amount of time spent for each, grouping time spent by project or by developer.</p></li><li class="list__item" id="00de56b0"><p>Map the required work duration per developer instead of using a common constant.</p></li></ul>    <p id="b4e9073c">As the second example, send a reminder to the developers when the amount of work logged is less than the required work duration at the end of the week:</p>    <div class="code-block" data-lang="javascript">var entities = require('@jetbrains/youtrack-scripting-api/entities');
+
+var wi = require('./work-items');
+
+var DAY_IN_MS = 24 * 60 * 60 * 1000;
+var HOURS_TO_WORK_A_WEEK = 40;
+
+exports.rule = entities.Issue.onSchedule({
+  title: 'Remind developers on Friday if they have not logged enough work',
+  cron: '0 0 16 ? * FRI',
+  search: '#WI-1', // // TODO: replace with ID of an anchor issue
+  action: function(ctx) {
+    var project = ctx.issue.project;
+
+    // Calculate start and end of this week:
+    var to = new Date(); // current moment
+    var from = new Date(to - 4 * DAY_IN_MS); // Monday 16:00
+    from.setHours(0, 0, 0, 0);
+    from = from.getTime(); // the start of last Monday
+
+    // Get a list of assignees from the Assignee field in the project,
+    // get a list of work items for each of them, and calculate sum of durations
+    // for the work items reported by each assignee:
+    var durations = {};
+    var assignees = ctx.Assignee.values;
+    assignees.forEach(function(assignee) {
+      var items = wi.fetchWorkItems(assignee, project, from, to);
+      var duration = 0; // duration in minutes
+      items.forEach(function(item) {
+        duration += item.duration;
+      });
+      durations[assignee.login] = duration / 60;
+    });
+
+    // Send emails in case of work is not yet done:
+    assignees.forEach(function(assignee) {
+      var duration = durations[assignee.login];
+      if (duration &lt; HOURS_TO_WORK_A_WEEK) {
+        var subject = '[YouTrack, Reminder] Work done this week';
+        var body = 'Hey ' + assignee.fullName + ',\n\n';
+        body +=
+          'Looks like you have forgot to log some work: you have worked on ' +
+          project.name + ' for ' + duration + ' hour(s) instead of ' +
+          HOURS_TO_WORK_A_WEEK + ' required for you.\n';
+        body += '\nSincerely yours, YouTrack\n';
+        assignee.notify(subject, body);
+      }
+    });
+  },
+  requirements: {
+    Assignee: {
+      type: entities.User.fieldType
+    }
+  }
+});</div>    <p id="89c65cdf">The same ideas for extending the previous script apply here as well, and many more.      With the ability to access work items, you can calculate not only billable hours but also other numeric characteristics, like the collective velocity of your team and the relative performance of each developer.</p>  </div><div class="last-modified" data-skip-index="skip">Last modified: 29 November 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="track-spent-time-workflow.html">Track Spent Time</a><a class="navigation-links__next" href="enhance-helpdesk-support-workflows.html">Enhance Helpdesk Support</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="//resources.jetbrains.com/storage/help-app/v3/app.js"></script></body></html>

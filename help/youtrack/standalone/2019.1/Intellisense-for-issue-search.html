@@ -1,0 +1,90 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="/help/app/v2/analytics.js"></script><meta charset="UTF-8"><meta name="robots" content="noindex"><title>Intellisense for issue search - Help | YouTrack Standalone</title><link rel="stylesheet" href="/help/app/v2/app.css"></head><body data-id="Intellisense-for-issue-search"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack Standalone Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>YouTrack Standalone 2019.1 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="Intellisense-for-issue-search" id="Intellisense-for-issue-search.xml">Intellisense for issue search</h1>   <a name="GET_/issue/intellisense"></a>   <h2 id="412392e7">GET /issue/intellisense</h2>   <p id="150b3e43">Get highlight and suggestions for issue filter query</p>         <div class="code-block" data-lang="none">GET /rest/issue/intellisense?{project}&amp;{filter}&amp;{caret}&amp;{optionsLimit}</div>               <b id="e2a54f8f">Parameters:</b><div class="table-wrapper"><table class=" wide                 " width="100%" id="b523d133"><thead><tr id="af2baf0f" class="ijRowHead"><th id="d7540298"><p> Name </p></th><th id="87cc80b6"><p> Type </p></th><th id="eac74b6f"><p> Description </p></th></tr></thead><tbody><tr id="349bff9b" class="ijRowOdd"><td id="20305b4d"><p> project </p></td><td id="8616ef08"><p> string (optional) </p></td><td id="60c0ee79"><p> Short name of the context project </p></td></tr><tr id="ebd03945" class="ijRowEven"><td id="bfbadff5"><p> filter </p></td><td id="2537ecbe"><p> string </p></td><td id="b70b96d9"><p> Current issue search query </p></td></tr><tr id="c3f396ff" class="ijRowOdd"><td id="f99569d3"><p> caret </p></td><td id="31d74142"><p> Integer (optional) </p></td><td id="b6152601"><p> Current caret position. End of the current search query by default </p></td></tr><tr id="013db0aa" class="ijRowEven"><td id="29756c51"><p> optionsLimit </p></td><td id="92b9b5d5"><p> Integer (optional) </p></td><td id="6cd11641"><p> Maximum amount of suggested items </p></td></tr></tbody></table></div>   <h3 id="f9c09dd7">Sample</h3>            <b id="b5068e54">Request</b>   <div class="code-block" data-lang="none">
+GET https://example.com/youtrack/rest/issue/intellisense?project=TST&amp;filter=by%3A+app_exception+Subsystem%3A+UI&amp;caret=19&amp;optionsLimit=5
+Cookie: $Version=0; JSESSIONID=1a62diy56jbak1731yheey3pv9; $Path=/; jetbrains.charisma.main.security.PRINCIPAL=MTVhMjY2OGUxMTUxMTI5MGMzNjhlZWM5NTJiNGJkNmIyNzc3NjdjZmM3YWU4MTVjYzQwYWE1MWZlYTkwNTcxNzphcHBfZXhjZXB0aW9u; $Path=/
+</div>            <b id="1e7faddb">Response</b>   <div class="code-block" data-lang="none">
+HTTP/1.1 200 OK
+Content-Type: application/xml;charset=UTF-8
+Content-Length: 1480
+
+&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+&lt;IntelliSense&gt;
+&lt;highlight&gt;
+  &lt;range&gt;
+    &lt;end&gt;2&lt;/end&gt;
+    &lt;start&gt;0&lt;/start&gt;
+    &lt;styleClass&gt;keyword&lt;/styleClass&gt;
+  &lt;/range&gt;
+  &lt;range&gt;
+    &lt;end&gt;17&lt;/end&gt;
+    &lt;start&gt;4&lt;/start&gt;
+    &lt;styleClass&gt;field&lt;/styleClass&gt;
+  &lt;/range&gt;
+  &lt;range&gt;
+    &lt;end&gt;27&lt;/end&gt;
+    &lt;start&gt;18&lt;/start&gt;
+    &lt;styleClass&gt;keyword&lt;/styleClass&gt;
+  &lt;/range&gt;
+  &lt;range&gt;
+    &lt;end&gt;31&lt;/end&gt;
+    &lt;start&gt;29&lt;/start&gt;
+    &lt;styleClass&gt;field&lt;/styleClass&gt;
+  &lt;/range&gt;
+&lt;/highlight&gt;
+&lt;recent/&gt;
+&lt;suggest&gt;
+  &lt;item&gt;
+    &lt;match start="0" end="1"/&gt;
+    &lt;completion start="18" end="29"/&gt;
+    &lt;caret&gt;32&lt;/caret&gt;
+    &lt;description&gt;by saved search&lt;/description&gt;
+    &lt;suffix&gt;:&lt;/suffix&gt;
+    &lt;option&gt;saved search&lt;/option&gt;
+    &lt;styleClass&gt;field&lt;/styleClass&gt;
+  &lt;/item&gt;
+  &lt;item&gt;
+    &lt;match start="0" end="1"/&gt;
+    &lt;completion start="18" end="29"/&gt;
+    &lt;caret&gt;27&lt;/caret&gt;
+    &lt;description&gt;by sort by&lt;/description&gt;
+    &lt;suffix&gt;:&lt;/suffix&gt;
+    &lt;option&gt;sort by&lt;/option&gt;
+    &lt;styleClass&gt;field&lt;/styleClass&gt;
+  &lt;/item&gt;
+  &lt;item&gt;
+    &lt;match start="0" end="1"/&gt;
+    &lt;completion start="18" end="29"/&gt;
+    &lt;caret&gt;25&lt;/caret&gt;
+    &lt;description&gt;by State&lt;/description&gt;
+    &lt;suffix&gt;:&lt;/suffix&gt;
+    &lt;option&gt;State&lt;/option&gt;
+    &lt;styleClass&gt;field&lt;/styleClass&gt;
+  &lt;/item&gt;
+  &lt;item&gt;
+    &lt;match start="0" end="1"/&gt;
+    &lt;completion start="18" end="29"/&gt;
+    &lt;caret&gt;29&lt;/caret&gt;
+    &lt;description&gt;by Subsystem&lt;/description&gt;
+    &lt;suffix&gt;:&lt;/suffix&gt;
+    &lt;option&gt;Subsystem&lt;/option&gt;
+    &lt;styleClass&gt;field&lt;/styleClass&gt;
+  &lt;/item&gt;
+  &lt;item&gt;
+    &lt;match start="0" end="1"/&gt;
+    &lt;completion start="18" end="29"/&gt;
+    &lt;caret&gt;28&lt;/caret&gt;
+    &lt;description&gt;03 Sep 2011 from 00:00 to 23:59&lt;/description&gt;
+    &lt;suffix&gt;&lt;/suffix&gt;
+    &lt;option&gt;Saturday&lt;/option&gt;
+    &lt;prefix&gt;#&lt;/prefix&gt;
+    &lt;styleClass&gt;field&lt;/styleClass&gt;
+  &lt;/item&gt;
+&lt;/suggest&gt;
+&lt;/IntelliSense&gt;
+</div><div class="last-modified" data-skip-index="skip">Last modified: 8 July 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="Get-Issues-in-a-Project.html">Get Issues in a Project</a><a class="navigation-links__next" href="Get-a-Number-of-Issues.html">Get a Number of Issues</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="/help/app/v2/app.js"></script></body></html>

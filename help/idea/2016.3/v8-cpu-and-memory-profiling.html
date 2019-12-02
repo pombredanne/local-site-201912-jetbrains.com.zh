@@ -1,0 +1,599 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta class="swiftype" name="product" data-type="string" content="/idea/2016.3/"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><meta charset="UTF-8"><meta name="robots" content="noindex"><title>IntelliJ IDEA 2016.3 Help :: V8 CPU and Memory Profiling</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="V8_CPU_and_Memory_Profiling"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-swiftype-index="false"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.3 Help</h3><div class="shortcuts-switcher" data-swiftype-index="false"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Windows/Linux Default</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWin</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">Mac OS X</option><option data-group="secondary" value="eclipse_mac_os_x">Eclipse (Mac OS X)</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (Mac OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper (Mac OS X)</option><option data-group="secondary" value="emacs">Emacs (Mac OS X)</option></select></div><div class="panel-trigger" data-swiftype-index="false"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="using-pug-jade-template-engine.html">Using Pug (Jade) Template Engine</a></div><h1>V8 CPU and Memory Profiling</h1><a name="d766e18"></a><p><a name="d766e19"></a><span class="emphasis">This feature is supported in the Ultimate edition only.</span></p>
+             
+                <aside class="warning ">
+                    <a name="d1646e280"></a><p><a name="d1646e281"></a><span class="emphasis">
+                        The following is only valid when Node.js Plugin is installed and enabled!
+                    </span></p>
+                </aside>
+             
+        <a name="d472515e32"></a><p>In this section:</p><ul><li class="list__item"><a href="#d472515e38">Introduction</a></li><li class="list__item"><a href="#d472515e74">Why is profiling important</a></li><li class="list__item"><a href="#d472515e89">Before you start</a></li><li class="list__item"><a href="#d472515e122">Preparing for V8 CPU and memory heap profiling</a><ul class="list _bullet"><li class="list__item"><a href="#d472515e146">Installing the v8-profiler Package</a></li></ul></li><li class="list__item"><a href="#d472515e261">CPU profiling</a><ul class="list _bullet"><li class="list__item"><a href="#d472515e351">Configuring CPU profiling</a></li><li class="list__item"><a href="#d472515e405">Collecting CPU profiling information</a></li><li class="list__item"><a href="#d472515e435">Analyzing CPU profiling information</a><ul class="list _bullet"><li class="list__item"><a href="#d472515e452">Exploring call Trees</a></li><li class="list__item"><a href="#d472515e579">Analyzing the Flame chart</a><ul class="list _bullet"><li class="list__item"><a href="#d472515e583">Selecting a Fragment in the Timeline</a></li><li class="list__item"><a href="#d472515e588">Synchronization in the Flame Chart</a></li></ul></li></ul></li></ul></li><li class="list__item"><a href="#d472515e597">Memory profiling</a><ul class="list _bullet"><li class="list__item"><a href="#d472515e632">Configuring memory profiling</a></li><li class="list__item"><a href="#d472515e727">Collecting memory profiling information</a></li><li class="list__item"><a href="#d472515e764">Analyzing memory profiling information</a><ul class="list _bullet"><li class="list__item"><a href="#d472515e818">Navigating through a snapshot</a></li></ul></li></ul></li></ul><a name="d472515e38"></a><h2>Introduction</h2>
+    <a name="d472515e40"></a><p>
+        As you may know, <a name="d472515e42"></a><a href="https://code.google.com/p/v8/" data-external="true"><span>V8</span></a> is an open-source JavaScript engine developed by Google.
+        It is used in Google <a name="d472515e45"></a><span class="emphasis">Chrome</span>, <a name="d472515e48"></a><a href="http://www.chromium.org/Home" data-external="true"><span>Chromium</span></a>, <a name="d472515e51"></a><span class="emphasis">Node.js</span>,
+        and <a name="d472515e54"></a><a href="https://iojs.org/en/index.html" data-external="true"><span>io.js</span></a>.
+    </p>
+    <a name="d472515e58"></a><p>
+        <a name="d472515e60"></a><span class="emphasis">V8</span> has a sampling CPU profiler <a name="d472515e63"></a><span class="emphasis">V8 profiler</span> which is intended for capturing and analyzing CPU profiles and heap snapshots
+        for your <a name="d472515e66"></a><span class="emphasis">Node.js</span> applications. With V8 CPU profiling you can get a better understanding of which parts of your code take up the most CPU time,
+        and how your code is executed and optimized by the V8 JavaScript engine.
+    </p>
+    <a name="d472515e70"></a><p>
+        You can also open and explore profiles and snapshots captured in Google Chrome DevTools for your client-side code.
+    </p>
+<a name="d472515e74"></a><h2>Why is profiling important</h2>
+        <ul class="list _bullet"><li class="list__item"><a name="d472515e78"></a>
+            A carefully designed algorithm can make your code faster and manage your memory consumption better, even more efficiently than the virtual machine can.
+            Profiling is the way to look inside the execution of your code and prove your assumptions about your design decisions.
+        </li><li class="list__item"><a name="d472515e81"></a>
+            Profiling is especially relevant for Javascript, which is a powerful language with advanced features like dynamic typing, closures,
+            and even the ability to create code at runtime. Therefore the behavior of the JavaScript engine is quite sophisticated,
+            and there are cases when you really need to go deep into the details of how the engine works.
+            Some of the code patterns you use need  being tweaked to allow the JavaScript optimizer to do its work.
+        </li><li class="list__item"><a name="d472515e84"></a>
+            JavaScript is by no means a simple language to judge if your code manages memory well.
+            Closure memory leaks are a good illustration of the fact that code that looks good and simple may still cause leaks.
+        </li></ul>
+    <a name="d472515e89"></a><h2>Before you start</h2>
+        <ol class="list _decimal"><li class="list__item"><a name="d472515e93"></a>
+            Install the <a name="d472515e95"></a><a href="http://nodejs.org/#download" data-external="true"><span>Node.js</span></a> runtime environment version 0.11.0 or higher.
+        </li><li class="list__item"><a name="d472515e99"></a>
+             
+        <a name="d831e5647"></a><span class="emphasis">Install</span> and <a name="d831e5650"></a><span class="emphasis">enable</span> the NodeJS plugin.
+         
+         
+        The <a name="d831e5668"></a><span class="emphasis"></span> plugin is&nbsp;not&nbsp;bundled with IntelliJ IDEA, but it can be installed from the <a name="d831e5671"></a><span class="emphasis">JetBrains plugin repository</span>
+            as described in <a name="d831e5674"></a><a href="installing-updating-and-uninstalling-repository-plugins.html"><span>Installing, Updating and Uninstalling Repository Plugins</span></a> and <a name="d831e5676"></a><a href="enabling-and-disabling-plugins.html"><span>Enabling and Disabling Plugins</span></a>.
+     
+     
+             
+         
+        The <a name="d831e5668"></a><span class="emphasis"></span> plugin is&nbsp;not&nbsp;bundled with IntelliJ IDEA, but it can be installed from the <a name="d831e5671"></a><span class="emphasis">JetBrains plugin repository</span>
+            as described in <a name="d831e5674"></a><a href="installing-updating-and-uninstalling-repository-plugins.html"><span>Installing, Updating and Uninstalling Repository Plugins</span></a> and <a name="d831e5676"></a><a href="enabling-and-disabling-plugins.html"><span>Enabling and Disabling Plugins</span></a>.
+     
+        </li><li class="list__item"><a name="d472515e117"></a>
+            Restart IntelliJ IDEA for the changes to take effect.
+        </li></ol>
+    <a name="d472515e122"></a><h2>Preparing for V8 CPU and memory heap profiling</h2>
+        <a name="d472515e124"></a><p>
+            V8 CPU profiling is provided through the IntelliJ IDEA built-in functionality, you do not need to install any additional software.
+        </p>
+        <a name="d472515e127"></a><p>
+            V8 memory heap profiling is provided through the
+            <a name="d472515e129"></a><a href="https://www.npmjs.com/package/v8-profiler" data-external="true"><span>v8-profiler</span></a> package.
+ 
+        </p>
+        <a name="d472515e135"></a><p>
+            The <a name="d472515e137"></a><span class="emphasis">v8-profiler</span> package can be installed from IntelliJ IDEA using the <a name="d472515e140"></a><span class="emphasis">Node Package Manager (npm)</span>.
+             
+        </p>
+
+    <a name="d472515e146"></a><h3>Installing the v8-profiler Package</h3>
+            <a name="d472515e148"></a><p>
+                You can install the <a name="d472515e150"></a><span class="emphasis">v8-profiler</span> package using the <a name="d472515e153"></a><span class="emphasis">Node Package Manager (npm)</span>
+                either in the command line mode or on the <a name="d472515e156"></a><a href="node-js-and-npm.html"><span>Node.js and NPM</span></a> page
+                of the <a name="d472515e158"></a><span class="control">Settings</span> dialog box.
+            </p>
+            <a name="d472515e164"></a><p>
+                To install the <a name="d472515e166"></a><span class="emphasis">v8-profiler</span> package globally,
+                do one of the following:
+            </p>
+        <ul class="list _bullet"><li class="list__item"><a name="d472515e172"></a>
+            In the command line mode, type <code class="code" data-lang="Java">npm install -g v8-profiler</code>.
+        </li><li class="list__item"><a name="d472515e178"></a>
+            Use the <a name="d472515e180"></a><a href="node-js-and-npm.html"><span>Node.js and NPM</span></a> page of the
+            <a name="d472515e182"></a><span class="control">Settings</span> dialog box:
+            <ol class="list _decimal"><li class="list__item"><a name="d472515e189"></a>
+                     
+         
+            Open the <a name="d831e8187"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by pressing <kbd data-default="Ctrl+Alt+S" data-default_for_gnome="Ctrl+Alt+S" data-default_for_kde="Ctrl+Alt+S" data-default_for_xwin="Ctrl+Alt+S" data-emacs="Ctrl+Alt+S" data-jbuilder="N/A" data-visual_studio="Alt+F7" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Alt+S" data-mac_os_x_10.5_="&#x2318;," data-mac_os_x="&#x2318;," data-eclipse_mac_os_x="&#x2318;," data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+S</kbd> or by choosing <a name="d831e8191"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d831e8194"></a><span class="menupath">IntelliJ IDEA | Preferences</span> for OS X,
+         
+         
+            and  
+         
+         
+         
+        click <a name="d831e8217"></a><span class="control">Node.js and NPM</span> under <a name="d831e8220"></a><span class="control">Languages &amp; Frameworks</span>.
+     
+     
+                </li><li class="list__item"><a name="d472515e201"></a>
+                    On the <a name="d472515e203"></a><span class="control">Node.js and NPM</span> page that opens, click <a name="d472515e206"></a><span class="control">Install</span> <img alt="/help/img/idea/2016.3/new.png" title="/help/img/idea/2016.3/new.png" src="/help/img/idea/2016.3/new.png" width="12" height="12" class="inline-icon-12">
+                    in the <a name="d472515e211"></a><span class="control">Packages </span> area.
+                </li><li class="list__item"><a name="d472515e215"></a>
+                    In the <a name="d472515e217"></a><span class="control">Available Packages</span> dialog box that opens,
+                    select the <a name="d472515e220"></a><span class="emphasis">v8-profiler</span> package
+                    from the list, possibly using the search field.
+                </li><li class="list__item"><a name="d472515e224"></a>
+                    Select the <a name="d472515e226"></a><span class="control">Options</span> check box and type <code class="code" data-lang="Java">-g</code> in the text box next to it
+                    to have the package installed <a name="d472515e232"></a><span class="emphasis">globally</span> and thus make it available from any IntelliJ IDEA project.
+                </li><li class="list__item"><a name="d472515e236"></a>
+                    Click <a name="d472515e238"></a><span class="control">Install</span>.
+                </li><li class="list__item"><a name="d472515e243"></a>
+                    When the package is installed successfully, close the dialog box.
+                    IntelliJ IDEA brings you back to the <a name="d472515e245"></a><span class="control">Node.js and NPM</span> page where the package is added to the list.
+                </li></ol>
+        </li></ul>
+        <a name="d472515e252"></a><p>
+            Learn more about installing packages through NPM at <a name="d472515e254"></a><a href="installing-and-removing-external-software-using-node-package-manager.html"><span>Installing and Removing External Software Using Node Package Manager</span></a>.
+        </p>
+
+     
+ 
+    <a name="d472515e261"></a><h2>CPU profiling</h2>
+        <a name="d472515e263"></a><p>
+            With V8 CPU profiling you can get a better understanding of which parts of your code take up the most CPU time,
+            and how your code is executed and optimized by the V8 JavaScript engine.
+        </p>
+
+        <a name="d472515e266"></a><p>
+            To identify the processes that consume most of your CPU, you can use two methods: <a name="d472515e268"></a><span class="emphasis">sampling</span> and <a name="d472515e271"></a><span class="emphasis">tracing</span>.
+            <ul class="list _bullet"><li class="list__item"><a name="d472515e276"></a>
+                    When the <a name="d472515e278"></a><span class="emphasis">sampling</span> method is applied, you periodically record stack traces of your application.
+                    The periods between records are measured in conventional units referred to as <a name="d472515e281"></a><span class="emphasis">ticks</span>.
+                    <a name="d472515e284"></a><p>
+                        This method does not guarantee very good accuracy or precision for the following reason:
+                        snapshots are taken at random moments therefore any function can happen to be recorded in a snapshot.
+                        However, sampling can give us a rough picture of where the most of time is spent.
+                         
+                    </p>
+                </li><li class="list__item"><a name="d472515e290"></a>
+                    When the <a name="d472515e292"></a><span class="emphasis">tracing</span> method is used, we actively record tracing information by ourselves, directly in the code.
+                    It is obviously better to get exact measurements of how much time each method took,
+                    and also allows to count how many times the traced method was called.
+                    The disadvantage of this method is that it comes with bigger <a name="d472515e295"></a><span class="emphasis">result distortion</span> compared to <a name="d472515e298"></a><span class="emphasis">sampling</span>.
+                </li></ul>
+        </p>
+        <a name="d472515e304"></a><p>
+            <a name="d472515e306"></a><span class="emphasis">Result Distortion</span>. Both sampling and tracing introduce delays into execution and therefore influence the profiling results.
+            With sampling, delays can be estimated as some fixed amount of time for each sampling event and do not introduce greater distortion than the sampling method itself
+            (i.e. the delay is much shorter than the sampling interval).
+            With tracing, the profiling delay depends on the code and the places where we made tracing measurements.
+            For instance, if a traced method is called inside other traced methods numerously, all inner delays will accumulate for the outer method.
+            If so, it may be difficult to separate the execution time from tracing distortion.
+            </p>
+        <a name="d472515e310"></a><p>
+            Usually we use sampling and tracing methods together. We start with sampling to get an idea of which parts of our code take the most time,
+            and then instrument the code with tracing calls to zero on the issues.
+        </p>
+        <a name="d472515e313"></a><p>
+             
+        Measurements are made not only for the work of your code, but also activities performed by the engine itself, such as compilation,
+        calls of system libraries, optimization, and garbage collection.
+     
+            The following time metrics are made for execution of functions themselves and for performing activities:
+            <ul class="list _bullet"><li class="list__item"><a name="d472515e319"></a>
+                    <a name="d472515e321"></a><span class="emphasis">Total</span>: the number of ticks (the time) during which a function was executed or an activity was performed.
+                </li><li class="list__item"><a name="d472515e325"></a><a name="d472515e326"></a><span class="emphasis">Total%</span>: the ratio of a function/activity execution time to the entire time when measurements were made.</li><li class="list__item"><a name="d472515e330"></a><a name="d472515e331"></a><span class="emphasis">Self</span>: the pure execution time of a function/activity itself, without the time spent on executing functions called by it.</li><li class="list__item"><a name="d472515e335"></a><a name="d472515e336"></a><span class="emphasis">Self%</span>: the ratio of the pure execution time of a function/activity to the entire time when the measurements were made.</li><li class="list__item"><a name="d472515e340"></a><a name="d472515e341"></a><span class="emphasis">Of Parent</span>: the ratio of the pure execution time of a function to the execution time of the function that called it (<a name="d472515e344"></a><span class="emphasis">Parent</span>).</li></ul>
+        </p>
+        <a name="d472515e351"></a><a name="dynaProc0"></a><section class="procedure-steps"><h2>Configuring CPU profiling</h2><p id="d472515e353">
+                <a name="d472515e355"></a><p>
+                    To invoke V8 CPU profiling on application start, you need to specify additional settings
+                    in the <a name="d472515e357"></a><span class="control">Node.js</span> run configuration according to which the application will be launched.
+                </p>
+            </p><ol class=".list _decimal"><li class="list__item">
+                 
+            Choose <a name="d831e8086"></a><span class="menupath">Run | Edit Configuration</span> on the main menu.
+            Alternatively, click <kbd data-default="Shift+Alt+F10" data-default_for_gnome="Shift+Alt+F10" data-default_for_kde="Shift+Alt+F10" data-default_for_xwin="Shift+Alt+F10" data-emacs="Alt+Shift+F10" data-jbuilder="Shift+Alt+F10" data-visual_studio="Alt+Shift+F10" data-netbeans_6.5="N/A" data-eclipse="Shift+Alt+F10" data-mac_os_x_10.5_="&#x2303;&#x2325;R" data-mac_os_x="&#x2325;&#x21E7;F10" data-eclipse_mac_os_x="&#x2303;&#x2325;R" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Shift+Alt+F10</kbd>  and select <a name="d831e8091"></a><span class="control">Edit Configuration</span>
+            from the pop-up menu.
+         
+            </li><li class="list__item">
+                From the list, choose the <a name="d472515e372"></a><span class="emphasis">Node.js</span> run configuration to activate CPU Profiling in or create a new configuration
+                as described in <a name="d472515e375"></a><a href="running-and-debugging-node-js.html"><span>Running and Debugging Node.js</span></a>.
+            </li><li class="list__item">
+                Switch to the <a name="d472515e380"></a><span class="control">V8 Profiling</span> pane and specify the following:
+                <ol class="list _decimal"><li class="list__item"><a name="d472515e385"></a>
+                        Select the <a name="d472515e387"></a><span class="control">Record CPU profiling info</span> check box.
+                    </li><li class="list__item"><a name="d472515e391"></a>
+                        In the <a name="d472515e393"></a><span class="control">Log folder</span> field, specify the folder to store recorded logs in.
+                        Profiling data are stored in V8 log files <code class="code" data-lang="Java">isolate-&lt;session number&gt;</code>.
+                    </li></ol>
+            </li></ol></section>
+
+        <a name="d472515e405"></a><a name="dynaProc1"></a><section class="procedure-steps"><h2>Collecting CPU profiling information</h2><ol class=".list _decimal"><li class="list__item">
+                Select the run configuration from the list on the main tool bar and then choose <a name="d472515e417"></a><span class="menupath">Run | Run &lt;configuration name&gt;</span> on the main menu
+                or click the <a name="d472515e420"></a><span class="control">Run</span> toolbar button <img alt="run.png" title="run.png" src="/help/img/idea/2016.3/run.png" width="11" height="14" class="inline-icon-14">.
+            </li><li class="list__item">
+                When the scenario that you need to profile is executed, stop the process by clicking <img alt="stop.png" title="stop.png" src="/help/img/idea/2016.3/stop.gif" width="12" height="12" class="inline-icon-12">
+                on the tool bar of the <a name="d472515e430"></a><span class="control">Run</span> tool window.
+            </li></ol><p id="d472515e407" class="procIntro">
+                <a name="d472515e409"></a><p>
+                    V8 log file will be processed by V8 scripts to calculate averaged call traces.
+                    IntelliJ IDEA opens the <a name="d472515e411"></a><a href="v8-profiling-tool-window.html"><span>V8 Profiling Tool Window</span></a>.
+                </p>
+            </p></section>
+
+        <a name="d472515e435"></a><h3>Analyzing CPU profiling information</h3>
+            <a name="d472515e437"></a><p>
+                Analyzing the profiling logs is available after the process stops because currently stopping and restarting profiling during execution of an application is not supported.
+            </p>
+            <a name="d472515e440"></a><p>
+                The collected profiling data is displayed in the <a name="d472515e442"></a><a href="v8-profiling-tool-window.html"><span>V8 Profiling Tool Window</span></a> which IntelliJ IDEA opens automatically when you stop your application.
+                 
+        If the window is already opened and shows the profiling data for another session, a new tab is added. Tabs that were opened automatically are named after the run configurations
+        that control execution of the applications and  collecting the profiling data.
+     
+            </p>
+            <a name="d472515e447"></a><p>
+                 
+        If you want to open and analyze some previously saved profiling data, choose <a name="d19550e4116"></a><span class="menupath">V8 Profiling - Analyze V8 Profiling Log</span> on the main menu
+        and select the relevant V8 log file <code class="code" data-lang="Java">isolate-&lt;session number&gt;</code>. IntelliJ IDEA creates a separate tab with the name of the log file.
+     
+            </p>
+            <a name="d472515e452"></a><a name="dynaProc2"></a><section class="procedure-steps"><h2>Exploring call Trees</h2><p id="d472515e454">
+                    <a name="d472515e456"></a><p>
+                         
+        Based on the collected profiling data, IntelliJ IDEA builds three call trees and displays each of them in a separate pane.
+        Having several call trees provides the possibility to analyze the application execution from two different points of view: on the one hand,
+        which calls were time consuming ("heavy"), and on the other hand, "who called whom".
+     
+                    </p>
+                        <ul class="list _bullet"><li class="list__item"><a name="d472515e463"></a>
+                                 
+        The <a name="d19550e4156"></a><span class="control">Top Calls</span> pane shows a list of performed activities sorted in the descending order by the <a name="d19550e4159"></a><span class="emphasis">Self</span> metrics.
+        For each activity IntelliJ IDEA displays its <a name="d19550e4162"></a><span class="emphasis">Total</span>, <a name="d19550e4165"></a><span class="emphasis">Total%</span>, and <a name="d19550e4168"></a><span class="emphasis">Self%</span> metrics.
+         
+        For each function call, IntelliJ IDEA displays the name of the file, the line, and the  column where the function is defined.
+     
+     
+                                <figure><img alt="v8ProfilerCPUTopCalls.png" title="v8ProfilerCPUTopCalls.png" src="/help/img/idea/2016.3/v8ProfilerCPUTopCalls.png" width="625" height="319"></figure>
+                                 
+        The diagram in the <a name="d19550e4210"></a><span class="control">Overview</span> pane shows distribution of self time for calls
+        with the <a name="d19550e4213"></a><span class="emphasis">Self%</span> metrics above 1%.
+     
+                                <figure><img alt="v8ProfilerCPUTopCallsOverviewPane.png" title="v8ProfilerCPUTopCallsOverviewPane.png" src="/help/img/idea/2016.3/v8ProfilerCPUTopCallsOverviewPane.png" width="442" height="283"></figure>
+                            </li><li class="list__item"><a name="d472515e474"></a>
+                                 
+        The <a name="d19550e4177"></a><span class="control">Bottom-up</span> pane also shows the performed activities sorted in the descending order by the <a name="d19550e4180"></a><span class="emphasis">Self</span> metrics. Unlike the <a name="d19550e4183"></a><span class="control">Top Calls</span> pane,
+        the <a name="d19550e4186"></a><span class="control">Bottom-up</span> pane shows only the activities with the <a name="d19550e4189"></a><span class="emphasis">Total%</span> metrics above 2 and the functions that called them. This is helpful if you encounter
+        a <a name="d19550e4193"></a><span class="emphasis">heavy</span> function and want to find out where it was called from.
+        <a name="d19550e4196"></a><p>
+            For each activity IntelliJ IDEA displays its execution time in <a name="d19550e4198"></a><span class="emphasis">ticks</span> and the <a name="d19550e4201"></a><span class="emphasis">Of Parent</span> metrics.
+             
+        For each function call, IntelliJ IDEA displays the name of the file, the line, and the  column where the function is defined.
+     
+        </p>
+     
+                            </li><li class="list__item"><a name="d472515e479"></a>
+                                 
+        The <a name="d19550e4219"></a><span class="control">Top-down</span> pane shows the entire call hierarchy with the functions that are execution entry points at the top.
+        For each activity IntelliJ IDEA displays its <a name="d19550e4222"></a><span class="emphasis">Total</span>, <a name="d19550e4225"></a><span class="emphasis">Total%</span>, <a name="d19550e4228"></a><span class="emphasis">Self</span>, and <a name="d19550e4231"></a><span class="emphasis">Self%</span> metrics.
+         
+        For each function call, IntelliJ IDEA displays the name of the file, the line, and the  column where the function is defined.
+     
+     
+                                 
+        Some of the functions may have been optimized by V8, see <a name="d19550e4265"></a><a href="http://floitsch.blogspot.de/2012/03/optimizing-for-v8-introduction.html" data-external="true"><span>Optimizing for V8</span></a> for details.
+        <ul class="list _bullet"><li class="list__item"><a name="d19550e4270"></a>
+                The functions that have been optimized are marked with an asterisk (<code class="code" data-lang="Java">*</code>) before the function name.
+            </li><li class="list__item"><a name="d19550e4276"></a>
+                The functions that possibly require optimization but still have not been optimized
+                are marked with a tilde (<code class="code" data-lang="Java">~</code>) character before the function name.
+                Though optimization may be delayed by the engine or skipped if the code is short-running,
+                a tilde (<code class="code" data-lang="Java">~</code>) points at a place where the code can be rewritten to achieve better performance.
+            </li></ul>
+     
+                                <figure><img alt="v8ProfilerCPUTrees.png" title="v8ProfilerCPUTrees.png" src="/help/img/idea/2016.3/v8ProfilerCPUTrees.png" width="625" height="282"></figure>
+                            </li></ul>
+
+                </p><ul class=".list "><li class="list__item">
+                    To navigate to the source code of a function, select the function in question in the tree and click <img alt="/help/img/idea/2016.3/edit.png" title="/help/img/idea/2016.3/edit.png" src="/help/img/idea/2016.3/edit.png" width="14" height="15" class="inline-icon-15"> on the toolbar
+                    or choose <a name="d472515e494"></a><span class="control">Jump to source</span> on the context menu of the selection.
+                    The file with the source code of the selected function is opened in the editor with the cursor positioned at the function.
+                </li><li class="list__item">
+                     
+        When a tab for a profiling session is opened, by default the nodes with heaviest calls are expanded. While exploring the trees, you may like to fold some nodes or expand other ones.
+     
+                    To restore the original tree presentation, click the <a name="d472515e502"></a><span class="control">Expand Heavy Traces</span> button <img alt="icon_expand_heavy_calls.png" title="icon_expand_heavy_calls.png" src="/help/img/idea/2016.3/icon_expand_heavy_calls.png" width="15" height="15" class="inline-icon-15"> on the toolbar.
+                </li><li class="list__item">
+                    To have IntelliJ IDEA display only the calls that indeed cause performance problems, filter out light calls:
+                    <ol class="list _decimal"><li class="list__item"><a name="d472515e512"></a>
+                            Click the <a name="d472515e514"></a><span class="control">Filter</span> button <img alt="/help/img/idea/2016.3/filter.png" title="/help/img/idea/2016.3/filter.png" src="/help/img/idea/2016.3/filter.png" width="16" height="16" class="inline-icon-16"> on the toolbar.
+                        </li><li class="list__item"><a name="d472515e520"></a>
+                             
+        Using the slider, specify the minimum <a name="d19550e4247"></a><span class="emphasis">Total%</span> or <a name="d19550e4250"></a><span class="emphasis">Parent%</span> value for a call to be displayed and click <a name="d19550e4253"></a><span class="control">Done</span>.
+     
+                        </li></ol>
+                </li><li class="list__item">
+                    To expand or collapse all the nodes in the active pane, click <img alt="expandAll.png" title="expandAll.png" src="/help/img/idea/2016.3/expandAll.png" width="16" height="22" class="inline-icon-22"> or <img alt="collapseAll.png" title="collapseAll.png" src="/help/img/idea/2016.3/collapseAll.png" width="12" height="14" class="inline-icon-14"> on the toolbar respectively.
+                </li><li class="list__item">
+                    To expand or collapse a node, select it and choose <a name="d472515e537"></a><span class="control">Expand Node</span> or <a name="d472515e540"></a><span class="control">Collapse Node</span> on the context menu of the selection.
+                </li><li class="list__item">
+                    Save and compare calls and lines:
+                    <ul class="list _bullet"><li class="list__item"><a name="d472515e548"></a>
+                            To save a line with a function and its metrics, select the function and choose <a name="d472515e550"></a><span class="control">Copy</span> on the context menu of the selection.
+                             
+        This may be helpful if you want to compare the measurements for a function from two sessions, for example, after you make some improvements to the code.
+     
+                        </li><li class="list__item"><a name="d472515e556"></a>
+                            To save only the function name and the name of the file where the function is defined, select the function and choose <a name="d472515e558"></a><span class="control">Copy Call</span> on the context menu of the selection.
+                        </li><li class="list__item"><a name="d472515e562"></a>
+                            To compare an item with the contents of the Clipboard, select the item in question and choose <a name="d472515e564"></a><span class="control">Compare With Clipboard</span> on the context menu of the selection.
+                            Compare the items in the <a name="d472515e567"></a><span class="emphasis">Difference Viewer</span> that opens.
+                        </li></ul>
+                </li><li class="list__item">
+                    To save the call tree in the current pane to a text file, click <img alt="exportToTextFile.png" title="exportToTextFile.png" src="/help/img/idea/2016.3/exportToTextFile.png" width="16" height="19" class="inline-icon-19"> on the toolbar and specify the target file in the dialog box that opens.
+                </li></ul></section>
+
+            <a name="d472515e579"></a><h4>Analyzing the Flame chart</h4>
+                 
+        <a name="d19550e5219"></a><p>
+            Use the multicolor chart in the <a name="d19550e5221"></a><span class="control">Flame Chart</span> tab to find where the application paused and explore the calls that provoked these pauses.
+            The chart consists of four areas:
+        </p>
+        <ul class="list _bullet"><li class="list__item"><a name="d19550e5227"></a>
+                The upper area shows a timeline with two sliders to limit the beginning and the end of a fragment to investigate.
+            </li><li class="list__item"><a name="d19550e5230"></a>
+                The bottom area shows a stack of calls in the form of a multicolor chart. When called for the first time, each function is assigned a random color,
+                whereupon every call of this function within the current session is shown in this color.
+            </li><li class="list__item"><a name="d19550e5233"></a>
+                The middle area shows a summary of  calls from the <a name="d19550e5235"></a><span class="emphasis">Garbage Collector</span>, the engine, the external calls,
+                and the execution itself. The  colors reserved for the <a name="d19550e5238"></a><span class="emphasis">Garbage Collector</span>, the engine , the external calls,
+                and the execution are listed on top of the area:
+                <figure><img alt="v8_flame_chart_reserved_colors.png" title="v8_flame_chart_reserved_colors.png" src="/help/img/idea/2016.3/v8_flame_chart_reserved_colors.png" width="236" height="22"></figure>
+            </li><li class="list__item"><a name="d19550e5244"></a>
+                The right-hand pane lists the calls within a selected fragment, for each call the list shows its duration, the name of the called function,
+                and file where the function is defined.
+            </li></ul>
+     
+                <a name="d472515e583"></a><h5>Selecting a Fragment in the Timeline</h5>
+                     
+        <a name="d19550e5251"></a><p>To explore  the processes within a certain period of time, you need to select the fragment in question. You can do it in two ways:</p>
+        <ul class="list _bullet"><li class="list__item"><a name="d19550e5256"></a>
+                Use the sliders:
+                <figure><img alt="v8_flame_chart_sliders.png" title="v8_flame_chart_sliders.png" src="/help/img/idea/2016.3/v8_flame_chart_sliders.png" width="184" height="63"></figure>
+            </li><li class="list__item"><a name="d19550e5261"></a>
+                Click the <a name="d19550e5263"></a><span class="emphasis">window</span> between two sliders and drag it to the required fragment:
+                <figure><img alt="v8_flame_chart_window_between_sliders.png" title="v8_flame_chart_window_between_sliders.png" src="/help/img/idea/2016.3/v8_flame_chart_window_between_sliders.png" width="184" height="62"></figure>
+            </li></ul>
+        <a name="d19550e5270"></a><p>
+            In either case, the multicolor chart below shows the stack of calls within the selected fragment.
+        </p>
+        <a name="d19550e5273"></a><p>
+            To enlarge the chart, click the selected fragment and then click the <a name="d19550e5275"></a><span class="control">Zoom</span> button <img alt="erDiagramIconZoomIn.png" title="erDiagramIconZoomIn.png" src="/help/img/idea/2016.3/erDiagramIconZoomIn.png" width="22" height="23" class="inline-icon-23">
+            on the toolbar. IntelliJ IDEA opens a new tab and shows the selected fragment enlarged to fit the tab width so you can examine the fragment with more details.
+        </p>
+     
+                 
+                <a name="d472515e588"></a><h5>Synchronization in the Flame Chart</h5>
+                     
+        <a name="d19550e5284"></a><p>
+            The bottom and the right-hand areas are synchronized: as you drag the slider in the bottom area through the timeline
+            the focus in the right-hand pane moves to the call that was performed at each moment.
+        </p>
+        <a name="d19550e5287"></a><p>
+            Moreover, if you click a call in the bottom area, the slider moves to it automatically
+            and the focus in the right-hand pane switches to the corresponding function, if necessary the list scrolls automatically.
+            And vice versa, if you click an item in the list, IntelliJ IDEA selects the corresponding call in the bottom area
+            and drags the slider to it automatically:
+            <figure><img alt="v8_flame_chart_.bottom_area.png" title="v8_flame_chart_.bottom_area.png" src="/help/img/idea/2016.3/v8_flame_chart_.bottom_area.png" width="689" height="510"></figure>
+        </p>
+         
+        <a name="d19550e5309"></a><p>
+            IntelliJ IDEA supports navigation from the right-hand area to the source code of called functions, to the other panes of the tool window, and to areas in the flame chart with specific metrics.
+        </p>
+        <ul class="list _bullet"><li class="list__item"><a name="d19550e5314"></a>
+                To jump to the source code of a called function, select the call in question
+                and choose <a name="d19550e5316"></a><span class="control">Jump to Source</span> on the context menu of the selection.
+            </li><li class="list__item"><a name="d19550e5320"></a>
+                To switch to another pane, select the call in question, choose <a name="d19550e5322"></a><span class="control">Navigate To</span> on the context menu of the selection, and then choose the destination:
+                <ul class="list _bullet"><li class="list__item"><a name="d19550e5327"></a><a name="d19550e5328"></a><span class="control">Navigate in Top Calls</span></li><li class="list__item"><a name="d19550e5331"></a><a name="d19550e5332"></a><span class="control">Navigate in Bottom-up</span></li><li class="list__item"><a name="d19550e5335"></a><a name="d19550e5336"></a><span class="control">Navigate in Top-down</span></li></ul>
+                IntelliJ IDEA switches to the selected pane and moves the focus to the call in question.
+            </li><li class="list__item"><a name="d19550e5341"></a>
+                To have the flame chart zoomed at the fragments with specific metrics of a call, select the call in question, choose <a name="d19550e5343"></a><span class="control">Navigate To</span> on the context menu of the slection,
+                and then choose the metrics:
+                <ul class="list _bullet"><li class="list__item"><a name="d19550e5348"></a><a name="d19550e5349"></a><span class="control">Navigate to Longest Time</span></li><li class="list__item"><a name="d19550e5352"></a><a name="d19550e5353"></a><span class="control">Navigate to Typical Time</span></li><li class="list__item"><a name="d19550e5356"></a><a name="d19550e5357"></a><span class="control">Navigate to Longest Self Time</span></li><li class="list__item"><a name="d19550e5360"></a><a name="d19550e5361"></a><span class="control">Navigate to Typical Self Time</span></li></ul>
+            </li></ul>
+     
+        <a name="d19550e5294"></a><p>
+            You can also navigate to the stacktrace of a call to view and anlyze exceptions. To do that, select the call in question and choose <a name="d19550e5296"></a><span class="control">Show As Stacktrace</span>. IntelliJ IDEA opens the stacktrace in a separate tab,
+            to return to the <a name="d19550e5299"></a><span class="control">Flame Chart</span> pane, click <a name="d19550e5302"></a><span class="control">V8 CPU Profiling</span>  tool window button in the bottom tool window.
+        </p>
+     
+                 
+             
+         
+    <a name="d472515e597"></a><h2>Memory profiling</h2>
+        <a name="d472515e599"></a><p>
+            Though the <a name="d472515e601"></a><span class="emphasis">V8</span> Javascript engine does memory management for you,
+            memory leaks or dynamic memory problems are still possible. Here are some examples of memory leaks or shortcomings reasons:
+            <ul class="list _bullet"><li class="list__item"><a name="d472515e606"></a>
+                    Using global objects to store collections of data, with complicated free policies.
+                </li><li class="list__item"><a name="d472515e609"></a>
+                    Errors in usages of closures: closures keep references onto outside objects.
+                </li><li class="list__item"><a name="d472515e612"></a>
+                    Keeping detached DOM nodes in javascript variables.
+                </li><li class="list__item"><a name="d472515e615"></a>
+                    Too frequent memory allocation.
+                </li></ul>
+            Memory management control is especially important for <a name="d472515e619"></a><span class="emphasis">Node.js</span> applications,
+            because the server-side code tend to run long while memory inaccuracy is accumulated.
+            </p>
+        <a name="d472515e623"></a><p>
+            <a name="d472515e625"></a><span class="emphasis">V8 heap snapshots</span> are complicated by their nature;
+            they include many “engine” objects; the inner structure of objects differs from what you expect while reading your code.
+            Learn more at <a name="d472515e628"></a><a href="https://developer.chrome.com/devtools/docs/javascript-memory-profiling" data-external="true"><span>Javascript Memory Profiling</span></a>.
+        </p>
+
+        <a name="d472515e632"></a><a name="dynaProc3"></a><section class="procedure-steps"><h2>Configuring memory profiling</h2><p id="d472515e634">
+                <a name="d472515e636"></a><p>
+                    To allow taking memory snapshots, you need to specify additional settings
+                    in the <a name="d472515e638"></a><span class="control">Node.js</span> run configuration according to which the application will be launched.
+                </p>
+            </p><ol class=".list _decimal"><li class="list__item">
+                 
+            Choose <a name="d831e8086"></a><span class="menupath">Run | Edit Configuration</span> on the main menu.
+            Alternatively, click <kbd data-default="Shift+Alt+F10" data-default_for_gnome="Shift+Alt+F10" data-default_for_kde="Shift+Alt+F10" data-default_for_xwin="Shift+Alt+F10" data-emacs="Alt+Shift+F10" data-jbuilder="Shift+Alt+F10" data-visual_studio="Alt+Shift+F10" data-netbeans_6.5="N/A" data-eclipse="Shift+Alt+F10" data-mac_os_x_10.5_="&#x2303;&#x2325;R" data-mac_os_x="&#x2325;&#x21E7;F10" data-eclipse_mac_os_x="&#x2303;&#x2325;R" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Shift+Alt+F10</kbd>  and select <a name="d831e8091"></a><span class="control">Edit Configuration</span>
+            from the pop-up menu.
+         
+            </li><li class="list__item">
+                From the list, choose the <a name="d472515e674"></a><span class="emphasis">Node.js</span> run configuration to activate CPU Profiling in or create a new configuration
+                as described in <a name="d472515e677"></a><a href="running-and-debugging-node-js.html"><span>Running and Debugging Node.js</span></a>.
+            </li><li class="list__item">
+                Switch to the <a name="d472515e682"></a><span class="control">V8 Profiling</span> pane and specify the following:
+                <ol class="list _decimal"><li class="list__item"><a name="d472515e687"></a>
+                        Select the <a name="d472515e689"></a><span class="control">Allow taling heap snapshots</span> check box.
+                    </li><li class="list__item"><a name="d472515e693"></a>
+                        In the <a name="d472515e695"></a><span class="control">Log folder</span> field, specify the folder to store recorded logs in.
+                        Profiling data are stored in V8 log files <code class="code" data-lang="Java">isolate-&lt;session number&gt;</code>.
+                    </li><li class="list__item"><a name="d472515e702"></a>
+                        Specify the <a name="d472515e704"></a><span class="emphasis">v8-profiler</span> package to use. Choose the relevant package from the <a name="d472515e707"></a><span class="control">v8-profiler package</span> drop-down list
+                        or click the <img alt="/help/img/idea/2016.3/browseButton.png" title="/help/img/idea/2016.3/browseButton.png" src="/help/img/idea/2016.3/browseButton.png" width="15" height="15" class="inline-icon-15"> button next to it and choose the package in the dialog box that opens.
+                    </li><li class="list__item"><a name="d472515e713"></a>
+                        Specify the port through which IntelliJ IDEA communicates with the profiler, namely, sends a command to take a snapshot
+                        when you click the <a name="d472515e715"></a><span class="control">Take Heap Snapshot</span> button <img alt="/help/img/idea/2016.3/ws_v8_profiling_take_snapshot.png" title="/help/img/idea/2016.3/ws_v8_profiling_take_snapshot.png" src="/help/img/idea/2016.3/ws_v8_profiling_take_snapshot.png" width="15" height="15" class="inline-icon-15"> on the toolbar of the <a name="d472515e720"></a><span class="control">Run</span> tool window.
+                    </li></ol>
+            </li></ol><p id="d472515e643" class="procIntro">
+                <a name="d472515e645"></a><p>
+                    To take memory snapshots of an application running on a Docker container,
+                    select the <a name="d472515e647"></a><span class="control">Auto configure</span> check box and add <a name="d472515e650"></a><span class="emphasis">v8-profiler</span> to your <code class="code" data-lang="Java">package.json</code> file,
+                    then switch to the <a name="d472515e656"></a><span class="control">V8 profiling</span> tab and specify the path as <code class="code" data-lang="Java">./node_modules/v8-profiler</code>.
+                </p>
+            </p></section>
+
+        <a name="d472515e727"></a><a name="dynaProc4"></a><section class="procedure-steps"><h2>Collecting memory profiling information</h2><ol class=".list _decimal"><li class="list__item">
+                Select the run configuration from the list on the main tool bar and then choose <a name="d472515e731"></a><span class="menupath">Run | Run &lt;configuration name&gt;</span> on the main menu
+                or click the <a name="d472515e734"></a><span class="control">Run</span> toolbar button <img alt="run.png" title="run.png" src="/help/img/idea/2016.3/run.png" width="11" height="14" class="inline-icon-14">.
+            </li><li class="list__item">
+                At any time during the application execution, click the <a name="d472515e742"></a><span class="control">Take Heap Snapshot</span> button <img alt="/help/img/idea/2016.3/ws_v8_profiling_take_snapshot.png" title="/help/img/idea/2016.3/ws_v8_profiling_take_snapshot.png" src="/help/img/idea/2016.3/ws_v8_profiling_take_snapshot.png" width="15" height="15" class="inline-icon-15">
+                on the toolbar of the <a name="d472515e747"></a><span class="control">Run</span> tool window.
+            </li><li class="list__item">
+                In the dialog box that opens, choose the folder to store the taken snapshot in and specify the name to save the snapshot file with.
+                To start analyzing the snapshot immediately, select the <a name="d472515e753"></a><span class="control">Open snapshot</span> check box.
+            </li><li class="list__item">
+                Click <a name="d472515e759"></a><span class="control">OK</span> to save the snapshot.
+            </li></ol></section>
+
+        <a name="d472515e764"></a><h3>Analyzing memory profiling information</h3>
+            <a name="d472515e766"></a><p>
+                The collected profiling data is displayed in the <a name="d472515e768"></a><a href="v8-heap-tool-window.html"><span>V8 Heap Tool Window</span></a> which opens when you take a snapshot at choose to open it.
+                 
+        If the window is already opened and shows the profiling data for another session, a new tab is added. Tabs that were opened automatically are named after the run configurations
+        that control execution of the applications and  collecting the profiling data.
+     
+            </p>
+
+            <a name="d472515e773"></a><p>
+                 
+        If you want to open and analyze some previously saved mempry profiling data, choose <a name="d19550e4125"></a><span class="menupath">V8 Profiling - Analyze V8 Heap Snapshot</span> on the main menu
+        and select the relevant <code class="code" data-lang="Java">.snapshot</code> file. IntelliJ IDEA creates a separate tab with the name of the selected file.
+     
+            </p>
+            <a name="d472515e778"></a><p>
+                The tool window has three tabs that present the collected information from difference point of views.
+                <ul class="list _bullet"><li class="list__item"><a name="d472515e782"></a>
+                         
+         
+        The <a name="d19550e4298"></a><span class="control">Containment</span> tab shows the objects in you application grouped under several top-level entries: <a name="d19550e4301"></a><span class="emphasis">DOMWindow objects</span>,
+        <a name="d19550e4304"></a><span class="emphasis">Native browser objects</span>, and  <a name="d19550e4307"></a><span class="emphasis">GC Roots</span>, which are roots the <a name="d19550e4311"></a><span class="emphasis">Garbage Collector</span> actually uses.
+        See <a name="d19550e4314"></a><a href="https://developer.chrome.com/devtools/docs/javascript-memory-profiling#containment-view" data-external="true"><span>Containment View</span></a> for details.
+     
+                        <a name="d472515e789"></a><p>
+                             
+        For each object, the tab shows its <a name="d19550e4320"></a><span class="emphasis">distance from the GC root</span>, that is the shortest simple path of nodes between the object and the GC root,
+        the <a name="d19550e4323"></a><a href="https://developer.chrome.com/devtools/docs/javascript-memory-profiling#shallow-size" data-external="true"><span>shallow size</span></a>  of the object,
+        and the <a name="d19550e4326"></a><a href="https://developer.chrome.com/devtools/docs/javascript-memory-profiling#retained-size" data-external="true"><span>retained size</span></a> of the object.
+        Besides the absolute values of the object's size, IntelliJ IDEA shows the percentage of memory the object occupies.
+     
+                        </p>
+                    </li><li class="list__item"><a name="d472515e795"></a>
+                         
+         
+        The <a name="d19550e4334"></a><span class="control">Biggest Objects</span> tab shows the most memory-consuming objects
+        sorted by their <a name="d19550e4337"></a><a href="https://developer.chrome.com/devtools/docs/javascript-memory-profiling#retained-size" data-external="true"><span>retained sizes</span></a>.
+        In this tab, you can spot memory leaks provoked by accumulating data in some global object.
+     
+                    </li><li class="list__item"><a name="d472515e803"></a>
+                         
+         
+        The <a name="d19550e4345"></a><span class="control">Summary</span> tab shows the objects in your application grouped by their types.
+        The tab shows the number of objects of each type, their size, and the percentage of memory that they occupy.
+        This information may be a clue to the memory state.
+     
+                    </li></ul>
+            </p>
+            <a name="d472515e813"></a><p>
+                 
+        Each tab has a <a name="d19550e4351"></a><span class="control">Details</span> pane, which shows the path to the currently selected object from GC roots
+        and the list of object’s <a name="d19550e4354"></a><span class="emphasis">retainers</span>, that is, the objects that keep links to the selected object.
+        Every heap snapshot has many “back” references and loops, so there are always many retainers for each object.
+     
+            </p>
+
+            <a name="d472515e818"></a><a name="dynaProc5"></a><section class="procedure-steps"><h2>Navigating through a snapshot</h2><ul class=".list "><li class="list__item">
+                     
+        To help differentiate objects and move from one to another without losing the context, mark objects with text labels.
+        To set a label to an object, select the object of interest and click <img alt="ws_v8_profiling_mark.png" title="ws_v8_profiling_mark.png" src="/help/img/idea/2016.3/ws_v8_profiling_mark.png" width="14" height="15" class="inline-icon-15">
+        on the toolbar or choose <a name="d19550e4362"></a><span class="control">Mark</span> on the context menu of the selection. Then type the label to mark the object with in the dialog box that opens.
+     
+                </li><li class="list__item">
+                     
+        To navigate to the function or variable that corresponds to an object, select the object of interest and click <img alt="edit.png" title="edit.png" src="/help/img/idea/2016.3/edit.png" width="14" height="15" class="inline-icon-15"> on the toolbar
+        or choose <a name="d19550e4371"></a><span class="control">Edit Source</span> on the context menu of the selection. If the button and the menu option are disabled, this means that IntelliJ IDEA has not found a function
+        or a variable that corresponds to the selected object.
+        <a name="d19550e4374"></a><p>
+            If several functions or variables are found, they are shown in a pop-up suggestion list.
+        </p>
+     
+                </li><li class="list__item">
+                     
+        To jump from an object in the <a name="d19550e4380"></a><span class="control">Biggest Objects</span> or <a name="d19550e4383"></a><span class="control">Summary</span> tab or <a name="d19550e4386"></a><span class="control">Occurrences</span> view to the same object in the <a name="d19550e4389"></a><span class="control">Containment</span> tab,
+        select the object in question in the <a name="d19550e4392"></a><span class="control">Biggest Objects</span> or <a name="d19550e4396"></a><span class="control">Summary</span> tab
+        and click <img alt="ws_v8_profiling_navigate_in_main_tree.png" title="ws_v8_profiling_navigate_in_main_tree.png" src="/help/img/idea/2016.3/ws_v8_profiling_navigate_in_main_tree.png" width="15" height="15" class="inline-icon-15"> on the toolbar
+        or choose <a name="d19550e4401"></a><span class="control">Navigate in Main Tree</span> on the context menu of the selection.
+         
+        This helps you investigate the object from the containment point of view and concentrate on the links between objects.
+     
+     
+                </li><li class="list__item">
+                     
+        To search through a snapshot:
+        <ol class="list _decimal"><li class="list__item"><a name="d19550e4414"></a>
+                In the <a name="d19550e4416"></a><span class="control">Containment</span> tab, click <img alt="find.png" title="find.png" src="/help/img/idea/2016.3/find.png" width="15" height="15" class="inline-icon-15"> on the toolbar.
+            </li><li class="list__item"><a name="d19550e4422"></a>
+                In the <a name="d19550e4424"></a><a href="v8-heap-search-dialog.html"><span>V8 Heap Search Dialog</span></a> that opens, specify the search pattern and the scope to search in. The available scopes are:
+                <ul class="list _bullet"><li class="list__item"><a name="d19550e4451"></a>
+            <a name="d19550e4453"></a><span class="control">Everywhere:</span> select this check box to search in all the scopes.
+            When this check box is selected, all the other search types are disabled.
+        </li><li class="list__item"><a name="d19550e4457"></a>
+            <a name="d19550e4459"></a><span class="control">Link Names:</span> select this check box to search among the object names that <a name="d19550e4462"></a><span class="emphasis">V8</span> creates
+            when calling the <a name="d19550e4465"></a><span class="emphasis">C++ runtime</span>,
+            see <a name="d19550e4468"></a><a href="http://stackoverflow.com/questions/11202824/what-is-in-javascript" data-external="true"><span>http://stackoverflow.com/questions/11202824/what-is-in-javascript</span></a>.
+            <a name="d19550e4471"></a><p>
+                In the <a name="d19550e4473"></a><a href="v8-heap-tool-window.html"><span>V8 Heap Tool Window</span></a>, link names are marked with the <code class="code" data-lang="Java">%</code> character (<code class="code" data-lang="Java">%&lt;link name&gt;</code>).
+            </p>
+        </li><li class="list__item"><a name="d19550e4483"></a>
+            <a name="d19550e4485"></a><span class="control">Class Names:</span> select this check box to search among functions-constructors.
+        </li><li class="list__item"><a name="d19550e4489"></a>
+            <a name="d19550e4491"></a><span class="control">Text Strings:</span> select this check box to perform a textual search in the contents of the objects.
+        </li><li class="list__item"><a name="d19550e4495"></a>
+            <a name="d19550e4497"></a><span class="control">Snapshot Object IDs:</span> select this check box to search among the unique identifiers of objects.
+            <a name="d19550e4500"></a><span class="emphasis">V8</span> assigns such a unique identifier in the format to each object when the object is created and
+            preserves it until the object is destroyed. This means that you can find and compare the same objects in several snapshots taken
+            within the same session.
+            <a name="d19550e4503"></a><p>
+                In the <a name="d19550e4505"></a><a href="v8-heap-tool-window.html"><span>V8 Heap Tool Window</span></a>, object IDs are marked with the <code class="code" data-lang="Java">@</code> character (<code class="code" data-lang="Java">@&lt;object id&gt;</code>).
+            </p>
+        </li><li class="list__item"><a name="d19550e4516"></a>
+            <a name="d19550e4518"></a><span class="control">Marks:</span> select this check box to search among the labels you set to objects manually
+            by clicking <img alt="ws_v8_profiling_mark.png" title="ws_v8_profiling_mark.png" src="/help/img/idea/2016.3/ws_v8_profiling_mark.png" width="14" height="15" class="inline-icon-15"> on the toolbar of the <a name="d19550e4523"></a><span class="control">Containment</span> tab.
+        </li></ul>
+                <a name="d19550e4431"></a><p>
+                    The search results are displayed in the <a name="d19550e4433"></a><span class="control">Details</span> pane, in a separate <a name="d19550e4436"></a><span class="control">Occurrences of '&lt;search pattern&gt;'</span> view.
+                    To have the search results shown grouped by the search scopes you specified, press the <a name="d19550e4439"></a><span class="control">Group by Type</span> toggle button on the toolbar.
+                </p>
+                <a name="d19550e4443"></a><p>
+                    When you open the dialog box next time, it will show the settings from the previous search.
+                </p>
+            </li></ol>
+     
+                </li></ul></section>
+         
+    <div class="navigation-links _bottom"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="using-pug-jade-template-engine.html">Using Pug (Jade) Template Engine</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content">```
+                <div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d472515e847"></a><a href="running-and-debugging-node-js.html"><span>Running and Debugging Node.js</span></a></li><li class="list__item"><a name="d472515e849"></a><a href="node-js.html"><span>Node.js</span></a></li></ul></div><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d472515e854"></a><a href="run-debug-configuration-node-js.html"><span>Run/Debug Configuration: Node JS</span></a></li><li class="list__item"><a name="d472515e856"></a><a href="v8-heap-tool-window.html"><span>V8 Heap Tool Window</span></a></li><li class="list__item"><a name="d472515e858"></a><a href="v8-profiling-tool-window.html"><span>V8 Profiling Tool Window</span></a></li></ul></div></div></section><div class="last-modified" data-swiftype-index="false">Last modified: 21 March 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

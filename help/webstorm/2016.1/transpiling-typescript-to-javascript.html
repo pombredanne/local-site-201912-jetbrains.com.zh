@@ -1,0 +1,582 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"></meta><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><title>WebStorm 2016.1 Help :: Transpiling TypeScript to JavaScript</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Transpiling_TypeScript"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search WebStorm Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>WebStorm 2016.1 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWindow</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="typescript-support.html">TypeScript Support</a><a class="navigation-links__next" href="running-typescript.html">Running TypeScript</a></div><h1>Transpiling TypeScript to JavaScript</h1><a name="d25102e7"></a><p>
+            TypeScript code is not processed by browsers that work with JavaScript code. Therefore to be executed, TypeScript code has to be translated into JavaScript.
+            This operation is referred to as <a name="d25102e9"></a><span class="emphasis">transpilation</span> and the tools that perform it are called <a name="d25102e12"></a><span class="emphasis">transpilers</span>.
+        </p><a name="d240690e27"></a><p>
+        In addition to this, <a name="d240690e29"></a><span class="emphasis">transpilation</span> also can involve generation of <a name="d240690e32"></a><a href="http://net.tutsplus.com/tutorials/tools-and-tips/source-maps-101/" data-external="true"><span>source maps</span></a>
+        that set correspondence between lines in your TypeScript code and in the generated JavaScript code,
+        otherwise your breakpoints will not be recognised and processed correctly.
+    </p><a name="d240690e36"></a><p>
+        With WebStorm, you can have your TypeScript code transpiled into JavaScript in two ways:
+        using the <a name="d240690e38"></a><a href="https://github.com/Microsoft/TypeScript/" data-external="true"><span>built-in TypeScript compiler</span></a> or
+        through integration with the <a name="d240690e41"></a><a href="https://npmjs.org/package/typescript" data-external="true"><span>typescript</span></a> tool configured as a file watcher.
+    </p><a name="d240690e45"></a><p>
+        On this page:
+    </p><ul><li class="list__item"><a href="#d240690e50">Configuring and Activating the Built-in TypeScript Compiler</a></li><li class="list__item"><a href="#d240690e164">Transpiling TypeScript using the Built-in Compiler</a></li><li class="list__item"><a href="#d240690e276">Resolving References in TypeScript Code without Running the Built-In Compiler</a></li><li class="list__item"><a href="#d240690e307">Transpiling TypeScript using a File Watcher</a><ul class="list _bullet"><li class="list__item"><a href="#d240690e336">Before You Start</a></li><li class="list__item"><a href="#d240690e358">Installing the TypeScript Transpiler Globally</a></li><li class="list__item"><a href="#d240690e371">Installing the TypeScript Transpiler in a Project</a></li><li class="list__item"><a href="#d240690e391">Creating a File Watcher</a></li><li class="list__item"><a href="#d240690e473">Transpiling the Code</a></li></ul></li></ul><a name="d240690e50"></a><h2>Configuring and Activating the Built-in TypeScript Compiler</h2>
+        <ol class="list _decimal"><li class="list__item"><a name="d240690e54"></a>
+             
+         
+            Open the <a name="d7162e7944"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by choosing <a name="d7162e7946"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d7162e7949"></a><span class="menupath">WebStorm | Preferences</span> for OS X,
+         
+         
+            and  
+         
+         
+         
+        click <a name="d7162e7972"></a><span class="control">Typescript</span> under <a name="d7162e7975"></a><span class="control">Languages &amp; Frameworks</span>.
+     
+     
+        </li><li class="list__item"><a name="d240690e66"></a>
+            On the <a name="d240690e68"></a><a href="typescript.html"><span>TypeScript Compiler page</span></a> that opens,
+            select the <a name="d240690e71"></a><span class="control">Enable TypeScript Compiler</span> check box to activate the compiler.
+             
+        When the check box is selected, the fields below on the page become active
+        and you can configure the behaviour of the compiler.
+     
+        </li><li class="list__item"><a name="d240690e77"></a>
+            In the other fields of the <a name="d240690e79"></a><span class="control">TypeScript Compiler</span> page, specify the following:
+            <ul class="list _bullet"><li class="list__item"><a name="d240690e84"></a>
+                    In the <a name="d240690e86"></a><span class="control">Node interpreter</span> field,
+                     
+        specify the location of the <a name="d9041e2308"></a><span class="emphasis">Node.js</span> executable file. In most cases, WebStorm
+        detects the <a name="d9041e2311"></a><span class="emphasis">Node.js</span> executable and fills in the field automatically.
+     
+                </li><li class="list__item"><a name="d240690e92"></a>
+                    In the <a name="d240690e94"></a><span class="control">Compiler version</span> area, WebStorm displays the default bundled version of the built-in compiler.
+                    <a name="d240690e97"></a><p>
+                         
+            To use a custom version of the compiler:
+            <ol class="list _decimal"><li class="list__item"><a name="d25102e875"></a>
+                    Download the <code class="code" data-lang="Java">typescriptServices.js</code>, <code class="code" data-lang="Java">lib.d.ts</code>, and <code class="code" data-lang="Java">lib.es6.d.ts</code> files from <a name="d25102e886"></a><a href="https://github.com/Microsoft/TypeScript/" data-external="true"><span>https://github.com/Microsoft/TypeScript/</span></a>.
+                </li><li class="list__item"><a name="d25102e890"></a>
+                    Click <a name="d25102e892"></a><span class="control">Edit</span> in the <a name="d25102e895"></a><span class="control">Compiler version</span> area.
+                </li><li class="list__item"><a name="d25102e899"></a>
+                    In the <a name="d25102e901"></a><span class="control">Configure TypeScript Compiler</span> dialog box that opens, choose <a name="d25102e904"></a><span class="control">Custom directory</span>
+                    and specify the folder where the downloaded files are stored.
+                </li></ol>
+
+     
+                    </p>
+
+                </li><li class="list__item"><a name="d240690e103"></a>
+                    From the <a name="d240690e105"></a><span class="control">Scope</span> drop-down list, choose the scope to apply the compiler in.
+                    The available options are:
+                     
+        <ul class="list _bullet"><li class="list__item"><a name="d25102e498"></a>
+                <a name="d25102e500"></a><span class="control">Project Files:</span> all the files within the project
+                 
+                                content roots (see <a name="d25102e505"></a><a href="content-root.html"><span>Content Root</span></a> and <a name="d25102e507"></a><a href="configuring-content-roots.html"><span>Configuring Content Roots</span></a>).
+                 
+                 
+            </li><li class="list__item"><a name="d25102e514"></a>
+                <a name="d25102e516"></a><span class="control">Project Production Files:</span> all the files within the project content roots excluding test sources.
+            </li><li class="list__item"><a name="d25102e520"></a>
+                <a name="d25102e522"></a><span class="control">Project Test Files:</span> all the files within the project test source roots.
+            </li><li class="list__item"><a name="d25102e526"></a>
+                <a name="d25102e528"></a><span class="control">Open Files:</span> all the files that are currently opened in the editor.
+            </li></ul>
+        <a name="d25102e533"></a><p>
+            <a name="d25102e535"></a><span class="control">VCS Scopes:</span> these scopes are only available if your <a name="d25102e538"></a><a href="associating-a-project-root-with-a-version-control-system.html"><span>project is under version control</span></a>.</p>
+        <ul class="list _bullet"><li class="list__item"><a name="d25102e544"></a>
+                <a name="d25102e546"></a><span class="control">Changed Files:</span> all changed files, that is, all files associated with all existing <a name="d25102e549"></a><a href="changelist.html"><span>changelists</span></a>.
+            </li><li class="list__item"><a name="d25102e553"></a>
+                <a name="d25102e555"></a><span class="control">Default:</span> all the files associated with the <a name="d25102e558"></a><a href="changelist.html"><span>changelist</span></a>&nbsp;<code class="code" data-lang="Java">Default</code>.
+            </li></ul>
+        Alternatively, click the <a name="d25102e566"></a><span class="control">Browse</span> button and configure a <a name="d25102e569"></a><span class="emphasis">custom scope</span> in the <a name="d25102e573"></a><span class="emphasis">Scopes</span> dialog box that opens.
+     
+                    For more details on scopes, see the pages <a name="d240690e110"></a><a href="scope.html"><span>Scopes</span></a> and <a name="d240690e113"></a><a href="scopes.html"><span>Scopes dialog</span></a>.
+                </li><li class="list__item"><a name="d240690e117"></a>
+                    In the <a name="d240690e119"></a><span class="control">Command line options</span> field,
+                     
+        specify the command line options to be passed to the compiler.
+        See the list of acceptable options at <a name="d9041e2323"></a><a href="https://github.com/Microsoft/TypeScript/wiki/Compiler-Options" data-external="true"><span>TSC arguments</span></a>.
+        Note that, the <code class="code" data-lang="Java">-w</code> or <code class="code" data-lang="Java">--watch</code> option (<a name="d9041e2332"></a><span class="emphasis">Watch input files</span>) is irrelevant.
+     
+                </li><li class="list__item"><a name="d240690e125"></a>
+                    Select the <a name="d240690e127"></a><span class="control">Compile main file only</span> check box
+                     
+        to have WebStorm compile only a specific file and the files that are referenced from it and ignore all the other files in the project.
+        This may be helpful if you have a dedicated <code class="code" data-lang="Java">main.ts</code> file which only references other files.
+     
+                </li><li class="list__item"><a name="d240690e134"></a>
+                    Select the <a name="d240690e136"></a><span class="control">Use output path</span> check box
+                     
+        to have the built-in compiler store the generated JavaScript files and source map in a custom folder.
+        Specify the path to this folder explicitly or use one of the listed available macros in the format: <code class="code" data-lang="Java">$&lt;macros_name&gt;$</code>.
+        The available macros are:
+        <ul class="list _bullet"><li class="list__item"><a name="d9041e2384"></a>
+                <code class="code" data-lang="Java">FileDir</code>: the path to the folder where the file is stored.
+            </li><li class="list__item"><a name="d9041e2390"></a>
+                <code class="code" data-lang="Java">FileRelativeDir</code>: the path to the <a name="d9041e2395"></a><span class="emphasis">file directory</span> relative to the project root.
+            </li><li class="list__item"><a name="d9041e2399"></a>
+                <code class="code" data-lang="Java">FileDirRelativeToProjectRoot</code>:
+                 
+                 
+                    the path to the <a name="d9041e2412"></a><span class="emphasis">file directory</span> relative to the project root.
+                 
+            </li><li class="list__item"><a name="d9041e2417"></a>
+                <code class="code" data-lang="Java">ModuleFileDir</code>:
+                 
+                 
+                    the path to the project root folder.
+                 
+            </li><li class="list__item"><a name="d9041e2429"></a>
+                <code class="code" data-lang="Java">SourcePath</code>:
+                 
+                    the path to the project root folder.
+                 
+                 
+                            </li><li class="list__item"><a name="d9041e2452"></a>
+                <code class="code" data-lang="Java">FileDirRelativeToSourcePath</code>:
+                 
+                    the path to the file relative to the project root.
+                 
+                 
+            </li></ul>
+     
+                </li><li class="list__item"><a name="d240690e142"></a>
+                    Select the <a name="d240690e144"></a><span class="control">Generate source maps</span> check box
+                     
+        to generate <a name="d9041e2317"></a><a href="http://net.tutsplus.com/tutorials/tools-and-tips/source-maps-101/" data-external="true"><span>source maps</span></a>
+        that set correspondence between lines in your TypeScript code and in the generated JavaScript code,
+        otherwise your breakpoints will not be recognised and processed correctly.
+     
+                </li><li class="list__item"><a name="d240690e150"></a>
+                     
+        To have the compiler "wake up" upon any change to a TypeScript file, select the <a name="d9041e2366"></a><span class="control">Track changes</span> check box.
+     
+                    <a name="d240690e154"></a><p>
+                         
+        When this check box is cleared, the built-in compiler ignores changes to TypeScript files. To re-activate the compiler,
+        open the <a name="d9041e2338"></a><a href="typescript-compiler-tool-window.html"><span>TypeScript Compiler Tool Window</span></a> (<a name="d9041e2340"></a><span class="menupath">View | Tool Windows | TypeScript Compiler</span>),
+        and click the <a name="d9041e2343"></a><span class="control">Compile All</span> button <img alt="icon_ts_compile_all" width="15" height="15" title="icon_ts_compile_all" src="/help/img/idea/2016.1/icon_ts_compile_all.png" class="inline-icon-15"> on the toolbar.
+        <a name="d9041e2348"></a><p>
+            If you have not opened the <a name="d9041e2350"></a><span class="control">TypeScript Compiler Tool Window</span> yet and it is not available from the <a name="d9041e2353"></a><span class="menupath">View</span> menu,
+            choose <a name="d9041e2356"></a><span class="menupath">Help | Find Action</span>, then find and launch the <a name="d9041e2359"></a><span class="control">TypeScript Compile All</span> action from the list.
+        </p>
+     
+                    </p>
+                </li></ul>
+        </li></ol>
+    <a name="d240690e164"></a><h2>Transpiling TypeScript using the Built-in Compiler</h2>
+ 
+    <ol class="list _decimal"><li class="list__item"><a name="d240690e172"></a>
+            To activate a previously configured built-in transpiler, select the <a name="d240690e174"></a><span class="control">Enable TypeScript Compiler</span> check box
+            on the   <a name="d240690e177"></a><a href="typescript.html"><span>TypeScript Compiler page</span></a>.
+            <a name="d240690e180"></a><p>
+                Alternatively, use the buttons on the pane which WebStorm displays when you open a TypeScript file.
+                <ul class="list _bullet"><li class="list__item"><a name="d240690e184"></a>
+                        To enable an already configured compiler, click <a name="d240690e186"></a><span class="control">Enable</span>.
+                    </li><li class="list__item"><a name="d240690e190"></a>
+                        To configure a compiler, click <a name="d240690e192"></a><span class="control">Configure</span> and specify the settings on the <a name="d240690e195"></a><span class="control">TypeScript Compiler</span> page that opens.
+                    </li><li class="list__item"><a name="d240690e199"></a>
+                        To leave the compiler disabled and suppress showing the pane in the future, click <a name="d240690e201"></a><span class="control">Dismiss</span>,
+                        whereupon the compiler can be later activated only on the <a name="d240690e204"></a><span class="control">TypeScript Compiler</span> page.
+                    </li></ul>
+            </p>
+        </li><li class="list__item"><a name="d240690e213"></a>
+            View the errors detected during compilation, compile separate files and the entire project in the <a name="d240690e215"></a><a href="typescript-compiler-tool-window.html"><span>TypeScript Compiler Tool Window</span></a>.
+            If you have configured the compiler to track changes, which is the default behaviour, the tool window opens automatically
+            as soon as you start editing a TypeScript file.
+            <a name="d240690e217"></a><p>
+                If tracking changes is disabled and you have closed the tool window, to re-open it choose <a name="d240690e219"></a><span class="menupath">View | Tool WIndows | TypeScript Compiler</span>.
+            </p>
+            <ul class="list _bullet"><li class="list__item"><a name="d240690e225"></a>
+                    Click the <a name="d240690e227"></a><span class="control">Compile Current File</span> toolbar button <img alt="icon_ts_compile_current_file.png" width="15" height="15" title="icon_ts_compile_current_file.png" src="/help/img/idea/2016.1/icon_ts_compile_current_file.png" class="inline-icon-15">
+                     
+        to run the compiler against the entire file opened in the active editor tab.
+        This approach is helpful if you do not want the compiler to wake up on any change as you edit your code
+        and for this purpose the <a name="d25102e913"></a><span class="control">Track Changes</span> check box
+        on the <a name="d25102e916"></a><a href="typescript.html"><span>TypeScript</span></a> page of the <a name="d25102e918"></a><span class="control">Settings</span> dialog box is cleared.
+        <a name="d25102e921"></a><p>
+            If you click this button from the <a name="d25102e923"></a><span class="control">Project Errors</span> pane, after compilation WebStorm switches to the <a name="d25102e926"></a><span class="control">Current Errors</span> pane.
+        </p>
+     
+                </li><li class="list__item"><a name="d240690e235"></a>
+                    Click the <a name="d240690e237"></a><span class="control">Compile All</span> toolbar button <img alt="icon_ts_compile_all.png" width="15" height="15" title="icon_ts_compile_all.png" src="/help/img/idea/2016.1/icon_ts_compile_all.png" class="inline-icon-15">
+                     
+        to run the compiler against all the TypeScript files in the current project.
+        If you click this button from the <a name="d25102e933"></a><span class="control">Current Errors</span> pane, after compilation WebStorm switches to the <a name="d25102e936"></a><span class="control">Project Errors</span> pane.
+     
+                </li><li class="list__item"><a name="d240690e245"></a>
+                    To clear the contents of the current pane, click the <a name="d240690e247"></a><span class="control">Clear All</span> toolbar button <img alt="clear_all" width="14" height="15" title="clear_all" src="/help/img/idea/2016.1/clear_all.png" class="inline-icon-15">.
+                </li><li class="list__item"><a name="d240690e253"></a>
+                    To navigate to the fragment of code where an error occurred during compilation, select the error message in question
+                    and choose <a name="d240690e255"></a><span class="control">Jump to Source</span> on the context menu of the selection.
+                </li></ul>
+        </li></ol>
+        <a name="d240690e262"></a><p>
+            The compiler stores the generated output in a separate file. The JavaScript file has the name of the source TypeScript file and the extension <code class="code" data-lang="Java">js</code>,
+            the source map file has the name of the source TypeScript file and the <code class="code" data-lang="Java">js.map</code> extension.
+            In the <a name="d240690e270"></a><span class="control">Project Tree</span>, the files  are shown under the source TypeScript file
+            which is now displayed as a node.
+        </p>
+
+    <a name="d240690e276"></a><h2>Resolving References in TypeScript Code without Running the Built-In Compiler</h2>
+        <a name="d240690e278"></a><p>
+            If you do not need the JavaScript output yet, you can
+             
+        have your TypeScript code analyzed without actually running the built-in compiler
+        but through checking the scopes set in the <code class="code" data-lang="Java">tsconfig.json</code> file
+     :
+        </p>
+        <ol class="list _decimal"><li class="list__item"><a name="d240690e285"></a>
+                 
+         
+            Open the <a name="d7162e7944"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by choosing <a name="d7162e7946"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d7162e7949"></a><span class="menupath">WebStorm | Preferences</span> for OS X,
+         
+         
+            and  
+         
+         
+         
+        click <a name="d7162e7972"></a><span class="control">TypeScript</span> under <a name="d7162e7975"></a><span class="control">Languages&amp;Frameworks</span>.
+     
+     
+            </li><li class="list__item"><a name="d240690e297"></a>
+                On the <a name="d240690e299"></a><a href="typescript.html"><span>TypeScript</span></a> page that opens,
+                select the <a name="d240690e301"></a><span class="control">Resolve objects using tsconfig.json</span> check box.
+            </li></ol>
+    <a name="d240690e307"></a><h2>Transpiling TypeScript using a File Watcher</h2>
+        <a name="d240690e309"></a><p>
+             
+        Using file watchers is recommended if your project consists of several independent parts and you want to transpile them separately.
+        In this case you can configure several file watchers each with its own scope and apply these file watchers independently.
+     
+        </p>
+    <a name="d240690e314"></a><p>
+              WebStorm supports integration with the <a name="d240690e316"></a><a href="https://npmjs.org/package/typescript" data-external="true"><span>typescript</span></a> tool.
+              The <a name="d240690e319"></a><span class="emphasis">TypeScript transpiler</span> translates TypeScript code into JavaScript
+              and creates <a name="d240690e322"></a><a href="http://net.tutsplus.com/tutorials/tools-and-tips/source-maps-101/" data-external="true"><span>source maps</span></a>
+              that set correspondence between lines in your TypeScript code and in the generated JavaScript code,
+              otherwise your breakpoints will not be recognised and processed correctly.
+          </p>
+          <a name="d240690e326"></a><p>
+               
+         
+        In WebStorm, transpiler configurations are called <a name="d25102e21"></a><span class="emphasis">File Watchers</span>.
+        For each supported transpiler, WebStorm provides a predefined <a name="d25102e24"></a><span class="emphasis">File Watcher</span> template.
+        Predefined <a name="d25102e27"></a><span class="emphasis">File Watcher</span> templates are available at the WebStorm level. To run a transpiler against your project files, you need to
+        create a project-specific <a name="d25102e30"></a><span class="emphasis">File Watcher</span> based on the relevant template, at least, specify the path to the transpiler to use on your machine.
+
+     
+          </p>
+
+         
+ 
+        <a name="d9041e4576"></a><p>
+            The easiest way to install the TypeScript transpiler is to use the <a name="d9041e4578"></a><span class="emphasis">Node Package Manager (npm)</span>,
+            which is a part of <a name="d9041e4581"></a><a href="http://nodejs.org/" data-external="true"><span>Node.js</span></a>. See <a name="d9041e4584"></a><a href="installing-and-removing-external-software-using-node-package-manager.html"><span>Installing and Removing External Software Using Node Package Manager</span></a> for details.
+        </p>
+         
+ 
+        <a name="d9041e4611"></a><p>
+            Depending on the desired location of the TypeScript transpiler executable file, choose one of the following methods:
+            <ul class="list _bullet"><li class="list__item"><a name="d9041e4615"></a>
+                    Install the transpiler <a name="d9041e4617"></a><span class="emphasis">globally</span> at the WebStorm level so it can be used in any WebStorm project.
+                </li><li class="list__item"><a name="d9041e4621"></a>
+                    Install the transpiler in a specific project and thus restrict its use to this project.
+                </li><li class="list__item"><a name="d9041e4624"></a>
+                    Install the transpiler in a project as a <a name="d9041e4626"></a><a href=""><span>development dependency</span></a>.
+                </li></ul>
+        </p>
+        <a name="d9041e4632"></a><p>
+            In either installation mode, make sure that the parent folder of the TypeScript transpiler is added to the <code class="code" data-lang="Java">PATH</code> variable.
+            This enables you to launch the transpiler from any folder.
+        </p>
+     
+        <a name="d9041e4592"></a><p>
+         
+            WebStorm provides user interface both for <a name="d9041e4600"></a><span class="emphasis">global</span> and <a name="d9041e4603"></a><span class="emphasis">project</span> installation as well as supports installation through the command line.
+     
+        </p>
+     
+
+
+        <a name="d240690e336"></a><h3>Before You Start</h3>
+            <ol class="list _decimal"><li class="list__item"><a name="d240690e340"></a>
+                 
+         
+         
+             
+            Download and install <a name="d25102e42"></a><a href="http://nodejs.org/" data-external="true"><span>Node.js</span></a>. The runtime environment is required for two reasons:
+            <ul class="list _bullet"><li class="list__item"><a name="d25102e47"></a>
+                    The TypeScript transpiler is started through <a name="d25102e49"></a><span class="emphasis">Node.js</span>.
+                </li><li class="list__item"><a name="d25102e53"></a>
+                    <a name="d25102e55"></a><span class="emphasis">NPM</span>, which is a part of the runtime environment, is also the easiest way to download the TypeScript transpiler.
+                </li></ul>
+             
+ 
+        <a name="d25102e63"></a><p>
+             
+            If you are going to use the command line mode, make sure the path to the parent folder of the <a name="d25102e67"></a><span class="emphasis">Node.js</span> executable file
+            and the path to the <code class="code" data-lang="Java">npm</code> folder are added to the <code class="code" data-lang="Java">PATH</code> variable.
+                This enables you to launch the TypeScript transpiler and <a name="d25102e76"></a><span class="emphasis">npm</span> from any folder.
+             
+        </p>
+     
+            </li><li class="list__item"><a name="d240690e345"></a>
+                 
+             
+             
+                Make sure the <a name="d7162e5488"></a><span class="emphasis">Node.js</span> plugin is enabled.
+                 
+        The plugin is bundled with WebStorm and activated by default.
+        If the plugin is not activated, enable it on the <a name="d7162e5458"></a><a href="plugins-2.html"><span>Plugins</span></a> page of the <a name="d7162e5460"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> as described in <a name="d7162e5462"></a><a href="enabling-and-disabling-plugins.html"><span>Enabling and Disabling Plugins</span></a>.
+     
+             
+     
+            </li><li class="list__item"><a name="d240690e350"></a>
+                 
+
+             
+             
+                Make sure the <a name="d25102e339"></a><span class="emphasis">File Watchers</span> plugin is enabled.  The plugin is bundled with WebStorm and activated by default. If it is not,
+                enable the plugin. See <a name="d25102e342"></a><a href="enabling-and-disabling-plugins.html"><span>Enabling and Disabling Plugins</span></a> for details.
+             
+
+     
+            </li></ol>
+         
+
+
+
+        <a name="d240690e358"></a><h3>Installing the TypeScript Transpiler Globally</h3>
+            <a name="d240690e360"></a><p>
+                 
+         
+         
+            <a name="d9041e4299"></a><span class="emphasis">Global</span> installation makes a transpiler available at the WebStorm level so it can be used in any WebStorm project.
+            Moreover, during installation the parent folder of the transpiler is automatically added to the <code class="code" data-lang="Java">PATH</code> variable,
+            which enables you to launch the transpiler from any folder.
+            To install the transpiler <a name="d9041e4305"></a><span class="emphasis">globally</span>, do one of the following:
+     
+            </p>
+            <ul class="list _bullet"><li class="list__item"><a name="d9041e4191"></a>
+            Run the installation from the command line in the <a name="d9041e4193"></a><span class="emphasis">global</span> mode:
+            <ol class="list _decimal"><li class="list__item"><a name="d9041e4198"></a>
+                     
+ 
+        Launch the embedded <a name="d9041e48"></a><span class="control">Terminal</span>
+        by hovering  your mouse pointer over <img alt="show_tool_window_bars" width="14" height="14" title="show_tool_window_bars" src="/help/img/idea/2016.1/show_tool_window_bars.png" class="inline-icon-14"> in the lower left corner of WebStorm and choosing  <a name="d9041e53"></a><span class="control">Terminal</span> from the menu
+        (see <a name="d9041e56"></a><a href="working-with-embedded-local-terminal.html"><span>Working with Embedded Local Terminal</span></a> for details).
+     
+                </li><li class="list__item"><a name="d9041e4206"></a>
+                     
+        Switch to the directory where <a name="d9041e1467"></a><span class="emphasis">NPM</span> is stored or define a <code class="code" data-lang="Java">PATH</code> variable for it so it is available from any folder,
+        see <a name="d9041e1473"></a><a href="installing-and-removing-external-software-using-node-package-manager.html#installingNodeJs"><span>Installing NodeJs</span></a>.
+     
+                </li><li class="list__item"><a name="d9041e4211"></a>
+                    Type the following command at the command line prompt:
+                    <a name="d9041e4213"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+npm install -g typescript 
+                    </code></div>
+                    <a name="d9041e4216"></a><p>
+                         
+        The <code class="code" data-lang="Java">-g</code> key makes the transpiler run in the <a name="d1973e178"></a><span class="emphasis">global</span> mode.
+        Because the installation is performed through <a name="d1973e181"></a><span class="emphasis">NPM</span>, the TypeScript transpiler is installed in the <code class="code" data-lang="Java">npm</code> folder.
+        Make sure this parent folder is added to the <code class="code" data-lang="Java">PATH</code> variable. This enables you to launch the transpiler from any folder.
+     
+                    </p>
+                    <a name="d9041e4221"></a><p>
+                        For more details on the <a name="d9041e4223"></a><span class="emphasis">NPM</span> operation modes, see <a name="d9041e4226"></a><a href="https://docs.npmjs.com/" data-external="true"><span>npm documentation</span></a>.
+                        For more information about installing the TypeScript transpiler, see <a name="d9041e4229"></a><a href="https://npmjs.org/package/typescript" data-external="true"><span>https://npmjs.org/package/typescript</span></a>.
+                    </p>
+                </li></ol>
+        </li><li class="list__item"><a name="d9041e4235"></a>
+            Run <a name="d9041e4237"></a><span class="emphasis">NPM</span> from WebStorm using the <a name="d9041e4240"></a><span class="control">Node.js and NPM</span> page of the <a name="d9041e4243"></a><span class="control">Settings</span> dialog box.
+            <ol class="list _decimal"><li class="list__item"><a name="d9041e4248"></a>
+                     
+         
+            Open the <a name="d7162e7944"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by choosing <a name="d7162e7946"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d7162e7949"></a><span class="menupath">WebStorm | Preferences</span> for OS X,
+         
+         
+            and  
+         
+         
+         
+        click <a name="d7162e7972"></a><span class="control">Node.js and NPM</span> under <a name="d7162e7975"></a><span class="control">Languages&amp;Frameworks</span>.
+     
+     
+                </li><li class="list__item"><a name="d9041e4260"></a>
+                     
+         
+         
+        On the <a name="d1973e127"></a><span class="control">packagePage</span> page that opens, the <a name="d1973e130"></a><span class="control">Packages</span> area shows all the engineDependent packages
+        that are currently installed on your computer, both at the <a name="d1973e133"></a><span class="emphasis">global</span> and at the <a name="d1973e137"></a><span class="emphasis">project</span> level.
+        Click <img alt="add" width="12" height="12" title="add" src="/help/img/idea/2016.1/new.png" class="inline-icon-12">.
+     
+                </li><li class="list__item"><a name="d9041e4268"></a>
+                    In the <a name="d9041e4270"></a><span class="control">Available Packages</span> dialog box that opens, select the required package to install.
+                </li><li class="list__item"><a name="d9041e4274"></a>
+                    Select the <a name="d9041e4276"></a><span class="control">Options</span> check box and type <code class="code" data-lang="Java">-g</code> in the text box next to it.
+                </li><li class="list__item"><a name="d9041e4283"></a>
+                    Optionally specify the product version and click <a name="d9041e4285"></a><span class="control">Install Package</span> to start installation.
+                </li></ol>
+        </li></ul>
+         
+
+        <a name="d240690e371"></a><h3>Installing the TypeScript Transpiler in a Project</h3>
+            <a name="d240690e373"></a><p>
+                 
+         
+         
+            Installing a transpiler in a specific project restricts its use to this project.
+            To run <a name="d9041e4315"></a><span class="emphasis">project</span> installation, do one of the following:
+     
+            </p>
+            <ul class="list _bullet"><li class="list__item"><a name="d9041e4397"></a>
+            Run the installation from the command line:
+            <ol class="list _decimal"><li class="list__item"><a name="d9041e4401"></a>
+                     
+ 
+        Launch the embedded <a name="d9041e48"></a><span class="control">Terminal</span>
+        by hovering  your mouse pointer over <img alt="show_tool_window_bars" width="14" height="14" title="show_tool_window_bars" src="/help/img/idea/2016.1/show_tool_window_bars.png" class="inline-icon-14"> in the lower left corner of WebStorm and choosing  <a name="d9041e53"></a><span class="control">Terminal</span> from the menu
+        (see <a name="d9041e56"></a><a href="working-with-embedded-local-terminal.html"><span>Working with Embedded Local Terminal</span></a> for details).
+     
+                </li><li class="list__item"><a name="d9041e4409"></a>
+                    Switch to the project root folder and type the following command at the command line prompt:
+                    <a name="d9041e4411"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+npm install typescript 
+                    </code></div>
+                </li></ol>
+        </li><li class="list__item"><a name="d9041e4417"></a>
+            Run <a name="d9041e4419"></a><span class="emphasis">NPM</span> from WebStorm using the <a name="d9041e4422"></a><span class="control">Node.js and NPM</span> page of the <a name="d9041e4425"></a><span class="control">Settings</span> dialog box.
+            <ol class="list _decimal"><li class="list__item"><a name="d9041e4430"></a>
+                     
+         
+            Open the <a name="d7162e7944"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by choosing <a name="d7162e7946"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d7162e7949"></a><span class="menupath">WebStorm | Preferences</span> for OS X,
+         
+         
+            and  
+         
+         
+         
+        click <a name="d7162e7972"></a><span class="control">Node.js and NPM</span> under <a name="d7162e7975"></a><span class="control">Languages &amp; Frameworks</span>.
+     
+     
+                </li><li class="list__item"><a name="d9041e4442"></a>
+                     
+        On the <a name="d9041e82"></a><span class="control">Node.js and NPM</span> page that opens, the <a name="d9041e85"></a><span class="control">Packages</span> area shows all the Node.js-dependent packages
+        that are currently installed on your computer, both at the <a name="d9041e88"></a><span class="emphasis">global</span> and at the <a name="d9041e91"></a><span class="emphasis">project</span> level.
+        Click <img alt="add" width="12" height="12" title="add" src="/help/img/idea/2016.1/new.png" class="inline-icon-12">.
+     
+                </li><li class="list__item"><a name="d9041e4447"></a>
+                    In the <a name="d9041e4449"></a><span class="control">Available Packages</span> dialog box that opens, select the required package.
+                </li><li class="list__item"><a name="d9041e4453"></a>
+                    Optionally specify the product version and click <a name="d9041e4455"></a><span class="control">Install Package</span> to start installation.
+                </li></ol>
+        </li></ul>
+             
+         
+         
+        <a name="d9041e4325"></a><p>
+            <a name="d9041e4327"></a><span class="emphasis">Project level</span> installation is helpful and reliable in <a name="d9041e4330"></a><a href="generating-a-project-from-a-framework-template.html"><span>template-based projects</span></a>
+             
+            of the type <a name="d9041e4336"></a><span class="emphasis">Node Boilerplate</span> or <a name="d9041e4339"></a><span class="emphasis">Node.js Express</span>, which already have the <code class="code" data-lang="Java">node_modules</code> folder.
+            The latter is important because <a name="d9041e4346"></a><span class="emphasis">NPM</span> installs the TypeScript transpiler
+            in a <code class="code" data-lang="Java">node_modules</code> folder. If your project already contains such folder, the  TypeScript transpiler is installed there.
+        </p>
+        <a name="d9041e4353"></a><p>
+            Projects of other types or <a name="d9041e4355"></a><span class="emphasis">empty</span> projects may not have a <code class="code" data-lang="Java">node_modules</code> folder.
+            In this case <a name="d9041e4361"></a><span class="emphasis">npm</span> goes upwards in the folder tree and installs the  TypeScript transpiler
+            in the first detected <code class="code" data-lang="Java">node_modules</code> folder. Keep in mind that this detected <code class="code" data-lang="Java">node_modules</code> folder may be <a name="d9041e4371"></a><span class="emphasis">outside</span> your current project root.
+        </p>
+ 
+        <a name="d9041e4378"></a><p>
+            Finally, if no <code class="code" data-lang="Java">node_modules</code> folder is detected in the folder tree either,
+            the folder is created right under the current project root and the TypeScript transpiler is installed there.
+        </p>
+        <a name="d9041e4384"></a><p>
+            In either case, make sure that the parent folder of the TypeScript transpiler is added to the <code class="code" data-lang="Java">PATH</code> variable.
+            This enables you to launch the transpiler from any folder.
+        </p>
+     
+         
+
+        <a name="d240690e391"></a><h3>Creating a File Watcher</h3>
+            <a name="d240690e393"></a><p>
+                 
+            WebStorm provides a common procedure and user interface for creating <a name="d25102e93"></a><span class="emphasis">File Watchers</span> of all types.
+            The only difference is in the predefined templates you choose in each case.
+     
+            </p>
+            <ol class="list _decimal"><li class="list__item"><a name="d240690e400"></a>
+                 
+
+            To start creating a <a name="d25102e100"></a><span class="emphasis">File Watcher</span>, open the <a name="d25102e103"></a><span class="control">Settings</span> dialog box  by choosing
+             
+             
+             
+             
+                <a name="d25102e118"></a><span class="menupath">File | Settings</span> for Windows and Linux or <a name="d25102e121"></a><span class="menupath">WebStorm | Preferences</span> for OS X
+             
+            on the main menu, and then click <a name="d25102e125"></a><span class="control">File Watchers</span> under the <a name="d25102e128"></a><span class="control">Tools</span> node.
+            The <a name="d25102e131"></a><a href="file-watchers.html"><span>File Watchers page</span></a> that opens, shows the list of <a name="d25102e134"></a><span class="emphasis">File Watchers</span> that are already configured in the project.
+
+     
+            </li><li class="list__item"><a name="d240690e405"></a>
+                Click the <a name="d240690e407"></a><span class="control">Add</span> button <img alt="new.png" width="12" height="12" title="new.png" src="/help/img/idea/2016.1/new.png" class="inline-icon-12"> or press <kbd data-default="Alt+Insert" data-default_for_gnome="Alt+Insert" data-default_for_kde="Alt+Insert" data-default_for_xwin="Alt+Insert" data-emacs="Alt+Insert" data-visual_studio="Alt+Insert" data-netbeans_6.5="N/A" data-eclipse="Alt+Insert" data-mac_os_x_10.5_="&#x2318;N" data-mac_os_x="&#x2303;N" data-eclipse_mac_os_x="&#x2318;N" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Insert</kbd>
+                and choose the <a name="d240690e414"></a><span class="control">TypeScript</span> predefined template from the pop-up list.
+            </li><li class="list__item"><a name="d240690e418"></a>
+                In the <a name="d240690e420"></a><span class="control">Program</span> text box, specify the path to the executable file <code class="code" data-lang="Java">tsc.cmd</code> or <code class="code" data-lang="Java">tsc</code> in the <code class="code" data-lang="Java">node_modules\.bin</code> folder.
+                <ul class="list _bullet"><li class="list__item"><a name="d240690e434"></a>
+                        If you installed <a name="d240690e436"></a><span class="emphasis">TypeScript</span> in the current project, the file is stored in the <code class="code" data-lang="Java">node_modules\.bin</code> folder under the project root.
+                    </li><li class="list__item"><a name="d240690e443"></a>
+                        In case of <a name="d240690e445"></a><span class="emphasis">global</span> installation, the executable file is stored in the <code class="code" data-lang="Java">node_modules\.bin</code> folder in the <a name="d240690e451"></a><span class="emphasis">user home</span>.
+                    </li></ul>
+                <a name="d240690e457"></a><p>
+                Type the path manually or click the <a name="d240690e459"></a><span class="control">Browse</span> button
+                <img alt="browseButton.png" width="15" height="15" title="browseButton.png" src="/help/img/idea/2016.1/browseButton.png" class="inline-icon-15"> and choose the file location in the dialog box that opens.
+                </p>
+            </li><li class="list__item"><a name="d240690e466"></a>
+                 
+            Proceed as described on page <a name="d25102e140"></a><a href="using-file-watchers.html"><span>Using File Watchers</span></a>.
+     
+            </li></ol>
+         
+
+        <a name="d240690e473"></a><h3>Transpiling the Code</h3>
+         
+         
+         
+         
+        <a name="d25102e147"></a><p>
+            When you open a TypeScript file, WebStorm checks whether an applicable file watcher is available in the current project. If such file watcher is configured but disabled,
+            WebStorm displays a pop-up window that informs you about the configured file watcher and suggests to enable it.
+        </p>
+         
+        <a name="d25102e153"></a><p>
+            If an applicable file watcher is configured and enabled in the current project, WebStorm starts it automatically
+            upon the event specified in the <a name="d25102e155"></a><a href="new-watcher-dialog.html"><span>New Watcher dialog</span></a>.
+            <ul class="list _bullet"><li class="list__item"><a name="d25102e160"></a>
+                    If the <a name="d25102e162"></a><span class="control">Immediate file synchronization</span> check box is selected, the <a name="d25102e165"></a><span class="emphasis">File Watcher</span> is invoked as soon as any changes are made to the source code.
+                </li><li class="list__item"><a name="d25102e169"></a>
+                    If the <a name="d25102e171"></a><span class="control">Immediate file synchronization</span> check box is cleared,
+                    the <a name="d25102e174"></a><span class="emphasis">File Watcher</span>  is started upon save (<a name="d25102e177"></a><span class="menupath">File | Save All</span>, <kbd data-default="Ctrl+S" data-default_for_gnome="Ctrl+S" data-default_for_kde="Ctrl+S" data-default_for_xwin="Ctrl+S" data-emacs="Ctrl+X, Ctrl+S" data-visual_studio="Ctrl+S" data-netbeans_6.5="N/A" data-eclipse="Ctrl+S" data-mac_os_x_10.5_="&#x2318;S" data-mac_os_x="&#x2318;S" data-eclipse_mac_os_x="&#x2318;S" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+S</kbd>) or when you move focus from WebStorm
+                    (upon frame deactivation).
+                </li></ul>
+        </p>
+     
+        <a name="d240690e481"></a><p>
+             
+         
+        The <a name="d25102e190"></a><span class="emphasis">transpiler</span> stores the generated output in a separate file. The file has the name of the source <a name="d25102e193"></a><span class="emphasis">TypeScript</span> file and the extension <code class="code" data-lang="Java">js</code> or <code class="code" data-lang="Java">js.map</code>
+        depending on the <a name="d25102e203"></a><span class="emphasis">transpiler</span> type. The location of the generated files is defined in the <a name="d25102e206"></a><span class="control">Output paths to refresh</span> text box
+        of the <a name="d25102e209"></a><a href="new-watcher-dialog.html"><span>New Watcher dialog</span></a>. Based on this setting, WebStorm detects the <a name="d25102e212"></a><span class="emphasis">transpiler</span> output.
+     
+            However, in the <a name="d240690e485"></a><span class="control">Project Tree</span>, they are shown under the source <code class="code" data-lang="Java">.ts</code> file
+            which is now displayed as a node.
+        </p>
+             
+    <div class="navigation-links _bottom"><a class="navigation-links__prev" href="typescript-support.html">TypeScript Support</a><a class="navigation-links__next" href="running-typescript.html">Running TypeScript</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content"><div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d240690e498"></a><a href="using-file-watchers.html"><span>Using File Watchers</span></a></li><li class="list__item"><a name="d240690e500"></a><a href="node-js.html"><span>Node.js</span></a></li><li class="list__item"><a name="d240690e502"></a><a href="installing-and-removing-external-software-using-node-package-manager.html"><span>Installing and Removing External Software Using Node Package Manager</span></a></li></ul></div><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d240690e507"></a><a href="typescript.html"><span>TypeScript</span></a></li><li class="list__item"><a name="d240690e509"></a><a href="typescript-compiler-tool-window.html"><span>TypeScript Compiler Tool Window</span></a></li><li class="list__item"><a name="d240690e511"></a><a href="file-watchers.html"><span>File Watchers</span></a></li><li class="list__item"><a name="d240690e513"></a><a href="new-watcher-dialog.html"><span>New Watcher Dialog</span></a></li></ul></div></div></section><div class="last-modified">Last modified: 11 July 2016 </div></article><div id="disqus_thread"></div></div></section></main></div><script src="/help/app/app.js"></script></body></html>

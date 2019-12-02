@@ -1,0 +1,75 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta charset="UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="//resources.jetbrains.com/storage/help-app/v3/analytics.js"></script><title>SLA Priority - Help | YouTrack InCloud</title><link rel="stylesheet" href="//resources.jetbrains.com/storage/help-app/v3/app.css"></head><body data-id="Workflow-Auto-Raise-Priority" data-breadcrumbs="Administration.xml|Administration/Workflow-Guide.xml|Workflows/Default-Workflows.xml|Default Workflows/Workflow-Auto-Raise-Priority.xml|SLA Priority" data-main-title="SLA Priority"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack InCloud Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>YouTrack InCloud 2019.2 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="Workflow-Auto-Raise-Priority" id="Workflow-Auto-Raise-Priority.xml">SLA Priority</h1>  <p id="134b388e">This workflow automatically updates the priority of an issue if it is not resolved within a set time frame.</p>  <div class="table-wrapper"><table class="left_header" width="100%" id="888d49ce"><tbody><tr id="0e8fc60e" class="ijRowOdd"><th id="806fa19d" width="20%"><p>Name</p></th><td id="bcac3ef0"><p>@jetbrains/youtrack-workflow-auto-raise-priority</p></td></tr><tr id="423d3fcd" class="ijRowEven"><th id="0896de67"><p>Previous Title</p></th><td id="00ff36ec"><p>Auto Raise Priority</p></td></tr><tr id="f970f528" class="ijRowOdd"><th id="f22cdd2c"><p>Auto-attached</p></th><td id="fcb6598f"><p>no</p></td></tr><tr id="dbe9be1c" class="ijRowEven"><th id="53c59830"><p>Modules</p></th><td id="245e717a"><p><a href="#normal-to-major">Raise priority from "Normal" to "Major" if not resolved in 7 days</a> (on-schedule rule)<br>        <a href="#major-to-critical">Raise priority from "Major" to "Critical" if not resolved in 10 days</a> (on-schedule rule)<br>        <a href="#critical-to-show-stopper">Raise priority from "Critical" to "Show-stopper" if not resolved in 12 days</a> (on-schedule rule)<br>        <a href="#date-utils">date-utils</a> (custom script)      </p></td></tr></tbody></table></div>  <div class="chapter"><h2 id="1f0cb498">Use Case</h2>    <p id="5dcec086">This workflow helps you meet specific service-level agreements.      The default workflow is set up for a support desk that tries to resolve all issues within 14 days.      As this deadline approaches, unresolved issues automatically increase in priority.</p>  </div>  <div class="chapter"><h2 id="256ccdfd">Modules</h2>    <p id="21224a01">This workflow includes three rules that change the priority based on the amount of time that has passed since an issue was opened.      You can easily customize this workflow to help you resolve issues within a set time frame by simply changing the number of days.</p>    <div class="chapter"><h3 id="normal-to-major">Raise priority from "Normal" to "Major" if not resolved in 7 days</h3>      <p id="d417c75b">The first module contains an on-schedule rule that changes the priority of an issue from <span class="control">Normal</span> to <span class="control">Major</span> if it is not resolved after seven days.        The rule runs daily starting at 08:00.</p>        <div class="code-block" data-lang="javascript">var entities = require('@jetbrains/youtrack-scripting-api/entities');
+var workflow = require('@jetbrains/youtrack-scripting-api/workflow');
+var days = require("./date-utils").days;
+
+exports.rule = entities.Issue.onSchedule({
+  title: workflow.i18n('Raise priority from "Normal" to "Major" if not resolved in 7 days'),
+  search: '#Unresolved priority:Normal',
+  cron: '0 0 8 1/1 * ? *',
+  guard: function(ctx) {
+    return ctx.issue.created &lt; Date.now() - days(7);
+  },
+  action: function(ctx) {
+    ctx.issue.fields.Priority = ctx.Priority.Major;
+  },
+  requirements: {
+    Priority: {
+      type: entities.EnumField.fieldType,
+      Normal: {},
+      Major: {}
+    }
+  }
+});</div>    </div>    <div class="chapter"><h3 id="major-to-critical">Raise priority from "Major" to "Critical" if not resolved in 10 days</h3>      <p id="c501135c">The second module contains an on-schedule rule that changes the priority of an issue from <span class="control">Major</span> to <span class="control">Critical</span> if it is not resolved after ten days.        The rule runs daily starting at 08:05.</p>        <div class="code-block" data-lang="javascript">var entities = require('@jetbrains/youtrack-scripting-api/entities');
+var workflow = require('@jetbrains/youtrack-scripting-api/workflow');
+var days = require("./date-utils").days;
+
+exports.rule = entities.Issue.onSchedule({
+  title: workflow.i18n('Raise priority from "Major" to "Critical" if not resolved in 10 days'),
+  search: '#Unresolved Priority: Major',
+  cron: '0 5 8 1/1 * ? *',
+  guard: function(ctx) {
+    return ctx.issue.created &lt; Date.now() - days(10);
+  },
+  action: function(ctx) {
+    ctx.issue.fields.Priority = ctx.Priority.Critical;
+  },
+  requirements: {
+    Priority: {
+      type: entities.EnumField.fieldType,
+      Major: {},
+      Critical: {}
+    }
+  }
+});</div>    </div>    <div class="chapter"><h3 id="critical-to-show-stopper">Raise priority from "Critical" to "Show-stopper" if not resolved in 12 days</h3>      <p id="189f552e">The next module contains an on-schedule rule that changes the priority of an issue from <span class="control">Critical</span> to <span class="control">Show-Stopper</span> if it is not resolved after 12 days.        The rule runs daily starting at 08:30.</p>        <div class="code-block" data-lang="javascript">var entities = require('@jetbrains/youtrack-scripting-api/entities');
+var workflow = require('@jetbrains/youtrack-scripting-api/workflow');
+var days = require("./date-utils").days;
+
+exports.rule = entities.Issue.onSchedule({
+  title: workflow.i18n('Raise priority from "Critical" to "Show-stopper" if not resolved in 12 days'),
+  search: '#Unresolved priority:Critical',
+  cron: '0 30 8 1/1 * ? *',
+  guard: function(ctx) {
+    return ctx.issue.created &lt; Date.now() - days(12);
+  },
+  action: function(ctx) {
+    ctx.issue.fields.Priority = ctx.Priority.ShowStopper;
+  },
+  requirements: {
+    Priority: {
+      type: entities.EnumField.fieldType,
+      Critical: {},
+      ShowStopper: {
+        name: 'Show-stopper'
+      }
+    }
+  }
+});</div>    </div>    <div class="chapter"><h3 id="date-utils">date-utils</h3>      <p id="aa8ed193">The last module contains a simple utility module that defines the <code class="code">days</code> function.      This function is used in each rule to calculate the difference between the current date and the due date.</p>      <div class="code-block" data-lang="javascript">exports.days = function days(count) {
+  return count * 24 * 3600 * 1000;
+};</div>    </div>  </div><div class="last-modified" data-skip-index="skip">Last modified: 29 November 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="Workflow-Set-Fix-Version.html">Set Fix Versions</a><a class="navigation-links__next" href="slack-notifications-workflow.html">Slack Notifications</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="//resources.jetbrains.com/storage/help-app/v3/app.js"></script></body></html>

@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[506],{505:function(o,t,n){n("ctTR"),o.exports=n("vg1c")},vg1c:function(o,t,n){var c=n("KI45"),d=c(n("Am66")),e=c(n("d+Zx"));c(n("MpdL"));d.default.domReady((function(){new e.default(".js-latest-posts",{product:"webstorm",count:5})}))}},[[505,0]]]);
+//# sourceMappingURL=index.entry.d1774e130331eb49238b.js.map

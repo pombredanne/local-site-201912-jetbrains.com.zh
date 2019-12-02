@@ -1,0 +1,80 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"></meta><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><title>WebStorm 2016.1 Help :: Running Inspections Offline</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="procedures.inspecting.running.offline"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search WebStorm Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>WebStorm 2016.1 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWindow</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="running-inspection-by-name.html">Running Inspection by Name</a><a class="navigation-links__next" href="applying-quickfixes-automatically.html">Applying Quickfixes Automatically</a></div><h1>Running Inspections Offline</h1><a name="d667859e5"></a><p>On this page:</p><ul><li class="list__item"><a href="#d667859e10">Basics</a></li><li class="list__item"><a href="#d667859e24">Launching a code inspection from the command line</a><ul class="list _bullet"><li class="list__item"><a href="#d667859e167">Examples</a><ul class="list _bullet"><li class="list__item"><a href="#d667859e169">Windows</a></li><li class="list__item"><a href="#d667859e178">OS X</a></li></ul></li></ul></li><li class="list__item"><a href="#d667859e192">Viewing the results of an offline inspection</a></li></ul><a name="d667859e10"></a><h2>Basics</h2>
+            <a name="d667859e12"></a><p>In addition to running code inspections from the main menu, or from the context menus of the
+                <a name="d667859e14"></a><a href="project-tool-window.html"><span>Project tool window</span></a>, you can also launch the inspector from the command line,
+                without actually running WebStorm.</p>
+        <a name="d667859e18"></a><p>This way you can perform regular code inspections as a part of your development process, which is especially
+            important for large projects. Inspection results are stored in the XML format.</p>
+    <a name="d667859e24"></a><h2>Launching a code inspection from the command line</h2>
+               
+               
+               
+               
+               
+               
+
+              <a name="d667859e39"></a><a name="dynaProc0"></a><section class="procedure-steps"><h2>To launch a code inspection from the command line</h2><ul class=".list "><li class="list__item">Specify the following command line arguments:
+                    <ul class="list _ul"><li class="list__item"><a name="d667859e45"></a><a name="d667859e46"></a><span class="keyword">Path to the launcher</span>: specify the <a name="d667859e49"></a><span class="emphasis">full path</span>
+                            to one of the following launchers (which reside under the <code class="code" data-lang="Java">bin</code>
+                            directory of your WebStorm installation):
+                             
+                            <ul class="list _ul"><li class="list__item"><a name="d667859e60"></a>For <a name="d667859e62"></a><span class="emphasis">Windows</span>:
+                                    <code class="code" data-lang="Java">inspect.bat</code></li><li class="list__item"><a name="d667859e70"></a>For <a name="d667859e72"></a><span class="emphasis">UNIX</span> and <a name="d667859e75"></a><span class="emphasis">OS X</span>:
+                                    <code class="code" data-lang="Java">inspect.sh</code></li></ul>
+                        </li><li class="list__item"><a name="path"></a><a name="d667859e86"></a><span class="keyword">Project file path</span> is the <a name="d667859e89"></a><span class="emphasis">full path</span> to
+                            the   directory that contains the project to be inspected.
+                        </li><li class="list__item"><a name="d667859e95"></a><a name="d667859e96"></a><span class="keyword">Inspection profile path</span> is the <a name="d667859e99"></a><span class="emphasis">full path</span> to the
+                            profile, against which the project should be inspected. The inspection profiles are stored
+                            under <code class="code" data-lang="Java">USER_HOME\.WebStormXX\config\inspection</code>
+                             
+                        </li><li class="list__item"><a name="d667859e108"></a><a name="d667859e109"></a><span class="keyword">Output path</span> is the <a name="d667859e112"></a><span class="emphasis">full path</span> to an existing
+                            directory where the report will be stored.</li><li class="list__item"><a name="d667859e116"></a><a name="d667859e117"></a><span class="keyword">Options</span>. You can specify:
+                            <ul class="list _ul"><li class="list__item"><a name="d667859e122"></a>The directory to be inspected
+                                    <code class="code" data-lang="Java">-d &lt;full path to the subdirectory&gt;</code>
+                                </li><li class="list__item"><a name="d667859e128"></a>The verbosity level of output
+                                    <code class="code" data-lang="Java">-vX</code>, where X is 0 for quiet, 1 for noisy and 2 for extra noisy.
+                                </li></ul>
+                        </li></ul>
+<aside class="warning sideblock" rel="path"><a name="d667859e138"></a><p>Please note that you have to specify full paths. Relative paths are not accepted!</p></aside>
+                     
+
+                     
+                </li></ul></section>
+             
+            <a name="d667859e167"></a><h3>Examples</h3>
+            <a name="d667859e169"></a><h4>Windows</h4>
+            <a name="d667859e171"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+C:\Program Files (x86)\JetBrains\&lt;WebStorm home&gt;\bin\inspect.bat
+E:\SampleProjects\MetersToInchesConverter E:\Work\MyProject\.idea\inspectionProfiles\Project_Default.xml
+E:\Work\MyProject\inspection-results-dir -v2 -d E:\SampleProjects\MetersToInchesConverter\subdirectory
+            </code></div>
+             
+             
+            <a name="d667859e178"></a><h4>OS X</h4>
+            <a name="d667859e180"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+/Applications/WebStorm.app/Contents/bin/inspect.sh ~/WebStormProjects/MyTestProject
+~/Library/Preferences/webideXX/inspection/Default.xml ~/WebStormProjects/MyTestProject/results-dir -v2
+            </code></div>
+             
+             
+             
+             
+        <a name="d667859e192"></a><h2>Viewing the results of an offline inspection</h2>
+     <a name="d667859e194"></a><p>If you have performed an offline inspection and exported the inspection results to a directory in the XML format
+         you can always download and view these results.</p>
+    <a name="d667859e197"></a><a name="dynaProc1"></a><section class="procedure-steps"><h2>To view the results of an offline inspection, follow these steps</h2><ol class=".list _decimal"><li class="list__item">Open the project against which the inspection was performed.</li><li class="list__item">On the main menu, choose <a name="d667859e204"></a><span class="menupath">Code | View Offline Inspection Results</span>.</li><li class="list__item">In the <a name="d667859e210"></a><span class="control">Select Path</span> dialog box that opens, navigate to the directory that
+                    contains inspection results in XML format.</li><li class="list__item">Click <a name="d667859e216"></a><span class="control">OK</span>. Inspection results display in the <a name="d667859e219"></a><span class="control">Offline View</span> tab
+                    in the <a name="d667859e222"></a><a href="inspection-tool-window.html"><span>Inspection tool window</span></a>.</li></ol></section>
+     <aside class="tip sideblock">
+         <a name="d667859e229"></a><p>Alternatively, you can open the relevant XML file in WebStorm or in any other text processor without
+             opening the inspected project.</p>
+     </aside>
+
+
+ <div class="navigation-links _bottom"><a class="navigation-links__prev" href="running-inspection-by-name.html">Running Inspection by Name</a><a class="navigation-links__next" href="applying-quickfixes-automatically.html">Applying Quickfixes Automatically</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content"><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d667859e238"></a><a href="inspection-tool-window.html"><span>Inspection Tool Window</span></a></li><li class="list__item"><a name="d667859e242"></a><a href="topicId47.html"><span>Project and IDE Settings</span></a></li></ul></div></div></section><div class="last-modified">Last modified: 11 July 2016 </div></article><div id="disqus_thread"></div></div></section></main></div><script src="/help/app/app.js"></script></body></html>

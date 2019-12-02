@@ -1,0 +1,102 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta class="swiftype" name="product" data-type="string" content="/idea/2016.3/"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><meta charset="UTF-8"><meta name="robots" content="noindex"><title>IntelliJ IDEA 2016.3 Help :: Extracting Hard-Coded String Literals</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="procedures.internationalizing.extract"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-swiftype-index="false"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.3 Help</h3><div class="shortcuts-switcher" data-swiftype-index="false"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Windows/Linux Default</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWin</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">Mac OS X</option><option data-group="secondary" value="eclipse_mac_os_x">Eclipse (Mac OS X)</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (Mac OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper (Mac OS X)</option><option data-group="secondary" value="emacs">Emacs (Mac OS X)</option></select></div><div class="panel-trigger" data-swiftype-index="false"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="ignoring-hard-coded-string-literals.html">Ignoring Hard-Coded String Literals</a></div><h1>Extracting Hard-Coded String Literals</h1><a name="d902899e8"></a><p>On this page:</p><ul><li class="list__item"><a href="#d902899e13">Introduction</a></li><li class="list__item"><a href="#d902899e80">Extracting string literals</a><ul class="list _bullet"><li class="list__item"><a href="#1">Extracting string literals using ResourceBundle</a></li><li class="list__item"><a href="#2">Extracting string literals using custom resource bundle class</a></li></ul></li></ul><a name="d902899e13"></a><h2>Introduction</h2>
+     
+        <a name="d902899e17"></a><p>Having <a name="d902899e19"></a><a href="recognizing-hard-coded-string-literals.html"><span>enabled</span></a> code inspection that highlights hard-coded string literals,
+                you can proceed with extracting these literals into your properties files. For this purpose, IntelliJ IDEA
+                provides special intention action <a name="d902899e22"></a><span class="menupath">i18nize hard coded string literal</span>.</p>
+        <a name="d902899e26"></a><p>This section considers two possible ways of accessing resource bundle:</p>
+        <ul class="list _bullet"><li class="list__item"><a name="d902899e31"></a>Using the <a name="d902899e33"></a><a href="#1"><span>java.util.ResourceBundle utility class</span></a>
+         </li><li class="list__item"><a name="d902899e37"></a>Using <a name="d902899e39"></a><a href="#2"><span>custom utility class</span></a>
+         </li></ul>
+       
+       
+  <a name="d902899e80"></a><h2>Extracting string literals</h2>
+     
+    <a name="1"></a><h3>Extracting string literals using ResourceBundle</h3>
+      <a name="d902899e86"></a><a name="dynaProc0"></a><section class="procedure-steps"><h2>To extract a string literal using java.util.ResourceBundle</h2><ol class=".list _decimal"><li class="list__item">Specify resource bundle that will be used to store the extracted literals.
+                In particular, you can add the following statement to your source code:
+        <a name="d902899e90"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kd">private</span> <span class="kd">static</span> <span class="n">ResourceBundle</span> <span class="o">&lt;</span><span class="n">field</span> <span class="n">name</span><span class="o">&gt;</span> <span class="o">=</span>
+<span class="na">getBundle</span><span class="o">(</span><span class="s">&quot;&lt;bundle name&gt;&quot;</span><span class="o">);</span></code></div>
+            <a name="d902899e93"></a><p>For example:</p>
+            <a name="d902899e96"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kd">private</span> <span class="kd">static</span> <span class="n">ResourceBundle</span> <span class="n">myBundle</span> <span class="o">=</span>
+<span class="na">getBundle</span><span class="o">(</span><span class="s">&quot;com.intellij.fontChooser.FontChooser&quot;</span><span class="o">);</span></code></div>
+            <aside class="note sideblock">
+               <a name="d902899e101"></a><p>You can skip this step and specify the desired resource bundle expression immediately in the
+                        <a name="d902899e103"></a><a href="#step4"><span>I18nize Hard Coded String Literal</span></a>
+                        dialog box.
+                    </p>
+            </aside>
+        </li><li class="list__item">Click the highlighted string, press <kbd data-default="Alt+Enter" data-default_for_gnome="Alt+Enter" data-default_for_kde="Alt+Enter" data-default_for_xwin="Alt+Enter" data-emacs="Alt+Enter" data-jbuilder="Alt+Enter" data-visual_studio="Alt+Enter" data-netbeans_6.5="N/A" data-eclipse="Alt+Enter" data-mac_os_x_10.5_="&#x2325;⏎" data-mac_os_x="&#x2325;⏎" data-eclipse_mac_os_x="&#x2318;1" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Enter</kbd>, and in the list of intention
+                actions choose <a name="d902899e113"></a><span class="menupath">i18nize hard coded string literal</span>:
+                <figure><img alt="i18nHardcodedString1.png" title="i18nHardcodedString1.png" src="/help/img/idea/2016.3/i18nHardcodedString1.png" width="476" height="127"></figure>
+         </li><li class="list__item">
+            <a name="step4"></a>In the <a name="d902899e123"></a><a href="i18nize-hard-coded-string.html"><span>I18nize Hard Coded String Literal</span></a>
+                dialog box specify the <a name="d902899e126"></a><span class="keyword">target properties file</span>, the
+            <a name="d902899e129"></a><span class="keyword">property key and value</span>, and the <a name="d902899e132"></a><span class="keyword">resource bundle expression</span>.
+                <a name="d902899e136"></a><p>If the ResourceBundle field has been declared in the source code (as shown in the step 1), IntelliJ IDEA
+                suggests its name by default. If you haven't declared this field in the source code yet, you can still
+                define the desired expression immediately in the dialog box. To do that, enter a valid
+                expression of the ResourceBundle type in the <a name="d902899e138"></a><span class="control">Resource bundle expression</span> field.</p>
+               <a name="d902899e142"></a><p>Note that <a name="d902899e144"></a><a href="basic-code-completion-completing-names-and-keywords.html"><span>basic code completion</span></a> works in this field. Type class name, and
+                        press <kbd data-default="Ctrl+Space" data-default_for_gnome="Ctrl+Space" data-default_for_kde="Ctrl+Space" data-default_for_xwin="Ctrl+Space" data-emacs="Alt+Slash" data-jbuilder="Ctrl+Space" data-visual_studio="Ctrl+Space" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Space" data-mac_os_x_10.5_="&#x2303;Space" data-mac_os_x="&#x2303;Space" data-eclipse_mac_os_x="&#x2303;Space" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Space</kbd> after period to select method:</p>
+               <figure><a class="lightbox" href="/help/img/idea/2016.3/i18nHardcodedString2.zoomed.png"><img alt="/help/img/idea/2016.3/i18nHardcodedString2.png" title="/help/img/idea/2016.3/i18nHardcodedString2.png" src="/help/img/idea/2016.3/i18nHardcodedString2.png" width="295" height="175"></a></figure>
+                    <a name="d902899e152"></a><p>Choose the desired method from the suggestion list, and press
+                        <kbd data-default="Ctrl+Space" data-default_for_gnome="Ctrl+Space" data-default_for_kde="Ctrl+Space" data-default_for_xwin="Ctrl+Space" data-emacs="Alt+Slash" data-jbuilder="Ctrl+Space" data-visual_studio="Ctrl+Space" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Space" data-mac_os_x_10.5_="&#x2303;Space" data-mac_os_x="&#x2303;Space" data-eclipse_mac_os_x="&#x2303;Space" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Space</kbd> once more to fill in the parentheses:</p>
+                    <figure><a class="lightbox" href="/help/img/idea/2016.3/i18nHardcodedString2a.zoomed.png"><img alt="/help/img/idea/2016.3/i18nHardcodedString2a.png" title="/help/img/idea/2016.3/i18nHardcodedString2a.png" src="/help/img/idea/2016.3/i18nHardcodedString2a.png" width="250" height="192"></a></figure>
+                    <a name="d902899e159"></a><p>After that, type the package and resource bundle name in quotes:</p>
+                    <figure><a class="lightbox" href="/help/img/idea/2016.3/i18nHardcodedString2b.zoomed.png"><img alt="/help/img/idea/2016.3/i18nHardcodedString2b.png" title="/help/img/idea/2016.3/i18nHardcodedString2b.png" src="/help/img/idea/2016.3/i18nHardcodedString2b.png" width="321" height="172"></a></figure>
+
+        </li><li class="list__item">Click <a name="d902899e168"></a><span class="control">OK</span>.  The line with hard-coded string literal is replaced. For example, if the
+                resource bundle has been declared in the source code, the following line will be created:
+                <figure><img alt="i18nHardcodedString3.png" title="i18nHardcodedString3.png" src="/help/img/idea/2016.3/i18nHardcodedString3.png" width="396" height="21"></figure>
+            <a name="d902899e173"></a><p>If the resource bundle has been defined in the dialog, the result will be:</p>
+            <figure><img alt="i18nHardcodedString3a.png" title="i18nHardcodedString3a.png" src="/help/img/idea/2016.3/i18nHardcodedString3a.png" width="462" height="39"></figure>
+         </li></ol></section>
+     
+    <a name="2"></a><h3>Extracting string literals using custom resource bundle class</h3>
+      <a name="d902899e183"></a><a name="dynaProc1"></a><section class="procedure-steps"><h2>To extract a string literal using custom resource bundle class</h2><ol class=".list _decimal"><li class="list__item">Make sure that <code class="code" data-lang="Java">redist/annotations.jar</code> archive that resides under your IntelliJ IDEA installation, is
+              <a name="d902899e190"></a><a href="configuring-module-dependencies-and-libraries.html"><span>added to the module dependencies</span></a>.</li><li class="list__item">
+            <a name="d902899e196"></a><a href="creating-template-based-files.html"><span>Create a new class</span></a> in your project, and type the following code:
+                <a name="d902899e199"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kn">import</span> <span class="nn">org.jetbrains.annotations.PropertyKey</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.jetbrains.annotations.NonNls</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.ResourceBundle</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.text.MessageFormat</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">I18nSupport</span> <span class="o">{</span>
+               <span class="nd">@NonNls</span>
+               <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">ResourceBundle</span> <span class="n">bundle</span> <span class="o">=</span> <span class="n">ResourceBundle</span><span class="o">.</span><span class="na">getBundle</span> <span class="o">(</span><span class="s">&quot;com.intellij.FontChooser&quot;</span><span class="o">);</span>
+               <span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">i18n_str</span>
+                <span class="o">(</span><span class="nd">@PropertyKey</span><span class="o">(</span><span class="n">resourceBundle</span> <span class="o">=</span><span class="s">&quot;com.intellij.FontChooser&quot;</span><span class="o">)</span>
+                <span class="n">String</span> <span class="n">key</span><span class="o">,</span><span class="n">Object</span><span class="o">...</span> <span class="n">params</span><span class="o">){</span>
+                <span class="n">String</span> <span class="n">value</span> <span class="o">=</span><span class="n">bundle</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">params</span><span class="o">.</span><span class="na">length</span> <span class="o">&gt;</span><span class="mi">0</span><span class="o">)</span> <span class="k">return</span> <span class="n">MessageFormat</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="n">value</span><span class="o">,</span> <span class="n">params</span><span class="o">);</span>
+                <span class="k">return</span> <span class="n">value</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></div>
+         </li><li class="list__item">In a class that contains hard-coded string, click the highlighted string, press
+                <kbd data-default="Alt+Enter" data-default_for_gnome="Alt+Enter" data-default_for_kde="Alt+Enter" data-default_for_xwin="Alt+Enter" data-emacs="Alt+Enter" data-jbuilder="Alt+Enter" data-visual_studio="Alt+Enter" data-netbeans_6.5="N/A" data-eclipse="Alt+Enter" data-mac_os_x_10.5_="&#x2325;⏎" data-mac_os_x="&#x2325;⏎" data-eclipse_mac_os_x="&#x2318;1" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Enter</kbd>, and in the list of intention actions choose
+            <a name="d902899e207"></a><span class="menupath">i18nize hard coded string literal</span>.
+            The <a name="d902899e210"></a><span class="control">I18n-ize String Literal</span> dialog box shows that resource bundle expression is missing:
+                <figure><img alt="i18nHardcodedString4.png" title="i18nHardcodedString4.png" src="/help/img/idea/2016.3/i18nHardcodedString4.png" width="348" height="338"></figure>
+         </li><li class="list__item">Click <a name="d902899e218"></a><span class="control">Edit i18n template</span> link. In the <a name="d902899e221"></a><span class="control">File Template</span> dialog box,
+            change the <a name="d902899e224"></a><span class="keyword">I18nized Expression</span> to point to the method of your custom resource bundle
+            class:
+            <figure><img alt="i18nHardcodedString5.png" title="i18nHardcodedString5.png" src="/help/img/idea/2016.3/i18nHardcodedString5.png" width="424" height="268"></figure>
+            <a name="d902899e229"></a><p>Click <a name="d902899e231"></a><span class="control">OK</span> to save the updated template and close the dialog box.</p>
+            <aside class="warning sideblock">
+               <a name="d902899e238"></a><p>This change is global, and affects all projects!</p>
+            </aside>
+         </li><li class="list__item">In the <a name="d902899e245"></a><span class="control">Preview</span> section of the <a name="d902899e248"></a><span class="control">I18n-ize String Literal</span> dialog box,
+                see the suggested substitution, and click <a name="d902899e251"></a><span class="control">OK</span>. The source code changes:
+                <figure><img alt="i18nHardcodedString7.png" title="i18nHardcodedString7.png" src="/help/img/idea/2016.3/i18nHardcodedString7.png" width="403" height="20"></figure>
+         </li></ol></section>
+     
+     
+     
+  <div class="navigation-links _bottom"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="ignoring-hard-coded-string-literals.html">Ignoring Hard-Coded String Literals</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content">```
+                <div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d902899e302"></a><a href="internationalization-and-localization-support.html"><span>Internationalization and Localization Support</span></a></li></ul></div><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d902899e311"></a><a href="i18nize-hard-coded-string.html"><span>I18nize Hard-Coded String</span></a></li></ul></div></div></section><div class="last-modified" data-swiftype-index="false">Last modified: 21 March 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

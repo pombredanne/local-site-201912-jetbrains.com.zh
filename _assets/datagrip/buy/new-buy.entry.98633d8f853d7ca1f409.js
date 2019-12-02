@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[75],{74:function(a,n,e){e("ctTR"),a.exports=e("jBml")},jBml:function(a,n,e){var o=e("KI45"),t=e("XHbo"),i=o(e("kIaO"));(0,t.initBuyPage)("buy-cards",{enableBannersRedirects:!0,pageProps:{productEditionsData:[{code:"DB",name:"DataGrip",description:i.default._({id:"Many databases, one tool"})}]}})}},[[74,0]]]);
+//# sourceMappingURL=new-buy.entry.71018b5e4a80ad336de0.js.map

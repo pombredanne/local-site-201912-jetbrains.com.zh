@@ -1,0 +1,112 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta class="swiftype" name="product" data-type="string" content="/idea/2016.3/"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><meta charset="UTF-8"><meta name="robots" content="noindex"><title>IntelliJ IDEA 2016.3 Help :: Using the Push ITDs In Refactoring</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Using_the_Push_ITDs_In_refactoring"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-swiftype-index="false"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.3 Help</h3><div class="shortcuts-switcher" data-swiftype-index="false"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Windows/Linux Default</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWin</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">Mac OS X</option><option data-group="secondary" value="eclipse_mac_os_x">Eclipse (Mac OS X)</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (Mac OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper (Mac OS X)</option><option data-group="secondary" value="emacs">Emacs (Mac OS X)</option></select></div><div class="panel-trigger" data-swiftype-index="false"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="using-the-aspectj-compiler-ajc.html">Using the AspectJ Compiler (ajc)</a></div><h1>Using the Push ITDs In Refactoring</h1><a name="d766e18"></a><p><a name="d766e19"></a><span class="emphasis">This feature is supported in the Ultimate edition only.</span></p><a name="d471326e8"></a><p>
+                For aspects, IntelliJ IDEA supports most of the basic refactorings such as <a name="d471326e10"></a><a href="move-refactorings.html"><span>Move</span></a> and 
+                <a name="d471326e13"></a><a href="rename-refactorings.html"><span>Rename</span></a>.
+                In addition to that, you can also perform the Push ITDs In refactoring for 
+                <a name="d471326e16"></a><a href="http://www.eclipse.org/aspectj/doc/released/progguide/language-interType.html" data-external="true"><span>inter-type declarations</span></a>.</p><a name="d471326e20"></a><p>
+                The Push ITDs In refactoring lets you move the definitions of fields and methods from aspects
+                to corresponding classes.
+                (The <a name="d471326e22"></a><span class="emphasis">ITDs</span> in the refactoring name stands for <a name="d471326e25"></a><span class="emphasis">Inter-Type Declarations</span>.)</p><a name="d471326e29"></a><p>
+                The refactoring may be performed for an individual field or method, for an aspect as a whole,
+                or for all aspects in a package.</p><a name="d471326e32"></a><p>
+                If when performing the refactoring certain aspects become "empty"
+                (this may be the case when the corresponding aspects contain nothing but inter-type declarations),
+                you can select to automatically delete all such aspects.</p><ul><li class="list__item"><a href="#d471326e38">Examples</a></li><li class="list__item"><a href="#d471326e199">Performing the Push ITDs In refactoring</a></li></ul><a name="d471326e38"></a><h2>Examples</h2>
+        <a name="d471326e40"></a><p>
+            The following table shows examples of the Push ITDs In refactoring.</p>
+        <a name="d471326e43"></a><p>
+            In the first example, the declaration of the field <code class="code" data-lang="Java">closed</code> is moved from
+            the aspect <code class="code" data-lang="Java">MyAspect</code> to the class <code class="code" data-lang="Java">Account</code>.</p>
+        <a name="d471326e55"></a><p>
+            In the second example, the method <code class="code" data-lang="Java">close()</code> is also moved from <code class="code" data-lang="Java">MyAspect</code>
+            to <code class="code" data-lang="Java">Account</code>.</p>
+        <a name="d471326e67"></a><p>
+            Note that both these declarations (that is, the declarations of <code class="code" data-lang="Java">closed</code> and <code class="code" data-lang="Java">close()</code>)
+            may be moved to the class <code class="code" data-lang="Java">Account</code> at once if the refactoring is performed for
+            the aspect <code class="code" data-lang="Java">MyAspect</code> as a whole.</p>
+        <table class="              _layout-fixed" width="100%" id="d471326e82"><thead><tr id="d471326e84" class="ijRowHead"><a name="d471326e84"></a><th width="50%"><a name="d471326e86"></a>Before</th><th><a name="d471326e89"></a>After</th></tr></thead><tbody><tr id="d471326e93" class="ijRowOdd"><a name="d471326e93"></a><td><a name="d471326e95"></a>
+                    <a name="d471326e97"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="n">aspect</span> <span class="n">myAspect</span> <span class="o">{</span>
+    <span class="kt">boolean</span> <span class="n">Account</span><span class="o">.</span><span class="na">closed</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="kt">void</span> <span class="n">Account</span><span class="o">.</span><span class="na">close</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">closed</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="c1">// some code here</span>
+<span class="o">}</span>
+<span class="kd">class</span> <span class="nc">Account</span> <span class="o">{</span>
+<span class="c1">// some code here</span>
+
+<span class="o">}</span></code></div>
+                </td><td><a name="d471326e116"></a>
+                    <a name="d471326e118"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="n">aspect</span> <span class="n">myAspect</span> <span class="o">{</span>
+
+    <span class="kt">void</span> <span class="n">Account</span><span class="o">.</span><span class="na">close</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">closed</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="c1">// some code here</span>
+<span class="o">}</span>
+<span class="kd">class</span> <span class="nc">Account</span> <span class="o">{</span>
+    <span class="c1">// some code here</span>
+    <span class="kt">boolean</span> <span class="n">closed</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+<span class="o">}</span></code></div>
+                </td></tr><tr id="d471326e138" class="ijRowEven"><a name="d471326e138"></a><td><a name="d471326e140"></a>
+                    <a name="d471326e142"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="n">aspect</span> <span class="n">MyAspect</span> <span class="o">{</span>
+    <span class="kt">void</span> <span class="n">Account</span><span class="o">.</span><span class="na">close</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">closed</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="c1">// some code here</span>
+<span class="o">}</span>
+<span class="kd">class</span> <span class="nc">Account</span> <span class="o">{</span>
+    <span class="c1">// some code here</span>
+    <span class="kt">boolean</span> <span class="n">closed</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+
+
+
+<span class="o">}</span></code></div>
+                </td><td><a name="d471326e168"></a>
+                    <a name="d471326e170"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="n">aspect</span> <span class="n">MyAspect</span> <span class="o">{</span>
+
+
+
+    <span class="c1">// some code here</span>
+<span class="o">}</span>
+<span class="kd">class</span> <span class="nc">Account</span> <span class="o">{</span>
+    <span class="c1">// some code here</span>
+    <span class="kt">boolean</span> <span class="n">closed</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="kt">void</span> <span class="nf">close</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">closed</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></div>
+                </td></tr></tbody></table>
+    <a name="d471326e199"></a><h2>Performing the Push ITDs In refactoring</h2>
+        <ol class="list _decimal"><li class="list__item"><a name="d471326e203"></a>
+                Depending on the intended scope of the refactoring:
+                <ul class="list _ul"><li class="list__item"><a name="d471326e207"></a>
+                        To perform the refactoring for an individual field or method,
+                        open the aspect of interest in the editor and
+                        place the cursor within the declaration of the field or method.</li><li class="list__item"><a name="d471326e210"></a>
+                        To perform the refactoring for an aspect as a whole,
+                        select the aspect of interest in the <a name="d471326e212"></a><span class="control">Project</span> tool window.
+                        Alternatively, open the aspect in the editor and
+                        place the cursor somewhere outside of individual inter-type declarations
+                        (e.g. within the declaration of the aspect).</li><li class="list__item"><a name="d471326e216"></a>
+                        To perform the refactoring for all aspects in a package,
+                        select the package in the <a name="d471326e218"></a><span class="control">Project</span> tool window.</li></ul></li><li class="list__item"><a name="d471326e222"></a>
+                Select <a name="d471326e224"></a><span class="control">Refactor | Push ITDs In</span> in the main or the context menu.</li><li class="list__item"><a name="d471326e228"></a>
+                In the <a name="d471326e230"></a><span class="control">Push Inter-Type Declarations In</span> dialog that opens:
+                <ol class="list _decimal"><li class="list__item"><a name="d471326e235"></a>
+                        Select or clear the <a name="d471326e237"></a><span class="control">Delete empty aspects</span> check box.</li><li class="list__item"><a name="d471326e241"></a>
+                        Click <a name="d471326e243"></a><span class="control">Refactor</span> to perform the refactoring right away,
+                        or <a name="d471326e246"></a><span class="control">Preview</span> to be able to study the expected changes prior to
+                        actually performing the refactoring.</li></ol></li><li class="list__item"><a name="d471326e250"></a>
+                If at the previous step you clicked <a name="d471326e252"></a><span class="control">Preview</span>,
+                the <a name="d471326e255"></a><a href="find-tool-window.html"><span>Find tool window</span></a> opens showing the inter-type declarations
+                that are going to be affected.
+                If happy with the expected result, click <a name="d471326e258"></a><span class="control">Do Refactor</span>.</li></ol>
+    <div class="navigation-links _bottom"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="using-the-aspectj-compiler-ajc.html">Using the AspectJ Compiler (ajc)</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content">```
+                <div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d471326e267"></a><a href="creating-aspects.html"><span>Creating Aspects</span></a></li><li class="list__item"><a name="d471326e269"></a><a href="using-the-aspectj-compiler-ajc.html"><span>Using the AspectJ Compiler (ajc)</span></a></li><li class="list__item"><a name="d471326e271"></a><a href="refactoring-source-code.html"><span>Refactoring Source Code</span></a></li></ul></div></div></section><div class="last-modified" data-swiftype-index="false">Last modified: 21 March 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

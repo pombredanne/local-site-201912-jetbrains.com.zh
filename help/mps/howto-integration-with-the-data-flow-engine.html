@@ -1,0 +1,109 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta charset="UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="//resources.jetbrains.com/storage/help-app/v3/analytics.js"></script><title>HowTo -- Integration with the Data Flow Engine - Help | MPS</title><link rel="stylesheet" href="//resources.jetbrains.com/storage/help-app/v3/app.css"></head><body data-id="HowTo+--+Integration+with+the+Data+Flow+Engine.html"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search MPS Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>MPS 2019.2 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="primary_default" selected>Default</option><option data-group="primary" value="primary_default_for_gnome">Default for GNOME</option><option data-group="primary" value="primary_default_for_kde">Default for KDE</option><option data-group="primary" value="primary_default_for_xwin">Default for XWin</option><option data-group="primary" value="primary_eclipse">Eclipse</option><option data-group="primary" value="primary_eclipse_mac_os_x">Eclipse (Mac OS X)</option><option data-group="primary" value="primary_emacs">Emacs</option><option data-group="primary" value="primary_jbuilder">JBuilder</option><option data-group="primary" value="primary_mac_os_x">Mac OS X</option><option data-group="primary" value="primary_mac_os_x_10.5_">Mac OS X 10.5+</option><option data-group="primary" value="primary_netbeans">NetBeans</option><option data-group="primary" value="primary_visual_studio">Visual Studio</option><option data-group="secondary" value="secondary_default">Default</option><option data-group="secondary" value="secondary_default_for_gnome">Default for GNOME</option><option data-group="secondary" value="secondary_default_for_kde">Default for KDE</option><option data-group="secondary" value="secondary_default_for_xwin">Default for XWin</option><option data-group="secondary" value="secondary_eclipse">Eclipse</option><option data-group="secondary" value="secondary_eclipse_mac_os_x">Eclipse (Mac OS X)</option><option data-group="secondary" value="secondary_emacs">Emacs</option><option data-group="secondary" value="secondary_jbuilder">JBuilder</option><option data-group="secondary" value="secondary_mac_os_x">Mac OS X</option><option data-group="secondary" value="secondary_mac_os_x_10.5_">Mac OS X 10.5+</option><option data-group="secondary" value="secondary_netbeans">NetBeans</option><option data-group="secondary" value="secondary_visual_studio">Visual Studio</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="HowTo+--+Integration+with+the+Data+Flow+Engine.html" id="howto-integration-with-the-data-flow-engine.xml">HowTo -- Integration with the Data Flow Engine</h1>   <h2 id="dataflow">Dataflow</h2>   <p id="13bb5328">Data flow analysis supports detecting errors that cannot be found easily by<br>"looking at the model" with static constraints or type checks. Examples include<br>dead code detection, missing returns in some branches of a method's body or<br>statically finding <code class="code">null</code> values and preventing null pointer exceptions.</p>   <p id="7c61ffc4">The foundation for data flow analysis is the so-called data flow graph. This is<br>a data structure that describes the flow of data through a program's code. For<br>example, in <code class="code">int i = 42; j = i + 1;</code> the 42 is "flowing" from the init<br>expression in the local variable declaration into the variable <code class="code">i</code> and then,<br>after adding 1, into j. Data flow analysis consists of two tasks: building a<br>data flow graph for a program, and then performing analysis on this data flow<br>graph to detect problems in the program.</p>   <p id="e056206d">MPS comes with predefined data structures for data flow graphs, a DSL for<br>defining how the graph can be derived from language concepts (and hence,<br>programs), a framework for defining your own analyses on the graph as well as a<br>set of default analyses that can be integrated into your language. We will look<br>at all these ingredients in this section.</p>   <p id="f16e6410">To play with the data flow graph, you can select a method in a Java program and<br>then use the context menu on the method; select {{Language Debug -&gt; Show Data<br>Flow Graph}}. This will render the data flow graph graphically and constitutes a<br>good debugging tool when building your own data flow graphs and analyses.</p>   <h2 id="buildingadataflowgraph">Building a Data Flow Graph</h2>   <h3 id="simple,lineardataflow">Simple, Linear Dataflow</h3>   <p id="72681379">In this section we look at the code that<br>has to be written to create a data flow graph for a language similar to C and<br>Java (in fact, it is for the mbeddr.com C base language).</p>   <p id="8855f9c0">Data flow is specified in the <b id="75a06bef">Dataflow</b> aspect of language definitions.<br>Inside that aspect, you can add data flow builders (DFBs) for your language<br>concepts. These are programs that build the data flow graph for instances of<br>those concepts in programs. To get started, here is the DFB for<br>      <code class="code">LocalVariableDeclaration</code>.</p>   <div class="code-block" data-lang="none">
+data flow builder for LocalVariableDeclaration {
+  (node)-&gt;void {
+    if (node.init != null) {
+      code for node.init
+      write node = node.init
+    } else {
+      nop
+    }
+  }
+}
+</div>   <p id="f645c8ac">Let's inspect this in detail. The framework passes in the <code class="code">node</code> variable as<br>a way of referring to the current instance of the concept for which this DFB is<br>defined (<code class="code">LocalVariableDecaration</code> here). If the<br>      <code class="code">LocalVariableDecaration</code> has an init expression (it is optional!), then the<br>DFB for the init expression has to be executed. The <code class="code">code for</code> statement<br>does this: it "calls" the DFB for the node that is passed as its argument. Then<br>we perform an actual data flow definition: the <code class="code">write node = node.init</code>      <br>specifies that write access is performed on the current node (there is also a<br>      <code class="code">read</code> statement; this support detection of read-before-write errors). The<br>statement also expresses that whatever value was in the init expression is now<br>in the node itself.</p>   <p id="6ccb58d5">If there is no <code class="code">init</code> expression, we still want to mark the<br>      <code class="code">LocalVariableDeclaration</code> node as visited — the program flow has come<br>across this node. A subsequent analysis reports all program nodes that have<br>      <b id="5205f7fa">not</b> been visited by a DFB as dead code. So even if a node has no further<br>effect on a program's data flow, it has to be marked as visited using <code class="code">nop</code>.</p>   <p id="a39ce129">To illustrate a <code class="code">read</code> statement, one can take a look at the<br>      <code class="code">LocalVariableRef</code> expression which read-accesses the variable it<br>references. Its data flow is defined as <code class="code">read node.var}, where {{var</code>} is<br>the name of the reference that points to the referenced variable. Here is the<br>code:</p>   <div class="code-block" data-lang="none">
+data flow builder for LocalVarRef {
+  (node)-&gt;void {
+    read node.var
+  }
+}
+</div>   <p id="b114e2ac">For an <code class="code">AssignmentStatement</code>, the data flow is as follows:</p>   <div class="code-block" data-lang="none">
+data flow builder for AssigmentStatement {
+  (node)-&gt;void {
+    code for node.rvalue
+    write node.lvalue = node.rvalue
+  }
+}
+</div>   <p id="14f0585c">Note how we first execute the DFB for the <code class="code">rvalue</code> and then "flow" the<br>      <code class="code">rvalue</code> into the <code class="code">lvalue</code> — the purpose of an assignment.</p>   <p id="40303674">For a <code class="code">StatementList</code>, we simply mark the list as visited and then execute<br>the DFBs for each statement:</p>   <div class="code-block" data-lang="none">
+nop
+foreach statement in node.statements {
+  code for statement
+}
+</div>   <p id="9ea6dff1">Finally, for a C function, at least for now, ignoring arguments, the DFB simply<br>calls the DFB for the body, a <code class="code">StatementList</code>.</p>   <p id="27918c06">We are now ready to inspect the data flow graph for a simple function.<br>Below is the graph for the function.</p>   <p id="389a2676">      <figure><img alt="dfgexample" title="dfgexample" src="/help/img/idea/2019.2/dfgexample.jpg" id="9c2a4ebf" width="485" height="336"></figure>   </p>   <p id="1ead647f">Data flow analysis is typically limited to one function, method or similar<br>concept. To signal the end of a one of those, we should use the <code class="code">ret</code>      <br>statement. To illustrate this, here is the DFB for the <code class="code">ReturnStatement</code>:</p>   <div class="code-block" data-lang="none">
+if (node.expression != null) {
+  code for node.expression
+}
+ret
+</div>   <h3 id="branching">Branching</h3>   <p id="4fb38954">Linear dataflow, as described above, is relatively<br>straight forward (no pun intended  ). However, most interesting data flow<br>analysis has to do with loops and branching. So specifying the correct DFBs for<br>things like <code class="code">if</code>, <code class="code">switch</code> and <code class="code">for</code> is important. It is also not as<br>simple\ldots</p>   <p id="7b9d463e">Let us take a step-by-step look at the DFB for the <code class="code">IfStatement</code>. We start<br>with the obligatory <code class="code">nop</code> to make the node as visited. Then we run the DFB<br>for the condition, because that is evaluated in any case. Then it becomes<br>interesting: depending on whether the condition is true or false, we either run<br>the <code class="code">thenPart} or we jump to where the {{else if</code> parts begin. Here is<br>the code so far:</p>   <div class="code-block" data-lang="none">
+nop
+code for node.condition
+ifjump after elseIfBlock // elseIfBlock is a label defined later
+code for node.thenPart
+{ jump after node }
+</div>   <p id="1e6d25f9">The <code class="code">ifjump</code> statement means that we may jump to the specified label (i.e.<br>we then execute the {{else if}}s). If not (we just "run over" the<br>      <code class="code">ifjmp}), then we execute the {{thenPart</code>. If we execute the<br>      <code class="code">thenPart}, we are finished with the whole {{IfStatement</code> — no<br>      <code class="code">else if}s or {{else</code> parts are relevant, so we jump after the current<br>node (the <code class="code">IfStatement</code>) and we're done. However, there is an additional<br>catch: in the <code class="code">thenPart}, there may be a {{return</code> statement. So we may<br>never actually arrive at the <code class="code">jump after node</code> statement. This is why it is<br>enclosed in curly braces: this says that the code in the braces is optional. If<br>the data flow does not visit it, that's fine (typically because we return from<br>the method before we get a chance to execute this code).</p>   <p id="5f049b11">Let's continue with the <code class="code">else if}s. We arrive at the {{elseIfBlock</code> label<br>if the condition was false, i.e. the above <code class="code">ifjump</code> actually happened. We<br>then iterate over the {{elseIf}}s and execute their DFB. After that, we run<br>the code for the <code class="code">elsePart</code>, if there is one. The following code can only be<br>understood if we know that, if we execute one of the {{else if}}s, then we<br>jump <b id="56003c59">after the whole</b>       <code class="code">IfStatement</code>. This is specified in the DFB for<br>the <code class="code">ElseIfPart</code>, which we'll illustrate below. Here is the rest of the code<br>for the <code class="code">IfStatement</code>'s DFB:</p>   <div class="code-block" data-lang="none">
+label elseIfBlock
+foreach elseIf in node.elseIfs {
+  code for elseIf
+}
+if (node.elsePart != null) {
+  code for node.elsePart
+}
+</div>   <p id="8e5b3b22">We can now inspect the DFB for the <code class="code">ElseIfPart</code>. We first run the DFB for<br>the condition. Then we may jump to after that <code class="code">else if</code>, because the<br>condition may be false and we want to try the next <code class="code">else if</code>, if there is<br>one. Alternatively, if the condition is true, we then run the DFB for the body<br>of the <code class="code">ElseIfPart</code>. Then two things can happen: either we jump to after<br>thoe whole <code class="code">IfStatement} (after all, we have found an {{else if</code> that is<br>true), or we don't do anything at all anymore because the current <code class="code">else if</code>      <br>contains a return statement. So we have to use the curly braces again for the<br>jump to after the whole <code class="code">if</code>. Here is the code:</p>   <div class="code-block" data-lang="none">
+code for node.condition
+ifjump after node
+code for node.body
+{ jump after node.ancestor&lt;concept = IfStatement&gt; }
+</div>   <p id="df28bbed">The resulting data flow graph is shown below.</p>   <p id="a5884901">      <figure><img alt="ifdfg" title="ifdfg" src="/help/img/idea/2019.2/ifdfg.jpg" id="7b2e5bae" width="329" height="403"></figure>      <br>      <b id="f835adb1">Loops</b>   </p>   <p id="a7a613f8">To wrap up data flow graph construction, we can take a<br>look at the <code class="code">for</code> loop. This is related to branching again, because after<br>all, a loop can be refactored to branching and jumps. Here is the DFB for the<br>      <code class="code">for</code> loop:</p>   <div class="code-block" data-lang="none">
+code for node.iterator
+label start
+code for node.condition
+ifjump after node
+code for node.body
+code for node.incr
+jump after start
+</div>   <p id="94362c14">We first execute the DFB for the <code class="code">iterator</code> (which is a kind of<br>      <code class="code">LocalVariableDeclaration</code>, so the DFB for it above works). Then we define a<br>label <code class="code">start</code> so we can jump to this place from further down. We then<br>execute the <code class="code">condition}. Then we have an {{ifjmp</code> to after the whole loop<br>(which covers the case where the condition is false and the loop ends). In the<br>ohter case (the condition is still true) we execute the code for the <code class="code">body</code>      <br>and the <code class="code">incr} part of the {{for</code> loop We then jump to after the<br>      <code class="code">start</code> label we defined above.</p>   <h2 id="integratingdataflowchecksintoyourlanguage">Integrating Data Flow Checks into your Language</h2>   <p id="b4e0a513">Data flow checks are triggered from <code class="code">NonTypesystemRules</code>. There is a bit of<br>procedural code that needs to be written, so we create a class<br>      <code class="code">DataflowUtil</code> in the typesystem aspect model.</p>   <div class="code-block" data-lang="none">
+public class DataflowUtil extends &lt;none&gt; implements &lt;none&gt; {
+
+  private Program prog;
+
+  public DataflowUtil(node&lt;&gt; root) {
+    // build a program object and store it
+    prog = DataFlow.buildProgram(root);
+  }
+
+  @CheckingMethod
+  public void checkForUnreachableNodes() {
+    // grab all instructions that are unreachable (predefined functionality)
+    sequence&lt;Instruction&gt; allUnreachableInstructions =
+             ((sequence&lt;Instruction&gt;) prog.getUnreachableInstructions());
+    // remove those that may legally be unreachable
+    sequence&lt;Instruction&gt; allWithoutMayBeUnreachable =
+            allUnreachableInstructions.where({~instruction =&gt;
+                !(Boolean.TRUE.equals(instruction.
+                       getUserObject("mayBeUnreachable"))); });
+
+    // get the program nodes that correspond to the unreachable instructions
+    sequence&lt;node&lt;&gt;&gt; unreachableNodes = allWithoutMayBeUnreachable.
+            select({~instruction =&gt; ((node&lt;&gt;) instruction.getSource()); });
+
+    // output errors for each of those unreachable nodes
+    foreach unreachableNode in unreachableNodes {
+      error "unreachable code" -&gt; unreachableNode;
+    }
+
+  }
+}
+</div>   <p id="87f5e327">The class constructs a {{Program} object in the constructor. {{Program}}s<br>are wrappers around the data flow graph and provide access to the graph, as well<br>as to a set of predefined analyses on the graph. We will make use of one of them<br>here in the <code class="code">checkForUnreachableNodes</code> method. This method extracts all<br>unreachable nodes from the graph (see comments in the code above) and reports<br>errors for them. To be able to use the <code class="code">error</code> statement, we have to<br>annotate the method with the <code class="code">@CheckingMethod</code> annotation.</p>   <p id="b371b180">To actually run the check, we call this method from a <code class="code">NonTypesystemRule</code>      <br>for C functions:</p>   <div class="code-block" data-lang="none">
+checking rule check_DataFlow {
+  applicable for concept = Function as fct
+  overrides false
+  do {
+    new DataflowUtil(fct.body).checkForUnreachableNodes();
+  }
+}
+</div>   <p id="502a5526">Inspecting the <code class="code">Program</code> class, you can see the set of existing other data<br>flow analyses: uninitialized reads (read before write), unreachable instructions<br>(dead code) and unused assignments. We'll look at what to do if those aren't<br>enough in the next section.</p>   <h2 id="buildingyourownanalyzers">Building your own Analyzers</h2>   <p id="43123625">Data flow analysis is a non trivial topic. To build meaningful analyses you will<br>probably need a background in this topic, or read up on the respective<br>literature.</p>   <p id="f09bef80">For the actual integration of custom data flow analyses, we will provide an<br>additional article later. </p><div class="last-modified" data-skip-index="skip">Last modified: 30 August 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="dataflow.html">Dataflow</a><a class="navigation-links__next" href="generator-cookbook.html">Generator cookbook</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="//resources.jetbrains.com/storage/help-app/v3/app.js"></script></body></html>

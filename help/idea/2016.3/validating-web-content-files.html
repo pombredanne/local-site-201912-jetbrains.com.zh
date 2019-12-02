@@ -1,0 +1,124 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta class="swiftype" name="product" data-type="string" content="/idea/2016.3/"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><meta charset="UTF-8"><meta name="robots" content="noindex"><title>IntelliJ IDEA 2016.3 Help :: Validating Web Content Files</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="procedure.developingcode.xmlhtml.validate"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-swiftype-index="false"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.3 Help</h3><div class="shortcuts-switcher" data-swiftype-index="false"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Windows/Linux Default</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWin</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">Mac OS X</option><option data-group="secondary" value="eclipse_mac_os_x">Eclipse (Mac OS X)</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (Mac OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper (Mac OS X)</option><option data-group="secondary" value="emacs">Emacs (Mac OS X)</option></select></div><div class="panel-trigger" data-swiftype-index="false"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="viewing-actual-html-dom.html">Viewing Actual HTML DOM</a></div><h1>Validating Web Content Files</h1><a name="d836322e5"></a><p>On this page:</p><ul><li class="list__item"><a href="#d836322e10">Types of validity checks</a></li><li class="list__item"><a href="#d836322e50">Choosing the default HTML language level</a></li><li class="list__item"><a href="#d836322e101">Choosing the default schema to validate XML files</a></li><li class="list__item"><a href="#d836322e144">Running full validation on an XML file</a></li></ul><a name="d836322e10"></a><h2>Types of validity checks</h2>
+			<a name="d836322e12"></a><p>IntelliJ IDEA performs two different <a name="d836322e14"></a><a href="http://en.wikipedia.org/wiki/XML#Validity" data-external="true"><span>validity</span></a> checks:
+            </p>
+			<ul class="list _ul"><li class="list__item"><a name="d836322e20"></a><a name="d836322e21"></a><span class="emphasis">On-the-fly validation</span> is available for all Web content files and is performed
+                      as you edit the file. IntelliJ IDEA checks well-formedness, that is, detects  various violations of
+                      syntax requirements, such as unclosed tags, wrong end-tag name, duplicate tags, unresolved links,
+                      etc. All encountered errors are highlighted in the editor.
+                      <a name="d836322e24"></a><p>However, this form of code validation is rather <a name="d836322e26"></a><i id="d836322e26">soft</i>, that is, not all requirements are
+                          taken into account.</p>
+                  </li><li class="list__item"><a name="d836322e31"></a><a name="d836322e32"></a><span class="emphasis">Full validation</span> involves structure validation in addition to well-formedness
+                    check. Full validation is available for files that are
+                    associated with an <a name="d836322e35"></a><a href="http://www.w3.org/XML/Schema" data-external="true"><span>XSD (XML Schema Definition) Schema</span></a>
+                    or contain a
+                    <a name="d836322e38"></a><a href="http://en.wikipedia.org/wiki/Document_Type_Definition" data-external="true"><span>Data Type Definition (DTD)</span></a>.
+                    IntelliJ IDEA checks whether the structure of your XML file complies with the structure defined in the
+                    corresponding DTD or Schema.
+                    <a name="d836322e41"></a><p>The results of full validation are provided as a <a name="d836322e43"></a><span class="emphasis">Message View</span>.</p>
+                </li></ul>
+	<a name="d836322e50"></a><h2>Choosing the default HTML language level</h2>
+        <a name="d836322e52"></a><p>
+        Normally, an HTML or an XHTML file has the <code class="code" data-lang="Java">&lt;!DOCTYPE&gt;</code> declaration which states the <a name="d19550e5491"></a><span class="emphasis">language level</span>
+        of the used in the source code from the file. This language level is used as a standard against which the contents of the file are validated.
+        If an HTML or an XHTML file does not have a <code class="code" data-lang="Java">&lt;!DOCTYPE&gt;</code> declaration, the contents of the file will be validated
+        against the default standard (schema).
+    </p>
+        <ol class="list _decimal"><li class="list__item"><a name="d836322e57"></a>
+                 
+         
+            Open the <a name="d831e8113"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by pressing <kbd data-default="Ctrl+Alt+S" data-default_for_gnome="Ctrl+Alt+S" data-default_for_kde="Ctrl+Alt+S" data-default_for_xwin="Ctrl+Alt+S" data-emacs="Ctrl+Alt+S" data-jbuilder="N/A" data-visual_studio="Alt+F7" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Alt+S" data-mac_os_x_10.5_="&#x2318;," data-mac_os_x="&#x2318;," data-eclipse_mac_os_x="&#x2318;," data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+S</kbd> or by choosing <a name="d831e8117"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d831e8120"></a><span class="menupath">IntelliJ IDEA | Preferences</span> for OS X.
+         
+         
+     
+                 
+         
+        Expand the <a name="d831e8166"></a><span class="control">Languages&amp;Frameworks</span> node, and then
+     
+                 
+         
+         
+         
+        click <a name="d831e8217"></a><span class="control">Default XML Schemas</span> under <a name="d831e8220"></a><span class="control">Schemas and DTDs</span>.
+     
+                <a name="d836322e75"></a><p>The <a name="d836322e77"></a><a href="default-xml-schemas.html"><span>Default XML Schemas</span></a> page opens.</p>
+            </li><li class="list__item"><a name="d836322e81"></a>
+                 
+        In the <a name="d19550e5501"></a><span class="control">Default HTML Language Level</span> area, choose the default schema
+        to validate HTML and XHTML files without a <code class="code" data-lang="Java">&lt;!DOCTYPE&gt;</code> declaration.
+     
+                The available options are:
+                <ul class="list _ul"><li class="list__item"><a name="d19550e5463"></a>
+            <a name="d19550e5465"></a><span class="control">HTML 4</span> or <a name="d19550e5468"></a><span class="control">HTML 5</span>:
+            Choose one of these options to have files treated as HTML 4 or HTML 5 and validated against one of these standards.
+        </li><li class="list__item"><a name="d19550e5472"></a>
+            <a name="d19550e5474"></a><span class="control">Other doctype</span>:
+            Choose this option to have HTML files by default validated agains a custom DTD or schema
+            and specify the URL of the DTD or schema to be used.
+            <a name="d19550e5477"></a><p>
+                Note that code completion is available in this field:
+                press <kbd data-default="Ctrl+Space" data-default_for_gnome="Ctrl+Space" data-default_for_kde="Ctrl+Space" data-default_for_xwin="Ctrl+Space" data-emacs="Alt+Slash" data-jbuilder="Ctrl+Space" data-visual_studio="Ctrl+Space" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Space" data-mac_os_x_10.5_="&#x2303;Space" data-mac_os_x="&#x2303;Space" data-eclipse_mac_os_x="&#x2303;Space" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Space</kbd> to see the list of suggested URLs.</p>
+            <figure><img alt="/help/img/idea/2016.3/defaultHtmlLangLevel.png" title="/help/img/idea/2016.3/defaultHtmlLangLevel.png" src="/help/img/idea/2016.3/defaultHtmlLangLevel.png" width="549" height="209"></figure>
+        </li></ul>
+                 
+        choose the <a name="d19550e5430"></a><a href="http://www.w3.org/XML/Schema" data-external="true"><span>XSD (XML Schema Definition) Schema</span></a> to validate XML files.
+     
+                The available options are:
+                <ul class="list _bullet"><li class="list__item"><a name="d19550e5436"></a>
+            <a name="d19550e5438"></a><span class="control">XML Schema 1.1</span>
+            See <a name="d19550e5441"></a><a href="http://www.w3.org/TR/xmlschema11-1/" data-external="true"><span>W3C XML Schema Definition Language (XSD) 1.1 Part 1: Structures</span></a>
+            and <a name="d19550e5444"></a><a href="http://www.w3.org/TR/xmlschema11-2/" data-external="true"><span>W3C XML Schema Definition Language (XSD) 1.1 Part 2: Datatypes</span></a> for details.
+        </li><li class="list__item"><a name="d19550e5448"></a>
+            <a name="d19550e5450"></a><span class="control">XML Schema 1.0</span>
+            See <a name="d19550e5453"></a><a href="http://www.w3.org/TR/xmlschema-1/" data-external="true"><span>XML Schema Part 1: Structures Second Edition</span></a> and
+            <a name="d19550e5456"></a><a href="http://www.w3.org/TR/xmlschema-2/" data-external="true"><span>XML Schema Part 2: Datatypes Second Edition</span></a> for details.
+        </li></ul>
+            </li></ol>
+    <a name="d836322e101"></a><h2>Choosing the default schema to validate XML files</h2>
+        <ol class="list _decimal"><li class="list__item"><a name="d836322e105"></a>
+                 
+         
+            Open the <a name="d831e8113"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by pressing <kbd data-default="Ctrl+Alt+S" data-default_for_gnome="Ctrl+Alt+S" data-default_for_kde="Ctrl+Alt+S" data-default_for_xwin="Ctrl+Alt+S" data-emacs="Ctrl+Alt+S" data-jbuilder="N/A" data-visual_studio="Alt+F7" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Alt+S" data-mac_os_x_10.5_="&#x2318;," data-mac_os_x="&#x2318;," data-eclipse_mac_os_x="&#x2318;," data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+S</kbd> or by choosing <a name="d831e8117"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d831e8120"></a><span class="menupath">IntelliJ IDEA | Preferences</span> for OS X.
+         
+         
+     
+                 
+         
+        Expand the <a name="d831e8166"></a><span class="control">Languages&amp;Frameworks</span> node, and then
+     
+                 
+         
+         
+         
+        click <a name="d831e8217"></a><span class="control">Default XML Schemas</span> under <a name="d831e8220"></a><span class="control">Schemas and DTDs</span>.
+     
+                <a name="d836322e123"></a><p>The <a name="d836322e125"></a><a href="default-xml-schemas.html"><span>Default XML Schemas</span></a> page opens.</p>
+            </li><li class="list__item"><a name="d836322e129"></a>
+                 In the <a name="d836322e131"></a><span class="control">Default XML Schema Version</span> area,
+                 
+        choose the <a name="d19550e5430"></a><a href="http://www.w3.org/XML/Schema" data-external="true"><span>XSD (XML Schema Definition) Schema</span></a> to validate XML files.
+     
+                The available options are:
+                <ul class="list _bullet"><li class="list__item"><a name="d19550e5436"></a>
+            <a name="d19550e5438"></a><span class="control">XML Schema 1.1</span>
+            See <a name="d19550e5441"></a><a href="http://www.w3.org/TR/xmlschema11-1/" data-external="true"><span>W3C XML Schema Definition Language (XSD) 1.1 Part 1: Structures</span></a>
+            and <a name="d19550e5444"></a><a href="http://www.w3.org/TR/xmlschema11-2/" data-external="true"><span>W3C XML Schema Definition Language (XSD) 1.1 Part 2: Datatypes</span></a> for details.
+        </li><li class="list__item"><a name="d19550e5448"></a>
+            <a name="d19550e5450"></a><span class="control">XML Schema 1.0</span>
+            See <a name="d19550e5453"></a><a href="http://www.w3.org/TR/xmlschema-1/" data-external="true"><span>XML Schema Part 1: Structures Second Edition</span></a> and
+            <a name="d19550e5456"></a><a href="http://www.w3.org/TR/xmlschema-2/" data-external="true"><span>XML Schema Part 2: Datatypes Second Edition</span></a> for details.
+        </li></ul>
+            </li></ol>
+    <a name="d836322e144"></a><h2>Running full validation on an XML file</h2>
+            <ol class="list _decimal"><li class="list__item"><a name="d836322e148"></a>Open the desired XML file in the editor, or just select it in the <a name="d836322e150"></a><a href="project-tool-window.html"><span>Project</span></a>
+                   tool window.</li><li class="list__item"><a name="d836322e154"></a>On the context menu, choose <a name="d836322e156"></a><span class="menupath">Validate</span>. </li></ol>
+		<div class="navigation-links _bottom"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="viewing-actual-html-dom.html">Viewing Actual HTML DOM</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content">```
+                <div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d836322e166"></a><a href="markup-languages-and-style-sheets.html"><span>Markup Languages and Style Sheets</span></a></li><li class="list__item"><a name="d836322e169"></a><a href="generating-xml-schema-from-instance-document.html"><span>Generating XML Schema From Instance Document</span></a></li></ul></div><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d836322e175"></a><a href="schemas-and-dtds.html"><span>Schemas and DTDs</span></a></li><li class="list__item"><a name="d836322e178"></a><a href="xml-java-binding-reference.html"><span>XML-Java Binding Reference</span></a></li></ul></div></div></section><div class="last-modified" data-swiftype-index="false">Last modified: 21 March 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

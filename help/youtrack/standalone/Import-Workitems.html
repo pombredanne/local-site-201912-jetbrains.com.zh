@@ -1,0 +1,39 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta charset="UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="//resources.jetbrains.com/storage/help-app/v3/analytics.js"></script><title>Import Workitems - Help | YouTrack Standalone</title><link rel="stylesheet" href="//resources.jetbrains.com/storage/help-app/v3/app.css"></head><body data-id="Import-Workitems" data-breadcrumbs="Resources-for-Developers.xml|Resources for Developers/deprecated-rest-api-reference.xml|Old REST API/Time-Tracking-REST-API.xml|Time Tracking REST API/Time-Tracking-User-Methods.xml|Time Tracking User Methods/Import-Workitems.xml|Import Workitems" data-main-title="Import Workitems"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack Standalone Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>YouTrack Standalone 2019.2 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="Import-Workitems" id="Import-Workitems.xml">Import Workitems</h1>   <a name="PUT_rest/import/issue/{issue}/workitems"></a>   <h2 id="bd96d849">PUT rest/import/issue/{issue}/workitems</h2>   <p id="c65e7765">Import work items to selected issue.</p>   <p id="51a8b93e">      <div class="code-block" data-lang="none">PUT rest/import/issue/{issue}/workitems</div>   </p>   <p id="6f473ffa">         <b id="da8752a5">Parameters:</b></p><div class="table-wrapper"><table class=" wide" width="100%" id="5663ee94"><thead><tr id="f6143f62" class="ijRowHead"><th id="c0c0901f"><p> Name </p></th><th id="ffe3ad95"><p> Type </p></th><th id="6425abe9"><p> Description </p></th></tr></thead><tbody><tr id="562849ab" class="ijRowOdd"><td id="bdf1a6a9"><p> issue </p></td><td id="32d24a97"><p> issue id </p></td><td id="0c9ef746"><p> ID of an issue to which work items should be added. </p></td></tr></tbody></table></div>   <p id="ab5672c5">In the request code you should provide the following parameters for each work item to be imported (a work item is designated with &lt;workItem&gt; tag):</p>   <ul class="list _ul"><li class="list__item" id="12f3d1f4"><p>         <code class="code">&lt;author&gt;</code> — login name of the user who will be set as the author of the work item</p></li><li class="list__item" id="3ac0a23b"><p>         <code class="code">&lt;date&gt;</code> — date and time of the new work item in Unix Epoch time format</p></li><li class="list__item" id="2915634b"><p>         <code class="code">&lt;duration&gt;</code> — duration of the new work item, in minutes</p></li><li class="list__item" id="6ad51b27"><p>         <code class="code">&lt;description&gt;</code> — activity description</p></li></ul>   <p id="36ce52ac">For a sample code please see below.</p>   <h4 id="76479662">Sample</h4>   <p id="8c6410a0">         <b id="6e6578bb">Request</b></p>         <div class="code-block" data-lang="none">
+PUT https://example.com/youtrack/rest/import/issue/HBR-63/workitems
+Cookie: $Version=0; JSESSIONID=i3p6eke3gf1o1s3zqdlz31ozf; $Path=/; jetbrains.charisma.main.security.PRINCIPAL=NDgxMzQ5NGQxMzdlMTYzMWJiYTMwMWQ1YWNhYjZlN2JiN2FhNzRjZTExODVkNDU2NTY1ZWY1MWQ3Mzc2NzdiMjpyb290; $Path=/
+
+&lt;workItems&gt; 
+  &lt;workItem&gt;
+    &lt;author login="john.smith"&gt;&lt;/author&gt;
+    &lt;date&gt;1353316956611&lt;/date&gt;
+    &lt;duration&gt;240&lt;/duration&gt;
+    &lt;description&gt;first work item&lt;/description&gt;
+  &lt;/workItem&gt;
+  &lt;workItem&gt;
+    &lt;author login="bob"&gt;&lt;/author&gt;
+    &lt;date&gt;1353316957711&lt;/date&gt;
+    &lt;duration&gt;300&lt;/duration&gt;
+    &lt;description&gt;something&lt;/description&gt;
+  &lt;/workItem&gt;
+&lt;/workItems&gt;
+</div>   <p id="c57ea974">         <b id="c240c077">Response</b></p>   <div class="code-block" data-lang="none">
+HTTP/1.1 200 OK
+Vary: Accept-Encoding
+Set-Cookie: JSESSIONID=1s62zlm564r6si3dgnzayivmv;Path=/
+Expires: Thu, 01 Jan 1970 00:00:00 GMT
+Content-Type: application/xml; charset=UTF-8
+Cache-Control: no-cache, no-store, no-transform, must-revalidate
+Content-Length: 107
+
+&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+&lt;importReport&gt;
+  &lt;item imported="true"/&gt;
+&lt;/importReport&gt;
+</div><div class="last-modified" data-skip-index="skip">Last modified: 29 November 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="Get-Available-Work-Items-of-Issue.html">Get Available Work Items of Issue</a><a class="navigation-links__next" href="Time-Tracking-Settings-Methods.html">Time Tracking Settings Methods</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="//resources.jetbrains.com/storage/help-app/v3/app.js"></script></body></html>

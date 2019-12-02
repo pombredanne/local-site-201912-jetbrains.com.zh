@@ -1,0 +1,38 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="robots" content="noindex"><title>YouTrack Standalone 7.0 Help :: Get Number of Issues for Several Queries</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Get-Number-of-Issues-for-Several-Queries"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack Standalone Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>YouTrack Standalone 7.0 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="Create-New-Issue.html">Create New Issue</a><a class="navigation-links__next" href="Delete-Attachment-from-an-Issue.html">Delete Attachment from an Issue</a></div><h1>Get Number of Issues for Several Queries</h1><a name="POST_/issue/counts"></a><a name="d48726e5"></a><h2>POST /issue/counts</h2><a name="d48726e8"></a><p>Get number of issues for several search queries.</p><a name="d48726e11"></a><p>POST /rest/issue/counts?<a name="d48726e13"></a><b id="d48726e13">{rough}</b>&amp;<a name="d48726e16"></a><b id="d48726e16">{sync}</b>
+   </p><a name="d48726e20"></a><p>
+      <a name="d48726e22"></a><b id="d48726e22">Parameters:</b>
+   </p><table class=" wide" width="100%" id="d48726e27"><thead><tr id="d48726e29" class="ijRowHead"><a name="d48726e29"></a><th><a name="d48726e31"></a> Name	</th><th><a name="d48726e34"></a> Type </th><th><a name="d48726e37"></a> Description </th></tr></thead><tbody><tr id="d48726e41" class="ijRowOdd"><a name="d48726e41"></a><td><a name="d48726e43"></a> rough	</td><td><a name="d48726e46"></a> Boolean </td><td><a name="d48726e49"></a> Calculate approximate counts.</td></tr><tr id="d48726e53" class="ijRowEven"><a name="d48726e53"></a><td><a name="d48726e55"></a> sync </td><td><a name="d48726e58"></a> Boolean </td><td><a name="d48726e61"></a> Calculate counts synchronously. <a name="d48726e63"></a><p>
+                  <a name="d48726e65"></a><b id="d48726e65">Warning!</b> 
+                  <br>
+Setting this parameter <a name="d48726e70"></a><b id="d48726e70">
+                     <a name="d48726e72"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">true</code></div>
+                  </b> may influence YouTrack performance.</p> 
+            </td></tr></tbody></table><aside class="note sideblock">
+      <a name="d48726e82"></a><p>
+         <a name="d48726e84"></a><p>Important!</p>
+         <a name="d48726e87"></a><p>If you get <a name="d48726e89"></a><b id="d48726e89">
+               <a name="d48726e91"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">&#39;-1&#39;</code></div>
+            </b> in response instead of number of issues, it means that the response was sent before the count had been completed. Please try again in a moment.</p>
+      </p>
+   </aside><a name="d48726e98"></a><h3>Sample</h3><a name="d48726e101"></a><p>
+      <a name="d48726e103"></a><b id="d48726e103">Request:</b>
+   </p><a name="d48726e107"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">POST /rest/issue/counts
+
+<span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;</span>
+<span class="nt">&lt;queries&gt;</span>
+ <span class="nt">&lt;query&gt;</span>#Resolved<span class="nt">&lt;/query&gt;</span>
+ <span class="nt">&lt;query&gt;</span>#Unresolved<span class="nt">&lt;/query&gt;</span>
+<span class="nt">&lt;/queries&gt;</span></code></div><a name="d48726e110"></a><p>
+      <a name="d48726e112"></a><b id="d48726e112">Response:</b>
+   </p><a name="d48726e117"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper"><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;</span>
+<span class="nt">&lt;counts&gt;</span>
+  <span class="nt">&lt;count&gt;</span>591<span class="nt">&lt;/count&gt;</span>
+  <span class="nt">&lt;count&gt;</span>78<span class="nt">&lt;/count&gt;</span>
+<span class="nt">&lt;/counts&gt;</span></code></div><div class="last-modified">Last modified: 2 February 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

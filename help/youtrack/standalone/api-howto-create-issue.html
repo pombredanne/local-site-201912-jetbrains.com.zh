@@ -1,0 +1,88 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta charset="UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="//resources.jetbrains.com/storage/help-app/v3/analytics.js"></script><title>Create an Issue - Help | YouTrack Standalone</title><link rel="stylesheet" href="//resources.jetbrains.com/storage/help-app/v3/app.css"></head><body data-id="api-howto-create-issue" data-breadcrumbs="Resources-for-Developers.xml|Resources for Developers/youtrack-rest-api-reference.xml|REST API/api-use-cases.xml|REST API Use Cases/api-howto-create-issue.xml|Create an Issue" data-main-title="Create an Issue"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack Standalone Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>YouTrack Standalone 2019.2 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="api-howto-create-issue" id="api-howto-create-issue.xml">Create an Issue</h1>    <h4 id="4c07f7df">Use Case:</h4>    <p id="version-2019">Use the REST API to create a new issue with the default values for issue custom fields.</p>    <a name="version-note"></a>        <aside data-type="note" class="prompt" data-title="" rel="api-howto-create-issue.xml" id="d4b0309f"><p>Please notice that this example is valid for YouTrack 2019.1 and later versions. In the previous versions, though            the principle is the same, query parameters and entity attributes may differ. Also, a number of features, like            addressing an entity by its name, were introduced in 2019.1 and are not supported in the previous versions.        </p></aside>        <div class="chapter"><h2 id="summary" data-toc="api-howto-create-issue#summary">Summary</h2>        <p id="7f2856ac">To create an issue, you need to know an entity id of the project to which the issue should be reported.            It means that you need to get a list of available projects, find an id of the target project, and then            create a new issue in this project.        </p>    </div>    <div class="chapter"><h2 id="step-by-step" data-toc="api-howto-create-issue#step-by-step">Step-by-Step</h2>        <section class="procedure-steps"><ol class="list _decimal"><li class="list__item" id="ca8ac675">                <p id="b33ded12">Get a list of available projects.</p>                <div class="code-block" data-lang="http">
+                    curl -X GET \
+                    'https://example.myjetbrains.com/youtrack/api/admin/projects?fields=id,name,shortName' \
+                    -H 'Accept: application/json' \
+                    -H 'Authorization: Bearer perm:amFuZS5kb2U=.UkVTVCBBUEk=.wcKuAok8cHmAtzjA6xlc4BrB4hleaX' \
+                    -H 'Content-Type: application/json'
+                </div>                <p id="58e5e725">For such request, you get response from the server with the following body:</p>                <div class="code-block" data-lang="json">
+                    [
+                        {
+                            "shortName": "GRP",
+                            "name": "GRA Project",
+                            "id": "0-7",
+                            "$type": "Project"
+                        },
+                        {
+                            "shortName": "RAP",
+                            "name": "Rest Api Project",
+                            "id": "0-2",
+                            "$type": "Project"
+                        },
+                        {
+                            "shortName": "RP",
+                            "name": "Rest Project",
+                            "id": "0-6",
+                            "$type": "Project"
+                        },
+                        {
+                            "shortName": "SP",
+                            "name": "Sample Project",
+                            "id": "0-0",
+                            "$type": "Project"
+                        },
+                        {
+                            "shortName": "SNBX",
+                            "name": "Sandbox",
+                            "id": "0-3",
+                            "$type": "Project"
+                        }
+                    ]
+                </div>                <p id="04f08232">You can also filter the list of projects by <code class="code">shortName</code> or a <code class="code">name</code> of the                    required project.                </p>                <p id="d24a368e">Sample request with the filter by a project's <code class="code">name</code>:                </p>                <div class="code-block" data-lang="http">
+                    curl -X GET \
+                    'https://example.myjetbrains.com/youtrack/api/admin/projects?fields=id,name,shortName&amp;query=Sample+Project'
+                    \
+                    -H 'Accept: application/json' \
+                    -H 'Authorization: Bearer perm:amFuZS5kb2U=.UkVTVCBBUEk=.wcKuAok8cHmAtzjA6xlc4BrB4hleaX' \
+                    -H 'Content-Type: application/json'
+                </div>                <p id="62fc73d4">Sample request with the filter by a project's <code class="code">shortName</code>:                </p>                <div class="code-block" data-lang="http">
+                    curl -X GET \
+                    'https://example.myjetbrains.com/youtrack/api/admin/projects?fields=id,name,shortName&amp;query=sp'
+                    \
+                    -H 'Accept: application/json' \
+                    -H 'Authorization: Bearer perm:amFuZS5kb2U=.UkVTVCBBUEk=.wcKuAok8cHmAtzjA6xlc4BrB4hleaX' \
+                    -H 'Content-Type: application/json'
+                </div>                <p id="1928ac96">To the sample request with the <code class="code">query</code> parameter, the response body contains data only for                    the matching project:                </p>                <div class="code-block" data-lang="json">
+                    [
+                        {
+                            "shortName": "SP",
+                            "name": "Sample Project",
+                            "id": "0-0",
+                            "$type": "Project"
+                        }
+                    ]
+                </div>            </li><li class="list__item" id="171d9a8a">                <p id="fc7d2446">In the response from the server, locate the id of the target project. In our sample, the required                    project <code class="code">id</code> is <code class="code">0-0</code>.                </p>                <div class="code-block" data-lang="json">
+                    "id" : "0-0"
+                </div>            </li><li class="list__item" id="c755cc23">                <p id="477b0d6a">Send a <code class="code">POST</code> request to create a new issue in the target project:                </p>                <div class="code-block" data-lang="http">
+                    curl -X POST \
+                    https://example.myjetbrains.com/youtrack/api/issues \
+                    -H 'Accept: application/json' \
+                    -H 'Authorization: Bearer perm:amFuZS5kb2U=.UkVTVCBBUEk=.wcKuAok8cHmAtzjA6xlc4BrB4hleaX' \
+                    -H 'Content-Type: application/json' \
+                    -d '{
+                    "project":{"id":"0-0"},
+                    "summary":"REST API lets you create issues!",
+                    "description":"Let'\''s create a new issue using YouTrack'\''s REST API."
+                    }'
+                </div>                <p id="8c67beb7">In the body of the response, the server returns the entity id of the created issue:</p>                <div class="code-block" data-lang="json">
+                    {
+                        "id": "2-38",
+                        "$type": "Issue"
+                    }
+                </div>            </li></ol></section>        <p id="3ccfc0a7">That's it: We created a new issue. All custom fields of the issue are set to their default values.</p>        <aside data-type="note" class="prompt" data-title="" rel="3ccfc0a7" id="b9e5235e">            <p id="21d81d98">Please note that you cannot simultaneously create a new issue and add attachments to it. You can attach                files only to an already existing issue.            </p>        </aside>    </div><div class="last-modified" data-skip-index="skip">Last modified: 29 November 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="api-use-cases.html">REST API Use Cases</a><a class="navigation-links__next" href="api-howto-create-issue-with-fields.html">Create an Issue and Set Custom Fields</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="//resources.jetbrains.com/storage/help-app/v3/app.js"></script></body></html>

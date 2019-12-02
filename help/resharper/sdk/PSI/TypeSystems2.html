@@ -1,0 +1,126 @@
+
+
+
+<!doctype html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>Type systems / ReSharper  DevGuide</title>
+    <link rel="stylesheet" href="/help/resharper/sdk/app/app.css">
+    <link rel="shortcut icon" href="/help/resharper/sdk/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="57x57" href="/help/resharper/sdk/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/help/resharper/sdk/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/help/resharper/sdk/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/help/resharper/sdk/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/help/resharper/sdk/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/help/resharper/sdk/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/help/resharper/sdk/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/help/resharper/sdk/apple-touch-icon-180x180.png">
+    <link rel="mask-icon" href="/help/resharper/sdk/apple-mask-icon.svg" color="black">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-square70x70logo" content="/help/resharper/sdk/mstile-70x70.png">
+    <meta name="msapplication-TileImage" content="/help/resharper/sdk/mstile-144x144.png">
+    <meta name="msapplication-square150x150logo" content="/help/resharper/sdk/mstile-150x150.png">
+    <meta name="msapplication-wide310x150logo" content="/help/resharper/sdk/mstile-310x150.png">
+    <meta name="msapplication-square310x310logo" content="/help/resharper/sdk/mstile-310x310.png">
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="Documentation for writing extensions for ReSharper" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.jetbrains.com/help/resharper/sdk//PSI/TypeSystems2.html" />
+    <meta property="og:site_name" content="JetBrains ReSharper" />
+    <meta property="og:title" content="Type systems" />
+    <meta property="og:description" content="Documentation for writing extensions for ReSharper" />
+    <meta property="og:image" content="https://www.jetbrains.com/help/resharper/sdk/jetbrains.png" />
+    <meta property="article:modified_time" content="2017-07-10T19:28:42+00:00" />
+    <!-- <meta property="article:section" content="" /> 
+    <meta property="article:tag" content="" /> -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@JBPlatform" />
+    <meta name="twitter:title" content="Type systems" />
+    <meta name="twitter:description" content="Documentation for writing extensions for ReSharper" />
+    <meta name="twitter:image" content="https://www.jetbrains.com/help/resharper/sdk/jetbrains.png" />
+    <meta class="swiftype" name="product" data-type="string" content="/help/resharper/sdk/"></meta>
+<link  rel="stylesheet" href="/help/resharper/sdk/app/styles.css"></head>
+<body data-id="PSI/TypeSystems2">
+<div class="wrapper">
+    <section class="panel _nav">
+        <header class="panel__header">
+            <div class="container">
+                <form class="search-box">
+                    <label for="search-box__input" class="search-box__label">
+                        <input type="text" class="search-box__input" id="search-box__input" placeholder="Search ReSharper  DevGuide">
+                    </label>
+                    <div class="search-box__clear" title="Clear"></div>
+                </form>
+            </div>
+        </header>
+        <nav class="panel__content">
+            <div class="container _nav">
+                <menu class="nav-tree"></menu>
+            </div>
+            <div class="container _footer panel__footer">
+                <p><a data-bypass="true" href="//youtrack.jetbrains.com/issues/IJSDK">Send feedback</a></p>
+                <p>&copy; 2000&ndash;2018 <a href="//www.jetbrains.com">JetBrains</a> s.r.o.<br>
+                    All rights reserved.</p>
+            </div>
+        </nav>
+    </section>
+
+    <main class="panel _main" role="main">
+        <header class="panel__header">
+            <div class="container">
+                <h3>ReSharper DevGuide</h3>
+                
+                <div class="panel-trigger"></div>
+            </div>
+        </header>
+        <section class="panel__content">
+            <div class="container">
+                <article class="article" data-shortcut-switcher="false">
+                    <div class="navigation-links _top" data-swiftype-index="false">
+                        
+                        
+                    </div>
+                    <a data-bypass="true" href="https://github.com/JetBrains/resharper-devguide/edit/master/PSI/TypeSystems2.md" class="page-link-to-github" target="_blank" rel="noopener noreferrer" title="Edit this page on GitHub">
+                        <i class="github-icon"></i>
+                        <span class="text">Edit page</span>
+                    </a>
+
+                    <h1>Type systems</h1>
+                    <p>The <code class="code highlight language-text">IDeclaredElement</code> interfaces provide a semantic view of something that has a declaration, but that doesn’t necessarily allow for modelling <em>usages</em> of the element. Specifically, if we take a look at CLR types, a declared element is a declaration of a type, such as a class, but it can’t represent all usages of the type, such as in an array, pointer or closed generic type. The <code class="code highlight language-text">ITypeElement</code> interface can provide a semantic view of the declaration of <code class="code highlight language-text">Foo</code> or <code class="code highlight language-text">Bar&lt;T&gt;</code>, but it can’t represent <code class="code highlight language-text">Foo[]</code> or <code class="code highlight language-text">Bar&lt;string&gt;</code>.</p>
+
+<p>Declared elements need to be able to model these usage scenarios to provide information about base classes, method signatures, etc. In order to do so, the derived declared elements (such as <code class="code highlight language-text">ITypeElement</code>) use an additional interface hierarchy to represent this “type system” information. This hierarchy is language specific, like the derived declared elements that use them. For CLR types, it’s the <code class="code highlight language-text">IType</code> hierarchy, for JavaScript, it’s <code class="code highlight language-text">IJavaScriptType</code>.</p>
+
+<p>This <code class="code highlight language-text">IType</code> is additional information rather than a replacement for the declared element’s semantic view. While the <code class="code highlight language-text">IType</code> can return a symbol table of all type members, it doesn’t provide accessors in the same way that <code class="code highlight language-text">ITypeElement</code> does. However, it is possible to get back to the declared element. If the type implements <code class="code highlight language-text">IDeclaredType</code>, the <code class="code highlight language-text">GetTypeElement</code> method will return the <code class="code highlight language-text">ITypeElement</code>, which gives the full semantic view of the type.</p>
+
+<p>Arrays and pointers are both defined in terms of another instance of <code class="code highlight language-text">IType</code>, allowing for recursively declaring types, such as multi-dimensional arrays, or arrays of generic types. The derived interfaces, such as a <code class="code highlight language-text">IArrayType</code> allow getting the element type (such as <code class="code highlight language-text">int</code> in <code class="code highlight language-text">int[]</code>), and in the case of arrays, the array’s rank.</p>
+
+<p>Generic types are internally represented by a declared element and an instance of <code class="code highlight language-text">ISubstitution</code>, which describes how the generic type parameters are substituted. (Non generic types are represented in the same manner, but use the Null Object Pattern and use an instance of <code class="code highlight language-text">EmptySubstitution</code>)</p>
+
+<p>It’s also possible to get the underlying declared type via the <code class="code highlight language-text">IType.GetScalarType</code> method, which returns the element type for arrays, and will downcast to <code class="code highlight language-text">IDeclaredType</code> for other types.</p>
+
+<p>Types are retrieved from a declared element - such as a base type, or member type signature. Alternatively, types can be created using the <code class="code highlight language-text">TypeFactory.CreateType</code> methods, passing in a fully qualified type name and any type parameters, or an <code class="code highlight language-text">IDeclaredElement</code> and an instance of <code class="code highlight language-text">ISubstitution</code>. Some frequently used types are also available from the <code class="code highlight language-text">PredefinedType</code> class.</p>
+
+
+                    <div class="navigation-links _bottom" data-swiftype-index="false">
+                        
+                        
+                    </div>
+                    <div class="last-modified">
+                        Last modified: 10 July 2017
+                    </div>
+                </article>
+
+                <section class="disqus">
+                    <div id="disqus_thread"></div>
+                </section>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="/help/resharper/sdk/app/app.js" data-baseurl="/help/resharper/sdk/"></script>
+
+</body>
+</html>
+

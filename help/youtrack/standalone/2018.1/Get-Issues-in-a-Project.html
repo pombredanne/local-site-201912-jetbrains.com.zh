@@ -1,0 +1,73 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="/help/app/v2/analytics.js"></script><meta charset="UTF-8"><meta name="robots" content="noindex"><title>Get Issues in a Project - Help | YouTrack Standalone</title><link rel="stylesheet" href="/help/app/v2/app.css"></head><body data-id="Get-Issues-in-a-Project"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack Standalone Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>YouTrack Standalone 2018.1 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><h1 data-toc="Get-Issues-in-a-Project" id="Get-Issues-in-a-Project.xml">Get Issues in a Project</h1>   <a name="GET_/issue/byproject/{project}"></a>   <h2 id="20516a30">GET /issue/byproject/{project}</h2>   <p id="d98cc6b8">Get all issues by project</p>   <p id="8294b2c4">      <div class="code-block" data-lang="xml"><code class="code-block__wrapper">GET /rest/issue/byproject/{project}?{filter}<span class="err">&amp;</span>{after}<span class="err">&amp;</span>{max}<span class="err">&amp;</span>{updatedAfter}<span class="err">&amp;</span>{wikifyDescription}</code></div>   </p>   <p id="219978a8">         <b id="8bb62729">Request parameters:</b></p>    <div class="table-wrapper"><table class=" wide                 " width="100%" id="821bcc52"><thead><tr id="6215fdf4" class="ijRowHead"><th id="3ac6b2ae"><p>Name</p></th><th id="18977e66"><p>Type</p></th><th id="e29b0a94"><p>Description</p></th></tr></thead><tbody><tr id="ae8e1df5" class="ijRowOdd"><td id="9e88fdc8"><p>project</p></td><td id="f8340855"><p>projectByIdForIssues</p></td><td id="bbdfba66"><p>ProjectID of a project to get issues from.</p></td></tr><tr id="854ac093" class="ijRowEven"><td id="43766eba"><p>filter</p></td><td id="ef9c8c33"><p>string</p></td><td id="e550529a"><p>Apply a filter to issues in a project.</p></td></tr><tr id="2147c4d5" class="ijRowOdd"><td id="0b619bbe"><p>after</p></td><td id="df6088be"><p>integer</p></td><td id="d14ddeb9"><p>A number of issues to skip before getting a list of issues. That is, when you specify, for example,                after=12 in request, then in the response you will get all issues matching request but without first                twelve issues found.            </p></td></tr><tr id="9565f7af" class="ijRowEven"><td id="f47952c7"><p>max</p></td><td id="8ce93640"><p>integer</p></td><td id="3263df68">The maximum number of issues to include in the result. If empty, 10 issues are returned.              <aside class="tip sideblock" data-title="" rel="3263df68" id="41324ee3">                <p id="1bb15bb5">                  The maximum number of issues returned by this request is also affected by                  the value of the <span class="control">Max Issues to Export                </span> setting for your YouTrack service.                  This setting is located on the <span class="control">Global Settings</span> page.                  For example, if you use the <code class="code" data-lang="Java">max=10000</code> parameter in the REST API request                  but the <span class="control">Max Issues to Export</span> setting is limited to 5000 issues,                  the response returns a maximum of 5000 issues.</p>              </aside>            </td></tr><tr id="a880ca65" class="ijRowOdd"><td id="cbdd96d2"><p>updatedAfter</p></td><td id="74bb05ba"><p>long</p></td><td id="2c952254"><p>Filter issues by the date of the most recent update. Only issues that have been updated after the specified date are returned.            </p></td></tr><tr id="83898b9d" class="ijRowEven"><td id="33cc43e3"><p>wikifyDescription</p></td><td id="7948564f"><p>boolean</p></td><td id="9eefddbd"><p>Optional. If '<code class="code" data-lang="Java">true</code>', the issue description in the response is formatted (that is: "wikified"). For example, the request URL with this parameter should look as                follows: "<code class="code" data-lang="xml">/rest/issue/jt-23?wikifyDescription=true</code>". By default, this parameter                is '<code class="code" data-lang="xml">false</code>' and skipped in the URL.            </p></td></tr></tbody></table></div>    <p id="ad7c9871">        <b id="8b3b4e92">Response parameters:</b>        <br>        For information about meaning of tags in response, see the description for the        <a href="Get-an-Issue.html"><span>Get an Issue</span></a>        method.    </p>    <h3 id="541500d0">Sample</h3>    <p id="2f496ab0">        <b id="6781ef3b">Request</b>    </p>    <div class="code-block" data-lang="xml"><code class="code-block__wrapper">GET https://example.com/youtrack/rest/issue/byproject/TST?filter=%23Show-stopper
+Cookie: $Version=0; JSESSIONID=peji4aw1vkkj1fvtm9vev8hnh; $Path=/; jetbrains.charisma.main.security.PRINCIPAL=MTVhMjY2OGUxMTUxMTI5MGMzNjhlZWM5NTJiNGJkNmIyNzc3NjdjZmM3YWU4MTVjYzQwYWE1MWZlYTkwNTcxNzphcHBfZXhjZXB0aW9u; $Path=/</code></div>   <p id="17a83416">         <b id="521b6057">Response</b></p>   <div class="code-block" data-lang="xml"><code class="code-block__wrapper">HTTP/1.1 200 OK
+Content-Type: application/xml;charset=UTF-8
+Content-Length: 1364
+
+<span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;</span>
+<span class="nt">&lt;issues&gt;</span>
+  <span class="nt">&lt;issue</span> <span class="na">id=</span><span class="s">&quot;TST-2&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;attachments&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value</span> <span class="na">url=</span><span class="s">&quot;/_persistent/user.properties?file=45-83&amp;amp;v=0&amp;amp;c=true&quot;</span><span class="nt">&gt;</span>user.properties<span class="nt">&lt;/value&gt;</span>
+      <span class="nt">&lt;value</span> <span class="na">url=</span><span class="s">&quot;/_persistent/foo1.properties?file=45-84&amp;amp;v=0&amp;amp;c=true&quot;</span><span class="nt">&gt;</span>foo1.properties<span class="nt">&lt;/value&gt;</span>
+      <span class="nt">&lt;value</span> <span class="na">url=</span><span class="s">&quot;/_persistent/foo2.properties?file=45-85&amp;amp;v=0&amp;amp;c=true&quot;</span><span class="nt">&gt;</span>foo2.properties<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;Priority&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>Show-stopper<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;Type&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>Feature<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;State&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>Reopened<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;Assignee&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>beto<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;Subsystem&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>UI<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;Affected versions&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>2.0.1<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;Fix versions&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>2.0.1<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;projectShortName&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>TST<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;numberInProject&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>2<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;summary&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>new issue<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;description&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>description of new issue<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;created&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>1320664502969<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;updated&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>1320664503229<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;updaterName&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>app_exception<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;reporterName&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>app_exception<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;commentsCount&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>0<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;votes&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>0<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+  <span class="nt">&lt;/issue&gt;</span>
+<span class="nt">&lt;/issues&gt;</span></code></div><div class="last-modified" data-skip-index="skip">Last modified: 7 March 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="Delete-an-Issue.html">Delete an Issue</a><a class="navigation-links__next" href="Intellisense-for-issue-search.html">Intellisense for issue search</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="/help/app/v2/app.js"></script></body></html>

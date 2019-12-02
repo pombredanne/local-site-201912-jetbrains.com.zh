@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+                                            
+        <!-- Error reporting -->
+<script>(function(){
+  window.reportError = function(msg, file, line, col, err, isUnhandledRejection){};
+  var prevOnError = window.onerror;
+  var onError = function(msg, file, line, col, err) {
+    reportError(msg, file, line, col, err, false);
+    prevOnError && prevOnError.apply(window, arguments);
+    return false;
+  };
+  window.onerror = onError;
+  // Setup reporting for unhandled Promise rejection errors
+  window.addEventListener("unhandledrejection", function(e) {
+    if (!e.reason) return;
+    var l = getSrcLocation(e.reason);
+    reportError(e.reason.message, l.file, l.line, l.col, e.reason, true);
+  });
+  // Setup reporting for console.error and console.warn calls
+  patchConsole('error');
+  patchConsole('warn');
+  // Utility functions
+  function patchConsole(fnName) {
+    var fn = console[fnName];
+    console[fnName] = function() {
+      fn.apply(console, arguments);
+      var l; try {
+        throw new Error('_');
+      } catch (err) {
+        l = getSrcLocation(err, 1);
+      }
+      var msg = 'console.' + fnName + ': ' + Array.prototype.join.call(arguments, ' ');
+      reportError(msg, l.file, l.line, l.col, undefined, false);
+    };
+  }
+  function getSrcLocation(err, sd) {
+    var s = err && err.stack;
+    var l = s && s.split("\n")[1 + (sd|0)];
+    var r = l && (/^\s*at [^(]*\((.*?):(\d+)(:\d+)?\)$/.exec(l) || /^\s*at (.*?):(\d+)(:\d+)?$/.exec(l));
+    return r ? {file: r[1], line: r[2], col: r[3]} : {};
+  }
+})();</script>
+<!-- Error reporting -->        <!-- Google Tag Manager -->
+<script>(function() {
+  // Initialize Tag Manager queue
+  window.dataLayer = window.dataLayer || [];
+  window.gtmLoaded = false;
+  // Setup reporting for errors that occurred before Tag Manager initialized
+  var prevReportError = window.reportError;
+  var reportError = function(msg, file, line, col, err, isUnhandledRejection) {
+    if (!window.gtmLoaded || isUnhandledRejection) {
+      // Reproduce the behavior of the Tag Manager error handler
+      window.dataLayer.push(makeEvt(msg, file, line));
+    }
+    prevReportError && prevReportError.apply(window, arguments);
+  };
+  window.reportError = reportError;
+  // Utility functions
+  function makeEvt(msg, file, line) {
+    return {
+      event: "gtm.pageError", "gtm.errorMessage": msg,
+      "gtm.errorUrl": file, "gtm.errorLineNumber": line
+    };
+  }
+})();</script>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;j.addEventListener(
+    'load', function(){window.gtmLoaded=true});f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5P98');</script>
+<!-- End Google Tag Manager -->        <!-- Sentry -->
+<script>
+    (function() {
+        window.sentryLoaded = false;
+        window.errorsForSentry = [];
+        var prevReportError = window.reportError;
+        var reportError = function(
+            msg,
+            file,
+            line,
+            col,
+            err,
+            isUnhandledRejection
+        ) {
+            if (!window.sentryLoaded) {
+                window.errorsForSentry.push(err);
+            }
+            prevReportError && prevReportError.apply(window, arguments);
+        };
+        window.reportError = reportError;
+    })();
+</script>
+<script>
+    window.sentryLoad = function() {
+        window.sentryLoaded = true;
+        Sentry.init({
+            dsn: 'https://1adb2a61713144eda0786e5af50ddc51@sentry.io/1423069',
+            release:
+                "jetbrainscom@a6ccaa6ddb",
+            beforeSend: function(event) {
+                Object.keys(event).forEach(function(key) {
+                    var value = event[key];
+                    if (isEmail(value)) {
+                        delete event[key];
+                    }
+                });
+                return event;
+            }
+        });
+        Sentry.configureScope(function(scope) {
+            scope.setTag('page_locale', 'en-us');
+            scope.setTag('browser.locale', getPageLocale());
+
+            scope.setTag('http.urlFull', location.href);
+            var protocol = location.protocol || '';
+            //omit `:` from location.protocol string
+            var protocolString = protocol.substring(0, protocol.length - 1);
+
+            scope.setTag('http.protocol', protocolString);
+
+            scope.setTag('http.hostname', location.hostname);
+
+            var search = location.search || '';
+            //omit ? from location.search string
+            var searchString = search.substr(1);
+            if (searchString !== '') {
+                scope.setTag('http.query', searchString || '1');
+            }
+            var hash = location.hash || '';
+            //omit # from location.hash string
+            var hashString = hash.substr(1);
+            if (hashString !== '') {
+                scope.setTag('http.fragment', hashString);
+            }
+        });
+        window.errorsForSentry.forEach(Sentry.captureException);
+
+        function getPageLocale() {
+            return (
+                (navigator.languages && navigator.languages[0]) ||
+                navigator.language
+            );
+        }
+        function isEmail(value) {
+            var emailRegex = /[\+\-\_\.a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+\.[a-zA-Z0-9]+/g;
+            return emailRegex.test(value);
+        }
+    };
+</script>
+<script src="https://browser.sentry-cdn.com/5.7.1/bundle.min.js" crossorigin="anonymous" onload="sentryLoad()" async></script>
+<!-- End Sentry -->    
+                <title>JetBrains EAP User Agreement</title>
+    
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, maximum-scale=1">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#000000">
+<meta name="apple-mobile-web-app-title" content="JetBrains">
+<meta name="application-name" content="JetBrains">
+<meta name="msapplication-TileColor" content="#000000">
+<meta name="theme-color" content="#000000">    <link rel="canonical" href="https://www.jetbrains.com/legal/agreements/user_eap.html" />    <!-- .61-->
+                
+        
+                    <meta name="description" content="JetBrains is a cutting-edge software vendor specializing in the creation of intelligent development tools, including IntelliJ IDEA – the leading Java IDE, and the Kotlin programming language."/>
+            <meta name="keywords" content="JetBrains, IntelliJ, IntelliJ IDEA, java, Java IDE, C#, .NET, refactoring, productivity, Visual Studio plugins, developer productivity tools."/>
+            
+        <link rel="alternate" hreflang="x-default" href="https://www.jetbrains.com/legal/agreements/user_eap.html" />
+
+                        <link rel="alternate" hreflang="en" href="https://www.jetbrains.com/legal/agreements/user_eap.html" />
+                                                                                                                        
+    
+    
+        
+    
+    
+    <script>
+        var current_lang = 'en-us';
+                                    var i18n_info = {"current_lang": "en-us", "languages": [{"canonical": "en", "code": "en-us", "label": "English", "page_translated": true, "url": "/legal/agreements/user_eap.html"}, {"canonical": "de", "code": "de-de", "label": "Deutsch", "page_translated": false, "url": "/de-de/legal/agreements/user_eap.html"}, {"canonical": "es", "code": "es-es", "label": "Espa\u00f1ol", "page_translated": false, "url": "/es-es/legal/agreements/user_eap.html"}, {"canonical": "fr", "code": "fr-fr", "label": "Fran\u00e7ais", "page_translated": false, "url": "/fr-fr/legal/agreements/user_eap.html"}, {"canonical": "ja", "code": "ja-jp", "label": "\u65e5\u672c\u8a9e", "page_translated": false, "url": "/ja-jp/legal/agreements/user_eap.html"}, {"canonical": "ko", "code": "ko-kr", "label": "\ud55c\uad6d\uc5b4", "page_translated": false, "url": "/ko-kr/legal/agreements/user_eap.html"}, {"canonical": "ru", "code": "ru-ru", "label": "\u0420\u0443\u0441\u0441\u043a\u0438\u0439", "page_translated": false, "url": "/ru-ru/legal/agreements/user_eap.html"}, {"canonical": "zh-CN", "code": "zh-cn", "label": "\u7b80\u4f53\u4e2d\u6587", "page_translated": false, "url": "/zh-cn/legal/agreements/user_eap.html"}, {"canonical": "pt-BR", "code": "pt-br", "label": "Portugu\u00eas do Brasil", "page_translated": false, "url": "/pt-br/legal/agreements/user_eap.html"}, {"canonical": "x-klingon", "code": "tl-aa", "label": "tlhIngan Hol", "page_translated": false, "url": "/tl-aa/legal/agreements/user_eap.html"}]};
+                            var navigationMenu = {"primary": {"id": "main_v2", "items": [{"id": "tools", "title": "Tools", "descriptionTitle": "Toolbox App", "descriptionLogoId": "toolbox", "descriptionLink": "Learn more", "descriptionUrl": "/toolbox-app/", "description": "Manage your tools the easy way", "src": "/img/banners-menu-main/toolbox-vertical.png", "horisontalSrc": "/img/banners-menu-main/toolbox-horisontal.png", "bgColor": "#3E0598", "isVisible": true, "hasCategories": true, "items": [{"title": "IDEs", "items": [{"isActive": false, "id": "appcode", "title": "AppCode", "url": "/objc/", "logoLeftActionId": "appcode", "items": [], "cleaned_url": "/objc/"}, {"isActive": false, "id": "clion", "title": "CLion", "url": "/clion/", "logoLeftActionId": "clion", "items": [], "cleaned_url": "/clion/"}, {"isActive": false, "id": "datalore", "title": "Datalore", "url": "https://datalore.io/", "isExternalLink": true, "logoLeftActionId": "datalore", "items": [], "cleaned_url": "https://datalore.io/"}, {"isActive": false, "id": "datagrip", "title": "DataGrip", "url": "/datagrip/", "logoLeftActionId": "datagrip", "items": [], "cleaned_url": "/datagrip/"}, {"isActive": false, "id": "goland", "title": "GoLand", "url": "/go/", "logoLeftActionId": "goland", "items": [], "cleaned_url": "/go/"}, {"isActive": false, "id": "idea", "title": "IntelliJ IDEA", "url": "/idea/", "logoLeftActionId": "intellij-idea", "items": [], "cleaned_url": "/idea/"}, {"isActive": false, "id": "phpstorm", "title": "PhpStorm", "url": "/phpstorm/", "logoLeftActionId": "phpstorm", "items": [], "cleaned_url": "/phpstorm/"}, {"isActive": false, "id": "pycharm", "title": "PyCharm", "url": "/pycharm/", "logoLeftActionId": "pycharm", "items": [], "cleaned_url": "/pycharm/"}, {"isActive": false, "id": "rider", "title": "Rider", "url": "/rider/", "logoLeftActionId": "rider", "items": [], "cleaned_url": "/rider/"}, {"isActive": false, "id": "rubymine", "title": "RubyMine", "url": "/ruby/", "logoLeftActionId": "rubymine", "items": [], "cleaned_url": "/ruby/"}, {"isActive": false, "id": "webstorm", "title": "WebStorm", "url": "/webstorm/", "logoLeftActionId": "webstorm", "items": [], "cleaned_url": "/webstorm/"}, {"isActive": false, "id": "toolbox", "type": "special", "title": "Toolbox App", "url": "/toolbox-app/", "logoLeftId": "toolbox", "description": "A control panel for your tools and projects", "items": [], "cleaned_url": "/toolbox-app/"}]}, {"title": ".NET & VISUAL STUDIO", "items": [{"isActive": false, "id": "resharper", "title": "ReSharper", "url": "/resharper/", "logoLeftActionId": "resharper", "items": [], "cleaned_url": "/resharper/"}, {"isActive": false, "id": "rider", "title": "Rider", "url": "/rider/", "logoLeftActionId": "rider", "items": [], "cleaned_url": "/rider/"}, {"isActive": false, "id": "resharper-cpp", "title": "ReSharper C++", "url": "/resharper-cpp/", "logoLeftActionId": "resharper-cpp", "items": [], "cleaned_url": "/resharper-cpp/"}, {"isActive": false, "id": "dotcover", "title": "dotCover", "url": "/dotcover/", "logoLeftActionId": "dotcover", "items": [], "cleaned_url": "/dotcover/"}, {"isActive": false, "id": "dotmemory", "title": "dotMemory", "url": "/dotmemory/", "logoLeftActionId": "dotmemory", "items": [], "cleaned_url": "/dotmemory/"}, {"isActive": false, "id": "dotpeek", "title": "dotPeek", "url": "/decompiler/", "logoLeftActionId": "dotpeek", "items": [], "cleaned_url": "/decompiler/"}, {"isActive": false, "id": "dottrace", "title": "dotTrace", "url": "/profiler/", "logoLeftActionId": "dottrace", "items": [], "cleaned_url": "/profiler/"}]}, {"title": "TEAM TOOLS", "items": [{"isActive": false, "id": "teamcity", "title": "TeamCity", "url": "/teamcity/", "logoLeftActionId": "teamcity", "items": [], "cleaned_url": "/teamcity/"}, {"isActive": false, "id": "upsource", "title": "Upsource", "url": "/upsource/", "logoLeftActionId": "upsource", "items": [], "cleaned_url": "/upsource/"}, {"isActive": false, "id": "youtrack", "title": "YouTrack", "url": "/youtrack/", "logoLeftActionId": "youtrack", "items": [], "cleaned_url": "/youtrack/"}, {"isActive": false, "id": "hub", "title": "Hub", "url": "/hub/", "logoLeftActionId": "hub", "items": [], "cleaned_url": "/hub/"}]}, {"title": "PLUGIN MARKETPLACE", "items": [{"isActive": false, "id": "bigdata", "title": "Big Data Tools", "url": "https://plugins.jetbrains.com/plugin/12494-big-data-tools", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/plugin/12494-big-data-tools"}, {"isActive": false, "id": "rustsupport", "title": "Rust", "url": "https://plugins.jetbrains.com/plugin/8182-rust", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/plugin/8182-rust"}, {"isActive": false, "id": "scalaplugin", "title": "Scala", "url": "https://plugins.jetbrains.com/plugin/1347-scala", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/plugin/1347-scala"}, {"isActive": false, "id": "idethemes", "title": "IDE Themes", "url": "https://plugins.jetbrains.com/search?tags=Theme", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/search?tags=Theme"}, {"isActive": false, "id": "plugins", "title": "All Plugins", "url": "https://plugins.jetbrains.com/", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/"}]}, {"title": "EDUCATION", "items": [{"isActive": false, "id": "pycharm-edu", "title": "PyCharm Edu", "url": "/education/", "urlHash": "#lang=python&role=learner", "logoLeftActionId": "pycharm-edu", "items": [], "cleaned_url": "/education/"}, {"isActive": false, "id": "idea-edu", "title": "IntelliJ IDEA Edu", "url": "/education/", "urlHash": "#lang=java&role=learner", "logoLeftActionId": "intellij-idea", "items": [], "cleaned_url": "/education/"}, {"isActive": false, "id": "jb-academy", "title": "JB Academy", "url": "/academy/", "items": [], "cleaned_url": "/academy/"}]}]}, {"id": "languages", "title": "Languages", "descriptionTitle": "Kotlin/Everywhere", "descriptionLogoId": "header-kotlin-everywhere", "descriptionLink": "Join in!", "descriptionUrl": "//everywhere.kotlinlang.org", "description": "A worldwide event series for learning the best Kotlin practices on all platforms", "descriptionBig": true, "src": "/img/banners-menu-main/kotlin-vertical.png", "horisontalSrc": "/img/banners-menu-main/kotlin-horisontal.png", "bgColor": "#D6721C", "isExternalLink": true, "isVisible": true, "hasCategories": false, "items": [{"isActive": false, "id": "kotlin", "title": "Kotlin", "url": "https://kotlinlang.org/", "isExternalLink": true, "logoLeftId": "header-kotlin-grayscale", "logoLeftActionId": "kotlin", "logoLeftSize": "50", "description": "Programming language \n for JVM & Android", "items": [], "cleaned_url": "https://kotlinlang.org/"}, {"isActive": false, "id": "mps", "title": "MPS", "url": "/mps/", "logoLeftId": "header-mps-grayscalse", "logoLeftActionId": "mps", "logoLeftSize": "50", "description": "Create your own domain-specific language", "items": [], "cleaned_url": "/mps/"}]}, {"id": "solutions", "title": "Solutions", "descriptionTitle": "JetBrains Academy", "descriptionLogoId": "academy-logo", "descriptionLink": "Join in!", "descriptionUrl": "/academy", "description": "An educational platform for future professionals", "src": "/img/banners-menu-main/academy-vertical.png", "horisontalSrc": "/img/banners-menu-main/academy-horisontal.png", "bgColor": "#53288E", "hasCategories": false, "isVisible": true, "items": [{"isActive": false, "title": "C++ Tools", "url": "/cpp/", "logoLeftId": "header-cpp-grayscale", "logoLeftActionId": "header-cpp", "description": "Tools for C/C++ development \nfor any platform", "items": [], "cleaned_url": "/cpp/"}, {"isActive": false, "title": "For Business", "url": "/store/business/", "logoLeftId": "header-for-business-grayscale", "logoLeftActionId": "header-for-business", "description": "Wide range of tools. \nAll major technologies covered", "items": [], "cleaned_url": "/store/business/"}, {"isActive": false, "title": "Game Development", "url": "/gamedev/", "logoLeftId": "header-gamedev-grayscale", "logoLeftActionId": "header-gamedev", "description": "Tools for game development \nfor any platform", "items": [], "cleaned_url": "/gamedev/"}, {"isActive": false, "title": "DevOps", "url": "/devops/", "logoLeftId": "header-devops-grayscale", "logoLeftActionId": "header-devops", "description": "Tools and integrations \nfor any infrastructure", "items": [], "cleaned_url": "/devops/"}, {"isActive": false, "title": "Education", "url": "/education/", "logoLeftId": "header-education-grayscale", "logoLeftActionId": "header-education", "description": "Products to learn and teach programming", "items": [], "cleaned_url": "/education/"}]}, {"id": "support", "title": "Support", "description": "Pricing and licensing for businesses and individuals", "descriptionTitle": "JetBrains Store", "descriptionLogoId": "header-store", "descriptionUrl": "/store/?fromMenu#edition=commercial", "descriptionLink": "visit store", "isVisible": true, "hasCategories": true, "items": [{"title": "CUSTOMERS", "items": [{"isActive": false, "title": "Sales Support", "url": "/support/sales/", "description": "Orders, payments", "items": [], "cleaned_url": "/support/sales/"}, {"isActive": false, "title": "Product Support", "url": "/support/", "description": "Tech support, documentation", "items": [], "cleaned_url": "/support/"}]}, {"title": "COMMUNITY PROGRAMS", "items": [{"isActive": false, "title": "Education", "url": "/community/education/", "description": "Students, classrooms, training", "items": [], "cleaned_url": "/community/education/"}, {"isActive": false, "title": "Open Source", "url": "/community/opensource/", "description": "Projects support", "items": [], "cleaned_url": "/community/opensource/"}, {"isActive": false, "title": "Sponsorship", "url": "/community/support/", "description": "User groups, events, technology experts", "items": [], "cleaned_url": "/community/support/"}]}]}, {"id": "company", "title": "Company", "isVisible": true, "hasCategories": true, "items": [{"title": "INITIATIVES", "items": [{"isActive": false, "title": "Open Source", "url": "/opensource/", "description": "Projects, contributions", "items": [], "cleaned_url": "/opensource/"}, {"isActive": false, "title": "Research", "url": "/research/", "description": "Market, Scientific", "items": [], "cleaned_url": "/research/"}]}, {"title": "COMPANY", "items": [{"isActive": false, "title": "About", "url": "/company/", "description": "People, customers, awards", "items": [], "cleaned_url": "/company/"}, {"isActive": false, "title": "Brand Assets", "url": "/company/brand/", "description": "Guidelines, logos", "items": [], "cleaned_url": "/company/brand/"}, {"isActive": false, "title": "Careers", "url": "/careers/apply/", "description": "Jobs, internships", "items": [], "cleaned_url": "/careers/apply/"}, {"isActive": false, "title": "Events", "url": "/company/events/", "description": "Conferences, meetups", "items": [], "cleaned_url": "/company/events/"}, {"isActive": false, "title": "Contacts", "url": "/company/contacts/", "description": "Partners, resellers, Kotlin training", "items": [], "cleaned_url": "/company/contacts/"}]}, {"title": "RESOURCES", "items": [{"isActive": false, "title": "Newsletters", "url": "/resources/newsletters/", "items": [], "cleaned_url": "/resources/newsletters/"}, {"isActive": false, "title": "Webinars", "url": "/resources/webinars/", "items": [], "cleaned_url": "/resources/webinars/"}, {"isActive": false, "title": "Early Access", "url": "/resources/eap/", "items": [], "cleaned_url": "/resources/eap/"}, {"isActive": false, "title": "Blog", "url": "//blog.jetbrains.com/", "isExternalLink": true, "items": [], "cleaned_url": "//blog.jetbrains.com/"}]}]}, {"isActive": false, "id": "store", "url": "/store/?fromNavMenu", "title": "Store", "isVisible": true, "hasCategories": false, "items": [], "cleaned_url": "/store/?fromNavMenu"}]}, "secondary": {}};
+        
+        var is_layout_adaptive = false;
+        
+        var disable_language_picker = false;
+        
+        var english_only_url_prefixes = [];
+            </script>
+    
+            <script></script>
+    
+        
+    
+            <link href="/_assets/common.d44d81f300d3bff87efe.css" rel="stylesheet" type="text/css">
+<link href="/_assets/default-page.fabf52db4bf34ea78af0.css" rel="stylesheet" type="text/css">
+        <script src="/_assets/common.34604685b633d15ae3ed.js" type="text/javascript"></script>
+<script src="/_assets/default-page.2e180fc15a6b94fe7fa3.js" type="text/javascript"></script>
+    
+            <!-- Social Media tag Starts -->
+    <!-- Open Graph data -->
+            <meta property="og:title" content="JetBrains EAP User Agreement"/>
+    
+                    <meta property="og:description" content="JetBrains is a cutting-edge software vendor specializing in the creation of intelligent development tools, including IntelliJ IDEA – the leading Java IDE, and the Kotlin programming language."/>
+    <meta property="og:image" content="http://resources.jetbrains.com/storage/products/jetbrains/img/meta/jetbrains_1280x800.png"/>
+
+    <meta property="og:site_name" content="JetBrains"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="https://www.jetbrains.com/legal/agreements/user_eap.html"/>
+    <!-- Social Media tag Ends -->
+</head>
+
+<body class="nojs body-adaptive ">
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<script>
+/*! modernizr 3.2.0 (Custom Build) | MIT *
+ * http://modernizr.com/download/?-flexbox-flexboxtweener !*/
+!function(e,n,t){function r(e,n){return typeof e===n}function o(){var e,n,t,o,i,s,l;for(var f in v)if(v.hasOwnProperty(f)){if(e=[],n=v[f],n.name&&(e.push(n.name.toLowerCase()),n.options&&n.options.aliases&&n.options.aliases.length))for(t=0;t<n.options.aliases.length;t++)e.push(n.options.aliases[t].toLowerCase());for(o=r(n.fn,"function")?n.fn():n.fn,i=0;i<e.length;i++)s=e[i],l=s.split("."),1===l.length?Modernizr[l[0]]=o:(!Modernizr[l[0]]||Modernizr[l[0]]instanceof Boolean||(Modernizr[l[0]]=new Boolean(Modernizr[l[0]])),Modernizr[l[0]][l[1]]=o),C.push((o?"":"no-")+l.join("-"))}}function i(e,n){return!!~(""+e).indexOf(n)}function s(e){return e.replace(/([a-z])-([a-z])/g,function(e,n,t){return n+t.toUpperCase()}).replace(/^-/,"")}function l(e,n){return function(){return e.apply(n,arguments)}}function f(e,n,t){var o;for(var i in e)if(e[i]in n)return t===!1?e[i]:(o=n[e[i]],r(o,"function")?l(o,t||n):o);return!1}function a(e){return e.replace(/([A-Z])/g,function(e,n){return"-"+n.toLowerCase()}).replace(/^ms-/,"-ms-")}function u(){return"function"!=typeof n.createElement?n.createElement(arguments[0]):b?n.createElementNS.call(n,"http://www.w3.org/2000/svg",arguments[0]):n.createElement.apply(n,arguments)}function d(){var e=n.body;return e||(e=u(b?"svg":"body"),e.fake=!0),e}function p(e,t,r,o){var i,s,l,f,a="modernizr",p=u("div"),c=d();if(parseInt(r,10))for(;r--;)l=u("div"),l.id=o?o[r]:a+(r+1),p.appendChild(l);return i=u("style"),i.type="text/css",i.id="s"+a,(c.fake?c:p).appendChild(i),c.appendChild(p),i.styleSheet?i.styleSheet.cssText=e:i.appendChild(n.createTextNode(e)),p.id=a,c.fake&&(c.style.background="",c.style.overflow="hidden",f=_.style.overflow,_.style.overflow="hidden",_.appendChild(c)),s=t(p,e),c.fake?(c.parentNode.removeChild(c),_.style.overflow=f,_.offsetHeight):p.parentNode.removeChild(p),!!s}function c(n,r){var o=n.length;if("CSS"in e&&"supports"in e.CSS){for(;o--;)if(e.CSS.supports(a(n[o]),r))return!0;return!1}if("CSSSupportsRule"in e){for(var i=[];o--;)i.push("("+a(n[o])+":"+r+")");return i=i.join(" or "),p("@supports ("+i+") { #modernizr { position: absolute; } }",function(e){return"absolute"==getComputedStyle(e,null).position})}return t}function m(e,n,o,l){function f(){d&&(delete E.style,delete E.modElem)}if(l=r(l,"undefined")?!1:l,!r(o,"undefined")){var a=c(e,o);if(!r(a,"undefined"))return a}for(var d,p,m,h,y,v=["modernizr","tspan"];!E.style;)d=!0,E.modElem=u(v.shift()),E.style=E.modElem.style;for(m=e.length,p=0;m>p;p++)if(h=e[p],y=E.style[h],i(h,"-")&&(h=s(h)),E.style[h]!==t){if(l||r(o,"undefined"))return f(),"pfx"==n?h:!0;try{E.style[h]=o}catch(g){}if(E.style[h]!=y)return f(),"pfx"==n?h:!0}return f(),!1}function h(e,n,t,o,i){var s=e.charAt(0).toUpperCase()+e.slice(1),l=(e+" "+x.join(s+" ")+s).split(" ");return r(n,"string")||r(n,"undefined")?m(l,n,o,i):(l=(e+" "+S.join(s+" ")+s).split(" "),f(l,n,t))}function y(e,n,r){return h(e,t,t,n,r)}var v=[],g={_version:"3.2.0",_config:{classPrefix:"",enableClasses:!0,enableJSClass:!0,usePrefixes:!0},_q:[],on:function(e,n){var t=this;setTimeout(function(){n(t[e])},0)},addTest:function(e,n,t){v.push({name:e,fn:n,options:t})},addAsyncTest:function(e){v.push({name:null,fn:e})}},Modernizr=function(){};Modernizr.prototype=g,Modernizr=new Modernizr;var C=[],w="Moz O ms Webkit",x=g._config.usePrefixes?w.split(" "):[];g._cssomPrefixes=x;var S=g._config.usePrefixes?w.toLowerCase().split(" "):[];g._domPrefixes=S;var _=n.documentElement,b="svg"===_.nodeName.toLowerCase(),z={elem:u("modernizr")};Modernizr._q.push(function(){delete z.elem});var E={style:z.elem.style};Modernizr._q.unshift(function(){delete E.style}),g.testAllProps=h,g.testAllProps=y,Modernizr.addTest("flexbox",y("flexBasis","1px",!0)),Modernizr.addTest("flexboxtweener",y("flexAlign","end",!0)),o(),delete g.addTest,delete g.addAsyncTest;for(var P=0;P<Modernizr._q.length;P++)Modernizr._q[P]();e.Modernizr=Modernizr}(window,document);
+
+if (!Modernizr.flexbox && !Modernizr.flexboxtweener) {
+
+  var $body = $('body');
+
+  var nodesClasses = {
+    wrapper: 'not-supported-browser',
+    container: 'not-supported-browser__container',
+
+    title: 'not-supported-browser__title',
+    content: 'not-supported-browser__content',
+    logo: 'not-supported-browser__logo'
+  };
+
+  var nodes = {
+    wrapper: $('<div class="' + nodesClasses.wrapper + '"></div>'),
+    title: $('<div class="' + nodesClasses.title + '">Sorry, your browser is not fully supported</div>'),
+    content: $('<div class="' + nodesClasses.content + '">There may be some issues with pages layout in your current browser.<br/>Please use an alternate browser until we resolve the issues.<br/>Thank you.</div>'),
+    container: $('<div class="' + nodesClasses.container + '"></div>'),
+    logo: $('<div class="' + nodesClasses.logo + '"><svg class="sprite-img _jetbrains" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#jetbrains"></use></svg></div>')
+  };
+
+  $body.addClass('overflow-hidden');
+
+
+  nodes.content
+    .prepend(nodes.title)
+    .prepend(nodes.logo);
+
+  nodes.container
+    .append(nodes.content);
+
+  nodes.wrapper
+    .append(nodes.container)
+    .appendTo($body);
+}
+</script>
+<div class="page">
+                <div class="page__header">
+                <header class="menu-main header"  id="js-menu-main">
+    <div class="wt-container">
+        <div class="wt-row wt-row_nowrap wt-row_size_s wt-row_align-items_center">
+            <div class="wt-col-auto-fill">
+                <a href="/" class="menu-main__logo-link"><svg class="_jetbrains-simple sprite-img menu-main__logo" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#jetbrains-simple"></use></svg></a>
+            </div>
+            <div class="wt-col-inline wt-display-md-none menu-main-skeleton-text-1" style="min-width: 69px"></div>
+            <div class="wt-col-inline wt-display-md-none menu-main-skeleton-text-1" style="min-width: 81px"></div>
+            <div class="wt-col-inline wt-display-md-none menu-main-skeleton-text-1" style="min-width: 46px"></div>
+            <div class="wt-col-inline menu-main-skeleton-button"></div>
+            <div class="wt-col-inline menu-main-skeleton-button"></div>
+        </div>
+    </div>
+</header>
+
+
+
+
+            </div>
+    
+    <div class="page__content ">
+        <section class="wt-section">
+<div class="wt-container">
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-8 wt-col-lg-9 wt-col-sm-12 wt-article">
+<!-- 2.0 --> <!-- 2019-05-20 -->
+<div class="licenseContent">
+<h1 id="jetbrains-eap-user-agreement">JETBRAINS EAP USER AGREEMENT</h1>
+<p><strong>Version 2.0, effective as of May 20<sup>th</sup>, 2019</strong></p>
+<p>IMPORTANT! READ CAREFULLY:</p>
+<p>THIS IS A LEGAL AGREEMENT. BY CLICKING THE &quot;I AGREE&quot; (OR SIMILAR) BUTTON THAT IS PRESENTED TO YOU AT THE TIME OF YOUR FIRST USE OF THE JETBRAINS SOFTWARE, SUPPORT OR PRODUCTS, YOU ARE BECOMING A PARTY TO THIS AGREEMENT, YOU DECLARE YOU HAVE THE LEGAL CAPACITY TO ENTER INTO SUCH AGREEMENT, AND YOU ARE CONSENTING TO BE BOUND BY ALL THE TERMS AND CONDITIONS SET FORTH BELOW.</p>
+<p>THIS IS AN EARLY ACCESS VERSION OF THE PRODUCT. YOU EXPRESSLY ACKNOWLEDGE THAT THIS VERSION OF THE PRODUCT MAY NOT BE RELIABLE, MAY NOT WORK AS INTENDED, AND MAY CONTAIN ERRORS. ANY USE OF THE EAP PRODUCT IS AT YOUR OWN RISK.</p>
+<p>JetBrains' Early Access Program (&quot;EAP&quot;) allows you to try pre-release versions of our Products to evaluate features that will be added to the next release. It is important to distinguish EAP builds from traditional beta software. Please note that the quality of EAP builds may at times be significantly below even usual beta software standards.</p>
+<h2 id="parties">1. PARTIES</h2>
+<p>1.1. &quot;JetBrains&quot; or &quot;We&quot; means JetBrains s.r.o., having its principal place of business at Na Hrebenech II 1718/10, Prague, 14000, Czech Republic, registered in the Commercial Register maintained by the Municipal Court of Prague, Section C, File 86211, ID. No.: 265 02 275.</p>
+<p>1.2. &quot;User&quot; or &quot;You&quot; means the individual given the right to use a Product in accordance with this Agreement. For the avoidance of doubt, User is a natural person and not a corporation, company, partnership or association or other entity or organization.</p>
+<p>1.3. &quot;Product Holder&quot; means a sole proprietor or legal entity using Products. For legal entities, &quot;Product Holder&quot; includes any entity which controls, is controlled by, or is under common control with Product Holder. For the purposes of this definition, &quot;control&quot; means (i) the power, directly or indirectly, to direct or manage such entity, whether by contract or otherwise, or (ii) ownership of fifty percent (50%) or more of the outstanding shares or beneficial ownership of such entity.</p>
+<h2 id="definitions">2. DEFINITIONS</h2>
+<p>2.1. &quot;Agreement&quot; means this JetBrains EAP User Agreement covering use of the Product by individual Users.</p>
+<p>2.2. &quot;Product&quot; means any generally available JetBrains software product identified by JetBrains as an individual developer tool, including software plugins, irrespective of whether any such software (i) may or may not be covered by a Toolbox Subscription or (ii) is or is not provided perpetually and/or for free. For the avoidance of doubt, a) the Product is not produced to the specifications of User nor customized through modification or personalization, and is intended for mass distribution, and b) this Agreement covers EAP builds only.</p>
+<p>2.3. &quot;Client&quot; means a computer device used by User for running Product(s).</p>
+<p>2.4. &quot;Product Version&quot; means a release, update, or upgrade of a particular Product that is not identified by JetBrains as being made for the purpose of fixing software bugs.</p>
+<p>2.5. &quot;Bug Fix Update&quot; for a particular Product Version means a software update or release that is specifically identified by JetBrains as an update or release for the purposes of fixing software bugs in that Product Version.</p>
+<p>2.8. &quot;JetBrains Account&quot; or &quot;JBA&quot; means an account at <a class="uri" href="https://account.jetbrains.com">https://account.jetbrains.com</a> created by User, having a unique name and password, through which User has access to Products.</p>
+<p>2.9. &quot;JetBrains Website&quot; means any website that is the property of JetBrains s.r.o. (&quot;JetBrains&quot; or &quot;We&quot;), including but not limited to everything hosted under the domains listed at <a class="uri" href="https://www.jetbrains.com/legal/websites/">https://www.jetbrains.com/legal/websites/</a>.</p>
+<p>2.10. &quot;EAP Term&quot; is a period during which the User can use a Product under this Agreement. The EAP Term is defined in the Product itself or on the website from which the Product is downloaded.</p>
+<p>2.12. &quot;Privacy Policy&quot; means the JetBrains Privacy Policy available at <a class="uri" href="https://www.jetbrains.com/company/privacy.html">https://www.jetbrains.com/company/privacy.html</a>, which may be updated from time to time.</p>
+<p>2.13. &quot;Personal Data&quot; means any information relating to an identified or identifiable natural person.</p>
+<p>2.14. &quot;EAP&quot; means the Early Access Program as defined in the preamble of this Agreement.</p>
+<p>2.15. &quot;Redistributable Product&quot; means an independent module of the Product or the Product as a whole designed to be redistributed and designated by JetBrains as &quot;Redistributable&quot; in its name or in its official description.</p>
+<h2 id="grant-of-rights">3. GRANT OF RIGHTS</h2>
+<p>3.1. Unless the EAP Term has expired or this Agreement is terminated in accordance with Section 10, and subject to the terms and conditions specified herein, JetBrains grants You a non-exclusive and non-transferable right to use each Product as follows:</p>
+<p>(A) You may:</p>
+<p>(i) Use any version of Product on any number of Clients and on any operating system supported by Product;</p>
+<p>(ii) Make one backup copy of Product solely for archival/security backup purposes.</p>
+<p>(B) You may not:</p>
+<p>(i) Rent, lease, reproduce, modify, adapt, create derivative works of, distribute, sell or transfer the Product;</p>
+<p>(ii) Provide access to the Product or Your JetBrains Account or right to use the Product to a third party;</p>
+<p>(iii) Reverse engineer, decompile, disassemble, modify, translate, or make any attempt to discover the source code of, the Product; or</p>
+<p>(iv) Remove or obscure any proprietary or other notices contained in the Product.</p>
+<p>3.2. If an independent module of the Product or the Product as a whole is a Redistributable Product, the following provisions shall apply in addition to Sections 3.1:</p>
+<p>(A) You may:</p>
+<p>(i) use the Redistributable Product without quantitative restrictions unless specified otherwise in the terms relating to the use of the particular Redistributable Product;</p>
+<p>(ii) transfer, reproduce, redistribute and provide access to the Redistributable Product to a third party;</p>
+<p>(iii) sell your product containing or using the Redistributable Product to a third party, but not the Redistributable Product as such;</p>
+<p>(iv) redistribute the Redistributable Product onto another Client for legitimate purposes in accordance with applicable law and use the Redistributable Product on that Client, provided that You have received authorization from the owner of such Client to deploy and use the Redistributable Product in this way. You will indemnify JetBrains against any loss, costs or damages arising from Your deployment of the Redistributable Product onto another Client in violation of this clause.</p>
+<p>(B) You hereby agree to ensure that the use of any Redistributable Product you reproduce, redistribute or provide access to, to a third party is governed by an agreement concluded between the relevant third party as a User and JetBrains and that such third party is bound by the agreement prior to the use of any such Redistributable Product. JetBrains is the exclusive owner and exclusive licensor of any Redistributable Product. You acknowledge that you are liable to JetBrains for any loss or damages in connection with the breach of this section.</p>
+<h2 id="decompiling-restrictions">4. DECOMPILING RESTRICTIONS</h2>
+<p>Some of the Products may include decompiling functionality that enables reproducing source code from the original binary code. You acknowledge that binary code and source code may be protected by copyright and trademark laws. Before using such Products for decompilation purposes, You hereby agree to make sure that decompilation of binary code is not prohibited by the applicable license agreement or that You have obtained permission to decompile the binary code from the copyright owner. Using the Products is entirely optional. JetBrains neither encourages nor condones the use of the Products for decompiling purposes, and disclaims any liability for their use by User in violation of applicable laws.</p>
+<h2 id="access-to-products">5. ACCESS TO PRODUCTS</h2>
+<p>5.1. Users may use the JBA in accordance with its documentation. Product Holder and its Users are solely responsible for the accuracy and completeness of any information provided via and any action taken through the JBA. If a User of Product Holder meets certain and specific conditions defined by JetBrains, User may be rewarded for participation in the EAP.</p>
+<p>5.2. You acknowledge that the Product may periodically connect to JetBrains servers to update this information including changes to JetBrains Account credentials, offline activation codes, EAP Term changes, and payments made.</p>
+<p>5.3. All deliveries under this Agreement will be electronic. You must have an Internet connection in order to access Your JetBrains Account and to receive any deliveries. For the avoidance of doubt, You are responsible for Product download and installation.</p>
+<h2 id="personal-data">6. PERSONAL DATA</h2>
+<p>6.1. In connection with your use of Products, We and our associated companies will process Personal Data of You as a User and the Product Holder (if appropriate), in particular contact and identification details, data about usage of our software and services, and information about Your subscription and payments, for the following purposes:</p>
+<p>6.1.1. To provide You with software, services or information;</p>
+<p>6.1.2. To protect Us from piracy and unlawful use of Our software or services;</p>
+<p>6.1.3. To improve Our offerings based on usage;</p>
+<p>6.1.4. For Our internal records and to protect Our rights and interests and those of other users;</p>
+<p>6.1.5. To promote and market Our software and services;</p>
+<p>6.1.6. To fulfil legal duties stipulated by accounting, taxation, and other laws.</p>
+<p>You may object to the processing of Your Personal Data for the purposes of 6.1.2 through 6.1.5 at any time. More detailed information about Personal Data processing for the above-mentioned purposes and about Your rights can be found in the Privacy Policy.</p>
+<p>6.2. For the above purposes, JetBrains may, among other things, collect the Personal Data identified in this clause. Specifically, JetBrains may collect Your IP address, JetBrains Account username, JetBrains Account password, first name, last name, and email address.</p>
+<p>6.3 On installation and execution, the Product may send certain information to JetBrains, which will not contain any Personal Data, including Product version, Product edition, and information about the operating system and/or environment where the Product is installed. A unique, randomly-generated ID, which does not contain any Personal Data, is also used to distinguish instances. The Product can also check for available updates, as well as available updates for plugins or components. In addition, it can check for validation of your right to use the Product, either using Your offline activation code or Your JetBrains Account details.</p>
+<p>6.4. The Product may electronically send anonymous information to JetBrains related to Your usage of the Product features. This information may include, but is not limited to, frameworks, file templates being used in the IDEs, actions invoked, and other interactions with Product features. This information will contain neither source code nor Your Personal Data, nor information about Your JetBrains Account.</p>
+<h2 id="feedback">7. FEEDBACK</h2>
+<p>You have no obligation to provide Us with ideas, suggestions, or proposals (&quot;Feedback&quot;). However, if You submit Feedback to us, then You grant Us a non-exclusive, worldwide, royalty-free license that is sub-licensable and transferable, to use, sell, offer to sell, import, reproduce, publicly display, distribute, modify, or publicly perform Feedback in any manner without any obligation, royalty or restriction based on intellectual property rights or otherwise.</p>
+<h2 id="third-party-software">8. THIRD-PARTY SOFTWARE</h2>
+<p>8.1. Products include code and libraries licensed to Us by third parties, including open source software (&quot;Third-Party Software&quot;). A list of Third-Party Software included in each Product is available in the Product documentation. All Third-Party Software is provided to You under the respective terms stipulated in the Product documentation.</p>
+<p>8.2. JETBRAINS PROVIDES NO WARRANTY, EXPRESS OR IMPLIED, WITH RESPECT TO ANY THIRD-PARTY SOFTWARE AND EXPRESSLY DISCLAIMS ANY WARRANTY OR CONDITION OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT.</p>
+<h2 id="warranty-limitations">9. WARRANTY LIMITATIONS</h2>
+<p>9.1 THE EAP PRODUCTS INCLUDE EXPERIMENTAL AND EARLY PRE-RELEASE SOFTWARE. THEREFORE, THE PRODUCTS ARE PROVIDED TO YOU ON AN &quot;AS IS&quot; AND &quot;AS AVAILABLE&quot; BASIS. USE OF THE PRODUCTS IS AT YOUR OWN RISK.</p>
+<p>9.2 JETBRAINS MAKES NO WARRANTY AS TO THE PRODUCTS' USE OR PERFORMANCE. TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, JETBRAINS (OR ITS AFFILIATES, SHAREHOLDERS, AGENTS, DIRECTORS, AND EMPLOYEES), ITS LICENSORS, SUPPLIERS (WHICH SHALL INCLUDE THE PROVIDERS OF THIRD PARTY SOFTWARE), AND RESELLERS (COLLECTIVELY HEREUNDER, &quot;JETBRAINS PARTIES&quot;) DISCLAIM ALL WARRANTIES AND CONDITIONS, WHETHER EXPRESS OR IMPLIED (INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY; FITNESS FOR A PARTICULAR PURPOSE; TITLE; AND NON-INFRINGEMENT) WITH REGARD TO THE PRODUCTS AND THE PROVISION OF OR FAILURE TO PROVIDE SUPPORT SERVICES.</p>
+<p>TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, JETBRAINS PARTIES DO NOT REPRESENT OR WARRANT THAT THE PRODUCTS: (A) ARE ACCURATE, RELIABLE OR CORRECT; (B) WILL MEET YOUR REQUIREMENTS; (C) WILL BE AVAILABLE AT ANY PARTICULAR TIME OR LOCATION, UNINTERRUPTED OR SECURE; (D) ARE FREE OF DEFECTS OR ERRORS AND THAT ANY, IF FOUND, WILL BE CORRECTED; AND/OR (E) ARE FREE OF VIRUSES OR OTHER HARMFUL COMPONENTS.</p>
+<p>9.3 ANY CONTENT OR DATA DOWNLOADED OR OTHERWISE OBTAINED THROUGH THE USE OF THE PRODUCTS ARE DOWNLOADED AT YOUR OWN RISK; YOU AGREE YOU ARE SOLELY RESPONSIBLE FOR ANY DAMAGE TO YOUR PROPERTY OR LOSS OF DATA THAT RESULTS FROM SUCH DOWNLOAD.</p>
+<p>9.4 YOU MAY HAVE OTHER RIGHTS, WHICH VARY FROM JURISDICTION TO JURISDICTION. THIS DOCUMENT IS NOT INTENDED TO ABROGATE SUCH RIGHTS.</p>
+<h2 id="disclaimer-of-damages">10. DISCLAIMER OF DAMAGES</h2>
+<p>10.1. TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT WILL THE JETBRAINS PARTIES BE LIABLE TO YOU, YOUR AFFILIATES, USERS, OR ANYONE ELSE FOR: (A) ANY LOSS OF USE, DATA, GOODWILL, OR PROFITS, WHETHER OR NOT FORESEEABLE; (B) ANY LOSS OR DAMAGES IN CONNECTION WITH TERMINATION OR SUSPENSION OF YOUR ACCESS TO THE PRODUCTS IN ACCORDANCE WITH THIS AGREEMENT; OR (C) ANY SPECIAL, INCIDENTAL, INDIRECT, CONSEQUENTIAL, EXEMPLARY OR PUNITIVE DAMAGES WHATSOEVER (EVEN IF THE RELEVANT JETBRAINS PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF THESE DAMAGES), INCLUDING THOSE (X) RESULTING FROM LOSS OF USE, DATA, OR PROFITS, WHETHER OR NOT FORESEEABLE, (Y) BASED ON ANY THEORY OF LIABILITY, INCLUDING BREACH OF CONTRACT OR WARRANTY, STRICT LIABILITY, NEGLIGENCE OR OTHER TORTIOUS ACTION, OR (Z) ARISING FROM ANY OTHER CLAIM ARISING OUT OF OR IN CONNECTION WITH YOUR USE OF OR ACCESS TO THE PRODUCTS OR SUPPORT. THE FOREGOING LIMITATION OF LIABILITY SHALL APPLY TO THE FULLEST EXTENT PERMITTED BY LAW IN THE APPLICABLE JURISDICTION..</p>
+<p>10.2. THE JETBRAINS PARTIES' TOTAL LIABILITY IN ANY MATTER ARISING OUT OF OR IN RELATION TO THIS AGREEMENT IS LIMITED TO FIVE (5) US DOLLARS. THIS LIMITATION WILL APPLY EVEN IF THE JETBRAINS PARTIES HAVE BEEN ADVISED OF THE POSSIBILITY OF LIABILITY EXCEEDING SUCH AN AMOUNT AND NOTWITHSTANDING ANY FAILURE OF THE ESSENTIAL PURPOSE OF ANY LIMITED REMEDY.</p>
+<h2 id="term-and-termination">11. TERM AND TERMINATION</h2>
+<p>11.1. The term of this Agreement will commence upon the acceptance of this Agreement by User as set forth in the preamble above, and will continue for each Product covered by this Agreement through the end of the applicable EAP Term, or in the case of Redistributable Products until terminated by either User or JetBrains.</p>
+<p>11.2. You may terminate this Agreement at any time via Your JetBrains Account. In case of Redistributable Products, User may terminate this Agreement with immediate effect by notifying JetBrains of such termination, discontinuing use of the Redistributable Product and deleting all copies of the Redistributable Product from its Clients and archives.</p>
+<p>11.3. JetBrains may terminate this Agreement if:</p>
+<p>(A) User has materially breached this Agreement and fails to cure such breach within thirty (30) days of written notice thereof;</p>
+<p>(B) JetBrains is required to do so by law (for example, where the provision of the Products to User is, or becomes, unlawful); or</p>
+<p>(C) JetBrains elects to discontinue providing the Product(s), in whole or in part.</p>
+<p>11.4. JetBrains will make reasonable efforts to notify User via email as follows:</p>
+<p>(A) Thirty (30) days prior to termination of the Agreement in the event specified in Section 11.3(C) above.</p>
+<p>(B) Three (3) days prior to termination of the Agreement in the event specified in Section 11.3(B).</p>
+<p>11.5. Upon expiration or termination of this Agreement by User under Section 11.2, Sections 7, 8, 9, and 10 of this Agreement will survive.</p>
+<h2 id="export-regulations">12. EXPORT REGULATIONS</h2>
+<p>User shall comply with all applicable laws and regulations with regards to economic sanctions, export controls, import regulations, and trade embargoes (all herein referred to as &quot;Sanctions&quot;), including those of the European Union and United States (specifically the Export Administration Regulations (EAR)). User declares that it is not a person targeted by Sanctions nor is it otherwise owned or controlled by or acting on behalf of any person targeted by Sanctions. Further, User warrants that it will not download or otherwise export or re-export the JetBrains Toolbox or any related technical data directly or indirectly to any person targeted by Sanctions or download or otherwise use the JetBrains Toolbox for any end-use prohibited or restricted by Sanctions.</p>
+<h2 id="general">13. GENERAL</h2>
+<p>13.1. Entire Agreement. This Agreement, including the Third-Party Software license terms and any other terms specifically referred to herein, constitutes the entire agreement between the parties concerning its subject matter and supersedes any prior agreements between You and JetBrains regarding Your use of any Products. No purchase order, other ordering document or any handwritten or typewritten text which purports to modify or supplement the printed text of this Agreement or any schedule will add to or vary the terms of this Agreement unless signed by both User and JetBrains.</p>
+<p>13.2. Reservation of Rights. JetBrains reserves the right at any time to cease the support of the Products and to alter prices, features, specifications, capabilities, functions, terms of use, release dates, general availability, or other characteristics of the Products.</p>
+<p>13.3. Changes to this Agreement. We may update or modify this Agreement from time to time, including any referenced policies and other documents. If a revision meaningfully reduces Your rights, We will use reasonable efforts to notify You (for example, by contacting You at the email address You have provided to us, by posting on JetBrains Website, or via the Product itself). If We modify this Agreement, the modified version of the Agreement will be effective from the date of your receipt of the notice, unless otherwise specified by JetBrains. In this case, if You object to the updated Agreement terms, as Your exclusive remedy, you may terminate this Agreement. You may be required to click through the updated Agreement to show Your acceptance.</p>
+<p>13.4. Severability. If a particular term of this Agreement is not enforceable, the unenforceability of that term will not affect any other terms of this Agreement.</p>
+<p>13.5. Headings. Headings and titles are for convenience only and do not affect the interpretation of this Agreement.</p>
+<p>13.6. No Waiver. Our failure to enforce or exercise any part of this Agreement is not a waiver of that section.</p>
+<p>13.7. Governing Law. This Agreement will be governed by the laws of the Czech Republic, without regard to conflict of laws principles. User agrees that any litigation relating to this Agreement may only be brought in, and will be subject to the jurisdiction of, any competent court of the Czech Republic. The parties agree that the United Nations Convention on Contracts for the International Sale of Goods does not apply to this Agreement.</p>
+<p>13.8. You declare that You have had sufficient opportunity to review this Agreement, understand the content of all of its clauses, negotiate its terms, and seek independent professional legal advice in that respect before entering into it. Consequently, any statutory &quot;form contract&quot; (&quot;adhesion contract&quot;) regulations shall not be applicable to this Agreement.</p>
+<p>13.9. The parties to this Agreement undertake to make their best efforts to settle any disputes arising hereunder (&quot;Dispute&quot;) amicably. Should the parties to this Agreement fail to settle a Dispute amicably, User has the right to submit a Dispute for an out-of-court resolution to the Czech Trade Inspection Authority, web address: <a href="https://www.coi.cz">www.coi.cz</a>.</p>
+<p>13.10. Notice. JetBrains may deliver any notice to User via electronic mail to an email address provided by User, JetBrains Account, registered mail, personal delivery or renowned express courier (such as DHL, FedEx or UPS). Any such notice will be deemed to be effective (i) on the day the notice is sent to User via email, (ii) upon being uploaded to Your JetBrains Account (irrespective of when User actually receives it), (iii) upon personal delivery, (iv) one (1) day after deposit with an express courier, or (v) five (5) days after deposit in the mail, whichever occurs first.</p>
+<p>13.11. Children and minors. If You are under 18 years old, then by entering into this Agreement you explicitly stipulate, that (i) You have legal capacity to conclude this Agreement or that you have valid consent from a parent or legal guardian to do so and (ii) You understand the JetBrains Privacy Policy available at: <a class="uri" href="https://www.jetbrains.com/company/privacy.html">https://www.jetbrains.com/company/privacy.html</a>. You may not enter into this Agreement if you are under 13 years old. IF YOU DO NOT UNDERSTAND THIS SECTION, DO NOT UNDERSTAND THE JETBRAINS PRIVACY POLICY, OR DO NOT KNOW WHETHER YOU HAVE THE LEGAL CAPACITY TO ACCEPT THESE TERMS, PLEASE ASK YOUR PARENT OR LEGAL GUARDIAN FOR HELP.</p>
+<p>For exceptions or modifications to this Agreement, please contact JetBrains at:</p>
+<p>Address: Na Hrebenech II 1718/10, Prague, 14000, Czech Republic</p>
+<p>Fax: +420 241 722 540</p>
+<p>Email: legal@jetbrains.com</p>
+</div>
+</div>
+<div class="wt-col-3 wt-col-sm-12 wt-offset-left-1 wt-offset-left-lg-0 wt-offset-top-96">
+<div class="license-agreement-sidebar">
+<h4 class="wt-h4">Download:</h4>
+<ul class="wt-text-2">
+<li class="wt-offset-top-12"><a class="wt-link" href="user_eap.docx">Microsoft Word</a> <span class="wt-text-3">(.docx)</span></li>
+<li class="wt-offset-top-12"><a class="wt-link" href="user_eap.pdf">PDF Document</a> <span class="wt-text-3">(.pdf)</span></li>
+</ul>
+<h4 class="wt-h4 wt-h4_flow">Help</h4>
+<ul class="wt-text-2">
+<li class="wt-offset-top-12"><a class="wt-link" href="//sales.jetbrains.com" title="Answers to questions about licenses and licensing policies">Licensing FAQs</a></li>
+<li class="wt-offset-top-12"><a class="wt-link" href="/store/terms/" title="Info about ordering and payment options, currencies, &amp; more">Purchase Terms</a></li>
+<li class="wt-offset-top-12"><a class="wt-link" href="/support/sales/">Contact Sales</a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section>    </div>
+
+            
+<div class="page__footer">
+    <footer class="footer" id="footer">
+        <div class="wt-container">
+            <div class="footer__main wt-row wt-row_size_m wt-row-sm_direction_column-reverse">
+                <div class="footer__logo wt-col-inline wt-display-md-none">
+                    <div class="jetbrains-logo _size-3 _full-block">
+                        <svg class="sprite-img jetbrains">
+                            <use xlink:href="#jetbrains" />
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="wt-col-auto-fill wt-col-sm-12">
+                    <div class="wt-row wt-row_size_xs wt-row-sm_size_m wt-offset-top-12">
+                        <div class="wt-col-inline footer-skeleton-button"></div>
+                        <div class="wt-col-inline footer-skeleton-button"></div>
+                        <div class="wt-col-inline footer-skeleton-button"></div>
+                        <div class="wt-col-inline footer-skeleton-button"></div>
+                    </div>
+
+                    <div class="footer-skeleton-text-2 wt-offset-top-24" style="max-width: 45%"></div>
+                    <div class="footer-skeleton-text-2 wt-offset-top-12" style="max-width: 70%"></div>
+                </div>
+
+                <div class="wt-col-inline wt-col-sm-12 wt-col_align-self_end wt-col-sm_align-self_start">
+                    <div class="wt-row wt-row_size_m wt-row_justify_end wt-row-sm_justify_start">
+                        <div class="wt-col-inline footer-skeleton-button" style="min-width: 180px"></div>
+                        <div class="wt-col-inline footer-skeleton-button" style="min-width: 80px"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+    </div>
+
+<script>
+(function () {
+  function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+      results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+  }
+
+  function updateQueryStringParameter(uri, key, value) {
+    var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+    var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+    if (uri.match(re)) {
+      return uri.replace(re, '$1' + key + "=" + value + '$2');
+    }
+    else {
+      return uri + separator + key + "=" + value;
+    }
+  }
+
+  var downloadLink = document.getElementById("download-link");
+  if (downloadLink != null) {
+    var platform = getParameterByName('platform');
+    platform = platform != null ? platform : "windows";
+    var href = downloadLink.getAttribute("href");
+    var code = getParameterByName("code");
+
+    if(code != null) {
+      href = updateQueryStringParameter(href, "code", code)
+    }
+    href = updateQueryStringParameter(href, "platform", platform);
+    downloadLink.setAttribute("href", href);
+  }
+})();
+</script><script>
+(function() {
+  var STORAGE_KEY_NAME = 'firefoxDisappearedSVGWorkaround';
+  var STORAGE_KEY_VALUE = '1';
+
+  var isFirefox = /firefox/i.test(navigator.userAgent);
+  if (!isFirefox || isFirefox && sessionStorage.getItem(STORAGE_KEY_NAME) === STORAGE_KEY_VALUE) {
+    return;
+  }
+
+  var arrayFrom = function (arrayLike) {
+    return Array.prototype.slice.call(arrayLike, 0);
+  };
+
+  function workaround() {
+    var uses = document.querySelectorAll('.page svg use');
+    var badNodesCount = 0;
+
+    arrayFrom(uses).forEach(function (node) {
+      var rect = node.getBoundingClientRect();
+      if (rect.width === 0 && rect.height === 0)
+        badNodesCount++;
+    });
+
+    if (badNodesCount === uses.length) {
+      sessionStorage.setItem(STORAGE_KEY_NAME, STORAGE_KEY_VALUE);
+      if (typeof dataLayer !== 'undefined')
+        dataLayer.push({'firefoxDisappearedSVGWorkaround': STORAGE_KEY_VALUE});
+
+      window.location.replace(window.location.href);
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', workaround);
+
+})();
+</script>      <link href="/_assets/banner-rotator.entry.07ac548a2a68a7922693.css" rel="stylesheet" type="text/css">
+      <script src="/_assets/banner-rotator.entry.b9ea3aaba598786010f0.js" type="text/javascript"></script>
+      
+      
+  <script>
+(function () {
+
+  'use strict';
+
+  function ImagesSrcReplacer () {
+
+    var attribute = 'data-src';
+    var matches = document.querySelectorAll('img[' + attribute + ']');
+
+    for (var i = 0, n = matches.length; i < n; i++) {
+
+      var attrValue = matches[i].getAttribute(attribute);
+
+      if (_isHighDensity ()) {
+
+        var name = attrValue.substring(0, attrValue.lastIndexOf('.'));
+        var extention = attrValue.substring(attrValue.lastIndexOf('.'), attrValue.length);
+
+        matches[i].setAttribute('src', name + '@2x' + extention);
+
+      } else {
+        matches[i].setAttribute('src', attrValue)
+      }
+    }
+
+    /**
+     * Detect high density
+     * @returns {*|boolean}
+     */
+    function _isHighDensity () {
+      return (
+      (window.matchMedia &&
+      (window.matchMedia('only screen and (min-resolution: 124dpi), only screen and (min-resolution: 1.3dppx), only screen and (min-resolution: 48.8dpcm)').matches ||
+       window.matchMedia('only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (-o-min-device-pixel-ratio: 2.6/2), only screen and (min--moz-device-pixel-ratio: 1.3), only screen and (min-device-pixel-ratio: 1.3)').matches)) ||
+      (window.devicePixelRatio &&
+       window.devicePixelRatio > 1.3));
+    }
+  }
+
+  return new ImagesSrcReplacer()
+
+}(document, window));
+</script></body>
+</html>

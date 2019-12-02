@@ -1,0 +1,66 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="robots" content="noindex"><title>YouTrack Standalone 7.0 Help :: Apply Command to an Issue</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Apply-Command-to-an-Issue"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack Standalone Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>YouTrack Standalone 7.0 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="Create-New-Issue.html">Create New Issue</a><a class="navigation-links__next" href="Intellisense-for-commands.html">Intellisense for commands</a></div><h1>Apply Command to an Issue</h1><a name="POST_/issue/{issue}/execute"></a><a name="d7275e5"></a><h2>POST /issue/{issue}/execute</h2><a name="d7275e8"></a><p>Apply a command to an issue. </p><a name="d7275e11"></a><p>
+      <a name="d7275e13"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">POST /rest/issue/{issue}/execute?{command}<span class="err">&amp;</span>{comment}<span class="err">&amp;</span>{group}<span class="err">&amp;</span>{disableNotifications}<span class="err">&amp;</span>{runAs}</code></div>
+   </p><a name="d7275e17"></a><p>
+         <a name="d7275e19"></a><b id="d7275e19">Parameters:</b></p><table class=" wide" width="100%" id="d7275e23"><thead><tr id="d7275e25" class="ijRowHead"><a name="d7275e25"></a><th><a name="d7275e27"></a> Name </th><th><a name="d7275e30"></a> Type </th><th><a name="d7275e33"></a> Description </th></tr></thead><tbody><tr id="d7275e37" class="ijRowOdd"><a name="d7275e37"></a><td><a name="d7275e39"></a> issue </td><td><a name="d7275e42"></a> issueById </td><td><a name="d7275e45"></a> A command will be applied to an issue with this issueID. </td></tr><tr id="d7275e49" class="ijRowEven"><a name="d7275e49"></a><td><a name="d7275e51"></a> command </td><td><a name="d7275e54"></a> string </td><td><a name="d7275e57"></a> A command to apply. A command might content a string of attributes and their values, that is: You can change multiple fields with one complex command. For example, the following command will set an issue's Type=Bug, Priority=Critical, Fix version=5.1, and will add tag "regression":
+                  <a name="d7275e59"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">Type Bug Priority Critical add Fix versions 5.1 tag regression</code></div>
+                  <a name="d7275e62"></a><p>For more details about YouTrack commands, please take a look at <a name="d7275e64"></a><a href="Commands.html"><span>the basic description</span></a> and <a name="d7275e67"></a><a href="Command-Reference.html"><span>Command Reference</span></a>.</p> </td></tr><tr id="d7275e72" class="ijRowOdd"><a name="d7275e72"></a><td><a name="d7275e74"></a> comment </td><td><a name="d7275e77"></a> string </td><td><a name="d7275e80"></a> A comment to add to an issue. </td></tr><tr id="d7275e84" class="ijRowEven"><a name="d7275e84"></a><td><a name="d7275e86"></a> group </td><td><a name="d7275e89"></a> string </td><td><a name="d7275e92"></a> User group name. Use to specify visibility settings of a comment to be post. </td></tr><tr id="d7275e97" class="ijRowOdd"><a name="d7275e97"></a><td><a name="d7275e99"></a> disableNotifications </td><td><a name="d7275e102"></a> boolean </td><td><a name="d7275e105"></a> If set 'true' then no notifications about changes made with the specified command will be send. By default, is 'false'. </td></tr><tr id="d7275e109" class="ijRowEven"><a name="d7275e109"></a><td><a name="d7275e111"></a>runAs</td><td><a name="d7275e114"></a>string</td><td><a name="d7275e117"></a>Login for a user on whose behalf the command should be executed.
+        <aside class="note ">
+
+            <a name="d7275e121"></a><p>To use <code class="code" data-lang="xml">runAs</code> parameter you should have '<code class="code" data-lang="xml">Update project</code>'
+                permission in the project, to which the issue belongs. For more information about permissions see
+                <a name="d7275e129"></a><a href="YouTrack-Permissions-Reference.html"><span>Permissions Reference</span></a>
+
+            </p>
+        </aside>
+        <a name="d7275e134"></a><p></p>
+    </td></tr></tbody></table><a name="d7275e139"></a><h3>Samples</h3><a name="d7275e142"></a><h4>Sample 1</h4><a name="d7275e145"></a><p>
+         <a name="d7275e147"></a><b id="d7275e147">Request</b></p><a name="d7275e150"></a><p>The following request applies command for the issue with ID "HBR-60" and sets issue Type to "exception" and simultaneously adds a comment "exception naturally!":</p><a name="d7275e153"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">POST http://localhost:8081/rest/issue/HBR-60/execute
+Content-Length: 46
+Connection: keep-alive
+Content-Type: application/x-www-form-urlencoded
+Cookie: $Version=0; JSESSIONID=n7hq7t8o49ae15sgbq5hn9ic; $Path=/; jetbrains.charisma.main.security.PRINCIPAL=MTVhMjY2OGUxMTUxMTI5MGMzNjhlZWM5NTJiNGJkNmIyNzc3NjdjZmM3YWU4MTVjYzQwYWE1MWZlYTkwNTcxNzphcHBfZXhjZXB0aW9u; $Path=/
+
+command=exception<span class="err">&amp;</span>comment=exception naturally!</code></div><a name="d7275e157"></a><p>
+         <a name="d7275e159"></a><b id="d7275e159">Response</b>
+</p><a name="d7275e163"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">HTTP/1.1 200 OK
+Content-Type: application/xml;charset=UTF-8
+Content-Length: 0
+Server: Jetty(6.1.23)</code></div><a name="d7275e166"></a><h4>Sample 2</h4><a name="d7275e169"></a><p>The command in this sample is applied to the issue "TP-30" and sets its Priority to "Major" and State to "Fixed".</p><a name="d7275e172"></a><p>
+         <a name="d7275e174"></a><b id="d7275e174">Request</b></p><a name="d7275e177"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">POST /youtrack/rest/issue/TP-30/execute HTTP/1.0
+Host: sample.myjetbrains.com 
+Content-Length: 41
+Content-Type: application/x-www-form-urlencoded
+Cookie: JSESSIONID=dxe03plylrrg1nkwf23twrl49; Path=/youtrack; jetbrains.charisma.main.security.PRINCIPAL=ZmNhNzIwYmQwYyM0YjNjMWYyNzQ4MjRiMDgzZDNhNGVlZjEwZGFlOTAwNmZlOTZmZDNiYzJiMzIyYWZlMDM5ZDpyb290; Path=/youtrack;
+
+command=Priority%20Major%20State%20Fixed</code></div><a name="d7275e181"></a><p>
+         <a name="d7275e183"></a><b id="d7275e183">Response</b>
+</p><a name="d7275e187"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">HTTP/1.1 200 OK
+Server: nginx
+Date: Tue, 21 Jan 2014 11:08:05 GMT
+Content-Type: application/xml; charset=UTF-8
+Content-Length: 0
+Connection: close</code></div><a name="Sample_3"></a><a name="d7275e192"></a><h4>Sample 3</h4><a name="d7275e195"></a><p>Below you will find a sample of an erroneous command.</p><a name="d7275e198"></a><p>
+         <a name="d7275e200"></a><b id="d7275e200">Request</b></p><a name="d7275e204"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">POST /youtrack/rest/issue/TP-30/execute HTTP/1.0
+Host: sample.myjetbrains.com 
+Content-Length: 41
+Content-Type: application/x-www-form-urlencoded
+Cookie: JSESSIONID=dxe03plylrrg1nkwf23twrl49; Path=/youtrack; jetbrains.charisma.main.security.PRINCIPAL=ZmNhNzIwYmQwYyM0YjNjMWYyNzQ4MjRiMDgzZDNhNGVlZjEwZGFlOTAwNmZlOTZmZDNiYzJiMzIyYWZlMDM5ZDpyb290; Path=/youtrack;
+
+command=Priority%20Major%20State%20Fixes</code></div><a name="d7275e207"></a><p>
+         <a name="d7275e209"></a><b id="d7275e209">Response</b>
+</p><a name="d7275e213"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">HTTP/1.1 400 Bad Request
+Server: nginx
+Date: Tue, 21 Jan 2014 11:10:24 GMT
+Content-Type: application/xml; charset=UTF-8
+Content-Length: 108
+Connection: close
+
+<span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;</span><span class="nt">&lt;error&gt;</span>Unknown command: State expected: Fixes<span class="nt">&lt;/error&gt;</span>
+Connection closed by foreign host.</code></div><div class="last-modified">Last modified: 2 February 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

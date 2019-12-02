@@ -1,0 +1,48 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta class="swiftype" name="product" data-type="string" content="/idea/2016.3/"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><meta charset="UTF-8"><meta name="robots" content="noindex"><title>IntelliJ IDEA 2016.3 Help :: Debugging TypeScript</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Debugging_TypeScript"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-swiftype-index="false"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.3 Help</h3><div class="shortcuts-switcher" data-swiftype-index="false"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Windows/Linux Default</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWin</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">Mac OS X</option><option data-group="secondary" value="eclipse_mac_os_x">Eclipse (Mac OS X)</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (Mac OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper (Mac OS X)</option><option data-group="secondary" value="emacs">Emacs (Mac OS X)</option></select></div><div class="panel-trigger" data-swiftype-index="false"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="using-tslint-code-quality-tool.html">Using TSLint Code Quality Tool</a></div><h1>Debugging TypeScript</h1><a name="d766e18"></a><p><a name="d766e19"></a><span class="emphasis">This feature is supported in the Ultimate edition only.</span></p><a name="d37778e7"></a><p>
+            TypeScript code is not processed by browsers that work with JavaScript code. Therefore to be executed, TypeScript code has to be translated into JavaScript.
+            This operation is referred to as <a name="d37778e9"></a><span class="emphasis">transpilation</span> and the tools that perform it are called <a name="d37778e12"></a><span class="emphasis">transpilers</span>.
+        </p><a name="d78305e16"></a><p>
+         
+        In addition to this, <a name="d37778e19"></a><span class="emphasis">transpilation</span> also can involve generation of <a name="d37778e22"></a><a href="http://net.tutsplus.com/tutorials/tools-and-tips/source-maps-101/" data-external="true"><span>source maps</span></a>
+        that set correspondence between lines in your TypeScript code and in the generated JavaScript code,
+        otherwise your breakpoints will not be recognised and processed correctly.
+     
+    </p><a name="d78305e22"></a><p>
+        Because JavaScript debugging is supported only in <a name="d78305e24"></a><a href="http://www.google.com/chrome" data-external="true"><span>Google Chrome</span></a> and other browsers of the <a name="d78305e27"></a><span class="emphasis">Chrome</span> family,
+        TypeScript can also be debugged only in these browsers.
+    </p><a name="d78305e33"></a><p>To debug TypeScript code:</p><ol class="list _decimal"><li class="list__item"><a name="d19550e6628"></a>
+            Transpile the TypeScript code into Javascript using the <a name="d19550e6630"></a><span class="emphasis">built-in compiler</span>,
+            see <a name="d19550e6633"></a><a href="transpiling-typescript-to-javascript.html"><span>Transpiling TypeScript to JavaScript</span></a> for details.
+        </li><li class="list__item"><a name="d19550e6636"></a>
+            In the editor, open the HTML files with the TypeScript references.
+        </li><li class="list__item"><a name="d19550e6639"></a>
+            Manually replace the references to the TypeScript files with the references to the JavaScript files that were generated through the <a name="d19550e6641"></a><span class="emphasis">transpilation</span>.
+        </li><li class="list__item"><a name="d19550e6650"></a>
+            <a name="d19550e6652"></a><a href="configuring-javascript-debugger.html"><span>Configure the JavaScript debugger.</span></a>
+        </li><li class="list__item"><a name="d19550e6656"></a>
+            <a name="d19550e6658"></a><a href="using-breakpoints.html"><span>Configure and set breakpoints</span></a> in the TypeScript code.
+            Although actually debugging will be performed against the generated JavaScript, IntelliJ IDEA will emulate TypeScript debugging using the generated source-maps
+            that set correspondence between lines in the TypeScript and in the JavaScript code.
+        </li><li class="list__item"><a name="d19550e6662"></a>
+            Proceed as if you were debugging JavaScript:
+            <ol class="list _decimal"><li class="list__item"><a name="d19550e6666"></a>
+                    Initiate a debugging session.
+                    For details about <a name="d19550e6668"></a><span class="emphasis">local</span> and <a name="d19550e6671"></a><span class="emphasis">remote</span> debugging, about debugging single files and entire applications, see <a name="d19550e6674"></a><a href="debugging-javascript.html"><span>Debugging JavaScript</span></a>.  
+                </li><li class="list__item"><a name="d19550e6679"></a>
+                     
+                 
+            If you are using Chrome, install and configure the <a name="d78035e83"></a><span class="emphasis">JetBrains Chrome Extension</span>.
+            For details, see <a name="d78035e86"></a><a href="using-jetbrains-chrome-extension.html"><span>Using JetBrains Chrome Extension</span></a>.
+             
+                </li><li class="list__item"><a name="d19550e6687"></a>
+                    <a name="d19550e6689"></a><a href="stepping-through-the-program.html"><span>Step through the program</span></a>, <a name="d19550e6692"></a><a href="pausing-and-resuming-the-debugger-session.html"><span>stop and resume</span></a> program execution, <a name="d19550e6695"></a><a href="examining-suspended-program.html"><span>examine it when suspended</span></a>, etc.
+                </li></ol>
+        </li></ol><div class="navigation-links _bottom"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="using-tslint-code-quality-tool.html">Using TSLint Code Quality Tool</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content">```
+                <div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d78305e47"></a><a href="running-and-debugging-javascript.html"><span>Running and Debugging JavaScript</span></a></li><li class="list__item"><a name="d78305e49"></a><a href="debugging.html"><span>Debugging</span></a></li><li class="list__item"><a name="d78305e52"></a><a href="typescript-support.html"><span>TypeScript Support</span></a></li></ul></div><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d78305e57"></a><a href="debug-tool-window.html"><span>Debug Tool Window</span></a></li></ul></div></div></section><div class="last-modified" data-swiftype-index="false">Last modified: 21 March 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"></meta><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><title>WebStorm 2016.1 Help :: Spellchecking</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="topicId261514"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search WebStorm Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>WebStorm 2016.1 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWindow</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="toggling-case.html">Toggling Case</a><a class="navigation-links__next" href="using-macros-in-the-editor.html">Using Macros in the Editor</a></div><h1>Spellchecking</h1><a name="d551655e7"></a><p>On this page:</p><ul><li class="list__item"><a href="#d551655e12">Basics</a></li><li class="list__item"><a href="#1">Checking the Spelling of a word</a></li><li class="list__item"><a href="#d551655e110">Configuring the Dictionaries to Use</a></li><li class="list__item"><a href="#2">Configuring Spellchecking Options</a></li></ul><a name="d551655e12"></a><h2>Basics</h2>
+
+            <a name="d551655e14"></a><p>
+             WebStorm helps you make sure that all your source code, including textual strings, comments, and literals,
+                and commit messages, is spelt correctly. For this purpose, WebStorm suggests a dedicated <a name="d551655e16"></a><span class="emphasis">Typo</span> inspection,
+            which is supported by the corresponding bundled plugin and is enabled by default. <br>
+            Correctness of spelling is checked against pre-defined dictionaries (as of now, <code class="code" data-lang="Java">jetbrains.dic</code>
+              and <code class="code" data-lang="Java">english.dic</code>), and any number of user-defined custom dictionaries. </p>
+          <a name="d551655e28"></a><p>A <a name="d551655e30"></a><span class="emphasis">user dictionary</span> is a textual file with  the <code class="code" data-lang="Java">dic</code> extension,
+            containing the words you want to be accepted by the <a name="d551655e36"></a><span class="emphasis">Typo</span> inspection as correct. The words
+            in such dictionaries are delimited with the newline.</p>
+           <a name="d551655e40"></a><p>Besides that, you can define your own list of words that will be skipped by the inspection. You can add
+                words to this list "on-the-fly", or intentionally while setting up your spellchecker options.</p>
+          <a name="d551655e43"></a><p>With the <a name="d551655e45"></a><span class="emphasis">Typo</span> inspection enabled, WebStorm detects and highlights
+            words not included in dictionaries and user's words list. It up to the user to provide correct spelling,
+            accept word as is, or disable inspection. </p>
+          If a word is accepted, it will be added to the user's words list, and skipped by the spellchecker in future.
+            If inspection is disabled, all typos will be ignored.
+              <a name="d551655e49"></a><p>In the textual strings and comments, spelling of a word at caret can be changed to a correct one.
+                  In the contexts that enable <a name="d551655e51"></a><a href="rename-refactorings.html"><span>Rename</span></a> refactoring, the inspection
+              suggests to rename all occurrences of a symbol.</p>
+
+             
+
+                <a name="d551655e68"></a><p>
+                    On this page:
+                </p>
+                <ul><li class="list__item"><a href="#1">Checking the Spelling of a word</a></li><li class="list__item"><a href="#d551655e110">Configuring the Dictionaries to Use</a></li><li class="list__item"><a href="#2">Configuring Spellchecking Options</a></li></ul>
+
+<a name="1"></a><h2>Checking the Spelling of a word</h2>
+      <ol class="list _decimal"><li class="list__item"><a name="d551655e79"></a>Place the caret on a word highlighted by the <a name="d551655e81"></a><span class="emphasis">Typo</span> inspection. </li><li class="list__item"><a name="d551655e85"></a>Press <kbd data-default="Alt+Enter" data-default_for_gnome="Alt+Enter" data-default_for_kde="Alt+Enter" data-default_for_xwin="Alt+Enter" data-emacs="Alt+Enter" data-visual_studio="Alt+Enter" data-netbeans_6.5="N/A" data-eclipse="Alt+Enter" data-mac_os_x_10.5_="&#x2325;⏎" data-mac_os_x="&#x2325;⏎" data-eclipse_mac_os_x="&#x2318;1" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Enter</kbd> to show the available intention actions. </li><li class="list__item"><a name="d551655e90"></a>Choose one of the following actions:
+            <ul class="list _ul"><li class="list__item"><a name="d551655e94"></a>
+               <a name="d551655e96"></a><span class="menupath">Change to</span>: select the desired spelling of a textual string or comment from the
+                    suggestion list. </li><li class="list__item"><a name="d551655e100"></a>
+               <a name="d551655e102"></a><span class="menupath">Save to dictionary</span>: add word to the user's list and skip it in future. </li></ul>
+        </li></ol>
+<a name="d551655e110"></a><h2>Configuring the Dictionaries to Use</h2>
+        <ol class="list _decimal"><li class="list__item"><a name="d551655e114"></a>
+                 
+         
+            Open the <a name="d7162e7944"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by choosing <a name="d7162e7946"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d7162e7949"></a><span class="menupath">WebStorm | Preferences</span> for OS X,
+         
+         
+            and  
+         
+         
+         
+        click <a name="d7162e7972"></a><span class="control">Spelling</span> under <a name="d7162e7975"></a><span class="control">Editor</span>.
+     
+     
+            </li><li class="list__item"><a name="d551655e126"></a>
+                Define the set of dictionaries to be used for spellchecking.
+                <ol class="list _decimal"><li class="list__item"><a name="d551655e130"></a>
+                        Switch to the <a name="d551655e132"></a><span class="control">Dictionaries</span> tab.
+                    </li><li class="list__item"><a name="d551655e136"></a>
+                        <a name="d551655e138"></a><p>
+                            The <a name="d551655e140"></a><span class="control">Dictionaries</span>
+                             
+        area in the bottom of the page shows a list of the dictionaries that can be used in spellchecking.
+        The list contains the dictionaries that come bundled with WebStorm by default and user-defined dictionaries
+        detected in the folders from the  <a name="d7162e8065"></a><span class="control">Custom Dictionaries Folder</span> area above.
+     
+                        </p>
+                        <ul class="list _bullet"><li class="list__item"><a name="d7162e8071"></a>
+            To have a default dictionary applied in the current project, select the check box next to it.
+        </li><li class="list__item"><a name="d7162e8074"></a>
+            To exclude a default dictionary from spellchecking within the scope of the current project, clear the check box next to it.
+        </li></ul>
+                    </li><li class="list__item"><a name="d551655e152"></a>
+                        In the <a name="d551655e154"></a><span class="control">Custom Dictionaries Folder</span> area, configure your custom dictionaries to use.
+                         
+        This area displays a list of directories that contain user-defined dictionary files (text files
+        with the <code class="code" data-lang="Java">dic</code> extension, containing words separated  with a newline).
+     
+                        <ul class="list _bullet"><li class="list__item"><a name="d7162e8086"></a>
+            To add a new folder to the list, click <img alt="add" width="12" height="12" title="add" src="/help/img/idea/2016.1/new.png" class="inline-icon-12"> and choose the required folder in the
+            <a name="d7162e8090"></a><a href="select-path-dialog.html"><span>Select Path Dialog</span></a> dialog that opens  .
+            <a name="d7162e8095"></a><p>
+                The full path to the folder is added to the <a name="d7162e8097"></a><span class="control">Custom Dictionaries Folder</span> list,
+                and all the <code class="code" data-lang="Java">*.dic</code> files found
+                in this folder are added to the <a name="d7162e8103"></a><span class="control">Dictionaries</span> list.
+            </p>
+        </li><li class="list__item"><a name="d7162e8108"></a>
+            To remove a folder from the list, select it and click <img alt="delete" width="12" height="12" title="delete" src="/help/img/idea/2016.1/delete.png" class="inline-icon-12">.
+        </li></ul>
+                    </li></ol>
+            </li><li class="list__item"><a name="d551655e167"></a>
+                Besides configuring a custom dictionary, you can create your own <a name="d551655e169"></a><span class="emphasis">Word List</span> with the words that you want to be skipped during spell checking
+                without being included in a custom dictionary.
+                <ol class="list _decimal"><li class="list__item"><a name="d551655e174"></a>
+                        Switch to the <a name="d551655e176"></a><span class="control">Accepted Words</span> tab.
+                    </li><li class="list__item"><a name="d551655e180"></a>
+                        Create a <a name="d551655e182"></a><span class="emphasis">Word List</span>:
+                        <ul class="list _bullet"><li class="list__item"><a name="d551655e187"></a>
+                                Click the <img alt="add" width="12" height="12" title="add" src="/help/img/idea/2016.1/new.png" class="inline-icon-12"> icon
+                                 
+        to open the <a name="d7162e8116"></a><span class="control">Add New Word</span> dialog box and specify a new entry there.
+        <a name="d7162e8119"></a><span class="emphasis">CamelCase</span> or <a name="d7162e8122"></a><span class="emphasis">snake_case</span> are not supported.
+        If you try to add a word that is already included in one of the spelling dictionaries,
+        WebStorm displays an error message <a name="d7162e8125"></a><span class="emphasis">The word &lt;just typed word&gt; is already in the dictionary</span>.
+     
+                            </li><li class="list__item"><a name="d551655e194"></a>
+                                To remove an item from the list, select it and click <img alt="delete" width="12" height="12" title="delete" src="/help/img/idea/2016.1/delete.png" class="inline-icon-12">.
+                            </li></ul>
+                    </li></ol>
+            </li></ol>
+    <a name="2"></a><h2>Configuring Spellchecking Options</h2>
+      <ol class="list _decimal"><li class="list__item"><a name="d551655e209"></a>
+                  
+         
+            Open the <a name="d7162e7944"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by choosing <a name="d7162e7946"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d7162e7949"></a><span class="menupath">WebStorm | Preferences</span> for OS X,
+         
+         
+            and  
+         
+         
+         
+        click <a name="d7162e7972"></a><span class="control">Inspections</span> under <a name="d7162e7975"></a><span class="control">Editor</span>.
+     
+     
+          </li><li class="list__item"><a name="d551655e221"></a>
+              On the <a name="d551655e223"></a><a href="inspections.html"><span>Inspections</span></a> page, that opens showing a list of inspection types, expand the <a name="d551655e225"></a><span class="control">Spelling</span> node and click <a name="d551655e228"></a><span class="control">Typo</span> in the central pane.
+          </li><li class="list__item"><a name="d551655e232"></a>
+              In the right-hand pane, configure the <a name="d551655e234"></a><span class="emphasis">Typo</span> inspection:
+              <ul class="list _bullet"><li class="list__item"><a name="d551655e239"></a>
+                      In the <a name="d551655e241"></a><span class="control">Options</span> area, define the type of contents to be inspected by selecting or clearing the  <a name="d551655e244"></a><span class="control">Process Code</span>, <a name="d551655e247"></a><span class="control">Process Literals</span>,
+                      and <a name="d551655e250"></a><span class="control">Process Comments</span> check boxes.
+                  </li><li class="list__item"><a name="d551655e254"></a>
+                      In the <a name="d551655e256"></a><span class="control">Severity</span> area, choose the <a name="d551655e259"></a><a href="configuring-inspection-severities.html"><span>inspection severity level</span></a>
+                      and the <a name="d551655e262"></a><span class="emphasis">scope</span> to apply this level in.
+                  </li></ul>
+          </li></ol>
+<div class="navigation-links _bottom"><a class="navigation-links__prev" href="toggling-case.html">Toggling Case</a><a class="navigation-links__next" href="using-macros-in-the-editor.html">Using Macros in the Editor</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content"><div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d551655e274"></a><a href="applying-intention-actions.html"><span>Applying Intention Actions</span></a></li><li class="list__item"><a name="d551655e278"></a><a href="rename-refactorings.html"><span>Rename Refactorings</span></a></li></ul></div><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d551655e285"></a><a href="spelling.html"><span>Spelling</span></a></li><li class="list__item"><a name="d551655e288"></a><a href="inspections.html"><span>Inspections</span></a></li><li class="list__item"><a name="d551655e292"></a><a href="plugins-2.html"><span>Plugins</span></a></li></ul></div></div></section><div class="last-modified">Last modified: 11 July 2016 </div></article><div id="disqus_thread"></div></div></section></main></div><script src="/help/app/app.js"></script></body></html>

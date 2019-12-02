@@ -1,0 +1,105 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"></meta><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><title>WebStorm 2016.1 Help :: Pushing Changes to the Upstream (Git Push)</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="topicId611349"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search WebStorm Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>WebStorm 2016.1 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWindow</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="pulling-changes-from-the-upstream-git-pull.html">Pulling Changes from the Upstream (Git Pull)</a><a class="navigation-links__next" href="handling-lf-and-crlf-line-endings.html">Handling LF and CRLF Line Endings</a></div><h1>Pushing Changes to the Upstream (Git Push)</h1><a name="d651916e7"></a><p>
+                The Git integration in WebStorm supports uploading changes from the <a name="d651916e9"></a><a href="checking-out-switching-between-branches.html#current"><span>current branch</span></a> to its <a name="d651916e12"></a><a href="http://schacon.github.com/git/git-branch.html" data-external="true"><span>tracked branch</span></a> or to any other remote branch.
+                If the upload (<a name="d651916e15"></a><a href="http://gitref.org/remotes/#push" data-external="true"><span>push</span></a>) is rejected due to lack of synchronization between your local repository and the remote storage,
+                you can either interactively choose the strategy to update the local branch or have WebStorm update it silently.
+            </p><a name="d651916e19"></a><p>
+                Before uploading changes from your local Git repository to a remote repository make sure that:
+               <ul class="list _bullet"><li class="list__item"><a name="d651916e23"></a>You have a Git hosting account.</li><li class="list__item"><a name="d651916e26"></a>The target remote Git repository is accessible for your account.</li><li class="list__item"><a name="d651916e29"></a>You have a pair of <code class="code" data-lang="Java">ssh keys</code> to access the remote repository.</li></ul>
+            </p><a name="d651916e37"></a><p>
+                In this section:
+            </p><ul><li class="list__item"><a href="#d651916e45">Pushing changes</a></li><li class="list__item"><a href="#interactively">Updating a local branch interactively if push is rejected</a></li><li class="list__item"><a href="#automatically">Configuring automatic update if push is rejected</a></li></ul><a name="oneRootSeveralBranches"></a><a name="d651916e45"></a><a name="dynaProc0"></a><section class="procedure-steps"><h2>To push changes</h2><ol class=".list _decimal"><li class="list__item">
+                On the main menu, choose <a name="d651916e49"></a><span class="control">VCS | Git | Push </span>.
+                The <a name="d651916e52"></a><a href="topicId40310.html"><span>Git Push</span></a> dialog box opens listing all commits made in the current branch since the last <code class="code" data-lang="Java">push</code>.
+            </li><li class="list__item">
+                Select the commit to push. The right-hand pane shows the changes included in the selected commit.
+                Use the <a name="d651916e61"></a><a href="topicId40310.html#changesWithinCommit"><span>toolbar buttons</span></a> to examine the commit details.
+            </li><li class="list__item">
+                Select which files you want to upload. To select all files, click the <a name="d651916e67"></a><span class="control">Select All</span> toolbar button
+                <img alt="svnSelectAll.png" width="17" height="19" title="svnSelectAll.png" src="/help/img/idea/2016.1/svnSelectAll.png" class="inline-icon-19"> or press <kbd data-default="Ctrl+A" data-default_for_gnome="Ctrl+A" data-default_for_kde="Ctrl+A" data-default_for_xwin="Ctrl+A" data-emacs="Ctrl+X, H" data-visual_studio="Ctrl+A" data-netbeans_6.5="N/A" data-eclipse="Ctrl+A" data-mac_os_x_10.5_="&#x2318;A" data-mac_os_x="&#x2318;A" data-eclipse_mac_os_x="&#x2318;A" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+A</kbd>.
+            </li><li class="list__item">
+                Specify the target remote branch to push the changes to. If you want to upload the current branch to an alternative branch,
+                rather than its tracked branch, click the branch name to edit it (note that completion is available for branch names).
+                <a name="d651916e77"></a><p>
+                    You can also click the <a name="d651916e79"></a><span class="control">Edit all targets</span> link in the bottom right corner to edit all branch names
+                    simultaneously.
+                </p>
+                 
+            </li><li class="list__item">
+                Click the <a name="d651916e88"></a><span class="control">Push</span> button, when ready. WebStorm starts the upload.
+            </li><li class="list__item">
+                If <code class="code" data-lang="Java">push</code> is rejected due to lack of synchronization, update the local branch in one of the following ways:
+                <ul class="list _bullet"><li class="list__item"><a name="d651916e100"></a>
+                        <a name="d651916e102"></a><a href="#interactively"><span>Choose the update strategy manually</span></a> in the <a name="d651916e105"></a><a href="push-rejected-dialog-git.html"><span>Push Rejected</span></a> dialog box.
+                    </li><li class="list__item"><a name="d651916e109"></a>
+                        Have the local <a name="d651916e111"></a><a href="#automatically"><span>branch updated automatically</span></a>.
+                    </li></ul>
+            </li></ol></section><a name="interactively"></a><a name="dynaProc1"></a><section class="procedure-steps"><h2>To update a local branch interactively if push is rejected</h2><p>
+                <a name="d651916e124"></a><p>
+                    When <code class="code" data-lang="Java">push</code> is rejected due to lack of synchronization between the current local branch and its tracked remote branch,
+                    WebStorm displays the <a name="d651916e129"></a><a href="push-rejected-dialog-git.html"><span>Push Rejected</span></a> dialog box, provided that the <a name="d651916e132"></a><span class="control">Auto-update if push ... rejected</span> check box
+                    in the <a name="d651916e135"></a><a href="git.html"><span>Git</span></a> page of the <a name="d651916e137"></a><span class="control">Settings</span>
+              dialog box is cleared.
+                </p>
+            </p><ol class=".list _decimal"><li class="list__item">
+                If your project uses several local Git repositories, specify the ones to be updated:
+                <ul class="list _bullet"><li class="list__item"><a name="d651916e150"></a>
+                        To have all the local repositories updated, no matter whether <code class="code" data-lang="Java">push</code> has been rejected for all of them or not,
+                        select the <a name="d651916e155"></a><span class="control">Update non rejected repositories as well</span> check box.
+                    </li><li class="list__item"><a name="d651916e159"></a>
+                        To have only affected repositories updated, clear the <a name="d651916e161"></a><span class="control">Update non rejected repositories as well</span> check box.
+                    </li></ul>
+            </li><li class="list__item">
+                In the <a name="d651916e169"></a><span class="control">Push Rejected</span> dialog box, specify the way to update local repositories in the future:
+                <ul class="list _bullet"><li class="list__item"><a name="d651916e174"></a>
+                        To have this dialog box displayed upon every reject of <code class="code" data-lang="Java">push</code>, clear the <a name="d651916e179"></a><span class="control">Remember the update method choice and silently update in future</span> check box.
+                    </li><li class="list__item"><a name="d651916e183"></a>
+                        To have WebStorm apply the update procedure invoked from this dialog box silently,
+                        select the <a name="d651916e185"></a><span class="control">Remember the update method choice and silently update in future</span> check box.
+
+                            <a name="d651916e188"></a><p>
+                                After you leave the dialog box, the <a name="d651916e190"></a><span class="control">Auto-update if push ... rejected</span> check box
+                                in the <a name="d651916e193"></a><a href="git.html"><span>Git</span></a> page of the <a name="d651916e195"></a><span class="control">Settings</span>
+                       dialog box is selected and the applied update method becomes default.
+                                To change this setting, clear the <a name="d651916e201"></a><span class="control">Auto-update if push ... rejected</span> check box.
+                            </p>
+
+                    </li></ul>
+            </li><li class="list__item">
+                <a name="invokeUpdateProcedure"></a>
+                Invoke the update procedure <a name="d651916e212"></a><a href="http://schacon.github.com/git/git-rebase.html" data-external="true"><span>rebase</span></a> or <a name="d651916e215"></a><a href="http://schacon.github.com/git/git-merge.html" data-external="true"><span>merge</span></a>
+                by clicking the buttons <a name="d651916e218"></a><span class="control">Rebase</span> or <a name="d651916e221"></a><span class="control">Merge</span> respectively.
+            </li></ol></section><a name="automatically"></a><a name="dynaProc2"></a><section class="procedure-steps"><h2>To have WebStorm update a local branch automatically if push is rejected</h2><p>
+                <a name="d651916e230"></a><p>
+                    Do one of the following:
+                </p>
+            </p><ul class=".list "><li class="list__item">
+                <a name="d651916e236"></a><a href="accessing-settings.html"><span>Open the Settings dialog box</span></a>, click <a name="d651916e239"></a><span class="control">Git</span> under the <a name="d651916e242"></a><span class="control">Version Control</span> node,
+                and in the in the <a name="d651916e245"></a><a href="git.html"><span>Git</span></a> page, that opens, select the <a name="d651916e247"></a><span class="control">Auto-update if push ... rejected</span> check box.
+                <a name="d651916e251"></a><p>
+                    If you have not invoked any update operation from the <a name="d651916e253"></a><a href="push-rejected-dialog-git.html"><span>Push Rejected</span></a> dialog box before and you are enabling the check box initially,
+                    WebStorm will synchronize the local branch silently by means of the <a name="d651916e256"></a><a href="http://schacon.github.com/git/git-merge.html" data-external="true"><span>merge</span></a> operation.
+                </p>
+                <a name="d651916e260"></a><p>
+                    If you have previously invoked an update operation <a name="d651916e262"></a><a href="http://schacon.github.com/git/git-rebase.html" data-external="true"><span>rebase</span></a> or <a name="d651916e265"></a><a href="http://schacon.github.com/git/git-merge.html" data-external="true"><span>merge</span></a>
+                    from the <a name="d651916e268"></a><span class="control">Push Rejected</span> dialog box and selected the <a name="d651916e271"></a><span class="control">Remember the update method choice...</span> check box,
+                    WebStorm will apply your last choice.
+                </p>
+                <a name="d651916e275"></a><p>
+                    <a name="changeRememberedChoice"></a>
+                    Accordingly, to change the "remembered" setting, clear the check box, access the <a name="d651916e279"></a><span class="control">Push Rejected</span> dialog box,
+                    select the <a name="d651916e282"></a><span class="control">Auto-update if push ... rejected</span> check box, whereupon invoke another update strategy.
+                </p>
+            </li><li class="list__item">
+                During an <a name="d651916e289"></a><a href="#interactively"><span>interactive update</span></a> in the <a name="d651916e292"></a><span class="control">Push Rejected</span> dialog box,
+                select the <a name="d651916e295"></a><span class="control">Remember the update method choice and silently update in future</span> check box,
+                whereupon invoke the required update method <code class="code" data-lang="Java">rebase</code> or <code class="code" data-lang="Java">merge</code> by pressing the corresponding button.
+                WebStorm saves your choice  and will apply it to update the conflicting local branch silently
+                until you <a name="d651916e305"></a><a href="#changeRememberedChoice"><span>change the remembered setting</span></a>.
+            </li></ul></section><div class="navigation-links _bottom"><a class="navigation-links__prev" href="pulling-changes-from-the-upstream-git-pull.html">Pulling Changes from the Upstream (Git Pull)</a><a class="navigation-links__next" href="handling-lf-and-crlf-line-endings.html">Handling LF and CRLF Line Endings</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content"><div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d651916e323"></a><a href="committing-changes-to-a-local-git-repository.html"><span>Committing Changes to a Local Git Repository</span></a></li><li class="list__item"><a name="d651916e326"></a><a href="rebasing-branches.html"><span>Rebasing Branches</span></a></li><li class="list__item"><a name="d651916e330"></a><a href="merging-deleting-and-comparing-branches.html"><span>Merging, Deleting, and Comparing Branches</span></a></li><li class="list__item"><a name="d651916e335"></a><a href="version-control-with-webstorm.html"><span>Version Control with WebStorm</span></a></li></ul></div><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d651916e342"></a><a href="version-control-reference.html"><span>Version Control Reference</span></a></li><li class="list__item"><a name="d651916e344"></a><a href="push-dialog-2.html"><span>Push Dialog</span></a></li><li class="list__item"><a name="d651916e346"></a><a href="push-rejected-dialog-git.html"><span>Push Rejected Dialog (Git)</span></a></li></ul></div><div class="seealso__col"><h3>Concepts:</h3><ul class="list"><li class="list__item"><a name="d651916e317"></a><a href="version-control-with-webstorm-2.html"><span>Version Control with WebStorm</span></a></li></ul></div><div class="seealso__col"><h3>External Links:</h3><ul class="list"><li class="list__item"><a name="d651916e351"></a><a href="http://schacon.github.com/git/git-push.html" data-external="true"><span>http://schacon.github.com/git/git-push.html</span></a></li><li class="list__item"><a name="d651916e353"></a><a href="http://gitref.org/remotes/#push" data-external="true"><span>http://gitref.org/remotes/#push</span></a></li><li class="list__item"><a name="d651916e355"></a><a href="http://schacon.github.com/git/git-merge.html" data-external="true"><span>http://schacon.github.com/git/git-merge.html</span></a></li><li class="list__item"><a name="d651916e357"></a><a href="http://gitref.org/branching/#merge" data-external="true"><span>http://gitref.org/branching/#merge</span></a></li><li class="list__item"><a name="d651916e359"></a><a href="http://schacon.github.com/git/git-rebase.html" data-external="true"><span>http://schacon.github.com/git/git-rebase.html</span></a></li><li class="list__item"><a name="d651916e362"></a><a href="http://schacon.github.com/git/git-clean.html" data-external="true"><span>http://schacon.github.com/git/git-clean.html</span></a></li></ul></div></div></section><div class="last-modified">Last modified: 11 July 2016 </div></article><div id="disqus_thread"></div></div></section></main></div><script src="/help/app/app.js"></script></body></html>

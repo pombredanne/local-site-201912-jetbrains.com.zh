@@ -1,0 +1,47 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta class="swiftype" name="product" data-type="string" content="/idea/2016.3/"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><meta charset="UTF-8"><meta name="robots" content="noindex"><title>IntelliJ IDEA 2016.3 Help :: Replace Constructor with Factory Method</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="procedures.refactoring.replaceConstructorWithFactoryMethod"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-swiftype-index="false"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.3 Help</h3><div class="shortcuts-switcher" data-swiftype-index="false"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Windows/Linux Default</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWin</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">Mac OS X</option><option data-group="secondary" value="eclipse_mac_os_x">Eclipse (Mac OS X)</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (Mac OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper (Mac OS X)</option><option data-group="secondary" value="emacs">Emacs (Mac OS X)</option></select></div><div class="panel-trigger" data-swiftype-index="false"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="replace-inheritance-with-delegation.html">Replace Inheritance with Delegation</a></div><h1>Replace Constructor with Factory Method</h1><a name="d920629e3"></a><p>The
+                <a name="d920629e5"></a><span class="control">Replace Constructor With Factory Method</span>
+                refactoring allows you to hide a
+                constructor and replace it with a static method which returns a new instance of a class.
+            </p><a name="d920629e9"></a><h2>Example</h2><table class="              _layout-fixed" width="100%" id="d920629e12"><thead><tr id="d920629e14" class="ijRowHead"><a name="d920629e14"></a><th width="50%"><a name="d920629e16"></a>Before</th><th width="50%"><a name="d920629e19"></a>After</th></tr></thead><tbody><tr id="d920629e23" class="ijRowOdd"><a name="d920629e23"></a><td><a name="d920629e25"></a>
+<a name="d920629e27"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="c1">// File Class.java</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Class</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="nf">Class</span><span class="o">(</span><span class="n">String</span> <span class="n">s</span><span class="o">)</span> <span class="o">{</span>
+        <span class="o">...</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">// File AnotherClass.java</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AnotherClass</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">method</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">Class</span> <span class="n">aClass</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Class</span><span class="o">(</span><span class="s">&quot;string&quot;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></div>
+				     </td><td><a name="d920629e31"></a>
+<a name="d920629e33"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="c1">// File Class.java</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Class</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nf">Class</span><span class="o">(</span><span class="n">String</span> <span class="n">s</span><span class="o">)</span> <span class="o">{</span>
+        <span class="o">...</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="nf">createClass</span><span class="o">(</span><span class="n">String</span> <span class="n">s</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="n">Class</span><span class="o">(</span><span class="n">s</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">// File AnotherClass.java</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AnotherClass</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">method</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">Class</span> <span class="n">aClass</span> <span class="o">=</span> <span class="n">Class</span><span class="o">.</span><span class="na">createClass</span><span class="o">(</span><span class="s">&quot;string&quot;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></div>
+				     </td></tr></tbody></table><a name="d920629e39"></a><a name="dynaProc0"></a><section class="procedure-steps"><h2>To replace a constructor with a factory method</h2><ol class=".list _decimal"><li class="list__item">Select the class constructor.</li><li class="list__item">Open <a name="d920629e46"></a><a href="replace-constructor-with-factory-method-dialog.html"><span>Replace Constructor With Factory Method dialog</span></a> by choosing
+                <a name="d920629e49"></a><span class="menupath">Refactor | Replace Constructor With Factory Method</span> on the main menu or
+                on tne context menu of the selection.</li><li class="list__item">In the <a name="d920629e55"></a><span class="control">Factory method name</span> field, specify the name for the factory method.</li><li class="list__item">In the <a name="d920629e61"></a><span class="control">In (fully qualified name)</span> field, specify the class, where the method should be created.</li><li class="list__item">To review the intended changes and make final corrections prior to the refactoring ,
+                click <a name="d920629e67"></a><span class="control">Preview</span>. To apply the changes immediately, click <a name="d920629e70"></a><span class="control">Refactor</span>.</li></ol></section><div class="navigation-links _bottom"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="replace-inheritance-with-delegation.html">Replace Inheritance with Delegation</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content">```
+                <div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d920629e79"></a><a href="replace-constructor-with-factory-method-dialog.html"><span>Replace Constructor with Factory Method Dialog</span></a></li></ul></div></div></section><div class="last-modified" data-swiftype-index="false">Last modified: 21 March 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

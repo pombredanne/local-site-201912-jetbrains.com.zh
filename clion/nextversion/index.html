@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+                                            
+        <!-- Error reporting -->
+<script>(function(){
+  window.reportError = function(msg, file, line, col, err, isUnhandledRejection){};
+  var prevOnError = window.onerror;
+  var onError = function(msg, file, line, col, err) {
+    reportError(msg, file, line, col, err, false);
+    prevOnError && prevOnError.apply(window, arguments);
+    return false;
+  };
+  window.onerror = onError;
+  // Setup reporting for unhandled Promise rejection errors
+  window.addEventListener("unhandledrejection", function(e) {
+    if (!e.reason) return;
+    var l = getSrcLocation(e.reason);
+    reportError(e.reason.message, l.file, l.line, l.col, e.reason, true);
+  });
+  // Setup reporting for console.error and console.warn calls
+  patchConsole('error');
+  patchConsole('warn');
+  // Utility functions
+  function patchConsole(fnName) {
+    var fn = console[fnName];
+    console[fnName] = function() {
+      fn.apply(console, arguments);
+      var l; try {
+        throw new Error('_');
+      } catch (err) {
+        l = getSrcLocation(err, 1);
+      }
+      var msg = 'console.' + fnName + ': ' + Array.prototype.join.call(arguments, ' ');
+      reportError(msg, l.file, l.line, l.col, undefined, false);
+    };
+  }
+  function getSrcLocation(err, sd) {
+    var s = err && err.stack;
+    var l = s && s.split("\n")[1 + (sd|0)];
+    var r = l && (/^\s*at [^(]*\((.*?):(\d+)(:\d+)?\)$/.exec(l) || /^\s*at (.*?):(\d+)(:\d+)?$/.exec(l));
+    return r ? {file: r[1], line: r[2], col: r[3]} : {};
+  }
+})();</script>
+<!-- Error reporting -->        <!-- Google Tag Manager -->
+<script>(function() {
+  // Initialize Tag Manager queue
+  window.dataLayer = window.dataLayer || [];
+  window.gtmLoaded = false;
+  // Setup reporting for errors that occurred before Tag Manager initialized
+  var prevReportError = window.reportError;
+  var reportError = function(msg, file, line, col, err, isUnhandledRejection) {
+    if (!window.gtmLoaded || isUnhandledRejection) {
+      // Reproduce the behavior of the Tag Manager error handler
+      window.dataLayer.push(makeEvt(msg, file, line));
+    }
+    prevReportError && prevReportError.apply(window, arguments);
+  };
+  window.reportError = reportError;
+  // Utility functions
+  function makeEvt(msg, file, line) {
+    return {
+      event: "gtm.pageError", "gtm.errorMessage": msg,
+      "gtm.errorUrl": file, "gtm.errorLineNumber": line
+    };
+  }
+})();</script>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;j.addEventListener(
+    'load', function(){window.gtmLoaded=true});f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5P98');</script>
+<!-- End Google Tag Manager -->        <!-- Sentry -->
+<script>
+    (function() {
+        window.sentryLoaded = false;
+        window.errorsForSentry = [];
+        var prevReportError = window.reportError;
+        var reportError = function(
+            msg,
+            file,
+            line,
+            col,
+            err,
+            isUnhandledRejection
+        ) {
+            if (!window.sentryLoaded) {
+                window.errorsForSentry.push(err);
+            }
+            prevReportError && prevReportError.apply(window, arguments);
+        };
+        window.reportError = reportError;
+    })();
+</script>
+<script>
+    window.sentryLoad = function() {
+        window.sentryLoaded = true;
+        Sentry.init({
+            dsn: 'https://1adb2a61713144eda0786e5af50ddc51@sentry.io/1423069',
+            release:
+                "jetbrainscom@a6ccaa6ddb",
+            beforeSend: function(event) {
+                Object.keys(event).forEach(function(key) {
+                    var value = event[key];
+                    if (isEmail(value)) {
+                        delete event[key];
+                    }
+                });
+                return event;
+            }
+        });
+        Sentry.configureScope(function(scope) {
+            scope.setTag('page_locale', 'en-us');
+            scope.setTag('browser.locale', getPageLocale());
+
+            scope.setTag('http.urlFull', location.href);
+            var protocol = location.protocol || '';
+            //omit `:` from location.protocol string
+            var protocolString = protocol.substring(0, protocol.length - 1);
+
+            scope.setTag('http.protocol', protocolString);
+
+            scope.setTag('http.hostname', location.hostname);
+
+            var search = location.search || '';
+            //omit ? from location.search string
+            var searchString = search.substr(1);
+            if (searchString !== '') {
+                scope.setTag('http.query', searchString || '1');
+            }
+            var hash = location.hash || '';
+            //omit # from location.hash string
+            var hashString = hash.substr(1);
+            if (hashString !== '') {
+                scope.setTag('http.fragment', hashString);
+            }
+        });
+        window.errorsForSentry.forEach(Sentry.captureException);
+
+        function getPageLocale() {
+            return (
+                (navigator.languages && navigator.languages[0]) ||
+                navigator.language
+            );
+        }
+        function isEmail(value) {
+            var emailRegex = /[\+\-\_\.a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+\.[a-zA-Z0-9]+/g;
+            return emailRegex.test(value);
+        }
+    };
+</script>
+<script src="https://browser.sentry-cdn.com/5.7.1/bundle.min.js" crossorigin="anonymous" onload="sentryLoad()" async></script>
+<!-- End Sentry -->    
+                <title>What's New in CLion 2019.3</title>
+    
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, maximum-scale=1">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#000000">
+<meta name="apple-mobile-web-app-title" content="JetBrains">
+<meta name="application-name" content="JetBrains">
+<meta name="msapplication-TileColor" content="#000000">
+<meta name="theme-color" content="#000000">    <link rel="canonical" href="https://www.jetbrains.com/clion/whatsnew/" />    <!-- .61-->
+        <meta class="local" content="New in CLion 2019.3: Ninja generator support, performance improvements, code coverage, and support for C++20's Concepts" name="description"><meta class="local" content="http://resources.jetbrains.com/storage/products/clion/img/meta/CL_2019.3@2x.png" name="image"><meta class="local" content="summary_large_image" name="twitter:card"><meta class="local" content="@clion_ide" name="twitter:site"><meta class="local" content="Meet CLion 2019.3" name="twitter:title"><meta class="local" content="New in CLion 2019.3: Ninja generator support, performance improvements, code coverage, and support for C++20's Concepts" name="twitter:description"><meta class="local" content="@clion_ide" name="twitter:creator"><meta class="local" content="http://resources.jetbrains.com/storage/products/clion/img/meta/CL_2019.3@2x.png" name="twitter:image:src"><meta class="local" content="Platforms:" name="twitter:label1"><meta class="local" content="Windows, macOS, Linux" name="twitter:data1"><meta class="local" content="Meet CLion 2019.3" itemprop="name"><meta class="local" content="New in CLion 2019.3: Ninja generator support, performance improvements, code coverage, and support for C++20's Concepts" itemprop="description"><meta class="local" content="http://resources.jetbrains.com/storage/products/clion/img/meta/CL_2019.3@2x.png" itemprop="image">
+        <link rel="alternate" hreflang="x-default" href="https://www.jetbrains.com/clion/whatsnew/" />
+
+                        <link rel="alternate" hreflang="en" href="https://www.jetbrains.com/clion/whatsnew/" />
+                                <link rel="alternate" hreflang="de" href="https://www.jetbrains.com/de-de/clion/whatsnew/" />
+                                <link rel="alternate" hreflang="es" href="https://www.jetbrains.com/es-es/clion/whatsnew/" />
+                                <link rel="alternate" hreflang="fr" href="https://www.jetbrains.com/fr-fr/clion/whatsnew/" />
+                                <link rel="alternate" hreflang="ja" href="https://www.jetbrains.com/ja-jp/clion/whatsnew/" />
+                                <link rel="alternate" hreflang="ko" href="https://www.jetbrains.com/ko-kr/clion/whatsnew/" />
+                                <link rel="alternate" hreflang="ru" href="https://www.jetbrains.com/ru-ru/clion/whatsnew/" />
+                                <link rel="alternate" hreflang="zh-CN" href="https://www.jetbrains.com/zh-cn/clion/whatsnew/" />
+                                            <link rel="alternate" hreflang="x-klingon" href="https://www.jetbrains.com/tl-aa/clion/whatsnew/" />
+            
+    
+    
+        
+    
+    
+    <script>
+        var current_lang = 'en-us';
+                                    var i18n_info = {"current_lang": "en-us", "languages": [{"canonical": "en", "code": "en-us", "label": "English", "page_translated": true, "url": "/clion/whatsnew/"}, {"canonical": "de", "code": "de-de", "label": "Deutsch", "page_translated": true, "url": "/de-de/clion/whatsnew/"}, {"canonical": "es", "code": "es-es", "label": "Espa\u00f1ol", "page_translated": true, "url": "/es-es/clion/whatsnew/"}, {"canonical": "fr", "code": "fr-fr", "label": "Fran\u00e7ais", "page_translated": true, "url": "/fr-fr/clion/whatsnew/"}, {"canonical": "ja", "code": "ja-jp", "label": "\u65e5\u672c\u8a9e", "page_translated": true, "url": "/ja-jp/clion/whatsnew/"}, {"canonical": "ko", "code": "ko-kr", "label": "\ud55c\uad6d\uc5b4", "page_translated": true, "url": "/ko-kr/clion/whatsnew/"}, {"canonical": "ru", "code": "ru-ru", "label": "\u0420\u0443\u0441\u0441\u043a\u0438\u0439", "page_translated": true, "url": "/ru-ru/clion/whatsnew/"}, {"canonical": "zh-CN", "code": "zh-cn", "label": "\u7b80\u4f53\u4e2d\u6587", "page_translated": true, "url": "/zh-cn/clion/whatsnew/"}, {"canonical": "pt-BR", "code": "pt-br", "label": "Portugu\u00eas do Brasil", "page_translated": false, "url": "/pt-br/clion/whatsnew/"}, {"canonical": "x-klingon", "code": "tl-aa", "label": "tlhIngan Hol", "page_translated": true, "url": "/tl-aa/clion/whatsnew/"}]};
+                            var navigationMenu = {"primary": {"id": "main_v2", "items": [{"id": "tools", "title": "Tools", "descriptionTitle": "Toolbox App", "descriptionLogoId": "toolbox", "descriptionLink": "Learn more", "descriptionUrl": "/toolbox-app/", "description": "Manage your tools the easy way", "src": "/img/banners-menu-main/toolbox-vertical.png", "horisontalSrc": "/img/banners-menu-main/toolbox-horisontal.png", "bgColor": "#3E0598", "isVisible": true, "hasCategories": true, "items": [{"title": "IDEs", "items": [{"isActive": false, "id": "appcode", "title": "AppCode", "url": "/objc/", "logoLeftActionId": "appcode", "items": [], "cleaned_url": "/objc/"}, {"isActive": false, "id": "clion", "title": "CLion", "url": "/clion/", "logoLeftActionId": "clion", "items": [], "cleaned_url": "/clion/"}, {"isActive": false, "id": "datalore", "title": "Datalore", "url": "https://datalore.io/", "isExternalLink": true, "logoLeftActionId": "datalore", "items": [], "cleaned_url": "https://datalore.io/"}, {"isActive": false, "id": "datagrip", "title": "DataGrip", "url": "/datagrip/", "logoLeftActionId": "datagrip", "items": [], "cleaned_url": "/datagrip/"}, {"isActive": false, "id": "goland", "title": "GoLand", "url": "/go/", "logoLeftActionId": "goland", "items": [], "cleaned_url": "/go/"}, {"isActive": false, "id": "idea", "title": "IntelliJ IDEA", "url": "/idea/", "logoLeftActionId": "intellij-idea", "items": [], "cleaned_url": "/idea/"}, {"isActive": false, "id": "phpstorm", "title": "PhpStorm", "url": "/phpstorm/", "logoLeftActionId": "phpstorm", "items": [], "cleaned_url": "/phpstorm/"}, {"isActive": false, "id": "pycharm", "title": "PyCharm", "url": "/pycharm/", "logoLeftActionId": "pycharm", "items": [], "cleaned_url": "/pycharm/"}, {"isActive": false, "id": "rider", "title": "Rider", "url": "/rider/", "logoLeftActionId": "rider", "items": [], "cleaned_url": "/rider/"}, {"isActive": false, "id": "rubymine", "title": "RubyMine", "url": "/ruby/", "logoLeftActionId": "rubymine", "items": [], "cleaned_url": "/ruby/"}, {"isActive": false, "id": "webstorm", "title": "WebStorm", "url": "/webstorm/", "logoLeftActionId": "webstorm", "items": [], "cleaned_url": "/webstorm/"}, {"isActive": false, "id": "toolbox", "type": "special", "title": "Toolbox App", "url": "/toolbox-app/", "logoLeftId": "toolbox", "description": "A control panel for your tools and projects", "items": [], "cleaned_url": "/toolbox-app/"}]}, {"title": ".NET & VISUAL STUDIO", "items": [{"isActive": false, "id": "resharper", "title": "ReSharper", "url": "/resharper/", "logoLeftActionId": "resharper", "items": [], "cleaned_url": "/resharper/"}, {"isActive": false, "id": "rider", "title": "Rider", "url": "/rider/", "logoLeftActionId": "rider", "items": [], "cleaned_url": "/rider/"}, {"isActive": false, "id": "resharper-cpp", "title": "ReSharper C++", "url": "/resharper-cpp/", "logoLeftActionId": "resharper-cpp", "items": [], "cleaned_url": "/resharper-cpp/"}, {"isActive": false, "id": "dotcover", "title": "dotCover", "url": "/dotcover/", "logoLeftActionId": "dotcover", "items": [], "cleaned_url": "/dotcover/"}, {"isActive": false, "id": "dotmemory", "title": "dotMemory", "url": "/dotmemory/", "logoLeftActionId": "dotmemory", "items": [], "cleaned_url": "/dotmemory/"}, {"isActive": false, "id": "dotpeek", "title": "dotPeek", "url": "/decompiler/", "logoLeftActionId": "dotpeek", "items": [], "cleaned_url": "/decompiler/"}, {"isActive": false, "id": "dottrace", "title": "dotTrace", "url": "/profiler/", "logoLeftActionId": "dottrace", "items": [], "cleaned_url": "/profiler/"}]}, {"title": "TEAM TOOLS", "items": [{"isActive": false, "id": "teamcity", "title": "TeamCity", "url": "/teamcity/", "logoLeftActionId": "teamcity", "items": [], "cleaned_url": "/teamcity/"}, {"isActive": false, "id": "upsource", "title": "Upsource", "url": "/upsource/", "logoLeftActionId": "upsource", "items": [], "cleaned_url": "/upsource/"}, {"isActive": false, "id": "youtrack", "title": "YouTrack", "url": "/youtrack/", "logoLeftActionId": "youtrack", "items": [], "cleaned_url": "/youtrack/"}, {"isActive": false, "id": "hub", "title": "Hub", "url": "/hub/", "logoLeftActionId": "hub", "items": [], "cleaned_url": "/hub/"}]}, {"title": "PLUGIN MARKETPLACE", "items": [{"isActive": false, "id": "bigdata", "title": "Big Data Tools", "url": "https://plugins.jetbrains.com/plugin/12494-big-data-tools", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/plugin/12494-big-data-tools"}, {"isActive": false, "id": "rustsupport", "title": "Rust", "url": "https://plugins.jetbrains.com/plugin/8182-rust", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/plugin/8182-rust"}, {"isActive": false, "id": "scalaplugin", "title": "Scala", "url": "https://plugins.jetbrains.com/plugin/1347-scala", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/plugin/1347-scala"}, {"isActive": false, "id": "idethemes", "title": "IDE Themes", "url": "https://plugins.jetbrains.com/search?tags=Theme", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/search?tags=Theme"}, {"isActive": false, "id": "plugins", "title": "All Plugins", "url": "https://plugins.jetbrains.com/", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/"}]}, {"title": "EDUCATION", "items": [{"isActive": false, "id": "pycharm-edu", "title": "PyCharm Edu", "url": "/education/", "urlHash": "#lang=python&role=learner", "logoLeftActionId": "pycharm-edu", "items": [], "cleaned_url": "/education/"}, {"isActive": false, "id": "idea-edu", "title": "IntelliJ IDEA Edu", "url": "/education/", "urlHash": "#lang=java&role=learner", "logoLeftActionId": "intellij-idea", "items": [], "cleaned_url": "/education/"}, {"isActive": false, "id": "jb-academy", "title": "JB Academy", "url": "/academy/", "items": [], "cleaned_url": "/academy/"}]}]}, {"id": "languages", "title": "Languages", "descriptionTitle": "Kotlin/Everywhere", "descriptionLogoId": "header-kotlin-everywhere", "descriptionLink": "Join in!", "descriptionUrl": "//everywhere.kotlinlang.org", "description": "A worldwide event series for learning the best Kotlin practices on all platforms", "descriptionBig": true, "src": "/img/banners-menu-main/kotlin-vertical.png", "horisontalSrc": "/img/banners-menu-main/kotlin-horisontal.png", "bgColor": "#D6721C", "isExternalLink": true, "isVisible": true, "hasCategories": false, "items": [{"isActive": false, "id": "kotlin", "title": "Kotlin", "url": "https://kotlinlang.org/", "isExternalLink": true, "logoLeftId": "header-kotlin-grayscale", "logoLeftActionId": "kotlin", "logoLeftSize": "50", "description": "Programming language \n for JVM & Android", "items": [], "cleaned_url": "https://kotlinlang.org/"}, {"isActive": false, "id": "mps", "title": "MPS", "url": "/mps/", "logoLeftId": "header-mps-grayscalse", "logoLeftActionId": "mps", "logoLeftSize": "50", "description": "Create your own domain-specific language", "items": [], "cleaned_url": "/mps/"}]}, {"id": "solutions", "title": "Solutions", "descriptionTitle": "JetBrains Academy", "descriptionLogoId": "academy-logo", "descriptionLink": "Join in!", "descriptionUrl": "/academy", "description": "An educational platform for future professionals", "src": "/img/banners-menu-main/academy-vertical.png", "horisontalSrc": "/img/banners-menu-main/academy-horisontal.png", "bgColor": "#53288E", "hasCategories": false, "isVisible": true, "items": [{"isActive": false, "title": "C++ Tools", "url": "/cpp/", "logoLeftId": "header-cpp-grayscale", "logoLeftActionId": "header-cpp", "description": "Tools for C/C++ development \nfor any platform", "items": [], "cleaned_url": "/cpp/"}, {"isActive": false, "title": "For Business", "url": "/store/business/", "logoLeftId": "header-for-business-grayscale", "logoLeftActionId": "header-for-business", "description": "Wide range of tools. \nAll major technologies covered", "items": [], "cleaned_url": "/store/business/"}, {"isActive": false, "title": "Game Development", "url": "/gamedev/", "logoLeftId": "header-gamedev-grayscale", "logoLeftActionId": "header-gamedev", "description": "Tools for game development \nfor any platform", "items": [], "cleaned_url": "/gamedev/"}, {"isActive": false, "title": "DevOps", "url": "/devops/", "logoLeftId": "header-devops-grayscale", "logoLeftActionId": "header-devops", "description": "Tools and integrations \nfor any infrastructure", "items": [], "cleaned_url": "/devops/"}, {"isActive": false, "title": "Education", "url": "/education/", "logoLeftId": "header-education-grayscale", "logoLeftActionId": "header-education", "description": "Products to learn and teach programming", "items": [], "cleaned_url": "/education/"}]}, {"id": "support", "title": "Support", "description": "Pricing and licensing for businesses and individuals", "descriptionTitle": "JetBrains Store", "descriptionLogoId": "header-store", "descriptionUrl": "/store/?fromMenu#edition=commercial", "descriptionLink": "visit store", "isVisible": true, "hasCategories": true, "items": [{"title": "CUSTOMERS", "items": [{"isActive": false, "title": "Sales Support", "url": "/support/sales/", "description": "Orders, payments", "items": [], "cleaned_url": "/support/sales/"}, {"isActive": false, "title": "Product Support", "url": "/support/", "description": "Tech support, documentation", "items": [], "cleaned_url": "/support/"}]}, {"title": "COMMUNITY PROGRAMS", "items": [{"isActive": false, "title": "Education", "url": "/community/education/", "description": "Students, classrooms, training", "items": [], "cleaned_url": "/community/education/"}, {"isActive": false, "title": "Open Source", "url": "/community/opensource/", "description": "Projects support", "items": [], "cleaned_url": "/community/opensource/"}, {"isActive": false, "title": "Sponsorship", "url": "/community/support/", "description": "User groups, events, technology experts", "items": [], "cleaned_url": "/community/support/"}]}]}, {"id": "company", "title": "Company", "isVisible": true, "hasCategories": true, "items": [{"title": "INITIATIVES", "items": [{"isActive": false, "title": "Open Source", "url": "/opensource/", "description": "Projects, contributions", "items": [], "cleaned_url": "/opensource/"}, {"isActive": false, "title": "Research", "url": "/research/", "description": "Market, Scientific", "items": [], "cleaned_url": "/research/"}]}, {"title": "COMPANY", "items": [{"isActive": false, "title": "About", "url": "/company/", "description": "People, customers, awards", "items": [], "cleaned_url": "/company/"}, {"isActive": false, "title": "Brand Assets", "url": "/company/brand/", "description": "Guidelines, logos", "items": [], "cleaned_url": "/company/brand/"}, {"isActive": false, "title": "Careers", "url": "/careers/apply/", "description": "Jobs, internships", "items": [], "cleaned_url": "/careers/apply/"}, {"isActive": false, "title": "Events", "url": "/company/events/", "description": "Conferences, meetups", "items": [], "cleaned_url": "/company/events/"}, {"isActive": false, "title": "Contacts", "url": "/company/contacts/", "description": "Partners, resellers, Kotlin training", "items": [], "cleaned_url": "/company/contacts/"}]}, {"title": "RESOURCES", "items": [{"isActive": false, "title": "Newsletters", "url": "/resources/newsletters/", "items": [], "cleaned_url": "/resources/newsletters/"}, {"isActive": false, "title": "Webinars", "url": "/resources/webinars/", "items": [], "cleaned_url": "/resources/webinars/"}, {"isActive": false, "title": "Early Access", "url": "/resources/eap/", "items": [], "cleaned_url": "/resources/eap/"}, {"isActive": false, "title": "Blog", "url": "//blog.jetbrains.com/", "isExternalLink": true, "items": [], "cleaned_url": "//blog.jetbrains.com/"}]}]}, {"isActive": false, "id": "store", "url": "/store/?fromNavMenu", "title": "Store", "isVisible": true, "hasCategories": false, "items": [], "cleaned_url": "/store/?fromNavMenu"}]}, "secondary": {"isActive": true, "id": "product_clion", "logoId": "clion", "url": "/clion/", "title": "CLion", "items": [{"isActive": true, "title": "What's New", "url": "/clion/whatsnew/", "items": [], "cleaned_url": "/clion/whatsnew/"}, {"isActive": false, "title": "Features", "url": "/clion/features/", "items": [{"isActive": false, "title": "Easy start", "url": "/clion/features/start-your-project.html", "items": [], "cleaned_url": "/clion/features/start-your-project.html"}, {"isActive": false, "title": "Smart editor", "url": "/clion/features/smart-editor.html", "items": [], "cleaned_url": "/clion/features/smart-editor.html"}, {"isActive": false, "title": "Search and navigation", "url": "/clion/features/navigation-and-usages-searches.html", "items": [], "cleaned_url": "/clion/features/navigation-and-usages-searches.html"}, {"isActive": false, "title": "Code generation and refactorings", "url": "/clion/features/code-generation-and-refactorings.html", "items": [], "cleaned_url": "/clion/features/code-generation-and-refactorings.html"}, {"isActive": false, "title": "Code analysis", "url": "/clion/features/code-analysis.html", "items": [], "cleaned_url": "/clion/features/code-analysis.html"}, {"isActive": false, "title": "Editor customization", "url": "/clion/features/editor-customization.html", "items": [], "cleaned_url": "/clion/features/editor-customization.html"}, {"isActive": false, "title": "Run and debug", "url": "/clion/features/run-and-debug.html", "items": [], "cleaned_url": "/clion/features/run-and-debug.html"}, {"isActive": false, "title": "Embedded Development", "url": "/clion/features/embedded-dev.html", "items": [], "cleaned_url": "/clion/features/embedded-dev.html"}, {"isActive": false, "title": "Dynamic analysis", "url": "/clion/features/dynamic-analysis.html", "items": [], "cleaned_url": "/clion/features/dynamic-analysis.html"}, {"isActive": false, "title": "CMake support", "url": "/clion/features/cmake-support.html", "items": [], "cleaned_url": "/clion/features/cmake-support.html"}, {"isActive": false, "title": "Unit testing", "url": "/clion/features/unit-testing.html", "items": [], "cleaned_url": "/clion/features/unit-testing.html"}, {"isActive": false, "title": "Documentation", "url": "/clion/features/code-documentation.html", "items": [], "cleaned_url": "/clion/features/code-documentation.html"}, {"isActive": false, "title": "VCS integration and local history", "url": "/clion/features/vcs-and-local-history.html", "items": [], "cleaned_url": "/clion/features/vcs-and-local-history.html"}, {"isActive": false, "title": "Terminal, Vim mode and others", "url": "/clion/features/terminal.html", "items": [], "cleaned_url": "/clion/features/terminal.html"}, {"isActive": false, "title": "Supported languages", "url": "/clion/features/supported-languages.html", "items": [], "cleaned_url": "/clion/features/supported-languages.html"}], "cleaned_url": "/clion/features/"}, {"isActive": false, "title": "Learning Center", "url": "/clion/learning-center/", "items": [], "cleaned_url": "/clion/learning-center/"}, {"isActive": false, "title": "Buy", "url": "/clion/buy/", "items": [], "cleaned_url": "/clion/buy/"}, {"isActive": false, "title": "Download", "url": "/clion/download/", "type": "button", "items": [], "cleaned_url": "/clion/download/"}], "cleaned_url": "/clion/"}};
+        
+        var is_layout_adaptive = false;
+        
+        var disable_language_picker = false;
+        
+        var english_only_url_prefixes = [];
+            </script>
+    
+            <script></script>
+    
+        
+    
+            <link href="/_assets/common.d44d81f300d3bff87efe.css" rel="stylesheet" type="text/css">
+<link href="/_assets/default-page.fabf52db4bf34ea78af0.css" rel="stylesheet" type="text/css">
+<link href="/_assets/clion/whatsnew/index.entry.e6f802e1aa3146bbe33b.css" rel="stylesheet" type="text/css">
+        <script src="/_assets/common.34604685b633d15ae3ed.js" type="text/javascript"></script>
+<script src="/_assets/default-page.2e180fc15a6b94fe7fa3.js" type="text/javascript"></script>
+<script src="/_assets/clion/whatsnew/index.entry.1a7ef2cda6170fde6ab9.js" type="text/javascript"></script>
+    
+            <!-- Social Media tag Starts -->
+    <!-- Open Graph data -->
+            <meta property="og:title" content="What's New in CLion 2019.3"/>
+    
+                    <meta property="og:description" content="New in CLion 2019.3: Ninja generator support, performance improvements, code coverage, and support for C++20's Concepts"/>
+    <meta property="og:image" content="http://resources.jetbrains.com/storage/products/clion/img/meta/CL_2019.3@2x.png"/>
+
+    <meta property="og:site_name" content="JetBrains"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="https://www.jetbrains.com/clion/whatsnew/"/>
+    <!-- Social Media tag Ends -->
+</head>
+
+<body class="nojs  ">
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<script>
+/*! modernizr 3.2.0 (Custom Build) | MIT *
+ * http://modernizr.com/download/?-flexbox-flexboxtweener !*/
+!function(e,n,t){function r(e,n){return typeof e===n}function o(){var e,n,t,o,i,s,l;for(var f in v)if(v.hasOwnProperty(f)){if(e=[],n=v[f],n.name&&(e.push(n.name.toLowerCase()),n.options&&n.options.aliases&&n.options.aliases.length))for(t=0;t<n.options.aliases.length;t++)e.push(n.options.aliases[t].toLowerCase());for(o=r(n.fn,"function")?n.fn():n.fn,i=0;i<e.length;i++)s=e[i],l=s.split("."),1===l.length?Modernizr[l[0]]=o:(!Modernizr[l[0]]||Modernizr[l[0]]instanceof Boolean||(Modernizr[l[0]]=new Boolean(Modernizr[l[0]])),Modernizr[l[0]][l[1]]=o),C.push((o?"":"no-")+l.join("-"))}}function i(e,n){return!!~(""+e).indexOf(n)}function s(e){return e.replace(/([a-z])-([a-z])/g,function(e,n,t){return n+t.toUpperCase()}).replace(/^-/,"")}function l(e,n){return function(){return e.apply(n,arguments)}}function f(e,n,t){var o;for(var i in e)if(e[i]in n)return t===!1?e[i]:(o=n[e[i]],r(o,"function")?l(o,t||n):o);return!1}function a(e){return e.replace(/([A-Z])/g,function(e,n){return"-"+n.toLowerCase()}).replace(/^ms-/,"-ms-")}function u(){return"function"!=typeof n.createElement?n.createElement(arguments[0]):b?n.createElementNS.call(n,"http://www.w3.org/2000/svg",arguments[0]):n.createElement.apply(n,arguments)}function d(){var e=n.body;return e||(e=u(b?"svg":"body"),e.fake=!0),e}function p(e,t,r,o){var i,s,l,f,a="modernizr",p=u("div"),c=d();if(parseInt(r,10))for(;r--;)l=u("div"),l.id=o?o[r]:a+(r+1),p.appendChild(l);return i=u("style"),i.type="text/css",i.id="s"+a,(c.fake?c:p).appendChild(i),c.appendChild(p),i.styleSheet?i.styleSheet.cssText=e:i.appendChild(n.createTextNode(e)),p.id=a,c.fake&&(c.style.background="",c.style.overflow="hidden",f=_.style.overflow,_.style.overflow="hidden",_.appendChild(c)),s=t(p,e),c.fake?(c.parentNode.removeChild(c),_.style.overflow=f,_.offsetHeight):p.parentNode.removeChild(p),!!s}function c(n,r){var o=n.length;if("CSS"in e&&"supports"in e.CSS){for(;o--;)if(e.CSS.supports(a(n[o]),r))return!0;return!1}if("CSSSupportsRule"in e){for(var i=[];o--;)i.push("("+a(n[o])+":"+r+")");return i=i.join(" or "),p("@supports ("+i+") { #modernizr { position: absolute; } }",function(e){return"absolute"==getComputedStyle(e,null).position})}return t}function m(e,n,o,l){function f(){d&&(delete E.style,delete E.modElem)}if(l=r(l,"undefined")?!1:l,!r(o,"undefined")){var a=c(e,o);if(!r(a,"undefined"))return a}for(var d,p,m,h,y,v=["modernizr","tspan"];!E.style;)d=!0,E.modElem=u(v.shift()),E.style=E.modElem.style;for(m=e.length,p=0;m>p;p++)if(h=e[p],y=E.style[h],i(h,"-")&&(h=s(h)),E.style[h]!==t){if(l||r(o,"undefined"))return f(),"pfx"==n?h:!0;try{E.style[h]=o}catch(g){}if(E.style[h]!=y)return f(),"pfx"==n?h:!0}return f(),!1}function h(e,n,t,o,i){var s=e.charAt(0).toUpperCase()+e.slice(1),l=(e+" "+x.join(s+" ")+s).split(" ");return r(n,"string")||r(n,"undefined")?m(l,n,o,i):(l=(e+" "+S.join(s+" ")+s).split(" "),f(l,n,t))}function y(e,n,r){return h(e,t,t,n,r)}var v=[],g={_version:"3.2.0",_config:{classPrefix:"",enableClasses:!0,enableJSClass:!0,usePrefixes:!0},_q:[],on:function(e,n){var t=this;setTimeout(function(){n(t[e])},0)},addTest:function(e,n,t){v.push({name:e,fn:n,options:t})},addAsyncTest:function(e){v.push({name:null,fn:e})}},Modernizr=function(){};Modernizr.prototype=g,Modernizr=new Modernizr;var C=[],w="Moz O ms Webkit",x=g._config.usePrefixes?w.split(" "):[];g._cssomPrefixes=x;var S=g._config.usePrefixes?w.toLowerCase().split(" "):[];g._domPrefixes=S;var _=n.documentElement,b="svg"===_.nodeName.toLowerCase(),z={elem:u("modernizr")};Modernizr._q.push(function(){delete z.elem});var E={style:z.elem.style};Modernizr._q.unshift(function(){delete E.style}),g.testAllProps=h,g.testAllProps=y,Modernizr.addTest("flexbox",y("flexBasis","1px",!0)),Modernizr.addTest("flexboxtweener",y("flexAlign","end",!0)),o(),delete g.addTest,delete g.addAsyncTest;for(var P=0;P<Modernizr._q.length;P++)Modernizr._q[P]();e.Modernizr=Modernizr}(window,document);
+
+if (!Modernizr.flexbox && !Modernizr.flexboxtweener) {
+
+  var $body = $('body');
+
+  var nodesClasses = {
+    wrapper: 'not-supported-browser',
+    container: 'not-supported-browser__container',
+
+    title: 'not-supported-browser__title',
+    content: 'not-supported-browser__content',
+    logo: 'not-supported-browser__logo'
+  };
+
+  var nodes = {
+    wrapper: $('<div class="' + nodesClasses.wrapper + '"></div>'),
+    title: $('<div class="' + nodesClasses.title + '">Sorry, your browser is not fully supported</div>'),
+    content: $('<div class="' + nodesClasses.content + '">There may be some issues with pages layout in your current browser.<br/>Please use an alternate browser until we resolve the issues.<br/>Thank you.</div>'),
+    container: $('<div class="' + nodesClasses.container + '"></div>'),
+    logo: $('<div class="' + nodesClasses.logo + '"><svg class="sprite-img _jetbrains" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#jetbrains"></use></svg></div>')
+  };
+
+  $body.addClass('overflow-hidden');
+
+
+  nodes.content
+    .prepend(nodes.title)
+    .prepend(nodes.logo);
+
+  nodes.container
+    .append(nodes.content);
+
+  nodes.wrapper
+    .append(nodes.container)
+    .appendTo($body);
+}
+</script>
+<div class="page">
+                <div class="page__header">
+                <header class="menu-main header"  id="js-menu-main">
+    <div class="wt-container">
+        <div class="wt-row wt-row_nowrap wt-row_size_s wt-row_align-items_center">
+            <div class="wt-col-auto-fill">
+                <a href="/" class="menu-main__logo-link"><svg class="_jetbrains-simple sprite-img menu-main__logo" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#jetbrains-simple"></use></svg></a>
+            </div>
+            <div class="wt-col-inline wt-display-md-none menu-main-skeleton-text-1" style="min-width: 69px"></div>
+            <div class="wt-col-inline wt-display-md-none menu-main-skeleton-text-1" style="min-width: 81px"></div>
+            <div class="wt-col-inline wt-display-md-none menu-main-skeleton-text-1" style="min-width: 46px"></div>
+            <div class="wt-col-inline menu-main-skeleton-button"></div>
+            <div class="wt-col-inline menu-main-skeleton-button"></div>
+        </div>
+    </div>
+</header>
+
+
+
+  <div class="menu-second" id="js-menu-second">
+    <div class="wt-container">
+        <div id="js-menu-second-mobile-wrapper" class="wt-display-none">
+            <div id="js-menu-second-mobile" >
+                <div class="menu-second-mobile wt-row wt-row_size_m wt-row_align-items_center wt-row_justify_between">
+                    <div class="wt-col-inline menu-second-skeleton-text-2" style="max-width: 120px"></div>
+                    <div class="wt-col-inline menu-second-skeleton-button" style="max-width: 80px"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="js-menu-second-desktop" class="menu-second-desktop
+                       wt-row wt-row_size_0 wt-row_align-items_center">
+            <div class="wt-col-auto-fill">
+                <a class="menu-second-title-box"
+                   href="/clion/">
+                                            <span class="menu-second-title-box__logo jetbrains-logo">
+                            <svg class="_clion sprite-img" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#clion"></use></svg>
+                        </span>
+                    
+                    <span class="menu-second-title-box__title wt-h3">CLion</span>
+                </a>
+            </div>
+
+                            
+                                                        <a href="/clion/whatsnew/"
+                       class="wt-col-inline wt-text-2 wt-text-2_hardness_average menu-second__link
+                                                                wt-text-2_hardness_primary">
+                        What&#39;s New
+                                            </a>
+                                            
+                                                        <a href="/clion/features/"
+                       class="wt-col-inline wt-text-2 wt-text-2_hardness_average menu-second__link
+                                                                ">
+                        Features
+                                            </a>
+                                            
+                                                        <a href="/clion/learning-center/"
+                       class="wt-col-inline wt-text-2 wt-text-2_hardness_average menu-second__link
+                                                                ">
+                        Learning Center
+                                            </a>
+                                            
+                                                        <a href="/clion/buy/"
+                       class="wt-col-inline wt-text-2 wt-text-2_hardness_average menu-second__link
+                                                                ">
+                        Buy
+                                            </a>
+                                            
+                            
+                                                    
+                            <a href="/clion/download/"
+                   class="wt-col-inline menu-second__download-button wt-button wt-button_size_s wt-button_mode_primary">
+                    Download
+                </a>
+                    </div>
+
+    </div>
+</div>
+
+            </div>
+    
+    <div class="page__content ">
+        <nav class="js-add-side-toc"></nav>
+<div class="section-content _bg-medium no-padding-bottom">
+<div class="wt-container article-content">
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-10 wt-col-lg-12">
+<h1 class="_big">What's New in CLion</h1>
+<p class="sub-title">CLion <strong>2019.3</strong> speeds up code completion by adding a Clangd-based provider, eliminates various UI freezes, and introduces many other performance improvements. It enhances the integration with CMake, adding Ninja generator support among other things, and brings code coverage and WSL2 support. The debugger support has been significantly improved in lots of ways. And finally, support for C++20's Concepts has made it in including refactoring, navigation, and code completion.</p>
+<div class="button-group _align-left">
+<div class="button-with-note">
+<div class="button-dropdown js-button-dropdown">
+<a class="button button-dropdown__link" href="/clion/download/download-thanks.html">Download</a>
+<button class="button button-dropdown__action js-button-dropdown-action">.exe</button>
+<ul class="dropdown-link-list js-button-dropdown-content">
+<li><a class="dropdown-link-list__link" data-windows=".exe" href="/clion/download/download-thanks.html?platform=windows">Windows (.exe)</a></li>
+<li><a class="dropdown-link-list__link" data-windowszip=".win.zip" href="/clion/download/download-thanks.html?platform=windowsZip">Windows (.zip)</a></li>
+<li><a class="dropdown-link-list__link" data-mac=".dmg" href="/clion/download/download-thanks.html?platform=mac">macOS (.dmg)</a></li>
+<li><a class="dropdown-link-list__link" data-linux=".tar.gz" href="/clion/download/download-thanks.html?platform=linux">Linux (.tar.gz)</a></li>
+</ul>
+</div>
+<div class="button-with-note__note">Free 30-day trial</div>
+</div>
+<a class="button _icon-video js-popup" href="//www.youtube.com/watch?v=40qdZrvE9ek">Take a short tour</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section-content _bg-medium version-2019-3" id="v2019-3">
+<div class="wt-container article-content">
+<div class="wt-row wt-row_size_m version-label">
+<span class="version-label__text">2019.3 (Nov 28)</span>
+<span class="version-label__slope"></span>
+</div>
+<h2 data-title="Better IDE Performance" title="Better IDE Performance">Better IDE Performance</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-10">
+<p>This release of CLion is quality-targeted with lots of performance improvements made throughout. The key enhancements affect code completion, the Rename refactoring, optimizations for the Building/Updating symbols step, and the elimination of UI freezes. <a class="_external" href="//blog.jetbrains.com/clion/2019/09/clion-starts-2019-3-eap/">Learn more</a>.</p>
+</div>
+</div>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image js-carousel-dots _two-block-in-row _no-shadow">
+<div>
+<img alt="code completion LLVM" data-lazy="/clion/whatsnew/img/2019.3/code_completion_llvm.png">
+</div>
+<div>
+<img alt="code completion Eigen" data-lazy="/clion/whatsnew/img/2019.3/code_completion_eigen.png">
+</div>
+<div>
+<img alt="code completion Qt" data-lazy="/clion/whatsnew/img/2019.3/code_completion_qt.png">
+</div>
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">Clangd-based code completion</h3>
+<p>Clangd is now added to the list of code completion providers in CLion, which helped speed up the time for the first results to appear on many projects significantly. Check out the <a class="_external" href="//blog.jetbrains.com/clion/2019/09/clion-starts-2019-3-eap/#clangd_based_code_completion">detailed performance metrics</a> we’ve gathered.</p>
+</div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="refactoring" src="/clion/whatsnew/img/2019.3/rename_in_strings.png" width="455">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">Quicker Rename refactoring</h3>
+<p>The Rename refactoring in CLion is really powerful as it can rename not only code usages but also usages in string literals and comments. If you still want to rename only code usages, it’s now much faster as it can ask you to make this decision <em>before</em> the actual search. (To use this, turn <em>off</em> <span class="js-replace-for-mac" data-mac="Preferences | Editor | General | Refactorings | Enable in-place mode">Settings | Editor | General | Refactorings | Enable in-place mode</span>.)</p>
+</div>
+</div>
+</div>
+<h2 data-title="Ninja" title="Ninja">Ninja and other generators in CMake</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Ninja Gen" src="/clion/whatsnew/img/2019.3/ninja.png" width="455">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<p>Support for the new CMake File API lets CLion 2019.3 enable various CMake generators (requires CMake 3.15 or higher). Previously, only Makefiles were supported, now users can select Ninja, Xcode, Visual Studio, etc.</p>
+<p>This works for all platforms, in remote mode, and with WSL.</p>
+<p><a class="_external" href="//blog.jetbrains.com/clion/2019/10/clion-2019-3-eap-ninja-cmake-generators/">Learn more</a>
+</p></div>
+</div>
+</div>
+<h2 data-title="CMake Defaults" title="CMake Defaults">CMake defaults</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="CMake Defaults" src="/clion/whatsnew/img/2019.3/defaults.png" width="455">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<p>To simplify the configuration process for your new CLion projects, you can now configure one or more default CMake Profiles, which will be used for all your new projects. Use File | Other Settings | <span class="js-replace-for-mac" data-mac="Preferences for New Projects...">Settings for New Projects…</span></p>
+</div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-10">
+<div class="features-block">
+<p>Other CMake support improvements include:</p>
+<ul>
+<li>It’s now possible to reload CMake valid configurations even if some others are failing.</li>
+<li>CMake 3.15 is bundled in CLion 2019.3.</li>
+<li>If your compiler doesn’t support the <em>-fpch-preprocess</em> flag, your project will still be successfully loaded in CLion 2019.3. Check out the details in this <a class="_external" href="//blog.jetbrains.com/clion/2019/09/clion-2019-3-eap-and-2019-2-3-bug-fix-update/#loading_pch_flag">blog post</a>.</li>
+</ul>
+</div>
+</div>
+</div>
+<h2 data-title="Debugger" title="Debugger">Debugger</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">Remote GDB Server</h3>
+<p>If you want to debug an executable on a remote machine from a locally running CLion, you can now use the <em>Remote GDB Server</em> configuration. CLion will upload the executable and launch your program under gdbserver, so there’s no need to do it manually anymore. <a href="/help/clion/remote-gdb-server.html">Learn more</a>.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="remote gdb" src="/clion/whatsnew/img/2019.3/remote_gdb_config.png" width="455">
+</div>
+</div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="lldb_printers" src="/clion/whatsnew/img/2019.3/pretty_printers.png" width="455">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">LLDB 9 and better pretty printers</h3>
+<p>In CLion 2019.3, the bundled LLDB on macOS and Linux was updated to v9.0. Besides this, a major clean-up was performed in the bundled LLDB pretty printers, fixing a whole set of related issues. <a class="_external" href="//blog.jetbrains.com/clion/2019/10/clion-2019-3-eap-debugger-improvements/">See how libc++ and libstdcxx are now handled on macOS and Linux</a>.</p>
+</div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">Read .gdbinit/.lldbinit from the project root</h3>
+<p>If you want to customize the GDB/LLDB debugger behavior on a particular project, you can now do so in CLion, as it supports reading the settings file from the project root directory.</p>
+<p>Note that to enable this behavior, you have to explicitly allow it in your home file. See how to do this for <a class="_external" href="//youtrack.jetbrains.com/issue/CPP-17608">LLDB</a> and <a class="_external" href="//youtrack.jetbrains.com/issue/CPP-17541">GDB</a>.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="lldbinit" src="/clion/whatsnew/img/2019.3/lldbinit.png" width="455">
+</div>
+</div>
+</div>
+</div>
+<h2 data-title="C++20’s Concepts" title="C++20’s Concepts">C++20’s Concepts</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image js-carousel-dots _two-block-in-row _no-shadow">
+<div>
+<img alt="concepts completion" data-lazy="/clion/whatsnew/img/2019.3/concepts_chain.png">
+</div>
+<div>
+<img alt="concepts completion" data-lazy="/clion/whatsnew/img/2019.3/concepts_base.png">
+</div>
+<div>
+<img alt="concepts completion" data-lazy="/clion/whatsnew/img/2019.3/concepts_require.png">
+</div>
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<p>One of the biggest features coming in C++20 is definitely Concepts. By collaborating with the author of Concepts support in Clang, we’ve brought Concepts to CLion 2019.3. The support covers not only code parsing and highlighting (which is done by the Clangd-based language engine), but also comes with:</p>
+<ul>
+<li>The Unused Concept inspection.</li>
+<li>Code completion including completion for types constrained by <em>std::is_base_of&lt;MyBase, T&gt;</em> and <em>std::is_same&lt;Other, T&gt;</em>.</li>
+<li>The Rename refactoring.</li>
+<li>Go to Definition and Find Usages.</li>
+</ul>
+<p><a class="_external" href="//blog.jetbrains.com/clion/2019/11/cpp20-concepts-in-clion/">Learn more</a>.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Code analysis" title="Code analysis">Code Analysis</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="virtual call" src="/clion/whatsnew/img/2019.3/virtual_in_destructor.png" width="455">
+</div>
+<h3 class="features-block__title">Virtual functions called from constructors / destructors</h3>
+<p>To prevent situations where virtual functions access resources that are not yet initialized or have already been destroyed, CLion gets a new inspection which detects <em>virtual functions called from constructors or destructors</em>.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Spelling in Doxygen" src="/clion/whatsnew/img/2019.3/typo_doxygen.png" width="455">
+</div>
+<h3 class="features-block__title">Spell Checker</h3>
+<p>The Spell Checker is useful for keeping the code accurate and readable. CLion has had it for C/C++ code for a long time. In v2019.3 we’ve enabled it in CMake and Doxygen comments.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Code coverage" title="Code coverage">Code Coverage</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Coverage" src="/clion/whatsnew/img/2019.3/coverage.png" width="455">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<p>If you’ve ever asked the question, “Was this statement executed during the configuration run?”, that means you are looking for statements coverage measuring for your code. CLion 2019.3 has it thanks to the integration with <em>llvm-cov/gcov tools</em>.</p>
+<p>You can get it for unit tests run or a regular configuration run. The results are available in the Coverage tool window or via a color indication in the editor’s left gutter.</p>
+<p><a class="_external" href="//blog.jetbrains.com/clion/2019/10/clion-2019-3-eap-coverage-cmake-defaults-lldb/#code_coverage">Learn more</a>.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Editor" title="Editor">Editor</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Go to Header/Source" class="js-gif" data-gif-src="/clion/whatsnew/img/2019.3/goto_header_source.gif" src="/clion/whatsnew/img/2019.3/goto_header_source.png" width="455">
+</div>
+<h3 class="features-block__title">Go to Header/Source action</h3>
+<p>A new action to switch between header/source files was added. It’s more accurate and quicker for many C/C++ cases than Go to Related Symbol.</p>
+<p>If multiple options to navigate to are identified within 500 ms, CLion shows an interactive popup where new items are added and you can select where you want to navigate to.</p>
+<p>There is also a built-in mechanism to remap the shortcut from Go to Related Symbol to this new action, should you want to.</p>
+<a class="_external" href="//blog.jetbrains.com/clion/2019/11/clion-2019-3-eap-concepts-goto-header-source-lldb/#goto_header_source">Learn more.</a>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Microsoft" src="/clion/whatsnew/img/2019.3/microsoft_style.png" width="455">
+</div>
+<h3 class="features-block__title">Microsoft formatting and naming rules</h3>
+<p>In CLion, you can configure a set of formatting options and naming convention rules. Or, alternatively, you can inherit these settings from one of the predefined styles. In CLion 2019.3, we’ve added Microsoft’s predefined formatting and <a class="_external" href="//docs.microsoft.com/en-us/dotnet/standard/design-guidelines/naming-guidelines">naming style</a> to the list.</p>
+</div>
+</div>
+</div>
+<h2 data-title="WSL2" title="WSL2">WSL2</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="WSL2" src="/clion/whatsnew/img/2019.3/wsl_config.png" width="455">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<p>Windows Subsystem for Linux provides a convenient way to develop on Windows for Linux target platform. CLion natively supports the WSL environment and now comes with support for WSL version 2. The configuration process in CLion is completely the same for WSL v1 and WSL v2!</p>
+<p><a class="_external" href="//blog.jetbrains.com/clion/2019/10/clion-2019-3-eap-wsl2-lldb9/#wsl">Learn more</a>.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Rust" title="Rust">Rust plugin update</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Rust" src="/clion/whatsnew/img/2019.3/rust_update.png" width="455">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<p>One of the biggest updates for IntelliJ Rust is the initial support of <code>cfg</code> attributes. Now, the conditionally disabled blocks are grayed-out and excluded from resolve and code analysis. Among the supported <code>cfg</code> options are <code>unix</code>, <code>windows</code>, and <code>target_os</code>.</p>
+<p>The widely used quick-fix, <em>Auto-import</em> for unresolved symbols, now works automatically when you call <em>Implement members</em>, <em>Specify type explicitly</em>, <em>Add remaining patterns</em>, and other code generation actions.</p>
+<p>Other changes include Code Coverage for your Rust code, which has been a part of the plugin for a few releases already, handy interactive inlays for type hints, and <code>include!</code> macro support.</p>
+</div>
+</div>
+</div>
+<h2>Other changes</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-10">
+<div class="features-block">
+<ul>
+<li>VCS support: the Clone dialog (VCS | Get from Version control) was reworked. Now you can log in from the dialog, or if you’re already logged in, the IDE will instantly preview the lists of all repositories grouped by accounts or organizations.</li>
+<li>
+                                Some UI updates:
+                                <ul>
+<li>A new option to make the scrollbars more visible was added – <span class="js-replace-for-mac" data-mac="Preferences">Settings</span> | Appearance & Behavior | Appearance | Use contrast scrollbars.</li>
+<li>A lot of UI issues were addressed in the updated JetBrains Runtime.</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="wt-col-12">
+<div class="button-with-note">
+<div class="button-dropdown js-button-dropdown">
+<a class="button button-dropdown__link" href="/clion/download/download-thanks.html">Download</a>
+<button class="button button-dropdown__action js-button-dropdown-action">.exe</button>
+<ul class="dropdown-link-list js-button-dropdown-content">
+<li><a class="dropdown-link-list__link" data-windows=".exe" href="/clion/download/download-thanks.html?platform=windows">Windows (.exe)</a></li>
+<li><a class="dropdown-link-list__link" data-windowszip=".win.zip" href="/clion/download/download-thanks.html?platform=windowsZip">Windows (.zip)</a></li>
+<li><a class="dropdown-link-list__link" data-mac=".dmg" href="/clion/download/download-thanks.html?platform=mac">macOS (.dmg)</a></li>
+<li><a class="dropdown-link-list__link" data-linux=".tar.gz" href="/clion/download/download-thanks.html?platform=linux">Linux (.tar.gz)</a></li>
+</ul>
+</div>
+<div class="button-with-note__note">Free 30-day trial</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section-content _bg-medium version-2019-2" id="v2019-2">
+<div class="wt-container article-content">
+<div class="wt-row wt-row_size_m version-label">
+<span class="version-label__text">2019.2 (Jul 24)</span>
+<span class="version-label__slope"></span>
+</div>
+<h2 data-title="Embedded Development" title="Embedded Development">Embedded Development</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Debug with GDB Server" src="/clion/whatsnew/img/2019.2/debug_embedded.png" width="455">
+</div>
+<h3 class="features-block__title">On-Chip debugging with GDB Server</h3>
+<p>If it’s possible to debug on the microcontroller of your choice with a GDB Server, you can now do it from CLion using a special
+                            <em>Embedded GDB Server</em> Run/Debug configuration. It covers OpenOCD, ST-Link GDB Servers, Segger J-Link GDB Server, QEMU, and many other specific GDB Servers.</p>
+<p>Create a configuration, providing a path to GDB Server, arguments to run the server, and other appropriate settings, and you are all set and ready to debug on-chip from CLion!</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Peripherals" src="/clion/whatsnew/img/2019.2/embedded_peripherals.png" width="455">
+</div>
+<h3 class="features-block__title">Peripheral View for ARM Devices</h3>
+<p>When debugging on-chip, it’s crucial to have the ability to view the peripherals. In CLion, this view is now available for two types of Run/Debug configurations:
+                            <em>Embedded GDB Server</em> and <em>OpenOCD Download & Run</em>. In both cases, a Peripherals tab appears in the debug tool window when you start debugging. Load the appropriate
+                            <em>.svd</em> file for your board and select the active peripherals you need to see.</p>
+<a class="_external" href="//blog.jetbrains.com/clion/2019/07/clion-2019-2-eap-peripheral-view-for-arm-devices">Learn more</a>
+</div>
+</div>
+</div>
+<h2 data-title="Debugger" title="Debugger">Debugger</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Line breakpoints" class="js-gif" data-gif-src="/clion/whatsnew/img/2019.2/line_breakpoints.gif" src="/clion/whatsnew/img/2019.2/line_breakpoints.png" width="455">
+</div>
+<h3 class="features-block__title">Pending, resolved, and invalid breakpoints</h3>
+<p>CLion 2019.2 now distinguishes three types of line breakpoints:</p>
+<ul>
+<li><em>Pending</em>: Line breakpoint is out of the debugging session, which means the session hasn’t started yet or the corresponding shared library hasn’t been loaded yet).</li>
+<li><em>Resolved</em>: Line breakpoint is successfully resolved by GDB or LLDB using the provided debug symbols, and can be hit during the execution.</li>
+<li><em>Invalid</em>: Line breakpoint can’t be resolved by GDB or LLDB and can never be hit.</li>
+</ul>
+<p>The types are detected automatically on the fly and the breakpoint icons are updated accordingly.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Debugger commands completion" class="js-gif" data-gif-src="/clion/whatsnew/img/2019.2/debug_completion.gif" src="/clion/whatsnew/img/2019.2/debug_completion.png" width="455">
+</div>
+<h3 class="features-block__title">Completion for GDB/LLDB commands</h3>
+<p>If you prefer the command line interface of GDB/LLDB and use the debugger console available in the debug tool window, you will benefit from completion for GDB/LLDB commands. Use <span>Tab</span> or <span>Ctrl+Space</span> to invoke it.</p>
+<p>This completion is powered by GDB or LLDB, respectively; CLion simply gives you access to the suggestions.
+                        </p>
+</div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="MSVC debugger" src="/clion/whatsnew/img/2019.2/msvc_debug.png" width="455">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">An experimental debugger for the MSVC toolchain</h3>
+<p>If you use the Microsoft Visual C++ toolchain in CLion, now you can try a new experimental debugger.</p>
+<p>It’s implemented by the JetBrains team on top of LLDB and is bundled into CLion. To enable bundled support for native visualizers, use Settings | Build, Execution, Deployment | Debugger Data Views | Enable NatVis renderers for LLDB.</p>
+<p>An experimental debugger is available when turned on explicitly: call up the Maintenance dialog (<span class="js-replace-for-mac" data-mac="⌥⇧⌘/">Shift+Ctrl+Alt+/</span>) | Experimental features, and select
+                            <em>cidr.debugger.lldb.windows</em> to control it.</p>
+<a class="_external" href="//blog.jetbrains.com/clion/2019/06/clion-2019-2-eap-msvc-debugger-unused-includes-check-and-more/#msvc_debug">Learn more</a>
+</div>
+</div>
+</div>
+<h2 data-title="Memory View" title="Memory View">Memory View</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-10">
+<p>When debugging your application, you can easily review the memory behind a pointer: in the Variables view of the debug tool window, press <span class="js-replace-for-mac" data-mac="⌘Enter">Ctrl+Enter</span> on a pointer to invoke the Memory View. In 2019.2, we’ve updated the <a href="//www.jetbrains.com/help/clion/memory-view.html">Memory View</a> to make it even more useful.</p>
+</div>
+</div>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Go to address" src="/clion/whatsnew/img/2019.2/go_to_address.png" width="455">
+</div>
+<h3 class="features-block__title">Go to address</h3>
+<p>Navigate to a particular address in memory from the Memory View. Use the hex value representing an address, a pointer variable, or call the address (<code>&</code>) of any variable you are interested in.</p>
+<p>Code completion will assist you with the known symbols.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="ASCII view" src="/clion/whatsnew/img/2019.2/ascii_view.png" width="455">
+</div>
+<h3 class="features-block__title">ASCII View</h3>
+<p>If you are interested in the ASCII memory format, you’ll find the ASCII view in the column on the right of the Memory View useful.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Parameter hints" title="Parameter hints">Parameter hints</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Parameter Name hints" src="/clion/whatsnew/img/2019.2/parameter_hints.png" width="455">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<p>Thanks to parameter name hints in v2019.2, you can avoid switching to the function signature while exploring a function call. This in turn should help increase the code readability.</p>
+<p>For function calls, lambdas, constructors, initializer lists, and macro expressions, CLion shows the names of the parameters for the passed arguments. This works if an argument is a literal or an expression with more than one operand.</p>
+<a class="_external" href="//blog.jetbrains.com/clion/2019/05/clion-starts-2019-2-eap-parameter-hints-go-to-address-code-assistance-for-clangformat/#parameter_name_hints">Learn more</a>
+</div>
+</div>
+</div>
+<h2 data-title="Code analysis" title="Code analysis">Code analysis</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Unused Include" src="/clion/whatsnew/img/2019.2/unused_include.png" width="455">
+</div>
+<h3 class="features-block__title">Unused Includes</h3>
+<p>The ‘unused includes’ check is back and completely reimplemented on top of the Clangd-based engine. It suggests 3 detection strategies: a conservative one, an aggressive one, and the default one (<em>Detect not directly used</em>) which is the closest to the “Include What You Use” principle.</p>
+<a class="_external" href="//blog.jetbrains.com/clion/2019/06/clion-2019-2-eap-msvc-debugger-unused-includes-check-and-more/#unused_includes">Learn more</a>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Clang-Tidy" src="/clion/whatsnew/img/2019.2/clang_tidy_nodiscard.png" width="455">
+</div>
+<h3 class="features-block__title">Clang-Tidy update</h3>
+<p>The Clang-Tidy bundled binary was updated to the newest version, which brings a set of <a href="//youtrack.jetbrains.com/issue/CPP-16432">new checks</a> to CLion. This includes some new
+                            <em>abseil-*</em> checks, a few from the <em>clang-analyzer-*</em> group, several new <em>modernize-*</em> checks, and more.</p>
+</div>
+</div>
+</div>
+<h2 data-title="ClangFormat" title="ClangFormat">Code assistance for .clang-format files</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-10">
+<p>Since v2019.1, CLion has support for ClangFormat as an alternative formatter tool. Now, if you have customized your <em>.clang-format</em> config files in the project, you can benefit from code assistance when you update them. <a class="_external" href="//blog.jetbrains.com/clion/2019/05/clion-starts-2019-2-eap-parameter-hints-go-to-address-code-assistance-for-clangformat/#code_assistance_for_clang_format_files">Learn more</a></p>
+</div>
+</div>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Quick Doc" src="/clion/whatsnew/img/2019.2/clangformat_quickdoc.png" width="455">
+</div>
+<h3 class="features-block__title">Quick Documentation</h3>
+<p>To learn about any particular option, call the Quick Documentation popup (<span class="js-replace-for-mac" data-mac="F1">Ctrl+Q</span>) and read the original documentation with samples.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="ClangFormat config inspection" class="js-gif" data-gif-src="/clion/whatsnew/img/2019.2/clangformat_inspection.gif" src="/clion/whatsnew/img/2019.2/clangformat_inspection.png" width="455">
+</div>
+<h3 class="features-block__title">Schema validation inspection</h3>
+<p>CLion validates the content of your <em>.clang-format</em> config file against the built-in JSON schema. If the option’s value doesn’t match the allowed value set, a warning will be shown.</p>
+</div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="ClangFormat completion" class="js-gif" data-gif-src="/clion/whatsnew/img/2019.2/clangformat_completion.gif" src="/clion/whatsnew/img/2019.2/clangformat_completion.png" width="455">
+</div>
+<h3 class="features-block__title">Code completion</h3>
+<p>When customizing the <em>.clang-format</em> config file, you can benefit from code completion working for both options and their values.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="ClangFormat doc" src="/clion/whatsnew/img/2019.2/clangformat_completion_doc.png" width="455">
+</div>
+<h3 class="features-block__title">Options description in completion</h3>
+<p>Code completion popup for option names also includes a short description of the option, so you can quickly check it while typing the option name.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Naming convention" title="Naming convention">Naming convention</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Naming settings" src="/clion/whatsnew/img/2019.2/naming_settings.png" width="455">
+</div>
+<h3 class="features-block__title">New settings</h3>
+<p>The naming convention settings (<span class="js-replace-for-mac" data-mac="Preferences">Settings</span> | Editor | Code Style | C/C++ | Naming Convention) were reworked to provide better flexibility and more opportunities. New settings like Visibility (Public, Private, or Protected) and Specifier (Const or Static) were added. We’ve also updated the rules to address several kinds of entities at once.</p>
+<p>It’s possible to work with the new UI <a class="_external" href="//blog.jetbrains.com/clion/2019/05/clion-2019-2-eap-performance-improvements-platform-changes-and-more/#naming">without using the mouse</a>.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Leading Snake Case" src="/clion/whatsnew/img/2019.2/leading_snake_case.png" width="455">
+</div>
+<h3 class="features-block__title">Leading snake case</h3>
+<p>As requested by CLion users, a new style – <em>Leading_snake_case</em>, which capitalizes only the first letter in the <em>snake_case</em> name, leaving the rest in lower case – is now available, along with the somewhat similar <em>Upper_Snake_Case</em> style and others.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Shell Script plugin" title="Shell Script plugin">Shell Script plugin</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Shell Script plugin" class="js-gif" data-gif-src="/clion/whatsnew/img/2019.2/shell_script.gif" src="/clion/whatsnew/img/2019.2/shell_script.png" width="455">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<p>If you need to edit shell scripts while you are working on your C++ project, you can do this with CLion as it now bundles the Shell Script plugin.</p>
+<p>You can benefit from code highlighting, word and path completion, and even textual Rename.</p>
+</div>
+</div>
+</div>
+<h2 data-title="New languages" title="New languages">Syntax highlighting for new languages</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Ruby syntax highlighting" src="/clion/whatsnew/img/2019.2/ruby_in_clion.png" width="455">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<p>CLion provides bundled profound support not only for C and C++, but also for Python, JavaScript, XML, and more, as well as providing plugins for Rust, Swift, and Kotlin/Native.</p>
+<p>Have code in your project in other languages, such as PHP, Ruby, or C#? You’ll be happy to learn that syntax highlighting is now available in CLion for over 20 different programming languages!</p>
+<a class="_external" href="//blog.jetbrains.com/clion/2019/06/clion-2019-2-eap-debugger-improvements-syntax-highlighting-for-20-languages-and-shell-script-plugin/#extra_languages">Learn more</a>
+</div>
+</div>
+</div>
+<h2 data-title="VCS" title="VCS">VCS: Commit from the Local Changes</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Commit from Local Changes" src="/clion/whatsnew/img/2019.2/commit_from_local_changes.png" width="455">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<p>You can now commit directly from Local Changes tab. Just enable the “Commit from the Local Changes without showing a dialog” option at <span class="js-replace-for-mac" data-mac="Preferences">Settings</span> | Version Control | Commit Dialog.</p>
+<p>Use the Commit shortcut (<span class="js-replace-for-mac" data-mac="⌘K">Ctrl+K</span>) and the IDE will select the modified files for the commit and focus on the Commit message field in the Local Changes tab of the Version Control tool window.</p>
+<a href="//www.jetbrains.com/idea/whatsnew/#v2019-2-version-control">Learn more about other VCS changes</a>
+</div>
+</div>
+</div>
+<h2 data-title="Performance" title="Performance">Performance improvements</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-10">
+<p>There is some huge ongoing work in CLion to improve the IDE’s performance such as indexing, responsiveness, and elimination of freezes, among others. Part of this work is already included in v2019.2:</p>
+<ul>
+<li>The in-place Rename refactoring was reworked to eliminate lags and freezes.</li>
+<li>The performance of code completion for qualified expressions in the editor has been significantly improved.</li>
+<li>Collecting compiler information and thus loading the CMake step in remote cases was accelerated by reducing the number of I/O operations.</li>
+<li>CLion now warns you when Windows Defender is affecting the build performance and is able to automatically exclude directories from real-time scanning.</li>
+</ul>
+</div>
+</div>
+<h2 data-title="Rust" title="Rust">Rust plugin update</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Rust plugin" class="js-gif" data-gif-src="/clion/whatsnew/img/2019.2/rust_macros.gif" src="/clion/whatsnew/img/2019.2/rust_macros.png" width="455">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<p>Another huge update for the Rust plugin brings a new experimental macro expansion engine. You can turn it on in <span class="js-replace-for-mac" data-mac="Preferences">Settings</span> | Languages & Frameworks | Rust | Expand declarative macros.</p>
+<p>This engine provides you with code insight features such as highlighting, name resolution, and completion for generated modules and methods from
+                            <code>impl</code> blocks. Besides this, it enables navigation in the macro calls.</p>
+<p>Other changes include a <em>Duplicate code fragments</em> inspection for Rust, and other new quick-fixes and inspections.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section-content _bg-medium version-2019-1" id="v2019-1">
+<div class="wt-container article-content">
+<div class="wt-row wt-row_size_m version-label">
+<span class="version-label__text">2019.1 (Mar 27)</span>
+<span class="version-label__slope"></span>
+</div>
+<h2 data-title="Embedded Development" title="Embedded Development">Embedded Development</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="STM32CubeMX integration" src="/clion/whatsnew/img/2019.1/stm32cubemx.png" width="455">
+</div>
+<h3 class="features-block__title">STM32CubeMX integration</h3>
+<p>If you develop for STMicroelectronics boards, you’ll be happy to know that CLion now integrates with <a class="_external" href="https://www.st.com/en/development-tools/stm32cubemx.html#getsoftware-scroll">STM32CubeMX</a>:</p>
+<ul>
+<li>CLion can create a new <em>.ioc</em> project or open an existing one, and generate a CMake file to correctly work with it.</li>
+<li>You can start STM32CubeMX any time directly from CLion to update board settings and generate code.</li>
+<li>CLion reminds you to select a board config and suggests a list of options in the UI.</li>
+</ul>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="OpenOCD support" src="/clion/whatsnew/img/2019.1/openocd.png" width="455">
+</div>
+<h3 class="features-block__title">OpenOCD support</h3>
+<p>Debugging with the <a class="_external" href="http://openocd.org/getting-openocd/">Open On-Chip Debugger</a> is now supported by CLion. Use the new Run/Debug configuration template, ‘OpenOCD Download and Run’ to debug on your microcontroller.</p>
+<p>If you work with a STM32CubeMX project in CLion, an OpenOCD Run/Debug configuration will be created for you automatically.</p>
+<p>Learn more about <a href="//blog.jetbrains.com/clion/2019/02/clion-2019-1-eap-clion-for-embedded-development-part-iii/">STM32CubeMX & OpenOCD integration</a></p>
+</div>
+</div>
+</div>
+<h2 data-title="ClangFormat" title="ClangFormat">ClangFormat</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-10">
+<p>The ClangFormat tool is widely used in the C/C++ world and even regarded as a standard by many developers. Its config files can be found in many projects, and especially in open source software. And it’s now supported in CLion! <a href="//blog.jetbrains.com/clion/2019/01/clion-opens-2019-1-eap-clangformat-disasm-lldb-injected-languages/#clangformat_support">Learn more.</a></p>
+</div>
+</div>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="ClangFormat across all IDE actions" class="js-gif" data-gif-src="/clion/whatsnew/img/2019.1/clang_format_enable.gif" src="/clion/whatsnew/img/2019.1/clang_format_enable.png" width="455">
+</div>
+<h3 class="features-block__title">ClangFormat across all IDE actions</h3>
+<p>CLion 2019.1 adds ClangFormat as an alternative code formatter. Turn it on for your current project or all projects in CLion and let CLion use it to format your code as you:</p>
+<ul>
+<li>Type in the editor or paste code</li>
+<li>Call the Reformat Code action</li>
+<li>Reformat as a pre-commit hook</li>
+<li>Generate boilerplate code</li>
+<li>Refactor code</li>
+<li>Apply quick-fixes or intention actions</li>
+</ul>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Working with .clang-format config" class="js-gif" data-gif-src="/clion/whatsnew/img/2019.1/clang_format_config.gif" src="/clion/whatsnew/img/2019.1/clang_format_config.png" width="455">
+</div>
+<h3 class="features-block__title">Working with .clang-format config</h3>
+<p>CLion detects <em>.clang-format</em> config files in your project and will suggest switching to ClangFormat. If there are multiple config files, you can identify which one is used in a particular file opened in the editor by selecting <em>“View ClangFormat options for &lt;file name&gt;”</em> from the toolbar switcher.</p>
+<p>Don’t have a config file? No problem – CLion will simply default to LLVM style.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Naming conventions" title="Naming conventions">Naming conventions</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Setting naming in CLion" src="/clion/whatsnew/img/2019.1/naming_settings.png" width="455">
+</div>
+<h3 class="features-block__title">Setting naming in CLion</h3>
+<p>CLion now respects the naming scheme you provide. The selected settings will be used when:</p>
+<ul>
+<li>Autocompleting code</li>
+<li>Generating code</li>
+<li>Refactoring code</li>
+<li>Applying quick-fixes</li>
+</ul>
+<p>You can configure the style manually in <span class="js-replace-for-mac" data-mac="Preferences">Settings</span> | Editor | Code Style | C/C++ | Naming Convention or select naming from the predefined scheme.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Inconsistent naming inspection" class="js-gif" data-gif-src="/clion/whatsnew/img/2019.1/naming_inspection.gif" src="/clion/whatsnew/img/2019.1/naming_inspection.png" width="455">
+</div>
+<h3 class="features-block__title">Inconsistent naming inspection</h3>
+<p>CLion can help enforce the selected naming convention in the editor. Simply turn on the <em>Inconsistent Naming</em> inspection, and CLion will highlight problematic names and suggest a quick-fix to replace all usages with a more accurate name.</p>
+</div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Header Guard style" src="/clion/whatsnew/img/2019.1/header_guard_settings.png" width="455">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">Header Guard style</h3>
+<p>In <span class="js-replace-for-mac" data-mac="Preferences">Settings</span> | Editor | Code Style | C/C++ | Naming Convention, you can configure the style for Header Guards to be used when creating a new header file.</p>
+<p>You can update this Velocity template or select a style from one of the predefined schemes.</p>
+</div>
+</div>
+</div>
+<h2 data-title="C++ support" title="C++ support">C++ support</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Code highlighting and quick-fixes with Clangd" class="js-gif" data-gif-src="/clion/whatsnew/img/2019.1/redefinition_clang_fix.gif" src="/clion/whatsnew/img/2019.1/redefinition_clang_fix.png" width="455">
+</div>
+<h3 class="features-block__title">Code highlighting and quick-fixes with Clangd</h3>
+<p>To improve the editor performance, code highlighting and quick-fixes are now implemented on top of the complementary Clangd-based language engine (and are enabled by default along with the engine).</p>
+<p>For quick-fixes, the location of the quick-fix is calculated in Clangd, while the fix itself is provided by CLion.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Error messages powered by Clang" class="js-gif" data-gif-src="/clion/whatsnew/img/2019.1/clang_errors.gif" src="/clion/whatsnew/img/2019.1/clang_errors.png" width="455">
+</div>
+<h3 class="features-block__title">Error messages powered by Clang</h3>
+<p>For some time now, we have been leveraging the Clangd-based language engine to annotate code errors and warnings in the editor. In v2019.1, CLion gets improved and more detailed error messages powered by Clang.</p>
+<p>A practically useful example of this is debugging a failed overload resolution in your C++ code.</p>
+</div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Improved Rename refactoring" class="js-gif" data-gif-src="/clion/whatsnew/img/2019.1/rename_related.gif" src="/clion/whatsnew/img/2019.1/rename_related.png" width="455">
+</div>
+<h3 class="features-block__title">Improved Rename refactoring</h3>
+<p>We’ve improved the Rename refactoring for files:</p>
+<ul>
+<li>When you do a file rename, CLion asks if you’d like to also rename an associated class/struct, and the other way around.</li>
+<li>When the header file is renamed, the header guards are updated accordingly.</li>
+</ul>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Improved Extract refactoring" class="js-gif" data-gif-src="/clion/whatsnew/img/2019.1/extract_aliases.gif" src="/clion/whatsnew/img/2019.1/extract_aliases.png" width="455">
+</div>
+<h3 class="features-block__title">Improved Extract refactoring</h3>
+<p>The Extract refactoring is now more accurate and:</p>
+<ul>
+<li>Respects type aliases and doesn’t expand on static members</li>
+<li>Respects <code>std::</code> namespace qualifier</li>
+<li>Respects template specialization and template parameters</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Member function can be static" class="js-gif" data-gif-src="/clion/whatsnew/img/2019.1/member_static.gif" src="/clion/whatsnew/img/2019.1/member_static.png" width="455">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">Member function can be static</h3>
+<p>This new inspection reports member functions that can be marked as static. It works on top of the Clangd-based language engine and analyzes the method body, trying to check if it depends on <code>this</code> or not.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Debugger" title="Debugger">Debugger</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Disassembly View" src="/clion/whatsnew/img/2019.1/lldb_disasm.png" width="455">
+</div>
+<h3 class="features-block__title">Disassembly View</h3>
+<p>Disassembly View is now available for LLDB in addition to GDB backend. We’ve also improved the view in general so that now it shows information divided by function.</p>
+<p>As before, Disassembly View works when you use Force Step Into (<span class="js-replace-for-mac" data-mac="⌥⇧F7">Shift+Alt+F7</span>) on a function with no source code.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Mute Variables" class="js-gif" data-gif-src="/clion/whatsnew/img/2019.1/mute_var.gif" src="/clion/whatsnew/img/2019.1/mute_var.png" width="455">
+</div>
+<h3 class="features-block__title">Mute Variables</h3>
+<p>To get a better stepping performance, or if you need to watch the variables only occasionally, you can now explicitly Mute Variables. A general per-IDE switch will stop the variable calculation, and each variable in the variables view gets a
+                            <em>Load</em> option which you can apply as needed.</p>
+<p><a href="//blog.jetbrains.com/clion/2019/01/clion-2019-1-eap-clangd-mute-var-rename/#mute_debugger">Learn more</a></p>
+</div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Memory View" class="js-gif" data-gif-src="/clion/whatsnew/img/2019.1/memory_view_stepping.gif" src="/clion/whatsnew/img/2019.1/memory_view_stepping.png" width="455">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">Memory View</h3>
+<p>Memory View dumps the memory behind the pointer in the Debug mode. To invoke it, select a pointer variable in the debugger’s variables view and press <span class="js-replace-for-mac" data-mac="⌘Enter">Ctrl+Enter</span>.</p>
+<p>During stepping, if you have Memory View opened, CLion will highlight the memory changes that take place in the selected memory piece.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Custom Build and Run" title="Custom Build and Run">Custom Build and Run</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Custom Build Targets" src="/clion/whatsnew/img/2019.1/custom_targets.png" width="455">
+</div>
+<h3 class="features-block__title">Custom Build Targets</h3>
+<p>Build-system independent Build Targets (<span class="js-replace-for-mac" data-mac="Preferences">Settings</span> | Build, Execution, Deployment | Custom Build Targets) allow you to add custom targets and configure any tools to be used for Building/Cleaning the target.</p>
+<p>The most typical use case is a compilation database project, which lacks the information about building the whole project.</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Custom Run/Debug Configurations" src="/clion/whatsnew/img/2019.1/custom_config.png" width="455">
+</div>
+<h3 class="features-block__title">Custom Run/Debug Configurations</h3>
+<p>To run and debug Custom Targets from CLion, create a corresponding Run/Debug configuration by using the Custom Build Application template (Run | Edit Configurations…).</p>
+<p>The debugger will be taken from the Toolchain setting of the Custom Build Target.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Injected languages" title="Injected languages">Injected languages</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Injected languages" class="js-gif" data-gif-src="/clion/whatsnew/img/2019.1/regexp_inject.gif" src="/clion/whatsnew/img/2019.1/regexp_inject.png" width="455">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<p>String literals with pieces of code in other languages can now be treated accordingly. To temporarily inject a language, press <span class="js-replace-for-mac" data-mac="⌥Enter">Alt+Enter</span>, apply the intention “Inject language or reference”, and select the appropriate language. For example, SQL strings, HTML code, or Regular Expressions.</p>
+<p>Based on the language chosen, CLion will provide code highlighting and language-specific intentions and actions.</p>
+</div>
+</div>
+</div>
+<h2 data-title="Custom color themes" title="Custom color themes">Custom color themes</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image js-carousel-dots _two-block-in-row _no-shadow">
+<div>
+<img alt="Theme 1" data-lazy="/clion/whatsnew/img/2019.1/theme_0.png">
+</div>
+<div>
+<img alt="Theme 2" data-lazy="/clion/whatsnew/img/2019.1/theme_1.png">
+</div>
+<div>
+<img alt="Theme 3" data-lazy="/clion/whatsnew/img/2019.1/theme_2.png">
+</div>
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<h3 class="features-block__title">Brighten up Your IDE</h3>
+<p>Tired of Black and White themes in CLion? Tweak literally every color in your IDE, from icons to radio buttons and arrows.</p>
+<p>Each theme is actually a theme plugin that you can download directly from our plugin repository. Or, if you feel up to it, create your own theme plugin using the DevKit and modify CLion’s appearance via the JSON file.</p>
+<p><a href="http://www.jetbrains.org/intellij/sdk/docs/reference_guide/ui_themes/themes_intro.html">Learn more</a></p>
+</div>
+</div>
+</div>
+<h2 data-title="Recent locations" title="Recent locations">Recent locations</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<img alt="Recent locations" src="/clion/whatsnew/img/2019.1/recent_loc.png" width="455">
+</div>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<p>The Recent Locations Popup (<span class="js-replace-for-mac" data-mac="⇧⌘E">Shift+Ctrl+E</span>) lists all the locations that you’ve visited in a chronological order so that you can easily go back and find things.</p>
+<p>Use instant search to filter the locations by file name or code snippet included. Or, switch to showing changed locations only.</p>
+</div>
+</div>
+</div>
+<h2>Other improvements</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<div class="features-block">
+<ul>
+<li>The process of building CLion’s plugins was simplified by publishing CLion as a Maven dependency to be used by <a href="//github.com/JetBrains/gradle-intellij-plugin">gradle-intellij-plugin</a> (since version 0.4.2). <a href="//blog.jetbrains.com/clion/2019/01/clion-opens-2019-1-eap-clangformat-disasm-lldb-injected-languages/#an_update_for_plugin_writers">Learn more</a></li>
+<li>The bundled CMake is updated to 3.13, the bundled LLDB is updated to 7.0.1, and the latest supported Cygwin is now 3.0.</li>
+<li>IPv6 is now supported to help you use Remote Development mode in CLion. <a href="//youtrack.jetbrains.com/issue/CPP-14264">Learn more</a></li>
+<li>The <a href="//plugins.jetbrains.com/plugin/8182-rust">Rust plugin</a> received a massive update: it suggests out-of-scope items in completion and auto-import, as well as supports Rust language injection into code snippets in doc comments. Besides, profiler tools (like DTrace or Perf) are now supported for Rust. </li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>    </div>
+
+            
+<div class="page__footer">
+    <footer class="footer" id="footer">
+        <div class="wt-container">
+            <div class="footer__main wt-row wt-row_size_m wt-row-sm_direction_column-reverse">
+                <div class="footer__logo wt-col-inline wt-display-md-none">
+                    <div class="jetbrains-logo _size-3 _full-block">
+                        <svg class="sprite-img jetbrains">
+                            <use xlink:href="#jetbrains" />
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="wt-col-auto-fill wt-col-sm-12">
+                    <div class="wt-row wt-row_size_xs wt-row-sm_size_m wt-offset-top-12">
+                        <div class="wt-col-inline footer-skeleton-button"></div>
+                        <div class="wt-col-inline footer-skeleton-button"></div>
+                        <div class="wt-col-inline footer-skeleton-button"></div>
+                        <div class="wt-col-inline footer-skeleton-button"></div>
+                    </div>
+
+                    <div class="footer-skeleton-text-2 wt-offset-top-24" style="max-width: 45%"></div>
+                    <div class="footer-skeleton-text-2 wt-offset-top-12" style="max-width: 70%"></div>
+                </div>
+
+                <div class="wt-col-inline wt-col-sm-12 wt-col_align-self_end wt-col-sm_align-self_start">
+                    <div class="wt-row wt-row_size_m wt-row_justify_end wt-row-sm_justify_start">
+                        <div class="wt-col-inline footer-skeleton-button" style="min-width: 180px"></div>
+                        <div class="wt-col-inline footer-skeleton-button" style="min-width: 80px"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+    </div>
+
+<script>
+(function () {
+  function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+      results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+  }
+
+  function updateQueryStringParameter(uri, key, value) {
+    var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+    var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+    if (uri.match(re)) {
+      return uri.replace(re, '$1' + key + "=" + value + '$2');
+    }
+    else {
+      return uri + separator + key + "=" + value;
+    }
+  }
+
+  var downloadLink = document.getElementById("download-link");
+  if (downloadLink != null) {
+    var platform = getParameterByName('platform');
+    platform = platform != null ? platform : "windows";
+    var href = downloadLink.getAttribute("href");
+    var code = getParameterByName("code");
+
+    if(code != null) {
+      href = updateQueryStringParameter(href, "code", code)
+    }
+    href = updateQueryStringParameter(href, "platform", platform);
+    downloadLink.setAttribute("href", href);
+  }
+})();
+</script><script>
+(function() {
+  var STORAGE_KEY_NAME = 'firefoxDisappearedSVGWorkaround';
+  var STORAGE_KEY_VALUE = '1';
+
+  var isFirefox = /firefox/i.test(navigator.userAgent);
+  if (!isFirefox || isFirefox && sessionStorage.getItem(STORAGE_KEY_NAME) === STORAGE_KEY_VALUE) {
+    return;
+  }
+
+  var arrayFrom = function (arrayLike) {
+    return Array.prototype.slice.call(arrayLike, 0);
+  };
+
+  function workaround() {
+    var uses = document.querySelectorAll('.page svg use');
+    var badNodesCount = 0;
+
+    arrayFrom(uses).forEach(function (node) {
+      var rect = node.getBoundingClientRect();
+      if (rect.width === 0 && rect.height === 0)
+        badNodesCount++;
+    });
+
+    if (badNodesCount === uses.length) {
+      sessionStorage.setItem(STORAGE_KEY_NAME, STORAGE_KEY_VALUE);
+      if (typeof dataLayer !== 'undefined')
+        dataLayer.push({'firefoxDisappearedSVGWorkaround': STORAGE_KEY_VALUE});
+
+      window.location.replace(window.location.href);
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', workaround);
+
+})();
+</script>      <link href="/_assets/banner-rotator.entry.07ac548a2a68a7922693.css" rel="stylesheet" type="text/css">
+      <script src="/_assets/banner-rotator.entry.b9ea3aaba598786010f0.js" type="text/javascript"></script>
+      
+      
+  <script>
+(function () {
+
+  'use strict';
+
+  function ImagesSrcReplacer () {
+
+    var attribute = 'data-src';
+    var matches = document.querySelectorAll('img[' + attribute + ']');
+
+    for (var i = 0, n = matches.length; i < n; i++) {
+
+      var attrValue = matches[i].getAttribute(attribute);
+
+      if (_isHighDensity ()) {
+
+        var name = attrValue.substring(0, attrValue.lastIndexOf('.'));
+        var extention = attrValue.substring(attrValue.lastIndexOf('.'), attrValue.length);
+
+        matches[i].setAttribute('src', name + '@2x' + extention);
+
+      } else {
+        matches[i].setAttribute('src', attrValue)
+      }
+    }
+
+    /**
+     * Detect high density
+     * @returns {*|boolean}
+     */
+    function _isHighDensity () {
+      return (
+      (window.matchMedia &&
+      (window.matchMedia('only screen and (min-resolution: 124dpi), only screen and (min-resolution: 1.3dppx), only screen and (min-resolution: 48.8dpcm)').matches ||
+       window.matchMedia('only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (-o-min-device-pixel-ratio: 2.6/2), only screen and (min--moz-device-pixel-ratio: 1.3), only screen and (min-device-pixel-ratio: 1.3)').matches)) ||
+      (window.devicePixelRatio &&
+       window.devicePixelRatio > 1.3));
+    }
+  }
+
+  return new ImagesSrcReplacer()
+
+}(document, window));
+</script></body>
+</html>

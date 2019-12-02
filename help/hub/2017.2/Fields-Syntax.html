@@ -1,0 +1,61 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><meta class="swiftype" name="product" data-type="string" content="/hub/2017.2/"><meta charset="UTF-8"><meta name="robots" content="noindex"><title>Fields Syntax - Help | Hub</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Fields-Syntax"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper" data-swiftype-index="false"><section class="panel _nav" data-swiftype-index="false"><header class="panel__header" data-swiftype-index="false"><div class="container" data-swiftype-index="false"><form class="search-box" data-swiftype-index="false"><label for="search-box__input" class="search-box__label" data-swiftype-index="false"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search Hub Help"></label><div class="search-box__clear" title="Clear" data-swiftype-index="false"></div></form></div></header><nav class="panel__content" data-swiftype-index="false"><div class="container _nav" data-swiftype-index="false"><menu class="nav-tree" data-swiftype-index="false"></menu></div><div class="container _footer panel__footer" data-swiftype-index="false"><p data-swiftype-index="false"><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main" data-swiftype-index="false"><header class="panel__header" data-swiftype-index="false"><div class="container" data-swiftype-index="false"><h3>Hub 2017.2 Help</h3><div class="shortcuts-switcher" data-swiftype-index="false"><label for="switch-shortcuts" data-swiftype-index="false">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1" data-swiftype-index="false"></select></div><div class="panel-trigger" data-swiftype-index="false"></div></div></header><section class="panel__content" data-swiftype-index="false"><div class="container"><article class="article" data-shortcut-switcher="false" data-swiftype-index="true"><div class="navigation-links _top" data-swiftype-index="false"><a class="navigation-links__prev" href="Partial-Requests.html" data-swiftype-index="false">Partial Requests</a><a class="navigation-links__next" href="Sort-Syntax.html" data-swiftype-index="false">Sort Syntax</a></div><h1>Fields Syntax</h1><a name="d7825e3"></a><p>Fields request syntax is based on <a name="d7825e5"></a><a href="https://developers.google.com/google-apps/calendar/performance#partial-response" data-external="true"><span>Google Partial request</span></a> syntax. The following text is an applicable to       the Hub API quote from the Google API documentation. </p><a name="d7825e9"></a><p>By default, the server sends back all immediate fields of a resource after processing requests.       For nested objects only the basic info (e.g. id) is sent by default. For better performance, you can ask       the server to send only the fields you really need and get a partial response instead.</p><a name="d7825e12"></a><p>To request a partial response, use the <code class="code" data-lang="Java">fields</code> request parameter to specify the fields       you want returned. You can use this parameter with any request that returns response data.</p><a name="Example"></a><h2>Example</h2>        <a name="d7825e20"></a><p>The following example shows the use of the fields parameter with a sample API.</p>        <a name="SimpleRequest"></a><h3>Simple Request</h3>            <a name="d7825e25"></a><p><a name="d7825e26"></a><b id="d7825e26">Simple request:</b> This HTTP GET request omits the fields parameter and returns the full resource.</p>            <a name="d7825e30"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="nl">https:</span><span class="c1">//sso.jetbrains.com/api/rest/users/6109acd8-598b-44db-9e85-e99f3adca355</span></code></div>            <a name="d7825e33"></a><p><a name="d7825e34"></a><b id="d7825e34">Full resource response:</b> The full resource data includes the following fields, along with many others that have been omitted for brevity.</p>            <a name="d7825e38"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="o">{</span>
+<span class="s">&quot;id&quot;</span><span class="o">:</span> <span class="s">&quot;6109acd8-598b-44db-9e85-e99f3adca355&quot;</span><span class="o">,</span>
+<span class="s">&quot;url&quot;</span><span class="o">:</span> <span class="s">&quot;http://hub-dev.labs.intellij.net:8080/accounts/api/rest/users/6109acd8-598b-44db-9e85-e99f3adca355&quot;</span><span class="o">,</span>
+<span class="s">&quot;name&quot;</span><span class="o">:</span> <span class="s">&quot;Maxim Mazin&quot;</span><span class="o">,</span>
+<span class="s">&quot;banned&quot;</span><span class="o">:</span> <span class="kc">false</span><span class="o">,</span>
+<span class="s">&quot;avatar&quot;</span><span class="o">:</span> <span class="o">{</span>
+<span class="s">&quot;url&quot;</span><span class="o">:</span> <span class="s">&quot;http://hub-dev.labs.intellij.net:8080/accounts/api/rest/avatar/6109acd8-598b-44db-9e85-e99f3adca355&quot;</span><span class="o">,</span>
+<span class="s">&quot;pictureUrl&quot;</span><span class="o">:</span> <span class="s">&quot;http://www.gravatar.com/avatar/3cc02cb9c88aada5761bdf22786e76f6.jpg?d=retro&quot;</span>
+<span class="o">},</span>
+<span class="s">&quot;contacts&quot;</span><span class="o">:</span> <span class="o">[</span>
+<span class="o">{</span>
+<span class="s">&quot;type&quot;</span><span class="o">:</span> <span class="s">&quot;EmailJSON&quot;</span><span class="o">,</span>
+<span class="s">&quot;verified&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="o">,</span>
+<span class="s">&quot;email&quot;</span><span class="o">:</span> <span class="s">&quot;maxim.mazin@gmail.com&quot;</span>
+<span class="o">},</span>
+<span class="o">...</span>
+<span class="o">],</span>
+<span class="s">&quot;groups&quot;</span><span class="o">:</span> <span class="o">[</span>
+<span class="o">{</span>
+<span class="s">&quot;id&quot;</span><span class="o">:</span> <span class="s">&quot;309ffb10-1cd4-4e90-9b86-1dbaded92319&quot;</span><span class="o">,</span>
+<span class="s">&quot;url&quot;</span><span class="o">:</span> <span class="s">&quot;http://hub-dev.labs.intellij.net:8080/accounts/api/rest/usergroups/309ffb10-1cd4-4e90-9b86-1dbaded92319&quot;</span>
+<span class="o">},</span>
+<span class="o">...</span>
+<span class="o">],</span>
+<span class="s">&quot;details&quot;</span><span class="o">:</span> <span class="o">[</span>
+<span class="o">{</span>
+<span class="s">&quot;type&quot;</span><span class="o">:</span> <span class="s">&quot;EmailuserdetailsJSON&quot;</span><span class="o">,</span>
+<span class="s">&quot;id&quot;</span><span class="o">:</span> <span class="s">&quot;c6903529-7f85-4d9c-b9c5-52fe38f07a37&quot;</span>
+<span class="o">},</span>
+<span class="o">...</span>
+<span class="o">],</span>
+<span class="s">&quot;aliasIds&quot;</span><span class="o">:</span> <span class="o">[</span>
+<span class="s">&quot;43e730f8-56cd-4957-8e15-c6ce17c49276&quot;</span><span class="o">,</span>
+<span class="o">...</span>
+<span class="o">]</span>
+<span class="o">}</span></code></div>                <a name="Request for a partial response"></a><h3>Request for a partial response</h3>            <a name="d7825e44"></a><p>Request for a partial response:</p>            <a name="d7825e47"></a><p>The following request for this same resource uses the fields parameter to significantly reduce the amount of                data returned and the number of requests required to get details about nested objects.</p>            <a name="d7825e50"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="n">https</span><span class="o">:</span><span class="c1">//sso.jetbrains.com/api/rest/users/6109acd8-598b-44db-9e85-e99f3adca355?fields=name,banned,avatar/pictureUrl,groups(id,name)</span></code></div>            <a name="d7825e53"></a><p>Partial response</p>            <a name="d7825e56"></a><p>In response to the request above, the server sends back a response that contains only the basic user information with a list of named user groups.</p>            <a name="d7825e60"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="o">{</span>
+<span class="s">&quot;name&quot;</span><span class="o">:</span> <span class="s">&quot;Maxim Mazin&quot;</span><span class="o">,</span>
+<span class="s">&quot;banned&quot;</span><span class="o">:</span> <span class="kc">false</span><span class="o">,</span>
+<span class="s">&quot;avatar&quot;</span><span class="o">:</span> <span class="o">{</span>
+<span class="s">&quot;url&quot;</span><span class="o">:</span> <span class="s">&quot;http://hub-dev.labs.intellij.net:8080/accounts/api/rest/avatar/6109acd8-598b-44db-9e85-e99f3adca355&quot;</span><span class="o">,</span>
+<span class="s">&quot;pictureUrl&quot;</span><span class="o">:</span> <span class="s">&quot;http://www.gravatar.com/avatar/3cc02cb9c88aada5761bdf22786e76f6.jpg?d=retro&quot;</span>
+<span class="o">},</span>
+<span class="s">&quot;groups&quot;</span><span class="o">:</span> <span class="o">[</span>
+<span class="o">{</span>
+<span class="s">&quot;id&quot;</span><span class="o">:</span> <span class="s">&quot;309ffb10-1cd4-4e90-9b86-1dbaded92319&quot;</span><span class="o">,</span>
+<span class="s">&quot;name&quot;</span><span class="o">:</span> <span class="s">&quot;New Users&quot;</span>
+<span class="o">},</span>
+<span class="o">{</span>
+<span class="s">&quot;id&quot;</span><span class="o">:</span> <span class="s">&quot;51ab66f5-bbfe-4345-9447-93ea8b5db3ee&quot;</span><span class="o">,</span>
+<span class="s">&quot;name&quot;</span><span class="o">:</span> <span class="s">&quot;Admins&quot;</span>
+<span class="o">},</span>
+<span class="o">...</span>
+<span class="o">]</span>
+<span class="o">}</span></code></div>            <a name="d7825e63"></a><p>Note that the response is a JSON object that includes only the selected fields and their enclosing parent objects.</p>            <a name="d7825e66"></a><p>Details on how to format the fields parameter is covered next, followed by more details about what exactly gets returned in the response.</p>            <a name="Fields parameter syntax summary"></a><h2>Summary of Fields Parameter Syntax</h2>        <a name="d7825e73"></a><p>The format of the fields request parameter value is loosely based on XPath syntax.            The supported syntax is summarized below, and additional examples are provided in the following section.</p>        <ol class="list _decimal"><li class="list__item"><a name="d7825e78"></a>Use a comma-separated list to select multiple fields.</li><li class="list__item"><a name="d7825e81"></a>Use a/b to select a field b that is nested within field a; use a/b/c to select a field c nested within b. </li><li class="list__item"><a name="d7825e84"></a>Use a sub-selector to request a set of specific sub-fields of arrays or objects by placing expressions in parentheses "( )".</li><li class="list__item"><a name="d7825e87"></a>Use wildcards in field selections, if needed.</li></ol>    <div class="last-modified" data-swiftype-index="false">Last modified: 19 July 2017 </div></article><div id="disqus_thread" data-swiftype-index="false"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

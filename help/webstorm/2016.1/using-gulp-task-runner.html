@@ -1,0 +1,356 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"></meta><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><title>WebStorm 2016.1 Help :: Using Gulp Task Runner</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Using_Gulp_Task_Runner"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search WebStorm Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>WebStorm 2016.1 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWindow</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="using-grunt-task-runner.html">Using Grunt Task Runner</a><a class="navigation-links__next" href="using-javascript-code-quality-tools.html">Using JavaScript Code Quality Tools</a></div><h1>Using Gulp Task Runner</h1><a name="d253624e14"></a><p>
+        WebStorm provides integration with the <a name="d253624e16"></a><a href="http://gulpjs.com/" data-external="true"><span>Gulp.js Task Runner</span></a>.  <a name="d253624e19"></a><span class="emphasis">Gulp.js</span> support involves:
+    </p><ul class="list _bullet"><li class="list__item"><a name="d9041e7"></a>
+            Parsing <code class="code" data-lang="Java">Gulpfile.js</code> files, recognizing definitions of tasks.
+        </li><li class="list__item"><a name="d9041e13"></a>
+            Building trees of tasks.
+        </li><li class="list__item"><a name="d9041e16"></a>
+            Navigation between a task in the tree and its definition in the <code class="code" data-lang="Java">Gulpfile.js</code> file.
+        </li><li class="list__item"><a name="d9041e22"></a>
+            Running tasks.
+        </li><li class="list__item"><a name="d9041e26"></a>
+            Configuring the task execution mode and output.
+        </li><li class="list__item"><a name="d253624e36"></a>
+            Creating a <a name="d253624e38"></a><span class="emphasis">Gulp.js</span> run configuration automatically.
+        </li></ul><a name="d253624e43"></a><p>On this page:</p><ul><li class="list__item"><a href="#d253624e48">Preparing to Install Gulp.js</a></li><li class="list__item"><a href="#installingGulp">Installing Gulp.js</a><ul class="list _bullet"><li class="list__item"><a href="#d253624e134">Installing Gulp.js in the command line mode</a></li><li class="list__item"><a href="#d253624e169">Installing Gulp.js through the WebStorm interface</a></li></ul></li><li class="list__item"><a href="#d253624e236">Running Gulp.js Tasks</a><ul class="list _bullet"><li class="list__item"><a href="#d253624e252">Running Gulp.js Tasks from the Tasks Tree</a><ul class="list _bullet"><li class="list__item"><a href="#d253624e272">Building a tasks tree</a></li><li class="list__item"><a href="#d253624e365">Running a task</a></li></ul></li><li class="list__item"><a href="#d253624e408">Running Tasks from Gulpfile.js</a></li><li class="list__item"><a href="#d253624e452">Running and Debugging Tasks According to a Run Configuration</a><ul class="list _bullet"><li class="list__item"><a href="#createGulpRunConfig">Creating a Gulp.js run configuration</a></li><li class="list__item"><a href="#d253624e526">Running a Task according to a Run Configuration</a></li><li class="list__item"><a href="#d253624e543">Debugging Gulp Tasks</a></li></ul></li></ul></li><li class="list__item"><a href="#d253624e580">Running Gulp.js Tasks Automatically</a></li></ul><a name="d253624e48"></a><a name="dynaProc0"></a><section class="procedure-steps"><h2>Preparing to Install Gulp.js</h2><ol class=".list _decimal"><li class="list__item">
+         
+         
+         
+             
+            Download and install <a name="d25102e42"></a><a href="http://nodejs.org/" data-external="true"><span>Node.js</span></a>. The runtime environment is required for two reasons:
+            <ul class="list _bullet"><li class="list__item"><a name="d25102e47"></a>
+                    The Gulp.js task runner is started through <a name="d25102e49"></a><span class="emphasis">Node.js</span>.
+                </li><li class="list__item"><a name="d25102e53"></a>
+                    <a name="d25102e55"></a><span class="emphasis">NPM</span>, which is a part of the runtime environment, is also the easiest way to download the Gulp.js task runner.
+                </li></ul>
+             
+ 
+        <a name="d25102e63"></a><p>
+             
+            If you are going to use the command line mode, make sure the path to the parent folder of the <a name="d25102e67"></a><span class="emphasis">Node.js</span> executable file
+            and the path to the <code class="code" data-lang="Java">npm</code> folder are added to the <code class="code" data-lang="Java">PATH</code> variable.
+                This enables you to launch the Gulp.js task runner and <a name="d25102e76"></a><span class="emphasis">npm</span> from any folder.
+             
+        </p>
+     
+        </li><li class="list__item">
+             
+             
+                Make sure the <a name="d253624e72"></a><span class="emphasis">NodeJS</span> plugin is enabled.
+                 
+        The plugin is bundled with WebStorm and activated by default.
+        If the plugin is not activated, enable it on the <a name="d7162e5458"></a><a href="plugins-2.html"><span>Plugins</span></a> page of the <a name="d7162e5460"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> as described in <a name="d7162e5462"></a><a href="enabling-and-disabling-plugins.html"><span>Enabling and Disabling Plugins</span></a>.
+     
+             
+        </li></ol></section><a name="installingGulp"></a><h2>Installing Gulp.js</h2>
+        <a name="d253624e82"></a><p>
+            To run <a name="d253624e84"></a><span class="emphasis">Gulp</span> in a WebStorm project you need a <a name="d253624e87"></a><span class="emphasis">Gulp</span> package installed <a name="d253624e90"></a><span class="emphasis">locally</span>, under the project root.
+        </p>
+        <a name="d253624e94"></a><p>
+            You can additionally have a <a name="d253624e96"></a><span class="emphasis">global</span> installation of <a name="d253624e99"></a><span class="emphasis">Gulp</span>. In this case, the path to the <a name="d253624e102"></a><span class="emphasis">Gulp</span> installation will be added to the
+            <code class="code" data-lang="Java">PATH</code> environment variable. This will allow you to invoke <a name="d253624e108"></a><span class="emphasis">Gulp</span> from any folder when working in the command line mode.
+        </p>
+        <a name="d253624e112"></a><p>
+             
+ 
+        The basic <a name="d9041e34"></a><span class="emphasis">Gulp.js</span> functionality is implemented in the <code class="code" data-lang="Java">gulp.js</code> package.
+        The package is responsible for building project trees of Gulp tasks and for coding assistance in editing the <code class="code" data-lang="Java">Gulpfile.js</code> file.
+     
+            The <code class="code" data-lang="Java">gulp</code> package can be installed either in the command line mode or through the WebStorm user interface.
+            In either case, installation is performed via <a name="d253624e130"></a><span class="emphasis">npm</span>.
+        </p>
+        <a name="d253624e134"></a><a name="dynaProc1"></a><section class="procedure-steps"><h2>Installing Gulp.js in the command line mode</h2><ol class=".list _decimal"><li class="list__item">
+                 
+ 
+        Launch the embedded <a name="d9041e48"></a><span class="control">Terminal</span>
+        by hovering  your mouse pointer over <img alt="show_tool_window_bars" width="14" height="14" title="show_tool_window_bars" src="/help/img/idea/2016.1/show_tool_window_bars.png" class="inline-icon-14"> in the lower left corner of WebStorm and choosing  <a name="d9041e53"></a><span class="control">Terminal</span> from the menu
+        (see <a name="d9041e56"></a><a href="working-with-embedded-local-terminal.html"><span>Working with Embedded Local Terminal</span></a> for details).
+     
+            </li><li class="list__item">
+                Do one of the following:
+                <ul class="list _bullet"><li class="list__item"><a name="d253624e148"></a>
+                        To install <a name="d253624e150"></a><span class="emphasis">Gulp.js</span> in the current project, switch to the project root folder and type the following command at the command line prompt:
+                        <a name="d253624e153"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+npm install gulp
+                        </code></div>
+                    </li><li class="list__item"><a name="d253624e157"></a>
+                        To install <a name="d253624e159"></a><span class="emphasis">Gulp.js</span> globally, type:
+                        <a name="d253624e162"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+npm install --global gulp
+                        </code></div>
+                    </li></ul>
+            </li></ol></section>
+
+        <a name="d253624e169"></a><a name="dynaProc2"></a><section class="procedure-steps"><h2>Installing Gulp.js through the WebStorm interface</h2><ol class=".list _decimal"><li class="list__item">
+                Run <a name="d253624e173"></a><span class="emphasis">NPM</span> from WebStorm using the <a name="d253624e176"></a><span class="control">Node.js and NPM</span> page of the <a name="d253624e179"></a><span class="control">Settings</span> dialog box:
+                 
+         
+            Open the <a name="d7162e7944"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by choosing <a name="d7162e7946"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d7162e7949"></a><span class="menupath">WebStorm | Preferences</span> for OS X,
+         
+         
+            and  
+         
+         
+         
+        click <a name="d7162e7972"></a><span class="control">Node.js and NPM</span> under <a name="d7162e7975"></a><span class="control">Languages &amp; Frameworks</span>.
+     
+     
+            </li><li class="list__item">
+                 
+        On the <a name="d9041e82"></a><span class="control">Node.js and NPM</span> page that opens, the <a name="d9041e85"></a><span class="control">Packages</span> area shows all the Node.js-dependent packages
+        that are currently installed on your computer, both at the <a name="d9041e88"></a><span class="emphasis">global</span> and at the <a name="d9041e91"></a><span class="emphasis">project</span> level.
+        Click <img alt="add" width="12" height="12" title="add" src="/help/img/idea/2016.1/new.png" class="inline-icon-12">.
+     
+            </li><li class="list__item">
+                In the <a name="d253624e199"></a><span class="control">Available Packages</span> dialog box that opens, select the <code class="code" data-lang="Java">gulp</code> package.
+                <a name="d253624e205"></a><p>
+                    Optionally:
+                    <ul class="list _bullet"><li class="list__item"><a name="d253624e209"></a>
+                            Specify the version to install.
+                        </li><li class="list__item"><a name="d253624e212"></a>
+                            To have the package installed <a name="d253624e214"></a><span class="emphasis">globally</span>, select the <a name="d253624e217"></a><span class="control">Options</span> check box and type <code class="code" data-lang="Java">--global</code> in the text box.
+                        </li></ul>
+                </p>
+            </li><li class="list__item">
+                Click <a name="d253624e229"></a><span class="control">Install Package</span> to start installation.
+            </li></ol></section>
+    <a name="d253624e236"></a><h2>Running Gulp.js Tasks</h2>
+        <a name="d253624e238"></a><p>
+            <a name="d253624e240"></a><span class="emphasis">Gulp.js</span> tasks can be run either from the tasks tree in the dedicated <a name="d253624e243"></a><a href="gulp-tool-window.html"><span>Gulp Tool Window</span></a>,
+            or from the <code class="code" data-lang="Java">Gulpfile.js</code> file, or by launching a <a name="d253624e248"></a><a href="run-debug-configuration-gulp-js.html"><span>Gulp.js run configuration</span></a>.
+        </p>
+        <a name="d253624e252"></a><h3>Running Gulp.js Tasks from the Tasks Tree</h3>
+            <a name="d253624e254"></a><p>
+                <a name="d253624e256"></a><span class="emphasis">Gulp.js</span> starts building a <a name="d253624e259"></a><span class="emphasis">tasks tree</span> as soon as you
+                 
+        invoke <a name="d9041e574"></a><span class="emphasis">Gulp.js</span> by choosing <a name="d9041e577"></a><span class="control">Show Gulp Tasks</span>
+        on the context menu of a <code class="code" data-lang="Java">Gulpfile.js</code> in the <a name="d9041e583"></a><span class="control">Project</span> tool window
+        or of a <code class="code" data-lang="Java">Gulpfile.js</code> opened in the editor.
+     
+                 
+        The tree is built according to the <code class="code" data-lang="Java">Gulpfile.js</code> file on which <a name="d9041e595"></a><span class="emphasis">Gulp.js</span> was invoked.
+        If you have several <code class="code" data-lang="Java">Gulpfile.js</code> files in your project, you can build a separate tasks tree for each of them and run tasks without abandoning the previously built tasks trees.
+        Each tree is shown under a separate node.
+     
+            </p>
+            <a name="d253624e267"></a><p>
+                 
+        Technically, WebStorm invokes <a name="d9041e604"></a><span class="emphasis">Gulp.js</span>
+        and processes <code class="code" data-lang="Java">Gulpfile.js</code> according to the <a name="d9041e610"></a><span class="emphasis">default Gulp.js run configuration</span>.
+        However this is done silently and does not require any steps from your side.
+     
+            </p>
+
+            <a name="d253624e272"></a><a name="dynaProc3"></a><section class="procedure-steps"><h2>Building a tasks tree</h2><ul class=".list "><li class="list__item">
+                    If the <a name="d253624e322"></a><span class="control">Gulp</span> tool window is not opened yet, do one of the following:
+                    <ul class="list _ul"><li class="list__item"><a name="d9041e102"></a>
+            Select the required <code class="code" data-lang="Java">Gulpfile.js</code> file in the <a name="d9041e107"></a><span class="control">Project</span> tool window and choose <a name="d9041e110"></a><span class="control">Show Gulp Tasks</span> on the context menu of the selection.
+        </li><li class="list__item"><a name="d9041e114"></a>
+            Open the required <code class="code" data-lang="Java">Gulpfile.js</code> file in the editor and choose <a name="d9041e119"></a><span class="control">Show Gulp Tasks</span> on the context menu of the editor.
+        </li></ul>
+                    <a name="d253624e335"></a><p>
+                        In either case, the <a name="d253624e337"></a><span class="control">Gulp</span> tool window opens showing the tasks tree built according to the selected or opened <code class="code" data-lang="Java">Gulp.js</code> file.
+                    </p>
+                </li><li class="list__item">
+                     
+ 
+        If the <a name="d9041e146"></a><span class="control">Gulp</span> tool window is already opened, click <img alt="add_black.png" width="18" height="10" title="add_black.png" src="/help/img/idea/2016.1/add_black.png" class="inline-icon-10"> on the toolbar and
+        choose the required <code class="code" data-lang="Java">Gulpfile.js</code> file from the list. WebStorm adds a new node and builds a tasks tree under it.
+        The title of the node shows the path to the  <code class="code" data-lang="Java">Gulpfile.js</code> file according to which the tree is built.
+     
+                </li><li class="list__item">
+                     
+        To re-build a tree, switch to the required node and click <img alt="icon_reload_grunt.png" width="14" height="14" title="icon_reload_grunt.png" src="/help/img/idea/2016.1/icon_reload_grunt.png" class="inline-icon-14"> on the toolbar.
+     
+                </li></ul><p class="procIntro">
+                    <a name="d253624e276"></a><p>
+                        If your <code class="code" data-lang="Java">Gulpfile.js</code> is written in <a name="d253624e281"></a><a href="https://github.com/lukehoban/es6features/blob/master/README.md" data-external="true"><span>ECMA6</span></a>,
+                        by default WebStorm does not recognize this format and fails to build a tasks tree. To solve this problem,
+                        update the <a name="d253624e284"></a><span class="emphasis">default Gulp.js run configuration</span>:
+                        <ol class="list _decimal"><li class="list__item"><a name="d253624e289"></a>
+                                 
+            Choose <a name="d7162e7850"></a><span class="menupath">Run | Edit Configuration</span> on the main menu.
+            Alternatively, click <kbd data-default="Shift+Alt+F10" data-default_for_gnome="Shift+Alt+F10" data-default_for_kde="Shift+Alt+F10" data-default_for_xwin="Shift+Alt+F10" data-emacs="Alt+Shift+F10" data-visual_studio="Alt+Shift+F10" data-netbeans_6.5="N/A" data-eclipse="Shift+Alt+F10" data-mac_os_x_10.5_="&#x2303;&#x2325;R" data-mac_os_x="&#x2325;&#x21E7;F10" data-eclipse_mac_os_x="&#x2303;&#x2325;R" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Shift+Alt+F10</kbd>  and select <a name="d7162e7855"></a><span class="control">Edit Configuration</span>
+            from the pop-up menu.
+         
+                            </li><li class="list__item"><a name="d253624e294"></a>
+                                Under the <a name="d253624e296"></a><span class="control">Defaults</span> node, click <a name="d253624e299"></a><span class="control">Gulp.js</span>.
+                            </li><li class="list__item"><a name="d253624e303"></a>
+                                In the <a name="d253624e305"></a><a href="run-debug-configuration-gulp-js.html"><span>Run/Debug Configuration: Gulp.Js</span></a> dialog box that opens,
+                                type <code class="code" data-lang="Java">--harmony</code> in the <a name="d253624e310"></a><span class="control">Node options</span> text box and click <a name="d253624e313"></a><span class="control">OK</span>.
+                            </li></ol>
+                    </p>
+                </p></section>
+
+            <a name="d253624e365"></a><a name="dynaProc4"></a><section class="procedure-steps"><h2>Running a task</h2><ul class=".list "><li class="list__item">
+                    <a name="d253624e369"></a><p>
+                        To run a <a name="d253624e371"></a><span class="emphasis">Gulp.js</span> task from a tree of tasks, do one of the following:
+                    </p>
+                     
+ 
+        <ul class="list _ul"><li class="list__item"><a name="d9041e183"></a>
+                To run the   task, select the root node in the tree and choose   on the context menu of the selection.
+            </li><li class="list__item"><a name="d9041e192"></a>
+                To navigate to the definition of a task, select the required task in the tree and choose   on the context menu of the selection.
+            </li></ul>
+     
+                    <a name="d253624e382"></a><p>
+                         
+ 
+        The task execution output will be displayed in the <a name="d9041e214"></a><a href="run-tool-window.html"><span>Run tool window</span></a>.
+     
+                         
+ 
+            The tool window shows the Gulp.js output, reports the errors occurred, lists the packages or plugins that have not been found, etc.
+            The name of the last executed task is displayed on the title bar of the tool window.
+         
+                    </p>
+                </li><li class="list__item">
+                     
+         
+            To run several tasks, use the multiselect mode: hold <kbd>Shift</kbd> (for adjacent items) or <kbd>Ctrl</kbd>
+            (for non-adjacent items) keys and select the required tasks, then choose <a name="d9041e233"></a><span class="control">Run</span> on the context menu of the selection.
+     
+
+                </li></ul></section>
+         
+
+        <a name="d253624e408"></a><a name="dynaProc5"></a><section class="procedure-steps"><h2>Running Tasks from Gulpfile.js</h2><p>
+                <a name="d253624e412"></a><p>
+                    You can run tasks right from the <code class="code" data-lang="Java">Gulpfile.js</code> file opened in the editor without previously building a tree of tasks.
+                </p>
+            </p><ul class=".list "><li class="list__item">
+                Position the cursor at the definition of the task to run and choose <a name="d253624e421"></a><span class="control">Run &lt;task name&gt;</span> on the context menu of the selection.
+                <a name="d253624e424"></a><p>
+                    WebStorm creates and launches a <a name="d253624e426"></a><span class="emphasis">temporary</span> run configuration with the name of the selected task.
+                </p>
+                <a name="d253624e430"></a><p>
+                     
+ 
+        The task execution output will be displayed in the <a name="d9041e214"></a><a href="run-tool-window.html"><span>Run tool window</span></a>.
+     
+                     
+ 
+            The tool window shows the Gulp.js output, reports the errors occurred, lists the packages or plugins that have not been found, etc.
+            The name of the last executed task is displayed on the title bar of the tool window.
+         
+                </p>
+            </li><li class="list__item">
+                 
+        To save an automatically created temporary run configuration, position the cursor at the definition of the task for which it was created
+        and choose <a name="d9041e239"></a><span class="control">Save &lt;task name&gt;</span> on the context menu of the selection.
+        Learn more  in <a name="d9041e242"></a><a href="creating-and-saving-temporary-run-debug-configurations.html"><span>Creating and Saving Temporary Run/Debug Configurations</span></a> and <a name="d9041e244"></a><a href="topicId975505.html"><span>Temporary and Permanent Run/Debug Configurations</span></a>.    
+     
+            </li></ul></section>
+
+
+        <a name="d253624e452"></a><h3>Running and Debugging Tasks According to a Run Configuration</h3>
+            <a name="d253624e454"></a><p>
+                Besides using <a name="d253624e456"></a><span class="emphasis">temporary</span> run configurations that WebStorm creates automatically, you can create and launch your own <a name="d253624e459"></a><span class="emphasis">Gulp.js</span> run configurations.
+                For details about run configurations, see <a name="d253624e462"></a><a href="run-debug-configuration.html"><span>Run/Debug Configuration</span></a> and <a name="d253624e464"></a><a href="creating-and-editing-run-debug-configurations.html"><span>Creating and Editing Run/Debug Configurations</span></a>.    
+            </p>
+
+            <a name="createGulpRunConfig"></a><a name="dynaProc6"></a><section class="procedure-steps"><h2>Creating a Gulp.js run configuration</h2><ol class=".list _decimal"><li class="list__item">
+                     
+            Choose <a name="d7162e7850"></a><span class="menupath">Run | Edit Configuration</span> on the main menu.
+            Alternatively, click <kbd data-default="Shift+Alt+F10" data-default_for_gnome="Shift+Alt+F10" data-default_for_kde="Shift+Alt+F10" data-default_for_xwin="Shift+Alt+F10" data-emacs="Alt+Shift+F10" data-visual_studio="Alt+Shift+F10" data-netbeans_6.5="N/A" data-eclipse="Shift+Alt+F10" data-mac_os_x_10.5_="&#x2303;&#x2325;R" data-mac_os_x="&#x2325;&#x21E7;F10" data-eclipse_mac_os_x="&#x2303;&#x2325;R" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Shift+Alt+F10</kbd>  and select <a name="d7162e7855"></a><span class="control">Edit Configuration</span>
+            from the pop-up menu.
+         
+                </li><li class="list__item">
+                     
+         
+        Click the <a name="d7162e7863"></a><span class="control">Add New Configuration</span> button <img alt="add.png" width="12" height="12" title="add.png" src="/help/img/idea/2016.1/new.png" class="inline-icon-12"> on the toolbar
+        and select <a name="d7162e7868"></a><span class="control">Gulp.js</span> from the pop-up list.
+     
+                </li><li class="list__item">
+                    In the <a name="d253624e492"></a><a href="run-debug-configuration-gulp-js.html"><span>Run/Debug Configuration: Gulp.Js</span></a> dialog box that opens, specify the name of the run configuration, the tasks to run (use blank spaces as separators),
+                    the location of the <code class="code" data-lang="Java">Gulpfile.js</code> file to retrieve the definitions of the tasks from,
+                    and the path to the <code class="code" data-lang="Java">Gulp</code> package installed <a name="d253624e500"></a><span class="emphasis">locally</span>, under the project root.
+                    <a name="d253624e503"></a><p>
+                        Specify the location of the Node executable file and the NodeJS-specific options to be passed to this executable file,
+                        see <a name="d253624e505"></a><a href="run-debug-configuration-node-js.html#node_parameters"><span>Node parameters</span></a> for details.
+                    </p>
+                    <a name="d253624e510"></a><p>
+                        If applicable, specify the <a name="d253624e512"></a><a href="http://en.wikipedia.org/wiki/Environment_variable" data-external="true"><span>environment variables</span></a> for the NodeJS executable file.
+                    </p>
+                    <a name="d253624e516"></a><p>
+                        If applicable, in the <a name="d253624e518"></a><span class="control">Arguments</span> field,
+                         
+        specify the arguments for tasks to be executed with. Use the following format:
+        <a name="d9041e616"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+            --&lt;parameter_name&gt; &lt;parameter_value&gt;
+        </code></div>
+        For example: <code class="code" data-lang="Java">--env development</code>.
+        <a name="d9041e622"></a><p>
+            For details about passing task arguments,
+            see <a name="d9041e624"></a><a href="https://github.com/gulpjs/gulp/blob/master/docs/recipes/pass-arguments-from-cli.md" data-external="true"><span>https://github.com/gulpjs/gulp/blob/master/docs/recipes/pass-arguments-from-cli.md</span></a>
+        </p>
+     
+                    </p>
+                </li></ol></section>
+
+            <a name="d253624e526"></a><a name="dynaProc7"></a><section class="procedure-steps"><h2>Running a Task according to a Run Configuration</h2><ul class=".list "><li class="list__item">
+                    Select the run configuration from the list on the main tool bar and then choose <a name="d253624e530"></a><span class="menupath">Run | Run &lt;configuration name&gt;</span>
+                    on the main menu or click the <a name="d253624e533"></a><span class="control">Run</span> toolbar button <img alt="run.png" width="11" height="14" title="run.png" src="/help/img/idea/2016.1/run.png" class="inline-icon-14">.
+                    The output is displayed in the <a name="d253624e538"></a><a href="run-tool-window.html"><span>Run tool window</span></a>.
+                </li></ul></section>
+
+            <a name="d253624e543"></a><a name="dynaProc8"></a><section class="procedure-steps"><h2>Debugging Gulp Tasks</h2><ol class=".list _decimal"><li class="list__item">
+                    Create a <a name="d253624e547"></a><span class="emphasis">Gulp.js</span> run/debug configuration, <a name="d253624e550"></a><a href="#createGulpRunConfig"><span>see above</span></a>.
+                     
+                </li><li class="list__item">
+                    Open the <code class="code" data-lang="Java">Gulpfile.js</code> file in the editor and set the breakpoints in it where necessary.
+                </li><li class="list__item">
+                    To start a debugging session,
+                     
+        select the required debug configuration from the list on the main tool bar
+        and then choose <a name="d9041e1106"></a><span class="menupath">Run | Debug &lt;configuration name&gt;</span> on the main menu or click the <a name="d9041e1109"></a><span class="control">Debug</span> toolbar button
+        <img alt="debug.png" width="14" height="14" title="debug.png" src="/help/img/idea/2016.1/debug.png" class="inline-icon-14">.
+     
+                </li><li class="list__item">
+                    In the  <a name="d253624e569"></a><a href="debug-tool-window.html"><span>Debug tool window</span></a> that opens, analyze the suspended task execution, step through the task, etc.
+                    as described in <a name="d253624e572"></a><a href="examining-suspended-program.html"><span>Examining Suspended Program</span></a> and <a name="d253624e574"></a><a href="stepping-through-the-program.html"><span>Stepping Through the Program</span></a>.
+                </li></ol></section>
+         
+    <a name="d253624e580"></a><h2>Running Gulp.js Tasks Automatically</h2>
+        <a name="d253624e582"></a><p>
+             
+         
+        If you have some tasks that you run on a regular basis, you can add the corresponding run configurations
+        to a list of <a name="d9041e3776"></a><span class="emphasis">startup tasks</span>. The tasks will be executed automatically on the project start-up.
+     
+        </p>
+        <ol class="list _decimal"><li class="list__item"><a name="d253624e592"></a>
+                 
+         
+            Open the <a name="d7162e7944"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by choosing <a name="d7162e7946"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d7162e7949"></a><span class="menupath">WebStorm | Preferences</span> for OS X,
+         
+         
+            and  
+         
+         
+         
+        click <a name="d7162e7972"></a><span class="control">Startup Tasks</span> under <a name="d7162e7975"></a><span class="control">Tools</span>.
+     
+     
+            </li><li class="list__item"><a name="d9041e3786"></a>
+            On the <a name="d9041e3788"></a><a href="startup-tasks.html"><span>Startup Tasks</span></a> page that opens, click <img alt="add.png" width="12" height="12" title="add.png" src="/help/img/idea/2016.1/new.png" class="inline-icon-12"> on the toolbar.
+        </li><li class="list__item"><a name="d9041e3793"></a>
+            From the drop-down list, choose the required <a name="d9041e3795"></a><span class="emphasis">Gulp.js</span> run configuration. The configuration is added to the list.
+            <a name="d9041e3798"></a><p>
+                If no applicable configuration is available in the project, click <img alt="add.png" width="12" height="12" title="add.png" src="/help/img/idea/2016.1/new.png" class="inline-icon-12">
+                and choose <a name="d9041e3802"></a><span class="control">Edit Configurations</span>. Then define a configuration with the required settings
+                in the <a name="d9041e3805"></a><a href="run-debug-configuration-gulp-js.html"><span>Run/Debug Configuration: Gulp.Js</span></a> page that opens.
+                When you save the new configuration it is automatically added to the list of startup tasks.
+            </p>
+        </li></ol>
+    <div class="navigation-links _bottom"><a class="navigation-links__prev" href="using-grunt-task-runner.html">Using Grunt Task Runner</a><a class="navigation-links__next" href="using-javascript-code-quality-tools.html">Using JavaScript Code Quality Tools</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content"><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d253624e617"></a><a href="run-debug-configuration-gulp-js.html"><span>Run/Debug Configuration: Gulp.Js</span></a></li><li class="list__item"><a name="d253624e619"></a><a href="gulp-tool-window.html"><span>Gulp Tool Window</span></a></li><li class="list__item"><a name="d253624e621"></a><a href="startup-tasks.html"><span>Startup Tasks</span></a></li></ul></div></div></section><div class="last-modified">Last modified: 11 July 2016 </div></article><div id="disqus_thread"></div></div></section></main></div><script src="/help/app/app.js"></script></body></html>

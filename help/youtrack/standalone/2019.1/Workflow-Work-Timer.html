@@ -1,0 +1,66 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="/help/app/v2/analytics.js"></script><meta charset="UTF-8"><meta name="robots" content="noindex"><title>In Progress Work Timer - Help | YouTrack Standalone</title><link rel="stylesheet" href="/help/app/v2/app.css"></head><body data-id="Workflow-Work-Timer"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack Standalone Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>YouTrack Standalone 2019.1 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="Workflow-Work-Timer" id="Workflow-Work-Timer.xml">In Progress Work Timer</h1>  <p id="a182026d">This workflow lets your development team track the time spent working on an issue and log work items    automatically.    The behavior is similar to the <a href="Workflow-Standalone-Work-Timer.html">Stopwatch-style Work Timer</a>.    Instead of using the value for an independent <span class="control">Timer</span> field to start and stop the timer, this workflow uses default values for the <span class="control">State</span> field.</p>  <p id="ff28bb60">Use this workflow when you want to track time spent working on an issue by measuring the amount of time an issue spends in the <span class="control">In Progress</span> state.</p>  <div class="table-wrapper"><table class="left_header                 " width="100%" id="d78e8be5"><tbody><tr id="22f5682a" class="ijRowOdd"><th id="2c4a40db" width="20%"><p>Name</p></th><td id="1c37ffa4"><p>@jetbrains/youtrack-workflow-work-timer</p></td></tr><tr id="2ed1a75a" class="ijRowEven"><th id="4496c4da"><p>Previous Title</p></th><td id="10ff815c"><p>In Progress Work Timer</p></td></tr><tr id="118499c9" class="ijRowOdd"><th id="a9097dd1"><p>Auto-attached</p></th><td id="51febb33"><p>no</p></td></tr><tr id="30c1e741" class="ijRowEven"><th id="50613aac"><p>Modules</p></th><td id="0d12989a"><p>        <a href="#start-timer">Start timer when issue is in progress</a>        (on-change rule)        <br>        <a href="#stop-timer">Stop timer when issue is fixed</a>        (on-change rule)      </p></td></tr></tbody></table></div>  <section class="procedure-steps"><h3 id="f2cb68ec">To enable this workflow:</h3><ol class="list _decimal"><li class="list__item" id="06ae1444"><p>Enable and configure time tracking for your project.      For instructions, see <a href="Enable-and-Configure-Time-Tracking.html">Enable Time Tracking</a>.</p></li><li class="list__item" id="ff01472a"><p>Add a field that stores a <code class="code">date and time</code> type with the name <span class="control">Timer time</span> to your project.    </p></li><li class="list__item" id="7b5caded"><p>Attach the <span class="control">In Progress Work Timer</span> workflow to your project.    </p></li></ol></section>  <p id="79f3f97d">For this workflow to function as written, your project must use a <span class="control">State</span> field that includes the    values <span class="control">In Progress</span> and <span class="control">Fixed</span>.    If you use different fields and values to track the status of issues in your project, modify the workflow    accordingly.  </p>  <div class="chapter"><h2 id="9b98faa7">Use Case</h2>    <p id="7de92fcf">When a developer changes the state of an issue state to <span class="control">In Progress</span>, the workflow enters the      current time in the <span class="control">Timer time</span> field.      When the developer changes the state to <span class="control">Fixed</span>,      a work item with the time spent between the <span class="control">Timer time</span> and the current is added to issue on      behalf of the user who fixed the issue.    </p>  </div>  <div class="chapter"><h2 id="937c9633">Modules</h2>    <p id="4b09bf15">This workflow includes two modules.</p>    <div class="chapter"><h3 id="start-timer">Start timer when issue is in progress</h3>      <p id="ba6505a5">When the state of an issue is changed to <span class="control">In Progress</span>, this rule sets the value of the <span class="control">        Timer time      </span> to the current time.      </p>      <div class="code-block" data-lang="javascript">var entities = require('@jetbrains/youtrack-scripting-api/entities');
+var workflow = require('@jetbrains/youtrack-scripting-api/workflow');
+
+exports.rule = entities.Issue.onChange({
+  title: workflow.i18n('Start timer when issue is in progress'),
+  guard: function(ctx) {
+    return ctx.issue.fields.becomes(ctx.State, ctx.State.InProgress);
+  },
+  action: function(ctx) {
+    ctx.issue.fields.TimerTime = Date.now();
+    workflow.message(workflow.i18n('The timer is started.'));
+  },
+  requirements: {
+    TimerTime: {
+      type: entities.Field.dateType,
+      name: 'Timer time'
+    },
+    State: {
+      type: entities.State.fieldType,
+      InProgress: {
+        name: 'In Progress'
+      }
+    }
+  }
+});</div>    </div>    <div class="chapter"><h3 id="stop-timer">Stop timer when issue is fixed</h3>      <p id="244bf081">When the state of an issue is changed to <span class="control">Fixed</span>, this rule calculates the time spent working        on the issue        and adds a work item to the issue. The work item includes a message that is defined by this rule and the        calculated time spent.      </p>      <div class="code-block" data-lang="javascript">var entities = require('@jetbrains/youtrack-scripting-api/entities');
+var workflow = require('@jetbrains/youtrack-scripting-api/workflow');
+
+exports.rule = entities.Issue.onChange({
+  title: workflow.i18n('Stop timer when issue is fixed'),
+  guard: function(ctx) {
+    var issue = ctx.issue;
+    return issue.fields.isChanged(ctx.State) &amp;&amp;
+      issue.fields.oldValue(ctx.State).name === ctx.State.InProgress.name &amp;&amp;
+      issue.fields.TimerTime;
+  },
+  action: function(ctx) {
+    var issue = ctx.issue;
+    var newWorkItem = {
+      description: workflow.i18n('The work item automatically added by the timer.'),
+      date: Date.now(),
+      author: ctx.currentUser,
+      duration: issue.project.intervalToWorkingMinutes(issue.fields.TimerTime, Date.now())
+    };
+    issue.addWorkItem(newWorkItem);
+    workflow.message(workflow.i18n('Work time added'));
+  },
+  requirements: {
+    TimerTime: {
+      type: entities.Field.dateType,
+      name: 'Timer time'
+    },
+    State: {
+      type: entities.State.fieldType,
+      InProgress: {
+        name: 'In Progress'
+      }
+    }
+  }
+});</div>    </div>  </div><div class="last-modified" data-skip-index="skip">Last modified: 8 July 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="Workflow-Issue-Properties-Combinations.html">Issue Property Combinations</a><a class="navigation-links__next" href="Workflow-Kanban.html">Kanban</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="/help/app/v2/app.js"></script></body></html>

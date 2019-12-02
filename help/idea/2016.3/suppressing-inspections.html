@@ -1,0 +1,83 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta class="swiftype" name="product" data-type="string" content="/idea/2016.3/"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><meta charset="UTF-8"><meta name="robots" content="noindex"><title>IntelliJ IDEA 2016.3 Help :: Suppressing Inspections</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="procedures.inspecting.suppressing"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-swiftype-index="false"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.3 Help</h3><div class="shortcuts-switcher" data-swiftype-index="false"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Windows/Linux Default</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWin</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">Mac OS X</option><option data-group="secondary" value="eclipse_mac_os_x">Eclipse (Mac OS X)</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (Mac OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper (Mac OS X)</option><option data-group="secondary" value="emacs">Emacs (Mac OS X)</option></select></div><div class="panel-trigger" data-swiftype-index="false"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="disabling-and-enabling-inspections.html">Disabling and Enabling Inspections</a></div><h1>Suppressing Inspections</h1><a name="d898724e10"></a><p>On this page:</p><ul><li class="list__item"><a href="#d898724e16">Introduction</a></li><li class="list__item"><a href="#d898724e65">Suppressing inspections in the editor</a></li><li class="list__item"><a href="#d898724e129">Suppressing inspections from the Inspection Results tool window</a></li></ul><a name="d898724e16"></a><h2>Introduction</h2>
+            <a name="d898724e18"></a><p>For some reasons, you may want to partly disable a specific inspection, i.e. ignore some code issues
+                while continuing to detect the other issues with this inspection.</p>
+                <a name="d898724e21"></a><p>For example, IntelliJ IDEA considers some code to be "dead", and you can see that it is true.
+                The inspection is helpful and you do not want to <a name="d898724e23"></a><a href="disabling-and-enabling-inspections.html"><span>disable</span></a> it.
+                However, you may want to use this code later and do not want it to be highlighted in the editor
+                or appear in the issue reports.</p>
+                <a name="d898724e27"></a><p>To do so, IntelliJ IDEA allows you to <a name="d898724e29"></a><span class="emphasis">suppress</span> certain inspections for a specific
+                    statement, function/method, tag or file. You can do it either
+                <a name="d898724e32"></a><a href="#1"><span>in the editor</span></a>, using the suggestion list or
+                    <a name="d898724e35"></a><a href="#2"><span>in the Inspection Results tool window</span></a> when analysing inspection results.</p>
+            <a name="d898724e39"></a><p>Let's summarize the difference between suppressing and <a name="d898724e41"></a><a href="disabling-and-enabling-inspections.html"><span>disabling</span></a> code
+                inspections: </p>
+         
+            <a name="d898724e47"></a><p>When <a name="d898724e49"></a><span class="emphasis">suppressing</span> an inspection, IntelliJ IDEA inserts a special comment that tells
+               the code analysis engine to ignore the issues found by this inspection in the specific piece of code.</p>
+            <a name="d898724e53"></a><p>When <a name="d898724e55"></a><span class="emphasis">disabling</span> an inspection, you just turn it off so the code analysis engine just
+                ignores the code issues found by this inspection.</p>
+         
+            <a name="d898724e61"></a><p>Some code inspections (e.g. those detecting errors) cannot be suppressed.</p>
+    <a name="d898724e65"></a><h2>Suppressing inspections in the editor</h2>
+        <a name="1"></a><a name="dynaProc0"></a><section class="procedure-steps"><h2>To suppress an inspection in the editor</h2><ol class=".list _decimal"><li class="list__item">Set the cursor to the highlighted code issue in the editor.</li><li class="list__item">Press <kbd data-default="Alt+Enter" data-default_for_gnome="Alt+Enter" data-default_for_kde="Alt+Enter" data-default_for_xwin="Alt+Enter" data-emacs="Alt+Enter" data-jbuilder="Alt+Enter" data-visual_studio="Alt+Enter" data-netbeans_6.5="N/A" data-eclipse="Alt+Enter" data-mac_os_x_10.5_="&#x2325;⏎" data-mac_os_x="&#x2325;⏎" data-eclipse_mac_os_x="&#x2318;1" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Enter</kbd>, or click the light bulb icon <img alt="/help/img/idea/2016.3/intentionBulb.png" title="/help/img/idea/2016.3/intentionBulb.png" src="/help/img/idea/2016.3/intentionBulb.png" width="10" height="15" class="inline-icon-15">
+                to expand the suggestion list.
+                <figure><img alt="/help/img/idea/2016.3/intentionActionSuppress.gif" title="/help/img/idea/2016.3/intentionActionSuppress.gif" src="/help/img/idea/2016.3/intentionActionSuppress.gif" width="317" height="100"></figure>
+                 
+                 
+            </li><li class="list__item">
+                Depending on the issue, you will see either quick-fixes related to the inspection or the
+                <a name="d898724e87"></a><span class="control">Inspection "&lt;inspection name&gt;" options</span> item.
+            </li><li class="list__item">
+                Use the up/down arrow keys to select this item and then press the right arrow key
+                or just click the right arrow
+                <img alt="rightArrowInMenu" title="rightArrowInMenu" src="/help/img/idea/2016.3/rightArrowInMenu.png" width="10" height="12" class="inline-icon-12"> next to this item.
+
+                    <a name="d898724e95"></a><p>
+                        Pressing the left arrow key, or
+                        <kbd data-default="Escape" data-default_for_gnome="Escape" data-default_for_kde="Escape" data-default_for_xwin="Escape" data-emacs="Escape, Escape" data-jbuilder="Escape" data-visual_studio="Escape" data-netbeans_6.5="N/A" data-eclipse="Escape" data-mac_os_x_10.5_="&#x238B;" data-mac_os_x="&#x238B;" data-eclipse_mac_os_x="&#x238B;" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Escape</kbd>
+                         
+                        hides the suggestion list.
+                    </p>
+
+            </li><li class="list__item">
+                In the inspection options list, select the desired suppress action:
+                <figure><img alt="/help/img/idea/2016.3/intentionActionSuppress1.gif" title="/help/img/idea/2016.3/intentionActionSuppress1.gif" src="/help/img/idea/2016.3/intentionActionSuppress1.gif" width="460" height="242"></figure>
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 The inspection will be suppressed with special comments in the corresponding
+                    piece of code. 
+            </li></ol></section>
+    <a name="d898724e129"></a><h2>Suppressing inspections from the Inspection Results tool window</h2>
+        <a name="2"></a><a name="dynaProc1"></a><section class="procedure-steps"><h2>To suppress inspections from the Inspection Results tool window</h2><ol class=".list _decimal"><li class="list__item">After <a name="d898724e135"></a><a href="running-inspections.html"><span>running code analysis</span></a>, select a code issue, for which you want to
+                suppress the inspection, in the <a name="d898724e138"></a><a href="inspection-results-tool-window.html"><span>Inspection Results Tool Window</span></a>.</li><li class="list__item">Click the button <a name="d898724e143"></a><span class="control">Suppress</span> and choose the scope of sustension, or just right-click
+                the selected inspection.</li><li class="list__item">Choose the desired suppress action. For example:
+                <figure><img alt="/help/img/idea/2016.3/suppressInspectionFromToolWindow.png" title="/help/img/idea/2016.3/suppressInspectionFromToolWindow.png" src="/help/img/idea/2016.3/suppressInspectionFromToolWindow.png" width="713" height="341"></figure>
+                 
+                 
+                 
+                 
+                 The inspection will be suppressed with special comments in the corresponding
+                    piece of code. 
+            </li></ol></section>
+
+         
+            <a name="cuke"></a>
+            <aside class="note sideblock"><a name="d898724e169"></a><p>The set of suppress actions depends on the language to which inspection applies. For example, for
+            Cucumber, one can suppress inspections for a whole feature, for a scenario, or for a particular step:</p>
+            <figure><img alt="/help/img/idea/2016.3/ruby_suppressInspectionCucumber.png" title="/help/img/idea/2016.3/ruby_suppressInspectionCucumber.png" src="/help/img/idea/2016.3/ruby_suppressInspectionCucumber.png" width="284" height="264"></figure>
+            </aside>
+         
+    <div class="navigation-links _bottom"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="disabling-and-enabling-inspections.html">Disabling and Enabling Inspections</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content">```
+                <div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d898724e190"></a><a href="disabling-and-enabling-inspections.html"><span>Disabling and Enabling Inspections</span></a></li><li class="list__item"><a name="d898724e193"></a><a href="running-inspections.html"><span>Running Inspections</span></a></li><li class="list__item"><a name="d898724e196"></a><a href="disabling-intention-actions.html"><span>Disabling Intention Actions</span></a></li></ul></div><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d898724e202"></a><a href="inspection-results-tool-window.html"><span>Inspection Results Tool Window</span></a></li></ul></div><div class="seealso__col"><h3>Concepts:</h3><ul class="list"><li class="list__item"><a name="d898724e181"></a><a href="code-inspection.html"><span>Code Inspection</span></a></li><li class="list__item"><a name="d898724e184"></a><a href="intention-actions.html"><span>Intention Actions</span></a></li></ul></div></div></section><div class="last-modified" data-swiftype-index="false">Last modified: 21 March 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

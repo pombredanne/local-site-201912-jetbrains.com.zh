@@ -1,0 +1,273 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta class="swiftype" name="product" data-type="string" content="/idea/2016.3/"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><meta charset="UTF-8"><meta name="robots" content="noindex"><title>IntelliJ IDEA 2016.3 Help :: Debugging with Chronon</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Debugging_with_Chronon"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-swiftype-index="false"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.3 Help</h3><div class="shortcuts-switcher" data-swiftype-index="false"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Windows/Linux Default</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWin</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">Mac OS X</option><option data-group="secondary" value="eclipse_mac_os_x">Eclipse (Mac OS X)</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (Mac OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper (Mac OS X)</option><option data-group="secondary" value="emacs">Emacs (Mac OS X)</option></select></div><div class="panel-trigger" data-swiftype-index="false"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="deployment-in-intellij-idea.html">Deployment in IntelliJ IDEA</a></div><h1>Debugging with Chronon</h1><a name="d79391e3"></a><p>On this page:</p><ul><li class="list__item"><a href="#d79391e8">What this tutorial is about</a></li><li class="list__item"><a href="#d79391e19">Before you start...</a></li><li class="list__item"><a href="#d79391e44">Preliminary steps</a><ul class="list _bullet"><li class="list__item"><a href="#d79391e46">Preparing an example</a></li><li class="list__item"><a href="#d79391e100">Installing plugin</a><ul class="list _bullet"><li class="list__item"><a href="#d79391e135">Changes to the UI</a></li></ul></li><li class="list__item"><a href="#d79391e180">Creating run/debug configuration</a><ul class="list _bullet"><li class="list__item"><a href="#d79391e224">Defining include/exclude patterns</a></li></ul></li></ul></li><li class="list__item"><a href="#d79391e245">Running with Chronon</a><ul class="list _bullet"><li class="list__item"><a href="#d79391e284">Opening an existing record</a></li></ul></li><li class="list__item"><a href="#d79391e296">What can you do with a record?</a><ul class="list _bullet"><li class="list__item"><a href="#d79391e301">Switch between threads</a></li><li class="list__item"><a href="#d79391e309">Step through the application</a></li><li class="list__item"><a href="#d79391e330">Use bookmarks</a></li><li class="list__item"><a href="#d79391e357">Explore methods</a></li><li class="list__item"><a href="#d79391e380">Log values</a></li><li class="list__item"><a href="#d79391e419">Explore exceptions</a></li></ul></li><li class="list__item"><a href="#d79391e436">Summary</a></li></ul><a name="d79391e8"></a><h2>What this tutorial is about</h2>
+    <a name="d79391e10"></a><p>This tutorial aims to walk you step-by-step through debugging a Java application with Chronon, a recorder and a
+        "time-travelling" debugger.</p>
+    <a name="d79391e13"></a><p>Chronon records changes are made by your application while it is executing.
+        The recordings are saved to files. You can later play these recordings back and share them among the team members.</p>
+<a name="d79391e19"></a><h2>Before you start...</h2>
+        <a name="d79391e21"></a><p>First of all, it is essential to understand that Chronon is not literally a debugger - it only helps you record
+            the execution progress and then play it back, like a videotape.</p>
+        <a name="d79391e24"></a><p>Second, make sure that:</p>
+        <ul class="list _ul"><li class="list__item"><a name="d79391e29"></a>Your IntelliJ IDEA version is 13.1 or later. This tutorial is made for the version 14.1.</li><li class="list__item"><a name="d79391e32"></a>The Chronon plugin is <a name="d79391e34"></a><a href="installing-updating-and-uninstalling-repository-plugins.html"><span>downloaded and installed</span></a>.</li></ul>
+        <a name="d79391e39"></a><p>Third, note that keyboard shortcuts on different keymaps may differ. This tutorial is made with the default keymap.</p>
+    <a name="d79391e44"></a><h2>Preliminary steps</h2>
+    <a name="d79391e46"></a><h3>Preparing an example</h3>
+        <a name="d79391e48"></a><p>Let’s see how Chronon works on a simple example of a two-thread class. One thread performs quick sorting,
+            while the second thread performs bubble sorting.</p>
+        <a name="d79391e51"></a><p>First, create a project as described in the page <a name="d79391e53"></a><a href="creating-running-and-packaging-your-first-java-application.html"><span>Creating, Running and Packaging Your First Java Application</span></a>.</p>
+        <a name="d79391e56"></a><p>Next, <a name="d79391e58"></a><a href="creating-packages-and-package-info-files.html"><span>create a package</span></a> with the name <code class="code" data-lang="Java">demo</code>, and,
+            finally, <a name="d79391e64"></a><a href="creating-java-classes,-interfaces,-enumerations-and-annotations.html"><span>add Java classes</span></a> to this package.
+            The first class is called <code class="code" data-lang="Java">ChrononDemo.java</code> and it performs two-threaded array sorting:</p>
+        <a name="d79391e71"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kn">package</span> <span class="nn">demo</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.jetbrains.annotations.NotNull</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.AbstractMap</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Arrays</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Random</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ChrononDemo</span> <span class="o">{</span>
+
+     <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">SIZE</span> <span class="o">=</span> <span class="mi">1000</span><span class="o">;</span>
+     <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Random</span> <span class="n">GENERATOR</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Random</span><span class="o">();</span>
+
+     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">InterruptedException</span> <span class="o">{</span>
+            <span class="kd">final</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">array</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">SIZE</span><span class="o">];</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">SIZE</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="n">array</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">GENERATOR</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span>
+            <span class="o">}</span>
+            <span class="kd">final</span> <span class="n">Thread</span> <span class="n">quickSortThread</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="o">(</span><span class="k">new</span> <span class="n">Runnable</span><span class="o">()</span> <span class="o">{</span>
+                <span class="nd">@Override</span>
+                <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+                    <span class="n">QuickSort</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">Arrays</span><span class="o">.</span><span class="na">copyOf</span><span class="o">(</span><span class="n">array</span><span class="o">,</span> <span class="n">array</span><span class="o">.</span><span class="na">length</span><span class="o">));</span>
+                <span class="o">}</span>
+            <span class="o">},</span> <span class="s">&quot;Quick sort&quot;</span><span class="o">);</span>
+
+            <span class="kd">final</span> <span class="n">Thread</span> <span class="n">bubbleThread</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="o">(</span><span class="k">new</span> <span class="n">Runnable</span><span class="o">()</span> <span class="o">{</span>
+                <span class="nd">@Override</span>
+                <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+                    <span class="n">BubbleSort</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">Arrays</span><span class="o">.</span><span class="na">copyOf</span><span class="o">(</span><span class="n">array</span><span class="o">,</span> <span class="n">array</span><span class="o">.</span><span class="na">length</span><span class="o">));</span>
+                <span class="o">}</span>
+            <span class="o">},</span> <span class="s">&quot;Bubble sort&quot;</span><span class="o">);</span>
+
+            <span class="n">quickSortThread</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+            <span class="n">bubbleThread</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+
+            <span class="n">quickSortThread</span><span class="o">.</span><span class="na">join</span><span class="o">();</span>
+            <span class="n">bubbleThread</span><span class="o">.</span><span class="na">join</span><span class="o">();</span>
+            <span class="o">}</span>
+            <span class="o">}</span></code></div>
+     <a name="d79391e74"></a><p>The second is the class <code class="code" data-lang="Java">QuickSort.java</code> that performs quick sorting:</p>
+        <a name="d79391e81"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kn">package</span> <span class="nn">demo</span><span class="o">;</span>
+
+<span class="kd">class</span> <span class="nc">QuickSort</span> <span class="o">{</span>
+      <span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">partition</span><span class="o">(</span><span class="kt">int</span> <span class="n">arr</span><span class="o">[],</span> <span class="kt">int</span> <span class="n">left</span><span class="o">,</span> <span class="kt">int</span> <span class="n">right</span><span class="o">)</span> <span class="o">{</span>
+            <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">left</span><span class="o">,</span> <span class="n">j</span> <span class="o">=</span> <span class="n">right</span><span class="o">;</span>
+            <span class="kt">int</span> <span class="n">tmp</span><span class="o">;</span>
+            <span class="kt">int</span> <span class="n">pivot</span> <span class="o">=</span> <span class="n">arr</span><span class="o">[(</span><span class="n">left</span> <span class="o">+</span> <span class="n">right</span><span class="o">)</span> <span class="o">/</span> <span class="mi">2</span><span class="o">];</span>
+
+            <span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;=</span> <span class="n">j</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">while</span> <span class="o">(</span><span class="n">arr</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">&lt;</span> <span class="n">pivot</span><span class="o">)</span>
+                    <span class="n">i</span><span class="o">++;</span>
+                <span class="k">while</span> <span class="o">(</span><span class="n">arr</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">&gt;</span> <span class="n">pivot</span><span class="o">)</span>
+                    <span class="n">j</span><span class="o">--;</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;=</span> <span class="n">j</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">tmp</span> <span class="o">=</span> <span class="n">arr</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+                <span class="n">arr</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">arr</span><span class="o">[</span><span class="n">j</span><span class="o">];</span>
+                <span class="n">arr</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">tmp</span><span class="o">;</span>
+                <span class="n">i</span><span class="o">++;</span>
+                <span class="n">j</span><span class="o">--;</span>
+              <span class="o">}</span>
+            <span class="o">}</span>
+
+            <span class="k">return</span> <span class="n">i</span><span class="o">;</span>
+       <span class="o">}</span>
+
+        <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="kt">int</span> <span class="n">arr</span><span class="o">[],</span> <span class="kt">int</span> <span class="n">left</span><span class="o">,</span> <span class="kt">int</span> <span class="n">right</span><span class="o">)</span> <span class="o">{</span>
+              <span class="kt">int</span> <span class="n">index</span> <span class="o">=</span> <span class="n">partition</span><span class="o">(</span><span class="n">arr</span><span class="o">,</span> <span class="n">left</span><span class="o">,</span> <span class="n">right</span><span class="o">);</span>
+              <span class="k">if</span> <span class="o">(</span><span class="n">left</span> <span class="o">&lt;</span> <span class="n">index</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span>
+                    <span class="n">sort</span><span class="o">(</span><span class="n">arr</span><span class="o">,</span> <span class="n">left</span><span class="o">,</span> <span class="n">index</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+              <span class="k">if</span> <span class="o">(</span><span class="n">index</span> <span class="o">&lt;</span> <span class="n">right</span><span class="o">)</span>
+                    <span class="n">sort</span><span class="o">(</span><span class="n">arr</span><span class="o">,</span> <span class="n">index</span><span class="o">,</span> <span class="n">right</span><span class="o">);</span>
+             <span class="o">}</span>
+
+        <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="kt">int</span> <span class="n">arr</span><span class="o">[])</span> <span class="o">{</span>
+            <span class="n">sort</span><span class="o">(</span><span class="n">arr</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="n">arr</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+        <span class="o">}</span>
+<span class="o">}</span></code></div>
+        <a name="d79391e84"></a><p>And, finally, the third one is the class <code class="code" data-lang="Java">BubbleSort.java</code>
+            that performs bubble sorting:</p>
+        <a name="d79391e90"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kn">package</span> <span class="nn">demo</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">BubbleSort</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">arr</span><span class="o">)</span> <span class="o">{</span>
+           <span class="kt">boolean</span> <span class="n">swapped</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+           <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+           <span class="kt">int</span> <span class="n">tmp</span><span class="o">;</span>
+           <span class="k">while</span> <span class="o">(</span><span class="n">swapped</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">swapped</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+                <span class="n">j</span><span class="o">++;</span>
+                <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">arr</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="n">j</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="n">arr</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">&gt;</span> <span class="n">arr</span><span class="o">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">])</span> <span class="o">{</span>
+                        <span class="n">tmp</span> <span class="o">=</span> <span class="n">arr</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+                        <span class="n">arr</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">arr</span><span class="o">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">];</span>
+                        <span class="n">arr</span><span class="o">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">tmp</span><span class="o">;</span>
+                        <span class="n">swapped</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span></code></div>
+        <a name="d79391e93"></a><p>By the way, it is recommended to type the code manually, to see the magic IntelliJ IDEA's
+            <a name="d79391e95"></a><a href="auto-completing-code.html"><span>code completion</span></a> in action.</p>
+     
+    <a name="d79391e100"></a><h3>Installing plugin</h3>
+        <a name="d79391e102"></a><p>Open the <a name="d79391e104"></a><span class="control">Settings/Preferences</span> dialog. To do that, click <img alt="/help/img/idea/2016.3/settings.png" title="/help/img/idea/2016.3/settings.png" src="/help/img/idea/2016.3/settings.png" width="15" height="15" class="inline-icon-15"> on the
+            main toolbar, or press <kbd data-default="Ctrl+Alt+S" data-default_for_gnome="Ctrl+Alt+S" data-default_for_kde="Ctrl+Alt+S" data-default_for_xwin="Ctrl+Alt+S" data-emacs="Ctrl+Alt+S" data-jbuilder="N/A" data-visual_studio="Alt+F7" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Alt+S" data-mac_os_x_10.5_="&#x2318;," data-mac_os_x="&#x2318;," data-eclipse_mac_os_x="&#x2318;," data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+S</kbd>. </p>
+        <a name="d79391e112"></a><p>Then click the page <a name="d79391e114"></a><a href="plugins-2.html"><span>Plugins</span></a>.</p>
+        <a name="d79391e117"></a><p>In this page, click the button <a name="d79391e119"></a><span class="control">Install JetBrains plugin...</span> to download and install plugins
+            from the JetBrains repository. In the <a name="d79391e122"></a><span class="control">Browse JetBrains Plugins</span> dialog box,
+            find the <a name="d79391e125"></a><span class="control">Chronon</span> plugin - you can type the search string in the filter area:</p>
+        <figure><img alt="/help/img/idea/2016.3/chronon_install_plugin.png" title="/help/img/idea/2016.3/chronon_install_plugin.png" src="/help/img/idea/2016.3/chronon_install_plugin.png" width="566" height="357"></figure>
+        <a name="d79391e131"></a><p>Install the plugin and restart IntelliJ IDEA for the changes to take effect.</p>
+        <a name="d79391e135"></a><h4>Changes to the UI</h4>
+<a name="d79391e137"></a><p>After restart, pay attention to the following changes:</p>
+            <ul class="list _ul"><li class="list__item"><a name="d79391e142"></a>Dedicated Run with Chronon icon appears on the main toolbar. By now, this icon is disabled
+                    <img alt="/help/img/idea/2016.3/chronon_icon_disabled.png" title="/help/img/idea/2016.3/chronon_icon_disabled.png" src="/help/img/idea/2016.3/chronon_icon_disabled.png" width="21" height="21" class="inline-icon-21">.<br>
+                    It will become enabled <img alt="/help/img/idea/2016.3/chronon_icon.png" title="/help/img/idea/2016.3/chronon_icon.png" src="/help/img/idea/2016.3/chronon_icon.png" width="22" height="22" class="inline-icon-22"> as soon as the corresponding run/debug
+                    configuration appears.</li><li class="list__item"><a name="d79391e151"></a>Chronon tool window (which becomes available on launching a run/debug configuration with Chronon, or
+                    on opening a Chronon record).</li><li class="list__item"><a name="d79391e154"></a>Chronon tab appears in the run/debug configuration of the Application type (and some other types as
+                    well):
+                <figure><img alt="/help/img/idea/2016.3/chronon_tab.png" title="/help/img/idea/2016.3/chronon_tab.png" src="/help/img/idea/2016.3/chronon_tab.png" width="525" height="223"></figure>
+                </li><li class="list__item"><a name="d79391e159"></a><a name="d79391e160"></a><span class="control">Run</span> menu is extended with two commands:
+                <ul class="list _ul"><li class="list__item"><a name="d79391e165"></a>Run &lt;run/debug configuration name&gt; with Chronon</li><li class="list__item"><a name="d79391e168"></a>Open Chronon recording</li></ul>
+                    <figure><img alt="/help/img/idea/2016.3/chronon_menu.png" title="/help/img/idea/2016.3/chronon_menu.png" src="/help/img/idea/2016.3/chronon_menu.png" width="352" height="211"></figure>
+                </li></ul>
+         
+     
+    <a name="d79391e180"></a><h3>Creating run/debug configuration</h3>
+        <a name="d79391e182"></a><p>To launch our application, we need a <a name="d79391e184"></a><a href="run-debug-configuration.html"><span>run/debug configuration</span></a>. Let's
+            <a name="d79391e187"></a><a href="creating-and-editing-run-debug-configurations.html"><span>create one</span></a>.</p>
+        <a name="d79391e191"></a><p>On the main menu, choose <a name="d79391e193"></a><span class="menupath">Run | Edit Configuration</span>, and in the Run/Debug Configurations
+            dialog box, click <img alt="/help/img/idea/2016.3/new.png" title="/help/img/idea/2016.3/new.png" src="/help/img/idea/2016.3/new.png" width="12" height="12" class="inline-icon-12">. We are going to create a new run/debug configuration of the
+            <a name="d79391e198"></a><a href="run-debug-configuration-application.html"><span>Application</span></a> type, so select this type:</p>
+        <figure><img alt="/help/img/idea/2016.3/chronon_application.png" title="/help/img/idea/2016.3/chronon_application.png" src="/help/img/idea/2016.3/chronon_application.png" width="258" height="191"></figure>
+        <a name="d79391e204"></a><p>The new run/debug configuration based on the Application type appears. So far, it is unnamed and lacks
+            reference to the class with the main method. Let's specify the missing information.</p>
+        <a name="d79391e207"></a><p>First, give this run/debug configuration a name. Let it be <code class="code" data-lang="Java">ChrononDemo</code>.
+            Next, press <kbd data-default="Shift+Enter" data-default_for_gnome="Shift+Enter" data-default_for_kde="Shift+Enter" data-default_for_xwin="Shift+Enter" data-emacs="Shift+Enter" data-jbuilder="Shift+Enter" data-visual_studio="Shift+Enter" data-netbeans_6.5="N/A" data-eclipse="Shift+Enter" data-mac_os_x_10.5_="&#x21E7;⏎" data-mac_os_x="&#x21E7;⏎" data-eclipse_mac_os_x="&#x21E7;⏎" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Shift+Enter</kbd> and find the class named
+            <code class="code" data-lang="Java">ChrononDemo.java</code> that contains the main method. This class resides in the
+            package <code class="code" data-lang="Java">demo</code>:</p>
+        <figure><img alt="/help/img/idea/2016.3/chronon_demo_app.png" title="/help/img/idea/2016.3/chronon_demo_app.png" src="/help/img/idea/2016.3/chronon_demo_app.png" width="729" height="583"></figure>
+
+        <a name="d79391e224"></a><h4>Defining include/exclude patterns</h4>
+            <a name="d79391e226"></a><p>Next, click <a name="d79391e228"></a><span class="control">Chronon</span> tab. In this tab, you have to specify which classes IntelliJ IDEA should look at.
+                This is done by Include / Exclude Patterns. In the <a name="d79391e231"></a><span class="control">Include Patterns</span> area, click
+                <img alt="/help/img/idea/2016.3/add_class.png" title="/help/img/idea/2016.3/add_class.png" src="/help/img/idea/2016.3/add_class.png" width="22" height="22" class="inline-icon-22">: </p>
+            <figure><img alt="/help/img/idea/2016.3/chronon_choose_class.png" title="/help/img/idea/2016.3/chronon_choose_class.png" src="/help/img/idea/2016.3/chronon_choose_class.png" width="725" height="372"></figure>
+            <a name="d79391e239"></a><p>Now apply changes and close the dialog. The preliminary steps are done.</p>
+         
+     
+    <a name="d79391e245"></a><h2>Running with Chronon</h2>
+        <a name="d79391e247"></a><p>OK, it's time to launch our application. To do that, either click the Chronon button
+            <img alt="/help/img/idea/2016.3/chronon_icon.png" title="/help/img/idea/2016.3/chronon_icon.png" src="/help/img/idea/2016.3/chronon_icon.png" width="22" height="22" class="inline-icon-22"> on the main toolbar, or choose
+            <a name="d79391e251"></a><span class="menupath">Run | Run ChrononDemo with Chronon</span> on the main menu.</p>
+        <a name="d79391e255"></a><p>Let's choose the first way:</p>
+        <figure><img alt="/help/img/idea/2016.3/chronon_run.png" title="/help/img/idea/2016.3/chronon_run.png" src="/help/img/idea/2016.3/chronon_run.png" width="690" height="117"></figure>
+        <a name="d79391e260"></a><p>IntelliJ IDEA shows the progress bar, and then the <a name="d79391e262"></a><a href="run-tool-window.html"><span>Run tool window</span></a>, where you can see
+            the Chronon messages:</p>
+        <figure><img alt="/help/img/idea/2016.3/chronon_run_tool_window.png" title="/help/img/idea/2016.3/chronon_run_tool_window.png" src="/help/img/idea/2016.3/chronon_run_tool_window.png" width="606" height="188"></figure>
+        <a name="d79391e269"></a><p>It is important to note that a Chronon record is NOT created, when you terminate your application by clicking
+            <img alt="/help/img/idea/2016.3/stop.gif" title="/help/img/idea/2016.3/stop.gif" src="/help/img/idea/2016.3/stop.gif" width="12" height="12" class="inline-icon-12">. If it is necessary to stop an application and still have a Chronon record, click the
+            Exit button <img alt="/help/img/idea/2016.3/exitIcon.gif" title="/help/img/idea/2016.3/exitIcon.gif" src="/help/img/idea/2016.3/exitIcon.gif" width="20" height="20" class="inline-icon-20"> on the toolbar of the Run tool window.</p>
+        <a name="d79391e276"></a><p>Then the Chronon tool window appears. It looks very much like the <a name="d79391e278"></a><a href="debug-tool-window.html"><span>Debug tool window</span></a>.
+            In this tool window you see a record created by Chronon; so doing, each record shows in its own tab:</p>
+        <figure><img alt="/help/img/idea/2016.3/chronon_tool_window.png" title="/help/img/idea/2016.3/chronon_tool_window.png" src="/help/img/idea/2016.3/chronon_tool_window.png" width="638" height="186"></figure>
+<a name="d79391e284"></a><h3>Opening an existing record</h3>
+    <a name="d79391e286"></a><p>By the way, if you want to open one of the previous records, use <a name="d79391e288"></a><span class="control">Run| Open Chronon recording</span>
+        on the main menu, and then choose the desired record:</p>
+    <figure><img alt="/help/img/idea/2016.3/chronon_open_record.png" title="/help/img/idea/2016.3/chronon_open_record.png" src="/help/img/idea/2016.3/chronon_open_record.png" width="426" height="396"></figure>
+ 
+
+    <a name="d79391e296"></a><h2>What can you do with a record?</h2>
+        <a name="d79391e298"></a><p>In the Chronon tool window, you can:</p>
+
+        <a name="d79391e301"></a><h3>Switch between threads</h3>
+            <a name="d79391e303"></a><p>This is most easy - just switch to the Threads tab, and double-click the thread you are interested in.
+                The selected thread is shown in boldface in the list of threads; besides that, the information about the
+                currently selected thread appears in the upper-right part of the Chronon tool window:</p>
+            <figure><img alt="/help/img/idea/2016.3/chronon_tool_window_threads.png" title="/help/img/idea/2016.3/chronon_tool_window_threads.png" src="/help/img/idea/2016.3/chronon_tool_window_threads.png" width="1008" height="147"></figure>
+         
+        <a name="d79391e309"></a><h3>Step through the application</h3>
+            <a name="d79391e311"></a><p>Actually, you can use either the stepping commands of the Run menu, or the stepping buttons of the
+                Chronon tool window. Unlike the debugger that allows only stepping forward, Chronon makes it possible to
+                step through the applications in the reverse direction also:</p>
+            <figure><img alt="/help/img/idea/2016.3/chronon_tool_window_step_backward.png" title="/help/img/idea/2016.3/chronon_tool_window_step_backward.png" src="/help/img/idea/2016.3/chronon_tool_window_step_backward.png" width="935" height="157"></figure>
+            <a name="d79391e316"></a><p>So, besides the traditional stepping buttons, there is <a name="d79391e318"></a><span class="emphasis">Step Backwards</span> button <img alt="/help/img/idea/2016.3/step_backwards.png" title="/help/img/idea/2016.3/step_backwards.png" src="/help/img/idea/2016.3/step_backwards.png" width="21" height="20" class="inline-icon-20"> and <a name="d79391e323"></a><span class="emphasis">Run Backwards to Cursor</span> button
+                <img alt="/help/img/idea/2016.3/run_backwards_to_cursor.png" title="/help/img/idea/2016.3/run_backwards_to_cursor.png" src="/help/img/idea/2016.3/run_backwards_to_cursor.png" width="23" height="24" class="inline-icon-24">.</p>
+         
+        <a name="d79391e330"></a><h3>Use bookmarks</h3>
+            <a name="d79391e332"></a><p>Suppose you've stopped at a certain line, for example, in the main method of the class
+                <code class="code" data-lang="Java">ChrononDemo.java</code>:</p>
+            <figure><img alt="/help/img/idea/2016.3/chronon_bookmark.png" title="/help/img/idea/2016.3/chronon_bookmark.png" src="/help/img/idea/2016.3/chronon_bookmark.png" width="610" height="407"></figure>
+            <a name="d79391e340"></a><p>You want to memorize this place with its event number, to be able to return to it from any other location.
+                This is where the <a name="d79391e342"></a><span class="control">Bookmarks</span> tab becomes helpful. Switch to this tab, and click
+                <img alt="/help/img/idea/2016.3/new.png" title="/help/img/idea/2016.3/new.png" src="/help/img/idea/2016.3/new.png" width="12" height="12" class="inline-icon-12">. A bookmark for the current event, thread and method is created:</p>
+            <figure><img alt="/help/img/idea/2016.3/chronon_bookmark1.png" title="/help/img/idea/2016.3/chronon_bookmark1.png" src="/help/img/idea/2016.3/chronon_bookmark1.png" width="939" height="139"></figure>
+            <a name="d79391e350"></a><p>So doing, the bookmark memorizes the event number, thread and method name. Next, when you are in a
+                different place of the code, clicking this bookmark in the <a name="d79391e352"></a><span class="control">Bookmarks</span> tab will return
+                you to this particular place.</p>
+         
+        <a name="d79391e357"></a><h3>Explore methods</h3>
+            <a name="d79391e359"></a><p>If you look at the editor, you notice the icons <img alt="/help/img/idea/2016.3/debug_resume.png" title="/help/img/idea/2016.3/debug_resume.png" src="/help/img/idea/2016.3/debug_resume.png" width="14" height="13" class="inline-icon-13"> in the left gutter next to
+                the method declarations. Hovering the mouse pointer over such an icon shows a tooltip with the number of
+                the recorded calls.</p>
+            <a name="d79391e364"></a><p>However, if you want to see a particular call event, then select the desired thread in the
+                <a name="d79391e366"></a><span class="control">Threads</span> tab (remember - the selected thread is shown in upper right part of the
+                Chronon tool window), switch to the <a name="d79391e369"></a><span class="control">Method History</span> tab, and track the execution
+                history of a method:</p>
+            <figure><img alt="/help/img/idea/2016.3/chronon_method_history.png" title="/help/img/idea/2016.3/chronon_method_history.png" src="/help/img/idea/2016.3/chronon_method_history.png" width="929" height="120"></figure>
+            <a name="d79391e375"></a><p>Thus you can explore the method execution, with the input and output data, which makes it easy to see how
+                and where a method has been invoked.</p>
+
+         
+        <a name="d79391e380"></a><h3>Log values</h3>
+            <a name="d79391e382"></a><p>What is the Logging tab for? By default, it is empty. However, using this tab makes it possible to define
+                custom logging statements and track their output during application run.</p>
+            <a name="d79391e385"></a><p>This is how logging works. In the editor, right-click the statement of interest, and choose
+                <a name="d79391e387"></a><span class="menupath">Add logging statement</span> on the context menu:</p>
+            <figure><img alt="/help/img/idea/2016.3/chronon_add_logging_statement.png" title="/help/img/idea/2016.3/chronon_add_logging_statement.png" src="/help/img/idea/2016.3/chronon_add_logging_statement.png" width="554" height="396"></figure>
+            <a name="d79391e393"></a><p>Then, in the dialog box that opens, specify the variable you want to watch in the following format:</p>
+            <figure><img alt="/help/img/idea/2016.3/chronon_add_logging_statement1.png" title="/help/img/idea/2016.3/chronon_add_logging_statement1.png" src="/help/img/idea/2016.3/chronon_add_logging_statement1.png" width="483" height="249"></figure>
+            <a name="d79391e399"></a><p>Next, to make use of this logging statement, click <img alt="/help/img/idea/2016.3/rerun.png" title="/help/img/idea/2016.3/rerun.png" src="/help/img/idea/2016.3/rerun.png" width="13" height="14" class="inline-icon-14"> in the toolbar of the
+                <a name="d79391e403"></a><span class="control">Logging</span> tab. In the right-hand side of the Logging tab, the output of the logged
+                statement is displayed:</p>
+            <figure><img alt="/help/img/idea/2016.3/chronon_add_logging_statement2.png" title="/help/img/idea/2016.3/chronon_add_logging_statement2.png" src="/help/img/idea/2016.3/chronon_add_logging_statement2.png" width="929" height="145"></figure>
+            <a name="d79391e409"></a><p>Note that such logging is equivalent to adding an output statement to your application; you could have
+                added</p>
+            <a name="d79391e412"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(&lt;</span><span class="n">variable</span> <span class="n">name</span><span class="o">&gt;);</span></code></div>
+            <a name="d79391e415"></a><p>However, this would require application rebuild and rerun. With Chronon's logging facility, such
+                complications are avoided.</p>
+         
+        <a name="d79391e419"></a><h3>Explore exceptions</h3>
+            <a name="d79391e421"></a><p>Suppose you want to find out how and when an exception has occurred. The <a name="d79391e423"></a><span class="control">Exceptions</span> tab
+                shows all the exceptions that took place during an application execution:</p>
+                <figure><img alt="/help/img/idea/2016.3/chronon_exception.png" title="/help/img/idea/2016.3/chronon_exception.png" src="/help/img/idea/2016.3/chronon_exception.png" width="929" height="127"></figure>
+                <a name="d79391e429"></a><p>If you double click an exception,
+                    IntelliJ IDEA will bring you directly to the place of the exception occurrence:</p>
+            <figure><img alt="/help/img/idea/2016.3/chronon_exception1.png" title="/help/img/idea/2016.3/chronon_exception1.png" src="/help/img/idea/2016.3/chronon_exception1.png" width="441" height="189"></figure>
+
+         
+    <a name="d79391e436"></a><h2>Summary</h2>
+        <a name="d79391e438"></a><p>You've learned how to:</p>
+        <ul class="list _ul"><li class="list__item"><a name="d79391e443"></a>Download and install Chronon plugin for IntelliJ IDEA</li><li class="list__item"><a name="d79391e446"></a>Launch an application with Chronon recording.</li><li class="list__item"><a name="d79391e449"></a>Open existing Chronon recordings.</li><li class="list__item"><a name="d79391e452"></a>Work with the Chronon tool window. By the way, refer to the
+                <a name="d79391e454"></a><a href="debug-tool-window.html#hide_restore"><span>Hide/Restore Toolbar</span></a> section of the Debug tool window
+                reference to learn how to show/hide tabs.</li></ul>
+        <a name="d79391e459"></a><p>This tutorial is over - congrats!</p>
+    <div class="last-modified" data-swiftype-index="false">Last modified: 21 March 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

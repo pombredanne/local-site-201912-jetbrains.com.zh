@@ -1,0 +1,258 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"></meta><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><title>WebStorm 2016.1 Help :: Run/Debug Configuration: JSTestDriver</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="reference.dialogs.rundebug.JsTestDriver-test-runner"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search WebStorm Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>WebStorm 2016.1 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWindow</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="run-debug-configuration-javascript-debug.html">Run/Debug Configuration: JavaScript Debug</a><a class="navigation-links__next" href="run-debug-configuration-karma.html">Run/Debug Configuration: Karma</a></div><h1>Run/Debug Configuration: JSTestDriver</h1><a name="d168602e3"></a><p>
+              In this dialog box, create a configuration to be used for running JavaScript unit tests in the browser against a JSTestDriver server.
+              Configurations of this type enable running unit tests based on the  <a name="d168602e5"></a><a href="http://code.google.com/p/js-test-driver/" data-external="true"><span>JSTestDriver Assertion</span></a>,
+              <a name="d168602e8"></a><a href="http://jasmine.github.io/" data-external="true"><span>Jasmine</span></a>, and <a name="d168602e11"></a><a href="http://docs.jquery.com/QUnit" data-external="true"><span>QUnit</span></a> frameworks.
+          </p><a name="d168602e15"></a><p>
+        The dialog box is available when the <a name="d168602e17"></a><span class="emphasis">JSTestDriver</span> plugin is activated.
+         
+            The plugin is&nbsp;not&nbsp;bundled with WebStorm, but it can be installed from the <a name="d7162e5517"></a><span class="emphasis">JetBrains plugin repository</span>
+            as described in <a name="d7162e5520"></a><a href="installing-updating-and-uninstalling-repository-plugins.html"><span>Installing, Updating and Uninstalling Repository Plugins</span></a> and <a name="d7162e5522"></a><a href="enabling-and-disabling-plugins.html"><span>Enabling and Disabling Plugins</span></a>.
+     
+
+    </p><a name="d168602e23"></a><p>
+        On this page:
+    </p><ul><li class="list__item"><a href="#d168602e31">Configuration Tab</a><ul class="list _bullet"><li class="list__item"><a href="#d168602e36">Test</a></li><li class="list__item"><a href="#d168602e240">Server</a></li></ul></li><li class="list__item"><a href="#d168602e289">Debug Tab</a></li><li class="list__item"><a href="#d168602e331">Coverage Tab</a></li><li class="list__item"><a href="#d7162e760">Toolbar</a></li><li class="list__item"><a href="#d7162e713">Common options</a></li></ul><a name="d168602e31"></a><h2>Configuration Tab</h2>
+        <a name="d168602e33"></a><p>
+            In this tab, specify the tests to run, the configuration files to use, and the server to run the tests against.
+        </p>
+        <a name="d168602e36"></a><h3>Test</h3>
+        <a name="d168602e38"></a><p>
+            In this area, tell WebStorm where to find the tests to execute and how to get <a name="d168602e40"></a><a href="http://code.google.com/p/js-test-driver/wiki/ConfigurationFile" data-external="true"><span>test runner configuration files</span></a>
+            that define which test files to load and in which order. The main approaches are:
+            <ul class="list _bullet"><li class="list__item"><a name="d168602e45"></a>
+                    Specify the location of one or several previously created configuration files.
+                </li><li class="list__item"><a name="d168602e48"></a>
+                    Point at the target test file, test case, or test method, and then specify the location of the corresponding configuration file.
+                </li></ul>
+            The way to find tests and configuration files is defined in the <a name="d168602e54"></a><span class="control">Test</span> drop-down list. This choice determines the set of other controls in the area.
+        </p>
+        <table class=" wide" width="100%" id="d168602e58"><thead><tr id="d168602e60" class="ijRowHead"><a name="d168602e60"></a><th width="20%"><a name="d168602e62"></a>Item</th><th width="60%"><a name="d168602e65"></a>Description</th><th width="20%"><a name="d168602e68"></a>Available for</th></tr></thead><tbody><tr id="d168602e72" class="ijRowOdd"><a name="d168602e72"></a><td><a name="d168602e74"></a>Test</td><td colspan="2"><a name="d168602e77"></a>
+                    In this drop-down list, specify how WebStorm will get test runner configuration files.
+                    <ul class="list _bullet"><li class="list__item"><a name="d168602e81"></a>
+                            <a name="d168602e83"></a><span class="control">All configuration files in directory:</span> select this option to use all the test runner configuration files in a specific folder.
+                        </li><li class="list__item"><a name="d168602e87"></a>
+                            <a name="d168602e89"></a><span class="control">Configuration file:</span> select this option to use a specific test runner configuration file.
+                        </li><li class="list__item"><a name="d168602e93"></a>
+                            <a name="d168602e95"></a><span class="control">JavaScript test file:</span> select this option to have tests from a specific file executed
+                            using one of the previously defined configuration files.
+                        </li><li class="list__item"><a name="d168602e99"></a>
+                            <a name="d168602e101"></a><span class="control">Case:</span> select this option to run a specific test case
+                            using one of the previously defined configuration files.
+                        </li><li class="list__item"><a name="d168602e105"></a>
+                            <a name="d168602e107"></a><span class="control">Method:</span> select this option to run a specific test method
+                            using one of the previously defined configuration files.
+                        </li></ul>
+                </td></tr><tr id="d168602e114" class="ijRowEven"><a name="d168602e114"></a><td><a name="d168602e116"></a>
+                    <a name="folder"></a>
+                    Directory
+                </td><td><a name="d168602e121"></a>
+                    In this text box, specify the folder to look for test runner configuration files in.
+                    Type the path manually or click the <a name="d168602e123"></a><span class="control">Browse</span> button <img alt="browseButton.png" width="15" height="15" title="browseButton.png" src="/help/img/idea/2016.1/browseButton.png" class="inline-icon-15">
+                    and select the required folder in the dialog box, that opens.
+                </td><td><a name="d168602e129"></a>
+                    All configuration files in directory
+                </td></tr><tr id="d168602e133" class="ijRowOdd"><a name="d168602e133"></a><td><a name="d168602e135"></a>
+                    Matched configuration files
+                </td><td><a name="d168602e138"></a>
+                    This read-only field shows a list of all the <code class="code" data-lang="Java">*jstd</code> and <code class="code" data-lang="Java">JSTestDriver.conf</code> test runner configuration files
+                    detected in the <a name="d168602e146"></a><a href="#folder"><span>specified folder</span></a>.
+                </td><td><a name="d168602e150"></a>
+                    All configuration files in directory
+                </td></tr><tr id="d168602e154" class="ijRowEven"><a name="d168602e154"></a><td><a name="d168602e156"></a>
+                    Configuration file
+                </td><td><a name="d168602e159"></a>
+                    In this text box, specify the test runner configuration file to use.
+                    Type the path manually or click the <a name="d168602e161"></a><span class="control">Browse</span> button <img alt="browseButton.png" width="15" height="15" title="browseButton.png" src="/help/img/idea/2016.1/browseButton.png" class="inline-icon-15">
+                    and select the required file in the dialog box that opens.
+                </td><td><a name="d168602e167"></a>
+                    Configuration file
+                </td></tr><tr id="d168602e172" class="ijRowOdd"><a name="d168602e172"></a><td><a name="d168602e174"></a>
+                    <a name="js_test_file"></a>
+                    JS test file</td><td><a name="d168602e179"></a>
+                    In this text box, specify the JavaScript files with tests to be executed.
+                    Type the path manually or click the <a name="d168602e181"></a><span class="control">Browse</span> button <img alt="browseButton.png" width="15" height="15" title="browseButton.png" src="/help/img/idea/2016.1/browseButton.png" class="inline-icon-15">
+                    and select the required file in the dialog box, that opens.
+                </td><td><a name="d168602e187"></a>
+                    JavaScript test file<br>
+                    Case<br>
+                    Method
+                </td></tr><tr id="d168602e195" class="ijRowEven"><a name="d168602e195"></a><td><a name="d168602e197"></a>
+                    <a name="case"></a>
+                    Case</td><td><a name="d168602e202"></a>
+                    In this text box, type the name of the target case from the <a name="d168602e204"></a><a href="#js_test_file"><span>specified JavaScript file</span></a>.
+                </td><td><a name="d168602e208"></a>
+                    Case<br>
+                    Method
+                </td></tr><tr id="d168602e214" class="ijRowOdd"><a name="d168602e214"></a><td><a name="d168602e216"></a>
+                    <a name="method"></a> 
+                    Method</td><td><a name="d168602e221"></a>
+                    In this text box, type the name of the target method from the <a name="d168602e223"></a><a href="#case"><span>specified test case</span></a> within the <a name="d168602e226"></a><a href="#js_test_file"><span>specified JavaScript file</span></a>.
+                </td><td><a name="d168602e230"></a>
+                    Method
+                </td></tr></tbody></table>
+ 
+    <a name="d168602e240"></a><h3>Server</h3>
+
+        <a name="d168602e242"></a><p>
+            In this area, appoint the test server to run tests against.
+        </p>
+        <table class="" width="100%" id="d168602e245"><thead><tr id="d168602e247" class="ijRowHead"><a name="d168602e247"></a><th width="20%"><a name="d168602e249"></a>Item</th><th width="80%"><a name="d168602e252"></a>Description</th></tr></thead><tbody><tr id="d168602e256" class="ijRowOdd"><a name="d168602e256"></a><td><a name="d168602e258"></a>
+                    At address
+                </td><td><a name="d168602e261"></a>
+                    Choose this option to have the test execution handles by a remote test server. In the text box, specify the URL address to access the server through. 
+                </td></tr><tr id="d168602e265" class="ijRowEven"><a name="d168602e265"></a><td><a name="d168602e267"></a>
+                    Running in IDE
+                </td><td><a name="d168602e270"></a>
+                    Choose this option to have test execution handles through the JSTestDriver server that comes bundled with WebStorm and can be launched from it. 
+                </td></tr><tr id="d168602e274" class="ijRowOdd"><a name="d168602e274"></a><td><a name="d168602e276"></a>
+                    Test Connection
+                </td><td><a name="d168602e279"></a>
+                    Click this button to check that the specified test server is accessible.
+
+                        <a name="d168602e281"></a><p>
+                            The server must be running. Start the server from WebStorm or manually, according to the server-specific instructions.
+                        </p>
+
+                </td></tr></tbody></table>
+ 
+    <a name="d168602e289"></a><h2>Debug Tab</h2>
+        <a name="d168602e291"></a><p>
+            In this tab, appoint the browser to debug the unit test in when two or more browsers are captured simultaneously.
+        </p>
+        <table class="" width="100%" id="d168602e294"><thead><tr id="d168602e296" class="ijRowHead"><a name="d168602e296"></a><th><a name="d168602e298"></a>Item</th><th><a name="d168602e301"></a>Description</th></tr></thead><tbody><tr id="d168602e305" class="ijRowOdd"><a name="d168602e305"></a><td><a name="d168602e307"></a>Debug</td><td><a name="d168602e310"></a>
+                    From this drop-down list, choose the browser to debug the specified tests in when two browsers are captured at a time. The available options are:
+                    <ul class="list _bullet"><li class="list__item"><a name="d168602e314"></a>
+                  <a name="d168602e316"></a><span class="control">Chrome</span>
+               </li><li class="list__item"><a name="d168602e320"></a>
+                  <a name="d168602e322"></a><span class="control">Firefox</span>
+               </li></ul>
+                </td></tr></tbody></table>
+<a name="d168602e331"></a><h2>Coverage Tab</h2>
+
+        <a name="d168602e333"></a><p>
+            In this tab, specify the files that you do not want to be involved in coverage analysis.
+        </p>
+        <table class="" width="100%" id="d168602e336"><thead><tr id="d168602e338" class="ijRowHead"><a name="d168602e338"></a><th><a name="d168602e340"></a>Item</th><th><a name="d168602e343"></a>Description</th></tr></thead><tbody><tr id="d168602e347" class="ijRowOdd"><a name="d168602e347"></a><td><a name="d168602e349"></a>
+                    Exclude file path
+                </td><td><a name="d168602e352"></a>
+                    In this area, create a list of files to be skipped during coverage analysis.
+                    <ul class="list _bullet"><li class="list__item"><a name="d168602e356"></a>
+                            To add an item to the list, click the <a name="d168602e358"></a><span class="control">Add</span> button <img alt="new.png" width="12" height="12" title="new.png" src="/help/img/idea/2016.1/new.png" class="inline-icon-12">
+                            and choose the required file in the <a name="d168602e363"></a><a href="select-path-dialog.html"><span>dialog that opens</span></a>.
+                        </li><li class="list__item"><a name="d168602e369"></a>
+                            To delete a file from the list so coverage is measured for it, select the file and click the <a name="d168602e371"></a><span class="control">Remove</span> button <img alt="delete.png" width="12" height="12" title="delete.png" src="/help/img/idea/2016.1/delete.png" class="inline-icon-12">.
+                        </li></ul>
+                </td></tr></tbody></table>
+
+<a name="2"></a><a name="d7162e760"></a><h2>Toolbar</h2><table class=" wide" width="100%" id="d7162e763"><thead><tr id="d7162e765" class="ijRowHead"><a name="d7162e765"></a><th><a name="d7162e767"></a>Item</th><th><a name="d7162e770"></a>Shortcut</th><th><a name="d7162e773"></a>Description</th></tr></thead><tbody><tr id="d7162e777" class="ijRowOdd"><a name="d7162e777"></a><td><a name="d7162e779"></a>
+                  <img alt="add" width="12" height="12" title="add" src="/help/img/idea/2016.1/new.png" class="inline-icon-12">
+              </td><td><a name="d7162e784"></a>
+                  <kbd data-default="Alt+Insert" data-default_for_gnome="Alt+Insert" data-default_for_kde="Alt+Insert" data-default_for_xwin="Alt+Insert" data-emacs="Alt+Insert" data-visual_studio="Ctrl+N" data-netbeans_6.5="N/A" data-eclipse="Alt+Insert" data-mac_os_x_10.5_="&#x2318;N" data-mac_os_x="&#x2303;N" data-eclipse_mac_os_x="&#x2318;N" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Insert</kbd>
+              </td><td><a name="d7162e789"></a>Click this button to add a new configuration to the list.</td></tr><tr id="d7162e793" class="ijRowEven"><a name="d7162e793"></a><td><a name="d7162e795"></a>
+                  <img alt="delete" width="12" height="12" title="delete" src="/help/img/idea/2016.1/delete.png" class="inline-icon-12">
+              </td><td><a name="d7162e800"></a>
+                  <kbd data-default="Alt+Delete" data-default_for_gnome="Alt+Delete" data-default_for_kde="Alt+Delete" data-default_for_xwin="Alt+Delete" data-emacs="N/A" data-visual_studio="Alt+Delete" data-netbeans_6.5="N/A" data-eclipse="Alt+Delete" data-mac_os_x_10.5_="&#x2318;&#x2326;" data-mac_os_x="&#x2318;&#x2326;" data-eclipse_mac_os_x="N/A" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Delete</kbd>
+              </td><td><a name="d7162e805"></a>Click this button to remove the selected configuration from the list.</td></tr><tr id="d7162e809" class="ijRowOdd"><a name="d7162e809"></a><td><a name="d7162e811"></a>
+                  <img alt="copy" width="14" height="16" title="copy" src="/help/img/idea/2016.1/copy.gif" class="inline-icon-16">
+              </td><td><a name="d7162e816"></a>
+                  <kbd data-default="Ctrl+D" data-default_for_gnome="Ctrl+D" data-default_for_kde="Ctrl+D" data-default_for_xwin="Ctrl+D" data-emacs="Meta+D" data-visual_studio="Ctrl+D" data-netbeans_6.5="N/A" data-eclipse="N/A" data-mac_os_x_10.5_="&#x2318;D" data-mac_os_x="&#x2318;D" data-eclipse_mac_os_x="N/A" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+D</kbd>
+              </td><td><a name="d7162e821"></a>Click this button to create a copy of the selected configuration.</td></tr><tr id="d7162e825" class="ijRowEven"><a name="d7162e825"></a><td><a name="d7162e827"></a>
+                  <img alt="settings" width="15" height="15" title="settings" src="/help/img/idea/2016.1/settings.png" class="inline-icon-15">
+              </td><td><a name="d7162e832"></a>Edit defaults</td><td><a name="d7162e835"></a>Click this button to edit the default configuration templates.
+                  The defaults are used for newly created configurations.</td></tr><tr id="d7162e840" class="ijRowOdd"><a name="d7162e840"></a><td><a name="d7162e842"></a>
+                  <img alt="arrowUp" width="12" height="12" title="arrowUp" src="/help/img/idea/2016.1/arrowUp.png" class="inline-icon-12">&nbsp;or&nbsp;<img alt="arrowDown" width="12" height="12" title="arrowDown" src="/help/img/idea/2016.1/arrowDown.png" class="inline-icon-12">
+              </td><td><a name="d7162e849"></a>
+                  <kbd data-default="Alt+Up" data-default_for_gnome="Alt+Up" data-default_for_kde="Alt+Up" data-default_for_xwin="Alt+Up" data-emacs="Alt+Up" data-visual_studio="Alt+Up" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Shift+Up" data-mac_os_x_10.5_="&#x2303;&#x2191;" data-mac_os_x="&#x2303;&#x2191;" data-eclipse_mac_os_x="&#x2303;&#x2325;&#x2191;" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Up</kbd> or <kbd data-default="Alt+Down" data-default_for_gnome="Alt+Down" data-default_for_kde="Alt+Down" data-default_for_xwin="Alt+Down" data-emacs="Alt+Down" data-visual_studio="Alt+Down" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Shift+Down" data-mac_os_x_10.5_="&#x2303;&#x2193;" data-mac_os_x="&#x2303;&#x2193;" data-eclipse_mac_os_x="&#x2303;&#x2325;&#x2193;" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Down</kbd>
+              </td><td><a name="d7162e856"></a>Use these buttons to move the selected configuration or folder up and down in the list.
+                  <a name="d7162e858"></a><p>The order of configurations or folders in the list defines the order in which configurations appear in the <a name="d7162e860"></a><span class="control">Run/Debug</span> drop-down list on the main toolbar.</p>
+              </td></tr><tr id="d7162e896" class="ijRowEven"><a name="d7162e896"></a><td><a name="d7162e898"></a>
+                  <img alt="sortAlphabetically" width="24" height="23" title="sortAlphabetically" src="/help/img/idea/2016.1/sortAlphabetically.png" class="inline-icon-23">
+              </td><td><a name="d7162e903"></a>
+                  Sort configurations
+              </td><td><a name="d7162e906"></a>
+                  Click this button to sort configurations in alphabetical order.
+              </td></tr></tbody></table><a name="common"></a><a name="d7162e713"></a><h2>Common options</h2><table class="" width="100%" id="d7162e716"><thead><tr id="d7162e718" class="ijRowHead"><a name="d7162e718"></a><th width="20%"><a name="d7162e720"></a>Item</th><th width="80%"><a name="d7162e723"></a>Description</th></tr></thead><tbody><tr id="d7162e727" class="ijRowOdd"><a name="d7162e727"></a><td><a name="d7162e729"></a>Name</td><td><a name="d7162e732"></a>In this text box, specify the name of the current run/debug configuration. This field does not appear for the default run/debug configurations.</td></tr><tr id="d7162e736" class="ijRowEven"><a name="d7162e736"></a><td><a name="d7162e738"></a>Defaults</td><td><a name="d7162e741"></a>
+              This node in the left-hand pane of the dialog box contains the default run/debug configuration settings.
+              Select the desired configuration to change its default settings in the right-hand pane.
+              The defaults are applied to all newly created run/debug configurations.
+          </td></tr><tr id="d7162e914" class="ijRowOdd"><a name="d7162e914"></a><td><a name="d7162e916"></a>Share</td><td><a name="d7162e919"></a>
+                Select this check box to make the run/debug configuration available to other team members.
+                 
+         
+         
+        <a name="d7162e955"></a><p>
+            The shared run/debug configurations are kept in separate xml files under <code class="code" data-lang="Java">.idea\runConfigurations</code> folder,
+            while the local run/debug configurations are kept in
+            the <code class="code" data-lang="Java">.idea\workspace.xml</code>.</p>
+     
+                <a name="d7162e923"></a><p>This check box is not available when editing the run/debug configuration defaults.</p>
+            </td></tr><tr id="d7162e968" class="ijRowEven"><a name="d7162e968"></a><td><a name="d7162e970"></a>Single instance only</td><td><a name="d7162e973"></a>If this check box is selected, this run/debug configuration cannot be launched more than once.
+               <a name="d7162e975"></a><p>Every time a new run/debug configuration is launched,  WebStorm checks the presence of the other instances
+                   of the same run/debug configuration, and displays a confirmation dialog box. If you click <a name="d7162e977"></a><span class="control">OK</span>
+                   in the confirmation dialog box, the first instance of the runner will be stopped,
+                   and the next one will take its place.</p>
+               <a name="d7162e981"></a><p>This makes sense when the usage of certain resources can cause conflicts, or when launching two run/debug
+                   configurations of the same type consumes too much of the CPU and memory resources.</p>
+           <a name="d7162e984"></a><p>If this check box is not selected, it is possible to launch as many instances of the runner as required.
+               So doing, each runner will start in its own tab of the Run tool window.</p>
+           </td></tr><tr id="d7162e1058" class="ijRowOdd"><a name="d7162e1058"></a><td><a name="d7162e1060"></a>Before launch</td><td><a name="d7162e1063"></a>Specify which tasks must be performed before applying the run/debug configuration.
+              The specified tasks are performed in the order they appear in the list.
+              <table class=" wide" width="100%" id="d7162e1065"><thead><tr id="d7162e1067" class="ijRowHead"><a name="d7162e1067"></a><th><a name="d7162e1069"></a>Item</th><th><a name="d7162e1072"></a>Keyboard shortcut</th><th><a name="d7162e1075"></a>Description</th></tr></thead><tbody><tr id="d7162e1079" class="ijRowOdd"><a name="d7162e1079"></a><td><a name="d7162e1081"></a>
+                     <img alt="add" width="12" height="12" title="add" src="/help/img/idea/2016.1/new.png" class="inline-icon-12">
+                  </td><td><a name="d7162e1086"></a>
+                     <kbd data-default="Alt+Insert" data-default_for_gnome="Alt+Insert" data-default_for_kde="Alt+Insert" data-default_for_xwin="Alt+Insert" data-emacs="Alt+Insert" data-visual_studio="Alt+Insert" data-netbeans_6.5="N/A" data-eclipse="Alt+Insert" data-mac_os_x_10.5_="&#x2318;N" data-mac_os_x="&#x2303;N" data-eclipse_mac_os_x="&#x2318;N" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Insert</kbd>
+                  </td><td><a name="d7162e1091"></a>Click this icon to add a task to the list. Select the task to be added:
+                          <ul class="list _ul"><li class="list__item"><a name="d7162e1095"></a>
+                           <a name="external"></a>
+                           <a name="d7162e1099"></a><span class="control">Run External tool.</span>
+                                  Select this option to run an application which is external to WebStorm.
+                                  In the dialog that opens, select the application or applications that should be run.
+                                  If the necessary application is not defined in WebStorm yet, add its definition.
+                                  For more information, see <a name="d7162e1102"></a><a href="configuring-third-party-tools.html"><span>Configuring Third-Party Tools</span></a> and <a name="d7162e1104"></a><a href="external-tools.html"><span>External Tools</span></a>.</li><li class="list__item"><a name="d7162e1145"></a>
+                           <a name="d7162e1147"></a><span class="control">Run Another Configuration.</span>
+                                  Select this option to have another run/debug configuration executed.
+                                  In the dialog that opens, select the configuration to run.
+                                  <a name="d7162e1150"></a><p>
+                                      This option is available only if you have already at least one run/debug configuration in the current project.
+                                  </p>
+                              </li><li class="list__item"><a name="d7162e1163"></a>
+                                  <a name="d7162e1165"></a><span class="control">Run File Watchers.</span>
+                                  Select this option to have WebStorm apply all the currently active <a name="d7162e1168"></a><span class="emphasis">file watchers</span>,
+                                  see  <a name="d7162e1171"></a><a href="using-file-watchers.html"><span>Using File Watchers</span></a> for details.
+                              </li><li class="list__item"><a name="d7162e1174"></a>
+                           <a name="d7162e1176"></a><span class="control">Generate CoffeeScript Source Maps.</span>
+                                  Select this option to have the source maps for your CoffeeScript sources generated.
+                                  In the dialog that opens, specify where your CoffeeScript source files are located.
+
+                                      For more information, see <a name="d7162e1179"></a><a href="coffeescript-support.html"><span>CoffeeScript Support</span></a>.</li></ul>
+                      </td></tr><tr id="d7162e1261" class="ijRowEven"><a name="d7162e1261"></a><td><a name="d7162e1263"></a>
+                     <img alt="delete" width="12" height="12" title="delete" src="/help/img/idea/2016.1/delete.png" class="inline-icon-12">
+                  </td><td><a name="d7162e1268"></a>
+                     <kbd data-default="Alt+Delete" data-default_for_gnome="Alt+Delete" data-default_for_kde="Alt+Delete" data-default_for_xwin="Alt+Delete" data-emacs="N/A" data-visual_studio="Alt+Delete" data-netbeans_6.5="N/A" data-eclipse="Alt+Delete" data-mac_os_x_10.5_="&#x2318;&#x2326;" data-mac_os_x="&#x2318;&#x2326;" data-eclipse_mac_os_x="N/A" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Delete</kbd> 
+                  </td><td><a name="d7162e1273"></a>Click this icon to remove the selected task from the list.</td></tr><tr id="d7162e1277" class="ijRowOdd"><a name="d7162e1277"></a><td><a name="d7162e1279"></a>
+                     <img alt="edit1" width="12" height="12" title="edit1" src="/help/img/idea/2016.1/editFlexLibraryNew.png" class="inline-icon-12">
+                  </td><td><a name="d7162e1284"></a>
+                     <kbd data-default="Enter" data-default_for_gnome="Enter" data-default_for_kde="Enter" data-default_for_xwin="Enter" data-emacs="Enter" data-visual_studio="Enter" data-netbeans_6.5="N/A" data-eclipse="Enter" data-mac_os_x_10.5_="⏎" data-mac_os_x="⏎" data-eclipse_mac_os_x="⏎" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Enter</kbd> 
+                  </td><td><a name="d7162e1289"></a>Click this icon to edit the selected task.
+                          Make the necessary changes in the dialog that opens.</td></tr><tr id="d7162e1293" class="ijRowEven"><a name="d7162e1293"></a><td><a name="d7162e1295"></a>
+                          <img alt="arrowUp" width="12" height="12" title="arrowUp" src="/help/img/idea/2016.1/arrowUp.png" class="inline-icon-12">
+                  </td><td><a name="d7162e1300"></a>
+                          <kbd data-default="Alt+Up" data-default_for_gnome="Alt+Up" data-default_for_kde="Alt+Up" data-default_for_xwin="Alt+Up" data-emacs="Alt+Up" data-visual_studio="Alt+Up" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Shift+Up" data-mac_os_x_10.5_="&#x2303;&#x2191;" data-mac_os_x="&#x2303;&#x2191;" data-eclipse_mac_os_x="&#x2303;&#x2325;&#x2191;" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Up</kbd>
+                  </td><td><a name="d7162e1305"></a>
+                          Click this icon to move the selected task one line up in the list.</td></tr><tr id="d7162e1310" class="ijRowOdd"><a name="d7162e1310"></a><td><a name="d7162e1312"></a>
+                          <img alt="arrowDown" width="12" height="12" title="arrowDown" src="/help/img/idea/2016.1/arrowDown.png" class="inline-icon-12">
+                  </td><td><a name="d7162e1317"></a>
+                          <kbd data-default="Alt+Down" data-default_for_gnome="Alt+Down" data-default_for_kde="Alt+Down" data-default_for_xwin="Alt+Down" data-emacs="Alt+Down" data-visual_studio="Alt+Down" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Shift+Down" data-mac_os_x_10.5_="&#x2303;&#x2193;" data-mac_os_x="&#x2303;&#x2193;" data-eclipse_mac_os_x="&#x2303;&#x2325;&#x2193;" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Down</kbd>
+                  </td><td><a name="d7162e1322"></a>
+                          Click this icon to move the selected task one line down in the list.</td></tr><tr id="d7162e1326" class="ijRowEven"><a name="d7162e1326"></a><td><a name="d7162e1328"></a>Show this page</td><td><a name="d7162e1331"></a></td><td><a name="d7162e1333"></a>
+                          Select this check box to have the run/debug configuration settings shown prior to
+                          actually starting the run/debug configuration.</td></tr><tr id="d7162e1337" class="ijRowOdd"><a name="d7162e1337"></a><td><a name="d7162e1339"></a>Active tool window</td><td><a name="d7162e1342"></a></td><td><a name="d7162e1344"></a>Select this option if you want the <a name="d7162e1346"></a><a href="run-tool-window.html"><span>Run</span></a>/<a name="d7162e1349"></a><a href="debug-tool-window.html"><span>Debug</span></a> tool windows
+                      to be activated automatically when you run/debug your application. This option is enabled by default.</td></tr></tbody></table>
+          </td></tr></tbody></table><div class="navigation-links _bottom"><a class="navigation-links__prev" href="run-debug-configuration-javascript-debug.html">Run/Debug Configuration: JavaScript Debug</a><a class="navigation-links__next" href="run-debug-configuration-karma.html">Run/Debug Configuration: Karma</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content"><div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d168602e388"></a><a href="running-javascript-unit-tests.html"><span>Running JavaScript Unit Tests</span></a></li><li class="list__item"><a name="d168602e392"></a><a href="monitoring-code-coverage-for-javascript.html"><span>Monitoring Code Coverage for JavaScript</span></a></li></ul></div></div></section><div class="last-modified">Last modified: 11 July 2016 </div></article><div id="disqus_thread"></div></div></section></main></div><script src="/help/app/app.js"></script></body></html>

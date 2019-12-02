@@ -1,0 +1,52 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="robots" content="noindex"><title>Hub 2.5 Help :: Add License to Licenses of a User</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="HUB-REST-API_Users_Licenses-of-User_Add-License-to-Licenses-of-a-User"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search Hub Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>Hub 2.5 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="HUB-REST-API_Users_Licenses-of-User.html">Licenses of User</a><a class="navigation-links__next" href="HUB-REST-API_Users_Licenses-of-User_Get-All-Licenses-of-a-User.html">Get All Licenses of a User</a></div><h1>Add License to Licenses of a User</h1><a name="request"></a><h2>Request</h2>
+        <div class="code-block"><code class="code-block__wrapper">POST <a name="d51751e7"></a><a href="Hub-Rest-Api-URL.html"><span>&lt;REST API URL&gt;</span></a>/users/{<a name="d51751e10"></a><b id="d51751e10">user id</b>}/licenses?<font style="color:&#xA;                        #808080&#xA;                        ;&#xA;                    "><a name="d51751e14"></a><b id="d51751e14">fields</b>=<a name="d51751e17"></a><i id="d51751e17">string</i></font></code></div>
+
+        <table class="" width="100%" id="d51751e20"><thead><tr id="d51751e22" class="ijRowHead"><a name="d51751e22"></a><th><a name="d51751e24"></a> Parameter </th><th><a name="d51751e27"></a> Description </th></tr></thead><tbody><tr id="d51751e31" class="ijRowOdd"><a name="d51751e31"></a><td><a name="d51751e33"></a> <a name="d51751e35"></a><b id="d51751e35"><font style="color:&#xA;                        #808080&#xA;                        ;&#xA;                    "><code class="code" data-lang="Java">fields</code></font></b> </td><td><a name="d51751e41"></a> Optional query parameter. Specifies a subset of the fields to be returned. Use <a name="d51751e43"></a><a href="Fields-Syntax.html"><span>Fields Syntax</span></a> to define subset. </td></tr></tbody></table>
+        <a name="RequestBody"></a><h3>Request Body</h3>
+  <a name="license"></a><h2>license</h2>
+  <a name="d51751e54"></a><p>extends <a name="d51751e56"></a><a href="HUB-REST-API_JSON-Scheme.html#settings"><span>settings</span></a></p>
+
+  <div class="code-block"><code class="code-block__wrapper">
+    {
+      "licenseKey": string, 
+      "licenseName": string, 
+      "service": <a name="d51751e61"></a><a href="HUB-REST-API_JSON-Scheme.html#service"><span>service</span></a>, 
+      "users": [<a name="d51751e64"></a><a href="HUB-REST-API_JSON-Scheme.html#user"><span>user</span></a>, ...], 
+      "autoJoinGroups": [<a name="d51751e67"></a><a href="HUB-REST-API_JSON-Scheme.html#userGroup"><span>userGroup</span></a>, ...], 
+      "licenseInfo": <a name="d51751e70"></a><a href="HUB-REST-API_JSON-Scheme.html#licenseInfo"><span>licenseInfo</span></a>, 
+      <font style="color:&#xA;                        #808080&#xA;                        ;&#xA;                    ">"id": string /* from settings */</font>, 
+      <font style="color:&#xA;                        #808080&#xA;                        ;&#xA;                    ">"aliasIds": [string, ...] /* from settings */</font>, 
+      <font style="color:&#xA;                        #808080&#xA;                        ;&#xA;                    ">"aliases": [<a name="d51751e82"></a><a href="HUB-REST-API_JSON-Scheme.html#alias"><span>alias</span></a>, ...] /* from settings */</font>
+    }
+  </code></div>
+         
+    <a name="response"></a><h2>Response</h2>
+        <table class="" width="100%" id="d51751e91"><thead><tr id="d51751e93" class="ijRowHead"><a name="d51751e93"></a><th><a name="d51751e95"></a> Response Code </th><th><a name="d51751e98"></a> Meaning </th></tr></thead><tbody><tr id="d51751e102" class="ijRowOdd"><a name="d51751e102"></a><td><a name="d51751e104"></a> 200 OK </td><td><a name="d51751e107"></a> Successful request. </td></tr><tr id="d51751e111" class="ijRowEven"><a name="d51751e111"></a><td><a name="d51751e113"></a> 400 Bad Request </td><td><a name="d51751e116"></a> Some of the parameters of the request are invalid (for example, required fields in the passed JSON object are missing). The response contains message describing the error. </td></tr><tr id="d51751e120" class="ijRowOdd"><a name="d51751e120"></a><td><a name="d51751e122"></a> 403 Forbidden </td><td><a name="d51751e125"></a> Requester has no access to the request. </td></tr><tr id="d51751e129" class="ijRowEven"><a name="d51751e129"></a><td><a name="d51751e131"></a> 404 Not Found </td><td><a name="d51751e134"></a> Requested resource wasn't found. </td></tr><tr id="d51751e139" class="ijRowOdd"><a name="d51751e139"></a><td><a name="d51751e141"></a> 500 Internal Server Error </td><td><a name="d51751e144"></a> Failed to process request because of the server error. The response contains message describing the error. </td></tr></tbody></table>
+
+        <a name="responseBody"></a><h3>Response body</h3>
+  <a name="license"></a><h2>license</h2>
+  <a name="d51751e154"></a><p>extends <a name="d51751e156"></a><a href="HUB-REST-API_JSON-Scheme.html#settings"><span>settings</span></a></p>
+
+  <div class="code-block"><code class="code-block__wrapper">
+    {
+      "licenseKey": string, 
+      "licenseName": string, 
+      "service": <a name="d51751e161"></a><a href="HUB-REST-API_JSON-Scheme.html#service"><span>service</span></a>, 
+      "users": [<a name="d51751e164"></a><a href="HUB-REST-API_JSON-Scheme.html#user"><span>user</span></a>, ...], 
+      "autoJoinGroups": [<a name="d51751e167"></a><a href="HUB-REST-API_JSON-Scheme.html#userGroup"><span>userGroup</span></a>, ...], 
+      "licenseInfo": <a name="d51751e170"></a><a href="HUB-REST-API_JSON-Scheme.html#licenseInfo"><span>licenseInfo</span></a>, 
+      <font style="color:&#xA;                        #808080&#xA;                        ;&#xA;                    ">"id": string /* from settings */</font>, 
+      <font style="color:&#xA;                        #808080&#xA;                        ;&#xA;                    ">"aliasIds": [string, ...] /* from settings */</font>, 
+      <font style="color:&#xA;                        #808080&#xA;                        ;&#xA;                    ">"aliases": [<a name="d51751e182"></a><a href="HUB-REST-API_JSON-Scheme.html#alias"><span>alias</span></a>, ...] /* from settings */</font>
+    }
+  </code></div>
+         
+
+    <div class="last-modified">Last modified: 31 January 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

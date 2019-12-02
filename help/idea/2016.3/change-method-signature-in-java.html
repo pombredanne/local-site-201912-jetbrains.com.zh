@@ -1,0 +1,275 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta class="swiftype" name="product" data-type="string" content="/idea/2016.3/"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><meta charset="UTF-8"><meta name="robots" content="noindex"><title>IntelliJ IDEA 2016.3 Help :: Change Method Signature in Java</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Change_Method_Signature_in_Java"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-swiftype-index="false"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.3 Help</h3><div class="shortcuts-switcher" data-swiftype-index="false"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Windows/Linux Default</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWin</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">Mac OS X</option><option data-group="secondary" value="eclipse_mac_os_x">Eclipse (Mac OS X)</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (Mac OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper (Mac OS X)</option><option data-group="secondary" value="emacs">Emacs (Mac OS X)</option></select></div><div class="panel-trigger" data-swiftype-index="false"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="convert-anonymous-to-inner.html">Convert Anonymous to Inner</a></div><h1>Change Method Signature in Java</h1><a name="d16562e4"></a><p>
+                In Java, you can use the <a name="d16562e6"></a><a href="change-signature.html"><span>Change Method Signature</span></a> refactoring to:</p><ul class="list _bullet"><li class="list__item"><a name="d16562e12"></a>Change the method name, return type and visibility scope.</li><li class="list__item"><a name="d16562e15"></a>Add new parameters and remove the existing ones.
+                    Note that you can also add a parameter using a dedicated
+                    <a name="d16562e17"></a><a href="extract-parameter-in-java.html"><span>Extract Parameter</span></a> refactoring.</li><li class="list__item"><a name="d16562e21"></a>Reorder parameters.</li><li class="list__item"><a name="d16562e24"></a>Change parameter names and types.</li><li class="list__item"><a name="d16562e27"></a>Add and remove exceptions.</li><li class="list__item"><a name="d16562e31"></a>Propagate new parameters and exceptions through the method call hierarchy.</li></ul><a name="d16562e35"></a><p>On this page:</p><ul><li class="list__item"><a href="#d16562e43">Examples</a></li><li class="list__item"><a href="#java_change_signature_proc">Changing a method signature</a></li></ul><a name="java_example"></a><a name="d16562e43"></a><h2>Examples</h2><a name="d16562e46"></a><p>
+        The following table shows 4 different ways of performing the same Change Method Signature refactoring.</p><a name="d16562e49"></a><p>
+        In all the cases, a new parameter <code class="code" data-lang="Java">price</code> of the type <code class="code" data-lang="Java">double</code> is added to
+        the method <code class="code" data-lang="Java">myMethod()</code>.</p><a name="d16562e61"></a><p>
+        The examples show how the method call, the calling method (<code class="code" data-lang="Java">myMethodCall()</code>) and other code fragments may be affected
+        depending on the refactoring settings.</p><table class="             " width="100%" id="d16562e67"><thead><tr id="d16562e69" class="ijRowHead"><a name="d16562e69"></a><th><a name="d16562e71"></a>Before</th><th><a name="d16562e74"></a>After</th></tr></thead><tbody><tr id="d16562e78" class="ijRowOdd"><a name="d16562e78"></a><td><a name="d16562e80"></a>
+<a name="modify_calls"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyClass</span> <span class="o">{</span>
+
+<span class="c1">// This is the method whose signature will be changed:</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">myMethod</span><span class="o">(</span><span class="kt">int</span> <span class="n">value</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// some code here</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyOtherClass</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">myMethodCall</span><span class="o">(</span><span class="n">MyClass</span> <span class="n">myClass</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">double</span> <span class="n">d</span><span class="o">=</span><span class="mf">0.5</span><span class="o">;</span>
+
+        <span class="c1">// Here is the method call:</span>
+
+        <span class="n">myClass</span><span class="o">.</span><span class="na">myMethod</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">// We&#39;ll ask IntelliJ IDEA to update all the method calls.</span>
+<span class="c1">// We&#39;ll also specify a default value to be passed to the method.</span></code></div>
+        </td><td><a name="d16562e86"></a>
+<a name="d16562e88"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyClass</span> <span class="o">{</span>
+
+    <span class="c1">// The new parameter price has been added:</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">myMethod</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">,</span> <span class="kt">double</span> <span class="n">price</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// some code here</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyOtherClass</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">myMethodCall</span><span class="o">(</span><span class="n">MyClass</span> <span class="n">myClass</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">double</span> <span class="n">d</span><span class="o">=</span><span class="mf">0.5</span><span class="o">;</span>
+
+        <span class="c1">// The method call has changed accordingly:</span>
+
+        <span class="n">myClass</span><span class="o">.</span><span class="na">myMethod</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mf">0.0</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">// When performing the refactoring, 0.0 was specified as</span>
+<span class="c1">// the default parameter value.</span></code></div>
+        </td></tr><tr id="d16562e93" class="ijRowEven"><a name="d16562e93"></a><td><a name="d16562e95"></a>
+<a name="use_any_var"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyClass</span> <span class="o">{</span>
+
+    <span class="c1">// This is the method whose signature will be changed:</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">myMethod</span><span class="o">(</span><span class="kt">int</span> <span class="n">value</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// some code here</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyOtherClass</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">myMethodCall</span><span class="o">(</span><span class="n">MyClass</span> <span class="n">myClass</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">double</span> <span class="n">d</span><span class="o">=</span><span class="mf">0.5</span><span class="o">;</span>
+
+        <span class="c1">// Here is the method call:</span>
+
+        <span class="n">myClass</span><span class="o">.</span><span class="na">myMethod</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">// We&#39;ll ask IntelliJ IDEA to update all the method calls.</span>
+<span class="c1">// We&#39;ll also ask IntelliJ IDEA to look for a variable</span>
+<span class="c1">// of the appropriate type near the method call and pass this</span>
+<span class="c1">// variable to the method.</span>
+<span class="c1">// In IntelliJ IDEA, this option is called Use Any Var.</span></code></div>
+            </td><td><a name="d16562e101"></a>
+<a name="d16562e103"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyClass</span> <span class="o">{</span>
+
+    <span class="c1">// The new parameter price has been added:</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">myMethod</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">,</span> <span class="kt">double</span> <span class="n">price</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// some code here</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyOtherClass</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">myMethodCall</span><span class="o">(</span><span class="n">MyClass</span> <span class="n">myClass</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">double</span> <span class="n">d</span><span class="o">=</span><span class="mf">0.5</span><span class="o">;</span>
+
+        <span class="c1">// The method call has changed accordingly:</span>
+
+        <span class="n">myClass</span><span class="o">.</span><span class="na">myMethod</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">d</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">// Near the method call, IntelliJ IDEA has found the variable d</span>
+<span class="c1">// which has the same type as the new parameter. As a result,</span>
+<span class="c1">// this variable was used in the method call.</span></code></div>
+            </td></tr><tr id="d16562e108" class="ijRowOdd"><a name="d16562e108"></a><td><a name="d16562e110"></a>
+<a name="delegate_calls"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyClass</span> <span class="o">{</span>
+
+
+
+
+
+
+
+<span class="c1">// This is the method whose signature will be changed:</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">myMethod</span><span class="o">(</span><span class="kt">int</span> <span class="n">value</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// some code here</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyOtherClass</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">myMethodCall</span><span class="o">(</span><span class="n">MyClass</span> <span class="n">myClass</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">double</span> <span class="n">d</span><span class="o">=</span><span class="mf">0.5</span><span class="o">;</span>
+
+        <span class="c1">// Here is the method call:</span>
+
+        <span class="n">myClass</span><span class="o">.</span><span class="na">myMethod</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">// We&#39;ll ask IntelliJ IDEA to keep the method calls unchanged but</span>
+<span class="c1">// create a new overloading method which will call the method</span>
+<span class="c1">// with the new signature.</span>
+<span class="c1">// In IntelliJ IDEA, this way of handling the method calls is</span>
+<span class="c1">// referred to as Delegate via overloading method.</span></code></div>
+            </td><td><a name="d16562e116"></a>
+<a name="d16562e118"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyClass</span> <span class="o">{</span>
+
+    <span class="c1">// A new overloading method has been created:</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">myMethod</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">)</span> <span class="o">{</span>
+               <span class="n">myMethod</span><span class="o">(</span><span class="n">i</span><span class="o">,</span> <span class="mf">0.0</span><span class="o">);</span>
+               <span class="o">}</span>
+
+    <span class="c1">// The new parameter price has been added:</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">myMethod</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">,</span> <span class="kt">double</span> <span class="n">price</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// some code here</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyOtherClass</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">myMethodCall</span><span class="o">(</span><span class="n">MyClass</span> <span class="n">myClass</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">double</span> <span class="n">d</span><span class="o">=</span><span class="mf">0.5</span><span class="o">;</span>
+
+        <span class="c1">// The method call has not changed:</span>
+
+        <span class="n">myClass</span><span class="o">.</span><span class="na">myMethod</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">// Note that the new overloading method has the old signature.</span>
+<span class="c1">// However, it calls the method with the new signature.</span>
+<span class="c1">// 0.0 was specified as the default parameter value</span>
+<span class="c1">// when performing the refactoring.</span></code></div>
+            </td></tr><tr id="d16562e123" class="ijRowEven"><a name="d16562e123"></a><td><a name="d16562e125"></a>
+<a name="d16562e127"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyClass</span> <span class="o">{</span>
+
+    <span class="c1">// This is the method whose signature will be changed:</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">myMethod</span><span class="o">(</span><span class="kt">int</span> <span class="n">value</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// some code here</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyOtherClass</span> <span class="o">{</span>
+
+    <span class="c1">// This method will also change its signature:</span>
+
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">myMethodCall</span><span class="o">(</span><span class="n">MyClass</span> <span class="n">myClass</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">double</span> <span class="n">d</span><span class="o">=</span><span class="mf">0.5</span><span class="o">;</span>
+
+        <span class="c1">// Here is the method call:</span>
+
+        <span class="n">myClass</span><span class="o">.</span><span class="na">myMethod</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">// This time we&#39;ll ask IntelliJ IDEA to propagate the new</span>
+<span class="c1">// parameter to the method call through the calling method</span>
+<span class="c1">// myMethodCall().</span></code></div>
+            </td><td><a name="d16562e131"></a>
+            <a name="d16562e133"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyClass</span> <span class="o">{</span>
+
+    <span class="c1">// The new parameter price has been added:</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">myMethod</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">,</span> <span class="kt">double</span> <span class="n">price</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// some code here</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyOtherClass</span> <span class="o">{</span>
+
+    <span class="c1">// The new parameter price has propagated</span>
+    <span class="c1">// to the method call through the calling method:</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">myMethodCall</span><span class="o">(</span><span class="n">MyClass</span> <span class="n">myClass</span><span class="o">,</span> <span class="kt">double</span> <span class="n">price</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">double</span> <span class="n">d</span><span class="o">=</span><span class="mf">0.5</span><span class="o">;</span>
+
+        <span class="c1">// The method call has changed accordingly:</span>
+
+        <span class="n">myClass</span><span class="o">.</span><span class="na">myMethod</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">price</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></div>
+            </td></tr></tbody></table><a name="java_change_signature_proc"></a><a name="dynaProc0"></a><section class="procedure-steps"><h2>Changing a method signature</h2><ol class=".list _decimal"><li class="list__item">In the editor, place the cursor within the name of the method whose signature you want to change.</li><li class="list__item">Do one of the following:
+            <ul class="list _ul"><li class="list__item"><a name="d16562e148"></a>Press <kbd data-default="Ctrl+F6" data-default_for_gnome="Ctrl+F6" data-default_for_kde="Ctrl+6" data-default_for_xwin="Ctrl+F6" data-emacs="Ctrl+F6" data-jbuilder="N/A" data-visual_studio="Ctrl+F6" data-netbeans_6.5="N/A" data-eclipse="Shift+Alt+C" data-mac_os_x_10.5_="&#x2318;F6" data-mac_os_x="&#x2318;F6" data-eclipse_mac_os_x="&#x2325;&#x2318;C" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+F6</kbd>.</li><li class="list__item"><a name="d16562e153"></a>Choose <a name="d16562e155"></a><span class="control">Refactor | Change Signature</span> in the main menu.</li><li class="list__item"><a name="d16562e159"></a>Select <a name="d16562e161"></a><span class="control">Refactor | Change Signature</span> from the context menu.</li></ul>
+                <a name="d16562e166"></a><p>Note that if you refactor a method that overrides another method, IntelliJ IDEA suggests
+                    either to modify the method from the base class, or to modify only the selected method.</p>
+      </li><li class="list__item">In the <a name="d16562e172"></a><a href="change-signature-dialog-for-java.html"><span>Change Signature dialog</span></a>, make the necessary changes to the method
+            signature and specify which other, related changes are required.
+            <a name="d16562e175"></a><p>You can:</p>
+            <ul class="list _ul"><li class="list__item"><a name="d16562e180"></a>Change the method visibility scope (access level modifier) by selecting the necessary option
+                    under <a name="d16562e182"></a><span class="control">Visibility</span>.</li><li class="list__item"><a name="d16562e186"></a>Change the method return type by editing the contents of the <a name="d16562e188"></a><span class="control">Return type</span> field.
+                        <a name="d16562e191"></a><p>Note that <a name="d16562e193"></a><a href="auto-completing-code.html"><span>code completion</span></a> is available in this field,
+                            and also in other fields used for specifying the types.</p>
+            </li><li class="list__item"><a name="d16562e198"></a>Change the method name. To do that, edit the text in the <a name="d16562e200"></a><span class="control">Name</span> field.</li><li class="list__item"><a name="d16562e204"></a><a name="manage_params"></a>Manage the method parameters using the controls on the <a name="d16562e207"></a><span class="control">Parameters</span> tab:
+                    <ul class="list _ul"><li class="list__item"><a name="d16562e212"></a>To add a new parameter, click <img alt="/help/img/idea/2016.3/new.png" title="/help/img/idea/2016.3/new.png" src="/help/img/idea/2016.3/new.png" width="12" height="12" class="inline-icon-12">&nbsp;(<kbd data-default="Alt+Insert" data-default_for_gnome="Alt+Insert" data-default_for_kde="Alt+Insert" data-default_for_xwin="Alt+Insert" data-emacs="Alt+Insert" data-jbuilder="Alt+Insert" data-visual_studio="Alt+Insert" data-netbeans_6.5="N/A" data-eclipse="Alt+Insert" data-mac_os_x_10.5_="&#x2318;N" data-mac_os_x="&#x2303;N" data-eclipse_mac_os_x="&#x2318;N" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Insert</kbd>) and
+                            specify the properties of the new parameter in the corresponding fields.
+                            If necessary, select the <a name="d16562e218"></a><a href="#use_any_var"><span>Use Any Var option</span></a>.
+                            <a name="d16562e221"></a><p>When adding parameters, you may want
+                                to <a name="d16562e223"></a><a href="#propagate_params"><span>propagate these parameters</span></a> to the methods that call
+                                the current method.</p>
+                  </li><li class="list__item"><a name="d16562e228"></a>To remove a parameter, select this parameter in the table and
+                            click <img alt="/help/img/idea/2016.3/delete.png" title="/help/img/idea/2016.3/delete.png" src="/help/img/idea/2016.3/delete.png" width="12" height="12" class="inline-icon-12">&nbsp;(<kbd data-default="Alt+Delete" data-default_for_gnome="Alt+Delete" data-default_for_kde="Alt+Delete" data-default_for_xwin="Alt+Delete" data-emacs="N/A" data-jbuilder="Alt+Delete" data-visual_studio="Alt+Delete" data-netbeans_6.5="N/A" data-eclipse="Alt+Delete" data-mac_os_x_10.5_="&#x2318;&#x2326;" data-mac_os_x="&#x2318;&#x2326;" data-eclipse_mac_os_x="N/A" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Delete</kbd>).</li><li class="list__item"><a name="d16562e235"></a>To reorder the parameters, use <img alt="/help/img/idea/2016.3/arrowUp.png" title="/help/img/idea/2016.3/arrowUp.png" src="/help/img/idea/2016.3/arrowUp.png" width="12" height="12" class="inline-icon-12">&nbsp;(<kbd data-default="Alt+Up" data-default_for_gnome="Alt+Up" data-default_for_kde="Alt+Up" data-default_for_xwin="Alt+Up" data-emacs="Alt+Up" data-jbuilder="Alt+Up" data-visual_studio="Alt+Up" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Shift+Up" data-mac_os_x_10.5_="&#x2303;&#x2191;" data-mac_os_x="&#x2303;&#x2191;" data-eclipse_mac_os_x="&#x2303;&#x2325;&#x2191;" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Up</kbd>) and
+                            <img alt="/help/img/idea/2016.3/arrowDown.png" title="/help/img/idea/2016.3/arrowDown.png" src="/help/img/idea/2016.3/arrowDown.png" width="12" height="12" class="inline-icon-12">&nbsp;(<kbd data-default="Alt+Down" data-default_for_gnome="Alt+Down" data-default_for_kde="Alt+Down" data-default_for_xwin="Alt+Down" data-emacs="Alt+Down" data-jbuilder="Alt+Down" data-visual_studio="Alt+Down" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Shift+Down" data-mac_os_x_10.5_="&#x2303;&#x2193;" data-mac_os_x="&#x2303;&#x2193;" data-eclipse_mac_os_x="&#x2303;&#x2325;&#x2193;" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Down</kbd>).</li><li class="list__item"><a name="d16562e246"></a>To change the name, type, or the default value for a parameter, click this parameter in the
+                            table and  make the necessary edits in the corresponding fields.</li></ul>
+            </li><li class="list__item"><a name="d16562e251"></a><a name="propagate_params"></a>
+                    Propagate new method parameters (if any) along the hierarchy of the methods that call the current
+                    method.
+                    <a name="d16562e254"></a><p>(There may be the methods that call the method whose signature you are changing.
+                        These methods, in their turn, may be called by other methods, and so on.
+                        You can propagate the changes you are making to the parameters of the current method
+                        through the hierarchy of the calling methods and also specify which calling methods
+                        should be affected and which shouldn't.)</p>
+                    <a name="d16562e257"></a><p>To propagate the new parameters:</p>
+                    <ol class="list _decimal"><li class="list__item"><a name="d16562e262"></a>Click <img alt="/help/img/idea/2016.3/propagateParameters.png" title="/help/img/idea/2016.3/propagateParameters.png" src="/help/img/idea/2016.3/propagateParameters.png" width="13" height="17" class="inline-icon-17">&nbsp;(<kbd>Alt+G</kbd>).</li><li class="list__item"><a name="d16562e270"></a>In the left-hand pane of the <a name="d16562e272"></a><span class="control">Select Methods to Propagate New Parameters</span>
+                            dialog, expand the necessary nodes and select the check boxes next to the methods you want
+                            the new parameters to be propagated to.
+                                <a name="d16562e275"></a><p>To help you select the necessary methods, the code for the calling method
+                                    and the method being called is shown in the right-hand part of the dialog
+                                    (in the <a name="d16562e277"></a><span class="control">Caller Method</span> and <a name="d16562e280"></a><span class="control">Callee Method</span> panes
+                                    respectively).</p>
+                                <a name="d16562e284"></a><p>As you switch between the methods in the left-hand pane, the code in the right-hand
+                                    part changes accordingly.</p>
+                  </li><li class="list__item"><a name="d16562e288"></a>Click <a name="d16562e290"></a><span class="control">OK</span>.</li></ol>
+            </li><li class="list__item"><a name="d16562e297"></a>Manage the method exceptions using the list of exception types and the buttons on
+                    the <a name="d16562e299"></a><span class="control">Exceptions</span> tab.
+                    The procedures are similar to those used
+                    for <a name="d16562e302"></a><a href="#manage_params"><span>managing the method parameters</span></a>.</li><li class="list__item"><a name="d16562e306"></a>Propagate new exceptions (if any) along the hierarchy of the methods that call the current method.
+                    To initiate this procedure, use <img alt="/help/img/idea/2016.3/propagateParameters.png" title="/help/img/idea/2016.3/propagateParameters.png" src="/help/img/idea/2016.3/propagateParameters.png" width="13" height="17" class="inline-icon-17">&nbsp;(<kbd>Alt+X</kbd>).
+                    In all other respects, the procedure is similar to that used
+                    for <a name="d16562e313"></a><a href="#propagate_params"><span>propagating new method parameters</span></a>.</li><li class="list__item"><a name="d16562e317"></a>Specify how the method calls should be handled.
+                    To do that, select one of the following <a name="d16562e319"></a><span class="control">Method calls</span> options:
+                    <ul class="list _ul"><li class="list__item"><a name="d16562e324"></a>If you want the method calls to be <a name="d16562e326"></a><a href="#modify_calls"><span>modified</span></a>,
+                            select <a name="d16562e329"></a><span class="control">Modify</span>.</li><li class="list__item"><a name="d16562e333"></a>If you want to leave the existing method calls <a name="d16562e335"></a><a href="#delegate_calls"><span>unchanged</span></a>,
+                            select <a name="d16562e338"></a><span class="control">Delegate via overloading method</span>.</li></ul>
+            </li></ul>
+      </li><li class="list__item">To perform the refactoring right away, click <a name="d16562e348"></a><span class="control">Refactor</span>.
+            <a name="d16562e351"></a><p>To <a name="d16562e353"></a><a href="refactoring-source-code.html"><span>see the expected changes</span></a> and make the necessary adjustments prior to
+                actually performing the refactoring, click <a name="d16562e356"></a><span class="control">Preview</span>.</p></li></ol></section><div class="navigation-links _bottom"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="convert-anonymous-to-inner.html">Convert Anonymous to Inner</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content">```
+                <div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d16562e366"></a><a href="change-signature-dialog-for-java.html"><span>Change Signature Dialog for Java</span></a></li></ul></div></div></section><div class="last-modified" data-swiftype-index="false">Last modified: 21 March 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

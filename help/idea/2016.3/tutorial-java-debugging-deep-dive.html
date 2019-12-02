@@ -1,0 +1,765 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta class="swiftype" name="product" data-type="string" content="/idea/2016.3/"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><meta charset="UTF-8"><meta name="robots" content="noindex"><title>IntelliJ IDEA 2016.3 Help :: Tutorial: Java Debugging Deep Dive</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Tutorial_Java_Debugging_Deep_Dive"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-swiftype-index="false"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.3 Help</h3><div class="shortcuts-switcher" data-swiftype-index="false"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Windows/Linux Default</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWin</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">Mac OS X</option><option data-group="secondary" value="eclipse_mac_os_x">Eclipse (Mac OS X)</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (Mac OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper (Mac OS X)</option><option data-group="secondary" value="emacs">Emacs (Mac OS X)</option></select></div><div class="panel-trigger" data-swiftype-index="false"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="testing.html">Testing</a></div><h1>Tutorial: Java Debugging Deep Dive</h1><a name="d405206e3"></a><p>
+        On this page:
+    </p><ul><li class="list__item"><a href="#d405206e8">Introduction</a></li><li class="list__item"><a href="#d405206e29">Before We Start</a></li><li class="list__item"><a href="#d405206e54">The Basics: Finding Out What the Application Does</a><ul class="list _bullet"><li class="list__item"><a href="#d405206e72">Stepping</a><ul class="list _bullet"><li class="list__item"><a href="#d405206e80">Basic Stepping</a></li><li class="list__item"><a href="#d405206e127">Stepping Skipping and Force Step Into</a></li><li class="list__item"><a href="#d405206e148">Debugging Without Source Code</a></li><li class="list__item"><a href="#d405206e154">Classes Compiled Without the Debug Flag</a></li></ul></li><li class="list__item"><a href="#d405206e175">Inspect State</a><ul class="list _bullet"><li class="list__item"><a href="#d405206e180">Watch</a></li><li class="list__item"><a href="#d405206e186">Type Renderer</a></li><li class="list__item"><a href="#d405206e221">Evaluate Expression</a></li></ul></li><li class="list__item"><a href="#d405206e240">Unexpected Parameter or Call to Method</a><ul class="list _bullet"><li class="list__item"><a href="#d405206e242">Exploring Call Frames</a></li><li class="list__item"><a href="#d405206e253">Drop Frames: Replaying the Execution</a></li><li class="list__item"><a href="#d405206e283">Method Breakpoint</a></li></ul></li><li class="list__item"><a href="#d405206e296">Unexpected Value of Field</a><ul class="list _bullet"><li class="list__item"><a href="#d405206e298">Field Watchpoint</a></li></ul></li><li class="list__item"><a href="#d405206e314">Unexpected Exception Thrown</a><ul class="list _bullet"><li class="list__item"><a href="#d405206e316">Analyse Stacktrace</a></li><li class="list__item"><a href="#d405206e336">Exception Breakpoint</a></li></ul></li></ul></li><li class="list__item"><a href="#d405206e348">Debugging Multithreaded Applications</a><ul class="list _bullet"><li class="list__item"><a href="#breakpoint_properties">Breakpoint Properties</a><ul class="list _bullet"><li class="list__item"><a href="#d405206e388">Breakpoint Actions</a><ul class="list _bullet"><li class="list__item"><a href="#d405206e390">Suspend VM</a></li><li class="list__item"><a href="#d405206e396">Suspend Thread</a></li><li class="list__item"><a href="#d405206e402">Log</a></li></ul></li><li class="list__item"><a href="#d405206e409">Breakpoint Conditions</a><ul class="list _bullet"><li class="list__item"><a href="#d405206e420">Conditional Expression</a></li><li class="list__item"><a href="#d405206e423">Pass Count</a></li><li class="list__item"><a href="#d405206e429">Remove Once Hit</a></li><li class="list__item"><a href="#d405206e436">Filters</a></li><li class="list__item"><a href="#d405206e445">Dependency on Other Breakpoint</a></li></ul></li></ul></li><li class="list__item"><a href="#d405206e451">If the Debugging Session is Too Slow</a></li><li class="list__item"><a href="#d405206e529">Race Condition: Corrupted State</a></li><li class="list__item"><a href="#d405206e554">Race Condition: Subtle</a><ul class="list _bullet"><li class="list__item"><a href="#d405206e575">Trace Buffer</a></li></ul></li><li class="list__item"><a href="#d405206e606">Race Condition: Unexpected Flow Control</a></li><li class="list__item"><a href="#d405206e643">Deadlock</a></li><li class="list__item"><a href="#d405206e706">Livelock</a></li></ul></li><li class="list__item"><a href="#d405206e777">Summary</a></li></ul><a name="d405206e8"></a><h2>Introduction</h2>
+        <a name="d405206e10"></a><p>
+            <a name="d405206e12"></a><a href="debugging.html"><span>Debugging</span></a>
+            is one of the most powerful tools in any developer's arsenal. It gives us a unique insight into
+            how a program runs and allows us to gain a much deeper understanding of the piece of code we debug. It
+            allows us to trace running code and inspect the state and the flow of the execution. As part of that, it
+            gives us the illusion of a sequential flow. This is very intuitive and powerful but also may be
+            misleading as most modern applications are multithreaded.
+        </p>
+        <a name="d405206e16"></a><p>"Debugging" suggests we deal with bugs but this is actually a misnomer. The information we get from debugging
+            is useful even when there is no problem with the code. Finding bugs just happens to be a very common use
+            case for the knowledge we can get from a debug session.
+        </p>
+        <a name="d405206e19"></a><p>The IntelliJ IDEA debugger offers a rich experience that helps us to easily debug anything from the simplest
+            code to complex multithreaded applications.
+        </p>
+        <a name="d405206e22"></a><p>In this tutorial we will cover some of its features from a developer's point of view, taking you through a
+            virtual debugging session of some extremely buggy code. After some general comments and an outline of
+            basic debugging concepts, this tutorial dives into practical debugging by looking at different 'bug
+            types' or assumptions we might make.
+        </p>
+        <a name="d405206e25"></a><p>There is no single way to debug. Through those types of issues, we cover several options the IntelliJ IDEA
+            debugger gives us that we can take in order to help us to prove or refute our assumptions.
+        </p>
+    <a name="d405206e29"></a><h2>Before We Start</h2>
+        <a name="d405206e31"></a><p>A word of caution: debugging is a very powerful tool but it does come with a cost. The debug process is part
+            of the runtime and therefore affects it. Every evaluation of an expression happens using the same memory of
+            the debugged application, and can modify and potentially corrupt the state.
+        </p>
+        <a name="d405206e34"></a><p>During this tutorial, bear in mind that debugging is an intrusive approach that may affect the outcome of
+            the debugged application. We will explore a few ways to minimize its impact and sometimes even exploit it.</p>
+        <a name="d405206e37"></a><p>The timing of execution is also very different when you debug code compared to running it. As we are about
+            to see, this becomes a critical issue in multithreaded environments, when reproducing a bug sometimes
+            depends on a very specific sequence of events, which a change in timing can make unreachable.
+        </p>
+        <a name="d405206e40"></a><p>In a debugging session, the minimal debug tracking overhead in itself may already be enough to change the
+            timing of events and therefore the application behaviour. Every
+            <a name="d405206e42"></a><a href="types-of-breakpoints.html"><span>breakpoint</span></a>
+            or log is a possible synchronization point, and stepping obviously changes the timings significantly.
+        </p>
+        <a name="d405206e46"></a><p>An important point to remember is that debugging is not a substitute for understanding the code. In fact, the
+            only way to learn from a debug session is to constantly compare the information the debugger shows us with
+            our expectations from the code and how we think it "should" behave.
+        </p>
+        <a name="d405206e50"></a><p>Before starting a debugging session we must have some knowledge of what we're trying to achieve by it.
+            If we're looking for a bug, we need to roughly know what is incorrect, i.e. what is different from the
+            expected behaviour or state. In most cases we will also have some initial assumption as to why things are
+            wrong. These two pieces of information will dictate how our debugging session should be conducted.
+        </p>
+    <a name="d405206e54"></a><h2>The Basics: Finding Out What the Application Does</h2>
+        The simplest case for <a name="d405206e56"></a><a href="debugging.html"><span>debugging</span></a> is seeing how the program behaves given a certain
+        input, either because of a bug, or just to understand the code. In this case, using a simple
+        <a name="d405206e59"></a><a href="types-of-breakpoints.html"><span>breakpoint</span></a>
+        (called a
+        <a name="d405206e62"></a><a href="creating-line-breakpoints.html"><span>line breakpoint</span></a>) that will suspend the JVM (or thread, see
+        <a name="d405206e65"></a><a href="#breakpoint_properties"><span>Breakpoint properties</span></a>) and then
+        <a name="d405206e68"></a><a href="debug-tool-window.html#steptoolbar"><span>stepping</span></a>
+        through the code is our bread and butter.
+
+        <a name="d405206e72"></a><h3>Stepping</h3>
+            <aside class="tip sideblock">
+                <a name="d405206e76"></a><p>A good way to approach debugging unknown code is to start by stepping a lot, adding breakpoints in
+                    the critical lines as we go, then later step less and skip more between breakpoints.
+                </p>
+            </aside>
+            <a name="d405206e80"></a><h4>Basic Stepping</h4>
+                <a name="d405206e82"></a><p>The four basic options we will constantly use when
+                    <a name="d405206e84"></a><a href="debug-tool-window.html#steptoolbar"><span>stepping</span></a> are:</p>
+                <ul class="list _ul"><li class="list__item"><a name="d405206e90"></a>
+                        <a name="d405206e92"></a><span class="keyword">Step over</span>
+                        <kbd data-default="F8" data-default_for_gnome="F8" data-default_for_kde="F8" data-default_for_xwin="F8" data-emacs="F8" data-jbuilder="F8" data-visual_studio="F10" data-netbeans_6.5="N/A" data-eclipse="F6" data-mac_os_x_10.5_="F8" data-mac_os_x="F8" data-eclipse_mac_os_x="F6" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">F8</kbd> Step over a line of code.</li><li class="list__item"><a name="d405206e98"></a>
+                        <a name="d405206e100"></a><span class="keyword">Step into</span>
+                        <kbd data-default="F7" data-default_for_gnome="F7" data-default_for_kde="F7" data-default_for_xwin="F7" data-emacs="F7" data-jbuilder="F7" data-visual_studio="F11" data-netbeans_6.5="N/A" data-eclipse="F5" data-mac_os_x_10.5_="F7" data-mac_os_x="F7" data-eclipse_mac_os_x="F5" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">F7</kbd> Step into a method called from this line of code.</li><li class="list__item"><a name="d405206e106"></a>
+                        <a name="d405206e108"></a><span class="keyword">Step out</span>
+                        <kbd data-default="Shift+F8" data-default_for_gnome="Shift+F8" data-default_for_kde="Shift+F8" data-default_for_xwin="Shift+F8" data-emacs="Shift+F8" data-jbuilder="Shift+F8" data-visual_studio="Shift+F11" data-netbeans_6.5="N/A" data-eclipse="F7" data-mac_os_x_10.5_="&#x21E7;F8" data-mac_os_x="&#x21E7;F8" data-eclipse_mac_os_x="F7" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Shift+F8</kbd> Step out of a method back to the calling code.</li><li class="list__item"><a name="d405206e114"></a>
+                        <a name="d405206e116"></a><span class="keyword">Resume Program</span>
+                        <kbd data-default="F9" data-default_for_gnome="F9" data-default_for_kde="F9" data-default_for_xwin="F9" data-emacs="F9" data-jbuilder="N/A" data-visual_studio="F5" data-netbeans_6.5="N/A" data-eclipse="F8" data-mac_os_x_10.5_="&#x2325;&#x2318;R" data-mac_os_x="F9" data-eclipse_mac_os_x="F8" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">F9</kbd> Resume debugging and stop at the next breakpoint.</li></ul>
+                <a name="d405206e123"></a><p>IntelliJ IDEA will step into most code with two exceptions, described below.</p>
+             
+            <a name="d405206e127"></a><h4>Stepping Skipping and Force Step Into</h4>
+                <a name="d405206e129"></a><p>Code can be configured to be skipped in stepping. Some of it, like, for example, any
+                    <code class="code" data-lang="Java">com.sun.*</code>
+                    classes is skipped by default. This is defined in
+                    <a name="d405206e134"></a><span class="menupath">Preferences | Build, Execution, Deployment | Debugger | Stepping</span>.
+                </p>
+                <a name="d405206e138"></a><p>The motivation behind this is to reduce noise and skip unrelated code. Class loading for example, is
+                    almost always unrelated to our application code, so is a lot of third party code, especially
+                    frameworks.
+                </p>
+                <a name="d405206e141"></a><p>We can change the configuration to skip more or less, and we also have an overriding mechanism at
+                    runtime to step into "skipped code". That is what the
+                    <a name="d405206e143"></a><span class="keyword">Force Step Into</span>
+                    option is for.
+                </p>
+             
+            <a name="d405206e148"></a><h4>Debugging Without Source Code</h4>
+                <a name="d405206e150"></a><p>If we don't have the source to specific code, IntelliJ IDEA will still decompile the class and show
+                    our steps in the decompiled source. This is very helpful, but note that the generated decompiled
+                    class may look different from the original, and if the lines do not match debugging in
+                    decompiled code may be confusing. Always try to obtain the source code of the classes you want
+                    to step into.
+                </p>
+             
+            <a name="d405206e154"></a><h4>Classes Compiled Without the Debug Flag</h4>
+                <a name="d405206e156"></a><p>Code that was compiled without the debug flag cannot be debugged. There is no way to step into this
+                    code. When the debugger encounters such code during a debugging session, it will step over that part
+                    of the code.
+                </p>
+                <a name="d405206e159"></a><p>Line breakpoints are also not possible to define and hit. However, this is where the
+                    <a name="d405206e161"></a><a href="creating-method-breakpoints.html"><span>Method Breakpoint</span></a>
+                    might save us, as we can still define in IntelliJ IDEA a breakpoint to stop before entry
+                    or exit from a specific method, even if the method itself was compiled without the debug flag.
+                </p>
+                <a name="d405206e165"></a><p>When viewing the state, the
+                    <a name="d405206e167"></a><a href="debug-tool-window-frames.html"><span>call frame</span></a>
+                    itself will appear in grey when not selected, and since the
+                    actual variables from within the method cannot be inspected, we will see a warning message instead.
+                </p>
+                <figure><img alt="Call frame appears in grey" title="Call frame appears in grey" src="/help/img/idea/2016.3/ij_debugging_classes_compiled_without_debug_flag.png" width="996" height="310"></figure>
+             
+         
+        <a name="d405206e175"></a><h3>Inspect State</h3>
+            Once running is suspended,
+            <a name="d405206e177"></a><a href="examining-suspended-program.html"><span>we can inspect the state of the application</span></a>. Based on the thread and the
+            position we are in that thread, IntelliJ IDEA will show us the various variables and fields in scope and
+            their values. This is good enough for almost all cases, but sometimes we want to enquire about something
+            else.
+            <a name="d405206e180"></a><h4>Watch</h4>
+                If we want to know the value of a particular expression in every frame or thread, and across many
+                suspended breakpoints, we can set a
+                <a name="d405206e182"></a><a href="adding-editing-and-removing-watches.html"><span>watch</span></a>
+                on an expression.
+             
+            <a name="d405206e186"></a><h4>Type Renderer</h4>
+                <a name="d405206e188"></a><p>Usually, the default rendering of a value into a displayed string is good enough. When it's not, in
+                    most cases it is because
+                    <code class="code" data-lang="Java">toString()</code>
+                    was not overridden. This is simply a hint to us that we should implement
+                    <code class="code" data-lang="Java">toString()</code>
+                    for this class.
+                </p>
+                <a name="d405206e197"></a><p>Sometimes though, implementing
+                    <code class="code" data-lang="Java">toString()</code>
+                    is not possible, or we will be better off with a specific
+                    <a name="d405206e202"></a><a href="java-type-renderers.html"><span>Type Renderer</span></a> for our purposes. For example,
+                    assume we're dealing with lists as queues: in all those lists, all we want to see is whether the
+                    list is empty, and if not, we want to see the last element of that list. Different lists will have
+                    different implementations and renderers. The renderer of an
+                    <code class="code" data-lang="Java">ArrayList</code>
+                    for example, will show you only the first 100 elements. That will both contain lots of unneeded
+                    details and also may not contain what is really important for us. To help us, IntelliJ IDEA allows
+                    us to easily override the
+                    <a name="d405206e208"></a><span class="keyword">Type Renderer</span>.
+                </p>
+                <a name="d405206e212"></a><p>We choose to render any
+                    <code class="code" data-lang="Java">java.util.List</code>
+                    object to show the "EMPTY" string when empty or the last element when it has one.
+                </p>
+                <figure><img alt="Updating the Type Renderer" title="Updating the Type Renderer" src="/help/img/idea/2016.3/ij_debugging_type_renderer.png" width="751" height="631"></figure>
+             
+            <a name="d405206e221"></a><h4>Evaluate Expression</h4>
+                <a name="d405206e223"></a><p>
+                    <a name="d405206e225"></a><a href="evaluate-expression.html"><span>Evaluate Expression</span></a>
+                    is possibly the most useful feature of the IntelliJ IDEA debugger. It allows us to
+                    inspect values and evaluate specific expressions. For example, evaluating parts of a condition
+                    to figure out why a certain complex condition gave an unexpected result.
+                </p>
+                <a name="d405206e229"></a><p>The expression can also contain calling methods, testing out scenarios and using parameter values
+                    that
+                    did not exist in the actual debugging session. These kind of "what-if" scenarios are easily done by
+                    <a name="d405206e231"></a><span class="keyword">Evaluating Expression</span>. This really allows us to closely inspect the behaviour
+                    of certain methods or expressions.
+                </p>
+                <aside class="note sideblock">The evaluation is obviously happening on the same memory space as the debugging session
+                    and therefore may be extremely intrusive. If we call a method that also modifies state, the
+                    state will be modified and that may create a corrupted state.
+                </aside>
+             
+         
+        <a name="d405206e240"></a><h3>Unexpected Parameter or Call to Method</h3>
+            This section covers what to do if we know where things have already gone wrong, but don't know why.
+            <a name="d405206e242"></a><h4>Exploring Call Frames</h4>
+                <a name="d405206e244"></a><p>A
+                    <a name="d405206e246"></a><span class="keyword">Line Breakpoint</span>
+                    should be enough for most cases of detecting the cause behind an unexpected call
+                    or call with unexpected parameter values to a method. If we're not sure where it's being called
+                    from, we can put the breakpoint inside the method. When the VM is suspended, click on the
+                    previous call frames to view the call stack and inspect the state in each scope to see how we
+                    got here. If the frame information is unavailable it will appear in grey.
+                </p>
+                <figure><img alt="Call frames" title="Call frames" src="/help/img/idea/2016.3/ij_debugging_call_frame.png" width="400" height="542"></figure>
+             
+            <a name="d405206e253"></a><h4>Drop Frames: Replaying the Execution</h4>
+                <a name="d405206e255"></a><p>If we want to step back through that method call to get more information by stepping, we can use
+                    the
+                    <a name="d405206e257"></a><a href="debug-tool-window-frames.html"><span>Drop Frame</span></a>
+                    feature. This will allow us to go back up the stack and re-execute the code. It's a useful feature,
+                    but also potentially dangerous: we must be aware that re-executing the code will execute the same
+                    instructions twice, and if those instructions modify state we might end up in a corrupted
+                    state, and certainly in a scenario that would not happen in a normal run under the same
+                    conditions. To make the impact of
+                    <a name="d405206e260"></a><span class="keyword">Drop Frame</span>
+                    obvious, consider this simple demo.
+                </p>
+                <a name="d405206e264"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DropFrameDemo</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="n">state</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="kd">final</span> <span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">modifyStateBasedOnParameter</span><span class="o">(</span><span class="n">state</span><span class="o">);</span>
+        <span class="n">modifyStateBasedOnStaticField</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="c1">// dropping frame within this method,</span>
+    <span class="c1">// and executing again will print state = 2</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">modifyStateBasedOnStaticField</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">state</span><span class="o">++;</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;state = &quot;</span> <span class="o">+</span> <span class="n">state</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="c1">// dropping frame from within this method,</span>
+    <span class="c1">// and executing again will print state = 1</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">modifyStateBasedOnParameter</span><span class="o">(</span><span class="kd">final</span> <span class="kt">int</span> <span class="n">parameter</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">parameter</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;state = &quot;</span> <span class="o">+</span> <span class="n">state</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></div>
+                <a name="d405206e267"></a><p>Breaking inside
+                    <code class="code" data-lang="Java">modifyStateBasedOnParameter()</code>
+                    will not impact the state because IntelliJ IDEA remembers the parameter values passed in to that
+                    frame and will not recalculate those. However, breaking inside
+                    <code class="code" data-lang="Java">modifyStateBasedOnStaticField()</code>
+                    will make the
+                    <code class="code" data-lang="Java">state</code>
+                    field equal '2'. A value which is impossible under a normal run of
+                    <code class="code" data-lang="Java">main()</code>.
+                </p>
+             
+            <a name="d405206e283"></a><h4>Method Breakpoint</h4>
+                <aside class="warning sideblock">A method breakpoint significantly slows down the execution of the application. This is fine
+                    in a simple application but can be unacceptable in multithreaded applications where this might prevent us
+                    from reproducing certain scenarios due to the difference in timing it causes.
+                </aside>
+                <a name="d405206e288"></a><p>An alternative to having a line breakpoint defined within the problematic method is to define a
+                    <a name="d405206e290"></a><a href="creating-method-breakpoints.html"><span>Method Breakpoint</span></a>. This type of breakpoint is not attached to a source
+                    code line number, but to the entry and
+                    exit of a call to a method. It is especially useful in cases where we don't have the source
+                    code, only a decompiled version, and we still want to inspect the ins and outs of the method
+                    call, without any confusing differences in line numbers between the compiled class and the
+                    decompiled source code.
+                </p>
+             
+         
+        <a name="d405206e296"></a><h3>Unexpected Value of Field</h3>
+            This could be viewed as something that went wrong before the access method to that field. That is why
+            all the above approaches can help detect the problem. Sometimes though, especially if the field was
+            accessible by more than just the getter and setter, it's not easy to find what flow started the
+            problem. For that scenario, IntelliJ IDEA provides us with another useful option.
+            <a name="d405206e298"></a><h4>Field Watchpoint</h4>
+                <aside class="warning sideblock">This type of breakpoint also slows down execution significantly and should be used with care,
+                    especially in multithreaded applications.
+                </aside>
+                <a name="d405206e303"></a><p>A
+                    <a name="d405206e305"></a><a href="creating-field-watchpoints.html"><span>Field Watchpoint</span></a>
+                    is really another type of breakpoint. It is a breakpoint at any point we
+                    either read from or write to a specific field. This is especially useful in cases where the field is
+                    being accessed all over the code, or we're not sure about all the places it is being accessed from.
+                </p>
+                <a name="d405206e309"></a><p>This is another case of the test giving a clue to the developer. If possible, we should try
+                    controlling the access to that field by an access modifier and using getters and setters to make it
+                    easier to manage.
+                </p>
+             
+         
+        <a name="d405206e314"></a><h3>Unexpected Exception Thrown</h3>
+            <a name="d405206e316"></a><h4>Analyse Stacktrace</h4>
+                <a name="d405206e318"></a><p>Although not strictly a debugging feature, when we want to investigate why an exception was thrown,
+                    we can
+                    <a name="d405206e320"></a><a href="analyze-stacktrace-dialog.html"><span>analyse the exception stack trace</span></a>
+                    and quickly get to the line of code that generated that
+                    exception. From there, the usual combination of <a name="d405206e323"></a><span class="keyword">Line Breakpoint</span> and
+                    <a name="d405206e326"></a><span class="keyword">Stepping</span>
+                    is enough to figure out what is wrong.
+                </p>
+                <figure><img alt="Analyze Stacktrace" title="Analyze Stacktrace" src="/help/img/idea/2016.3/ij_debugging_analyze_stack_trace.png" width="1470" height="494"></figure>
+                <a name="d405206e332"></a><p>Sometimes however, the exception is wrapped in another exception or caught, and we only see its side
+                    effects but not its stack trace. For that we have a special type of breakpoint.
+                </p>
+             
+            <a name="d405206e336"></a><h4>Exception Breakpoint</h4>
+                We can define an
+                <a name="d405206e338"></a><a href="creating-exception-breakpoints.html"><span>Exception Breakpoint</span></a>
+                for a specific type of
+                <code class="code" data-lang="Java">Exception</code>,
+                or any type, and the breakpoint will be triggered whenever the matching exception is thrown. This is
+                extremely useful in cases where we don't know where the exception is generated from.
+             
+         
+    <a name="d405206e348"></a><h2>Debugging Multithreaded Applications</h2>
+        <aside class="tip sideblock">Always name your threads in multithreaded applications according to their function. It simplifies both
+            logging and debugging.
+        </aside>
+        <a name="d405206e353"></a><p>
+            Multithreaded applications are the biggest challenge to debug. These applications are a lot less
+            deterministic and much harder to control. The illusion of sequential flow we get from
+            <a name="d405206e355"></a><span class="keyword">Stepping</span> in a debug session does not help either.
+        </p>
+        <a name="d405206e359"></a><p>
+            In a multithreaded environment, and in particular when investigating issues that can be concurrency bugs,
+            we need to try to
+            <a name="d405206e361"></a><span class="keyword">Step</span>
+            less and fine tune our
+            <a name="d405206e364"></a><span class="keyword">Breakpoints</span>
+            more. This is because a lot of the concurrency bugs depend on a specific interaction between the
+            different threads, and an intrusive debugging session will interfere with that. We'll show how using
+            various
+            <a name="d405206e367"></a><a href="breakpoints-2.html"><span>Breakpoint properties</span></a>
+            allows us to limit the interference to a minimum.
+        </p>
+        <a name="d405206e371"></a><p>The other important topic is controlling and
+            <a name="d405206e373"></a><a href="debug-tool-window-threads.html"><span>switching between the different threads</span></a>
+            in the application. We'll go through some examples of debugging different concurrency bugs to
+            demonstrate how IntelliJ IDEA's features help with this.
+        </p>
+        <a name="breakpoint_properties"></a><h3>Breakpoint Properties</h3>
+            <a name="d405206e379"></a><p>IntelliJ IDEA
+                <a name="d405206e381"></a><a href="configuring-breakpoints.html"><span>debugger properties</span></a>
+                allow us to control the actions taken when the
+                <a name="d405206e384"></a><span class="keyword">Breakpoint</span>
+                is triggered.
+                Some of them define the action, and others are there to add further conditions on whether to take
+                the action at all. This fine level of control of the breakpoints is critical for concurrency bugs,
+                because most will only be reproduced when the threads interact in a very specific way. Any
+                interference of the breakpoints may prevent us from reproducing the bug.
+            </p>
+            <a name="d405206e388"></a><h4>Breakpoint Actions</h4>
+                Deciding on the breakpoint action depends on what we want to achieve in the debugging session.
+                <a name="d405206e390"></a><h5>Suspend VM</h5>
+                    If we want to view all the threads, with their state and call frames, when one thread reaches a
+                    specific point in the code, or when a certain condition occurs, then
+                    <a name="d405206e392"></a><a href="breakpoints-2.html#suspend"><span>suspending</span></a>
+                    the entire VM is our best approach.
+                 
+                <a name="d405206e396"></a><h5>Suspend Thread</h5>
+                    In many cases, <a name="d405206e398"></a><a href="breakpoints-2.html#suspend"><span>suspending</span></a> only the thread and
+                    not the
+                    whole VM is preferable. This is especially
+                    true when the application is part of a larger system and suspending the VM will cause either an
+                    overflow of messages waiting to be served, or request timeouts that end up breaking the entire
+                    system. When we have many worker threads, it is better to keep almost all working and focus
+                    on the one thread which manifests the problem.
+                 
+                <a name="d405206e402"></a><h5>Log</h5>
+                    When we deal with a concurrency bug, any suspension of execution may prevent us from reproducing
+                    the bug. We can opt to make the breakpoint not suspend anything, just
+                    <a name="d405206e404"></a><a href="breakpoints-2.html#log"><span>log</span></a>
+                    either a message or a
+                    value of a particular expression to the console, then inspect the log. This works well when we
+                    have a strong theory about what exactly are we looking for.
+                 
+             
+            <a name="d405206e409"></a><h4>Breakpoint Conditions</h4>
+                <aside class="note sideblock">The conditions themselves have an overhead and are being evaluated every time the breakpoint is
+                    hit.
+                </aside>
+                <a name="d405206e414"></a><p>Apart from being convenient, <a name="d405206e416"></a><a href="breakpoints-2.html#breakpoint_condition"><span>breakpoint conditions</span></a> let us minimize the intrusive nature of the
+                    debugging session. They allow us to limit the breakpoint actions to only what we see as absolutely
+                    essential.
+                </p>
+                <a name="d405206e420"></a><h5>Conditional Expression</h5>
+                    The most widely used condition. Allows us to trigger the breakpoint only when our application
+                    reaches a specific state. Ideal if we can define an expression that captures when things start to go
+                    wrong.
+                 
+                <a name="d405206e423"></a><h5>Pass Count</h5>
+                    <a name="d405206e425"></a><a href="breakpoints-2.html#pass_count"><span>Pass count</span></a>
+                    is useful in code that is being run many times, either an event handler or a loop and
+                    the interesting scenario we're after only manifest itself after several passes.
+                 
+                <a name="d405206e429"></a><h5>Remove Once Hit</h5>
+                    <a name="d405206e431"></a><a href="breakpoints-2.html#remove_once_hit"><span>Remove Once Hit</span></a>
+                    is especially useful when the breakpoint action is to log rather than suspend, as if
+                    we were suspended we could remove or disable the breakpoint ourselves. We use this when the code is
+                    being hit many times but only the first case is interesting.
+                 
+                <a name="d405206e436"></a><h5>Filters</h5>
+                    <aside class="tip sideblock">Instance filtering uses instance ID, and therefore needs to be set when already running.</aside>
+                    Allows us to filter the triggering
+                    <a name="d405206e441"></a><a href="breakpoints-2.html#filters"><span>by class or specific instance</span></a>.
+                 
+                <a name="d405206e445"></a><h5>Dependency on Other Breakpoint</h5>
+                    A very useful feature. Its obvious use is as a filter to triggering a breakpoint in a scenario where
+                    we're interested in a visit to a method, or a specific state in the code only after another state
+                    was reached. But as well as that, we can use it to reproduce a particular concurrency issue,
+                    as it can help us suspend threads and control which thread reaches what particular line in the code
+                    and in what order.
+                 
+             
+         
+        <a name="d405206e451"></a><h3>If the Debugging Session is Too Slow</h3>
+            <a name="d405206e453"></a><p>
+                <a name="d405206e455"></a><a href="creating-method-breakpoints.html"><span>Method Breakpoint</span></a> and <a name="d405206e458"></a><a href="creating-field-watchpoints.html"><span>Field Watchpoint</span></a> slow down
+                the code execution considerably. When executing the
+                same code a huge number of times, even
+                <a name="d405206e461"></a><a href="breakpoints-2.html#breakpoint_condition"><span>conditional breakpoints</span></a>
+                slow down the processing enough for
+                it to be noticeable. This is a real issue because the scenario of an event handler processing many
+                events is fairly common, and evaluating a breakpoint condition inside that event handling code can
+                slow down the system to an unusable state. To overcome that, assuming we can modify the running
+                code, we can improve the speed by employing a little trick we shall call "breakpoint in code".
+            </p>
+            <a name="d405206e465"></a><p>
+                This trick is very useful when we debug processing of millions of events where only one causes a
+                problem and we have no idea in advance which is the problematic one, and can save us a lot of waiting
+                for a conditional breakpoint to be triggered.
+            </p>
+            <a name="d405206e468"></a><p>
+                The fastest code is the executed code that was compiled and optimized by the JVM. We want to use
+                that fact and so, instead of writing a condition on a breakpoint, we introduce it to our executed
+                code in a way that we can manipulate later. We then debug without any breakpoint, thus running in
+                the fastest way a debugging session can run, and introduce a breakpoint only when we actually know we
+                need to hit it.
+            </p>
+            <a name="d405206e471"></a><a name="dynaProc0"></a><section class="procedure-steps"><h2>Breakpoint in Code</h2><ol class=".list _decimal"><li class="list__item">We introduce a loop to the code with our condition. This means we enter the loop only if the
+                    interesting state occurs. We then print something to the console so we will know when the code
+                    has
+                    entered the loop. Because the loop does not change any state, once we enter the loop we will
+                    stay inside it.
+                    <a name="d405206e475"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="k">while</span> <span class="o">(</span><span class="n">bugCondition</span><span class="o">(</span><span class="n">msg</span><span class="o">))</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;gotcha!&quot;</span><span class="o">);</span>
+    <span class="k">try</span> <span class="o">{</span>
+        <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">1_000</span><span class="o">);</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">//ignore</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></div>
+                    <aside class="tip sideblock">The sleep here is just to avoid bombarding the console with "gotcha!" messages.</aside>
+                </li><li class="list__item">At this point we initiate the debug session, sit and wait for the "gotcha!" to appear. The
+                    console will show us we "hit" the "breakpoint".
+                    <figure><img alt="Console shows breakpoint hit" title="Console shows breakpoint hit" src="/help/img/idea/2016.3/ij_debugging_gotcha.png" width="300" height="508"></figure>
+                </li><li class="list__item">
+                    <a name="d405206e489"></a><p>When it does appear, we introduce a real line breakpoint inside the loop. The breakpoint will be
+                        hit and suspend the VM or thread. Now we can inspect the event and its state. If that is not
+                        enough, the last thing to do is to make our code exit the loop. There are two options to do
+                        that.
+                    </p>
+                    <ul class="list _alpha-lower"><li class="list__item"><a name="d405206e494"></a>
+                            <a name="d405206e496"></a><p>We can take advantage of
+                                <a name="d405206e498"></a><span class="keyword">Evaluate Expression</span>
+                                to evaluate a code fragment that will actually modify the loop condition to
+                                false. This is easily done if we use a field or variable as the condition of the
+                                loop, since we can then modify its value.
+                            </p>
+                            <a name="d405206e502"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kt">boolean</span> <span class="n">enterLoop</span> <span class="o">=</span> <span class="n">bugCondition</span><span class="o">(</span><span class="n">msg</span><span class="o">);</span>
+<span class="k">while</span> <span class="o">(</span><span class="n">enterLoop</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;gotcha!&quot;</span><span class="o">);</span>
+    <span class="k">try</span> <span class="o">{</span>
+        <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">1_000</span><span class="o">);</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">//ignore</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></div>
+                            <figure><img alt="Use Evaluate Expression to stop the loop" title="Use Evaluate Expression to stop the loop" src="/help/img/idea/2016.3/ij_debugging_enter_loop_false.png" width="1088" height="414"></figure>
+                        </li><li class="list__item"><a name="d405206e508"></a>
+                            <a name="d405206e510"></a><p>We can exit the loop by using another feature of a debugging session,
+                                <a name="d405206e512"></a><span class="keyword">HotSwap</span>. This allows us to modify the running code during
+                                debugging, compile it and then
+                                IntelliJ IDEA
+                                <a name="d405206e515"></a><a href="reloading-classes.html"><span>will hot swap the debugged classes</span></a>
+                                with the new versions. We change the loop condition to false, exit the loop and
+                                continue to debug. By default, IntelliJ IDEA will detect that a class has a new version
+                                and will ask us whether to reload the class with the new version.
+                            </p>
+                            <figure><img alt="Reload classes?" title="Reload classes?" src="/help/img/idea/2016.3/ij_debugging_reload_classes.png" width="600" height="268"></figure>
+                            <aside class="warning ">
+                                Remember! Delete this code after debugging. You should also have a failing test for the
+                                real feature to remind you never to commit it.
+                            </aside>
+                        </li></ul>
+                </li></ol></section>
+         
+        <a name="d405206e529"></a><h3>Race Condition: Corrupted State</h3>
+            <aside class="tip sideblock">If you suspect a race condition, start by debugging without any breakpoints just to make sure you can
+                still reproduce the issue in debug mode.
+            </aside>
+            <a name="d405206e534"></a><p>
+                A race condition is a common issue in multithreaded applications. Multiple threads access and modify
+                the same state, potentially corrupting it or causing undesired flow. A race condition is a very
+                subtle bug and usually hard to reproduce. That is because it is only reproduced when the threads
+                work in a very specific order, other runs will look fine.
+            </p>
+            <a name="d405206e537"></a><p>
+                Sometimes race conditions only occur once every tens or hundred runs of the system. If we suspect
+                there is a race condition in our multithreaded code, we must always make sure that the intrusive
+                nature of the debugging session does not make the issue not reproducible. For example, here we've
+                created a system of a publishers and subscribers, however all our subscribers share a primitive (and
+                non-atomic) counter to count the total consumed messages.
+            </p>
+
+            <a name="d405206e540"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kd">private</span> <span class="kd">class</span> <span class="nc">Subscriber</span> <span class="kd">implements</span> <span class="n">Runnable</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">String</span> <span class="n">msg</span> <span class="o">=</span> <span class="n">messageQueue</span><span class="o">.</span><span class="na">poll</span><span class="o">();</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">msg</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">msg</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">STOP</span><span class="o">))</span> <span class="o">{</span>
+                    <span class="k">break</span><span class="o">;</span>
+                <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                    <span class="c1">// race condition right here!</span>
+                    <span class="n">counter</span><span class="o">++;</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></div>
+
+            <a name="d405206e543"></a><p>
+                When looking for a race condition among threads, the debug run must be as minimally intrusive as
+                possible.
+            </p>
+            <a name="d405206e547"></a><p>
+                Once we're satisfied the issue can be reproduced in debug mode, we try setting a
+                <a name="d405206e549"></a><a href="breakpoints-2.html#log"><span>breakpoint with logging</span></a>
+                instead of suspending the program execution. Here again, just the fact we are logging from
+                all threads to the same console may "synchronize" the threads in such a way that will "solve" the bug.
+                We need to be sure we can still reproduce it even if now it might take more attempts. Logging the
+                suspected state can narrow down our options and allow us to see that the problem is not with the
+                number of calls to the method but with the counter field.
+            </p>
+         
+        <a name="d405206e554"></a><h3>Race Condition: Subtle</h3>
+            <a name="d405206e556"></a><p>A race condition such as the one in our previous example will, on most machines, turn out to be a
+                "subtle" race condition. By "subtle" we mean that any modification or change to the runtime environment
+                can "fix" it.
+            </p>
+            <aside class="note sideblock">Remember that the origin of the bug is the fact that advancing a primitive counter is not an atomic
+                operation.
+            </aside>
+            <a name="d405206e562"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="c1">// race condition right here!</span>
+<span class="n">counter</span><span class="o">++;</span></code></div>
+            <a name="d405206e565"></a><p>To reproduce the bug we need two threads, both reading the same value: the "second" thread must
+                read the value before the "first" one updates it and flushes its CPU cache. Easy enough to create on
+                multi-core machines during a normal run, but almost impossible to reproduce in a debugging session.
+            </p>
+            <a name="d405206e568"></a><p>
+                Logging, via a breakpoint, at that same point synchronizes the threads, as they all need to
+                write to the same log. Most likely, this also flushes the CPU caches of all threads, as writing to
+                the log is atomic. In short, it prevents us from reproducing the bug. Suspending either the VM or
+                the thread cannot help us here either, as we can't separate the two instructions (reading the counter
+                value and incrementing it) to break between them. At this point, we need to make some assumptions then
+                prove or refute them. Since we cannot use any breakpoints, our only hope is that we can change the
+                actual executed code and introduce new code that will be compiled and therefore will interfere less.
+            </p>
+            <a name="d405206e572"></a><p>This is very much a last resort option. A good pattern to help us here is a trace buffer.</p>
+            <a name="d405206e575"></a><h4>Trace Buffer</h4>
+                We can introduce an internal buffer and store the interesting values into this buffer. We must make
+                sure that:
+                <ul class="list _ul"><li class="list__item"><a name="d405206e579"></a>We have a buffer per thread, and those buffers are isolated so this does not introduce new
+                        concurrency issues
+                    </li><li class="list__item"><a name="d405206e582"></a>Because the buffer is per thread, it also is
+                        <a name="d405206e584"></a><i id="d405206e584">not</i>
+                        thread safe, and therefore does not introduce unwanted synchronization points.
+                    </li><li class="list__item"><a name="d405206e588"></a>The values we insert are not references to real state that can change, but copies or log
+                        messages.
+                    </li><li class="list__item"><a name="d405206e591"></a>The introduced code is as minimal as possible, to minimize its effect on the running code.</li><li class="list__item"><a name="d405206e594"></a>We print or log the contents of the buffers only after the execution has ended, to avoid making
+                        the logging action a synchronization mechanism between threads. Another option is to only store
+                        the values in the trace buffer, then inspect its contents by putting a breakpoint after the
+                        critical part of the code have finished executing.
+                    </li></ul>
+                <a name="d405206e598"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kd">private</span> <span class="kd">class</span> <span class="nc">Subscriber</span> <span class="kd">implements</span> <span class="n">Runnable</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">traceBuffer</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">NUMBER_OF_SUBSCRIBERS_AND_PUBLISHERS</span> <span class="o">*</span> <span class="mi">100</span><span class="o">];</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">String</span> <span class="n">msg</span> <span class="o">=</span> <span class="n">messageQueue</span><span class="o">.</span><span class="na">poll</span><span class="o">();</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">msg</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">msg</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">STOP</span><span class="o">))</span> <span class="o">{</span>
+                    <span class="k">break</span><span class="o">;</span>
+                <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                    <span class="n">traceBuffer</span><span class="o">[</span><span class="n">index</span><span class="o">++]</span> <span class="o">=</span> <span class="n">counter</span><span class="o">;</span>
+                    <span class="c1">// race condition right here!</span>
+                    <span class="n">counter</span><span class="o">++;</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></div>
+                <a name="d405206e601"></a><p>For example, here we introduced a primitive int array large enough for all messages, and in order to
+                    prove our suspicion of a bug in the counter, we store just the
+                    counter values before advancing it. Yes, it may not be the exact value advanced by the counter, but
+                    it will reproduce the bug in terms of having the same counter value reported by several threads.
+                    After all the events are done, we can inspect the trace buffers and find the duplicates.
+                </p>
+             
+         
+        <a name="d405206e606"></a><h3>Race Condition: Unexpected Flow Control</h3>
+            <a name="d405206e608"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kd">private</span> <span class="kd">class</span> <span class="nc">Subscriber</span> <span class="kd">implements</span> <span class="n">Runnable</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">String</span> <span class="n">msg</span><span class="o">;</span>
+        <span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="n">messageQueue</span><span class="o">.</span><span class="na">poll</span><span class="o">();</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">msg</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">msg</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">STOP</span><span class="o">))</span> <span class="o">{</span>
+                    <span class="k">break</span><span class="o">;</span>
+                <span class="o">}</span>
+                <span class="c1">// else do something</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="c1">// Will NOT work with multiple subscribers, as main thread will</span>
+        <span class="c1">// wake up when the first subscriber is done.</span>
+        <span class="c1">// Using a CountDownLatch here is a much better approach.</span>
+        <span class="kd">synchronized</span> <span class="o">(</span><span class="n">messageQueue</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">messageQueue</span><span class="o">.</span><span class="na">notify</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></div>
+            <a name="d405206e611"></a><p>In this example we have another race condition, but the contended shared state is not directly visible
+                and is only deduced by what seems like a wrong flow control: the first subscriber will wake up the main
+                thread, which will exit even if the second thread is still processing a message. We can't inspect or
+                print the waiting thread in this case, but we can inspect the position of the various threads when we
+                suspend the entire application.
+            </p>
+            <a name="d405206e614"></a><a name="dynaProc1"></a><section class="procedure-steps"><ol class=".list _decimal"><li class="list__item">
+                    First we can suspend the main thread after it wakes up. We can see that sometimes, one of the
+                    subscriber threads is still marked running.
+                </li><li class="list__item">
+                    We can suspend only one of subscriber threads. That will cause the other thread to notify the
+                    main thread. This will prove to us the problem can happen in any subscriber and is in its logic.
+                </li><li class="list__item">
+                    <a name="d405206e624"></a><p>Then to be sure, we can suspend the application earlier, just before it notifies the main thread.
+                        We can then inspect the status of the two subscriber threads and prove that one of them is still
+                        polling, while the other has already finished and notifies the main thread it's done.
+                    </p>
+
+                    <figure><img alt="Suspending the application before main thread notified" title="Suspending the application before main thread notified" src="/help/img/idea/2016.3/ij_debugging_race_condition_flow_control1.png" width="886" height="588"></figure>
+                    <a name="d405206e629"></a><p>We can see from inspecting the threads that both are marked 'RUNNING', which means that while
+                        the first is about to notify the main thread it is done, the other is still processing
+                        messages.</p>
+                </li><li class="list__item">
+                    <a name="d405206e635"></a><p>To prove our assumption beyond any doubt we can also put a breakpoint inside the polling loop of
+                        the subscribers. We make that breakpoint depended on the previous breakpoint just before we
+                        notify the main thread we're done. Hitting the depended breakpoint (as shown below) proves
+                        our theory.
+                    </p>
+                    <figure><img alt="Breakpoint inside the subscriber" title="Breakpoint inside the subscriber" src="/help/img/idea/2016.3/ij_debugging_race_condition_flow_control2.png" width="888" height="652"></figure>
+                </li></ol></section>
+
+         
+        <a name="d405206e643"></a><h3>Deadlock</h3>
+            <a name="d405206e645"></a><p>A deadlock occurs when two threads will conflict in such a way that both are preventing each other from
+                working at all. Once they occur, deadlocks are easy to spot by looking at the frames of all threads.
+                We can do this by using
+                <a name="d405206e647"></a><a href="debug-tool-window-dump.html"><span>Dump Threads</span></a>.
+                This feature is also
+                <a name="d405206e650"></a><a href="run-tool-window.html#dump_threads"><span>available when running</span></a>. If we know we're chasing a
+                deadlock, running
+                mode is even preferable to debugging. This is because we will not interfere at all with the
+                execution this way, and the snapshot will be the output of a Java thread dump of the application. A
+                thread dump can detect deadlocks and warn about them. For example, in the dump below we can see the
+                process found 1 deadlock between the PublisherThread (which is stuck in line 44) and
+                SubscriberThread (in line 78).
+            </p>
+            <figure><img alt="Thread dump" title="Thread dump" src="/help/img/idea/2016.3/ij_debugging_thread_dump.png" width="1766" height="770"></figure>
+            <a name="d405206e656"></a><a name="dynaProc2"></a><section class="procedure-steps"><ol class=".list _decimal"><li class="list__item">In this example, we can see that both threads are stuck waiting for a lock, which means that
+                    another thread is not freeing those locks. We can also see that both are waiting for different
+                    locks, as the synchronizer id is different. Even more informative is the lines at the top, they
+                    tell us that the two deadlocked threads are holding the lock the other thread is trying to obtain.
+                </li><li class="list__item">
+                    This should already give us plenty of information on how the deadlock occurs. If it is still unclear
+                    how our code reached a deadlock, we can then try debugging with breakpoints just before we hit
+                    the lines provided by the thread dump. When we have a theory of what is wrong, we can try to
+                    reproduce the scenario using dependency between breakpoints.</li><li class="list__item">
+                    <a name="d405206e666"></a><p>We can now create a
+                        <a name="d405206e668"></a><span class="keyword">Suspend Thread</span>
+                        breakpoint on one of those threads and verify, using another snapshot, the other thread reached
+                        its deadlock position.
+                    </p>
+                    <figure><img alt="Breakpoint in Publisher thread" title="Breakpoint in Publisher thread" src="/help/img/idea/2016.3/ij_debugging_deadlock1.png" width="1999" height="483"></figure>
+                </li><li class="list__item">Now we can inspect the state just before one of the threads gets deadlocked.</li><li class="list__item">
+                    <a name="d405206e680"></a><p>Another option is to put suspend thread breakpoints on both threads and switch between them.
+                        Inspecting the states of the
+                        <code class="code" data-lang="Java">Publisher</code>
+                        and
+                        <code class="code" data-lang="Java">Subscriber</code>
+                        in this example will show us the confusion that caused the deadlock.
+                    </p>
+                    <figure><img alt="Breakpoint in the publisher" title="Breakpoint in the publisher" src="/help/img/idea/2016.3/ij_debugging_deadlock2.png" width="1999" height="337"></figure>
+                    <figure><img alt="Breakpoint in the subscriber" title="Breakpoint in the subscriber" src="/help/img/idea/2016.3/ij_debugging_deadlock3.png" width="1999" height="265"></figure>
+                </li><li class="list__item">When we inspect our lock instances we can see that the concurrent code was actually correct,
+                    but we confused the read lock and write lock between the two objects.
+                </li><li class="list__item">And indeed when we then inspect the constructions (where we injected those locks) we can see the
+                    bug
+                    <a name="d405206e700"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="n">ThreadGroup</span> <span class="n">threadGroup</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ThreadGroup</span><span class="o">(</span><span class="s">&quot;Demo&quot;</span><span class="o">);</span>
+<span class="k">new</span> <span class="n">Thread</span><span class="o">(</span><span class="n">threadGroup</span><span class="o">,</span> <span class="k">new</span> <span class="n">Subscriber</span><span class="o">(</span><span class="n">messageQueue</span><span class="o">,</span> <span class="n">readLock</span><span class="o">,</span> <span class="n">writeLock</span><span class="o">),</span> <span class="s">&quot;SubscriberThread&quot;</span><span class="o">).</span><span class="na">start</span><span class="o">();</span>
+<span class="c1">//passing locks in the wrong order will cause deadlock between publisher and subscriber</span>
+<span class="k">new</span> <span class="n">Thread</span><span class="o">(</span><span class="n">threadGroup</span><span class="o">,</span> <span class="k">new</span> <span class="n">Publisher</span><span class="o">(</span><span class="n">messageQueue</span><span class="o">,</span> <span class="n">writeLock</span><span class="o">,</span> <span class="n">readLock</span><span class="o">),</span> <span class="s">&quot;PublisherThread&quot;</span><span class="o">).</span><span class="na">start</span><span class="o">();</span></code></div>
+                </li></ol></section>
+         
+        <a name="d405206e706"></a><h3>Livelock</h3>
+            <a name="d405206e708"></a><p>A livelock is a scenario where threads are not blocked, but still unable to make a progress.
+                From the outside, a livelock should behave just like a deadlock, but because the threads are not
+                blocked, the snapshot (thread dump) will not alert us on any deadlock.
+            </p>
+            <a name="d405206e711"></a><a name="dynaProc3"></a><section class="procedure-steps"><ol class=".list _decimal"><li class="list__item">
+                    <a name="d405206e715"></a><p>One strategy to try before starting debugging, is to repeat the
+                        <a name="d405206e717"></a><span class="keyword">Thread Dump</span>
+                        several times then compare the stack traces for the various threads. This should give us a
+                        clear view of the problematic areas in the code, in most cases a loop that the code cannot
+                        escape from.
+                    </p>
+                    <figure><img alt="Livelock snapshot" title="Livelock snapshot" src="/help/img/idea/2016.3/ij_debugging_livelock1.png" width="1999" height="211"></figure>
+                </li><li class="list__item">
+                    <a name="d405206e726"></a><p>If we're still unsure, we can use a
+                        <a name="d405206e728"></a><span class="keyword">Pass Count</span>
+                        with a large number that we assume we will only
+                        reach in a livelock situation.
+                    </p>
+                    <figure><img alt="Using pass count" title="Using pass count" src="/help/img/idea/2016.3/ij_debugging_livelock_pass_count.png" width="613" height="552"></figure>
+                </li><li class="list__item">
+                    <a name="d405206e737"></a><p>Then we can
+                        <a name="d405206e739"></a><span class="keyword">Step</span>
+                        and verify exactly what area of code is being executed but not progressing.
+                        At this point we can use a
+                        <a name="d405206e742"></a><span class="keyword">Conditional Expression</span>
+                        to capture the point in the execution when we enter the livelock situation.
+                    </p>
+                    <figure><img alt="Using a conditional to capture livelock situation" title="Using a conditional to capture livelock situation" src="/help/img/idea/2016.3/ij_debugging_livelock_condition.png" width="968" height="414"></figure>
+                    <a name="d405206e748"></a><p>In this example, we assume that the STOP message failed to break us from the loop, so either it
+                        was never sent or that it was not handled.
+                    </p>
+                </li><li class="list__item">
+                    <a name="d405206e754"></a><p>Our breakpoint is hit, meaning the STOP message was not handled.</p>
+                    <figure><img alt="Breakpoint hit" title="Breakpoint hit" src="/help/img/idea/2016.3/ij_debugging_livelock_stop_breakpoint.png" width="442" height="165"></figure>
+                </li><li class="list__item">
+                    <a name="d405206e762"></a><p>We step in, inspect state with
+                        <a name="d405206e764"></a><span class="keyword">Evaluate Expression</span>
+                        and find the bug. The 'valid' method does not support
+                        <code class="code" data-lang="Java">STOP</code>
+                        as a valid message and puts us in this livelock scenario.
+                    </p>
+                    <figure><img alt="Using Evaluate Expression to test the theory" title="Using Evaluate Expression to test the theory" src="/help/img/idea/2016.3/ij_debugging_livelock_evaluate.png" width="546" height="201"></figure>
+                </li></ol></section>
+         
+
+    <a name="d405206e777"></a><h2>Summary</h2>
+        <a name="d405206e779"></a><p>Debugging is an extremely powerful tool that allows us to view the state and flow of the source code we run.
+            Via the use of examples of buggy code and some ideas on how to find the bugs using debugging, we have
+            explored many of its features and benefits. We've also looked at its limitations and how to minimize them.
+        </p>
+        <a name="d405206e782"></a><p>Ultimately, debugging is a way to gain a lot of information. When we look for a bug, we must always
+            compare that information with our expectations, and pay close attention when the code deviates from that,
+            as that is the point where it is so effective. That is the point where we learn.
+        </p>
+    <div class="last-modified" data-swiftype-index="false">Last modified: 21 March 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

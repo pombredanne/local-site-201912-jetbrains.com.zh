@@ -1,0 +1,386 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"></meta><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><title>WebStorm 2016.1 Help :: Using Grunt Task Runner</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Using_Grunt_Task_Runner"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search WebStorm Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>WebStorm 2016.1 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWindow</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="using-the-flow-type-checker.html">Using the Flow Type Checker</a><a class="navigation-links__next" href="using-gulp-task-runner.html">Using Gulp Task Runner</a></div><h1>Using Grunt Task Runner</h1><a name="d252349e22"></a><p>
+        WebStorm provides integration with the <a name="d252349e24"></a><a href="http://gruntjs.com/" data-external="true"><span>Grunt JavaScript Task Runner</span></a>.  <a name="d252349e27"></a><span class="emphasis">Grunt</span> support involves:
+    </p><ul class="list _bullet"><li class="list__item"><a name="d9041e7"></a>
+            Parsing <code class="code" data-lang="Java">Gruntfile.js</code> files, recognizing definitions of tasks and targets.
+        </li><li class="list__item"><a name="d9041e13"></a>
+            Building trees of tasks and targets.
+        </li><li class="list__item"><a name="d9041e16"></a>
+            Navigation between a task or a target in the tree and its definition in the <code class="code" data-lang="Java">Gruntfile.js</code> file.
+        </li><li class="list__item"><a name="d9041e22"></a>
+            Running tasks and targets.
+        </li><li class="list__item"><a name="d9041e26"></a>
+            Configuring the task execution mode and output.
+        </li></ul><a name="d252349e46"></a><p>On this page:</p><ul><li class="list__item"><a href="#d252349e51">Preparing to Install Grunt</a></li><li class="list__item"><a href="#installingGrunt">Installing Grunt</a><ul class="list _bullet"><li class="list__item"><a href="#installGruntCli">Installing the Grunt Command Line Interface</a></li><li class="list__item"><a href="#d252349e161">Installing Grunt in a project</a></li></ul></li><li class="list__item"><a href="#d252349e206">Running Grunt Tasks</a><ul class="list _bullet"><li class="list__item"><a href="#d252349e247">Running Grunt Tasks from the Tasks Tree</a><ul class="list _bullet"><li class="list__item"><a href="#d252349e258">Building a Tasks Tree</a></li><li class="list__item"><a href="#d252349e305">Running Tasks</a></li></ul></li><li class="list__item"><a href="#d252349e342">Running and Debugging Tasks According to a Run Configuration</a><ul class="list _bullet"><li class="list__item"><a href="#createGruntRunConfig">Creating a Grunt.js Run/Debug Configuration</a></li><li class="list__item"><a href="#d252349e417">Running a Task according to a Run Configuration</a></li><li class="list__item"><a href="#d252349e437">Debugging Grunt Tasks</a></li></ul></li></ul></li><li class="list__item"><a href="#d252349e474">Running Grunt Tasks Automatically</a></li></ul><a name="d252349e51"></a><a name="dynaProc0"></a><section class="procedure-steps"><h2>Preparing to Install Grunt</h2><ol class=".list _decimal"><li class="list__item">
+         
+         
+         
+             
+            Download and install <a name="d25102e42"></a><a href="http://nodejs.org/" data-external="true"><span>Node.js</span></a>. The runtime environment is required for two reasons:
+            <ul class="list _bullet"><li class="list__item"><a name="d25102e47"></a>
+                    The Grunt task runner is started through <a name="d25102e49"></a><span class="emphasis">Node.js</span>.
+                </li><li class="list__item"><a name="d25102e53"></a>
+                    <a name="d25102e55"></a><span class="emphasis">NPM</span>, which is a part of the runtime environment, is also the easiest way to download the Grunt task runner.
+                </li></ul>
+             
+ 
+        <a name="d25102e63"></a><p>
+             
+            If you are going to use the command line mode, make sure the path to the parent folder of the <a name="d25102e67"></a><span class="emphasis">Node.js</span> executable file
+            and the path to the <code class="code" data-lang="Java">npm</code> folder are added to the <code class="code" data-lang="Java">PATH</code> variable.
+                This enables you to launch the Grunt task runner and <a name="d25102e76"></a><span class="emphasis">npm</span> from any folder.
+             
+        </p>
+     
+        </li><li class="list__item">
+             
+             
+                Make sure the <a name="d252349e76"></a><span class="emphasis">NodeJS</span> plugin is enabled.
+                 
+        The plugin is bundled with WebStorm and activated by default.
+        If the plugin is not activated, enable it on the <a name="d7162e5458"></a><a href="plugins-2.html"><span>Plugins</span></a> page of the <a name="d7162e5460"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> as described in <a name="d7162e5462"></a><a href="enabling-and-disabling-plugins.html"><span>Enabling and Disabling Plugins</span></a>.
+     
+             
+        </li></ol></section><a name="installingGrunt"></a><h2>Installing Grunt</h2>
+    <a name="d252349e86"></a><p>
+        To use <a name="d252349e88"></a><span class="emphasis">Grunt</span> in a WebStorm project, you need two packages:
+    </p>
+    <ul class="list _bullet"><li class="list__item"><a name="d252349e94"></a>
+            A <a name="d252349e96"></a><span class="emphasis">globally</span> installed <code class="code" data-lang="Java">grunt-cli</code> package (Grunt command line interface) for executing Grunt commands.
+        </li><li class="list__item"><a name="d252349e103"></a>
+            A <code class="code" data-lang="Java">grunt</code> package installed in the project to build the project tasks tree
+            and provide coding assistance while editing the <code class="code" data-lang="Java">Gruntfile.js</code> or <code class="code" data-lang="Java">Gruntfile.coffee</code>  file.
+            Learn more about <code class="code" data-lang="Java">Gruntfile.json</code> at <a name="d252349e117"></a><a href="http://gruntjs.com/getting-started#preparing-a-new-grunt-project" data-external="true"><span>http://gruntjs.com/getting-started#preparing-a-new-grunt-project</span></a>.
+        </li></ul>
+    <a name="d252349e121"></a><p>
+        These packages can be installed either in the command line mode or through the WebStorm user interface. In either case, installation is performed via <a name="d252349e123"></a><span class="emphasis">npm</span>.
+    </p>
+
+
+    <a name="installGruntCli"></a><h3>Installing the Grunt Command Line Interface</h3>
+
+            <a name="d252349e129"></a><p>
+                The <a name="d252349e131"></a><span class="emphasis">Grunt Command Line Interface</span> is implemented in the <code class="code" data-lang="Java">grunt-cli</code> package which should be installed <a name="d252349e137"></a><span class="emphasis">globally</span>
+                to make the functionality available in any WebStorm project and from any folder.
+                Do one of the following:
+            </p>
+        <ul class="list _bullet"><li class="list__item"><a name="d9041e4191"></a>
+            Run the installation from the command line in the <a name="d9041e4193"></a><span class="emphasis">global</span> mode:
+            <ol class="list _decimal"><li class="list__item"><a name="d9041e4198"></a>
+                     
+ 
+        Launch the embedded <a name="d9041e48"></a><span class="control">Terminal</span>
+        by hovering  your mouse pointer over <img alt="show_tool_window_bars" width="14" height="14" title="show_tool_window_bars" src="/help/img/idea/2016.1/show_tool_window_bars.png" class="inline-icon-14"> in the lower left corner of WebStorm and choosing  <a name="d9041e53"></a><span class="control">Terminal</span> from the menu
+        (see <a name="d9041e56"></a><a href="working-with-embedded-local-terminal.html"><span>Working with Embedded Local Terminal</span></a> for details).
+     
+                </li><li class="list__item"><a name="d9041e4206"></a>
+                     
+        Switch to the directory where <a name="d9041e1467"></a><span class="emphasis">NPM</span> is stored or define a <code class="code" data-lang="Java">PATH</code> variable for it so it is available from any folder,
+        see <a name="d9041e1473"></a><a href="installing-and-removing-external-software-using-node-package-manager.html#installingNodeJs"><span>Installing NodeJs</span></a>.
+     
+                </li><li class="list__item"><a name="d9041e4211"></a>
+                    Type the following command at the command line prompt:
+                    <a name="d9041e4213"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+npm install -g grunt-cli 
+                    </code></div>
+                    <a name="d9041e4216"></a><p>
+                         
+        The <code class="code" data-lang="Java">-g</code> key makes the task runner run in the <a name="d1973e178"></a><span class="emphasis">global</span> mode.
+        Because the installation is performed through <a name="d1973e181"></a><span class="emphasis">NPM</span>, the Grunt task runner is installed in the <code class="code" data-lang="Java">npm</code> folder.
+        Make sure this parent folder is added to the <code class="code" data-lang="Java">PATH</code> variable. This enables you to launch the task runner from any folder.
+     
+                    </p>
+                    <a name="d9041e4221"></a><p>
+                        For more details on the <a name="d9041e4223"></a><span class="emphasis">NPM</span> operation modes, see <a name="d9041e4226"></a><a href="https://docs.npmjs.com/" data-external="true"><span>npm documentation</span></a>.
+                        For more information about installing the Grunt task runner, see <a name="d9041e4229"></a><a href="https://npmjs.org/package/grunt-cli" data-external="true"><span>https://npmjs.org/package/grunt-cli</span></a>.
+                    </p>
+                </li></ol>
+        </li><li class="list__item"><a name="d9041e4235"></a>
+            Run <a name="d9041e4237"></a><span class="emphasis">NPM</span> from WebStorm using the <a name="d9041e4240"></a><span class="control">Node.js and NPM</span> page of the <a name="d9041e4243"></a><span class="control">Settings</span> dialog box.
+            <ol class="list _decimal"><li class="list__item"><a name="d9041e4248"></a>
+                     
+         
+            Open the <a name="d7162e7944"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by choosing <a name="d7162e7946"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d7162e7949"></a><span class="menupath">WebStorm | Preferences</span> for OS X,
+         
+         
+            and  
+         
+         
+         
+        click <a name="d7162e7972"></a><span class="control">Node.js and NPM</span> under <a name="d7162e7975"></a><span class="control">Languages&amp;Frameworks</span>.
+     
+     
+                </li><li class="list__item"><a name="d9041e4260"></a>
+                     
+         
+         
+        On the <a name="d1973e127"></a><span class="control">packagePage</span> page that opens, the <a name="d1973e130"></a><span class="control">Packages</span> area shows all the engineDependent packages
+        that are currently installed on your computer, both at the <a name="d1973e133"></a><span class="emphasis">global</span> and at the <a name="d1973e137"></a><span class="emphasis">project</span> level.
+        Click <img alt="add" width="12" height="12" title="add" src="/help/img/idea/2016.1/new.png" class="inline-icon-12">.
+     
+                </li><li class="list__item"><a name="d9041e4268"></a>
+                    In the <a name="d9041e4270"></a><span class="control">Available Packages</span> dialog box that opens, select the required package to install.
+                </li><li class="list__item"><a name="d9041e4274"></a>
+                    Select the <a name="d9041e4276"></a><span class="control">Options</span> check box and type <code class="code" data-lang="Java">-g</code> in the text box next to it.
+                </li><li class="list__item"><a name="d9041e4283"></a>
+                    Optionally specify the product version and click <a name="d9041e4285"></a><span class="control">Install Package</span> to start installation.
+                </li></ol>
+        </li></ul>
+     
+
+    <a name="d252349e161"></a><h3>Installing Grunt in a project</h3>
+
+            <a name="d252349e163"></a><p>
+                At the project level,
+                 
+ 
+        the basic <a name="d9041e34"></a><span class="emphasis">Grunt</span> functionality is implemented in the <code class="code" data-lang="Java">grunt</code> package.
+        The package is responsible for building project trees of Grunt tasks and for coding assistance in editing the <code class="code" data-lang="Java">Gruntfile.js</code> file.
+     
+                Do one of the following:
+            </p>
+
+        <ul class="list _bullet"><li class="list__item"><a name="d9041e4397"></a>
+            Run the installation from the command line:
+            <ol class="list _decimal"><li class="list__item"><a name="d9041e4401"></a>
+                     
+ 
+        Launch the embedded <a name="d9041e48"></a><span class="control">Terminal</span>
+        by hovering  your mouse pointer over <img alt="show_tool_window_bars" width="14" height="14" title="show_tool_window_bars" src="/help/img/idea/2016.1/show_tool_window_bars.png" class="inline-icon-14"> in the lower left corner of WebStorm and choosing  <a name="d9041e53"></a><span class="control">Terminal</span> from the menu
+        (see <a name="d9041e56"></a><a href="working-with-embedded-local-terminal.html"><span>Working with Embedded Local Terminal</span></a> for details).
+     
+                </li><li class="list__item"><a name="d9041e4409"></a>
+                    Switch to the project root folder and type the following command at the command line prompt:
+                    <a name="d9041e4411"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+npm install grunt 
+                    </code></div>
+                </li></ol>
+        </li><li class="list__item"><a name="d9041e4417"></a>
+            Run <a name="d9041e4419"></a><span class="emphasis">NPM</span> from WebStorm using the <a name="d9041e4422"></a><span class="control">Node.js and NPM</span> page of the <a name="d9041e4425"></a><span class="control">Settings</span> dialog box.
+            <ol class="list _decimal"><li class="list__item"><a name="d9041e4430"></a>
+                     
+         
+            Open the <a name="d7162e7944"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by choosing <a name="d7162e7946"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d7162e7949"></a><span class="menupath">WebStorm | Preferences</span> for OS X,
+         
+         
+            and  
+         
+         
+         
+        click <a name="d7162e7972"></a><span class="control">Node.js and NPM</span> under <a name="d7162e7975"></a><span class="control">Languages &amp; Frameworks</span>.
+     
+     
+                </li><li class="list__item"><a name="d9041e4442"></a>
+                     
+        On the <a name="d9041e82"></a><span class="control">Node.js and NPM</span> page that opens, the <a name="d9041e85"></a><span class="control">Packages</span> area shows all the Node.js-dependent packages
+        that are currently installed on your computer, both at the <a name="d9041e88"></a><span class="emphasis">global</span> and at the <a name="d9041e91"></a><span class="emphasis">project</span> level.
+        Click <img alt="add" width="12" height="12" title="add" src="/help/img/idea/2016.1/new.png" class="inline-icon-12">.
+     
+                </li><li class="list__item"><a name="d9041e4447"></a>
+                    In the <a name="d9041e4449"></a><span class="control">Available Packages</span> dialog box that opens, select the required package.
+                </li><li class="list__item"><a name="d9041e4453"></a>
+                    Optionally specify the product version and click <a name="d9041e4455"></a><span class="control">Install Package</span> to start installation.
+                </li></ol>
+        </li></ul>
+
+     
+<a name="d252349e206"></a><h2>Running Grunt Tasks</h2>
+    <a name="d252349e208"></a><p>
+        Grunt tasks are launched in two ways:
+        <ul class="list _bullet"><li class="list__item"><a name="d252349e212"></a>
+                From tasks trees in the dedicated <a name="d252349e214"></a><a href="grunt-tool-window.html"><span>Grunt Tool Window</span></a> which opens
+                when you invoke <a name="d252349e216"></a><span class="emphasis">Grunt</span> from a <code class="code" data-lang="Java">Gruntfile.js</code> file.
+                 
+        As soon as you invoke <a name="d68392e117"></a><span class="emphasis">Grunt</span>, it starts building a tree of tasks according to the <code class="code" data-lang="Java">Gruntfile.js</code> on which it was invoked.
+         
+            If a task has <a name="d68392e125"></a><a href="http://gruntjs.com/api/grunt.task#grunt.task.registermultitask" data-external="true"><span>targets</span></a>,
+            the task is displayed as a node and the targets are listed under it.
+         
+            </li><li class="list__item"><a name="d252349e225"></a>
+                According to a dedicated run configuration, see <a name="d252349e227"></a><a href="run-debug-configuration-grunt-js.html"><span>Run/Debug Configuration: Grunt.Js</span></a>.
+            </li></ul>
+    </p>
+        <a name="d252349e232"></a><p>
+             
+            The result of executing a task is displayed in the <a name="d252349e236"></a><a href="run-tool-window.html"><span>Run tool window</span></a>.
+             
+ 
+            The tool window shows the Grunt output, reports the errors occurred, lists the packages or plugins that have not been found, etc.
+            The name of the last executed task is displayed on the title bar of the tool window.
+         
+
+        </p>
+
+
+        <a name="d252349e247"></a><h3>Running Grunt Tasks from the Tasks Tree</h3>
+        <a name="d252349e249"></a><p>
+            Running Grunt tasks right from the tasks tree is easy and fast, the only disadvantage of this approach is that
+            such important additional options as <a name="d252349e251"></a><span class="emphasis">force execution</span> and <a name="d252349e254"></a><span class="emphasis">verbose mode</span> are not available in this mode.
+            As a result, you cannot have WebStorm, for example, ignore warnings or provide a detailed log.
+        </p>
+
+    <a name="d252349e258"></a><a name="dynaProc1"></a><section class="procedure-steps"><h2>Building a Tasks Tree</h2><ul class=".list "><li class="list__item">
+            If the <a name="d252349e262"></a><span class="control">Grunt</span> tool window is not opened yet, do one of the following:
+            <ul class="list _ul"><li class="list__item"><a name="d9041e102"></a>
+            Select the required <code class="code" data-lang="Java">Gruntfile.js</code> file in the <a name="d9041e107"></a><span class="control">Project</span> tool window and choose <a name="d9041e110"></a><span class="control">Show Grunt Tasks</span> on the context menu of the selection.
+        </li><li class="list__item"><a name="d9041e114"></a>
+            Open the required <code class="code" data-lang="Java">Gruntfile.js</code> file in the editor and choose <a name="d9041e119"></a><span class="control">Show Grunt Tasks</span> on the context menu of the editor.
+        </li></ul>
+            <a name="d252349e275"></a><p>
+                In either case, the <a name="d252349e277"></a><span class="control">Grunt</span> tool window opens showing the tasks tree built according to the selected or opened <code class="code" data-lang="Java">Gruntfile.js</code> file.
+            </p>
+        </li><li class="list__item">
+             
+ 
+        If the <a name="d9041e146"></a><span class="control">Grunt</span> tool window is already opened, click <img alt="add_black.png" width="18" height="10" title="add_black.png" src="/help/img/idea/2016.1/add_black.png" class="inline-icon-10"> on the toolbar and
+        choose the required <code class="code" data-lang="Java">Gruntfile.js</code> file from the list. WebStorm adds a new node and builds a tasks tree under it.
+        The title of the node shows the path to the  <code class="code" data-lang="Java">Gruntfile.js</code> file according to which the tree is built.
+     
+        </li><li class="list__item">
+             
+        To re-build a tree, switch to the required node and click <img alt="icon_reload_grunt.png" width="14" height="14" title="icon_reload_grunt.png" src="/help/img/idea/2016.1/icon_reload_grunt.png" class="inline-icon-14"> on the toolbar.
+     
+        </li></ul></section>
+
+    <a name="d252349e305"></a><a name="dynaProc2"></a><section class="procedure-steps"><h2>Running Tasks</h2><ul class=".list "><li class="list__item">
+            <a name="d252349e309"></a><p>
+                To run a task or a target, do one of the following:
+            </p>
+             
+ 
+        <ul class="list _ul"><li class="list__item"><a name="d9041e183"></a>
+                To run the   task, select the root node in the tree and choose   on the context menu of the selection.
+            </li><li class="list__item"><a name="d9041e192"></a>
+                To navigate to the definition of a task or target, select the required task or target in the tree and choose   on the context menu of the selection.
+            </li></ul>
+     
+            <a name="d252349e319"></a><p>
+                 
+            The task or target execution output will be displayed in the <a name="d9041e202"></a><a href="run-tool-window.html"><span>Run tool window</span></a>.
+            The name of the target is shown in the format <code class="code" data-lang="Java">&lt;task name&gt;:&lt;target name&gt;</code>.
+     
+                 
+ 
+            The tool window shows the Grunt output, reports the errors occurred, lists the packages or plugins that have not been found, etc.
+            The name of the last executed task is displayed on the title bar of the tool window.
+         
+            </p>
+        </li><li class="list__item">
+             
+         
+            To run several tasks or targets, use the multiselect mode: hold <kbd>Shift</kbd> (for adjacent items) or <kbd>Ctrl</kbd>
+            (for non-adjacent items) keys and select the required tasks or targets, then choose <a name="d9041e233"></a><span class="control">Run</span> on the context menu of the selection.
+     
+        </li></ul></section>
+         
+        <a name="d252349e342"></a><h3>Running and Debugging Tasks According to a Run Configuration</h3>
+            <a name="d252349e344"></a><p>
+                Besides using <a name="d252349e346"></a><span class="emphasis">temporary</span> run configurations that WebStorm creates automatically,
+                you can create and launch your own <a name="d252349e349"></a><span class="emphasis">Grunt.js</span> run configurations.
+                For details about run configurations, see <a name="d252349e352"></a><a href="run-debug-configuration.html"><span>Run/Debug Configuration</span></a> and <a name="d252349e354"></a><a href="creating-and-editing-run-debug-configurations.html"><span>Creating and Editing Run/Debug Configurations</span></a>.    
+            </p>
+
+            <a name="createGruntRunConfig"></a><a name="dynaProc3"></a><section class="procedure-steps"><h2>Creating a Grunt.js Run/Debug Configuration</h2><ol class=".list _decimal"><li class="list__item">
+                     
+            Choose <a name="d7162e7850"></a><span class="menupath">Run | Edit Configuration</span> on the main menu.
+            Alternatively, click <kbd data-default="Shift+Alt+F10" data-default_for_gnome="Shift+Alt+F10" data-default_for_kde="Shift+Alt+F10" data-default_for_xwin="Shift+Alt+F10" data-emacs="Alt+Shift+F10" data-visual_studio="Alt+Shift+F10" data-netbeans_6.5="N/A" data-eclipse="Shift+Alt+F10" data-mac_os_x_10.5_="&#x2303;&#x2325;R" data-mac_os_x="&#x2325;&#x21E7;F10" data-eclipse_mac_os_x="&#x2303;&#x2325;R" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Shift+Alt+F10</kbd>  and select <a name="d7162e7855"></a><span class="control">Edit Configuration</span>
+            from the pop-up menu.
+         
+                </li><li class="list__item">
+                     
+         
+        Click the <a name="d7162e7863"></a><span class="control">Add New Configuration</span> button <img alt="add.png" width="12" height="12" title="add.png" src="/help/img/idea/2016.1/new.png" class="inline-icon-12"> on the toolbar
+        and select <a name="d7162e7868"></a><span class="control">Grunt.js</span> from the pop-up list.
+     
+                </li><li class="list__item">
+                    In the <a name="d252349e382"></a><a href="run-debug-configuration-grunt-js.html"><span>Run/Debug Configuration: Grunt.Js</span></a> dialog box that opens, specify the name of the run configuration,
+                    the tasks to run (use blank spaces as separators),
+                    the location of the <code class="code" data-lang="Java">Gruntfile.js</code> file to retrieve the definitions of the tasks from,
+                    and the path to the <code class="code" data-lang="Java">Grunt</code> package installed <a name="d252349e390"></a><span class="emphasis">locally</span>, under the project root.
+                    <a name="d252349e393"></a><p>
+                        Specify the location of the Node executable file and the NodeJS-specific options to be passed to this executable file,
+                        see <a name="d252349e395"></a><a href="run-debug-configuration-node-js.html#node_parameters"><span>Node parameters</span></a> for details.
+                    </p>
+                    <a name="d252349e400"></a><p>
+                        If applicable, specify the <a name="d252349e402"></a><a href="http://en.wikipedia.org/wiki/Environment_variable" data-external="true"><span>environment variables</span></a> for the NodeJS executable file.
+                    </p>
+                    <a name="d252349e406"></a><p>
+                         
+     To have <a name="d9041e639"></a><span class="emphasis">Grunt</span> ignore warnings and continue executing the launched task until the task is completed successfully or an error occurs,
+     select the <a name="d9041e642"></a><span class="control">--f</span> check box. Otherwise, the task execution is stopped by the first reported warning.
+  
+                         
+        To have the <a name="d9041e649"></a><span class="emphasis">verbose</span> mode applied and thus have a full detailed log of a task execution displayed,
+        select the <a name="d9041e652"></a><span class="control">--v</span> check box.
+     
+                    </p>
+ 
+                </li></ol></section>
+
+            <a name="d252349e417"></a><a name="dynaProc4"></a><section class="procedure-steps"><h2>Running a Task according to a Run Configuration</h2><p>
+                    <a name="d252349e421"></a><p>
+                        Select the run configuration from the list on the main tool bar and then choose <a name="d252349e423"></a><span class="menupath">Run | Run &lt;configuration name&gt;</span>
+                        on the main menu or click the <a name="d252349e426"></a><span class="control">Run</span> toolbar button <img alt="run.png" width="11" height="14" title="run.png" src="/help/img/idea/2016.1/run.png" class="inline-icon-14">.
+                        The output is displayed in the <a name="d252349e431"></a><a href="run-tool-window.html"><span>Run tool window</span></a>.
+                    </p>
+                </p></section>
+
+            <a name="d252349e437"></a><a name="dynaProc5"></a><section class="procedure-steps"><h2>Debugging Grunt Tasks</h2><ol class=".list _decimal"><li class="list__item">
+                    Create a <a name="d252349e441"></a><span class="emphasis">Grunt.js</span> run/debug configuration, <a name="d252349e444"></a><a href="#createGruntRunConfig"><span>see above</span></a>.
+ 
+                </li><li class="list__item">
+                    Open the <code class="code" data-lang="Java">Gruntfile.js</code> file in the editor and set the breakpoints in it where necessary.
+                </li><li class="list__item">
+                    To start a debugging session,
+                     
+        select the required debug configuration from the list on the main tool bar
+        and then choose <a name="d9041e1106"></a><span class="menupath">Run | Debug &lt;configuration name&gt;</span> on the main menu or click the <a name="d9041e1109"></a><span class="control">Debug</span> toolbar button
+        <img alt="debug.png" width="14" height="14" title="debug.png" src="/help/img/idea/2016.1/debug.png" class="inline-icon-14">.
+     
+                </li><li class="list__item">
+                    In the  <a name="d252349e463"></a><a href="debug-tool-window.html"><span>Debug tool window</span></a> that opens, analyze the suspended task execution, step through the task, etc.
+                    as described in <a name="d252349e466"></a><a href="examining-suspended-program.html"><span>Examining Suspended Program</span></a> and <a name="d252349e468"></a><a href="stepping-through-the-program.html"><span>Stepping Through the Program</span></a>.
+                </li></ol></section>
+         
+    <a name="d252349e474"></a><h2>Running Grunt Tasks Automatically</h2>
+        <a name="d252349e476"></a><p>
+             
+         
+        If you have some tasks or targets that you run on a regular basis, you can add the corresponding run configurations
+        to a list of <a name="d9041e3776"></a><span class="emphasis">startup tasks</span>. The tasks will be executed automatically on the project start-up.
+     
+        </p>
+        <ol class="list _decimal"><li class="list__item"><a name="d252349e486"></a>
+                 
+         
+            Open the <a name="d7162e7944"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by choosing <a name="d7162e7946"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d7162e7949"></a><span class="menupath">WebStorm | Preferences</span> for OS X,
+         
+         
+            and  
+         
+         
+         
+        click <a name="d7162e7972"></a><span class="control">Startup Tasks</span> under <a name="d7162e7975"></a><span class="control">Tools</span>.
+     
+     
+            </li><li class="list__item"><a name="d9041e3786"></a>
+            On the <a name="d9041e3788"></a><a href="startup-tasks.html"><span>Startup Tasks</span></a> page that opens, click <img alt="add.png" width="12" height="12" title="add.png" src="/help/img/idea/2016.1/new.png" class="inline-icon-12"> on the toolbar.
+        </li><li class="list__item"><a name="d9041e3793"></a>
+            From the drop-down list, choose the required <a name="d9041e3795"></a><span class="emphasis">Grunt</span> run configuration. The configuration is added to the list.
+            <a name="d9041e3798"></a><p>
+                If no applicable configuration is available in the project, click <img alt="add.png" width="12" height="12" title="add.png" src="/help/img/idea/2016.1/new.png" class="inline-icon-12">
+                and choose <a name="d9041e3802"></a><span class="control">Edit Configurations</span>. Then define a configuration with the required settings
+                in the <a name="d9041e3805"></a><a href="run-debug-configuration-grunt-js.html"><span>Run/Debug Configuration: Grunt.Js</span></a> page that opens.
+                When you save the new configuration it is automatically added to the list of startup tasks.
+            </p>
+        </li></ol>
+    <div class="navigation-links _bottom"><a class="navigation-links__prev" href="using-the-flow-type-checker.html">Using the Flow Type Checker</a><a class="navigation-links__next" href="using-gulp-task-runner.html">Using Gulp Task Runner</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content"><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d252349e521"></a><a href="run-debug-configuration-grunt-js.html"><span>Run/Debug Configuration: Grunt.Js</span></a></li><li class="list__item"><a name="d252349e523"></a><a href="grunt-tool-window.html"><span>Grunt Tool Window</span></a></li><li class="list__item"><a name="d252349e525"></a><a href="startup-tasks.html"><span>Startup Tasks</span></a></li></ul></div><div class="seealso__col"><h3>External Links:</h3><ul class="list"><li class="list__item"><a name="d252349e512"></a><a href="http://gruntjs.com/getting-started" data-external="true"><span>http://gruntjs.com/getting-started</span></a></li><li class="list__item"><a name="d252349e514"></a><a href="http://gruntjs.com/using-the-cli" data-external="true"><span>http://gruntjs.com/using-the-cli</span></a></li><li class="list__item"><a name="d252349e516"></a><a href="installing-and-removing-external-software-using-node-package-manager.html"><span>Installing and Removing External Software Using Node Package Manager</span></a></li></ul></div></div></section><div class="last-modified">Last modified: 11 July 2016 </div></article><div id="disqus_thread"></div></div></section></main></div><script src="/help/app/app.js"></script></body></html>

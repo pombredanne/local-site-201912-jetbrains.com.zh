@@ -1,0 +1,485 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"></meta><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><title>WebStorm 2016.1 Help :: Using Meteor</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Using_Meteor"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search WebStorm Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>WebStorm 2016.1 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWindow</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="using-javascript-code-quality-tools.html">Using JavaScript Code Quality Tools</a><a class="navigation-links__next" href="using-phonegap-cordova.html">Using PhoneGap/Cordova</a></div><h1>Using Meteor</h1><a name="d259635e16"></a><p>
+        WebStorm provides integration with the <a name="d259635e18"></a><a href="https://www.meteor.com/" data-external="true"><span>Meteor framework</span></a>. <a name="d259635e21"></a><span class="emphasis">Meteor</span> support in WebStorm involves:
+    </p><ul class="list _ul"><li class="list__item"><a name="d259635e27"></a>
+            Automatic recognition of <a name="d259635e29"></a><span class="emphasis">Meteor</span> projects by detecting the <code class="code" data-lang="Java">.meteor</code> folder and excluding the <code class="code" data-lang="Java">.meteor/local</code> folder from project.
+        </li><li class="list__item"><a name="d259635e41"></a>
+            Attaching the predefine <a name="d259635e43"></a><span class="emphasis">Meteor</span> library to the project automatically.
+        </li><li class="list__item"><a name="d259635e47"></a>
+            Coding assistance: syntax highlighting, code completion, resolving references.
+        </li><li class="list__item"><a name="d259635e50"></a>
+            Support of <a name="d259635e52"></a><span class="emphasis">Spacebars</span> via <a name="d259635e55"></a><span class="emphasis">Handlebars</span> with completion for <a name="d259635e58"></a><span class="keyword">if</span> and <a name="d259635e61"></a><span class="keyword">each</span> directives.
+            There is also support for navigation between JavaScript source code and templates, allowing for easy navigation by using <kbd data-default="Ctrl+B" data-default_for_gnome="Ctrl+B" data-default_for_kde="Ctrl+B" data-default_for_xwin="Ctrl+B" data-emacs="Ctrl+Alt+G" data-visual_studio="F12" data-netbeans_6.5="N/A" data-eclipse="F3" data-mac_os_x_10.5_="&#x2318;B" data-mac_os_x="&#x2318;B" data-eclipse_mac_os_x="F3" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+B</kbd> to <a name="d259635e67"></a><a href="navigating-to-declaration-or-type-declaration-of-a-symbol.html"><span>go to Declaration</span></a>.
+        </li><li class="list__item"><a name="d259635e72"></a>
+            Running and debugging the server and the client sides of applications.
+        </li></ul><a name="d259635e76"></a><p>On this page:</p><ul><li class="list__item"><a href="#d259635e81">Before You Start</a></li><li class="list__item"><a href="#installMeteor">Installing Meteor</a></li><li class="list__item"><a href="#d259635e154">Preparing to Develop a Meteor Application</a><ul class="list _bullet"><li class="list__item"><a href="#d259635e164">Generating a Meteor Application Stub</a></li><li class="list__item"><a href="#d259635e285">Enabling Meteor Integration in an Existing Project</a></li><li class="list__item"><a href="#d259635e447">Importing Meteor Packages</a></li></ul></li><li class="list__item"><a href="#d259635e513">Running and Debugging a Meteor Application</a><ul class="list _bullet"><li class="list__item"><a href="#meteor_create_run_config">Creating a Meteor Run Configuration</a></li><li class="list__item"><a href="#d259635e653">Configuring the Update Policy in the Debugging Mode</a><ul class="list _bullet"><li class="list__item"><a href="#d259635e678">Configuring the Update Policy for the Server Side Code</a></li><li class="list__item"><a href="#d259635e707">Configuring the Update Policy for the Client Side Code</a></li></ul></li><li class="list__item"><a href="#d259635e750">Running a Meteor Application</a></li><li class="list__item"><a href="#d259635e761">Debugging a Meteor Application</a></li></ul></li></ul><a name="d259635e81"></a><a name="dynaProc0"></a><section class="procedure-steps"><h2>Before You Start</h2><ul class=".list "><li class="list__item">
+            Make sure the <a name="d259635e85"></a><span class="emphasis">Meteor</span> and the <a name="d259635e88"></a><span class="emphasis">Handlebars/Mustache</span> plugins are activated.
+            The <a name="d259635e91"></a><span class="emphasis">Handlebars/Mustache</span> enables WebStorm to recognize <a name="d259635e94"></a><span class="emphasis">Spacebars</span> templates that are an extension of the <a name="d259635e97"></a><span class="emphasis">Handlebars/Mustache</span> templates.
+            As a side effect, HTML files in <a name="d259635e101"></a><span class="emphasis">Meteor</span> projects are marked with the <a name="d259635e104"></a><span class="emphasis">Handlebars/Mustache</span> icon <img alt="fileTypeHandlebars" width="16" height="15" title="fileTypeHandlebars" src="/help/img/idea/2016.1/fileTypeHandlebars.png" class="inline-icon-15">.
+             
+        The plugins are bundled with WebStorm and activated by default.
+        If the plugins are not activated, enable them on the <a name="d7162e5467"></a><a href="plugins-2.html"><span>Plugins</span></a> page of the
+        <a name="d7162e5469"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> as described in <a name="d7162e5471"></a><a href="enabling-and-disabling-plugins.html"><span>Enabling and Disabling Plugins</span></a>.
+     
+             
+        </li></ul></section><a name="installMeteor"></a><a name="dynaProc1"></a><section class="procedure-steps"><h2>Installing Meteor</h2><p>
+            <a name="d259635e120"></a><p>
+                The installation procedure depends on the operating system you are using:
+            </p>
+        </p><ul class=".list "><li class="list__item">
+            To install <a name="d259635e134"></a><span class="emphasis">Meteor</span> on Windows, download the <code class="code" data-lang="Java">LaunchMeteor.exe</code> installer
+            at <a name="d259635e140"></a><a href="https://github.com/meteor/meteor/wiki/Preview-of-Meteor-on-Windows" data-external="true"><span>https://github.com/meteor/meteor/wiki/Preview-of-Meteor-on-Windows</span></a>.
+        </li><li class="list__item">
+            To install <a name="d259635e146"></a><span class="emphasis">Meteor</span> on OSX (OSX 10.6 or higher is required) or Linux, type the following command:
+            <a name="d259635e149"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">$ curl https://install.meteor.com | /bin/sh</code></div>
+        </li></ul><p class="procIntro">
+            <a name="d259635e126"></a><p>
+                Learn more at <a name="d259635e128"></a><a href="http://docs.meteor.com/" data-external="true"><span>http://docs.meteor.com/</span></a>.
+            </p>
+        </p></section><a name="d259635e154"></a><h2>Preparing to Develop a Meteor Application</h2>
+        <a name="d259635e156"></a><p>
+             
+        To start your development, you need a WebStorm project with the <a name="d9041e1129"></a><span class="emphasis">Meteor</span>-specific structure.
+        You can have an application stub that meets these requirements generated automatically or open an existing <a name="d9041e1132"></a><span class="emphasis">Meteor</span> project in WebStorm
+        and configure <a name="d9041e1135"></a><span class="emphasis">Meteor</span> support in it.
+     
+        </p>
+        <a name="d259635e164"></a><a name="dynaProc2"></a><section class="procedure-steps"><h2>Generating a Meteor Application Stub</h2><ol class=".list _decimal"><li class="list__item">
+             
+        Choose
+         
+         
+            <a name="d9041e1495"></a><span class="menupath">File | New Project</span>
+         
+        on the main menu
+        or click the <a name="d9041e1499"></a><span class="control">New Project</span> button on the <a name="d9041e1502"></a><span class="control">Welcome screen</span>.
+         The <a name="d9041e1507"></a><a href="create-new-project-select-project-type.html"><span>Create New Project: Select Project Type</span></a> dialog box opens. 
+         
+     
+        </li><li class="list__item">
+                     
+        In the left-hand pane, choose <a name="d9041e941"></a><span class="control">Meteor JS App</span>.
+     
+                </li><li class="list__item">
+                    In the right-hand pane:
+                    <ol class="list _decimal"><li class="list__item"><a name="d259635e210"></a>
+                             
+        In the <a name="d9041e1522"></a><span class="control">Location</span> text box, specify the path to the project folder where the project-related files will be stored.
+     
+                        </li><li class="list__item"><a name="d259635e215"></a>
+                             
+ 
+        Specify the location of the <a name="d9041e968"></a><span class="emphasis">Meteor</span> executable file
+        (see <a name="d9041e971"></a><a href="#installMeteor"><span>Installing Meteor</span></a>).
+     
+                        </li><li class="list__item"><a name="d259635e223"></a>
+                            From the <a name="d259635e225"></a><span class="control">Template</span> drop-down list,
+                             
+        choose the sample to generate.
+        To have a basic project structure generated, choose the <a name="d9041e977"></a><span class="control">Default</span> option.
+     
+                        </li><li class="list__item"><a name="d259635e231"></a>
+                            In the <a name="d259635e233"></a><span class="control">Filename</span> text box,
+                             
+        type the name for the mutually related
+        <code class="code" data-lang="Java">.js</code>, <code class="code" data-lang="Java">.html</code>, and <code class="code" data-lang="Java">.css</code> files that will be generated.
+        The text box is available only if the <a name="d9041e957"></a><span class="emphasis">Default</span> sample type is selected
+        from the <a name="d9041e960"></a><span class="control">Template</span> drop-dow list.
+     
+                        </li></ol>
+                </li></ol><p class="procIntro">
+                <a name="d259635e168"></a><p>
+                     
+        When you click <a name="d9041e984"></a><span class="control">Create</span>, WebStorm generates a skeleton of a <a name="d9041e990"></a><span class="emphasis">Meteor</span> application, including an HTML file, a JavaScript file, a CSS file,
+        and a <code class="code" data-lang="Java">.meteor</code> folder with subfolders.
+     
+                     
+ 
+        The <code class="code" data-lang="Java">.meteor/local</code> folder, which is intended for storing the built application,
+        is automatically marked as <a name="d9041e877"></a><span class="emphasis">excluded</span> and is not involved in indexing.
+     
+                </p>
+                <a name="d259635e178"></a><p>
+                     
+        By default, <a name="d9041e883"></a><span class="emphasis">excluded</span> files are shown in the project tree. To have the <code class="code" data-lang="Java">.meteor/local</code> folder hidden,
+        click the <img alt="viewMode" width="19" height="12" title="viewMode" src="/help/img/idea/2016.1/viewMode.png" class="inline-icon-12"> button on the toolbar of the <a name="d9041e891"></a><span class="control">Project</span> tool window and remove a tick next to the <a name="d9041e894"></a><span class="control">Show Excluded Files</span> option.
+     
+                </p>
+                <a name="d259635e183"></a><p>
+                     
+        WebStorm also automatically attaches the predefined <a name="d9041e933"></a><span class="emphasis">Meteor library</span> to the project, thus enabling syntax highlighting, resolving references, and code completion.
+        See <a name="d9041e936"></a><a href="configuring-javascript-libraries.html"><span>Configuring JavaScript Libraries</span></a> for details.
+     
+                </p>
+                <a name="d259635e188"></a><p>
+                     
+        <a name="d9041e999"></a><span class="emphasis">Meteor</span> uses <a name="d9041e1002"></a><span class="emphasis">Spacebars</span> templates that are an extension of the <a name="d9041e1005"></a><span class="emphasis">Handlebars/Mustache</span> templates.
+        WebStorm recognizes <a name="d9041e1008"></a><span class="emphasis">Spacebars</span> templates, but as a side effect marks  HTML files in <a name="d9041e1011"></a><span class="emphasis">Meteor</span> projects
+        with the <a name="d9041e1015"></a><span class="emphasis">Handlebars/Mustache</span> icon <img alt="fileTypeHandlebars" width="16" height="15" title="fileTypeHandlebars" src="/help/img/idea/2016.1/fileTypeHandlebars.png" class="inline-icon-15">.
+     
+                </p>
+            </p></section>
+
+        <a name="d259635e285"></a><a name="dynaProc3"></a><section class="procedure-steps"><h2>Enabling Meteor Integration in an Existing Project</h2><p>
+                <a name="d259635e289"></a><p>
+                    WebStorm automatically detects <a name="d259635e291"></a><span class="emphasis">Meteor</span> projects by locating the <code class="code" data-lang="Java">.meteor</code> folder.
+                     
+ 
+        The <code class="code" data-lang="Java">.meteor/local</code> folder, which is intended for storing the built application,
+        is automatically marked as <a name="d9041e877"></a><span class="emphasis">excluded</span> and is not involved in indexing.
+     
+                </p>
+            </p><ol class=".list _decimal"><li class="list__item">
+                Open the desired <a name="d259635e319"></a><span class="emphasis">Meteor</span> project in WebStorm by choosing <a name="d259635e322"></a><span class="menupath">File | Open</span> on the main menu
+                or clicking <a name="d259635e325"></a><span class="control">Open</span> on the <a name="d259635e328"></a><span class="control">Welcome Screen</span>.
+            </li><li class="list__item">
+                 
+         
+            Open the <a name="d7162e7876"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by choosing <a name="d7162e7878"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d7162e7881"></a><span class="menupath">WebStorm | Preferences</span> for OS X.
+         
+         
+     
+                 
+         
+        Expand the <a name="d7162e7923"></a><span class="control">Languages&amp;Frameworks</span> node, and then
+     
+                 
+         
+         
+         
+        click <a name="d7162e7972"></a><span class="control">Meteor</span> under <a name="d7162e7975"></a><span class="control">JavaScript</span>.
+     
+            </li><li class="list__item">
+                On the <a name="d259635e353"></a><a href="meteor.html"><span>Meteor</span></a> page that opens:
+                <ol class="list _decimal"><li class="list__item"><a name="d259635e357"></a>
+                        Check the location of the <a name="d259635e359"></a><span class="emphasis">Meteor</span> executable file or specify the path to it if WebStorm has not detected the executable file automatically.
+                    </li><li class="list__item"><a name="d259635e363"></a>
+                        To have WebStorm involve the <code class="code" data-lang="Java">.meteor/local</code> folder and its contents in indexing,
+                        clear the <a name="d259635e368"></a><span class="control">Automatically exclude ".meteor/local" directory on open project</span> check box.
+                        By default, the check box is selected and
+                         
+ 
+        the <code class="code" data-lang="Java">.meteor/local</code> folder, which is intended for storing the built application,
+        is automatically marked as <a name="d9041e877"></a><span class="emphasis">excluded</span> and is not involved in indexing.
+     
+                        <a name="d259635e376"></a><p>
+                             
+        By default, <a name="d9041e883"></a><span class="emphasis">excluded</span> files are shown in the project tree. To have the <code class="code" data-lang="Java">.meteor/local</code> folder hidden,
+        click the <img alt="viewMode" width="19" height="12" title="viewMode" src="/help/img/idea/2016.1/viewMode.png" class="inline-icon-12"> button on the toolbar of the <a name="d9041e891"></a><span class="control">Project</span> tool window and remove a tick next to the <a name="d9041e894"></a><span class="control">Show Excluded Files</span> option.
+     
+                        </p>
+                    </li><li class="list__item"><a name="d259635e382"></a>
+                        Make sure the <a name="d259635e384"></a><span class="control">Automatically import Meteor packages as external library</span> check box is selected.
+                         
+        <ul class="list _bullet"><li class="list__item"><a name="d9041e902"></a>
+                When the check box is selected, WebStorm automatically imports the external packages from the <code class="code" data-lang="Java">meteor/packages</code> file.
+                As a result, WebStorm provides full range coding assistance: resolves references to <a name="d9041e907"></a><span class="emphasis">Meteor</span> built-in functions,
+                for example, <code class="code" data-lang="Java">check(true)</code>, and to functions  from third-party packages,
+                provides proper syntax and error highlighting,
+                supports debugging with source maps, etc.
+            </li><li class="list__item"><a name="d9041e914"></a>
+                When this check box is cleared, WebStorm does not automatically import the external packages from the <code class="code" data-lang="Java">meteor/packages</code> file.
+                As a result no coding assistance is provided.
+                    To improve the situation, open the <code class="code" data-lang="Java">meteor/packages</code> file in the editor and click the <a name="d9041e922"></a><span class="control">Import packages as library</span> link
+                    or run the <code class="code" data-lang="Java">meteor --update</code> command.
+            </li></ul>
+        By default, the check box is selected.
+     
+                    </li><li class="list__item"><a name="d259635e390"></a>
+                        Click <a name="d259635e392"></a><span class="control">Apply</span> to save the settings without leaving the dialog box.
+                    </li></ol>
+            </li><li class="list__item">
+                Check that WebStorm has attached the <a name="d259635e401"></a><span class="emphasis">Meteor</span> library to the project:
+                <ol class="list _decimal"><li class="list__item"><a name="d259635e406"></a>
+                         
+         
+         
+         
+        Click <a name="d7162e7972"></a><span class="control">Libraries</span> under <a name="d7162e7975"></a><span class="control">JavaScript</span>.
+     
+                    </li><li class="list__item"><a name="d259635e418"></a>
+                        On the <a name="d259635e420"></a><a href="javascript-libraries.html"><span>JavaScript. Libraries</span></a> page that opens,
+                        make sure the check box next to the <a name="d259635e422"></a><span class="emphasis">Meteor</span> project library in the <a name="d259635e425"></a><span class="control">Libraries</span> list is selected.
+                    </li><li class="list__item"><a name="d259635e429"></a>
+                        Click <a name="d259635e431"></a><span class="control">OK</span>.
+                    </li></ol>
+                <a name="d259635e436"></a><p>
+                    Alternatively, choose <a name="d259635e438"></a><span class="control">Use JavaScript Library</span> on the context menu of the editor and make sure a tick is set next to <a name="d259635e441"></a><span class="control">Meteor project library</span>.
+                </p>
+            </li></ol><p class="procIntro">
+                <a name="d259635e306"></a><p>
+                     
+        By default, <a name="d9041e883"></a><span class="emphasis">excluded</span> files are shown in the project tree. To have the <code class="code" data-lang="Java">.meteor/local</code> folder hidden,
+        click the <img alt="viewMode" width="19" height="12" title="viewMode" src="/help/img/idea/2016.1/viewMode.png" class="inline-icon-12"> button on the toolbar of the <a name="d9041e891"></a><span class="control">Project</span> tool window and remove a tick next to the <a name="d9041e894"></a><span class="control">Show Excluded Files</span> option.
+     
+                </p>
+
+                <a name="d259635e311"></a><p>
+                     
+        WebStorm also automatically attaches the predefined <a name="d9041e933"></a><span class="emphasis">Meteor library</span> to the project, thus enabling syntax highlighting, resolving references, and code completion.
+        See <a name="d9041e936"></a><a href="configuring-javascript-libraries.html"><span>Configuring JavaScript Libraries</span></a> for details.
+     
+                </p>
+            </p></section>
+
+        <a name="d259635e447"></a><a name="dynaProc4"></a><section class="procedure-steps"><h2>Importing Meteor Packages</h2><p>
+                <a name="d259635e451"></a><p>
+                    Besides the predefined <a name="d259635e453"></a><span class="emphasis">Meteor</span> library that ensures basic <a name="d259635e456"></a><span class="emphasis">Meteor</span>-specific coding assistance,
+                    you can download additional <a name="d259635e459"></a><a href="http://docs.meteor.com/#/basic/packages" data-external="true"><span>packages</span></a> that are defined in the <code class="code" data-lang="Java">.meteor/local/packages</code> file.
+                </p>
+            </p><ol class=".list _decimal"><li class="list__item">
+                Open the <code class="code" data-lang="Java">.meteor/local/packages</code> file in the editor.
+            </li><li class="list__item">
+                Click the <a name="d259635e475"></a><span class="control">Import Meteor Packages</span> link in the upper right-hand corner of the screen.
+            </li><li class="list__item">
+                In the dialog box that opens, specify the packages to download depending on the type of the application you are going to develop in your project.
+                <ul class="list _bullet"><li class="list__item"><a name="d259635e483"></a><a name="d259635e484"></a><span class="control">Client</span></li><li class="list__item"><a name="d259635e487"></a><a name="d259635e488"></a><span class="control">Server</span></li><li class="list__item"><a name="d259635e491"></a>
+                        <a name="d259635e493"></a><span class="control">Cordova:</span> choose this option to import the packages that support development of <a name="d259635e496"></a><span class="emphasis">Meteor</span> applications
+                        for <a name="d259635e499"></a><span class="emphasis">iOS</span> and <a name="d259635e502"></a><span class="emphasis">Android</span>,
+                        see <a name="d259635e505"></a><a href="https://github.com/meteor/meteor/wiki/Meteor-Cordova-Phonegap-integration" data-external="true"><span>Meteor Cordova Phonegap Integration</span></a> for details.
+                    </li></ul>
+            </li></ol></section>
+    <a name="d259635e513"></a><h2>Running and Debugging a Meteor Application</h2>
+        <a name="d259635e515"></a><p>
+            With WebStorm, you can debug both the <a name="d259635e517"></a><span class="emphasis">client-side</span> and the <a name="d259635e520"></a><span class="emphasis">server-side</span> of <a name="d259635e523"></a><span class="emphasis">Meteor</span> JavaScript code simultaneously
+            using the WebStorm debugger.
+             
+            In WebStorm version 11.0.2 and higher, the debugger also pauses at the breakpoints set in the sources
+            stored in the <code class="code" data-lang="Java">/packages</code> folder. This functionality is supported both for the client side and for the server side code.
+             
+             
+        </p>
+        <a name="d259635e539"></a><p>
+             
+        <a name="d9041e1023"></a><span class="emphasis">Meteor</span> applications are launched only through a dedicated run configuration.
+         
+        Technically, several <a name="d9041e1032"></a><span class="emphasis">Meteor projects</span> that implement different applications can be combined within one single WebStorm project.
+        To run and debug these applications independently, create a separate run configuration for each of them
+        with the relevant <a name="d9041e1035"></a><span class="emphasis">working directory</span>.
+        To avoid port conflicts, these run configurations should use different ports. In the <a name="d9041e1038"></a><span class="control">Program Arguments</span> field,
+        specify a separate port for each run configuration in the format <code class="code" data-lang="Java">--port &lt;port_number&gt;</code>.
+     
+     
+            The results are shown in the console and/or in the browser depending on the settings specified
+            in the <a name="d259635e543"></a><span class="control">Browser / Live Edit</span> tab, see <a name="d259635e546"></a><a href="#meteor_create_run_config"><span>Creating a run configuration</span></a> below.
+        </p>
+        <a name="d259635e550"></a><p>
+             
+        In the debugging mode, WebStorm provides the <a name="d7162e8434"></a><span class="emphasis">Live Edit</span> functionality which
+        supports both automatic and manual upload of updated files on the server side.
+        For the client side, <a name="d7162e8437"></a><span class="emphasis">Live Edit</span> does not provide any way to apply the changes.
+     
+            For information on enabling and configuring the <a name="d259635e554"></a><span class="emphasis">Live Edit</span> functionality, see <a name="d259635e557"></a><a href="live-editing-of-html-css-and-javascript.html"><span>Live Editing of HTML, CSS, and JavaScript</span></a>.
+        </p>
+        <a name="meteor_create_run_config"></a><a name="dynaProc5"></a><section class="procedure-steps"><h2>Creating a Meteor Run Configuration</h2><p>
+                <a name="d259635e564"></a><p>
+                     
+ 
+        Technically, WebStorm creates separate run configurations for the server-side and the client-side code,
+        but you specify all your settings in one dedicated <a name="d9041e1100"></a><span class="emphasis">Meteor</span> run configuration.
+     
+                </p>
+            </p><ol class=".list _decimal"><li class="list__item">
+                 
+ 
+        On the main menu, choose <a name="d9041e1080"></a><span class="menupath">Run | Edit Configurations</span>.
+        In the <a name="d9041e1083"></a><span class="control">Edit Configuration</span> dialog box, that opens, click the <a name="d9041e1086"></a><span class="control">Add New Configuration</span> toolbar button <img alt="add.png" width="12" height="12" title="add.png" src="/help/img/idea/2016.1/new.png" class="inline-icon-12">,
+        and choose <a name="d9041e1092"></a><span class="control">Meteor</span> on the context menu.
+     
+            </li><li class="list__item">
+                In the <a name="d259635e585"></a><span class="control">Configuration</span> tab of the <a name="d259635e588"></a><a href="run-debug-configuration-meteor.html"><span>Run/Debug Configuration: Meteor</span></a> dialog box that opens,
+                specify the name of the configuration and the location of the <a name="d259635e590"></a><span class="emphasis">Meteor</span> executable file according to the installation
+                (see <a name="d259635e593"></a><a href="#installMeteor"><span>Installing Meteor</span></a>).
+                <a name="d259635e596"></a><p>
+                    Optionally, in the <a name="d259635e598"></a><span class="control">Program Arguments</span> field,
+                     
+        specify the command line additional parameters to be passed to the executable file on start up, if applicable.
+        These can be, for example, <code class="code" data-lang="Java">--dev</code>, <code class="code" data-lang="Java">--test</code>, or <code class="code" data-lang="Java">--prod</code> to indicate the environment in which the application is running (<a name="d9041e1065"></a><span class="emphasis">development</span>, <a name="d9041e1068"></a><span class="emphasis">test</span>,
+        or <a name="d9041e1072"></a><span class="emphasis">production</span> environments) so different resources are loaded on start up.
+     
+                </p>
+                <a name="d259635e605"></a><p>
+                    In the <a name="d259635e607"></a><span class="control">Working Directory</span> field,
+                     
+        specify the folder under which the application files to run are stored.
+        This folder must contain a <code class="code" data-lang="Java">.meteor</code> folder in the root to be treated a <a name="d9041e1050"></a><span class="emphasis">Meteor project</span>.
+     
+                    By default, the field shows the path to the WebStorm project root.
+                </p>
+                <a name="d259635e613"></a><p>
+                     
+        Technically, several <a name="d9041e1032"></a><span class="emphasis">Meteor projects</span> that implement different applications can be combined within one single WebStorm project.
+        To run and debug these applications independently, create a separate run configuration for each of them
+        with the relevant <a name="d9041e1035"></a><span class="emphasis">working directory</span>.
+        To avoid port conflicts, these run configurations should use different ports. In the <a name="d9041e1038"></a><span class="control">Program Arguments</span> field,
+        specify a separate port for each run configuration in the format <code class="code" data-lang="Java">--port &lt;port_number&gt;</code>.
+     
+                </p>
+            </li><li class="list__item">
+                Switch to the <a name="d259635e621"></a><span class="control">Browser / Live Edit</span> tab and configure the behaviour of the browser:
+                        <ol class="list _decimal"><li class="list__item"><a name="d259635e626"></a>
+                                To view the results of the client-side code execution during running and debugging, select the <a name="d259635e628"></a><span class="control">After Launch</span> check box
+                                and choose the browser to open from the drop-down list.
+                            </li><li class="list__item"><a name="d259635e632"></a>
+                                In the text box below, specify the URL address to open the application in. The default value is <code class="code" data-lang="Java">http://localhost:3000</code>.
+                            </li><li class="list__item"><a name="d259635e638"></a>
+                                To enable debugging the client-side code in the browser, select the <a name="d259635e640"></a><span class="control">With JavaScript Debugger</span> check box.
+                            </li><li class="list__item"><a name="d259635e644"></a>
+                                Click <a name="d259635e646"></a><span class="control">OK</span> to save the run/debug configuration.
+                            </li></ol>
+            </li></ol></section>
+
+<a name="d259635e653"></a><h3>Configuring the Update Policy in the Debugging Mode</h3>
+    <a name="d259635e655"></a><p>
+         
+        In the debugging mode, WebStorm provides the <a name="d7162e8434"></a><span class="emphasis">Live Edit</span> functionality which
+        supports both automatic and manual upload of updated files on the server side.
+        For the client side, <a name="d7162e8437"></a><span class="emphasis">Live Edit</span> does not provide any way to apply the changes.
+     
+    </p>
+    <a name="d259635e660"></a><p>
+        For information on enabling and configuring the <a name="d259635e662"></a><span class="emphasis">Live Edit</span> functionality, see <a name="d259635e665"></a><a href="live-editing-of-html-css-and-javascript.html"><span>Live Editing of HTML, CSS, and JavaScript</span></a>.
+    </p>
+    <a name="d259635e668"></a><p>
+         
+        The client-side code can be updated
+        through the native <a name="d7162e8457"></a><a href="https://www.meteor.com/blog/2012/02/09/hot-code-pushes" data-external="true"><span>Meteor hot code pushes functionality</span></a>.
+     
+    </p>
+    <a name="configure_server_side_update_policy_meteor"></a>
+    <a name="d259635e678"></a><a name="dynaProc6"></a><section class="procedure-steps"><h2>Configuring the Update Policy for the Server Side Code</h2><ol class=".list _decimal"><li class="list__item">
+             
+         
+            Open the <a name="d7162e7876"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by choosing <a name="d7162e7878"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d7162e7881"></a><span class="menupath">WebStorm | Preferences</span> for OS X.
+         
+         
+     
+             
+         
+         
+        Expand the <a name="d7162e7933"></a><span class="control">Debugger</span> node under <a name="d7162e7936"></a><span class="control">Build, Execution, Deployment</span>, and then
+     
+            click <a name="d259635e691"></a><span class="control">Live Edit</span>.
+            The <a name="d259635e694"></a><a href="live-edit.html"><span>Live Edit</span></a> page that opens.
+        </li><li class="list__item">
+            In the <a name="d259635e699"></a><span class="control">Update</span> area,
+             
+        configure the way changes made to the code during a debugging session are applied.
+        This functionality is available only for the <a name="d7162e8463"></a><span class="emphasis">server-side</span> code. To have the <a name="d7162e8466"></a><span class="emphasis">client side</span> code updated,
+        select the <a name="d7162e8469"></a><span class="control">Enable Meteor 'Hot code push'</span> check box on the <a name="d7162e8472"></a><a href="meteor.html"><span>Meteor page</span></a> of the <a name="d7162e8475"></a><span class="control">Settings</span> dialog box.
+        <a name="d7162e8479"></a><p>
+            Note that an update will be performed only if none of the modified files have any syntax errors.
+        </p>
+        <ul class="list _bullet"><li class="list__item"><a name="d7162e8484"></a>
+                <a name="d7162e8486"></a><span class="control">Auto in (ms):</span> Choose this option to have the changes applied automatically at certain time interval and specify the delay in ms in the text box.
+                This policy is not available for the client-side code of <a name="d7162e8489"></a><span class="emphasis">Meteor</span> applications.
+            </li><li class="list__item"><a name="d7162e8493"></a>
+                <a name="d7162e8495"></a><span class="control">Manual:</span> Choose this option to apply the changes manually by clicking
+                the <a name="d7162e8498"></a><span class="control">Update &lt;run configuration name&gt; JavaScript</span> button <img alt="update_icon" width="14" height="15" title="update_icon" src="/help/img/idea/2016.1/update_icon.png" class="inline-icon-15"> or
+                the <a name="d7162e8503"></a><span class="control">Update &lt;run configuration name&gt;</span> button <img alt="update_icon" width="14" height="15" title="update_icon" src="/help/img/idea/2016.1/update_icon.png" class="inline-icon-15"> on the toolbar of the <a name="d7162e8509"></a><span class="control">Debug</span> tool window.
+                <a name="d7162e8512"></a><p>
+                    It is recommended that you choose this option because applying changes to the <a name="d7162e8514"></a><span class="emphasis">client-side</span> code is not supported.
+                </p>
+            </li><li class="list__item"><a name="d7162e8519"></a>
+                <a name="d7162e8521"></a><span class="control">Restart if hotswap fails:</span>
+                <a name="d7162e8524"></a><p>
+                    With changes in HTML, CSS, and JavaScript on the client side, the contents of a Web page in the browser are updated without reloading.
+                    For <a name="d7162e8526"></a><span class="emphasis">NodeJS</span> or <a name="d7162e8529"></a><span class="emphasis">Meteor</span> applications, WebStorm first tries to update the application incorporating the changes without
+                    restarting the NodeJS server.
+                </p>
+                <ul class="list _bullet"><li class="list__item"><a name="d7162e8535"></a>
+                        Select this check box to have WebStorm try restarting the server if the changes cannot be applied automatically.
+                        After the restart, WebStorm brings you to the execution point where the problem took place.
+                        <a name="d7162e8537"></a><p>
+                            If even with this option chosen automatic upload still fails, tou will have to restart the server manually by clicking the
+                            <a name="d7162e8539"></a><span class="control">Rerun &lt;run configuration name&gt;</span> button <img alt="rerun" width="13" height="14" title="rerun" src="/help/img/idea/2016.1/rerun.png" class="inline-icon-14">.
+                        </p>
+                    </li><li class="list__item"><a name="d7162e8546"></a>
+                        When the check box is cleared, WebStorm just displays a pop-up window informing you about the failure and suggesting you to restart the server manually.
+                    </li></ul>
+            </li></ul>
+     
+        </li></ol></section>
+
+    <a name="d259635e707"></a><a name="dynaProc7"></a><section class="procedure-steps"><h2>Configuring the Update Policy for the Client Side Code</h2><p>
+            <a name="d259635e711"></a><p>
+                 
+        The client-side code can be updated
+        through the native <a name="d7162e8457"></a><a href="https://www.meteor.com/blog/2012/02/09/hot-code-pushes" data-external="true"><span>Meteor hot code pushes functionality</span></a>.
+     
+                The functionality is enabled by default, to activate it:
+            </p>
+        </p><ol class=".list _decimal"><li class="list__item">
+             
+         
+            Open the <a name="d7162e7876"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by choosing <a name="d7162e7878"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d7162e7881"></a><span class="menupath">WebStorm | Preferences</span> for OS X.
+         
+         
+     
+             
+         
+        Expand the <a name="d7162e7923"></a><span class="control">Languages&amp;Frameworks</span> node, and then
+     
+             
+         
+         
+         
+        click <a name="d7162e7972"></a><span class="control">Meteor</span> under <a name="d7162e7975"></a><span class="control">JavaScript</span>.
+     
+        </li><li class="list__item">
+            On the <a name="d259635e741"></a><a href="meteor.html"><span>Meteor</span></a> page that opens, select the <a name="d259635e743"></a><span class="control">Enable Meteor 'Hot code push'</span> check box.
+        </li></ol></section>
+ 
+
+        <a name="d259635e750"></a><a name="dynaProc8"></a><section class="procedure-steps"><h2>Running a Meteor Application</h2><ul class=".list "><li class="list__item">
+                To run an application,
+                 
+        select the required run configuration from the list on the main tool bar
+        and then choose <a name="d9041e1118"></a><span class="menupath">Run | Run &lt;configuration name&gt;</span> on the main menu or click the <a name="d9041e1121"></a><span class="control">Run</span> toolbar button
+        <img alt="run.png" width="11" height="14" title="run.png" src="/help/img/idea/2016.1/run.png" class="inline-icon-14">.
+     
+                <a name="d259635e756"></a><p>
+                    If in the run configuration the browser is configured to open automatically upon application start, the browser opens showing the result of application execution.
+                    You can view the same result by opening the browser of your choice manually at the URL specified in the run configuration.
+                </p>
+            </li></ul></section>
+
+
+        <a name="d259635e761"></a><a name="dynaProc9"></a><section class="procedure-steps"><h2>Debugging a Meteor Application</h2><ol class=".list _decimal"><li class="list__item">
+                Set the <a name="d259635e765"></a><a href="using-breakpoints.html"><span>breakpoints</span></a> in the code, where necessary.
+            </li><li class="list__item">
+                To initiate a debugging session,  
+        select the required debug configuration from the list on the main tool bar
+        and then choose <a name="d9041e1106"></a><span class="menupath">Run | Debug &lt;configuration name&gt;</span> on the main menu or click the <a name="d9041e1109"></a><span class="control">Debug</span> toolbar button
+        <img alt="debug.png" width="14" height="14" title="debug.png" src="/help/img/idea/2016.1/debug.png" class="inline-icon-14">.
+     
+                The <a name="d259635e773"></a><span class="control">Debug</span> tool window opens showing two tabs: one for debugging the server-side code marked with <img alt="icon_meteor" width="14" height="15" title="icon_meteor" src="/help/img/idea/2016.1/icon_meteor.png" class="inline-icon-15">
+                and the other for debugging the client-side code marked with <img alt="icon_javascript" width="15" height="14" title="icon_javascript" src="/help/img/idea/2016.1/icon_javascript.png" class="inline-icon-14">.
+            </li><li class="list__item">
+                <a name="d259635e783"></a><a href="examining-suspended-program.html"><span>Explore the suspended program</span></a> and <a name="d259635e786"></a><a href="stepping-through-the-program.html"><span>step through the program</span></a>.
+            </li><li class="list__item">
+                Apply the changes to the application depending on the update policy defined in the run configuration:
+                <ul class="list _bullet"><li class="list__item"><a name="d259635e794"></a>
+                        To apply the changes to the client-side code, switch to the <img alt="icon_javascript" width="15" height="14" title="icon_javascript" src="/help/img/idea/2016.1/icon_javascript.png" class="inline-icon-14"> tab
+                        and click the <a name="d259635e798"></a><span class="control">Update &lt;run configuration name&gt; JavaScript</span> button <img alt="update_icon" width="14" height="15" title="update_icon" src="/help/img/idea/2016.1/update_icon.png" class="inline-icon-15"> on the toolbar.
+                    </li><li class="list__item"><a name="d259635e804"></a>
+                        The changes to the server-side code are applied depending on the update policy defined in the run configuration:
+                        <ul class="list _bullet"><li class="list__item"><a name="d259635e808"></a>
+                                If you have chosen manual upload, switch to the <img alt="icon_meteor" width="14" height="15" title="icon_meteor" src="/help/img/idea/2016.1/icon_meteor.png" class="inline-icon-15"> tab and click the <a name="d259635e812"></a><span class="control">Update &lt;run configuration name&gt;</span> button <img alt="update_icon" width="14" height="15" title="update_icon" src="/help/img/idea/2016.1/update_icon.png" class="inline-icon-15"> on the toolbar.
+                            </li><li class="list__item"><a name="d259635e818"></a>
+                                If you have chosen automatic upload, updates to the server-side code are applied automatically.
+                                If automatic upload fails, restart the application by clicking <a name="d259635e820"></a><span class="control">Rerun &lt;run configuration name&gt;</span> button <img alt="rerun" width="13" height="14" title="rerun" src="/help/img/idea/2016.1/rerun.png" class="inline-icon-14">.
+                                Choosing the <a name="d259635e825"></a><span class="control">Restart if hotswap fails</span> option on the <a name="d259635e828"></a><a href="live-edit.html"><span>Live Edit</span></a> page may help: WebStorm will attempt to restart the server automatically.
+                            </li></ul>
+                    </li></ul>
+            </li></ol></section>
+    <div class="navigation-links _bottom"><a class="navigation-links__prev" href="using-javascript-code-quality-tools.html">Using JavaScript Code Quality Tools</a><a class="navigation-links__next" href="using-phonegap-cordova.html">Using PhoneGap/Cordova</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content"><div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d259635e841"></a><a href="generating-a-project-from-a-framework-template.html"><span>Generating a Project from a Framework Template</span></a></li></ul></div><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d259635e846"></a><a href="meteor.html"><span>Meteor</span></a></li><li class="list__item"><a name="d259635e848"></a><a href="run-debug-configuration-meteor.html"><span>Run/Debug Configuration: Meteor</span></a></li></ul></div></div></section><div class="last-modified">Last modified: 11 July 2016 </div></article><div id="disqus_thread"></div></div></section></main></div><script src="/help/app/app.js"></script></body></html>

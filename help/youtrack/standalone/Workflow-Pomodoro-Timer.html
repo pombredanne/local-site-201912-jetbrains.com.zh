@@ -1,0 +1,173 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta charset="UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="//resources.jetbrains.com/storage/help-app/v3/analytics.js"></script><title>Pomodoro Timer - Help | YouTrack Standalone</title><link rel="stylesheet" href="//resources.jetbrains.com/storage/help-app/v3/app.css"></head><body data-id="Workflow-Pomodoro-Timer" data-breadcrumbs="Administration.xml|Administration/Workflow-Guide.xml|Workflows/Default-Workflows.xml|Default Workflows/Workflow-Pomodoro-Timer.xml|Pomodoro Timer" data-main-title="Pomodoro Timer"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack Standalone Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>YouTrack Standalone 2019.2 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="Workflow-Pomodoro-Timer" id="Workflow-Pomodoro-Timer.xml">Pomodoro Timer</h1>  <p id="75112ef7">This workflow supports the Pomodoro time management and time tracking technique.    Pomodoro was created by Francesco Cirillo in the 1980s. For details, visit <a href="http://cirillocompany.de/pages/pomodoro-technique/" data-external="true" target="_blank" rel="noopener noreferrer">http://cirillocompany.de/pages/pomodoro-technique/</a>.  </p>  <div class="table-wrapper"><table class="left_header" width="100%" id="4d8fa6d4"><tbody><tr id="738f57d7" class="ijRowOdd"><th id="95570e22" width="20%"><p>Name</p></th><td id="4bb3bf01"><p>@jetbrains/youtrack-workflow-pomodoro-timer</p></td></tr><tr id="0b719368" class="ijRowEven"><th id="39a920b5"><p>Auto-attached</p></th><td id="01089402"><p>no</p></td></tr><tr id="7e5826e7" class="ijRowOdd"><th id="6cd82286"><p>Modules</p></th><td id="c563285f"><p>        <a href="#pomodoro-states">Define transitions for "State" field with Pomodoro timer</a>        (state-machine rule)        <br>        <a href="#pomodoro-countdown">Enable Pomodoro countdown</a>        (on-schedule rule)        <br>        <a href="#change-reason">Block changes to interruption cause without stopping timer</a>        (on-change rule)      </p></td></tr></tbody></table></div>  <section class="procedure-steps"><h3 id="a8ae16ab">To enable this workflow:</h3><ol class="list _decimal"><li class="list__item" id="43daf338"><p>Enable and configure time tracking for your project.</p></li><li class="list__item" id="c07e350d"><p>Add an enumerated field with the name <span class="control">Pomodoro state</span> to your project.      Add the values <span class="control">Timer's running</span>, <span class="control">Not set</span>, <span class="control">Timer finished</span>,      and <span class="control">On a break</span> to the field.    </p></li><li class="list__item" id="d5603f9d"><p>Add an enumerated field with the name <span class="control">Pomodoro interruption</span> to your project.      Add the values <span class="control">Boss interrupted</span>, <span class="control">Facebook chat</span>, <span class="control">Phone        call</span>, and <span class="control">Urgent email</span> to the field.    </p></li><li class="list__item" id="e9f8700a"><p>Add an integer-type field with the name <span class="control">Pomodoro countdown</span> to your project.    </p></li><li class="list__item" id="ce2c3a52"><p>Attach the <span class="control">Pomodoro Timer</span> workflow to your project.    </p></li></ol></section>  <div class="chapter"><h2 id="a5da21aa">Use Case</h2>    <p id="e7f629ec">This workflow lets users follow the Pomodoro time management strategy. The Pomodoro technique works like this:    </p>    <ul class="list _ul"><li class="list__item" id="b81feed0"><p>Periods of activity are divided into equal intervals of time, which are called "pomodoros."</p></li><li class="list__item" id="69d94337"><p>A traditional pomodoro is 30 minutes long: 25 minutes of work plus a 5-minute break.</p></li><li class="list__item" id="2c6677af"><p>Every four pomodoros, you are allowed to take a longer break of 15 to 30 minutes.</p></li><li class="list__item" id="0b03a78f"><p>A pomodoro cannot be interrupted or split up. It marks 25 minutes of pure work.</p></li><li class="list__item" id="53985721"><p>If interruptions occur, you stop your pomodoro and log the cause of the interruption.</p></li></ul>  </div>  <div class="chapter"><h2 id="2749f83d">Modules</h2>    <p id="30982e75">This workflow includes three modules.</p>    <div class="chapter"><h3 id="pomodoro-states">Define transitions for "State" field with Pomodoro timer</h3>      <p id="dffef349">The first module contains a state-machine rule that defines how a Pomodoro transitions from state to state.        The beauty of this rule is that for each finished or interrupted Pomodoro, YouTrack automatically adds a new        work item.        It automatically logs your work on a particular issue!      </p>      <div class="code-block" data-lang="javascript">var entities = require('@jetbrains/youtrack-scripting-api/entities');
+var workflow = require('@jetbrains/youtrack-scripting-api/workflow');
+
+exports.rule = entities.Issue.stateMachine({
+  title: workflow.i18n('Define transitions for "State" field with Pomodoro timer'),
+  fieldName: 'Pomodoro state',
+  states: {
+    'Not set': {
+      initial: true,
+      transitions: {
+        start: {
+          targetState: 'Timer’s running'
+        }
+      }
+    },
+
+    'Timer’s running': {
+      onEnter: function(ctx) {
+        ctx.issue.fields['Pomodoro interruption'] = null;
+        workflow.message(workflow.i18n('25 minutes pomodoro is started.'));
+        ctx.issue.fields['Pomodoro countdown'] = 25;
+      },
+      transitions: {
+        interrupt: {
+          targetState: 'Not set',
+          action: function(ctx) {
+            ctx.issue.fields.required(ctx['Pomodoro interruption'], workflow.i18n('Please specify the interruption cause.'));
+
+            ctx.issue.applyCommand(addWorkToday(
+              (25 - ctx.issue.fields['Pomodoro countdown']) + 'm',
+              workflow.i18n('Pomodoro was interrupted. The cause: \'') +
+              ctx.issue.fields['Pomodoro interruption'].name +
+              '\'.'
+            ));
+
+            ctx.issue.fields['Pomodoro countdown'] = null;
+          }
+        },
+        reminder: {
+          targetState: 'Timer finished',
+          after: minutes(25)
+        }
+      }
+    },
+
+    'Timer finished': {
+      transitions: {
+        'take a break': {
+          targetState: 'On a break',
+          action: function(ctx) {
+            workflow.message(workflow.i18n('5 minutes break.'));
+            ctx.issue.applyCommand(addWorkToday('25m', '+1 pomodoro.'));
+            ctx.issue.fields['Pomodoro countdown'] = 5;
+          }
+        },
+        'discard': {
+          targetState: 'Not set',
+            action: function(ctx) {
+              ctx.issue.fields.required(ctx['Pomodoro interruption'], workflow.i18n('Please specify the interruption cause.'));
+
+              ctx.issue.applyCommand(addWorkToday(
+                '25m',
+                workflow.i18n('Pomodoro was discarded. The cause: \'') +
+                ctx.issue.fields['Pomodoro interruption'].name +
+                "'."
+              ));
+
+              ctx.issue.fields['Pomodoro countdown'] = null;
+            }
+          }
+        }
+    },
+
+    'On a break': {
+      transitions: {
+        start: {
+          targetState: 'Timer’s running',
+          action: function(ctx) {
+            ctx.issue.applyCommand(addWorkToday(
+              (5 - ctx.issue.fields['Pomodoro countdown']) + 'm',
+              workflow.i18n('+1 short break.')
+            ));
+          }
+        },
+        reminder: {
+          targetState: 'Not set',
+          after: minutes(5),
+          action: function(ctx) {
+            ctx.issue.applyCommand(addWorkToday('5m', workflow.i18n('+1 break.')));
+          }
+        }
+      }
+    }
+  },
+  requirements: {
+    'Pomodoro interruption': {
+      type: entities.EnumField.fieldType
+    },
+    'Pomodoro countdown': {
+      type: entities.Field.integerType
+    },
+    'Pomodoro state': {
+      type: entities.EnumField.fieldType
+    }
+  }
+});
+
+
+function minutes(m) {
+  return m * 60 * 1000;
+}
+
+function addWorkToday(countdown, message) {
+  return 'add work Today ' + countdown + ' ' + message;
+}</div>    </div>    <div class="chapter"><h3 id="pomodoro-countdown">Enable Pomodoro countdown</h3>      <p id="61c53d03">The second module contains an on-schedule rule that runs the timer and invokes a 25-minute countdown.</p>      <div class="code-block" data-lang="javascript">var entities = require('@jetbrains/youtrack-scripting-api/entities');
+var workflow = require('@jetbrains/youtrack-scripting-api/workflow');
+
+exports.rule = entities.Issue.onSchedule({
+  title: workflow.i18n('Enable Pomodoro countdown'),
+  search: 'has: {Pomodoro countdown} AND Pomodoro countdown: -0 AND (Pomodoro state: {Timer’s running} OR Pomodoro state: {On a break})',
+  cron: '0 * * * * ?',
+  action: function(ctx) {
+    var issueFields = ctx.issue.fields;
+    issueFields['Pomodoro countdown'] -= 1;
+  },
+  requirements: {
+    'PomodoroCountdown': {
+      name: 'Pomodoro countdown',
+      type: entities.Field.integerType
+    },
+    'PomodoroState': {
+      name: 'Pomodoro state',
+      type: entities.EnumField.fieldType,
+    }
+  }
+});</div>    </div>    <div class="chapter"><h3 id="change-reason">Block changes to interruption cause without stopping timer</h3>      <p id="3b73b164">The last module contains an on-change rule that prevents the user from changing the cause of an interruption (by entering a value in the <span class="control">        Pomodoro interruption      </span> field) without stopping the timer.      </p>      <div class="code-block" data-lang="javascript">// The Pomodoro technique is a time management method created by Francesco Cirillo in the 1980s.
+var entities = require('@jetbrains/youtrack-scripting-api/entities');
+var workflow = require('@jetbrains/youtrack-scripting-api/workflow');
+
+exports.rule = entities.Issue.onChange({
+  title: workflow.i18n('Block changes to interruption cause without stopping timer'),
+  guard: function(ctx) {
+    var issueFields = ctx.issue.fields;
+    return issueFields.isChanged(ctx.PomodoroInterruption) &amp;&amp; !issueFields.isChanged(ctx.PomodoroState);
+  },
+  action: function() {
+    workflow.check(
+      false,
+      workflow.i18n('Cannot change the interruption cause without changing the timer state.')
+    );
+  },
+  requirements: {
+    'PomodoroInterruption': {
+      name: 'Pomodoro interruption',
+      type: entities.EnumField.fieldType
+      'Boss interrupted': {},
+      'Facebook chat': {},
+      'Phone call': {},
+      'Urgent email': {}
+    },
+    'PomodoroState': {
+      name: 'Pomodoro state',
+      type: entities.EnumField.fieldType
+    }
+  }
+});</div>    </div>  </div><div class="last-modified" data-skip-index="skip">Last modified: 29 November 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="Workflow-One-Vote-Comment.html">One Vote Comment</a><a class="navigation-links__next" href="Workflow-Spam-Blacklist.html">Profanity Blacklist</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="//resources.jetbrains.com/storage/help-app/v3/app.js"></script></body></html>

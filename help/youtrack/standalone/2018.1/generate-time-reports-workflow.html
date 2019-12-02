@@ -1,0 +1,160 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="/help/app/v2/analytics.js"></script><meta charset="UTF-8"><meta name="robots" content="noindex"><title>Generate Time Reports - Help | YouTrack Standalone</title><link rel="stylesheet" href="/help/app/v2/app.css"></head><body data-id="generate-time-reports-workflow"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack Standalone Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>YouTrack Standalone 2018.1 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><h1 data-toc="generate-time-reports-workflow" id="generate-time-reports-workflow.xml">Generate Time Reports</h1>  <p id="622fed02">YouTrack gives you the option to collect and display time tracking data on a <a href="Time-Report.html"><span>Time Report</span></a>.        This report shows the total amount of time spent working on issues in one or more projects.      It displays the type of work done and the original estimation.      Time spent can be grouped by the type of work performed or by the users who performed the tasks.</p>  <p id="ee01beca">The time report helps answer questions like:</p>  <ul class="list _ul"><li class="list__item" id="d035c225"><p>How much work was recorded last week and who performed this work?</p></li><li class="list__item" id="707f6cb2"><p>How was the time spent allocated between different projects?</p></li><li class="list__item" id="b95a2ff6"><p>Are the issues that are assigned to an employee usually overestimated or underestimated?</p></li></ul>  <p id="4f60a146">However, the main problem here is that you need to analyze this data manually.    Every time you want to monitor this activity, you need to access the report, recalculate it, then analyze the data.    If you need to do any historical analysis, you have to export the data and crunch the numbers in an external tool.</p>  <div class="chapter"><h2 id="use-workflows-reporting" data-toc="generate-time-reports-workflow#use-workflows-reporting">Use Workflows as a Reporting Tool</h2>    <p id="bad2e2ee">While workflows don’t have direct access to calculated report data, they have access to the raw data in the form of issues and work items.      With on-schedule rules, you can report whatever you want on a regular basis and send it to someone, whether a team lead or an employee, by email.</p>    <p id="6f1b2699">First, start with a core module that you can use to analyze issues.      This script finds all of the work items for a given assignee in a given project that were recorded within a specific time frame.      As this module is referenced in other workflow rules, save this as a separate custom script called <code class="code" data-lang="Java">work-items</code>:</p>    <div class="code-block" data-lang="Javascript"><code class="code-block__wrapper"><span class="kd">var</span> <span class="nx">search</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;@jetbrains/youtrack-scripting-api/search&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">dates</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;@jetbrains/youtrack-scripting-api/date-time&#39;</span><span class="p">);</span>
+
+<span class="kd">function</span> <span class="nx">formatter</span><span class="p">(</span><span class="nx">timestamp</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">dates</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="nx">timestamp</span><span class="p">,</span> <span class="s1">&#39;yyyy-MM-dd&#39;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cm">/**</span>
+<span class="cm">  * @param {User} [author] work items author</span>
+<span class="cm">  * @param {Project} [project] project to get issue from</span>
+<span class="cm">  * @param {Number} [from] starting date in ms from the epoch start</span>
+<span class="cm">  * @param {Number} [to] ending date in ms from the epoch start</span>
+<span class="cm">  * @return {[WorkItem]} list of work items matching the parameters</span>
+<span class="cm">*/</span>
+<span class="kd">var</span> <span class="nx">fetchWorkItems</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">author</span><span class="p">,</span> <span class="nx">project</span><span class="p">,</span> <span class="nx">from</span><span class="p">,</span> <span class="nx">to</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// Generate a search string to find issues,</span>
+  <span class="c1">// where at least one work item was added by `author` between `from` and `to`:</span>
+  <span class="kd">var</span> <span class="nx">searchQuery</span> <span class="o">=</span> <span class="s1">&#39;work author: &#39;</span> <span class="o">+</span> <span class="nx">author</span><span class="p">.</span><span class="nx">login</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span><span class="p">;</span>
+    <span class="nx">searchQuery</span> <span class="o">+=</span> <span class="s1">&#39;work date: &#39;</span> <span class="o">+</span> <span class="nx">formatter</span><span class="p">(</span><span class="nx">from</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; .. &#39;</span> <span class="o">+</span> <span class="nx">formatter</span><span class="p">(</span><span class="nx">to</span><span class="p">);</span>
+
+  <span class="c1">// Now we can traverse over these issues in a `project`</span>
+  <span class="c1">// and choose the work items we need:</span>
+  <span class="kd">var</span> <span class="nx">items</span> <span class="o">=</span> <span class="p">[];</span>
+  <span class="kd">var</span> <span class="nx">issues</span> <span class="o">=</span> <span class="nx">search</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="nx">project</span><span class="p">,</span> <span class="nx">searchQuery</span><span class="p">);</span>
+  <span class="nx">issues</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">issue</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">issue</span><span class="p">.</span><span class="nx">workItems</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">item</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">item</span><span class="p">.</span><span class="nx">author</span><span class="p">.</span><span class="nx">login</span> <span class="o">===</span> <span class="nx">author</span><span class="p">.</span><span class="nx">login</span> <span class="o">&amp;&amp;</span>
+          <span class="nx">item</span><span class="p">.</span><span class="nx">date</span> <span class="o">&gt;=</span> <span class="nx">from</span> <span class="o">&amp;&amp;</span> <span class="nx">item</span><span class="p">.</span><span class="nx">date</span> <span class="o">&lt;=</span> <span class="nx">to</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">items</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">item</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="p">})</span>
+  <span class="p">});</span>
+
+  <span class="c1">// Return the array:</span>
+  <span class="k">return</span> <span class="nx">items</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="nx">exports</span><span class="p">.</span><span class="nx">fetchWorkItems</span> <span class="o">=</span> <span class="nx">fetchWorkItems</span><span class="p">;</span></code></div>    <p id="726f0a59">Now, help your team lead answer the following question: how much work did each developer log last week?      Extract the set of values from the <span class="control">Assignee</span> field as the list of developers, get work items for each one of them, and calculate the difference between the time logged and required work duration (say, 40 hours for each developer).</p>    <p id="2fe88dc2">As you may have seen in other workflows that run on a schedule, this rule uses an <i id="0e4fc790">anchor issue</i>.      The anchor issue lets you pull the project that the issue belongs to into the context and iterate over other issues in the project.      It also makes sure the rule runs exactly once per scheduled execution.</p>    <p id="77895f68">For an anchor issue, just create an issue with a description like “Please don’t ever delete this issue!” and set it to a resolved state.      You can then reference its ID in the <code class="code" data-lang="Java">search</code> property of your on-schedule rule.      This makes the rule to run exactly once per each time scheduled.      You can see this technique applied in the following rules.</p>    <div class="code-block" data-lang="Javascript"><code class="code-block__wrapper"><span class="kd">var</span> <span class="nx">entities</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;@jetbrains/youtrack-scripting-api/entities&#39;</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">wi</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./work-items&#39;</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">DAY_IN_MS</span> <span class="o">=</span> <span class="mi">24</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">HOURS_TO_WORK_A_WEEK</span> <span class="o">=</span> <span class="mi">40</span><span class="p">;</span>
+
+<span class="nx">exports</span><span class="p">.</span><span class="nx">rule</span> <span class="o">=</span> <span class="nx">entities</span><span class="p">.</span><span class="nx">Issue</span><span class="p">.</span><span class="nx">onSchedule</span><span class="p">({</span>
+  <span class="nx">title</span><span class="o">:</span> <span class="s1">&#39;Send report to the project lead every Monday&#39;</span><span class="p">,</span>
+  <span class="nx">cron</span><span class="o">:</span> <span class="s1">&#39;0 0 10 ? * MON&#39;</span><span class="p">,</span>
+  <span class="nx">search</span><span class="o">:</span> <span class="s1">&#39;#WI-1&#39;</span><span class="p">,</span> <span class="c1">// // TODO: replace with the ID of an anchor issue</span>
+  <span class="nx">action</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">ctx</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">project</span> <span class="o">=</span> <span class="nx">ctx</span><span class="p">.</span><span class="nx">issue</span><span class="p">.</span><span class="nx">project</span><span class="p">;</span>
+
+    <span class="c1">// Calculate start and end of the last week:</span>
+    <span class="kd">var</span> <span class="nx">from</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">();</span>
+    <span class="nx">from</span><span class="p">.</span><span class="nx">setHours</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span> <span class="c1">// the start of this day</span>
+    <span class="nx">from</span> <span class="o">=</span> <span class="nx">from</span><span class="p">.</span><span class="nx">getTime</span><span class="p">()</span> <span class="o">-</span> <span class="mi">7</span> <span class="o">*</span> <span class="nx">DAY_IN_MS</span><span class="p">;</span> <span class="c1">// the start of last Monday</span>
+    <span class="kd">var</span> <span class="nx">to</span> <span class="o">=</span> <span class="nx">from</span> <span class="o">+</span> <span class="mi">7</span> <span class="o">*</span> <span class="nx">DAY_IN_MS</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// the end of last Sunday</span>
+
+    <span class="c1">// Get a list of assignees from the Assignee field in the project,</span>
+    <span class="c1">// get a list of work items for each of them, and calculate sum of durations</span>
+    <span class="c1">// for the work items reported by each assignee:</span>
+    <span class="kd">var</span> <span class="nx">durations</span> <span class="o">=</span> <span class="p">{};</span>
+    <span class="kd">var</span> <span class="nx">assignees</span> <span class="o">=</span> <span class="nx">ctx</span><span class="p">.</span><span class="nx">Assignee</span><span class="p">.</span><span class="nx">values</span><span class="p">;</span>
+    <span class="nx">assignees</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">assignee</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">var</span> <span class="nx">items</span> <span class="o">=</span> <span class="nx">wi</span><span class="p">.</span><span class="nx">fetchWorkItems</span><span class="p">(</span><span class="nx">assignee</span><span class="p">,</span> <span class="nx">project</span><span class="p">,</span> <span class="nx">from</span><span class="p">,</span> <span class="nx">to</span><span class="p">);</span>
+      <span class="kd">var</span> <span class="nx">duration</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// duration in minutes</span>
+      <span class="nx">items</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">item</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">duration</span> <span class="o">+=</span> <span class="nx">item</span><span class="p">.</span><span class="nx">duration</span><span class="p">;</span>
+      <span class="p">});</span>
+      <span class="nx">durations</span><span class="p">[</span><span class="nx">assignee</span><span class="p">.</span><span class="nx">login</span><span class="p">]</span> <span class="o">=</span> <span class="nx">duration</span> <span class="o">/</span> <span class="mi">60</span><span class="p">;</span>
+    <span class="p">});</span>
+
+    <span class="c1">// Create email content:</span>
+    <span class="kd">var</span> <span class="nx">subject</span> <span class="o">=</span> <span class="s1">&#39;[YouTrack, Report] Report of work done last week&#39;</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">body</span> <span class="o">=</span> <span class="s1">&#39;Here is the report for last week: \n\n&#39;</span><span class="p">;</span>
+    <span class="nx">assignees</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">assignee</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">var</span> <span class="nx">duration</span> <span class="o">=</span> <span class="nx">durations</span><span class="p">[</span><span class="nx">assignee</span><span class="p">.</span><span class="nx">login</span><span class="p">];</span>
+      <span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span> <span class="nx">assignee</span><span class="p">.</span><span class="nx">fullName</span> <span class="o">+</span> <span class="s1">&#39; worked for &#39;</span> <span class="o">+</span> <span class="nx">duration</span> <span class="o">+</span> <span class="s1">&#39; hour(s)&#39;</span><span class="p">;</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">duration</span> <span class="o">&gt;</span> <span class="nx">HOURS_TO_WORK_A_WEEK</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">text</span> <span class="o">+=</span> <span class="s1">&#39; (overtime for &#39;</span> <span class="o">+</span> <span class="p">(</span><span class="nx">duration</span> <span class="o">-</span> <span class="nx">HOURS_TO_WORK_A_WEEK</span><span class="p">)</span> <span class="o">+</span>
+          <span class="s1">&#39; hour(s)).\n&#39;</span><span class="p">;</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">duration</span> <span class="o">&lt;</span> <span class="nx">HOURS_TO_WORK_A_WEEK</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">text</span> <span class="o">+=</span> <span class="s1">&#39; (downtime for &#39;</span> <span class="o">+</span> <span class="p">(</span> <span class="nx">HOURS_TO_WORK_A_WEEK</span> <span class="o">-</span> <span class="nx">duration</span><span class="p">)</span> <span class="o">+</span>
+          <span class="s1">&#39; hour(s)).\n&#39;</span><span class="p">;</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">text</span> <span class="o">+=</span> <span class="s1">&#39;.\n&#39;</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="nx">body</span> <span class="o">+=</span> <span class="nx">text</span><span class="p">;</span>
+    <span class="p">});</span>
+    <span class="nx">body</span> <span class="o">+=</span> <span class="s1">&#39;\nSincerely yours, YouTrack\n&#39;</span><span class="p">;</span>
+
+    <span class="c1">// Send email to the project lead:</span>
+    <span class="nx">project</span><span class="p">.</span><span class="nx">leader</span><span class="p">.</span><span class="nx">notify</span><span class="p">(</span><span class="nx">subject</span><span class="p">,</span> <span class="nx">body</span><span class="p">);</span>
+  <span class="p">},</span>
+  <span class="nx">requirements</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">Assignee</span><span class="o">:</span> <span class="p">{</span>
+      <span class="nx">type</span><span class="o">:</span> <span class="nx">entities</span><span class="p">.</span><span class="nx">User</span><span class="p">.</span><span class="nx">fieldType</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">});</span></code></div>    <p id="f8eecf00">The cool thing about this rule is that it is highly customizable.      Here are just a few of the possible directions you can push this functionality:</p>    <ul class="list _ul"><li class="list__item" id="cd0daca2"><p>Instead of using the set of values for the Assignee field, generate the list of developers based on membership in one or more groups.</p></li><li class="list__item" id="9a669a43"><p>Pull data from multiple projects and calculate the amount of time spent for each, grouping time spent by project or by developer.</p></li><li class="list__item" id="9f34ddeb"><p>Map the required work duration per developer instead of using a common constant.</p></li></ul>    <p id="cfa73287">As the second example, send a reminder to the developers when the amount of work logged is less than the required work duration at the end of the week:</p>    <div class="code-block" data-lang="Javascript"><code class="code-block__wrapper"><span class="kd">var</span> <span class="nx">entities</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;@jetbrains/youtrack-scripting-api/entities&#39;</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">wi</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./work-items&#39;</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">DAY_IN_MS</span> <span class="o">=</span> <span class="mi">24</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">HOURS_TO_WORK_A_WEEK</span> <span class="o">=</span> <span class="mi">40</span><span class="p">;</span>
+
+<span class="nx">exports</span><span class="p">.</span><span class="nx">rule</span> <span class="o">=</span> <span class="nx">entities</span><span class="p">.</span><span class="nx">Issue</span><span class="p">.</span><span class="nx">onSchedule</span><span class="p">({</span>
+  <span class="nx">title</span><span class="o">:</span> <span class="s1">&#39;Remind developers on Friday if they have not logged enough work&#39;</span><span class="p">,</span>
+  <span class="nx">cron</span><span class="o">:</span> <span class="s1">&#39;0 0 16 ? * FRI&#39;</span><span class="p">,</span>
+  <span class="nx">search</span><span class="o">:</span> <span class="s1">&#39;#WI-1&#39;</span><span class="p">,</span> <span class="c1">// // TODO: replace with ID of an anchor issue</span>
+  <span class="nx">action</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">ctx</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">project</span> <span class="o">=</span> <span class="nx">ctx</span><span class="p">.</span><span class="nx">issue</span><span class="p">.</span><span class="nx">project</span><span class="p">;</span>
+
+    <span class="c1">// Calculate start and end of this week:</span>
+    <span class="kd">var</span> <span class="nx">to</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">();</span> <span class="c1">// current moment</span>
+    <span class="kd">var</span> <span class="nx">from</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="nx">to</span> <span class="o">-</span> <span class="mi">4</span> <span class="o">*</span> <span class="nx">DAY_IN_MS</span><span class="p">);</span> <span class="c1">// Monday 16:00</span>
+    <span class="nx">from</span><span class="p">.</span><span class="nx">setHours</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="nx">from</span> <span class="o">=</span> <span class="nx">from</span><span class="p">.</span><span class="nx">getTime</span><span class="p">();</span> <span class="c1">// the start of last Monday</span>
+
+    <span class="c1">// Get a list of assignees from the Assignee field in the project,</span>
+    <span class="c1">// get a list of work items for each of them, and calculate sum of durations</span>
+    <span class="c1">// for the work items reported by each assignee:</span>
+    <span class="kd">var</span> <span class="nx">durations</span> <span class="o">=</span> <span class="p">{};</span>
+    <span class="kd">var</span> <span class="nx">assignees</span> <span class="o">=</span> <span class="nx">ctx</span><span class="p">.</span><span class="nx">Assignee</span><span class="p">.</span><span class="nx">values</span><span class="p">;</span>
+    <span class="nx">assignees</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">assignee</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">var</span> <span class="nx">items</span> <span class="o">=</span> <span class="nx">wi</span><span class="p">.</span><span class="nx">fetchWorkItems</span><span class="p">(</span><span class="nx">assignee</span><span class="p">,</span> <span class="nx">project</span><span class="p">,</span> <span class="nx">from</span><span class="p">,</span> <span class="nx">to</span><span class="p">);</span>
+      <span class="kd">var</span> <span class="nx">duration</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// duration in minutes</span>
+      <span class="nx">items</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">item</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">duration</span> <span class="o">+=</span> <span class="nx">item</span><span class="p">.</span><span class="nx">duration</span><span class="p">;</span>
+      <span class="p">});</span>
+      <span class="nx">durations</span><span class="p">[</span><span class="nx">assignee</span><span class="p">.</span><span class="nx">login</span><span class="p">]</span> <span class="o">=</span> <span class="nx">duration</span> <span class="o">/</span> <span class="mi">60</span><span class="p">;</span>
+    <span class="p">});</span>
+
+    <span class="c1">// Send emails in case of work is not yet done:</span>
+    <span class="nx">assignees</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">assignee</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">var</span> <span class="nx">duration</span> <span class="o">=</span> <span class="nx">durations</span><span class="p">[</span><span class="nx">assignee</span><span class="p">.</span><span class="nx">login</span><span class="p">];</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">duration</span> <span class="o">&lt;</span> <span class="nx">HOURS_TO_WORK_A_WEEK</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">subject</span> <span class="o">=</span> <span class="s1">&#39;[YouTrack, Reminder] Work done this week&#39;</span><span class="p">;</span>
+        <span class="kd">var</span> <span class="nx">body</span> <span class="o">=</span> <span class="s1">&#39;Hey &#39;</span> <span class="o">+</span> <span class="nx">assignee</span><span class="p">.</span><span class="nx">fullName</span> <span class="o">+</span> <span class="s1">&#39;,\n\n&#39;</span><span class="p">;</span>
+        <span class="nx">body</span> <span class="o">+=</span>
+          <span class="s1">&#39;Looks like you have forgot to log some work: you have worked on &#39;</span> <span class="o">+</span>
+          <span class="nx">project</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="s1">&#39; for &#39;</span> <span class="o">+</span> <span class="nx">duration</span> <span class="o">+</span> <span class="s1">&#39; hour(s) instead of &#39;</span> <span class="o">+</span>
+          <span class="nx">HOURS_TO_WORK_A_WEEK</span> <span class="o">+</span> <span class="s1">&#39; required for you.\n&#39;</span><span class="p">;</span>
+        <span class="nx">body</span> <span class="o">+=</span> <span class="s1">&#39;\nSincerely yours, YouTrack\n&#39;</span><span class="p">;</span>
+        <span class="nx">assignee</span><span class="p">.</span><span class="nx">notify</span><span class="p">(</span><span class="nx">subject</span><span class="p">,</span> <span class="nx">body</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="p">});</span>
+  <span class="p">},</span>
+  <span class="nx">requirements</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">Assignee</span><span class="o">:</span> <span class="p">{</span>
+      <span class="nx">type</span><span class="o">:</span> <span class="nx">entities</span><span class="p">.</span><span class="nx">User</span><span class="p">.</span><span class="nx">fieldType</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">});</span></code></div>    <p id="e8168d83">The same ideas for extending the previous script apply here as well, and many more.      With the ability to access work items, you can calculate not only billable hours but also other numeric characteristics, like the collective velocity of your team and the relative performance of each developer.</p>  </div><div class="last-modified" data-skip-index="skip">Last modified: 7 March 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="track-spent-time-workflow.html">Track Spent Time</a><a class="navigation-links__next" href="enhance-helpdesk-support-workflows.html">Enhance Helpdesk Support</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="/help/app/v2/app.js"></script></body></html>

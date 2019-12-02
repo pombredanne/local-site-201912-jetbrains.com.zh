@@ -1,0 +1,171 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="//resources.jetbrains.com/storage/help-app/v2/analytics.js"></script><meta charset="UTF-8"><title>Cookbook - Type System - Help | MPS</title><link rel="stylesheet" href="//resources.jetbrains.com/storage/help-app/v2/app.css"></head><body data-id="Cookbook+-+Type+System.html"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search MPS Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>MPS 2019.1 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="primary_default" selected>Windows/Linux Default</option><option data-group="primary" value="primary_default_for_gnome">GNOME</option><option data-group="primary" value="primary_default_for_kde">KDE</option><option data-group="primary" value="primary_default_for_xwin">XWin</option><option data-group="primary" value="primary_emacs">Emacs</option><option data-group="primary" value="primary_visual_studio">Visual Studio</option><option data-group="primary" value="primary_netbeans">NetBeans</option><option data-group="primary" value="primary_eclipse">Eclipse</option><option data-group="secondary" value="secondary_mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="secondary_mac_os_x">Mac OS X</option><option data-group="secondary" value="secondary_eclipse_mac_os_x">Eclipse (Mac OS X)</option><option data-group="secondary" value="secondary_intellij_idea_classic_os_x">IntelliJ IDEA Classic (Mac OS X)</option><option data-group="secondary" value="secondary_xcode">Xcode</option><option data-group="secondary" value="secondary_visual_studio">Visual Studio</option><option data-group="secondary" value="secondary_resharper">ReSharper</option><option data-group="secondary" value="secondary_resharper_osx">ReSharper (Mac OS X)</option><option data-group="secondary" value="secondary_emacs">Emacs (Mac OS X)</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="Cookbook+-+Type+System.html" id="cookbook-type-system.xml">Cookbook - Type System</h1>   <h2 id="inferencerules">Inference rules</h2>   <p id="81a25ee0">This cookbook should give you quick answers and guidelines when designing types for your languages. For in-depth description of the typesystem please refer to the <a href="typesystem.html">Typesystem </a>section of the user guide.</p>   <h3 id="equality">Equality</h3>   <p id="2e8d3e83">Use type equation when the type of a node should always be a particular concrete type. Use the <i id="9d68e09b">typeof</i> command to declare that the type of the desired node should equal to a particular type.</p>   <div class="code-block" data-lang="none">rule typeof_StringLiteral {
+    applicable for concept = StringLiteral as nodeToCheck
+    applicable always
+    overrides false
+    do {
+    typeof(nodeToCheck) :==: &lt;string&gt;;
+    }
+    }</div>   <p id="285603b3">Note quotation is used to refer to a type. <i id="a3a27eba">&lt;string&gt;</i> is equivalent to typing <i id="bc9f934c">new node&lt;StringType&gt;()</i>. The type of an element is equal to the type of some other element. For example, the to express that parentheses preserve the type of the wrapped element, the <i id="f7443ee9">ParenthesizedExpression</i> concept</p>   <p id="4b8675f9">declares:</p>   <div class="code-block" data-lang="none">rule typeOf_ParenthesizedExpression {
+    applicable for concept = ParenthesizedExpression as parExpr
+    applicable always
+    overrides false
+    do {
+    typeof(parExpr) :==: typeof(parExpr.expression);
+    }
+    }</div>   <h3 id="inequality">Inequality</h3>   <p id="79ca1ed9">When the types should be sub-types or super-types of other types, use the <i id="be8c47ea">infer typeof</i> command. See the ternary operator as an example:</p>   <div class="code-block" data-lang="none">rule typeOf_TernaryOperator {
+  applicable for concept = TernaryOperatorExpression as toe
+  applicable always
+  overrides false
+
+  do {
+    infer typeof(toe.condition) :&lt;=: &lt;boolean&gt;;
+    infer typeof(toe) :&gt;=: typeof(toe.ifTrue);
+    infer typeof(toe) :&gt;=: typeof(toe.ifFalse);
+  }
+}
+</div>   <p id="4d7e3f30">The <i id="3026a967">ForEachStatement</i> concept illustrates how to solve quite an involved scenario. The type of the loop variable must be equal to the type of elements in the iterated collection, while the type of the collection must be a sub-type of either a sequence or an array of elements of the <i id="04fe1108">elementType</i> type.</p>   <div class="code-block" data-lang="none">rule typeof_ForEachStatement {
+  applicable for concept = ForEachStatement as forEachStatement
+  applicable always
+  overrides false
+
+  do {
+    node&lt;ForEachVariable&gt; variable = forEachStatement.variable;
+    node&lt;Expression&gt; inputSequence = forEachStatement.inputSequence;
+    if (inputSequence.isNotNull &amp;&amp; variable.isNotNull) {
+    var elementType;
+    infer &lt;join(sequence&lt;%( elementType)%&gt;| %( elementType)%[])&gt; :&gt;=: typeof(inputSequence);
+    typeof(variable) :==: elementType;
+    }
+  }
+}
+</div>   <p id="490e019c">Notice, we use <i id="209a8d2c">var elementType</i> to declare a variable, which we then use to tie together the type of the collection elements and the type of the loop variable. Also, <i id="230ab543">%(...)%</i> demarcates so called anti-quotation, which allows you to provide values from your local context into the AST you are manipulating or retrieve them back.</p>   <h2 id="replacementrules">Replacement rules</h2>   <p id="aa0e8ed1">Replacement rules indicate to the type system the possibility to replace one type with another. For example, <i id="d2f498b6">NullType</i> is a subtype of all types (except for primitive types) and so the type system can simply remove the inequation between <i id="82d83461">NullType</i> and <i id="49fddca6">BaseConcept</i>.</p>   <div class="code-block" data-lang="none">replacement rule any_type_supertypeof_nulltype
+
+applicable for  concept = NullType as nullType &lt;: concept = BaseConcept as baseConcept
+
+custom condition: ()-&gt;boolean {
+  !(baseConcept.isInstanceOf(RuntimeTypeVariable));
+}
+
+rule {
+  if (baseConcept.isInstanceOf(PrimitiveType) || baseConcept.isInstanceOf(PrimitiveTypeDescriptor)) {
+    error "null type is not a subtype of primitive type" -&gt; equationInfo.getNodeWithError();
+  }
+}
+</div>   <p id="13a32db1">Replacement rules are also handy to declare covariance and contravariance. For example, covariance for sequences is declared in MPS as follows:</p>   <div class="code-block" data-lang="none">replacement rule sequence_subtypeOf_sequence
+
+applicable for  concept = SequenceType as left &lt;: concept = SequenceType as right
+
+custom condition: true
+
+rule {
+  if (right.elementType.isNotNull) {
+    infer left.elementType :&lt;=: right.elementType;
+  }
+}
+</div>   <p id="c6401213">The original rule claiming that the left collection is a subtype of the right collection gets replaced with a rule ensuring that the type of elements in the left collection is a subtype of the type of elements in the right collection.</p>   <h2 id="subtypingrules">Subtyping rules</h2>   <p id="f656861e">Subtyping rules allow you to specify where the particular type belongs in the type hierarchy. The rule returns a collection of types, which it identifies as its direct super-types. The following rule, for example, declares that <i id="958235b3">Long</i> variables can be cast to <i id="c9af4151">Float</i>.</p>   <div class="code-block" data-lang="none">subtyping rule long_extends_float {
+  weak = false
+  applicable for concept = LongType as longType
+
+  rule {
+    return &lt;float&gt;;
+  }
+}
+</div>   <p id="676ef7fc">Here MPS declares, that <i id="1b3302f6">LinkedList</i> is a subtype of either a <i id="1640d6fc">List</i>, a <i id="84b3e16f">Deque</i> or a <i id="8f17d685">Stack</i>:</p>   <div class="code-block" data-lang="none">subtyping rule supertypesOf_linkedlist {
+  weak = false
+  applicable for concept = LinkedListType as llt
+
+  rule {
+    nlist&lt;&gt; res = new nlist&lt;&gt;;
+    res.add(&lt;list&lt;%( llt.elementType)%&gt;&gt;);
+    res.add(&lt;deque&lt;%( llt.elementType)%&gt;&gt;);
+    res.add(&lt;stack&lt;%( llt.elementType)%&gt;&gt;);
+    return res;
+  }
+}
+</div>   <h2 id="comparisonrules">Comparison rules</h2>   <p id="1944ba73">When two types should be interchangeable, use comparison rules to define that. For example, the following rule makes <i id="c0e44792">NullType</i> comparable with any type, except for primitive ones:</p>   <div class="code-block" data-lang="none">comparison rule  any_type_comparable_with_nulltype
+
+applicable for  concept = BaseConcept as baseConcept , concept = NullType as nullType
+
+rule {
+   if (baseConcept.isInstanceOf(PrimitiveType) || baseConcept.isInstanceOf(PrimitiveTypeDescriptor)) { return false; }
+   return true;
+}
+weak = false
+</div>   <p id="9559a1af">Similarly, the <i id="ca127479">MapType</i> from <i id="d96ce68a">BaseLanguage</i> and the <i id="6650da2d">Map</i> interface from Java (here refered to through the <i id="be8360e2">ClassifierType</i> concept inside a pattern) should be comparable:</p>   <div class="code-block" data-lang="none">comparison rule  map_type_comparableWith_Map
+
+applicable for  concept = MapType as mapType , &gt; Map&lt;# KEY, # VALUE&gt; &lt; as classifierMapType
+
+rule {
+   return true;
+}
+weak = true
+</div>   <h2 id="substitutetyperules">Substitute Type rules</h2>   <p id="df9f3563">These instruct the type-system to replace nodes representing a type with defined substitutes.</p>   <p id="c194c5cc">For example, one might decide to use different types for different program configurations, such as using&nbsp;<code class="code">int</code>&nbsp;or&nbsp;<code class="code">long</code>&nbsp;depending on whether the task requires using one type or another. This is different from simply using the generator to produce the correct "implementation" type, as the substitution is done at the time the typechecking is performed, so possible errors can be caught early.</p>   <p id="9aff71ac">In its simplest form the type substitution can be used by creating an instance of&nbsp;<code class="code">Substitute Type Rule</code>&nbsp;in the typesystem model.</p>   <div class="code-block"><code class="code-block__wrapper">substitute type rule substituteType_MyType {                                                                                       
+  applicable for concept = MyType as mt                                                                          
+                                                                                                                                                 
+  substitute {                                      &nbsp;
+    if (mt.isConditionSatisfied()) { 
+      return new node&lt;IntegerType&gt;;
+    } 
+    null; 
+  }                                
+
+}&nbsp;                                                                                                                                                                                                  </code></div>   <p id="f927d4c1">The&nbsp;<code class="code">Substitute Type Rule</code>&nbsp;is applicable to nodes that represent types. Whenever a new type is introduced by the typechecker, it searches for applicable substitution rules and executes them.&nbsp;The rule must either return an instance of `node&lt;&gt;` as the substitution, or null value, in which case the original node is used to represent the type (the default behaviour).</p>   <p id="4847061b">One other possibility to overrides types used by the typechecker comes with the use of node attributes. If there is a node attribute contained by the original type node, the typechecker tries to find a Substitute Type Rule applicable to the attribute first. This way one can override the type nodes even for languages, which implementation is sealed.</p>   <div class="code-block"><code class="code-block__wrapper">substitute type rule substituteType_SubstituteAnnotation {                                                                                       
+  applicable for concept = SubstituteAnnotation as substituteAnnotation                                                                          
+
+  substitute {                                                                                                                                        
+    if (substituteAnnotation.condition.isSatisfied(attributedNode)) { 
+      return substituteAnnotation.substitute; 
+    } 
+    null;&nbsp;
+  }
+}                                                                                                                                                
+</code></div>   <p id="02982558">The rule above is defined for the attribute node, and it's the attribute node that is passed to the rule as the explicit parameter. The rule can check whether the condition for substituting the type node is satisfied, and it can also access the attributed node representing original type via&nbsp;<code class="code">attributedNode</code>&nbsp;expression.</p>   <h2 id="checkingandquick-fixes">Checking and Quick-fixes</h2>   <p id="53f78af2">Checking rules become part of the MPS code analysis process and will report found issues to the user interactively in the editor. For example, this is a check for superfluous type casts:</p>   <div class="code-block" data-lang="none">checking rule CheckExcessTypeCasts {
+  applicable for concept = CastExpression as expr
+  overrides false
+
+  do {
+    if (isStrongSubtype(expr.expression.type :&lt;&lt; expr.type)) {
+    info "Typecast expression is superflous" -&gt; expr ;
+    }
+  }
+}
+</div>   <p id="1aa4d745">Now you can define a quick-fix that will pop-up to the user whenever the problem above is reported. The user can then quickly invoke the quick-fix to correct the reported issue.</p>   <div class="code-block" data-lang="none">quick fix RemoveExcessTypeCast
+
+arguments:
+node&lt;CastExpression&gt; castExpr
+
+fields:
+&lt;&lt; ... &gt;&gt;
+
+description(node)-&gt;string {
+  "Remove Excess Typecast";
+}
+
+execute(node)-&gt;void {
+  castExpr.replace with(castExpr.expression);
+}
+</div>   <p id="bc8cbdff">The hook the quick-fix to the reported error, you need to specify the quick-fix as&nbsp;<b id="17778f03">intention linked with info message(optional)</b>:</p>         <figure><a class="lightbox" href="/help/img/idea/2019.1/checkingRules153.png"><img alt="checkingRules153" title="checkingRules153" src="/help/img/idea/2019.1/checkingRules153.png" id="6a20ce54" width="500" height="600"></a></figure>      <p id="3b020500">Additionally, you can pass parameters to the quick-fix and mark it with&nbsp;<b id="7bfefc6c">apply&nbsp;</b>      <b id="0e6e38e9">immediately</b>, in which case the quick-fix will be applied automatically as soon as the error is discovered in the editor.</p>   <h2 id="when-concrete,overloadedoperations">When-concrete, overloaded operations</h2>   <p id="c7015c6e">When-concrete blocks allow you to perform type checks once the type a node has been calculated. In the example below we are checking, that the calculated type of an operation matches the type suggested by the <i id="b729406d">operation type</i> command based on the operator overriding rules:</p>   <div class="code-block" data-lang="none">rule typeof_BinaryOperation {
+  applicable for concept = BinaryOperation as operation
+  overrides false
+
+  do {
+    when concrete (typeof(operation.leftExpression) as leftType) {
+    when concrete (typeof(operation.rightExpression) as rightType) {
+    node&lt;&gt; opType = operation type( operation , leftType , rightType );
+    if (opType.isNotNull) {
+    typeof(operation) :==: opType;
+    } else {
+    error "operation is not applicable to these operands" -&gt; operation;
+    }
+    }
+    }
+  }
+}
+</div><div class="last-modified" data-skip-index="skip">Last modified: 5 July 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="howto-adding-additional-tools-aka-views.html">HowTo -- Adding additional Tools (aka Views)</a><a class="navigation-links__next" href="building-an-interpreter-cookbook.html">Building an interpreter cookbook</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="//resources.jetbrains.com/storage/help-app/v2/app.js"></script></body></html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="robots" content="noindex"><title>YouTrack Standalone 7.0 Help :: Import from Trac</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Import-from-Trac"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack Standalone Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>YouTrack Standalone 7.0 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="Import-Projects-from-JIRA.html">Import Projects from JIRA</a><a class="navigation-links__next" href="Project-related-Settings.html">Project-related Settings</a></div><h1>Import from Trac</h1><aside class="note sideblock">
+        <a name="d62762e5"></a><p>Before you begin:</p>
+        <a name="d62762e8"></a><p>If you try to re-import same project several times, then you must delete previously imported data before the next attempt. </p>
+    </aside><a name="Importing_Issues_from_Trac_to_YouTrack_"></a><a name="d62762e14"></a><p><a name="d62762e15"></a><b id="d62762e15">Version compatibility note</b></p><a name="d62762e18"></a><p>Current implementation of the <a name="d62762e20"></a><a href="Python-Client-Library.html"><span>Python Client Library</span></a> and scripts is compatible with YouTrack 3.x. and later REST API and Python 2.6.</p><a name="d62762e23"></a><a name="dynaProc0"></a><section class="procedure-steps"><h2>To import issues from Trac:</h2><ol class=".list _decimal"><li class="list__item">Download <a name="d62762e27"></a><a href="http://www.jetbrains.com/youtrack/tools/index.html" data-external="true"><span>the latest version</span></a> of YouTrack's <a name="d62762e30"></a><a href="Python-Client-Library.html"><span>Python Client Library</span></a> and unzip it.</li><li class="list__item">Create a mapping between Trac project and target YouTrack project. See sample mapping in the <code class="code" data-lang="xml">defaultTrac.py</code> file.</li><li class="list__item">Import your mapping into <code class="code" data-lang="xml">trac2youtrack.py</code>. By default, the <code class="code" data-lang="xml">defaultTrac.py</code> mapping scheme will be used.
+            <a name="d62762e47"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="err">#</span><span class="kn">import</span> <span class="nn">tracLib.defaultTrac</span>
+<span class="kn">import</span> <span class="nn">tracLib.myMapping</span></code></div>
+        </li><li class="list__item">From the Python Client Library installation directory, execute the following command:
+            <a name="d62762e53"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="n">python</span> <span class="n">trac2youtrack</span><span class="o">.</span><span class="na">py</span> <span class="n">target_url</span> <span class="n">target_login</span> <span class="n">target_password</span> <span class="n">project_ID</span> <span class="n">project_name</span> <span class="n">path_to_trac_environment</span></code></div>
+            Enter values for the following command-line parameters:
+            <table class="" width="100%" id="d62762e56"><thead><tr id="d62762e58" class="ijRowHead"><a name="d62762e58"></a><th width="20%"><a name="d62762e60"></a>
+                        Parameter
+                    </th><th><a name="d62762e63"></a>
+                        Description
+                    </th></tr></thead><tbody><tr id="d62762e67" class="ijRowOdd"><a name="d62762e67"></a><td><a name="d62762e69"></a>
+                        <code class="code" data-lang="xml">target_url</code>
+                    </td><td><a name="d62762e75"></a>
+                        YouTrack URL
+                    </td></tr><tr id="d62762e79" class="ijRowEven"><a name="d62762e79"></a><td><a name="d62762e81"></a>
+                        <code class="code" data-lang="xml">target_login</code>
+                    </td><td><a name="d62762e87"></a>
+                        YouTrack admin user login
+                    </td></tr><tr id="d62762e91" class="ijRowOdd"><a name="d62762e91"></a><td><a name="d62762e93"></a>
+                        <code class="code" data-lang="xml">target_password</code>
+                    </td><td><a name="d62762e99"></a>
+                        YouTrack admin user password
+                    </td></tr><tr id="d62762e103" class="ijRowEven"><a name="d62762e103"></a><td><a name="d62762e105"></a>
+                        <code class="code" data-lang="xml">project_ID</code>
+                    </td><td><a name="d62762e111"></a>
+                        YouTrack Project ID
+                    </td></tr><tr id="d62762e116" class="ijRowOdd"><a name="d62762e116"></a><td><a name="d62762e118"></a>
+                        <code class="code" data-lang="xml">project_name</code>
+                    </td><td><a name="d62762e124"></a>
+                        YouTrack Project Name
+                    </td></tr><tr id="d62762e128" class="ijRowEven"><a name="d62762e128"></a><td><a name="d62762e130"></a>
+                        <code class="code" data-lang="xml">path_to_trac_environment</code>
+                    </td><td><a name="d62762e136"></a>
+                        the path to the Trac project
+                    </td></tr></tbody></table>
+        </li></ol></section><a name="d62762e144"></a><h2>Notes on Mapping</h2>
+        <a name="Mapping_Notes_"></a>
+
+        <ul class="list _ul"><li class="list__item"><a name="d62762e150"></a>Importing Trac <a name="d62762e152"></a><span class="control">Users</span>:<br>
+                There are two types of Trac users: registered users with a login and a password,
+                and unregistered users who specified a name and an email address or a name only when creating or commenting the ticket. <br>
+                Registered users are imported to YouTrack with their original name and email.
+                Unregistered users are imported only if an email address is provided.
+                All the users without email address are imported as <a name="d62762e159"></a><i id="d62762e159">guest</i>.
+                If you would like to import all the unregistered users as <a name="d62762e162"></a><i id="d62762e162">guest</i> (without creating an account in YouTrack),
+                set ACCEPT_NON_AUTHORISED_USERS to <code class="code" data-lang="Java">False</code> in the mapping scheme:
+                <a name="d62762e169"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="n">ACCEPT_NON_AUTHORISED_USERS</span><span class="o">=</span><span class="n">False</span></code></div>
+            </li><li class="list__item"><a name="d62762e173"></a>
+                <a name="d62762e175"></a><span class="control">Visible to Group</span> setting value is set to <a name="d62762e178"></a><span class="control">All Users</span> for all the imported issues.</li><li class="list__item"><a name="d62762e182"></a>
+                <a name="d62762e184"></a><span class="control">Component</span> is transferred to <a name="d62762e187"></a><span class="control">Subsystem</span>.</li><li class="list__item"><a name="d62762e191"></a>
+                <a name="d62762e193"></a><span class="control">Owner</span> is transferred to <a name="d62762e196"></a><span class="control">Default Assignee</span>.</li><li class="list__item"><a name="d62762e200"></a>
+                <a name="d62762e202"></a><span class="control">Versions</span> = <a name="d62762e205"></a><span class="control">Fix Version</span>
+            </li><li class="list__item"><a name="d62762e210"></a>
+                <a name="d62762e212"></a><span class="control">Type</span> - configure the correspondence between the ticket Types in Trac and Issue Types in YouTrack in the mapping scheme.
+                For example, the following mapping is used by default:
+                <a name="d62762e215"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="s">&quot;defect&quot;</span> <span class="o">:</span> <span class="s">&quot;Bug&quot;</span><span class="o">,</span>
+<span class="s">&quot;enhancement&quot;</span> <span class="o">:</span> <span class="s">&quot;Feature&quot;</span><span class="o">,</span>
+<span class="s">&quot;task&quot;</span> <span class="o">:</span> <span class="s">&quot;Task&quot;</span></code></div>
+            </li><li class="list__item"><a name="d62762e219"></a>
+                <a name="d62762e221"></a><span class="control">Time</span> = <a name="d62762e224"></a><span class="control">Submitted Time</span>.</li><li class="list__item"><a name="d62762e228"></a>
+                <a name="d62762e230"></a><span class="control">Changetime</span> = <a name="d62762e233"></a><span class="control">Last Updated Time</span>.</li><li class="list__item"><a name="d62762e237"></a>
+                <a name="d62762e239"></a><span class="control">Severity</span> - if this attribute is used in the Trac project, the corresponding custom fields will be created in YouTrack with the matching set of values.</li><li class="list__item"><a name="d62762e243"></a>
+                <a name="d62762e245"></a><span class="control">Priority</span> - configure the correspondence between the Priority in Trac and Priority in YouTrack in the mapping scheme.
+                The following mapping will be used by default:
+                <a name="d62762e248"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="s">&quot;trivial&quot;</span> <span class="o">:</span> <span class="s">&quot;Minor&quot;</span><span class="o">,</span>
+<span class="s">&quot;minor&quot;</span> <span class="o">:</span> <span class="s">&quot;Normal&quot;</span><span class="o">,</span>
+<span class="s">&quot;major&quot;</span> <span class="o">:</span> <span class="s">&quot;Major&quot;</span><span class="o">,</span>
+<span class="s">&quot;critical&quot;</span> <span class="o">:</span> <span class="s">&quot;Critical&quot;</span><span class="o">,</span>
+<span class="s">&quot;blocker&quot;</span> <span class="o">:</span> <span class="s">&quot;Show-stopper&quot;</span></code></div>
+            </li><li class="list__item"><a name="d62762e252"></a>
+                <a name="d62762e254"></a><span class="control">Reporter</span> = <a name="d62762e257"></a><span class="control">Reporter</span>
+            </li><li class="list__item"><a name="d62762e262"></a>
+                <a name="d62762e264"></a><span class="control">Resolution</span> and <a name="d62762e267"></a><span class="control">State</span> are transferred to the single <a name="d62762e270"></a><span class="control">State</span> field in YouTrack.
+                Configure the correspondence between the Resolution and State values in Trac and State values in YouTrack in the mapping scheme.
+                The correspondence between Resolution and State is checked first. By default, the following mapping is used:
+                <a name="d62762e273"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="n">tracLib</span><span class="o">.</span><span class="na">RESOLUTIONS</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="s">&quot;duplicate&quot;</span> <span class="o">:</span> <span class="s">&quot;Duplicate&quot;</span><span class="o">,</span>
+    <span class="s">&quot;fixed&quot;</span> <span class="o">:</span> <span class="s">&quot;Fixed&quot;</span><span class="o">,</span>
+    <span class="s">&quot;wontfix&quot;</span> <span class="o">:</span> <span class="s">&quot;Won&#39;t fix&quot;</span><span class="o">,</span>
+    <span class="s">&quot;worksforme&quot;</span> <span class="o">:</span> <span class="s">&quot;Can&#39;t Reproduce&quot;</span><span class="o">,</span>
+    <span class="s">&quot;invalid&quot;</span> <span class="o">:</span> <span class="s">&quot;Can&#39;t Reproduce&quot;</span>
+<span class="o">}</span>
+<span class="n">tracLib</span><span class="o">.</span><span class="na">STATES</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="s">&quot;accepted&quot;</span> <span class="o">:</span> <span class="s">&quot;Submitted&quot;</span><span class="o">,</span>
+    <span class="s">&quot;new&quot;</span> <span class="o">:</span> <span class="s">&quot;Open&quot;</span><span class="o">,</span>
+    <span class="s">&quot;reopened&quot;</span> <span class="o">:</span> <span class="s">&quot;Reopened&quot;</span><span class="o">,</span>
+    <span class="s">&quot;assigned&quot;</span> <span class="o">:</span> <span class="s">&quot;Submitted&quot;</span>
+<span class="o">}</span></code></div>
+            </li><li class="list__item"><a name="d62762e277"></a>
+                <a name="d62762e279"></a><span class="control">Summary</span>=<a name="d62762e282"></a><span class="control">Summary</span>.</li><li class="list__item"><a name="d62762e286"></a>
+                <a name="d62762e288"></a><span class="control">Description</span>=<a name="d62762e291"></a><span class="control">Description</span>.</li><li class="list__item"><a name="d62762e295"></a>
+                <a name="d62762e297"></a><span class="control">Keywords</span> are transferred to <a name="d62762e300"></a><span class="control">Tags</span>.</li><li class="list__item"><a name="d62762e304"></a>
+                <a name="d62762e306"></a><span class="control">Comments</span> - comment text is imported along with the commenter's name.</li><li class="list__item"><a name="d62762e310"></a>
+                <a name="d62762e312"></a><span class="control">Attachments</span> = <a name="d62762e315"></a><span class="control">Attachments</span>.</li><li class="list__item"><a name="d62762e320"></a>
+                <a name="d62762e322"></a><span class="control">Custom fields</span> - the description is taken from the <a name="d62762e325"></a><span class="control">trac.ini</span> file along with the list of values, type and the default value.
+                Appropriate custom fields are created in YouTrack while importing.
+                The correspondence between the Trac custom fields type and YouTrack custom fields type is configured in the mapping scheme. The following mapping is used by default:
+                <a name="d62762e328"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="s">&quot;text&quot;</span> <span class="o">:</span> <span class="s">&quot;string&quot;</span><span class="o">,</span>
+<span class="s">&quot;checkbox&quot;</span> <span class="o">:</span> <span class="s">&quot;enum[*]&quot;</span><span class="o">,</span>
+<span class="s">&quot;select&quot;</span> <span class="o">:</span> <span class="s">&quot;enum[1]&quot;</span><span class="o">,</span>
+<span class="s">&quot;radio&quot;</span> <span class="o">:</span> <span class="s">&quot;enum[1]&quot;</span><span class="o">,</span>
+<span class="s">&quot;textarea&quot;</span> <span class="o">:</span> <span class="s">&quot;string&quot;</span></code></div>
+            </li><li class="list__item"><a name="d62762e332"></a>You can specify mapping between YouTrack issue fields and Trac issue fields. In order to define mapping, use <code class="code" data-lang="xml">FIELD_NAMES</code> dictionary.
+                In default provided <code class="code" data-lang="xml">defaultTrac.py</code> mapping file, the following dictionary is defined:
+                <a name="d62762e340"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="n">tracLib</span><span class="o">.</span><span class="na">FIELD_NAMES</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="s">&quot;Resolution&quot;</span>        <span class="o">:</span>   <span class="s">&quot;State&quot;</span><span class="o">,</span>
+    <span class="s">&quot;Status&quot;</span>            <span class="o">:</span>   <span class="s">&quot;State&quot;</span><span class="o">,</span>
+    <span class="s">&quot;Owner&quot;</span>             <span class="o">:</span>   <span class="s">&quot;Assignee&quot;</span><span class="o">,</span>
+    <span class="s">&quot;Version&quot;</span>           <span class="o">:</span>   <span class="s">&quot;Fix versions&quot;</span><span class="o">,</span>
+    <span class="s">&quot;Component&quot;</span>         <span class="o">:</span>   <span class="s">&quot;Subsystem&quot;</span>
+<span class="o">}</span></code></div>
+            </li><li class="list__item"><a name="d62762e344"></a>Also, you can change target field types (field types in YouTrack) using <code class="code" data-lang="xml">FIELD_TYPES</code> dictionary.
+                In the default mapping file, the following dictionary is defined:
+                <a name="d62762e349"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="n">tracLib</span><span class="o">.</span><span class="na">FIELD_TYPES</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="s">&quot;Priority&quot;</span>          <span class="o">:</span>   <span class="s">&quot;enum[1]&quot;</span><span class="o">,</span>
+    <span class="s">&quot;Type&quot;</span>              <span class="o">:</span>   <span class="s">&quot;enum[1]&quot;</span><span class="o">,</span>
+    <span class="s">&quot;State&quot;</span>             <span class="o">:</span>   <span class="s">&quot;state[1]&quot;</span><span class="o">,</span>
+    <span class="s">&quot;Fix versions&quot;</span>      <span class="o">:</span>   <span class="s">&quot;version[*]&quot;</span><span class="o">,</span>
+    <span class="s">&quot;Affected versions&quot;</span> <span class="o">:</span>   <span class="s">&quot;version[*]&quot;</span><span class="o">,</span>
+    <span class="s">&quot;Assignee&quot;</span>          <span class="o">:</span>   <span class="s">&quot;user[1]&quot;</span><span class="o">,</span>
+    <span class="s">&quot;Severity&quot;</span>          <span class="o">:</span>   <span class="s">&quot;enum[1]&quot;</span><span class="o">,</span>
+    <span class="s">&quot;Subsystem&quot;</span>         <span class="o">:</span>   <span class="s">&quot;ownedField[1]&quot;</span>
+<span class="o">}</span></code></div>
+            </li></ul>
+        <aside class="tip sideblock">
+            <a name="d62762e356"></a><p>The default custom fields type mapping is used in the import rules in trac2youtrack.py. Do not forget to update the import rules in your script when changing the mapping. </p>
+        </aside>
+    <div class="last-modified">Last modified: 2 February 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

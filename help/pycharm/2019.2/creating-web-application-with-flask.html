@@ -1,0 +1,372 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta charset="UTF-8"></meta><meta name="robots" content="noindex"></meta><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="//resources.jetbrains.com/storage/help-app/v3/analytics.js"></script><meta content="How to create a web application using Flask, SQlite database, SQLAlchemy, and Jinja templates." name="description" data-skip-index="skip"><title>Creating Web Applications with Flask - Help | PyCharm</title><link rel="stylesheet" href="//resources.jetbrains.com/storage/help-app/v3/app.css"></head><body data-id="Creating_Web_Application_with_Flask" data-article-props="&#xA;                {&#xA;                &#xA;            &#34;seeAlso&#34;:[&#xA;            &#xA;                {&#34;title&#34;: &#34;Concepts&#34;,&#xA;                 &#34;links&#34;: [&#xA;                &#xA;        {&#34;url&#34;:&#34;project.html&#34;,&#34;text&#34;:&#34;Project&#34;}&#xA;                    ]},&#xA;                {&#34;title&#34;: &#34;Web Resources&#34;,&#xA;                 &#34;links&#34;: [&#xA;                &#xA;        {&#34;url&#34;:&#34;http://devnet.jetbrains.com/community/python?view=documents&#xA;            &#34;,&#34;text&#34;:&#34;Developer Community&#34;}&#xA;                    ]}&#xA;            ]&#xA;        &#xA;                }&#xA;            "><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search PyCharm Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>PyCharm 2019.2 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="primary_default_for_windows" selected>Default for Windows</option><option data-group="primary" value="primary_intellij_idea_classic_macos">IntelliJ IDEA Classic (macOS)</option><option data-group="primary" value="primary_default_for_gnome">Default for GNOME</option><option data-group="primary" value="primary_default_for_kde">Default for KDE</option><option data-group="primary" value="primary_sublime_text">Sublime Text</option><option data-group="primary" value="primary_eclipse">Eclipse</option><option data-group="primary" value="primary_emacs">Emacs</option><option data-group="primary" value="primary_default_for_xwin_windows">Default for XWin (Windows)</option><option data-group="secondary" value="secondary_default_for_macos">Default for macOS</option><option data-group="secondary" value="secondary_default_for_gnome">Default for GNOME</option><option data-group="secondary" value="secondary_default_for_kde">Default for KDE</option><option data-group="secondary" value="secondary_eclipse">Eclipse</option><option data-group="secondary" value="secondary_default_for_xwin_macos">Default for XWin (macOS)</option><option data-group="secondary" value="secondary_sublime_text_macos">Sublime Text (macOS)</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="active"><h1 data-toc="Creating_Web_Application_with_Flask" id="Creating_Web_Application_with_Flask.xml">Creating Web Applications with Flask</h1>                    <a name="edition"></a>     <aside class="warning " data-title="" rel="Creating_Web_Application_with_Flask.xml" id="feb33128"><p>        This feature is only supported in the <b id="3d94b173" origin="intellij-platform">Professional</b> edition.         This edition is commercial, and it provides an outstanding set of features:          see the <a href="https://www.jetbrains.com/pycharm/features/editions_comparison_matrix.html" data-external="true" target="_blank" rel="noopener noreferrer">comparison matrix</a> for more details.    </p></aside>    <p id="2c0a37d5">This tutorial explains how to develop a web-based application using the Flask web framework. Our MeteoMaster application processes meteo data stored in a database and    presents it in the form of the following charts:</p>    <ul class="list _ul"><li class="list__item" id="48cb0997"><p id="4c01a5d8">Scatter chart – a cumulative report of the average yearly temperature and humidity in Prague, St. Petersburg, San Francisco, Paris, and Singapore.</p>        </li><li class="list__item" id="0ba3c94f">            <p id="7e026a9a">Line charts – Average monthly temperature and humidity in each city.</p>        </li></ul>    <figure data-theme="light" id="f50d553f" width="600"><img class="js-gif" src="/help/img/idea/2019.2/py_flask_demo.png" data-gif-src="/help/img/idea/2019.2/py_flask_demo.animated.gif" width="600" style="width:600px;"></figure>    <div class="chapter"><h2 id="overview" data-toc="Creating_Web_Application_with_Flask#overview">Staying Above the Weather: Application Overview</h2>        <p id="5b6defc2">You will use various Web technologies to implement the following application functions:</p>        <div class="table-wrapper"><table width="100%" id="42ffaaa5"><thead><tr id="130ac1fa" class="ijRowHead"><th id="17693bc4"><p>Function</p></th><th id="4e28a23a"><p>Technology</p></th></tr></thead><tbody><tr id="027c03ec" class="ijRowOdd"><td id="ad42949c"><p>Meteo data operations</p></td><td id="aace94aa"><p><a href="https://www.sqlite.org/index.html" data-external="true" target="_blank" rel="noopener noreferrer">SQLite</a> database to store data, <a href="https://www.sqlalchemy.org/" data-external="true" target="_blank" rel="noopener noreferrer">SQLAlchemy</a> package to perform operations with the database in Python code.</p></td></tr><tr id="b9f20563" class="ijRowEven"><td id="f04143ae"><p>Graphical representation</p></td><td id="0b22cb60"><p><a href="https://matplotlib.org/" data-external="true" target="_blank" rel="noopener noreferrer">matplotlib</a> package to plot graphs.</p></td></tr><tr id="f84ae4cf" class="ijRowOdd"><td id="18543294"><p>Viewing and editing content</p></td><td id="9ab662ac"><p><a href="https://www.w3schools.com/html/" data-external="true" target="_blank" rel="noopener noreferrer">HTML</a> to create page views and <a href="http://jinja.pocoo.org/" data-external="true" target="_blank" rel="noopener noreferrer">Jinja</a> to create smart templates.</p></td></tr><tr id="0c8e2ca8" class="ijRowEven"><td id="aceda262"><p>Managing content</p></td><td id="80ca8a4f"><p><a href="http://flask.pocoo.org/" data-external="true" target="_blank" rel="noopener noreferrer">Flask</a> to orchestrate the application content.</p></td></tr></tbody></table></div>        <p id="c876e05c">The MeteoMaster is a web application that comprises the following components:</p>        <figure><img alt="Key modules of the Flask Web application" title="Key modules of the Flask Web application" src="/help/img/idea/2019.2/py_flask_app_structure.png" id="deb7ceb2" width="600" height="440"></figure>        <dl><dt id="3d43755e">Main page</dt><dd>                <p id="9e30729f">Application entry point that renders the scatter chart and provides links to the detailed summary of climate in a particular city.</p>            </dd><dt id="5a313d60">City</dt><dd>                <p id="3e51b237">A series of pages with the detailed information about climate in each city.</p>            </dd><dt id="a4f40a71">Login</dt><dd>                <p id="48c44c8a">Authentication page. One needs to enter the valid credentials to edit meteo data.</p>            </dd><dt id="714a371a">Edit</dt><dd>                <p id="a417aa54">A series of pages for editing city specific data.</p>            </dd></dl>        <p id="448feeb5">Each HTML page has a corresponding Flask view implemented in Python code.</p>    </div>    <div class="chapter"><h2 id="7c11c750" data-toc="Creating_Web_Application_with_Flask#7c11c750">Creating a Flask application in PyCharm</h2>        <p id="ca2d50a2">Create a basic Flask project as described in <a href="creating-flask-project.html">Creating a Flask Project</a> to start prototyping the application.</p>        <section class="procedure-steps"><ol class="list _decimal"><li class="list__item" id="49ea5f56">                <p id="b389110f">Select <span class="control">Flask</span> in the <span class="control">New Project</span> dialog.                <figure><img alt="Creating a new Flask project" title="Creating a new Flask project" src="/help/img/idea/2019.2/py_flask_create_meteo_project.png" id="71cf2aa4" width="600" height="869"></figure>                </p>            </li><li class="list__item" id="30f49b13"><p id="471b4aa0">In the <span class="control">Location</span> field, provide the path to the project location and type the <span class="keyword">MeteoMaster</span> as the project name.                Leave the rest of the settings default and save the changes.</p>            </li><li class="list__item" id="bc847fe5">                <p id="477e8e2e">Click <kbd data-primary_default_for_windows="Shift+F10" data-primary_intellij_idea_classic_macos="Shift+F10" data-primary_default_for_gnome="Shift+F10" data-primary_default_for_kde="Shift+F10" data-primary_sublime_text="Shift+F10" data-primary_eclipse="Shift+Alt+X" data-primary_emacs="Shift+F10" data-primary_default_for_xwin_windows="N/A" data-secondary_default_for_macos="⌃R" data-secondary_default_for_gnome="⇧F10" data-secondary_default_for_kde="⇧F10" data-secondary_eclipse="⌥⇧X" data-secondary_default_for_xwin_macos="N/A" data-secondary_sublime_text_macos="N/A">Shift+F10</kbd> to run the default application. In the <span class="control">Run</span> tool window,                click the hyperlink and preview the target page.                <figure><img alt="Preview the Hello World app" title="Preview the Hello World app" src="/help/img/idea/2019.2/py_flask_meteo_run_default.png" id="3aa74c6e" width="700" height="366"></figure>                </p>            </li><li class="list__item" id="34b83b22">                <p id="e1ba85ff">Now install all the packages required for the MeteoMaster application. The easiest way to do that is to use project dependencies                    (see <a href="managing-dependencies.html">Manage dependencies using requirements.txt</a>). Right-click the project root and select                    <span data-skip-index="skip" class="menupath">New | File</span>, then specify <span class="keyword">requirements.txt</span> as the filename and add the following list of the dependencies to it.                    <div class="code-block" data-lang="none">
+                                Click==7.0
+                                cycler==0.10.0
+                                Flask==1.0.2
+                                Jinja2==2.10
+                                kiwisolver==1.0.1
+                                MarkupSafe==1.1.0
+                                matplotlib==3.0.2
+                                numpy==1.15.4
+                                pyparsing==2.3.0
+                                python-dateutil==2.7.5
+                                six==1.11.0
+                                SQLAlchemy==1.2.14
+                                Werkzeug==0.14.1
+    </div>                </p>                <p id="ddd4ab01">Click the <span class="control">Install requirements</span> link to proceed with installation of the packages.                <figure><img alt="Installing packages required for the application" title="Installing packages required for the application" src="/help/img/idea/2019.2/py_flask_meteo_requirements.png" id="a7e35135" width="700" height="189"></figure></p>            </li></ol></section>    </div>    <div class="chapter"><h2 id="database" data-toc="Creating_Web_Application_with_Flask#database">Setting up a Database</h2>        <p id="924a9d22">Now, set up a data source for your application. With PyCharm, it is quite straightforward.</p>        <section class="procedure-steps"><ol class="list _decimal"><li class="list__item" id="64b92e80">                <p id="e3602cf0">Download the predefined database with the meteo data for five cities from the following location:                </p>                <p id="2d72101f"><a href="https://github.com/allaredko/flask-tutorial-demo/blob/master/user_database" data-external="true" target="_blank" rel="noopener noreferrer">https://github.com/allaredko/flask-tutorial-demo/blob/master/user_database</a></p>                 <p id="82e9d334">Save the <span class="filepath">user_database</span> file in the project root directory.</p></li><li class="list__item" id="49345a1f"><p id="1f6110bc">Double-click the added file and open the <a href="database-tool-window.html">Database Tool Window</a>.                <figure><img alt="Meteo database" title="Meteo database" src="/help/img/idea/2019.2/py_flask_meteo_database.png" id="b5d789b9" width="700" height="724"></figure></p>                    <p id="eacde782">You should see the following tables in the <code class="code">user_database</code> database: <code class="code">city</code>                        and <code class="code">meteo</code>. Double-click each table to preview the data. The <code class="code">city</code> table has three columns:                        <code class="code">city_id</code>, <code class="code">city_name</code>, and <code class="code">city_climate</code> (a brief text description of the city climate).                        The <code class="code">meteo</code> table has four columns: <code class="code">city_id</code>, <code class="code">month</code>, <code class="code">average_humidity</code>, and                        <code class="code">average_temperature</code>. A <span class="emphasis">foreign key</span> is defined for the <code class="code">city_id</code> column of the                        <code class="code">table</code> to set a relation between two tables.                    </p>                </li><li class="list__item" id="1eaf7e5a">                   <p id="cfdb7655">Optionally, right-click <span class="control">user_database</span> in the <span class="control">Database</span> tool window and select <span data-skip-index="skip" class="menupath">Properties</span>.                       In the <span class="control">Data Sources and Drivers</span> dialog, click                    <span class="control">Test connection</span> to ensure that the data source has been configured properly.</p>                <figure><img alt="Adding a data source" title="Adding a data source" src="/help/img/idea/2019.2/py_flask_meteo_datasource.png" id="a45e851d" width="600" height="756"></figure></li><li class="list__item" id="de3f8df3">                <p id="26f642f3"><a href="creating-and-running-your-first-python-project.html#create-file">Create a Python file</a>, <span class="filepath">user_database.py</span>,                    to work with the newly created database. Use <a href="https://docs.sqlalchemy.org/en/latest/orm/extensions/declarative/basic_use.html" data-external="true" target="_blank" rel="noopener noreferrer">SQLAlchemy declarative base</a> syntax to describe the database.                    <div class="code-block" data-lang="python">
+                        metadata = MetaData()
+                        engine = create_engine('sqlite:///user_database', connect_args={'check_same_thread': False}, echo=False)  # echo=False
+                        Base = declarative_base()
+                        db_session = sessionmaker(bind=engine)()
+
+
+                        # Table city
+                        class City(Base):
+                            __tablename__ = 'city'
+                            city_id = Column(Integer, primary_key=True)
+                            city_name = Column(String)
+                            city_climate = Column(String)
+                            city_meteo_data = relationship("Meteo", backref="city")
+
+
+                        # Table meteo
+                        class Meteo(Base):
+                            __tablename__ = 'meteo'
+                            id = Column(Integer, primary_key=True)
+                            city_id = Column(ForeignKey('city.city_id'))
+                            month = Column(String)
+                            average_humidity = Column(Integer)
+                            average_temperature = Column(Float)
+                    </div>                </p>                <p id="de556e08">Instead of manually adding import statements for the code fragment, apply the suggested                <a href="intention-actions.html">quick fixes</a>: just click the bulb icon (or press <kbd data-primary_default_for_windows="Alt+Enter" data-primary_intellij_idea_classic_macos="Alt+Enter" data-primary_default_for_gnome="Alt+Enter" data-primary_default_for_kde="Alt+Enter" data-primary_sublime_text="Alt+Enter" data-primary_eclipse="Alt+Enter" data-primary_emacs="Alt+Enter" data-primary_default_for_xwin_windows="N/A" data-secondary_default_for_macos="⌥⏎" data-secondary_default_for_gnome="⌥⏎" data-secondary_default_for_kde="⌥⏎" data-secondary_eclipse="⌥⏎" data-secondary_default_for_xwin_macos="N/A" data-secondary_sublime_text_macos="⌥⏎">Alt+Enter</kbd>).                <figure><img alt="Applying quick fixes for the missing import statements" title="Applying quick fixes for the missing import statements" src="/help/img/idea/2019.2/py_flask_meteo_import.png" id="2d11503f" width="587" height="292"></figure></p>            </li><li class="list__item" id="3665a9e7">                <p id="205da9f1">Now that you have defined the tables and their relationship, add the following functions to retrieve data from the database:                </p>                <div class="code-block" data-lang="python">
+                    # Retrieving data from the database
+                    def get_cities():
+                        return db_session.query(City)
+
+
+                    # Generating the set of average temperature values for a particular city
+                    def get_city_temperature(city):
+                        return [month.average_temperature for month in city.city_meteo_data]
+
+
+                    # Generating the set of average humidity values for a particular city
+                    def get_city_humidity(city):
+                        return [month.average_humidity for month in city.city_meteo_data]
+
+
+                    data = get_cities()
+                    MONTHS = [record.month for record in data[0].city_meteo_data]
+                    CITIES = [city.city_name for city in data]
+                </div>            </li></ol><aside class="note " data-title="" rel="3665a9e7" id="48cef03d"><p id="af83b0c2">See the complete code of the <a href="https://github.com/allaredko/flask-tutorial-demo/blob/master/user_database.py" data-external="true" target="_blank" rel="noopener noreferrer">user_database.py</a> file in the                project repository.</p></aside></section>    </div>    <div class="chapter"><h2 id="scatter_chart" data-toc="Creating_Web_Application_with_Flask#scatter_chart">Plotting the scatter chart</h2>        <p id="60316801">You are ready to retrieve data and build the first graph - the scatter chart with the yearly average temperature and humidity            in each city. Use the <a href="https://matplotlib.org/" data-external="true" target="_blank" rel="noopener noreferrer">matplotlib</a> library to set up the graph and assign the values.</p>        <section class="procedure-steps"><ol class="list _decimal"><li class="list__item" id="6af1da67">            <p id="740d48cc"><a href="creating-and-running-your-first-python-project.html#create-file">Create yet another Python file</a>, <span class="filepath">charts.py</span>, and paste the            following code fragment:</p>            <div class="code-block" data-lang="python">
+            import matplotlib.pyplot as plt
+            from user_database import data, get_city_temperature, get_city_humidity, CITIES
+
+            yearly_temp = []
+            yearly_hum = []
+
+            for city in data:
+                yearly_temp.append(sum(get_city_temperature(city))/12)
+                yearly_hum.append(sum(get_city_humidity(city))/12)
+
+            plt.clf()
+            plt.scatter(yearly_hum, yearly_temp, alpha=0.5)
+            plt.title('Yearly Average Temperature/Humidity')
+            plt.xlim(70, 95)
+            plt.ylabel('Yearly Average Temperature')
+            plt.xlabel('Yearly Average Relative Humidity')
+            for i, txt in enumerate(CITIES):
+                plt.annotate(txt, (yearly_hum[i], yearly_temp[i]))
+            plt.show()
+            </div>            </li><li class="list__item" id="b91adf8b"><p>The quickest way to preview the graph is to use the <kbd data-primary_default_for_windows="Shift+F10" data-primary_intellij_idea_classic_macos="Shift+F10" data-primary_default_for_gnome="Shift+F10" data-primary_default_for_kde="Shift+F10" data-primary_sublime_text="Shift+F10" data-primary_eclipse="Shift+Alt+X" data-primary_emacs="Shift+F10" data-primary_default_for_xwin_windows="N/A" data-secondary_default_for_macos="⌃R" data-secondary_default_for_gnome="⇧F10" data-secondary_default_for_kde="⇧F10" data-secondary_eclipse="⌥⇧X" data-secondary_default_for_xwin_macos="N/A" data-secondary_sublime_text_macos="N/A">Shift+F10</kbd> shortcut. PyCharm renders the scatter chart            in the <span class="control">SciView</span> tool window. You can use the <span class="control">Plots</span> tab to            preview the generated graph.            <figure><img alt="Previewing a scatter chart" title="Previewing a scatter chart" src="/help/img/idea/2019.2/py_flask_meteo_scatter_chart.png" id="f6cd986a" width="800" height="877"></figure>            </p></li><li class="list__item" id="f4fee780">                <p id="8e4d34c3">Now save the graph into an image so that you can add it to the main page of your application. Replace                <code class="code">plt.show()</code> with the fragment that utilizes the <code class="code">savefig(img)</code> function:</p>                <div class="code-block" data-lang="python">
+                    from io import BytesIO
+                    import matplotlib.pyplot as plt
+                    from user_database import data, MONTHS, get_city_temperature, get_city_humidity, CITIES
+
+
+                    def get_main_image():
+                        """Rendering the scatter chart"""
+                        yearly_temp = []
+                        yearly_hum = []
+
+                        for city in data:
+                            yearly_temp.append(sum(get_city_temperature(city))/12)
+                            yearly_hum.append(sum(get_city_humidity(city))/12)
+
+                        plt.clf()
+                        plt.scatter(yearly_hum, yearly_temp, alpha=0.5)
+                        plt.title('Yearly Average Temperature/Humidity')
+                        plt.xlim(70, 95)
+                        plt.ylabel('Yearly Average Temperature')
+                        plt.xlabel('Yearly Average Relative Humidity')
+                        for i, txt in enumerate(CITIES):
+                            plt.annotate(txt, (yearly_hum[i], yearly_temp[i]))
+
+                        img = BytesIO()
+                        plt.savefig(img)
+                        img.seek(0)
+                        return img
+                </div>            </li></ol></section>    </div>    <div class="chapter"><h2 id="main" data-toc="Creating_Web_Application_with_Flask#main">Creating the Main Page</h2>        <p id="0643406f">Set up the main page of the application and create a view for the scatter chart.</p>        <section class="procedure-steps"><ol class="list _decimal"><li class="list__item" id="d432c7f9">        <p id="d7817b7a">Replace the <code class="code">app.route()</code> code fragment in the <span class="filepath">app.py</span> file with the following code:</p>        <div class="code-block" data-lang="python">
+            @app.route('/')
+            def main():
+                """Entry point; the view for the main page"""
+                cities = [(record.city_id, record.city_name) for record in data]
+                return render_template('main.html', cities=cities)
+
+
+            @app.route('/main.png')
+            def main_plot():
+                """The view for rendering the scatter chart"""
+                img = get_main_image()
+                return send_file(img, mimetype='image/png', cache_timeout=0)
+        </div>        </li><li class="list__item" id="4f857940"><p id="d0a2ec81">Apply the suggested quick fixes to add the missing import statements.</p>        </li><li class="list__item" id="4fd7af90">            <p id="efa12c5a">Note that PyCharm highlights <span class="filepath">main.html</span> because you have not created this file yet.            <figure><img alt="Code inspection" title="Code inspection" src="/help/img/idea/2019.2/py_flask_meteo_code_inspection.png" id="77caa509" width="489" height="245"></figure></p>            <p id="d02ef812">With PyCharm intention action you can quickly create the missing template file.                Press <kbd data-primary_default_for_windows="Alt+Enter" data-primary_intellij_idea_classic_macos="Alt+Enter" data-primary_default_for_gnome="Alt+Enter" data-primary_default_for_kde="Alt+Enter" data-primary_sublime_text="Alt+Enter" data-primary_eclipse="Alt+Enter" data-primary_emacs="Alt+Enter" data-primary_default_for_xwin_windows="N/A" data-secondary_default_for_macos="⌥⏎" data-secondary_default_for_gnome="⌥⏎" data-secondary_default_for_kde="⌥⏎" data-secondary_eclipse="⌥⏎" data-secondary_default_for_xwin_macos="N/A" data-secondary_sublime_text_macos="⌥⏎">Alt+Enter</kbd> and select <span class="control">Create template main.html</span> from the                context menu. Confirm the name and location of the template file and click <span class="control">OK</span>.                As the result, the <span class="filepath">main.html</span> will be added to the <span class="filepath">templates</span> directory.                Open the newly added file and paste the following code into it:</p>            <div class="code-block" data-lang="markup">
+                &lt;!DOCTYPE html&gt;
+                &lt;html lang="en"&gt;
+                &lt;head&gt;
+                &lt;meta charset="UTF-8"&gt;
+                &lt;link href="../static/style.css" rel="stylesheet" type="text/css"&gt;
+                &lt;title&gt;Typical Climate&lt;/title&gt;
+                &lt;/head&gt;
+                &lt;body&gt;
+                    &lt;div id="element1"&gt;
+                        &lt;img src="{{ url_for('main_plot') }}" alt="Image"&gt;
+                    &lt;/div&gt;
+                    &lt;div id="element2"&gt;
+                        &lt;p&gt;What city has the best climate?&lt;/p&gt;
+                        &lt;p&gt;When planning your trip or vacation you often check weather data for
+                                humidity and temperature.&lt;/p&gt;
+                        &lt;p&gt;Below is the collection of the yearly average values for the following cities: &lt;/p&gt;
+                        &lt;ul&gt;
+                                {% for city_id, city_name in cities %}
+                                &lt;li&gt;&lt;a href=""&gt;{{ city_name }}&lt;/a&gt;&lt;/li&gt;
+                                {% endfor %}
+                        &lt;/ul&gt;
+                    &lt;/div&gt;
+                &lt;/body&gt;
+                &lt;/html&gt;
+            </div>            <p id="0822aa18">Note that <code class="code">{{ city_name }}</code> in this fragment is a <a href="http://jinja.pocoo.org/" data-external="true" target="_blank" rel="noopener noreferrer">Jinja2</a> template variable used to pass the <code class="code">city_name</code> Python variable                to the HTML template.            </p>        </li><li class="list__item" id="7f743037">            <p id="ef16c321">Also create the stylesheet to set up font and layout settings for all HTML pages in your application.            Right-click the <span class="control">static</span> directory and select <span data-skip-index="skip" class="menupath">New | Stylesheet</span>, then                specify the name of the <span class="filepath">css</span> file, <span class="filepath">style.css</span>, and paste the following style definitions:</p>            <div class="code-block" data-lang="css">
+                body
+                {
+                    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+                }
+                #element1
+                {
+                    display: inline-block;
+                }
+
+                #element2
+                {
+                    display: inline-block;
+                    vertical-align: top;
+                    margin-top: 90px;
+                    alignment: left;
+                    width: 25%;
+                }
+            </div>            <aside class="note " data-title="" rel="121dc705" id="ff2138cb"><p id="543ef39c">PyCharm will autocomplete identifiers such as <code class="code">#element1</code> from those used in the project HTML files.</p></aside>        </li><li class="list__item" id="c318d8e9">            <p id="74cff127">When you run the application for the very first time, PyCharm automatically generated the Run/Debug                configuration. You can use it to run the modified application any time you want to evaluate the result.                <figure><img alt="Run/Debug configuration" title="Run/Debug configuration" src="/help/img/idea/2019.2/py_flask_meteo_run_debug_configuration.png" id="e744c607" width="282" height="53"></figure>            </p>            <p id="336ffef5">Click the <img class="inline-icon-16" src="/help/img/idea/2019.2/artwork.studio.icons.avd.run@2x.png" width="16" alt="the Run button"> and follow the                <span class="filepath">http://127.0.0.1:5000/</span> link in the <span class="control">Run</span> tool window. You should expect to see the            following page:            <figure><img alt="The main page of the MeteoMaster application" title="The main page of the MeteoMaster application" src="/help/img/idea/2019.2/py_flask_meteo_main_page.png" id="f8410938" width="700" height="569"></figure>            </p>            <aside class="note " data-title="" rel="336ffef5" id="41b3782e"><p id="6c94aec2">You can continuously rerun your application on any code change.  Click the list of the available configurations and select <span class="control">Edit Configurations</span>.                In the <a href="run-debug-configuration-flask-server.html">Flask Run/Debug configuration</a> dialog, select the                <span class="control">FLASK_DEBUG</span> checkbox. With this mode enabled, PyCharm will restart the running application each time you save the                code changes <kbd data-primary_default_for_windows="Ctrl+S" data-primary_intellij_idea_classic_macos="⌘+S" data-primary_default_for_gnome="Ctrl+S" data-primary_default_for_kde="Ctrl+S" data-primary_sublime_text="Ctrl+S" data-primary_eclipse="Ctrl+S" data-primary_emacs="Ctrl+X, Ctrl+S" data-primary_default_for_xwin_windows="N/A" data-secondary_default_for_macos="⌘S" data-secondary_default_for_gnome="⌃S" data-secondary_default_for_kde="⌃S" data-secondary_eclipse="⌃S" data-secondary_default_for_xwin_macos="N/A" data-secondary_sublime_text_macos="⌘S">Ctrl+S</kbd>.</p>            </aside>        </li></ol></section>    </div>    <div class="chapter"><h2 id="line_charts" data-toc="Creating_Web_Application_with_Flask#line_charts">Plotting line charts</h2>        <p id="a2a7ae6b">To provide application users with the detailed information about climate of a particular city, render the line charts with the        relevant information.</p>        <section class="procedure-steps"><ol class="list _decimal"><li class="list__item" id="4873ebd1"><p id="30be5c27">Modify the charts.py file by adding the <code class="code">get_city_image</code> function:</p>            <div class="code-block" data-lang="python">
+            def get_city_image(city_id):
+                """Rendering line charts with city specific data"""
+                city = data.get(city_id)
+                city_temp = get_city_temperature(city)
+                city_hum = get_city_humidity(city)
+
+                plt.clf()
+                plt.plot(MONTHS, city_temp, color='blue', linewidth=2.5, linestyle='-')
+                plt.ylabel('Mean Daily Temperature', color='blue')
+                plt.yticks(color='blue')
+                plt.twinx()
+                plt.plot(MONTHS, city_hum, color='red', linewidth=2.5, linestyle='-')
+                plt.ylabel('Average Relative Humidity', color='red')
+                plt.yticks(color='red')
+                plt.title(city.city_name)
+
+                img = BytesIO()
+                plt.savefig(img)
+                img.seek(0)
+                return img
+            </div>                <p id="9b1b5d0b">This function plots two linear charts: monthly <span class="keyword">Mean Daily Temperature</span> and <span class="keyword">Average Relative Humidity</span>                    for each city. Similarly to the <code class="code">get_main_image</code> function, it saves the chart in an image.</p>            </li><li class="list__item" id="f3ada874">                <p id="99f7b2e4">Create one more <span class="filepath">.html</span> file to show the line charts.</p>                <p id="d09ea8f1">Right-click the <span class="control">templates</span> directory in the project root and select                <span data-skip-index="skip" class="menupath">New | HTML File</span>, then enter, <span class="filepath">city.html</span> as the file's name, and paste the                following code in the newly created file:</p>            </li><li class="list__item" id="71ae5931">                    <div class="code-block" data-lang="markup">
+                        &lt;!DOCTYPE html&gt;
+                        &lt;html lang="en"&gt;
+                        &lt;head&gt;
+                            &lt;meta charset="UTF-8"&gt;
+                            &lt;link href="../static/style.css" rel="stylesheet" type="text/css"&gt;
+                            &lt;title&gt;{{ city_name }}&lt;/title&gt;
+                        &lt;/head&gt;
+                        &lt;body&gt;
+                            &lt;div id="element1"&gt;
+                                &lt;img src="{{ url_for('city_plot', city_id=city_id) }}" alt="Image"&gt;
+                            &lt;/div&gt;
+                            &lt;div id="element2"&gt;
+                                &lt;p&gt;This graph shows mean daily temperature and average relative humidity in {{ city_name }}.&lt;/p&gt;
+                                &lt;p&gt; {{ city_climate }}&lt;/p&gt;
+                                &lt;hr/&gt;
+                                &lt;p&gt;&lt;a href="/"&gt;Back to the main page&lt;/a&gt;&lt;/p&gt;
+                            &lt;/div&gt;
+                        &lt;/body&gt;
+                        &lt;/html&gt;
+                    </div>                </li><li class="list__item" id="a88bcb34">                 <p id="1c72a537">The remaining step is to create two more views using the <code class="code">Flask.route</code> function. Add the following code fragment to the                 <span class="filepath">app.py</span> file:</p>                 <div class="code-block" data-lang="python">
+                     @app.route('/city/&lt;int:city_id&gt;')
+                     def city(city_id):
+                         """Views for the city details"""
+                         city_record = data.get(city_id)
+                         return render_template('city.html', city_name=city_record.city_name, city_id=city_id,
+                                                city_climate=city_record.city_climate)
+
+
+                     @app.route('/city&lt;int:city_id&gt;.png')
+                     def city_plot(city_id):
+                         """Views for rendering city specific charts"""
+                         img = get_city_image(city_id)
+                         return send_file(img, mimetype='image/png', cache_timeout=0,)
+                 </div>                 <p id="c743f85b">Don't forget to use the quick fixes <kbd data-primary_default_for_windows="Alt+Enter" data-primary_intellij_idea_classic_macos="Alt+Enter" data-primary_default_for_gnome="Alt+Enter" data-primary_default_for_kde="Alt+Enter" data-primary_sublime_text="Alt+Enter" data-primary_eclipse="Alt+Enter" data-primary_emacs="Alt+Enter" data-primary_default_for_xwin_windows="N/A" data-secondary_default_for_macos="⌥⏎" data-secondary_default_for_gnome="⌥⏎" data-secondary_default_for_kde="⌥⏎" data-secondary_eclipse="⌥⏎" data-secondary_default_for_xwin_macos="N/A" data-secondary_sublime_text_macos="⌥⏎">Alt+Enter</kbd> to add the missing import statements.</p>             </li><li class="list__item" id="813f6bfd">                 <p id="78122cfe">Now modify the <span class="filepath">main.html</span> file to populate the list of the cities with the links to the                 corresponding <span class="emphasis">city/*</span> page. Replace <code class="code">&lt;li&gt;&lt;a href=""&gt;{{ city_name }}&lt;/a&gt;&lt;/li&gt;</code>                 with <code class="code">&lt;li&gt;&lt;a href="{{ url_for('city', city_id=city_id) }}"&gt;{{ city_name }}&lt;/a&gt;&lt;/li&gt;</code>.</p>             </li></ol><p id="29c03830">Rerun the Run/Debug configuration to restart the application and click the link that leads to Paris.                You should expect to get navigated to the <span class="filepath">city/2</span> page.</p><figure><img alt="Detailed weather information for Paris" title="Detailed weather information for Paris" src="/help/img/idea/2019.2/py_flask_meteo_line_chart.png" id="a70027e6" width="800" height="829"></figure></section>    </div>    <div class="chapter"><h2 id="login" data-toc="Creating_Web_Application_with_Flask#login">Creating a Login Form</h2>        <p id="65761501">By this time, you have created a fully functional application that retrieves meteo data from the database and present them as charts.            However, in real life you typically want to edit the data. Reasonably, editing should only be permitted to authorized users, so, let's create a login form.</p>        <section class="procedure-steps"><ol class="list _decimal"><li class="list__item" id="8d12bb54"><p id="5553821d">Right-click the <span class="control">templates</span> directory in the project root and select                <span data-skip-index="skip" class="menupath">New | HTML File</span>, then enter, <span class="filepath">login.html</span> as the file's name, and paste the                following code in the newly created file:</p>                <div class="code-block" data-lang="python">
+                    &lt;!DOCTYPE html&gt;
+                    &lt;html lang="en"&gt;
+                        &lt;head&gt;
+                            &lt;meta charset="UTF-8"&gt;
+                            &lt;link rel="stylesheet" type="text/css" href="../static/style.css"&gt;
+                            &lt;title&gt;Login form &lt;/title&gt;
+                        &lt;/head&gt;
+                        &lt;body&gt;
+                            &lt;p&gt;Login to edit the meteo database: &lt;/p&gt;
+                            &lt;div class="container"&gt;
+                                &lt;form action="" class="form-inline" method="post"&gt;
+                                    &lt;input type="text" class="form-control" placeholder="Username" name="username"
+                                           value="{{ request.form.username }}"&gt;
+                                    &lt;input type="password" class="form-control" placeholder="Password" name="password"
+                                           value="{{ request.form.password }}"&gt;
+                                    &lt;input class="btn btn-default" type="submit" value="Login"&gt;
+                                &lt;/form&gt;
+                                &lt;p&gt;{{ error }} &lt;/p&gt;
+                            &lt;/div&gt;
+                        &lt;/body&gt;
+                    &lt;/html&gt;
+                </div>                <p id="cc2caa68">This code implements a typical login form with the <span class="control">Username</span> and <span class="control">Password</span> fields.</p>            </li><li class="list__item" id="58a02ecc">                <p id="2c2447d0">Add the following code to the <span class="filepath">app.py</span> file to create the Flask view for the login form and to control the login session.</p>                <div class="code-block" data-lang="python">
+                @app.route('/login/&lt;int:city_id&gt;',  methods=["GET", "POST"])
+                def login(city_id):
+                    """The view for the login page"""
+                    city_record = data.get(city_id)
+                    try:
+                        error = ''
+                        if request.method == "POST":
+                            attempted_username = request.form['username']
+                            attempted_password = request.form['password']
+                            if attempted_username == 'admin' and attempted_password == os.environ['USER_PASSWORD']:
+                                session['logged_in'] = True
+                                session['username'] = request.form['username']
+                                return redirect(url_for('edit_database', city_id=city_id))
+                            else:
+                                print('invalid credentials')
+                                error = 'Invalid credentials. Please, try again.'
+                        return render_template('login.html', error=error, city_name=city_record.city_name, city_id=city_id)
+                    except Exception as e:
+                        return render_template('login.html', error=str(e), city_name=city_record.city_name, city_id=city_id)
+
+
+                def login_required(f):
+                    @wraps(f)
+                    def wrap(*args, **kwargs):
+                        """login session"""
+                        if 'logged_in' in session:
+                            return f(*args, **kwargs)
+                        else:
+                            pass
+                        return redirect(url_for('login'))
+                    return wrap
+
+
+                app.secret_key = os.environ['FLASK_WEB_APP_KEY']
+                </div>                <p id="b26a3a12">Use the <kbd data-primary_default_for_windows="Alt+Enter" data-primary_intellij_idea_classic_macos="Alt+Enter" data-primary_default_for_gnome="Alt+Enter" data-primary_default_for_kde="Alt+Enter" data-primary_sublime_text="Alt+Enter" data-primary_eclipse="Alt+Enter" data-primary_emacs="Alt+Enter" data-primary_default_for_xwin_windows="N/A" data-secondary_default_for_macos="⌥⏎" data-secondary_default_for_gnome="⌥⏎" data-secondary_default_for_kde="⌥⏎" data-secondary_eclipse="⌥⏎" data-secondary_default_for_xwin_macos="N/A" data-secondary_sublime_text_macos="⌥⏎">Alt+Enter</kbd> shortcut to add the missing import statements. Note that this code fragment introduces two environmental variables: <code class="code">USER_PASSWORD</code>                    and <code class="code">FLASK_WEB_APP_KEY</code>.                    </p>            </li><li class="list__item" id="7c26346e">                <p id="86e29fd5">You can record the values of the newly created environmental variables in the <span class="control">MeteoMaster</span> Run/Debug configuration as this is                    a safer way to store security sensitive information than hardcoding it in the <span class="filepath">app.py</span> file.</p>                <p id="e40bd45b">Go to the Run/Debug configurations list on the top-right of the editor and select <span class="filepath">Edit configurations</span>.                Click the <img class="inline-icon-16" src="/help/img/idea/2019.2/icons.actions.menu-open_dark.svg@2x.png" width="16" alt="edit environmental variables"> icon in the <span class="control">Environmental variables</span> field and                add two variables.</p>                <figure><img alt="Adding environmental variables" title="Adding environmental variables" src="/help/img/idea/2019.2/py_flask_meteo_env_variables.png" id="477d2dd1" width="700" height="877"></figure>            </li><li class="list__item" id="e468464e">                <p id="a42041ae">Modify the <code class="code">&lt;div id="element2"&gt;</code> element in the <span class="filepath">city.html</span> file to accommodate login                facilities:</p>                <div class="code-block" data-lang="python">
+                    &lt;p&gt;This graph shows mean daily temperature and average relative humidity in {{ city_name }}.&lt;/p&gt;
+                    &lt;p&gt; {{ city_climate }}&lt;/p&gt;
+                    {% if session['logged_in'] %}
+                    &lt;p&gt;Want to add more data?&lt;/p&gt;
+                    &lt;p&gt;Go and &lt;a href="{{ url_for('edit_database', city_id=city_id) }}"&gt;edit&lt;/a&gt; the meteo database.&lt;/p&gt;
+                    {% else %}
+                    &lt;p&gt;Want to edit meteo data?&lt;/p&gt;
+                    &lt;p&gt;Please &lt;a href="{{ url_for('login', city_id=city_id) }}"&gt;login&lt;/a&gt; first.&lt;/p&gt;
+                    {% endif %}
+                    &lt;hr/&gt;
+                    &lt;p&gt;&lt;a href="/"&gt;Back to the main page&lt;/a&gt;&lt;/p&gt;
+                </div>            </li><li class="list__item" id="3eaa46f1"><p id="cab647fd">Restart the application and click any city link, then click the <span class="control">login</span> link in the "Please login first" sentence.                You should expect to see the login form.</p>            <figure><img alt="Login form" title="Login form" src="/help/img/idea/2019.2/py_flask_meteo_login_form.png" id="3934327c" width="438" height="277"></figure>            <p id="ceb16553">For time being, this form doesn't enable editing because you have not implemented the corresponding page. Meanwhile,            you can try to enter any incorrect password to check if it is processed with the message: "Invalid credentials. Please, try again."</p></li></ol></section>    </div>    <div class="chapter"><h2 id="edit" data-toc="Creating_Web_Application_with_Flask#edit">Editing the data</h2>        <p id="b4dbbdd5">The last remaining step is to enable editing of the meteo data.</p>        <section class="procedure-steps"><ol class="list _decimal"><li class="list__item" id="2305d380"><p id="d1f52afc">Right-click the <span class="control">templates</span> directory in the project root and select                <span data-skip-index="skip" class="menupath">New | HTML File</span>, then enter, <span class="filepath">edit.html</span> as the file's name, and paste the                following code in the newly created file:</p>                <div class="code-block" data-lang="markup">
+                    &lt;!DOCTYPE html&gt;
+                    &lt;html lang="en"&gt;
+                        &lt;head&gt;
+                            &lt;meta charset="UTF-8"&gt;
+                            &lt;link rel="stylesheet" type="text/css" href="../static/style.css"&gt;
+                            &lt;title&gt;Edit meteo data for {{ city_name }}&lt;/title&gt;
+                        &lt;/head&gt;
+                        &lt;body&gt;
+                            &lt;p&gt;Edit the data for {{ city_name }} as appropriate:&lt;/p&gt;
+                            &lt;div class="container"&gt;
+                                &lt;form name="meteoInput" action="" class="form-inline" method="post"&gt;
+                                    &lt;table&gt;
+                                        &lt;tr&gt;
+                                            &lt;td&gt;Month&lt;/td&gt;
+                                            &lt;td colspan="2" align="center"&gt;Average Temperature&lt;/td&gt;
+                                            &lt;td colspan="2" align="center"&gt;Average Humidity&lt;/td&gt;
+                                        &lt;/tr&gt;
+                                        {% for month in months %}
+                                        &lt;tr&gt;
+                                            &lt;td&gt;{{ month }}&lt;/td&gt;
+                                            &lt;td&gt;
+                                                &lt;input placeholder="20" class="form-control" name="temperature{{ loop.index0 }}"
+                                                       value="{{ meteo[0][loop.index0]}}" type="range" min="-50.0" max="50.0" step="0.01"
+                                                       oninput="temp_output{{ loop.index0 }}.value=this.value" &gt;
+                                            &lt;/td&gt;
+                                            &lt;td&gt;
+                                                &lt;output name="temp_output{{ loop.index0 }}"&gt;{{ '%0.2f' % meteo[0][loop.index0]|float }}&lt;/output&gt;
+                                                &lt;label&gt; C&lt;/label&gt;
+                                            &lt;/td&gt;
+                                            &lt;td&gt;
+                                                &lt;input placeholder="20" class="form-control" name="humidity{{ loop.index0 }}"
+                                                       value="{{ meteo[1][loop.index0]}}" type="range" min="0" max="100"
+                                                       oninput="hum_output{{ loop.index0 }}.value=this.value"&gt;
+                                            &lt;/td&gt;
+                                            &lt;td&gt;
+                                                &lt;output name="hum_output{{ loop.index0 }}"&gt;{{ meteo[1][loop.index0]}}&lt;/output&gt;
+                                                &lt;label&gt; %&lt;/label&gt;
+                                            &lt;/td&gt;
+                                        &lt;/tr&gt;
+                                        {% endfor %}
+
+                                    &lt;/table&gt;
+                                    &lt;input class="btn btn-default" type="submit" value="Save"&gt;
+                                &lt;/form&gt;
+                                &lt;p&gt;{{ error }}&lt;/p&gt;
+                            &lt;/div&gt;
+                        &lt;/body&gt;
+                    &lt;/html&gt;
+                </div>            <p id="762e1d11">This fragment also utilizes a Jinjia2 template to process the input data and pass it to the Python code that            performs a commit to the database.</p>            </li><li class="list__item" id="2fa37b20">                <p id="f305e45a">Add one more code fragment to the <span class="filepath">app.py</span> file that creates a Flask view for the edit page, processes input data, and updates the database:</p>                <div class="code-block" data-lang="python">
+                    @app.route('/edit/&lt;int:city_id&gt;', methods=["GET", "POST"])
+                    @login_required
+                    def edit_database(city_id):
+                        """Views for editing city specific data"""
+                        month_temperature = []
+                        month_humidity = []
+                        city_record = data.get(city_id)
+                        meteo = [get_city_temperature(city_record), get_city_humidity(city_record)]
+                        try:
+                            if request.method == "POST":
+                                # Get data from the form
+                                for i in range(12):
+                                    # In a production application we ought to validate the input data
+                                    month_temperature.append(float(request.form[f'temperature{i}']))
+                                    month_humidity.append(int(request.form[f'humidity{i}']))
+
+                                # Database update
+                                for i, month in enumerate(city_record.city_meteo_data):
+                                    month.average_temperature = month_temperature[i]
+                                    month.average_humidity = month_humidity[i]
+
+                                db_session.commit()
+                                return redirect(url_for('main', city_id=city_id))
+                            else:
+                                return render_template('edit.html', city_name=city_record.city_name, city_id=city_id, months=MONTHS,
+                                                                              meteo=meteo)
+                        except Exception as error:
+                            return render_template('edit.html', city_name=city_record.city_name, city_id=city_id, months=MONTHS,
+                                          meteo=meteo, error=error)
+                </div>                <p id="5be59a16">Don't forget to add the missing import statements. See the complete code of the  <a href="https://github.com/allaredko/flask-tutorial-demo/blob/master/app.py" data-external="true" target="_blank" rel="noopener noreferrer">app.py</a> file in the                    project repository.                </p>            </li></ol><p id="5503373f">With this step, you have completed the task of creating a Flask-based application that interacts with the database. Now you've got full power over the weather.            Go and modify meteo data for any of the cities, so that the changes be prominent on the charts. Then preview the changes.</p></section>    </div>    <div class="last-modified" data-skip-index="skip">Last modified: 6 November 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="creating-flask-project.html">Creating a Flask Project</a><a class="navigation-links__next" href="pyramid.html">Pyramid</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="//resources.jetbrains.com/storage/help-app/v3/app.js"></script></body></html>

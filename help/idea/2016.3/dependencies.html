@@ -1,0 +1,53 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta class="swiftype" name="product" data-type="string" content="/idea/2016.3/"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><meta charset="UTF-8"><meta name="robots" content="noindex"><title>IntelliJ IDEA 2016.3 Help :: Dependencies</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="concepts.module.dependencies"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-swiftype-index="false"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.3 Help</h3><div class="shortcuts-switcher" data-swiftype-index="false"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Windows/Linux Default</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWin</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">Mac OS X</option><option data-group="secondary" value="eclipse_mac_os_x">Eclipse (Mac OS X)</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (Mac OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper (Mac OS X)</option><option data-group="secondary" value="emacs">Emacs (Mac OS X)</option></select></div><div class="panel-trigger" data-swiftype-index="false"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="library.html">Library</a></div><h1>Dependencies</h1><a name="d821759e3"></a><p>
+        Module dependencies are the entities that a <a name="d821759e5"></a><a href="module.html"><span>module</span></a> uses and, consequently, depends on.
+        So, the term <a name="d821759e8"></a><span class="keyword">module dependency</span> may refer to:</p><ul class="list _ul"><li class="list__item"><a name="d821759e14"></a>
+            The <a name="d821759e16"></a><a href="sdk.html"><span>SDK</span></a> associated with the module</li><li class="list__item"><a name="d821759e19"></a>
+            <a name="d821759e21"></a><a href="library.html"><span>Libraries</span></a> used in the module</li><li class="list__item"><a name="d821759e25"></a>
+            Other modules belonging to the same project</li></ul><a name="d821759e28"></a><p>
+        The term <a name="d821759e30"></a><span class="keyword">module dependency</span> may also be used in a narrower sense
+        meaning only the modules that a module depends on.</p><ul><li class="list__item"><a href="#order_of_dependencies">Order of dependencies</a></li><li class="list__item"><a href="#d821759e79">Dependencies on other modules</a></li></ul><a name="order_of_dependencies"></a><h2>Order of dependencies</h2>
+        <a name="d821759e41"></a><p>
+            The module dependencies are processed in the order in which they appear
+            in the corresponding list (see <a name="d821759e43"></a><a href="dependencies-tab.html"><span>Dependencies tab</span></a>).</p>
+        <a name="d821759e47"></a><p>
+            At compile time, the order of items in the list defines the order in which
+            the compiler (javac) looks for the classes to resolve the corresponding references.
+            At runtime, this list defines the order in which the JVM searches for the classes to be loaded.</p>
+        <a name="d821759e50"></a><p>
+            In certain situations, the order of libraries may be important.
+            For example, if you want to use patches to certain libraries, these patches should be placed in the list
+            before (above) the main libraries.
+            Otherwise, new versions of the classes (contained in the patches) will be ignored.</p>
+        <a name="d821759e53"></a><p>
+            For compilation, the position of an item in the list in relation to the module SDK (JDK) also matters,
+            and in certain cases may be very important.
+            (The module SDK is always shown in the list among the module dependencies.)</p>
+        <ul class="list _ul"><li class="list__item"><a name="d821759e58"></a>
+                All the items after the JDK are translated into the module <code class="code" data-lang="Java">classpath</code> entries.
+                Most of the libraries that you normally deal with should go there.</li><li class="list__item"><a name="d821759e64"></a>
+                All the items before the JDK correspond to the module <code class="code" data-lang="Java">bootclasspath</code> entries.
+                <a name="d821759e69"></a><p>
+                    For the compilation to succeed,
+                    certain libraries (e.g. the ones having to do with the JDK itself and its extensions)
+                    must be included in the module <code class="code" data-lang="Java">bootclasspath</code>.
+                    So, such libraries must appear in the list before the JDK.</p>
+                <a name="d821759e75"></a><p>
+                    The use of such libraries, however, may be necessary in a very limited number of special cases.
+                    Thus, for the most of your modules,
+                    the JDK will (and should) be the first item in the list of dependencies.</p></li></ul>
+    <a name="d821759e79"></a><h2>Dependencies on other modules</h2>
+        <a name="d821759e81"></a><p>
+            If a module (module A) depends on another module (module B),
+            IntelliJ IDEA assumes that:</p>
+        <ul class="list _ul"><li class="list__item"><a name="d821759e86"></a>
+                The sources of module A depend on the sources in module B and don't depend on its test sources.</li><li class="list__item"><a name="d821759e89"></a>
+                The test sources of module A depend on the sources and the test sources of module B.</li></ul>
+    <div class="navigation-links _bottom"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="library.html">Library</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content">```
+                <div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d821759e110"></a><a href="analyzing-applications.html"><span>Analyzing Applications</span></a></li><li class="list__item"><a name="d821759e112"></a><a href="configuring-module-dependencies-and-libraries.html"><span>Configuring Module Dependencies and Libraries</span></a></li></ul></div><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d821759e117"></a><a href="dependency-viewer.html"><span>Dependency Viewer</span></a></li><li class="list__item"><a name="d821759e119"></a><a href="duplicates-tool-window.html"><span>Duplicates Tool Window</span></a></li><li class="list__item"><a name="d821759e121"></a><a href="dependencies-tab.html"><span>Dependencies Tab</span></a></li></ul></div><div class="seealso__col"><h3>Concepts:</h3><ul class="list"><li class="list__item"><a name="d821759e101"></a><a href="module.html"><span>Module</span></a></li><li class="list__item"><a name="d821759e103"></a><a href="library.html"><span>Library</span></a></li><li class="list__item"><a name="d821759e105"></a><a href="dsm-analysis.html"><span>DSM Analysis</span></a></li></ul></div></div></section><div class="last-modified" data-swiftype-index="false">Last modified: 21 March 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

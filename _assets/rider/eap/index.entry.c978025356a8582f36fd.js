@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[425],{"20nG":function(n,o,e){var a=e("KI45")(e("V93b")),s=e("Am66"),c=e("pF6c");e("y4GL"),s.domReady((function(){a.default.create(".js-next-releases",{code:c.rider,showToolboxBanner:!0,displayDownloads:!0})}))},424:function(n,o,e){e("ctTR"),n.exports=e("20nG")}},[[424,0]]]);
+//# sourceMappingURL=index.entry.062dfb641dea6c2cf734.js.map

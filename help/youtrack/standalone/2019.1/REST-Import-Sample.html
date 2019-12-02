@@ -1,0 +1,605 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="/help/app/v2/analytics.js"></script><meta charset="UTF-8"><meta name="robots" content="noindex"><title>REST Import Sample - Help | YouTrack Standalone</title><link rel="stylesheet" href="/help/app/v2/app.css"></head><body data-id="REST-Import-Sample"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack Standalone Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>YouTrack Standalone 2019.1 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="REST-Import-Sample" id="REST-Import-Sample.xml">REST Import Sample</h1>   <ul class="list _links" data-skip-index="skip"></ul>   <a name="Login"></a>   <h3 id="e52a66a3">Login</h3>            <b id="ca5d2204">Request</b>   <div class="code-block" data-lang="none">
+POST https://example.com/youtrack/rest/user/login
+Content-Length: 24
+Connection: keep-alive
+Content-Type: application/x-www-form-urlencoded
+
+login=root&amp;password=root
+</div>            <b id="b312b51b">Response</b>   <div class="code-block" data-lang="none">
+HTTP/1.1 200 OK
+Expires: Thu, 01-Jan-1970 00:00:00 GMT
+Set-Cookie: JSESSIONID=2h2curh13q3p11s564124l5jm;Path=/
+Set-Cookie: jetbrains.charisma.main.security.PRINCIPAL=NDgxMzQ5NGQxMzdlMTYzMWJiYTM
+wMWQ1YWNhYjZlN2JiN2FhNzRjZTExODVkNDU2NTY1ZWY1MWQ3Mzc2NzdiMjpyb290;Path=/;Expires=Thu, 07-Apr-2011 13:53:29 GMT
+Content-Type: application/xml;charset=UTF-8
+Transfer-Encoding: chunked
+
+&lt;login&gt;ok&lt;/login&gt;
+</div>   <p id="eb13f322">There is no line break in the value of "Set-Cookie" header. It is added here to fix layout overflow.</p>   <a name="Import_users"></a>   <h3 id="df6d4ea4">Import users</h3>            <b id="f6644955">Request</b>   <div class="code-block" data-lang="none">
+PUT https://example.com/youtrack/rest/import/users
+Content-Length: 904
+Connection: keep-alive
+Content-Type: application/xml
+Cookie: $Version=0; JSESSIONID=2h2curh13q3p11s564124l5jm; $Path=/; jetbrains.charisma.main.security.PRINCIPAL=NDgx
+MzQ5NGQxMzdlMTYzMWJiYTMwMWQ1YWNhYjZlN2JiN2FhNzRjZTExODVkNDU2NTY1ZWY1MWQ3Mzc2NzdiMjpyb290; $Path=/
+
+&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+&lt;list&gt;
+  &lt;user login="lenin" fullName="Ulyanov Vladimir Ilyich" email="lenin@mavzoley.su"/&gt;
+  &lt;user login="stalin" fullName="Dzhugashvili Ioseb Besarionis" email="stalin@necropolis.cremlin.su"/&gt;
+  &lt;user login="malenkov" fullName="Georgy Maximilianovich Malenkov" email="malenkov@kuntsevo.msk.ru"/&gt;
+  &lt;user login="khrushchev" fullName="Khrushchev Nikita Sergeyevich" email="khrushchev@novodevichy.msk.ru"/&gt;
+  &lt;user login="brezhnev" fullName="Brezhnev Leonid Ilyich" email="brezhnev@necropolis.cremlin.su"/&gt;
+  &lt;user login="andropov" fullName="Andropov Yuri Vladimirovich" email="andropov@necropolis.cremlin.su"/&gt;
+  &lt;user login="chernenko" fullName="Chernenko Konstantin Ustinovich" email="chernenko@necropolis.cremlin.su"/&gt;
+  &lt;user login="gorbachev" fullName="Gorbachev Mikhail Sergeyevich" email="gorbi@zaria.phoros.ua"
+        jabber="gorbi@zaria.phoros.ua"/&gt;
+&lt;/list&gt;
+</div>   <p id="f4deb9e9">There is no line break in the value of "Cookie" header. It is added here to fix layout overflow.</p>            <b id="8256527f">Response</b>   <div class="code-block" data-lang="none">
+HTTP/1.1 200 OK
+Content-Type: application/xml;charset=UTF-8
+Content-Length: 379
+
+&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+&lt;importReport&gt;
+  &lt;item imported="true" id="lenin"/&gt;
+  &lt;item imported="true" id="stalin"/&gt;
+  &lt;item imported="true" id="malenkov"/&gt;
+  &lt;item imported="true" id="khrushchev"/&gt;
+  &lt;item imported="true" id="brezhnev"/&gt;
+  &lt;item imported="true" id="andropov"/&gt;
+  &lt;item imported="true" id="chernenko"/&gt;
+  &lt;item imported="true" id="gorbachev"/&gt;
+&lt;/importReport&gt;
+</div>   <a name="Create_project"></a>   <h3 id="bd60e626">Create project</h3>            <b id="f266c4fc">Request</b>   <div class="code-block" data-lang="none">
+PUT https://example.com/youtrack/rest/admin/project/CMN?projectName=Communism&amp;projectLeadLogin=lenin&amp;description=You+Know
+Content-Length: 0
+Connection: keep-alive
+Cookie: $Version=0; JSESSIONID=2h2curh13q3p11s564124l5jm; $Path=/; jetbrains.charisma.main.security.PRINCIPAL=NDg...
+</div>   <p id="2a5c27d8">Here and further "Cookie" header is cut.</p>            <b id="e82789d1">Response</b>   <div class="code-block" data-lang="none">
+HTTP/1.1 201 Created
+Content-Type: application/xml;charset=UTF-8
+Location: https://example.com/youtrack/charisma/rest/admin/project/CMN
+Content-Length: 0
+</div>   <a name="Add_first_subsystem"></a>   <h3 id="5230f600">Add first subsystem</h3>            <b id="15b5f489">Request</b>   <div class="code-block" data-lang="none">
+PUT https://example.com/youtrack/rest/admin/project/CMN/subsystem/Revolution?defaultAssignee=lenin
+Content-Length: 0
+Connection: keep-alive
+Cookie: $Version=0; JSESSIONID=2h2curh13q3p11s564124l5jm; $Path=/; jetbrains.charisma.main.security.PRINCIPAL=NDg...
+</div>            <b id="3d7346fb">Response</b>   <div class="code-block" data-lang="none">
+HTTP/1.1 201 Created
+Content-Type: application/xml;charset=UTF-8
+Location: https://example.com/youtrack/charisma/rest/admin/project/CMN/subsystem/Revolution
+Content-Length: 0
+</div>   <a name="Add_second_subsystem"></a>   <h3 id="98f13dea">Add second subsystem</h3>            <b id="d4cb9f3e">Request</b>   <div class="code-block" data-lang="none">
+PUT https://example.com/youtrack/rest/admin/project/CMN/subsystem/Collectivization?defaultAssignee=stalin
+Content-Length: 0
+Connection: keep-alive
+Cookie: $Version=0; JSESSIONID=2h2curh13q3p11s564124l5jm; $Path=/; jetbrains.charisma.main.security.PRINCIPAL=NDg...
+</div>            <b id="9b104c99">Response</b>   <div class="code-block" data-lang="none">
+HTTP/1.1 201 Created
+Content-Type: application/xml;charset=UTF-8
+Location: https://example.com/youtrack/charisma/rest/admin/project/CMN/subsystem/Collectivization
+Content-Length: 0
+</div>   <a name="Add_first_version"></a>   <h3 id="985fde91">Add first version</h3>            <b id="e49e3254">Request</b>   <div class="code-block" data-lang="none">
+PUT https://example.com/youtrack/rest/admin/project/CMN/version/War%20Communism?releaseDate=-1539430807&amp;isReleased=true
+Content-Length: 0
+Connection: keep-alive
+Cookie: $Version=0; JSESSIONID=2h2curh13q3p11s564124l5jm; $Path=/; jetbrains.charisma.main.security.PRINCIPAL=NDg...
+</div>            <b id="58caf1d6">Response</b>   <div class="code-block" data-lang="none">
+HTTP/1.1 201 Created
+Content-Type: application/xml;charset=UTF-8
+Location: https://example.com/youtrack/charisma/rest/admin/project/CMN/version/War+Communism
+Content-Length: 0
+</div>   <a name="Add_second_version"></a>   <h3 id="43c310b7">Add second version</h3>            <b id="7e1fc7f5">Request</b>   <div class="code-block" data-lang="none">
+PUT https://example.com/youtrack/rest/admin/project/CMN/version/NEP?releaseDate=-1328010007&amp;isReleased=true&amp;isArchived=true
+Content-Length: 0
+Connection: keep-alive
+Cookie: $Version=0; JSESSIONID=2h2curh13q3p11s564124l5jm; $Path=/; jetbrains.charisma.main.security.PRINCIPAL=NDg...
+</div>            <b id="195b9c6c">Response</b>   <div class="code-block" data-lang="none">
+HTTP/1.1 201 Created
+Content-Type: application/xml;charset=UTF-8
+Location: https://example.com/youtrack/charisma/rest/admin/project/CMN/version/NEP
+Content-Length: 0
+</div>   <a name="Add_third_version"></a>   <h3 id="1dc5d2d2">Add third version</h3>            <b id="8facfa30">Request</b>   <div class="code-block" data-lang="none">
+PUT https://example.com/youtrack/rest/admin/project/CMN/version/Industrialization
+Content-Length: 0
+Connection: keep-alive
+Cookie: $Version=0; JSESSIONID=2h2curh13q3p11s564124l5jm; $Path=/; jetbrains.charisma.main.security.PRINCIPAL=NDg...
+</div>            <b id="b743e3b1">Response</b>   <div class="code-block" data-lang="none">
+HTTP/1.1 201 Created
+Content-Type: application/xml;charset=UTF-8
+Location: https://example.com/youtrack/charisma/rest/admin/project/CMN/version/Industrialization
+Content-Length: 0
+</div>   <a name="Create_integer_custom_field"></a>   <h3 id="5a9fe081">Create integer custom field</h3>            <b id="f318f9bf">Request</b>   <div class="code-block" data-lang="none">
+PUT https://example.com/youtrack/rest/admin/customfield/field/victims?typeName=integer&amp;defaultVisibility=false
+Content-Length: 0
+Connection: keep-alive
+Cookie: $Version=0; JSESSIONID=2h2curh13q3p11s564124l5jm; $Path=/; jetbrains.charisma.main.security.PRINCIPAL=NDg...
+</div>            <b id="fe9f9844">Response</b>   <div class="code-block" data-lang="none">
+HTTP/1.1 201 Created
+Content-Type: application/xml;charset=UTF-8
+Location: https://example.com/youtrack/charisma/rest/admin/customfield/field/victims
+Content-Length: 0
+</div>   <a name="Attach_integer_custom_field_to_the_project"></a>   <h3 id="5bb79be2">Attach integer custom field to the project</h3>            <b id="f6524619">Request</b>   <div class="code-block" data-lang="none">
+PUT https://example.com/youtrack/rest/admin/project/CMN/customfield/victims?emptyFieldText=unknown
+Content-Length: 0
+Connection: keep-alive
+Cookie: $Version=0; JSESSIONID=2h2curh13q3p11s564124l5jm; $Path=/; jetbrains.charisma.main.security.PRINCIPAL=NDg...
+</div>            <b id="33a35cf2">Response</b>   <div class="code-block" data-lang="none">
+HTTP/1.1 201 Created
+Content-Type: application/xml;charset=UTF-8
+Location: https://example.com/youtrack/charisma/rest/admin/project/CMN/customfield/victims
+Content-Length: 0
+</div>   <a name="Create_enumeration_custom_field"></a>   <h3 id="64cc188a">Create enumeration custom field</h3>            <b id="1a9b2d51">Request</b>   <div class="code-block" data-lang="none">
+PUT https://example.com/youtrack/rest/admin/customfield/field/party?typeName=enum[1]&amp;defaultVisibility=true
+Content-Length: 0
+Connection: keep-alive
+Cookie: $Version=0; JSESSIONID=2h2curh13q3p11s564124l5jm; $Path=/; jetbrains.charisma.main.security.PRINCIPAL=NDg...
+</div>            <b id="6c5ab09e">Response</b>   <div class="code-block" data-lang="none">
+HTTP/1.1 201 Created
+Content-Type: application/xml;charset=UTF-8
+Location: https://example.com/youtrack/charisma/rest/admin/customfield/field/party
+Content-Length: 0
+</div>   <a name="Create_enumeration_values_bundle"></a>   <h3 id="494c27a5">Create enumeration values bundle</h3>            <b id="d0b0d4fb">Request</b>   <div class="code-block" data-lang="none">
+PUT https://example.com/youtrack/rest/admin/customfield/bundle
+Content-Length: 320
+Connection: keep-alive
+Content-Type: application/xml
+Cookie: $Version=0; JSESSIONID=2h2curh13q3p11s564124l5jm; $Path=/; jetbrains.charisma.main.security.PRINCIPAL=NDg...
+
+&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+&lt;enumeration name="RussianCommunistParties"&gt;
+  &lt;value&gt;РСДРП 1898 - 1912&lt;/value&gt;
+  &lt;value&gt;РСДРП (б) 1912 - 1917&lt;/value&gt;
+  &lt;value&gt;РКП (б) 1918 - 1925&lt;/value&gt;
+  &lt;value&gt;ВКП (б) 1925 - 1952&lt;/value&gt;
+  &lt;value&gt;КПСС 1952 - 1993&lt;/value&gt;
+&lt;/enumeration&gt;
+</div>            <b id="a1af2ed3">Response</b>   <div class="code-block" data-lang="none">
+HTTP/1.1 201 Created
+Content-Type: application/xml;charset=UTF-8
+Location: https://example.com/youtrack/charisma/rest/admin/customfield/type/RussianCommunistParties
+Content-Length: 0
+</div>   <a name="Attach_enumeration_custom_field_to_the_project"></a>   <h3 id="d11cce8b">Attach enumeration custom field to the project</h3>            <b id="b32a9a9a">Request</b>   <div class="code-block" data-lang="none">
+PUT https://example.com/youtrack/rest/admin/project/CMN/customfield/party?bundle=RussianCommunistParties
+Content-Length: 0
+Connection: keep-alive
+Cookie: $Version=0; JSESSIONID=2h2curh13q3p11s564124l5jm; $Path=/; jetbrains.charisma.main.security.PRINCIPAL=NDg...
+</div>            <b id="f3670861">Response</b>   <div class="code-block" data-lang="none">
+HTTP/1.1 201 Created
+Content-Type: application/xml;charset=UTF-8
+Location: https://example.com/youtrack/charisma/rest/admin/project/CMN/customfield/party
+Content-Length: 0
+</div>   <a name="Import_first_issues_package"></a>   <h3 id="16336161">Import first issues package</h3>   <p id="78a77196">In the real life issue package will contain more then two issues.</p>            <b id="17ff57f7">Request</b>   <div class="code-block" data-lang="none">
+PUT https://example.com/youtrack/rest/import/CMN/issues
+Content-Length: 3155
+Connection: keep-alive
+Content-Type: application/xml
+Cookie: $Version=0; JSESSIONID=2h2curh13q3p11s564124l5jm; $Path=/; jetbrains.charisma.main.security.PRINCIPAL=NDg...
+
+&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+&lt;issues&gt;
+&lt;issue&gt;
+    &lt;field name="numberInProject"&gt;
+    &lt;value&gt;1917&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="summary"&gt;
+    &lt;value&gt;Exterminate tsar&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="description"&gt;
+    &lt;value&gt;The Russian Revolution is the collective term for the series of revolutions in Russia in 1917, which
+    destroyed the Tsarist autocracy and led to the creation of the Soviet Union. In the first revolution of
+    February 1917 (March in the Gregorian calendar), the Tsar was deposed and replaced by a Provisional government.
+    In the second revolution, during October, the Provisional Government was removed and replaced with
+    a Bolshevik (Communist) government.&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="created"&gt;
+    &lt;value&gt;1149678852000&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="updated"&gt;
+    &lt;value&gt;1159374446000&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="updaterName"&gt;
+    &lt;value&gt;stalin&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="resolved"&gt;
+    &lt;value&gt;1260367510059&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="priority"&gt;
+    &lt;value&gt;1&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="type"&gt;
+    &lt;value&gt;Task&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="state"&gt;
+    &lt;value&gt;Fixed&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="subsystem"&gt;
+    &lt;value&gt;Revolution&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="fixedVersion"&gt;
+    &lt;value&gt;War Communism&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="assigneeName"&gt;
+    &lt;value&gt;lenin&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="reporterName"&gt;
+    &lt;value&gt;lenin&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="fixedInBuild"&gt;
+    &lt;value&gt;Next build&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="victims"&gt;
+    &lt;value&gt;11&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="party"&gt;
+    &lt;value&gt;РСДРП (б) 1912 - 1917&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;comment author="stalin" text="It is enough that the people know there was an election. The people who cast the
+votes decide nothing. The people who count the votes decide everything." created="1267030230127"/&gt;
+    &lt;comment author="khrushchev" text="Support by United States rulers is rather in the nature of the support that
+the rope gives to a hanged man." created="1267030238721" updated="1267030230127"/&gt;
+&lt;/issue&gt;
+&lt;issue&gt;
+    &lt;field name="numberInProject"&gt;
+    &lt;value&gt;1928&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="summary"&gt;
+    &lt;value&gt;Implement collectivization&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="created"&gt;
+    &lt;value&gt;1149678852000&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="priority"&gt;
+    &lt;value&gt;1&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="type"&gt;
+    &lt;value&gt;Feature&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="state"&gt;
+    &lt;value&gt;Fixed&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="assigneeName"&gt;
+    &lt;value&gt;stalin&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="reporterName"&gt;
+    &lt;value&gt;stalin&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="subsystem"&gt;
+    &lt;value&gt;Collectivization&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="fixedVersion"&gt;
+    &lt;value&gt;Industrialization&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="victims"&gt;
+    &lt;value&gt;1300000&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="party"&gt;
+    &lt;value&gt;ВКП (б) 1925 - 1952&lt;/value&gt;
+    &lt;/field&gt;
+&lt;/issue&gt;
+&lt;/issues&gt;
+</div>            <b id="01d3b7b8">Response</b>   <div class="code-block" data-lang="none">
+HTTP/1.1 200 OK
+Content-Type: application/xml;charset=UTF-8
+Content-Length: 150
+
+&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+&lt;importReport&gt;
+  &lt;item imported="true" id="1917"/&gt;
+  &lt;item imported="true" id="1928"/&gt;
+&lt;/importReport&gt;
+</div>   <a name="Try_to_import_second_issues_package_(test_mode)"></a>   <h3 id="3b7e7062">Try to import second issues package (test mode)</h3>   <p id="3c9f40cc">Import attempt in the test mode. No issues are actually saved.</p>            <b id="a98b05f6">Request</b>   <div class="code-block" data-lang="none">
+PUT https://example.com/youtrack/rest/import/CMN/issues?test=true
+Content-Length: 3125
+Connection: keep-alive
+Content-Type: application/xml
+Cookie: $Version=0; JSESSIONID=2h2curh13q3p11s564124l5jm; $Path=/; jetbrains.charisma.main.security.PRINCIPAL=NDg...
+
+&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+&lt;issues&gt;
+  &lt;issue&gt;
+    &lt;field name="numberInProject"&gt;
+    &lt;value&gt;1917&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="summary"&gt;
+    &lt;value&gt;Exterminate tsar&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="description"&gt;
+    &lt;value&gt;The Russian Revolution is the collective term for the series of revolutions in Russia in 1917, which
+    destroyed the Tsarist autocracy and led to the creation of the Soviet Union. In the first revolution of February
+    1917 (March in the Gregorian calendar), the Tsar was deposed and replaced by a Provisional government. In the
+    second revolution, during October, the Provisional Government was removed and replaced with a Bolshevik
+    (Communist) government.
+    &lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="created"&gt;
+    &lt;value&gt;1149678852000&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="updated"&gt;
+    &lt;value&gt;1159374446000&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="updaterName"&gt;
+    &lt;value&gt;stalin&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="resolved"&gt;
+    &lt;value&gt;1260367510059&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="priority"&gt;
+    &lt;value&gt;1&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="type"&gt;
+    &lt;value&gt;Task&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="state"&gt;
+    &lt;value&gt;Fixed&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="subsystem"&gt;
+    &lt;value&gt;Revolution&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="fixedVersion"&gt;
+    &lt;value&gt;War Communism&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="assigneeName"&gt;
+    &lt;value&gt;lenin&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="reporterName"&gt;
+    &lt;value&gt;lenin&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="fixedInBuild"&gt;
+    &lt;value&gt;Next build&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="Build"&gt;
+    &lt;value&gt;Some Read Only&lt;/value&gt;
+    &lt;value&gt;Value&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="scf"&gt;
+    &lt;value&gt;1260317512059&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="cf"&gt;
+    &lt;value&gt;1&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;comment author="who!" text="It is enough that the people know there was an election. The people who cast the votes
+decide nothing. The people who count the votes decide everything." created="1267030230127"/&gt;
+    &lt;comment author="root" text="Support by United States rulers is rather in the nature of the support that the rope
+gives to a hanged man." created="1267030238721" updated="1267030230127"/&gt;
+  &lt;/issue&gt;
+  &lt;issue&gt;
+    &lt;field name="numberInProject"&gt;
+    &lt;value&gt;1987&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="summary"&gt;
+    &lt;value&gt;Perestroyka&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="description"&gt;
+    &lt;value&gt;# Reduce GDP
+    # Split USSR into separate states
+    # Reduce population
+    &lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="created"&gt;
+    &lt;value&gt;1149678852000&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="priority"&gt;
+    &lt;value&gt;1&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="type"&gt;
+    &lt;value&gt;Bug&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="state"&gt;
+    &lt;value&gt;Open&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="assigneeName"&gt;
+    &lt;value&gt;gorbachev&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="reporterName"&gt;
+    &lt;value&gt;gorbachev&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="party"&gt;
+    &lt;value&gt;КПСС 1952 - 1993&lt;/value&gt;
+    &lt;/field&gt;
+  &lt;/issue&gt;
+&lt;/issues&gt;
+</div>            <b id="50e04ae4">Response</b>   <div class="code-block" data-lang="none">
+HTTP/1.1 400 Bad Request
+Content-Type: application/xml;charset=UTF-8
+Content-Length: 445
+
+&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+&lt;importReport&gt;
+  &lt;item imported="false" id="1917"&gt;
+    &lt;error fieldName="numberInProject" value="1917"&gt;Value is not unique&lt;/error&gt;
+    &lt;error fieldName="comment.author" value="who!"&gt;Value is unknown&lt;/error&gt;
+    &lt;error fieldName="Build"&gt;Field is unknown&lt;/error&gt;
+    &lt;error fieldName="scf"&gt;Field is unknown&lt;/error&gt;
+    &lt;error fieldName="cf"&gt;Field is unknown&lt;/error&gt;
+  &lt;/item&gt;
+  &lt;item imported="true" id="1987"/&gt;
+&lt;/importReport&gt;
+</div>   <a name="Import_second_issues_package_(with_errors)"></a>   <h3 id="cb3dfa92">Import second issues package (with errors)</h3>   <p id="5d44a904">Only one of two provided issues is actually imported.</p>            <b id="da6be088">Request</b>   <div class="code-block" data-lang="none">
+PUT https://example.com/youtrack/rest/import/CMN/issues
+Content-Length: 3125
+Connection: keep-alive
+Content-Type: application/xml
+Cookie: $Version=0; JSESSIONID=2h2curh13q3p11s564124l5jm; $Path=/; jetbrains.charisma.main.security.PRINCIPAL=NDg...
+
+&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+&lt;issues&gt;
+  &lt;issue&gt;
+    &lt;field name="numberInProject"&gt;
+    &lt;value&gt;1917&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="summary"&gt;
+    &lt;value&gt;Exterminate tsar&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="description"&gt;
+    &lt;value&gt;The Russian Revolution is the collective term for the series of revolutions in Russia in 1917, which
+    destroyed the Tsarist autocracy and led to the creation of the Soviet Union. In the first revolution of February
+    1917 (March in the Gregorian calendar), the Tsar was deposed and replaced by a Provisional government. In the
+    second revolution, during October, the Provisional Government was removed and replaced with a Bolshevik
+    (Communist) government.
+    &lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="created"&gt;
+    &lt;value&gt;1149678852000&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="updated"&gt;
+    &lt;value&gt;1159374446000&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="updaterName"&gt;
+    &lt;value&gt;stalin&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="resolved"&gt;
+    &lt;value&gt;1260367510059&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="priority"&gt;
+    &lt;value&gt;1&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="type"&gt;
+    &lt;value&gt;Task&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="state"&gt;
+    &lt;value&gt;Fixed&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="subsystem"&gt;
+    &lt;value&gt;Revolution&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="fixedVersion"&gt;
+    &lt;value&gt;War Communism&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="assigneeName"&gt;
+    &lt;value&gt;lenin&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="reporterName"&gt;
+    &lt;value&gt;lenin&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="fixedInBuild"&gt;
+    &lt;value&gt;Next build&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="Build"&gt;
+    &lt;value&gt;Some Read Only&lt;/value&gt;
+    &lt;value&gt;Value&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="scf"&gt;
+    &lt;value&gt;1260317512059&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="cf"&gt;
+    &lt;value&gt;1&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;comment author="who!" text="It is enough that the people know there was an election. The people who cast the votes
+decide nothing. The people who count the votes decide everything." created="1267030230127"/&gt;
+    &lt;comment author="root" text="Support by United States rulers is rather in the nature of the support that the rope
+gives to a hanged man." created="1267030238721" updated="1267030230127"/&gt;
+  &lt;/issue&gt;
+  &lt;issue&gt;
+    &lt;field name="numberInProject"&gt;
+    &lt;value&gt;1987&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="summary"&gt;
+    &lt;value&gt;Perestroyka&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="description"&gt;
+    &lt;value&gt;# Reduce GDP
+    # Split USSR into separate states
+    # Reduce population
+    &lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="created"&gt;
+    &lt;value&gt;1149678852000&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="priority"&gt;
+    &lt;value&gt;1&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="type"&gt;
+    &lt;value&gt;Bug&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="state"&gt;
+    &lt;value&gt;Open&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="assigneeName"&gt;
+    &lt;value&gt;gorbachev&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="reporterName"&gt;
+    &lt;value&gt;gorbachev&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="party"&gt;
+    &lt;value&gt;КПСС 1952 - 1993&lt;/value&gt;
+    &lt;/field&gt;
+  &lt;/issue&gt;
+&lt;/issues&gt;
+</div>            <b id="8cde8e3d">Response</b>   <div class="code-block" data-lang="none">
+HTTP/1.1 400 Bad Request
+Content-Type: application/xml;charset=UTF-8
+Content-Length: 445
+
+&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+&lt;importReport&gt;
+  &lt;item imported="false" id="1917"&gt;
+    &lt;error fieldName="numberInProject" value="1917"&gt;Value is not unique&lt;/error&gt;
+    &lt;error fieldName="comment.author" value="who!"&gt;Value is unknown&lt;/error&gt;
+    &lt;error fieldName="Build"&gt;Field is unknown&lt;/error&gt;
+    &lt;error fieldName="scf"&gt;Field is unknown&lt;/error&gt;
+    &lt;error fieldName="cf"&gt;Field is unknown&lt;/error&gt;
+  &lt;/item&gt;
+  &lt;item imported="true" id="1987"/&gt;
+&lt;/importReport&gt;
+</div>   <a name="Create_issue_link_type"></a>   <h3 id="6f8657d7">Create issue link type</h3>            <b id="9bd0aac2">Request</b>   <div class="code-block" data-lang="none">
+PUT https://example.com/youtrack/rest/admin/issueLinkType/Rescind?outwardName=rescinds&amp;inwardName=rescinded+by&amp;directed=true
+Content-Length: 0
+Connection: keep-alive
+Cookie: $Version=0; JSESSIONID=2h2curh13q3p11s564124l5jm; $Path=/; jetbrains.charisma.main.security.PRINCIPAL=NDg...
+</div>            <b id="8af0262b">Response</b>   <div class="code-block" data-lang="none">
+HTTP/1.1 201 Created
+Content-Type: application/xml;charset=UTF-8
+Location: https://example.com/youtrack/charisma/rest/admin/issueLinkType/Rescind
+Content-Length: 0
+</div>   <a name="Import_links"></a>   <h3 id="f6b7985c">Import links</h3>            <b id="03f7a395">Request</b>   <div class="code-block" data-lang="none">
+PUT https://example.com/youtrack/rest/import/links
+Content-Length: 199
+Connection: keep-alive
+Content-Type: application/xml
+Cookie: $Version=0; JSESSIONID=2h2curh13q3p11s564124l5jm; $Path=/; jetbrains.charisma.main.security.PRINCIPAL=NDg...
+
+&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+&lt;list&gt;
+  &lt;link typeName="depend" source="CMN-1928" target="CMN-1917"/&gt;
+  &lt;link typeName="rescind" source="CMN-1987" target="CMN-1928"/&gt;
+&lt;/list&gt;
+</div>            <b id="2e24ea40">Response</b>   <div class="code-block" data-lang="none">
+HTTP/1.1 200 OK
+Content-Type: application/xml;charset=UTF-8
+Content-Length: 130
+
+&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+&lt;importReport&gt;
+  &lt;item imported="true"/&gt;
+  &lt;item imported="true"/&gt;
+&lt;/importReport&gt;
+</div>   <a name="Upload_attachment"></a>   <h3 id="0097926f">Upload attachment</h3>            <b id="088efe70">Request</b>   <div class="code-block" data-lang="none">
+POST https://example.com/youtrack/rest/issue/CMN-1917/attachment?authorLogin=gorbachev&amp;created=1149678852000
+Content-Length: 7839
+Connection: keep-alive
+Content-Type: multipart/form-data; boundary=---------------------------7d159c1302d0y0
+Cookie: $Version=0; JSESSIONID=1eufd2pvosy59101uv1zr0bi1y; $Path=/; jetbrains.charisma.main.security.PRINCIPAL=NDg...
+
+-----------------------------7d159c1302d0y0
+Content-Disposition: form-data; name="flag.png"; filename="flag.png"
+Content-Type: image/png
+Content-Transfer-Encoding: binary
+
+&lt;actual file content, not shown here&gt;
+-----------------------------7d159c1302d0y0--
+</div>            <b id="c1be9659">Response</b>   <div class="code-block" data-lang="none">
+HTTP/1.1 201 Created
+Content-Type: application/xml;charset=UTF-8
+Location: https://example.com/youtrack/rest/issue/CMN-1917/attachment/_persistent/flag.png?file=45-50&amp;v=0&amp;c=true
+Content-Length: 0
+</div><div class="last-modified" data-skip-index="skip">Last modified: 8 July 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="Import-Links.html">Import Links</a><a class="navigation-links__next" href="Import-Attachment-to-an-Issue.html">Import Attachment to an Issue</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="/help/app/v2/app.js"></script></body></html>

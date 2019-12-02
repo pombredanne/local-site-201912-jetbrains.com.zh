@@ -1,0 +1,221 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"></meta><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><title>WebStorm 2016.1 Help :: Running and Debugging Node.js</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Running_and_Debugging_Node_JS"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search WebStorm Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>WebStorm 2016.1 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWindow</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="configuring-node-js-interpreters.html">Configuring Node.js Interpreters</a><a class="navigation-links__next" href="running-nodeunit-tests.html">Running Nodeunit Tests</a></div><h1>Running and Debugging Node.js</h1><a name="d211911e33"></a><p>
+        On this page:
+    </p><ul><li class="list__item"><a href="#d211911e38">Before You Start</a></li><li class="list__item"><a href="#d211911e63">Local and Remote Modes of Running or Debugging Node.js Applications</a></li><li class="list__item"><a href="#running">Running a Node.js Application</a></li><li class="list__item"><a href="#debugLocal">Debugging a Node.js Application Locally</a></li><li class="list__item"><a href="#remote_debugging">Debugging a Running Node.js Application</a></li><li class="list__item"><a href="#Node.js_run">Creating a Node.js Run/Debug Configuration</a></li><li class="list__item"><a href="#d211911e385">Enabling Live Editing During a Node.js Debugging Session</a></li><li class="list__item"><a href="#Node.js_remote_debug">Creating a Node.js Remote Debug Configuration.</a></li></ul><a name="d211911e38"></a><h2>Before You Start</h2>
+    <a name="d211911e40"></a><p>
+         
+         
+         
+             
+        Make sure the <a name="d7162e5450"></a><span class="emphasis">NodeJS</span> plugin is enabled.
+         
+        The plugin is bundled with WebStorm and activated by default.
+        If the plugin is not activated, enable it on the <a name="d7162e5458"></a><a href="plugins-2.html"><span>Plugins</span></a> page of the <a name="d7162e5460"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> as described in <a name="d7162e5462"></a><a href="enabling-and-disabling-plugins.html"><span>Enabling and Disabling Plugins</span></a>.
+     
+     
+         
+    </p>
+<a name="d211911e63"></a><h2>Local and Remote Modes of Running or Debugging Node.js Applications</h2>
+          <a name="d211911e65"></a><p>
+             <a name="d211911e67"></a><span class="emphasis">Running</span> a Node.js application in WebStorm  is supported only in the <a name="d211911e70"></a><span class="emphasis">local</span> mode.
+              This means that WebStorm itself starts the Node.js engine and the target application
+              according to a <a name="d211911e73"></a><a href="run-debug-configuration.html"><span>run configuration</span></a> and gets full control over the session.
+          </p>
+          <a name="d211911e77"></a><p>
+              <a name="d211911e79"></a><span class="emphasis">Debugging</span> can be performed in two modes:
+              <ul class="list _bullet"><li class="list__item"><a name="d211911e84"></a>
+                      Locally, with the Node.js engine started from WebStorm.
+                  </li><li class="list__item"><a name="d211911e87"></a>
+                      Remotely, when WebStorm connects to an already running Node.js application. This approach gives you the possibility to re-start a debugging session without re-starting the Node.js server.
+                  </li></ul>
+              In either case, the debugging session is initiated through a <a name="d211911e91"></a><a href="run-debug-configuration.html"><span>debug configuration</span></a> 
+          </p>
+          <a name="d211911e95"></a><p>
+              You can also  
+        configure the behaviour of the browser and enable debugging the client-side code of the application.  This functionality is provided through a <code class="code" data-lang="Java">JavaScript Debug</code> run configuration, so
+     
+               
+ 
+        technically, WebStorm creates separate run configurations for the server-side and the client-side code,
+        but you specify all your settings in one dedicated <a name="d9041e1100"></a><span class="emphasis">NodeJS</span> run configuration.
+     
+          </p>
+    <a name="running"></a><h2>Running a Node.js Application</h2>
+            <ol class="list _decimal"><li class="list__item"><a name="d211911e112"></a>
+                <a name="d211911e114"></a><a href="#Node.js_run"><span>Create a Node.js run configuration</span></a>.
+            </li><li class="list__item"><a name="d211911e118"></a>
+                To launch the application, select the run configuration from the list on the main tool bar
+                and then choose <a name="d211911e120"></a><span class="menupath">Run | Run &lt;configuration name&gt;</span> on the main menu or click the <a name="d211911e123"></a><span class="control">Run</span> toolbar button 
+                <img alt="run.png" width="11" height="14" title="run.png" src="/help/img/idea/2016.1/run.png" class="inline-icon-14">. The <a name="d211911e128"></a><a href="run-tool-window.html"><span>Run</span></a> tool window opens.
+ 
+            </li><li class="list__item"><a name="d211911e134"></a>
+                Open the browser of your choice and open the page with the URL address generated through the
+                <a name="d211911e136"></a><a href="http://nodejs.org/api/net.html#net_server_listen_port_host_backlog_callback" data-external="true"><span>server.listen</span></a> function
+                based on the <code class="code" data-lang="Java">port</code> and <code class="code" data-lang="Java">host</code> parameters.
+                The page shows the result of executing your Node.js application.
+            </li></ol>
+        <a name="debugLocal"></a><h2>Debugging a Node.js Application Locally</h2>
+            <ol class="list _decimal"><li class="list__item"><a name="d211911e152"></a>
+                Set the <a name="d211911e154"></a><a href="using-breakpoints.html"><span>breakpoints</span></a> in the Node.js code, where necessary.
+                 
+        At least one breakpoint is necessary otherwise the program will be just executed. If you want the debugging tool to stop at the first line of your code, set a breakpoint at the first line.
+     
+            </li><li class="list__item"><a name="d211911e160"></a>
+                <a name="d211911e162"></a><a href="#Node.js_run"><span>Create a Node.js run/debug configuration</span></a>.
+            </li><li class="list__item"><a name="d211911e166"></a>
+                To start a debugging session,
+                 
+        select the required debug configuration from the list on the main tool bar
+        and then choose <a name="d9041e1106"></a><span class="menupath">Run | Debug &lt;configuration name&gt;</span> on the main menu or click the <a name="d9041e1109"></a><span class="control">Debug</span> toolbar button
+        <img alt="debug.png" width="14" height="14" title="debug.png" src="/help/img/idea/2016.1/debug.png" class="inline-icon-14">.
+     
+            </li><li class="list__item"><a name="d211911e173"></a>
+                Open the browser of your choice and open the starting page of your application. Control over the debugging session returns to WebStorm.
+            </li><li class="list__item"><a name="d211911e177"></a>
+                Switch to WebStorm, where the controls of the <a name="d211911e179"></a><span class="control">Debug</span> tool window are now enabled.
+                Proceed with the debugging session <a name="d211911e182"></a><a href="stepping-through-the-program.html"><span>step through the breakpoints</span></a>, switch between frames, change values on-the-fly,
+                <a name="d211911e185"></a><a href="examining-suspended-program.html"><span>examine a suspended program</span></a>, <a name="d211911e188"></a><a href="evaluating-expressions.html"><span>evaluate expressions</span></a>, and <a name="d211911e191"></a><a href="adding-editing-and-removing-watches.html"><span>set watches</span></a>.
+            </li></ol>
+        <a name="remote_debugging"></a><h2>Debugging a Running Node.js Application</h2>
+
+ 
+                <a name="d211911e201"></a><p>
+                    With WebStorm, you can connect to an already running Node.js applications. The application can be started either on the same machine or on a <a name="d211911e203"></a><span class="emphasis">physically remote host</span>.
+                </p>
+                <a name="d211911e207"></a><p>
+                    When the application to debug is running on a <a name="d211911e209"></a><span class="emphasis">physically remote host</span>, you need to run a proxy or any other software that ensures port forwarding on the Node.js server.
+                    This is necessary because the debug port can open only on the <code class="code" data-lang="Java">localhost</code> network interface. The <code class="code" data-lang="Java">localhost</code> network interface cannot be accessed from another machine
+                    therefore WebStorm cannot connect to it upon initiating a debugging session.
+                </p>
+    <ol class="list _decimal"><li class="list__item"><a name="d211911e223"></a>
+                 
+                Make sure the application to debug has been launched in the target environment with the following parameters:
+                <code class="code" data-lang="Java">--debug-brk=&lt;port through which the debugger on the remote host interacts with the network interface which accepts external connections&gt;</code>
+                <a name="d211911e230"></a><p>Please note the following:</p>
+
+                    <ul class="list _bullet"><li class="list__item"><a name="d9041e4165"></a>
+            With the <code class="code" data-lang="Java">--debug-brk</code> option, the execution of the application suspends right after launch. This option allows you to debug the code executed on start.
+        </li><li class="list__item"><a name="d9041e4171"></a>
+            With the <code class="code" data-lang="Java">--debug</code> option, the code that has to be executed on the application start is executed whereupon the application waits for a debugger to connect to it.
+            This option is useful when you are not going to debug Node.js right now, but you want to debug it later.
+        </li></ul>
+
+            </li><li class="list__item"><a name="d211911e241"></a>
+                <a name="d211911e243"></a><a href="#Node.js_remote_debug"><span>Create a Node.js Remote Debug</span></a> configuration: in the <a name="d211911e246"></a><span class="control">Debug port</span> text box,
+                type the port number through which you will interact with the remote host according to the <a name="d211911e249"></a><span class="emphasis">server access configuration</span>,
+                see <a name="d211911e252"></a><a href="creating-a-remote-server-configuration.html"><span>Creating a Remote Server Configuration</span></a>.
+            </li><li class="list__item"><a name="d211911e255"></a>
+                With the application still running, launch the <a name="d211911e257"></a><span class="control">Node.js Remote Debug</span> configuration (select the configuration in the list
+                and click the <a name="d211911e260"></a><span class="control">Debug</span> toolbar button <img alt="debug.png" width="14" height="14" title="debug.png" src="/help/img/idea/2016.1/debug.png" class="inline-icon-14">).
+            </li><li class="list__item"><a name="d211911e267"></a>
+                In the <a name="d211911e269"></a><span class="control">Run</span> tool window, copy the URL address of the server and open the corresponding page in the browser.
+                Control over the debugging session returns to WebStorm.
+            </li><li class="list__item"><a name="d211911e273"></a>
+                Switch to WebStorm. In the <a name="d211911e275"></a><span class="control">Debug</span> tool window, <a name="d211911e278"></a><a href="stepping-through-the-program.html"><span>step through the breakpoints</span></a>, switch between frames, change values on-the-fly,
+                <a name="d211911e281"></a><a href="examining-suspended-program.html"><span>examine a suspended program</span></a>, <a name="d211911e284"></a><a href="evaluating-expressions.html"><span>evaluate expressions</span></a>, and <a name="d211911e287"></a><a href="adding-editing-and-removing-watches.html"><span>set watches</span></a>.
+            </li></ol>
+        <a name="Node.js_run"></a><h2>Creating a Node.js Run/Debug Configuration</h2>
+            <ol class="list _decimal"><li class="list__item"><a name="d7162e7823"></a>
+             
+            Choose <a name="d7162e7850"></a><span class="menupath">Run | Edit Configuration</span> on the main menu.
+            Alternatively, click <kbd data-default="Shift+Alt+F10" data-default_for_gnome="Shift+Alt+F10" data-default_for_kde="Shift+Alt+F10" data-default_for_xwin="Shift+Alt+F10" data-emacs="Alt+Shift+F10" data-visual_studio="Alt+Shift+F10" data-netbeans_6.5="N/A" data-eclipse="Shift+Alt+F10" data-mac_os_x_10.5_="&#x2303;&#x2325;R" data-mac_os_x="&#x2325;&#x21E7;F10" data-eclipse_mac_os_x="&#x2303;&#x2325;R" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Shift+Alt+F10</kbd>  and select <a name="d7162e7855"></a><span class="control">Edit Configuration</span>
+            from the pop-up menu.
+         
+        </li><li class="list__item"><a name="d7162e7828"></a>
+             
+        In the <a name="d7162e7836"></a><span class="control">Edit Configuration</span> dialog box, that opens, click the <a name="d7162e7839"></a><span class="control">Add New Configuration</span> toolbar button <img alt="add.png" width="12" height="12" title="add.png" src="/help/img/idea/2016.1/new.png" class="inline-icon-12">,
+        and choose <a name="d7162e7844"></a><span class="control">Node.js</span> on the context menu.
+     
+        </li><li class="list__item"><a name="d211911e302"></a>
+                In the <a name="d211911e304"></a><a href="run-debug-configuration-node-js.html"><span>Run/Debug Configuration: Node.js</span></a> dialog box, that opens, specify the following:
+                <ul class="list _bullet"><li class="list__item"><a name="d211911e309"></a>The name of the configuration.</li><li class="list__item"><a name="d211911e312"></a>
+                        In the <a name="d211911e314"></a><span class="control">Node Interpreter</span> field, specify the Node.js installation to use.
+                        Choose the local or remote interpreter from the drop-down list, or click <img alt="browseButton" width="15" height="15" title="browseButton" src="/help/img/idea/2016.1/browseButton.png" class="inline-icon-15"> and choose the interpreter
+                        in the dialog box that opens, or configure an interpreter as described in <a name="d211911e319"></a><a href="configuring-node-js-interpreters.html"><span>Configuring Node.js Interpreters</span></a>.
+                                                     </li><li class="list__item"><a name="d211911e324"></a>
+                        To enable <a name="d211911e326"></a><a href="#remote_debugging"><span>remote debugging</span></a> of the application, specify the following option in the <a name="d211911e329"></a><span class="control">Node parameters</span> text box:
+                        <code class="code" data-lang="Java">--debug-brk=&lt;port for connect to debugger remotely&gt;</code>
+                            <ul class="list _bullet"><li class="list__item"><a name="d9041e4165"></a>
+            With the <code class="code" data-lang="Java">--debug-brk</code> option, the execution of the application suspends right after launch. This option allows you to debug the code executed on start.
+        </li><li class="list__item"><a name="d9041e4171"></a>
+            With the <code class="code" data-lang="Java">--debug</code> option, the code that has to be executed on the application start is executed whereupon the application waits for a debugger to connect to it.
+            This option is useful when you are not going to debug Node.js right now, but you want to debug it later.
+        </li></ul>
+                    </li><li class="list__item"><a name="d211911e341"></a>In the <a name="d211911e343"></a><span class="control">JavaScript File</span> field, specify the location of the file to start running the Node.js application from.</li><li class="list__item"><a name="d211911e347"></a>If the file to run references any other files, specify their location in the <a name="d211911e349"></a><span class="control">Working directory</span> field.</li><li class="list__item"><a name="d211911e354"></a>
+                        If applicable, in the <a name="d211911e356"></a><span class="control">Application parameters</span> text box, specify the arguments to be passed to the application on start
+                        through the <a name="d211911e359"></a><a href="https://nodejs.org/api/process.html#process_process_argv" data-external="true"><span>process.argv</span></a> array.
+                    </li></ul>
+            </li><li class="list__item"><a name="d211911e365"></a>
+                If necessary,  
+        configure the behaviour of the browser and enable debugging the client-side code of the application.  This functionality is provided through a <code class="code" data-lang="Java">JavaScript Debug</code> run configuration, so
+     
+                 
+ 
+        technically, WebStorm creates separate run configurations for the server-side and the client-side code,
+        but you specify all your settings in one dedicated <a name="d9041e1100"></a><span class="emphasis">NodeJS</span> run configuration.
+     
+
+            </li><li class="list__item"><a name="d211911e377"></a>
+                Click <a name="d211911e379"></a><span class="control">OK</span>, when ready.
+            </li></ol>
+        <a name="d211911e385"></a><h2>Enabling Live Editing During a Node.js Debugging Session</h2>
+
+                <a name="d211911e387"></a><p>
+                    You can  
+        configure the behaviour of the browser and enable debugging the client-side code of the application.  This functionality is provided through a <code class="code" data-lang="Java">JavaScript Debug</code> run configuration, so
+     
+                     
+ 
+        technically, WebStorm creates separate run configurations for the server-side and the client-side code,
+        but you specify all your settings in one dedicated <a name="d9041e1100"></a><span class="emphasis">NodeJS</span> run configuration.
+     
+
+                </p>
+            <ol class="list _decimal"><li class="list__item"><a name="d211911e401"></a>
+                 
+            Choose <a name="d7162e7850"></a><span class="menupath">Run | Edit Configuration</span> on the main menu.
+            Alternatively, click <kbd data-default="Shift+Alt+F10" data-default_for_gnome="Shift+Alt+F10" data-default_for_kde="Shift+Alt+F10" data-default_for_xwin="Shift+Alt+F10" data-emacs="Alt+Shift+F10" data-visual_studio="Alt+Shift+F10" data-netbeans_6.5="N/A" data-eclipse="Shift+Alt+F10" data-mac_os_x_10.5_="&#x2303;&#x2325;R" data-mac_os_x="&#x2325;&#x21E7;F10" data-eclipse_mac_os_x="&#x2303;&#x2325;R" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Shift+Alt+F10</kbd>  and select <a name="d7162e7855"></a><span class="control">Edit Configuration</span>
+            from the pop-up menu.
+         
+            </li><li class="list__item"><a name="d211911e409"></a>
+                From the list, choose the <a name="d211911e411"></a><span class="emphasis">Node.js</span> run configuration to activate the Live Edit functionality in.
+                In the dialog box that opens, switch to the <a name="d211911e414"></a><span class="control">Browser / Live Edit</span> tab.
+            </li><li class="list__item"><a name="d211911e418"></a>
+                Select the <a name="d211911e420"></a><span class="control">After launch</span> check box
+                 
+        to have a browser started automatically after a debugging session is launched. Specify the browser to use in the drop-down list next to the check box.
+        <ul class="list _bullet"><li class="list__item"><a name="d7162e5601"></a>
+                To use the system default browser, choose <a name="d7162e5603"></a><span class="control">Default</span>.
+            </li><li class="list__item"><a name="d7162e5607"></a>
+                To use a custom browser, choose it from the list. Note that <a name="d7162e5609"></a><span class="emphasis">Live Edit</span> is fully supported only in Chrome.
+            </li><li class="list__item"><a name="d7162e5613"></a>
+                To configure browsers, click the <a name="d7162e5615"></a><span class="control">Browse</span> button <img alt="browseButton" width="15" height="15" title="browseButton" src="/help/img/idea/2016.1/browseButton.png" class="inline-icon-15"> and adjust the settings in the <a name="d7162e5620"></a><span class="control">Web Browsers</span> dialog box that opens.
+                For more information, see <a name="d7162e5623"></a><a href="configuring-browsers.html"><span>Configuring Browsers</span></a>.  
+            </li></ul>
+     
+            </li><li class="list__item"><a name="d211911e426"></a>
+                Select the <a name="d211911e428"></a><span class="control">With JavaScript debugger</span> check box to enable the JavaScript debugger in the selected browser and specify the URL address to open the application at.
+            </li></ol>
+        <a name="Node.js_remote_debug"></a><h2>Creating a Node.js Remote Debug Configuration.</h2>
+            <ol class="list _decimal"><li class="list__item"><a name="d211911e439"></a>
+                On the main menu, choose <a name="d211911e441"></a><span class="menupath">Run | Edit Configurations</span>.
+            </li><li class="list__item"><a name="d211911e445"></a>
+                In the <a name="d211911e447"></a><span class="control">Edit Configuration</span> dialog box, that opens, click the <a name="d211911e450"></a><span class="control">Add New Configuration</span> toolbar button <img alt="add.png" width="12" height="12" title="add.png" src="/help/img/idea/2016.1/new.png" class="inline-icon-12">,
+                and choose <a name="d211911e455"></a><span class="control">Node.js Remote Debug</span> on the context menu.
+            </li><li class="list__item"><a name="d211911e459"></a>
+                In the <a name="d211911e461"></a><a href="run-debug-configuration-node-js-remote-debug.html"><span>Run/Debug Configuration: Node.js Remote Debug</span></a> dialog box, that opens, specify the following:
+                <ul class="list _bullet"><li class="list__item"><a name="d211911e466"></a>The name of the configuration.</li><li class="list__item"><a name="d211911e469"></a>
+                        The host where the target application is running.
+                    </li><li class="list__item"><a name="d211911e472"></a>
+                        The port to connect to. Copy the port number from the information message in the <a name="d211911e474"></a><a href="run-tool-window.html"><span>Run</span></a> tool window that controls the running application.
+                    </li></ul>
+            </li><li class="list__item"><a name="d211911e480"></a>
+                Click <a name="d211911e482"></a><span class="control">OK</span>, when ready.
+            </li></ol>
+        <div class="navigation-links _bottom"><a class="navigation-links__prev" href="configuring-node-js-interpreters.html">Configuring Node.js Interpreters</a><a class="navigation-links__next" href="running-nodeunit-tests.html">Running Nodeunit Tests</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content"><div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d211911e499"></a><a href="node-js.html"><span>Node.js</span></a></li><li class="list__item"><a name="d211911e501"></a><a href="running.html"><span>Running</span></a></li><li class="list__item"><a name="d211911e505"></a><a href="debugging.html"><span>Debugging</span></a></li><li class="list__item"><a name="d211911e510"></a><a href="creating-and-editing-run-debug-configurations.html"><span>Creating and Editing Run/Debug Configurations</span></a></li></ul></div><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d211911e517"></a><a href="run-debug-configuration-node-js.html"><span>Run/Debug Configuration: Node JS</span></a></li><li class="list__item"><a name="d211911e519"></a><a href="run-debug-configuration-node-js-remote-debug.html"><span>Run/Debug Configuration: Node JS Remote Debug</span></a></li><li class="list__item"><a name="d211911e521"></a><a href="run-tool-window.html"><span>Run Tool Window</span></a></li><li class="list__item"><a name="d211911e525"></a><a href="debug-tool-window.html"><span>Debug Tool Window</span></a></li></ul></div><div class="seealso__col"><h3>Concepts:</h3><ul class="list"><li class="list__item"><a name="d211911e492"></a><a href="running-and-debugging.html"><span>Running and Debugging</span></a></li></ul></div></div></section><div class="last-modified">Last modified: 11 July 2016 </div></article><div id="disqus_thread"></div></div></section></main></div><script src="/help/app/app.js"></script></body></html>

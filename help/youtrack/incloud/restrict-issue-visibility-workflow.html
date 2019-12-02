@@ -1,0 +1,121 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta charset="UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="//resources.jetbrains.com/storage/help-app/v3/analytics.js"></script><title>Restrict Issue Visibility with Workflows - Help | YouTrack InCloud</title><link rel="stylesheet" href="//resources.jetbrains.com/storage/help-app/v3/app.css"></head><body data-id="restrict-issue-visibility-workflow" data-breadcrumbs="Administration.xml|Administration/Workflow-Guide.xml|Workflows/Workflow-Use-Cases.xml|Use Cases for Workflows/restrict-issue-visibility-workflow.xml|Restrict Issue Visibility with Workflows" data-main-title="Restrict Issue Visibility with Workflows"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack InCloud Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>YouTrack InCloud 2019.2 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="restrict-issue-visibility-workflow" id="restrict-issue-visibility-workflow.xml">Restrict Issue Visibility with Workflows</h1>    <p id="b8b671d5">You can use the permission scheme in YouTrack to restrict read access to issues in YouTrack.        Users who have <span class="control">Create Issue</span> permission but not <span class="control">Read Issue</span> permission in a project can only see the issues they create themselves.        However, this setup is very binary.        Users can either read and update only the issues that they reported themselves, or access all of the issues in the project. In real life, the situation is usually much more complex.        What happens when you want some people to read and update some issues — not just the issues they created, but also those which are shared with them somehow?</p>    <p id="78dfdebf">To support this use case, you can grant reporters the <span class="control">Read Issue</span> permission and use a workflow to automatically restrict issue visibility to a group that excludes other reporters.        The following workflow rule restricts issue visibility as soon as an issue is reported.</p>    <div class="code-block" data-lang="javascript">var entities = require('@jetbrains/youtrack-scripting-api/entities');
+var workflow = require('@jetbrains/youtrack-scripting-api/workflow');
+
+exports.rule = entities.Issue.onChange({
+  title: 'Set "Visible to" group on submit',
+  guard: function(ctx) {
+    return ctx.issue.becomesReported;
+  },
+  action: function(ctx) {
+    ctx.issue.permittedGroups.add(ctx.viewers);
+    workflow.message('Users from group "' + ctx.viewers.name +
+                     '" can see this request.');
+  },
+  requirements: {
+    viewers: {
+      type: entities.UserGroup
+    }
+  }
+});</div>  <p id="1e6915ec">Each issue is visible to its reporter and any member of the <code class="code">Viewers</code> group.    However, the reporter or any member of the <code class="code">Viewers</code> group can “share” the issue with any other users who have the <span class="control">Read Issue</span> permission in the project.      To share the issue, the user selects another user from the <span class="control">Visible to</span> list.</p>        <p id="fb5bb174">There are a number of other ways you can use workflows to manage visibility.          You might consider adding one or more of the following rules to increase the flexibility of the entire scheme.</p>      <div class="chapter"><h2 id="add-mentioned-users" data-toc="restrict-issue-visibility-workflow#add-mentioned-users">Add Mentioned Users</h2>        <p id="0239c87d">This rule automatically adds users to the <span class="control">Visible to</span> list when they are @mentionedin a comment.</p>        <div class="code-block" data-lang="javascript">var entities = require('@jetbrains/youtrack-scripting-api/entities');
+var workflow = require('@jetbrains/youtrack-scripting-api/workflow');
+
+var loginRegex = /@(([A-Z0-9._@$+\-=|])*)/gi;
+
+exports.rule = entities.Issue.onChange({
+  title: 'Automatically add users to the "visible to" list',
+  guard: function(ctx) {
+    var issue = ctx.issue;
+    return issue.comments.added.isNotEmpty() &amp;&amp;
+      (issue.permittedGroups.isNotEmpty() || issue.permittedUsers.isNotEmpty());
+  },
+  action: function(ctx) {
+    var issue = ctx.issue;
+    var text = '';
+    issue.comments.added.forEach(function (comment) {
+      text += comment.text + '\n';
+    });
+    var message = '';
+    var matches = text.match(loginRegex);
+    if (matches) {
+      matches.forEach(function(m) {
+        var login = m.slice(1);
+        if (login) {
+          var user = entities.User.findByLogin(login);
+          if (user) {
+            issue.permittedUsers.add(user);
+            message += 'User "' + user.fullName +
+                       '" is added to issue readers. ';
+          } else {
+            message += 'User with login "' + login + '" not found. ';
+          }
+        }
+      });
+    }
+    if (message) {
+      workflow.message(message);
+    }
+  },
+  requirements: {}
+});</div>      </div>      <div class="chapter"><h2 id="block-visibility-updates-reported-issues" data-toc="restrict-issue-visibility-workflow#block-visibility-updates-reported-issues">Block Updates to Visibility Settings</h2>        <p id="a053b519">This rule blocks changes to the <span class="control">Visible to</span> setting for issues that have been reported.        This prevents unwanted changes to visibility settings for issues that contain sensitive data.</p>        <div class="code-block" data-lang="javascript">// This rule assumes that issue visibility is set to a specific group
+// at the moment when an issue becomes reported.
+// Each project has its own visibility group.
+
+var entities = require('@jetbrains/youtrack-scripting-api/entities');
+var workflow = require('@jetbrains/youtrack-scripting-api/workflow');
+
+exports.rule = entities.Issue.onChange({
+  title: 'Block changes to visibility group for reported issues',
+  guard: function(ctx) {
+    var issue = ctx.issue;
+    return issue.isReported &amp;&amp; !issue.becomesReported &amp;&amp;
+      issue.isChanged('permittedGroups');
+    },
+  action: function(ctx) {
+    workflow.check(false,
+      'You cannot change group visibility restrictions for reported issues. ' +
+      'Instead, you can add single users to the "visible to" list.');
+  },
+  requirements: {}
+});</div>      </div><div class="chapter"><h2 id="block-removing-other-users" data-toc="restrict-issue-visibility-workflow#block-removing-other-users">Block Users from Removing Other Users</h2>      <p id="07512080">This rule prevents users from removing other users from the <span class="control">Visible to</span> list.</p>        <div class="code-block" data-lang="javascript">var entities = require('@jetbrains/youtrack-scripting-api/entities');
+var workflow = require('@jetbrains/youtrack-scripting-api/workflow');
+
+exports.rule = entities.Issue.onChange({
+  title: 'Do not remove users from "visible to" list',
+  guard: function(ctx) {
+    var issue = ctx.issue;
+    return issue.permittedUsers.removed.isNotEmpty();
+  },
+  action: function(ctx) {
+    workflow.check(false,
+      'You cannot remove other users from the "visible to" list.');
+  },
+  requirements: {}
+});</div></div>      <div class="chapter"><h2 id="field-based-visibility" data-toc="restrict-issue-visibility-workflow#field-based-visibility">Update Visibility on Assignment</h2>      <p id="607c5bd1">This rule automatically add users to the <span class="control">Visible to</span> list when they are selected in a custom field that stores a user type (for example, Authorizer or Verifier).</p>      <p id="f0df966c">You can also use a modified version of this rule to hide sensitive issues from other members of the project team.      For example, your company does not want accountants to see payment requests that are processed by other accountants.        Here, you could add users to the <span class="control">Visible to</span> list when they are set as the assignee.</p>        <div class="code-block" data-lang="javascript">var entities = require('@jetbrains/youtrack-scripting-api/entities');
+var workflow = require('@jetbrains/youtrack-scripting-api/workflow');
+
+exports.rule = entities.Issue.onChange({
+  title: 'Add Authorizer to the "visible to" list',
+  guard: function(ctx) {
+    var fs = ctx.issue.fields;
+    return fs.isChanged(ctx.AuthBy) &amp;&amp; fs.AuthBy;
+  },
+  action: function(ctx) {
+    var issue = ctx.issue;
+    issue.permittedUsers.add(issue.fields.AuthBy);
+    workflow.message('The issue is now visible to ' +
+                      issue.fields.AuthBy.fullName);
+  },
+  requirements: {
+    AuthBy: {
+      type: entities.User.fieldType,
+      name: 'Authorizer'
+    }
+  }
+});</div>      </div><div class="last-modified" data-skip-index="skip">Last modified: 29 November 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="Workflow-Use-Cases.html">Use Cases for Workflows</a><a class="navigation-links__next" href="prevent-unwanted-updates-workflows.html">Prevent Unwanted Updates</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="//resources.jetbrains.com/storage/help-app/v3/app.js"></script></body></html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta charset="UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="//resources.jetbrains.com/storage/help-app/v3/analytics.js"></script><title>Scrum - Help | YouTrack InCloud</title><link rel="stylesheet" href="//resources.jetbrains.com/storage/help-app/v3/app.css"></head><body data-id="Workflow-Scrum" data-breadcrumbs="Administration.xml|Administration/Workflow-Guide.xml|Workflows/Default-Workflows.xml|Default Workflows/Workflow-Scrum.xml|Scrum" data-main-title="Scrum"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack InCloud Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>YouTrack InCloud 2019.2 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="Workflow-Scrum" id="Workflow-Scrum.xml">Scrum</h1>  <p id="5a45852a">This workflow includes several rules that support the scrum framework for agile product development.</p>  <div class="table-wrapper"><table class="left_header" width="100%" id="cd1b6bb0"><tbody><tr id="6e95e036" class="ijRowOdd"><th id="809dbe3a" width="20%"><p>Name</p></th><td id="1c868278"><p>@jetbrains/youtrack-workflow-scrum</p></td></tr><tr id="01272486" class="ijRowEven"><th id="8f4d1704"><p>Auto-attached</p></th><td id="562d3921"><p>yes</p></td></tr><tr id="6b3e7818" class="ijRowOdd"><th id="233b29f9"><p>Modules</p></th><td id="0a5517a3"><p>        <a href="#assign-on-move">Assign on move</a>        (on-change rule)        <br>        <a href="#epics-ideal-days">Block ideal days for epics</a>        (on-change rule)        <br>        <a href="#fix-parent-when-subtasks-resolved">Fix parent task when all subtasks are resolved</a>        (on-change rule)        <br>        <a href="#open-parent-on-subtask">Open parent task when any subtask is open</a>        (on-change rule)        <br>        <a href="#tasks-story-points">Block story points for tasks</a>        (on-change rule)      </p></td></tr></tbody></table></div>  <div class="chapter"><h2 id="e2f61d46">Use Case</h2>    <p id="426c5d7b">This workflow helps you automate and manage issues when you use a scrum framework for agile product development.      The rules in this workflow help you manage assignees, ideal days, story points, subtasks, and sprints.    </p>  </div>  <div class="chapter"><h2 id="f0ef57cd">Modules</h2>    <p id="8662c04e">This workflow includes five different modules.</p>    <div class="chapter"><h3 id="assign-on-move">Assign on move</h3>      <p id="b3b14cca">When the state of a reported issue is changed and not assigned, the <span class="control">Assignee</span> is set to the        currently logged-in user.        This rule automatically assigns an issue to the user who moves a card, for example,        from an <span class="control">Open</span> state to the <span class="control">In Progress</span> column on a scrum board.      </p>      <div class="code-block" data-lang="javascript">var entities = require('@jetbrains/youtrack-scripting-api/entities');
+var workflow = require('@jetbrains/youtrack-scripting-api/workflow');
+
+exports.rule = entities.Issue.onChange({
+  title: workflow.i18n('Assign on move'),
+  guard: function(ctx) {
+    var issue = ctx.issue;
+    return issue.isReported &amp;&amp; !issue.fields.Assignee &amp;&amp; issue.fields.isChanged(ctx.State);
+  },
+  action: function(ctx) {
+    var issue = ctx.issue;
+    if (issue.project.findFieldByName(ctx.Assignee.name).findValueByLogin(ctx.currentUser.login)) {
+      issue.fields.Assignee = ctx.currentUser;
+    }
+  },
+  requirements: {
+    Assignee: {
+      type: entities.User.fieldType
+    },
+    State: {
+      type: entities.State.fieldType
+    }
+  }
+});</div>    </div>    <div class="chapter"><h3 id="epics-ideal-days">Block ideal days for epics</h3>      <p id="9b2ee63a">This rule prevents users from setting ideal days for epics. Epics represent large features that contain        multiple user stories and are usually delivered over a set of sprints.        Ideal days are usually set for the tasks and not for epics.      </p>      <p id="3e801ea1">When an user changes the value that is set for the <span class="control">Ideal days</span> field for an issue that is        assigned the <span class="control">Epic</span> issue type,        this rule checks the new value set for this field. If the <span class="control">Ideal days</span> field is set to anything        other than zero or empty, a warning is displayed.        The change is rolled back to the previous value.      </p>      <div class="code-block" data-lang="javascript">var entities = require('@jetbrains/youtrack-scripting-api/entities');
+var workflow = require('@jetbrains/youtrack-scripting-api/workflow');
+
+exports.rule = entities.Issue.onChange({
+  title: workflow.i18n('Block ideal days for epics'),
+  guard: function(ctx) {
+    var issue = ctx.issue;
+    return issue.Type.name === ctx.Type.Epic.name &amp;&amp; issue.fields.isChanged(ctx.IdealDays);
+  },
+  action: function(ctx) {
+    workflow.check(!ctx.issue.fields.IdealDays, workflow.i18n('Epics can not have ideal days'));
+  },
+  requirements: {
+    Type: {
+      type: entities.EnumField.fieldType,
+      Epic: {}
+    },
+    IdealDays: {
+      type: entities.Field.integerType,
+      name: 'Ideal days'
+    }
+  }
+});</div>    </div>    <div class="chapter"><h3 id="fix-parent-when-subtasks-resolved">Fix parent task when all subtasks are resolved</h3>      <p id="395da1a3">This rule helps you manage the state of issues with subtasks (parent tasks). The rule automatically changes the        state of a parent task when all subtasks are resolved.      </p>      <p id="e8a5bb70">When a reported issue is set to a resolved state,        this rule checks the issue for parent tasks. If the issue is a subtask of a parent task, the rule checks the        status of all other issues that are        linked as subtasks to the parent issue. If all subtasks are set to a resolved state, the state of the parent        task is set to <span class="control">Done</span>.        A notification is displayed.      </p>      <p id="d0aa46a6">The rule then performs the same operation if the parent task is a subtask of another issue.</p>      <div class="code-block" data-lang="javascript">var entities = require('@jetbrains/youtrack-scripting-api/entities');
+var workflow = require('@jetbrains/youtrack-scripting-api/workflow');
+
+exports.rule = entities.Issue.onChange({
+  title: workflow.i18n('Fix parent when all subtasks are resolved'),
+  guard: function(ctx) {
+    return ctx.issue.isReported &amp;&amp; ctx.issue.becomesResolved;
+  },
+  action: function(ctx) {
+    var processParent = function(issue) {
+      if (issue.links['subtask of'].isEmpty()) {
+        return;
+      }
+      var parent = issue.links['subtask of'].first();
+      if (parent &amp;&amp; parent.project &amp;&amp; !parent.project.isArchived &amp;&amp;
+        parent.isReported &amp;&amp; !parent.isResolved) {
+        var unresolvedSubtask = parent.links['parent for'].find(function(subtask) {
+          return subtask.isReported &amp;&amp; !subtask.fields.State.isResolved;
+        });
+        if (!unresolvedSubtask) {
+          var field = parent.project.findFieldByName(ctx.State.name);
+          if (field) {
+            var value = field.findValueByName(ctx.State.Done.name);
+            if (value) {
+              parent.State = value;
+              workflow.message(workflow.i18n('Automatically set {0} as Done', parent.id));
+              return parent;
+            }
+          }
+        }
+      }
+    };
+
+    var issue = ctx.issue;
+    while (issue) {
+      issue = processParent(issue);
+    }
+  },
+  requirements: {
+    State: {
+      type: entities.State.fieldType,
+      Done: {}
+    }
+  }
+});</div>    </div>    <div class="chapter"><h3 id="open-parent-on-subtask">Open parent task when any subtask is open</h3>      <p id="5f1673d6">This rule helps you manage the state of issues with subtasks (parent tasks). The rule automatically re-opens a        parent task when a subtask is set to an unresolved state.      </p>      <p id="06e2d3b7">When a reported issue is set to an unresolved state,        this rule checks the issue for parent tasks. If the rule finds a parent task that does not belong to an archived        project and is set to a resolved state,        the state of the parent task is set to <span class="control">Open</span>. A notification is displayed.      </p>      <p id="f2e36575">The rule then performs the same operation if the parent task is a subtask of another issue.</p>      <div class="code-block" data-lang="javascript">var entities = require('@jetbrains/youtrack-scripting-api/entities');
+var workflow = require('@jetbrains/youtrack-scripting-api/workflow');
+
+exports.rule = entities.Issue.onChange({
+  title: workflow.i18n('Open parent task when any subtask is open'),
+  guard: function(ctx) {
+    return ctx.issue.isReported &amp;&amp; ctx.issue.becomesUnresolved;
+  },
+  action: function(ctx) {
+    var processParent = function(issue) {
+      if (issue.links['subtask of'].isEmpty()) {
+        return;
+      }
+      var parent = issue.links['subtask of'].first();
+      if (parent &amp;&amp; parent.project &amp;&amp; !parent.project.isArchived &amp;&amp; parent.isReported &amp;&amp; parent.isResolved) {
+        var field = parent.project.findFieldByName(ctx.State.name);
+        if (field) {
+          var value = field.findValueByName(ctx.State.Open.name);
+          if (value) {
+            parent.State = value;
+            workflow.message(workflow.i18n('Automatically reopen {0}', parent.id));
+            return parent;
+          }
+        }
+      }
+    };
+
+    var issue = ctx.issue;
+    while (issue) {
+      issue = processParent(issue);
+    }
+  },
+  requirements: {
+    State: {
+      type: entities.State.fieldType,
+      Open: {}
+    }
+  }
+});</div>    </div>    <div class="chapter"><h3 id="tasks-story-points">Block story points for tasks</h3>      <p id="54fcf125">This rule prevents users from setting story points for tasks.        Story points are an arbitrary measure used by scrum teams to estimate the effort required to implement a user        story.        Story points are usually set for the user stories and not for tasks.      </p>      <p id="2d5c2a77">When an user changes the value that is set for the <span class="control">Story points</span> field for an issue that is        assigned the <span class="control">Task</span> issue type,        this rule checks the new value set for this field. If the <span class="control">Story points</span> field is set to        anything other than zero or empty, a warning is displayed.        The change is rolled back to the previous value.      </p>      <div class="code-block" data-lang="javascript">var entities = require('@jetbrains/youtrack-scripting-api/entities');
+var workflow = require('@jetbrains/youtrack-scripting-api/workflow');
+
+exports.rule = entities.Issue.onChange({
+  title: workflow.i18n('Block story points for tasks'),
+  guard: function(ctx) {
+    return ctx.issue.fields.Type.name === ctx.Type.Task.name &amp;&amp; ctx.issue.fields.isChanged(ctx.StoryPoints);
+  },
+  action: function(ctx) {
+    workflow.check(!ctx.issue.fields.StoryPoints, workflow.i18n('Tasks can not have story points'));
+  },
+  requirements: {
+    Type: {
+      type: entities.EnumField.fieldType,
+      Task: {}
+    },
+    StoryPoints: {
+      name: 'Story points',
+      type: entities.Field.integerType
+    }
+  }
+});</div>    </div>  </div><div class="last-modified" data-skip-index="skip">Last modified: 29 November 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="Workflow-Replace-Links.html">Replace Links</a><a class="navigation-links__next" href="Workflow-Set-Fix-Version.html">Set Fix Versions</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="//resources.jetbrains.com/storage/help-app/v3/app.js"></script></body></html>

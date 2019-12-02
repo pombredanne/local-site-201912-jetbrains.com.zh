@@ -1,0 +1,1154 @@
+/* Based on eStore Credit Card with additional includes for independent work */
+/* Technicals */
+.clearfix {
+  display: table;
+}
+.clearfix:after {
+  content: '. .';
+  display: block;
+  word-spacing: 99in;
+  height: 0;
+  overflow: hidden;
+  font-size: 0.13em;
+  line-height: 0;
+}
+.clearfix2:before,
+.clearfix2:after {
+  content: " ";
+  display: table;
+}
+.clearfix2:after {
+  clear: both;
+}
+.nobr {
+  white-space: nowrap;
+}
+/* Visual */
+/* Elements */
+.element:before {
+  font-family: "Open Sans", "Arial Unicode", Helvetica, sans-serif !important;
+  display: inline-block;
+  position: inherit;
+  font-weight: bold;
+  font-size: 20px;
+  width: 13px;
+  height: 13px;
+  line-height: 1em;
+  color: #999;
+  text-align: center;
+}
+.element-bg:before {
+  font-size: 13px;
+  border-radius: 6px;
+  color: #ffffff;
+  background-color: #999;
+}
+.loader {
+  display: block;
+  border: 4px solid #d3d3d3;
+  border-top: 4px solid #777777;
+  border-radius: 100%;
+  height: 10px;
+  width: 10px;
+  animation: rot .6s infinite linear;
+}
+@keyframes rot {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
+.text-muted {
+  color: #999999;
+}
+.list-ordered li {
+  margin-bottom: 11px;
+  padding-left: 30px;
+}
+.list-ordered li:before {
+  content: "\2014";
+  display: block;
+  padding-right: 10px;
+  float: left;
+  margin-left: -22px;
+}
+/* START CREDIT CARD */
+/* ======================== */
+/* Purchase Method Selector */
+/* ======================== */
+.purchaseSignin {
+  width: 230px;
+}
+.purchaseMethodNote {
+  color: #777;
+  font-size: 13px;
+  padding-bottom: 16.5px !important;
+  width: 650px;
+}
+.purchaseMethodSelector {
+  margin-bottom: 11px;
+  padding-bottom: 16.5px;
+  overflow: hidden;
+}
+.purchaseMethodSelector .purchaseMethodTitle {
+  left: 50%;
+  /* Payment Methods */
+}
+.purchaseMethodSelector .purchaseMethodTitle:before {
+  background: url('/shop/static/images/payment-methods.svg');
+  background-repeat: no-repeat;
+  position: absolute;
+  content: "";
+  z-index: 8887;
+  left: 50%;
+}
+.purchaseMethodSelector .purchaseMethodTitle.adyen_card:before,
+.purchaseMethodSelector .purchaseMethodTitle.bank:before,
+.purchaseMethodSelector .purchaseMethodTitle.bank_recurring:before {
+  background-position: 0 -32px;
+  top: 5px;
+  width: 23px;
+  height: 15px;
+}
+.purchaseMethodSelector .purchaseMethodTitle.adyen_paypal:before,
+.purchaseMethodSelector .purchaseMethodTitle.braintree_paypal:before,
+.purchaseMethodSelector .purchaseMethodTitle.paypal:before,
+.purchaseMethodSelector .purchaseMethodTitle.paypal_recurring:before {
+  background-position: 0 -48px;
+  width: 21px;
+  height: 23px;
+}
+.purchaseMethodSelector .purchaseMethodTitle.adyen_sepa:before {
+  background-position: 0 -72px;
+  width: 40px;
+  height: 11px;
+}
+.purchaseMethodSelector .purchaseMethodTitle.adyen_alipay:before {
+  background-position: 0 -83px;
+  width: 40px;
+  height: 13px;
+}
+.purchaseMethodSelector .purchaseMethodTitle.adyen_sofort:before {
+  background-position: 0 0;
+  width: 45px;
+  height: 30px;
+}
+.purchaseMethodSelector .purchaseMethodTitle.purchase_order:before,
+.purchaseMethodSelector .purchaseMethodTitle.proforma_invoice:before {
+  background-position: 0 -121px;
+  width: 18px;
+  height: 21px;
+}
+.purchaseMethodSelector .purchaseMethodTitle.adyen_unionpay:before {
+  background-position: 0 -154px;
+  width: 32px;
+  height: 20px;
+}
+.purchaseMethodSelector .purchaseMethodTitle.partner_payment:before {
+  background-position: 0 -175px;
+  width: 32px;
+  height: 15px;
+}
+.purchaseMethodSelector .purchaseMethodTitle.contact_sales:before {
+  background-position: 0 -190px;
+  width: 20px;
+  height: 19px;
+}
+.purchaseMethodSelector .purchaseMethodTitle.partner_payment_in:before {
+  background-position: 0 -210px;
+  width: 26px;
+  height: 33px;
+}
+.purchaseMethodSelector .purchaseMethodTitle.adyen_wechatpay:before {
+  background-position: 0 -244px;
+  width: 26px;
+  height: 23px;
+}
+.purchaseMethodSelector .purchaseMethodTitle.adyen_ideal:before {
+  background-position: 0 -270px;
+  width: 26px;
+  height: 22px;
+}
+.purchaseMethodSelector.singlePaymentMethod {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+.purchaseMethodSelector.singlePaymentMethod .purchaseMethodTitle {
+  margin-top: 22px;
+  position: relative;
+  font-weight: bold;
+  left: 0;
+}
+.purchaseMethodSelector.singlePaymentMethod .purchaseMethodTitle.partner_payment_in {
+  padding-left: 31px;
+}
+.purchaseMethodSelector.singlePaymentMethod .purchaseMethodTitle.partner_payment_in:before {
+  top: -11px;
+  left: 0;
+  margin-left: 0;
+}
+.purchaseMethodSelector.singlePaymentMethod .purchaseMethodTitle.contact_sales,
+.purchaseMethodSelector.singlePaymentMethod .purchaseMethodTitle.adyen_card {
+  padding-left: 32px;
+}
+.purchaseMethodSelector.singlePaymentMethod .purchaseMethodTitle.contact_sales:before,
+.purchaseMethodSelector.singlePaymentMethod .purchaseMethodTitle.adyen_card:before {
+  top: 2px;
+  left: 0;
+  margin-left: 0;
+}
+.purchaseMethodSelector:not(.singlePaymentMethod) .purchaseMethodBlock {
+  border: 1px solid #d3d3d3;
+  border-left: 1px solid transparent;
+  float: left;
+  min-width: 124px;
+  min-height: 80px;
+  text-align: center;
+  border-radius: 2px;
+  color: #777;
+  position: relative;
+  cursor: pointer;
+}
+.purchaseMethodSelector:not(.singlePaymentMethod) .purchaseMethodBlock:hover,
+.purchaseMethodSelector:not(.singlePaymentMethod) .purchaseMethodBlock:active {
+  color: #18a3fa;
+}
+.purchaseMethodSelector:not(.singlePaymentMethod) .purchaseMethodBlock:first-child {
+  border-left: 1px solid #d3d3d3;
+  float: left;
+  clear: right;
+}
+.purchaseMethodSelector:not(.singlePaymentMethod) .purchaseMethodBlock.selected {
+  border: 1px solid #18a3fa;
+  color: #2e2e2e;
+  cursor: default;
+}
+.purchaseMethodSelector:not(.singlePaymentMethod) .purchaseMethodBlock.selected:before,
+.purchaseMethodSelector:not(.singlePaymentMethod) .purchaseMethodBlock.selected:after {
+  content: "";
+  position: absolute;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  left: 50%;
+  margin-left: -10px;
+  z-index: 8888;
+}
+.purchaseMethodSelector:not(.singlePaymentMethod) .purchaseMethodBlock.selected:before {
+  border-top: 10px solid #18a3fa;
+  bottom: -10px;
+}
+.purchaseMethodSelector:not(.singlePaymentMethod) .purchaseMethodBlock.selected:after {
+  border-top: 10px solid #ffffff;
+  bottom: -9px;
+}
+.purchaseMethodSelector:not(.singlePaymentMethod) .purchaseMethodBlock.selected:before,
+.purchaseMethodSelector:not(.singlePaymentMethod) .purchaseMethodBlock.selected:after {
+  z-index: 8887;
+}
+.purchaseMethodSelector:not(.singlePaymentMethod) .purchaseMethodTitle {
+  width: 124px;
+  position: absolute;
+  margin-left: -62px;
+  bottom: 12px;
+  padding-top: 30px;
+  /* Payment Methods */
+}
+.purchaseMethodSelector:not(.singlePaymentMethod) .purchaseMethodTitle.adyen_card:before,
+.purchaseMethodSelector:not(.singlePaymentMethod) .purchaseMethodTitle.bank:before,
+.purchaseMethodSelector:not(.singlePaymentMethod) .purchaseMethodTitle.bank_recurring:before {
+  top: 5px;
+  margin-left: -11px;
+}
+.purchaseMethodSelector:not(.singlePaymentMethod) .purchaseMethodTitle.adyen_paypal:before,
+.purchaseMethodSelector:not(.singlePaymentMethod) .purchaseMethodTitle.braintree_paypal:before,
+.purchaseMethodSelector:not(.singlePaymentMethod) .purchaseMethodTitle.paypal:before,
+.purchaseMethodSelector:not(.singlePaymentMethod) .purchaseMethodTitle.paypal_recurring:before {
+  top: 0;
+  margin-left: -12px;
+}
+.purchaseMethodSelector:not(.singlePaymentMethod) .purchaseMethodTitle.adyen_sepa:before {
+  top: 11px;
+  margin-left: -20px;
+}
+.purchaseMethodSelector:not(.singlePaymentMethod) .purchaseMethodTitle.adyen_alipay:before {
+  top: 9px;
+  margin-left: -20px;
+}
+.purchaseMethodSelector:not(.singlePaymentMethod) .purchaseMethodTitle.adyen_sofort:before {
+  top: -4px;
+  margin-left: -22px;
+}
+.purchaseMethodSelector:not(.singlePaymentMethod) .purchaseMethodTitle.purchase_order,
+.purchaseMethodSelector:not(.singlePaymentMethod) .purchaseMethodTitle.proforma_invoice {
+  font-size: 13px;
+  bottom: 13px;
+}
+.purchaseMethodSelector:not(.singlePaymentMethod) .purchaseMethodTitle.purchase_order:before,
+.purchaseMethodSelector:not(.singlePaymentMethod) .purchaseMethodTitle.proforma_invoice:before {
+  font-size: 13px;
+  top: 2px;
+  margin-left: -9px;
+}
+.purchaseMethodSelector:not(.singlePaymentMethod) .purchaseMethodTitle.adyen_unionpay:before {
+  top: 3px;
+  margin-left: -16px;
+}
+.purchaseMethodSelector:not(.singlePaymentMethod) .purchaseMethodTitle.partner_payment {
+  font-size: 13px;
+  bottom: 7px;
+  line-height: 1.25em;
+}
+.purchaseMethodSelector:not(.singlePaymentMethod) .purchaseMethodTitle.partner_payment:before {
+  top: 10px;
+  margin-left: -11px;
+}
+.purchaseMethodSelector:not(.singlePaymentMethod) .purchaseMethodTitle.partner_payment_in {
+  font-size: 13px;
+  bottom: 7px;
+  line-height: 1.25em;
+}
+.purchaseMethodSelector:not(.singlePaymentMethod) .purchaseMethodTitle.partner_payment_in:before {
+  top: -10px;
+  margin-left: -11px;
+}
+.purchaseMethodSelector:not(.singlePaymentMethod) .purchaseMethodTitle.adyen_wechatpay:before {
+  top: 3px;
+  margin-left: -16px;
+}
+.purchaseMethodSelector:not(.singlePaymentMethod) .purchaseMethodTitle.adyen_ideal:before {
+  top: 2px;
+  margin-left: -16px;
+}
+.purchaseMethodSelector:not(.singlePaymentMethod) .purchaseMethodTitle.contact_sales {
+  font-size: 13px;
+  bottom: 13px;
+}
+.purchaseMethodSelector:not(.singlePaymentMethod) .purchaseMethodTitle.contact_sales:before {
+  top: 8px;
+  margin-left: -12px;
+}
+/* =============== */
+/* Purchase Method */
+/* =============== */
+.purchaseMethod {
+  position: relative;
+  display: none;
+}
+.purchaseMethod p {
+  display: none;
+  margin: 0.5em 0 0.8em 0 !important;
+}
+.purchaseMethod.selected,
+.purchaseMethod.selected p {
+  display: block;
+}
+/* =========== */
+/* Credit Card */
+/* =========== */
+.ccBlock {
+  margin: 11px 0 0 0;
+  position: relative;
+}
+.ccBlock:before,
+.ccBlock:after {
+  content: " ";
+  display: table;
+}
+.ccBlock:after {
+  clear: both;
+}
+.ccBlock:before,
+.ccBlock:after {
+  content: " ";
+  display: table;
+}
+.ccBlock:after {
+  clear: both;
+}
+.ccBlock .error {
+  margin: 0.1em 0 1.85em -5px !important;
+  color: #b94a48;
+}
+.ccBlock .error-cardDetails {
+  margin: 35px 0 0 0 !important;
+  position: absolute;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  left: 621.5px;
+  width: 138.5px;
+}
+/* Common shape and back of the Card */
+.ccAppearance {
+  width: 600px;
+  position: relative;
+  float: left;
+  background: url('/shop/static/images/ccBackBg.png') #ecebeb 0 0 repeat-x;
+  -webkit-box-shadow: 0 2px 5px 0 rgba(119, 119, 119, 0.5);
+  box-shadow: 0 2px 5px 0 rgba(119, 119, 119, 0.5);
+  border-radius: 11px;
+}
+.ccAppearance:after {
+  content: '';
+  display: block;
+  height: 100%;
+  width: 70px;
+  top: 0;
+  left: 390px;
+  position: absolute;
+  background: -moz-linear-gradient(left, rgba(0, 0, 0, 0.33) 1%, rgba(0, 0, 0, 0.33) 20%, rgba(0, 0, 0, 0) 100%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.33) 1%, rgba(0, 0, 0, 0.33) 20%, rgba(0, 0, 0, 0) 100%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.33) 1%, rgba(0, 0, 0, 0.33) 20%, rgba(0, 0, 0, 0) 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#54000000', endColorstr='#00000000', GradientType=1);
+  /* IE6-9 */
+}
+/* Credit Card View */
+.ccFront {
+  width: 420px;
+  position: relative;
+  float: left;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: 1px solid #ffffff;
+  background: url('/shop/static/images/ccFrontBg.png') 0 0 repeat-x;
+  border-radius: 11px;
+  padding: 65px 16.5px 5px 16.5px;
+  z-index: 1;
+}
+.ccFront .brand {
+  position: absolute;
+  top: 16.5px;
+  background: url('/shop/static/images/cc-images.svg') 0 0 no-repeat;
+  width: 312px;
+  height: 24px;
+}
+.ccFront input,
+.ccFront select {
+  font-size: 13px !important;
+  margin-bottom: 16.5px !important;
+}
+.ccFront input {
+  padding: 10px 10px !important;
+  line-height: normal !important;
+  height: auto;
+}
+.ccFront select {
+  padding: 1px 10px !important;
+  line-height: normal !important;
+  height: auto;
+}
+.ccFront label {
+  font-family: "Space Mono", "Courier New Bold", sans-serif;
+  color: #666;
+  text-transform: uppercase;
+  font-size: 13px;
+  min-width: 95px;
+  display: inline-block;
+  padding: 4px 0;
+  vertical-align: baseline;
+  text-shadow: 0 -1px 1px #ffffff;
+  -webkit-text-stroke-width: 0.2px;
+  -webkit-text-stroke-color: #666;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.2em;
+}
+/* Specific Controls */
+#ccNumberLabel {
+  width: 100%;
+  position: relative;
+  font-size: 16px;
+}
+#ccNumber {
+  width: 100% !important;
+  font-size: 19px !important;
+  padding-right: 30px !important;
+  margin-bottom: 20px !important;
+}
+input.invalid,
+select.invalid {
+  border: 1px solid #ee685a !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+}
+#ccNumber.errorHighlight,
+#ccNumber.invalid-luhn,
+#ccNumber.valid-luhn,
+#ccNumber.errorHighlight:focus,
+#ccNumber.invalid-luhn:focus,
+#ccNumber.valid-luhn:focus {
+  transition: 0s;
+  -webkit-transition: 0s;
+  -moz-transition: 0s;
+  -o-transition: 0s;
+}
+#ccNumber.invalid-luhn {
+  background: url('/shop/static/images/error-icon.svg') #ffffff 352px 10px no-repeat;
+}
+#ccNumber.valid-luhn {
+  background: url('/shop/static/images/ok-icon.svg') #ffffff 352px 10px no-repeat;
+}
+#ccNumber.valid-luhn:not:focus {
+  border: 1px solid #c0c0c0 !important;
+}
+#ccSecurityCodeLabel {
+  display: block;
+  position: absolute;
+  width: 65px;
+  min-width: 65px;
+  left: 447.5px;
+  top: 94px;
+  z-index: 1;
+  text-shadow: 0 -1px 1px rgba(255, 255, 255, 0.3);
+}
+#ccSecurityCode {
+  position: absolute;
+  width: 60px !important;
+  left: 523.5px;
+  top: 92px;
+}
+#ccExpirationLabel {
+  display: block;
+  position: relative;
+  float: left;
+  width: 95px;
+}
+#ccExpirationLabel:after {
+  display: block;
+  position: absolute;
+  content: "/";
+  top: 0;
+  left: 190px;
+  width: 12px;
+  max-width: 12px;
+  text-align: center;
+  padding: 4px 0;
+}
+#ccExpirationMonth,
+#ccExpirationMonth:focus {
+  display: block;
+  float: left;
+  width: 95px !important;
+  margin: 0 12px 16.5px 0 !important;
+}
+#ccExpirationYear {
+  display: block;
+  width: 95px !important;
+}
+#ccHolderLabel {
+  display: block;
+  float: left;
+  width: 95px;
+  margin-top: 9px;
+}
+#ccHolder {
+  width: 290px !important;
+}
+/* CVV Code Note */
+.ccSecurityCodeNote {
+  display: none;
+  position: absolute;
+  width: 138.5px;
+  top: 106px;
+  left: 616.5px;
+  line-height: normal;
+}
+.ccSecurityCodeNote:before {
+  display: block;
+  content: "";
+  position: absolute;
+  width: 20px;
+  border-top: 1px solid #c0c0c0;
+  top: 8px;
+  left: -25px;
+  z-index: 2;
+}
+.ccSecurityCodeNote p {
+  font-size: 12px !important;
+  margin: 0 0 11px 0 !important;
+}
+.ccSecurityCodeNote strong {
+  color: #000;
+}
+/* Default */
+.ccSecurityCodeNote.default {
+  display: block;
+}
+/* Recurring Note */
+.recurring-note {
+  clear: both;
+  position: relative;
+  top: 11px;
+  margin-bottom: 11px;
+}
+/* Amex */
+.amex .ccAppearance {
+  background: none;
+  width: 420px;
+}
+.amex .ccAppearance:after {
+  display: none;
+}
+.amex #ccNumberLabel,
+.amex #ccNumber {
+  width: 297px !important;
+}
+.amex #ccNumber.invalid-luhn,
+.amex #ccNumber.valid-luhn {
+  background-position: 265px 10px !important;
+}
+.amex #ccSecurityCodeLabel {
+  width: 75px;
+  min-width: 75px;
+  left: 341.5px;
+  top: 53px;
+}
+.amex #ccSecurityCode {
+  width: 60px;
+  left: 341.5px;
+  top: 92px;
+}
+.amex .ccSecurityCodeNote.default {
+  display: none;
+}
+.amex .ccSecurityCodeNote.amex {
+  display: block;
+  width: 275px;
+  left: 439.5px;
+}
+.amex .error-cardDetails {
+  width: 275px;
+  left: 439.5px;
+}
+/* ================= */
+/* Saved Credit Card */
+/* ================= */
+.savedCard {
+  overflow: visible;
+}
+.savedCard:before,
+.savedCard:after {
+  content: " ";
+  display: table;
+}
+.savedCard:after {
+  clear: both;
+}
+.savedCard:before,
+.savedCard:after {
+  content: " ";
+  display: table;
+}
+.savedCard:after {
+  clear: both;
+}
+.savedCard .cc-saved-content {
+  position: absolute;
+  font-family: "Space Mono", "Courier New Bold", sans-serif;
+  right: 11px;
+}
+.savedCard .cc-saved-content:before {
+  display: inline-block;
+  color: #b6b6b6;
+}
+.savedCard .ccAppearance {
+  width: auto;
+  border-radius: 5.5px;
+  border: 1px solid #f5f5f4;
+  overflow: visible;
+  -webkit-box-shadow: 0 2px 3px 1px rgba(119, 119, 119, 0.4), inset 0 0 0 1px #ffffff;
+  box-shadow: 0 2px 3px 1px rgba(119, 119, 119, 0.4), inset 0 0 0 1px #ffffff;
+}
+.savedCard .ccAppearance:after {
+  display: none;
+}
+.savedCard .ccFront {
+  width: 170px;
+  border-radius: 5.5px;
+  padding-right: 11px;
+  padding-left: 11px;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.savedCard .brand {
+  display: block;
+  top: 11px;
+  background: none;
+}
+.savedCard .ccSavedNumber {
+  position: absolute;
+  font-family: "Space Mono", "Courier New Bold", sans-serif;
+  right: 11px;
+  top: 17px;
+}
+.savedCard .ccSavedNumber:before {
+  display: inline-block;
+  color: #b6b6b6;
+}
+.savedCard .ccSavedNumber:before {
+  content: "****";
+}
+.savedCard .ccSavedExpiration {
+  position: absolute;
+  font-family: "Space Mono", "Courier New Bold", sans-serif;
+  right: 11px;
+  top: 41px;
+  font-size: 13px;
+}
+.savedCard .ccSavedExpiration:before {
+  display: inline-block;
+  color: #b6b6b6;
+}
+.savedCard .ccSavedExpiration:before {
+  content: "EXP: ";
+}
+.savedCard .ccSavedDate {
+  text-align: left;
+  font-size: 11px;
+  color: #999;
+  margin-top: 16.5px;
+}
+.savedCard .ccSavedDate:before {
+  content: "Saved ";
+}
+.savedCard.selected .ccAppearance {
+  border: 1px solid #63c1fc;
+  -webkit-box-shadow: 0 0 6px 3px #e0f3fe;
+  box-shadow: 0 0 6px 3px #e0f3fe;
+}
+.savedCard.expired .ccFront {
+  background: #ffdddd;
+}
+.savedCard.expired .ccSavedExpiration {
+  color: #b94a48;
+}
+.savedCard.expired .ccSavedExpiration:before {
+  color: #b94a48;
+  content: "EXPIRED: ";
+}
+.savedCard.expires-soon .ccSavedExpiration {
+  color: #b94a48;
+}
+.savedCard.expires-soon .ccSavedExpiration:before {
+  color: #b94a48;
+  content: "EXPIRES SOON: ";
+}
+.savedCard .PayPalCode {
+  position: absolute;
+  font-family: "Space Mono", "Courier New Bold", sans-serif;
+  right: 11px;
+  font-family: "Open Sans", "Arial Unicode", Helvetica, sans-serif;
+  left: 11px;
+  top: 41px;
+  font-size: 11px;
+}
+.savedCard .PayPalCode:before {
+  display: inline-block;
+  color: #b6b6b6;
+}
+.savedCard .PayPalCode:before {
+  font-family: "Space Mono", "Courier New Bold", sans-serif;
+  content: "ID: ";
+  font-size: 10px;
+}
+.savedCard .PayPalCode:empty {
+  visibility: hidden;
+}
+.savedCard .PayPalEmail {
+  position: absolute;
+  font-family: "Space Mono", "Courier New Bold", sans-serif;
+  right: 11px;
+  font-family: "Open Sans", "Arial Unicode", Helvetica, sans-serif;
+  left: 11px;
+  top: 55.4px;
+  font-size: 11px;
+  line-height: 11px;
+  width: 156px;
+  visibility: visible;
+}
+.savedCard .PayPalEmail:before {
+  display: inline-block;
+  color: #b6b6b6;
+}
+.savedCard .PayPalEmailContent {
+  display: none;
+}
+.savedCard .PayPalEmailLong {
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  width: 148px;
+  visibility: visible;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.savedCard .PayPalEmailMore {
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  right: -2px;
+}
+.savedCard .PayPalEmailMore + .tooltip > .tooltip-inner {
+  width: 350px;
+  max-width: 350px;
+}
+.savedCard.paypal .brand {
+  content: "";
+  display: block;
+  background-image: url('/shop/static/images/payment-methods.svg');
+  background-position: 0 -48px;
+  width: 102px;
+  height: 23px;
+  zoom: 0.81;
+  -moz-transform: scale(0.81);
+  -moz-transform-origin: 0 0;
+}
+#eStoreCheckout .savedCard {
+  cursor: pointer;
+}
+.ccSavedArea {
+  width: 100%;
+}
+.ccSavedArea:before,
+.ccSavedArea:after {
+  content: " ";
+  display: table;
+}
+.ccSavedArea:after {
+  clear: both;
+}
+.ccSavedArea:before,
+.ccSavedArea:after {
+  content: " ";
+  display: table;
+}
+.ccSavedArea:after {
+  clear: both;
+}
+.ccSavedContainer {
+  float: left;
+}
+.ccSavedActions {
+  position: relative;
+  top: 27.5px;
+  left: 16.5px;
+  font-size: 13px;
+}
+.ccSavedAdd {
+  margin: 27.5px 0 0 11px;
+  font-size: 13px;
+}
+.ccSavedDescription {
+  width: 600px;
+}
+.ccSavedBack {
+  display: block;
+  float: right;
+  font-size: 13px;
+}
+.ccSavedNote {
+  font-size: 13px;
+  color: #308800;
+  box-sizing: border-box;
+  margin: 11px 0 0 24px;
+}
+.ccSavedNote p {
+  margin: 0 0 0 0 !important;
+}
+.savePaymentBlock {
+  clear: both;
+}
+#removeCreditCardConfirm {
+  top: 30px;
+  margin: 0;
+}
+/* =========== */
+/* Specific CC */
+/* =========== */
+.visa .brand {
+  background-image: url('/shop/static/images/cc-images.svg');
+  background-position: 0px 0;
+  width: 40px;
+}
+.visa .ccSecurityCodeNote.default {
+  display: none;
+}
+.visa .ccSecurityCodeNote.visa {
+  display: block;
+}
+.visadankort .brand {
+  background-image: url('/shop/static/images/cc-images.svg');
+  background-position: 0px 0;
+  width: 40px;
+}
+.visadankort .ccSecurityCodeNote.default {
+  display: none;
+}
+.visadankort .ccSecurityCodeNote.visadankort {
+  display: block;
+}
+.visaalphabankbonus .brand {
+  background-image: url('/shop/static/images/cc-images.svg');
+  background-position: 0px 0;
+  width: 40px;
+}
+.visaalphabankbonus .ccSecurityCodeNote.default {
+  display: none;
+}
+.visaalphabankbonus .ccSecurityCodeNote.visaalphabankbonus {
+  display: block;
+}
+.mc .brand {
+  background-image: url('/shop/static/images/cc-images.svg');
+  background-position: -46px 0;
+  width: 40px;
+}
+.mc .ccSecurityCodeNote.default {
+  display: none;
+}
+.mc .ccSecurityCodeNote.mc {
+  display: block;
+}
+.mcalphabankbonus .brand {
+  background-image: url('/shop/static/images/cc-images.svg');
+  background-position: -46px 0;
+  width: 40px;
+}
+.mcalphabankbonus .ccSecurityCodeNote.default {
+  display: none;
+}
+.mcalphabankbonus .ccSecurityCodeNote.mcalphabankbonus {
+  display: block;
+}
+.bijcard .brand {
+  background-image: url('/shop/static/images/cc-images.svg');
+  background-position: -46px 0;
+  width: 40px;
+}
+.bijcard .ccSecurityCodeNote.default {
+  display: none;
+}
+.bijcard .ccSecurityCodeNote.bijcard {
+  display: block;
+}
+.maestro .brand {
+  background-image: url('/shop/static/images/cc-images.svg');
+  background-position: -92px 0;
+  width: 40px;
+}
+.maestro .ccSecurityCodeNote.default {
+  display: none;
+}
+.maestro .ccSecurityCodeNote.maestro {
+  display: block;
+}
+.maestrouk .brand {
+  background-image: url('/shop/static/images/cc-images.svg');
+  background-position: -92px 0;
+  width: 40px;
+}
+.maestrouk .ccSecurityCodeNote.default {
+  display: none;
+}
+.maestrouk .ccSecurityCodeNote.maestrouk {
+  display: block;
+}
+.amex .brand {
+  background-image: url('/shop/static/images/cc-images.svg');
+  background-position: -138px 0;
+  width: 40px;
+}
+.amex .ccSecurityCodeNote.default {
+  display: none;
+}
+.amex .ccSecurityCodeNote.amex {
+  display: block;
+}
+.discover .brand {
+  background-image: url('/shop/static/images/cc-images.svg');
+  background-position: -184px 0;
+  width: 40px;
+}
+.discover .ccSecurityCodeNote.default {
+  display: none;
+}
+.discover .ccSecurityCodeNote.discover {
+  display: block;
+}
+.diners_club_international .brand {
+  background-image: url('/shop/static/images/cc-images.svg');
+  background-position: -230px 0;
+  width: 40px;
+}
+.diners_club_international .ccSecurityCodeNote.default {
+  display: none;
+}
+.diners_club_international .ccSecurityCodeNote.diners_club_international {
+  display: block;
+}
+.diners_club_carte_blanche .brand {
+  background-image: url('/shop/static/images/cc-images.svg');
+  background-position: -230px 0;
+  width: 40px;
+}
+.diners_club_carte_blanche .ccSecurityCodeNote.default {
+  display: none;
+}
+.diners_club_carte_blanche .ccSecurityCodeNote.diners_club_carte_blanche {
+  display: block;
+}
+.jcb .brand {
+  background-image: url('/shop/static/images/cc-images.svg');
+  background-position: -276px 0;
+  width: 40px;
+}
+.jcb .ccSecurityCodeNote.default {
+  display: none;
+}
+.jcb .ccSecurityCodeNote.jcb {
+  display: block;
+}
+.unionpay .brand {
+  background-image: url('/shop/static/images/cc-images.svg');
+  background-position: -322px 0;
+  width: 40px;
+}
+.unionpay .ccSecurityCodeNote.default {
+  display: none;
+}
+.unionpay .ccSecurityCodeNote.unionpay {
+  display: block;
+}
+.ccBlock.unknown .brand.no-maestro {
+  background: none;
+}
+.ccBlock.unknown .brand.no-maestro:before {
+  display: block;
+  content: "";
+  position: absolute;
+  background: url('/shop/static/images/cc-images.svg') 0 0 no-repeat;
+  width: 92px;
+  height: 24px;
+}
+.ccBlock.unknown .brand.no-maestro:after {
+  display: block;
+  content: "";
+  position: absolute;
+  background: url('/shop/static/images/cc-images.svg') -138px 0 no-repeat;
+  width: 312px;
+  height: 24px;
+  margin-left: 92px;
+}
+@media (max-width: 780px) {
+  .ccBlock:not(.savedCard) .ccAppearance {
+    width: auto;
+    background: none;
+    box-shadow: none;
+  }
+  .ccBlock:not(.savedCard) .ccAppearance:after {
+    display: none;
+  }
+  .ccBlock:not(.savedCard) .ccFront {
+    width: auto;
+    border: none;
+    background: none;
+    box-shadow: none;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .ccBlock .error-cardDetails,
+  .amex .error-cardDetails {
+    position: static !important;
+    left: 0 !important;
+    margin-top: 11px !important;
+    width: 100%;
+  }
+  #ccNumberLabel,
+  .amex #ccNumberLabel {
+    display: block;
+    float: left;
+    padding-top: 15px;
+    width: 110px !important;
+    min-width: 110px !important;
+  }
+  #ccNumber,
+  .amex #ccNumber {
+    width: 290px !important;
+  }
+  #ccNumber.invalid-luhn,
+  #ccNumber.valid-luhn,
+  .amex #ccNumber.invalid-luhn,
+  .amex #ccNumber.valid-luhn {
+    background-position: 255px 10px !important;
+  }
+  #ccSecurityCodeLabel,
+  .amex #ccSecurityCodeLabel {
+    display: inline-block;
+    position: relative;
+    width: 110px;
+    min-width: 110px;
+    left: 0;
+    top: 0;
+    z-index: 1;
+  }
+  #ccSecurityCode,
+  .amex #ccSecurityCode {
+    display: inline-block;
+    position: relative;
+    left: 0;
+    top: 0;
+    margin-bottom: 5.5px !important;
+  }
+  .ccSecurityCodeNote,
+  .amex .ccSecurityCodeNote.amex {
+    position: relative;
+    top: 0;
+    left: 0;
+    margin: 5px 0 20px 112px;
+    clear: both;
+    width: 290px;
+  }
+  .ccSecurityCodeNote:before,
+  .amex .ccSecurityCodeNote.amex:before {
+    display: none;
+  }
+  .ccSecurityCodeNote p,
+  .amex .ccSecurityCodeNote.amex p {
+    margin-bottom: 5.5px !important;
+  }
+  #ccExpirationLabel,
+  .amex #ccExpirationLabel {
+    width: 110px;
+    min-width: 110px;
+  }
+  #ccExpirationLabel:after,
+  .amex #ccExpirationLabel:after {
+    left: 205px;
+  }
+  #ccHolderLabel,
+  .amex #ccHolderLabel {
+    width: 110px;
+    min-width: 110px;
+  }
+}
+.paypal-cards-info {
+  font-size: 14px;
+  margin-top: 27.5px;
+}
+.paypal-cards-info:before {
+  content: '';
+  display: inline-block;
+  position: relative;
+  background: url('/shop/static/images/cc-images.svg') 0 0 no-repeat;
+  width: 92px;
+  height: 24px;
+  top: 7px;
+}
+

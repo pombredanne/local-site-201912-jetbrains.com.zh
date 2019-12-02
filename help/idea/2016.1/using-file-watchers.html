@@ -1,0 +1,400 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"></meta><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta content="&#xA;        Basic procedures to set up and configure the transpiler file watcher&#xA;        configurations. Learn more about specifying and configuring the File Watcher.&#xA;    " name="description"><meta charset="UTF-8"><title>
+
+        How to create file watchers transpiler configurations.
+    </title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Using_File_Watchers"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.1 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWindow</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="updating-a-command-line-tool.html">Updating a Command Line Tool</a><a class="navigation-links__next" href="working-with-embedded-local-terminal.html">Working with Embedded Local Terminal</a></div><h1>Using File Watchers</h1><a name="d795888e26"></a><p>On this page:</p><ul><li class="list__item"><a href="#d795888e32">Basics</a></li><li class="list__item"><a href="#nameTypeDescription">Specifying the File Watcher name, type, and description</a></li><li class="list__item"><a href="#generalOptions">Configuring the behaviour of the File Watcher</a></li><li class="list__item"><a href="#transpilerBehaviour">Configuring interaction with the transpiler</a></li><li class="list__item"><a href="#enableFileWatcher">Enabling and disabling File Watchers</a></li><li class="list__item"><a href="#d795888e488">Examples of customizing the behaviour of a transpiler</a></li></ul><a name="d795888e32"></a><h2>Basics</h2>
+         
+    <a name="d76029e53"></a><p>
+              IntelliJ IDEA supports integration with various third-party <a name="d76029e55"></a><a href="http://en.wikipedia.org/wiki/Source-to-source_compiler" data-external="true"><span>transpilers</span></a> that run in the background and perform the following:
+              <ul class="list _bullet"><li class="list__item"><a name="d76029e59"></a>
+                      Translate <a name="d76029e61"></a><span class="emphasis">Less</span>, <a name="d76029e64"></a><span class="emphasis">Sass</span>, and <a name="d76029e67"></a><span class="emphasis">SCSS</span> source code into <a name="d76029e70"></a><span class="emphasis">CSS</span> code.
+                  </li><li class="list__item"><a name="d76029e73"></a>
+                      Translate <a name="d76029e75"></a><span class="emphasis">TypeScript</span> and <a name="d76029e78"></a><span class="emphasis">CoffeeScript</span> source code into <a name="d76029e81"></a><span class="emphasis">JavaScript</span> code,
+                      possibly also creating <a name="d76029e84"></a><span class="emphasis">source maps</span> to enable debugging.
+                  </li><li class="list__item"><a name="d76029e87"></a>
+                      Compress <a name="d76029e89"></a><span class="emphasis">JavaScript</span> and <a name="d76029e92"></a><span class="emphasis">CSS</span> code.
+                  </li></ul>
+              Note that IntelliJ IDEA does not contain built-in <a name="d76029e96"></a><span class="emphasis">transpilers</span> but only supports integration with the tools that you have to download and install outside IntelliJ IDEA.
+          </p>
+    <a name="d76029e100"></a><p>
+              In IntelliJ IDEA, these transpiler configurations are called <a name="d76029e102"></a><span class="emphasis">File Watchers</span>.
+              For each supported transpiler, IntelliJ IDEA provides a predefined <a name="d76029e105"></a><span class="emphasis">File Watcher</span> template.
+              Predefined <a name="d76029e108"></a><span class="emphasis">File Watcher</span> templates are available at the IntelliJ IDEA level. To run a transpiler against your project files you need to
+              create a project-specific <a name="d76029e111"></a><span class="emphasis">File Watcher</span> based on the relevant template, at least, specify the path to the transpiler to use on your machine.
+          </p>
+    <a name="d76029e115"></a><p>
+              You can download a <a name="d76029e117"></a><span class="emphasis">transpiler</span> of your choice and set it up as a <a name="d76029e120"></a><span class="emphasis">File Watcher</span>. However, in this case no predefined template is available
+              so you will have to specify all the settings manually.
+          </p>
+    <a name="d76029e124"></a><p>
+                  To be applicable, a <a name="d76029e126"></a><span class="emphasis">File Watcher</span> must be enabled by selecting the check box next to it on the <a name="d76029e129"></a><span class="control">File Watchers</span> page of the <a name="d76029e132"></a><span class="control">Settings</span> dialog box,
+                  see <a name="d76029e135"></a><a href="#enableFileWatcher"><span>Enabling and Disabling File Watchers</span></a>.
+                  After that the <a name="d76029e138"></a><span class="emphasis">File Watcher</span> will be invoked automatically upon any changes made to the source code or upon save,
+        depending on whether the <a name="d76029e142"></a><span class="control">Immediate File Synchronization</span> check box is selected or cleared, see <a name="d76029e145"></a><a href="new-watcher-dialog.html#immediateFileSynchronization"><span>New Watcher Dialog</span></a>.
+
+              </p>
+    <a name="d76029e148"></a><p>
+              The output of a <a name="d76029e150"></a><span class="emphasis">File Watcher</span> is stored in a separate file. The predefined templates suggest the type of the file depending on the transpiler type.
+              By default the output file is created in the same folder as the input file when the <a name="d76029e153"></a><span class="emphasis">File Watcher</span> is invoked for the first time, whereupon this file is only updated.
+              You can customize all these settings during <a name="d76029e156"></a><span class="emphasis">File Watcher</span> creation.
+          </p>
+    <a name="d76029e161"></a><p>
+                  JavaScript files generated by <a name="d76029e163"></a><span class="emphasis">File Watchers</span> are excluded from code completion and refactoring.
+              </p>
+
+      <a name="d76029e167"></a><p>
+                      In the <a name="d76029e169"></a><span class="control">Project</span> tree view, the output file is shown under the original file which is shown as a node.
+                      This is done to improve visibility so you can easier locate necessary files.
+                  </p>
+
+    <a name="d76029e173"></a><p>
+              File watchers have two dedicated <a name="d76029e175"></a><span class="emphasis">code inspections</span>:
+              <ul class="list _bullet"><li class="list__item"><a name="d76029e179"></a>
+                      The <a name="d76029e181"></a><span class="emphasis">File watcher available</span> inspection is invoked in every file
+                      that is recognized as subject for applying a predefined file watcher (Sass, Less, SCSS, TypeScript, or CoffeeScript).
+                      If none of the applicable predefined <a name="d76029e184"></a><span class="emphasis">File Watchers</span> is associated with the current project, IntelliJ IDEA suggests to add one.
+                  </li><li class="list__item"><a name="d76029e187"></a>
+                      The <a name="d76029e189"></a><span class="emphasis">File watcher problems</span> inspection is invoked by a running <a name="d76029e192"></a><span class="emphasis">File Watcher</span> and highlights errors specific for it.
+                  </li></ul></p>
+   
+        <a name="d795888e36"></a><p>To create a project <a name="d795888e38"></a><span class="emphasis">File Watcher</span> based on a predefined template, perform these general
+            steps:
+            <ol class="list _decimal"><li class="list__item"><a name="d795888e43"></a>Make sure the&nbsp;<a name="d795888e45"></a><span class="emphasis">transpiler</span>&nbsp;to use is downloaded and installed on your machine.</li><li class="list__item"><a name="d795888e49"></a>
+                         
+                     
+                     
+        Make sure the <a name="d2333e5509"></a><span class="emphasis">File Watchers</span> repository plugin is installed and enabled.
+         
+            The plugin is&nbsp;not&nbsp;bundled with IntelliJ IDEA, but it can be installed from the <a name="d2333e5517"></a><span class="emphasis">JetBrains plugin repository</span>
+            as described in <a name="d2333e5520"></a><a href="installing-updating-and-uninstalling-repository-plugins.html"><span>Installing, Updating and Uninstalling Repository Plugins</span></a> and <a name="d2333e5522"></a><a href="enabling-and-disabling-plugins.html"><span>Enabling and Disabling Plugins</span></a>.
+     
+     
+                </li><li class="list__item"><a name="d795888e61"></a>Specify the File Watcher name, type, and description.</li><li class="list__item"><a name="d795888e64"></a>In the <a name="d795888e66"></a><span class="control">Options</span> area, configure the behaviour of the File Watcher: the events that
+                    will invoke it, from which files  it can be invoked, when you want the console shown, etc.</li><li class="list__item"><a name="d795888e70"></a>In the <a name="d795888e72"></a><span class="control">Watcher Settings</span> area, configure interaction with the transpiler and its
+                    behaviour: the path to the executable file,
+                    the arguments to pass to it, the acceptable input and expected output file types, etc.</li></ol>
+        </p>
+    <a name="nameTypeDescription"></a><a name="dynaProc0"></a><section class="procedure-steps"><h2>Specifying the File Watcher name, type, and description</h2><ol class=".list _decimal"><li class="list__item">
+                 
+         
+            Open the <a name="d2333e7944"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by choosing <a name="d2333e7946"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d2333e7949"></a><span class="menupath">IntelliJ IDEA | Preferences</span> for OS X,
+         
+         
+            and  
+         
+         
+         
+        click <a name="d2333e7972"></a><span class="control">File Watchers</span> under <a name="d2333e7975"></a><span class="control">Tools</span>.
+     
+     
+
+            </li><li class="list__item">
+                The <a name="d795888e95"></a><a href="file-watchers.html"><span>File Watchers page</span></a> that opens, shows the list of <a name="d795888e98"></a><span class="emphasis">File Watchers</span> that are already configured in the project.
+                Click the <a name="d795888e101"></a><span class="control">Add</span> button <img alt="new.png" width="12" height="12" title="new.png" src="/help/img/idea/2016.1/new.png" class="inline-icon-12"> or press <kbd data-default="Alt+Insert" data-default_for_gnome="Alt+Insert" data-default_for_kde="Alt+Insert" data-default_for_xwin="Alt+Insert" data-emacs="Alt+Insert" data-jbuilder="Alt+Insert" data-visual_studio="Alt+Insert" data-netbeans_6.5="N/A" data-eclipse="Alt+Insert" data-mac_os_x_10.5_="&#x2318;N" data-mac_os_x="&#x2303;N" data-eclipse_mac_os_x="&#x2318;N" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Insert</kbd> and do one of the following:
+                <ul class="list _bullet"><li class="list__item"><a name="d795888e111"></a>
+                        Choose the predefined template to create the <a name="d795888e113"></a><span class="emphasis">File Watcher</span> from. The choice depends on the <a name="d795888e116"></a><span class="emphasis">transpiler</span> you are going to use.
+                    </li><li class="list__item"><a name="d795888e120"></a>
+                        To set up a transpiler of your choice, choose <a name="d795888e122"></a><span class="control">Custom</span>.
+                    </li></ul>
+                After you choose the relevant template or the <a name="d795888e127"></a><span class="control">Custom</span> option, the <a name="d795888e130"></a><a href="new-watcher-dialog.html"><span>New Watcher</span></a> dialog box opens.
+            </li><li class="list__item">
+                In the <a name="d795888e136"></a><span class="control">Name</span> text box, type the name of the <a name="d795888e139"></a><span class="emphasis">File Watcher</span>. By default, IntelliJ IDEA suggests the name of the selected predefined template.
+            </li><li class="list__item">
+                Provide a brief description of the <a name="d795888e145"></a><span class="emphasis">File Watcher's</span> functionality.
+                 
+        Predefined templates already contain general information regarding the accepted input and produced output.
+        Expand or update the description, if, for example, you have two <a name="d75433e843"></a><span class="emphasis">File Watcher</span> that apply to the same source code
+        but differ from each other in some configuration settings.
+     .
+            </li></ol></section><a name="generalOptions"></a><a name="dynaProc1"></a><section class="procedure-steps"><h2>Configuring the behaviour of the File Watcher</h2><p>
+                <a name="d795888e156"></a><p>
+                    In the <a name="d795888e158"></a><span class="control">Options</span> area of the <a name="d795888e161"></a><span class="control">New Watcher</span> dialog box, configure the behaviour of the <a name="d795888e164"></a><span class="emphasis">File Watcher</span>: the events that will invoke it, from which files  it can be invoked,
+                    when you want the console shown, etc.
+                </p>
+            </p><ol class=".list _decimal"><li class="list__item">
+                Specify whether you want the <a name="d795888e171"></a><span class="emphasis">File Watcher</span>  to interact with the IntelliJ IDEA syntax parser:
+                <ul class="list _bullet"><li class="list__item"><a name="d795888e176"></a>
+                        To have the <a name="d795888e178"></a><span class="emphasis">File Watcher</span> ignore update, save, and change focus events
+                        in files that are syntactically invalid and start only in error-free files,
+                        select the <a name="d795888e181"></a><span class="control">Trigger watcher regardless of syntax errors</span> check box.
+                    </li><li class="list__item"><a name="d795888e185"></a>
+                        To have the <a name="d795888e187"></a><span class="emphasis">File Watcher</span> start regardless of the syntactical correctness of a file,
+                        clear the <a name="d795888e190"></a><span class="control">Trigger watcher regardless of syntax errors</span> check box.
+                        The <a name="d795888e193"></a><span class="emphasis">File Watcher</span> will start upon update, save, or frame deactivation,
+                        depending on the status of the <a name="d795888e196"></a><span class="control">Immediate file synchronization</span> check box.
+                    </li></ul>
+            </li><li class="list__item">
+                Specify the events which will invoke the <a name="d795888e204"></a><span class="emphasis">File Watcher</span>:
+                <ul class="list _bullet"><li class="list__item"><a name="d795888e209"></a>To have the <a name="d795888e211"></a><span class="emphasis">File Watcher</span> invoked as soon as any changes are made to the
+                        source code, select the <a name="d795888e214"></a><span class="control">Immediate file synchronization</span> check box.</li><li class="list__item"><a name="d795888e218"></a>Clear the check box to have the <a name="d795888e220"></a><span class="emphasis">File Watcher</span> started upon save
+                        (<a name="d795888e223"></a><span class="menupath">File | Save All</span>)or when you move focus from IntelliJ IDEA
+                        (upon frame deactivation).</li></ul>
+            </li><li class="list__item">
+                Specify how you want the <a name="d795888e231"></a><span class="emphasis">File Watcher</span> to deal with dependencies.
+                 
+        When the <a name="d75433e579"></a><span class="emphasis">File Watcher</span> is invoked on a file, IntelliJ IDEA detects all the files in which this file is included.
+        For each of these files, in its turn, IntelliJ IDEA again detects the files into which it is included. This operation is repeated recursively until IntelliJ IDEA reaches the files
+        that are not included anywhere <a name="d75433e582"></a><a href="new-watcher-dialog.html#scope"><span>within the specified scope</span></a>. These files are referred to as <a name="d75433e585"></a><span class="emphasis">root files</span> (do not confuse with <a name="d75433e588"></a><span class="emphasis">content roots</span>).
+     
+                <ul class="list _bullet"><li class="list__item"><a name="d795888e238"></a>
+                        To run the <a name="d795888e240"></a><span class="emphasis">File Watcher</span> only against the <a name="d795888e243"></a><span class="emphasis">root files</span>,
+                        select the <a name="d795888e246"></a><span class="control">Track only root files</span> check box.
+                        <a name="d795888e249"></a><p>
+                            Note that
+                             
+         
+        in the <a name="d75433e627"></a><span class="emphasis">TypeScript</span> file watcher, the check box has been renamed to <a name="d75433e630"></a><span class="control">Compile main files only</span>.
+     
+
+                        </p>
+                    </li><li class="list__item"><a name="d795888e258"></a>
+                        Clear the check box to run the <a name="d795888e260"></a><span class="emphasis">File Watcher</span> against the file from which it is invoked and against all the files in which this file is recursively included
+                        within the specified scope.
+                    </li></ul>
+                 
+        <a name="d75433e594"></a><p>
+            This choice is available only for <a name="d75433e596"></a><span class="emphasis">CSS</span>, <a name="d75433e599"></a><span class="emphasis">Sass</span>/<a name="d75433e602"></a><span class="emphasis">SCSS</span>, <a name="d75433e605"></a><span class="emphasis">Less</span>, <a name="d75433e608"></a><span class="emphasis">Compass</span>,
+            <a name="d75433e612"></a><span class="emphasis">Stylus</span>, <a name="d75433e615"></a><span class="emphasis">Typescript</span>, and <a name="d75433e618"></a><span class="emphasis">Dart</span>.
+        </p>
+     
+            </li><li class="list__item">
+                In the <a name="d795888e270"></a><span class="control">Show console</span> drop-down list, specify when you want the console shown.
+                 
+        The available options are:
+        <ul class="list _bullet"><li class="list__item"><a name="d75433e639"></a>
+                <a name="d75433e641"></a><span class="control">Always:</span> when this option is chosen, the <a name="d75433e644"></a><span class="emphasis">File Watcher</span> opens the console when it starts.
+            </li><li class="list__item"><a name="d75433e648"></a>
+                <a name="d75433e650"></a><span class="control">Error:</span> when this option is chosen, the  <a name="d75433e653"></a><span class="emphasis">File Watcher</span> opens the console only if any errors occur in transpilation.
+            </li><li class="list__item"><a name="d75433e657"></a>
+                <a name="d75433e659"></a><span class="control">Never:</span> choose this option to suppress opening the console under any circumstances.
+            </li></ul>
+     
+            </li><li class="list__item">
+                Configure the output filters to distinguish the output of the <a name="d795888e279"></a><span class="emphasis">File Watcher</span> from other output.
+                 
+        These filters make the basis for:
+        <ol class="list _decimal"><li class="list__item"><a name="d75433e851"></a>
+                Displaying paths to the <a name="d75433e853"></a><span class="emphasis">File Watcher</span> output files as links in error and other messages and logs.
+                When you click such link, the corresponding file is opened in the editor.
+            </li><li class="list__item"><a name="d75433e857"></a>
+                Error highlighting in the output files.
+            </li></ol>
+     
+                Click the <a name="d795888e284"></a><span class="control">Output Filters</span> button to open the <a name="d795888e287"></a><a href="output-filters-dialog.html"><span>Output Filters dialog</span></a> and  manage the list of filters.
+            </li></ol></section><a name="transpilerBehaviour"></a><a name="dynaProc2"></a><section class="procedure-steps"><h2>Configuring interaction with the transpiler</h2><p>
+                <a name="d795888e296"></a><p>
+                    In the <a name="d795888e298"></a><span class="control">Watcher Settings</span> area, configure interaction with the <a name="d795888e301"></a><span class="emphasis">transpiler</span>: specify the path to the executable file,
+                    the arguments to pass to it, the acceptable input and expected output file types, etc.
+                </p>
+            </p><ol class=".list _decimal"><li class="list__item">
+                In the <a name="d795888e308"></a><span class="control">Program</span> text box, specify the location  of the <a name="d795888e311"></a><span class="emphasis">transpiler's</span> executable file (<code class="code" data-lang="Java">.exe</code>, <code class="code" data-lang="Java">.cmd</code>, <code class="code" data-lang="Java">.bat</code>
+                or other depending on the specific tool. <code class="code" data-lang="Java">.jar</code> archives are also acceptable but defining <code class="code" data-lang="Java">PATH</code> variables for them is not supported.
+                 
+        Do one of the following:
+        <ul class="list _ul"><li class="list__item"><a name="d75433e684"></a>Type the path explicitly.</li><li class="list__item"><a name="d75433e687"></a>Click the <a name="d75433e689"></a><span class="control">Browse</span> button <img alt="browseButton" width="15" height="15" title="browseButton" src="/help/img/idea/2016.1/browseButton.png" class="inline-icon-15"> to open the <a name="d75433e694"></a><span class="control">Select Path </span> dialog box
+                and navigate to the desired location.</li><li class="list__item"><a name="d75433e698"></a>Click the <a name="d75433e700"></a><span class="control">Insert Macro</span> button to open the <a name="d75433e703"></a><a href="macros-dialog.html"><span>Macros</span></a> dialog box where you can select the relevant macro from the list.</li></ul>
+     
+            </li><li class="list__item">
+                From the <a name="d795888e335"></a><span class="control">File type</span> drop-down, choose the expected type of input files.
+                 
+        The <a name="d75433e667"></a><span class="emphasis">File Watcher</span> will consider only files of this type
+        as subject for analyzing and processing.
+        File types are recognised based on <a name="d75433e670"></a><a href="file-types.html"><span>associations between file types and file extensions</span></a>.
+        <a name="d75433e673"></a><p>
+            By default, the field shows the file type in accordance with the chosen predefined <a name="d75433e675"></a><span class="emphasis">File Watcher</span> template.
+        </p>
+     
+            </li><li class="list__item">
+                In the <a name="d795888e343"></a><span class="control">Scope</span> drop-down list, define the range of files the <a name="d795888e346"></a><span class="emphasis">File Watcher</span> can be applied to.
+                 
+        Changes in these files will invoke the <a name="d75433e461"></a><span class="emphasis">File Watcher</span> either immediately or upon save or frame deactivation,
+        depending on the status of the <a name="d75433e464"></a><span class="control">Immediate file synchronization</span> check box.
+        <a name="d75433e467"></a><p>
+            You can choose one of the predefined scopes from the drop-down list:
+             
+        <ul class="list _bullet"><li class="list__item"><a name="d75433e498"></a>
+                <a name="d75433e500"></a><span class="control">Project Files:</span> all the files within the project
+                 
+                                content roots (see <a name="d75433e505"></a><a href="content-root.html"><span>Content Root</span></a> and <a name="d75433e507"></a><a href="configuring-content-roots.html"><span>Configuring Content Roots</span></a>).
+                 
+                 
+            </li><li class="list__item"><a name="d75433e514"></a>
+                <a name="d75433e516"></a><span class="control">Project Production Files:</span> all the files within the project content roots excluding test sources.
+            </li><li class="list__item"><a name="d75433e520"></a>
+                <a name="d75433e522"></a><span class="control">Project Test Files:</span> all the files within the project test source roots.
+            </li><li class="list__item"><a name="d75433e526"></a>
+                <a name="d75433e528"></a><span class="control">Open Files:</span> all the files that are currently opened in the editor.
+            </li></ul>
+        <a name="d75433e533"></a><p>
+            <a name="d75433e535"></a><span class="control">VCS Scopes:</span> these scopes are only available if your <a name="d75433e538"></a><a href="associating-a-project-root-with-a-version-control-system.html"><span>project is under version control</span></a>.</p>
+        <ul class="list _bullet"><li class="list__item"><a name="d75433e544"></a>
+                <a name="d75433e546"></a><span class="control">Changed Files:</span> all changed files, that is, all files associated with all existing <a name="d75433e549"></a><a href="changelist.html"><span>changelists</span></a>.
+            </li><li class="list__item"><a name="d75433e553"></a>
+                <a name="d75433e555"></a><span class="control">Default:</span> all the files associated with the <a name="d75433e558"></a><a href="changelist.html"><span>changelist</span></a>&nbsp;<code class="code" data-lang="Java">Default</code>.
+            </li></ul>
+        Alternatively, click the <a name="d75433e566"></a><span class="control">Browse</span> button and configure a <a name="d75433e569"></a><span class="emphasis">custom scope</span> in the <a name="d75433e573"></a><span class="emphasis">Scopes</span> dialog box that opens.
+     
+        </p>
+        <a name="d75433e472"></a><p>
+            For more details on scopes, see the pages <a name="d75433e474"></a><a href="scope.html"><span>Scopes</span></a> and <a name="d75433e477"></a><a href="scopes.html"><span>Scopes dialog</span></a>.
+        </p>
+        <a name="d75433e481"></a><p>
+            The <a name="d75433e483"></a><span class="control">Scope</span> setting overrides the <a name="d75433e486"></a><span class="control">Track only root files</span> check box setting: if a dependency is outside the specified scope,
+            the <a name="d75433e489"></a><span class="emphasis">File Watcher</span> is not applied to it.
+        </p>
+     
+            </li><li class="list__item">
+                In the <a name="d795888e354"></a><span class="control">Arguments</span> text box, define the arguments to pass to the <a name="d795888e357"></a><span class="emphasis">transpiler</span>
+                 
+        Among other cases, use this text box to change the default output location, that is,
+        specify a custom location where you want the <a name="d75433e711"></a><span class="emphasis">transpiler</span> to store the files generated during transpilation.
+        Do one of the following:
+
+        <ul class="list _ul"><li class="list__item"><a name="d75433e716"></a>
+                Type the list of arguments in the text box.
+            </li><li class="list__item"><a name="d75433e719"></a>
+                Click the <a name="d75433e721"></a><span class="control">Insert Macro</span> button to open the <a name="d75433e724"></a><a href="macros-dialog.html"><span>Macros</span></a> dialog box where you can select the desired macro from the list.
+            </li></ul>
+        <a name="d75433e729"></a><p>
+            When specifying the arguments, follow these rules:
+        </p>
+        <ul class="list _ul"><li class="list__item"><a name="d75433e734"></a>
+                Use spaces to separate individual arguments.</li><li class="list__item"><a name="d75433e737"></a>
+                If an argument includes spaces,
+                enclose the spaces or the argument that contains the spaces in double quotes,
+                for example,
+                <code class="code" data-lang="Java">some"&nbsp;"arg</code> or <code class="code" data-lang="Java">"some&nbsp;arg"</code>.</li><li class="list__item"><a name="d75433e746"></a>
+                If an argument includes double quotes (e.g. as part of the argument),
+                escape the double quotes by means of the backslashes,
+                for example,
+                <code class="code" data-lang="Java">-Dmy.prop=\"quoted_value"\</code>.
+            </li></ul>
+     
+            </li><li class="list__item">
+                In the <a name="d795888e366"></a><span class="control">Working Directory</span> text box, specify the directory to which the <a name="d795888e369"></a><span class="emphasis">transpiler</span>&nbsp;will be applied.
+                 
+        Because the tool is always invoked in the context of a file, the default working directory is the directory of the current file. This setting is specified in all predefined templates
+        through a macros <code class="code" data-lang="Java">$FileDir$</code>. To update this default settings, do one of the following:
+        <ul class="list _ul"><li class="list__item"><a name="d75433e761"></a>Type the path explicitly in the text box.</li><li class="list__item"><a name="d75433e764"></a>Click the <a name="d75433e766"></a><span class="control">Browse</span> button <img alt="browseButton" width="15" height="15" title="browseButton" src="/help/img/idea/2016.1/browseButton.png" class="inline-icon-15"> to open the <a name="d75433e771"></a><span class="control">Select Path </span> dialog box
+                and navigate to the desired location.
+            </li><li class="list__item"><a name="d75433e775"></a>
+                Click the
+                <a name="d75433e777"></a><span class="control">Insert Macro</span>
+                button to open the <a name="d75433e780"></a><a href="macros-dialog.html"><span>Macros</span></a> dialog box, where you can select the desired macro from the list.
+            </li></ul>
+        <aside class="tip sideblock">
+            <a name="d75433e787"></a><p>
+                If the field is left blank, IntelliJ IDEA uses the directory of the file where the <a name="d75433e789"></a><span class="emphasis">File Watcher</span> is invoked.
+            </p>
+        </aside>
+     
+            </li><li class="list__item">
+                In the <a name="d795888e377"></a><span class="control">Output paths to refresh</span> text box, specify the files where the <a name="d795888e380"></a><span class="emphasis">transpiler</span> stores its output: the resulting source code, source maps,
+                and dependencies. Based on this settings, IntelliJ IDEA detects files generated through transpilation.
+                 
+        <a name="d75433e797"></a><p>
+            Please note, that changing the value in this text box does not make the <a name="d75433e799"></a><span class="emphasis">transpiler</span> store its output in another location.
+            To do that, specify the desired output location in the <a name="d75433e802"></a><span class="control">Arguments</span> text box.
+        </p>
+
+        <a name="d75433e806"></a><p>
+            Do one of the following:
+        </p>
+        <ul class="list _bullet"><li class="list__item"><a name="d75433e811"></a>
+                Type the output paths manually. Use colons as separators.
+            </li><li class="list__item"><a name="d75433e814"></a>
+                Click the <a name="d75433e816"></a><span class="control">Insert Macro</span>
+                button to open the <a name="d75433e819"></a><a href="macros-dialog.html"><span>Macros</span></a> dialog box, where you can select the desired pattern from the list.
+            </li></ul>
+     
+            </li><li class="list__item">
+                Use the <a name="d795888e388"></a><span class="control">Create output file from stdout</span> check box  to specify how you want the output file generated.
+                <ul class="list _bullet"><li class="list__item"><a name="d795888e393"></a>
+                        To have IntelliJ IDEA read the native <a name="d795888e395"></a><span class="emphasis">transpiler's</span> output (<code class="code" data-lang="Java">standard output stream (stdout)</code>) and generate the resulting files from it,
+                        select the <a name="d795888e401"></a><span class="control">Create output file from stdout</span> check box.
+                    </li><li class="list__item"><a name="d795888e405"></a>
+                        To have the <a name="d795888e407"></a><span class="emphasis">transpiler</span> write its output directly to the files specified in the <a name="d795888e410"></a><span class="control">Output paths to refresh</span> field,
+                        clear the check box.
+                    </li></ul>
+                 
+        <aside class="tip sideblock">
+            <a name="d75433e830"></a><p>
+                Some <a name="d75433e832"></a><span class="emphasis">transpilers</span> generate a <code class="code" data-lang="Java">standard output stream (stdout)</code> file, others do not, which may lead to errors.
+                Therefore it is strongly recommended to preserve the default setting.
+            </p>
+        </aside>
+     
+            </li><li class="list__item">
+                Optionally, define environment variables. For example, specify the <code class="code" data-lang="Java">PATH</code> variable for the tool that is required for starting the <a name="d795888e423"></a><span class="emphasis">transpiler</span>
+                but is not referenced in the path to it. In most cases it is <a name="d795888e426"></a><span class="emphasis">Node.js</span> or <a name="d795888e429"></a><span class="emphasis">ruby.exe</span>.
+                Such situation may happen if you installed the <a name="d795888e432"></a><span class="emphasis">transpiler</span> manually but not through the <a name="d795888e436"></a><span class="emphasis">Node Package Manager</span> or <a name="d795888e439"></a><span class="emphasis">gem manager</span>
+                and its installation folder is not under <a name="d795888e442"></a><span class="emphasis">Node.js</span> or <a name="d795888e445"></a><span class="emphasis">ruby</span>.
+            </li></ol></section><a name="enableFileWatcher"></a><h2>Enabling and disabling File Watchers</h2>
+    <a name="d795888e452"></a><p>
+        To toggle the enable/disable status of a <a name="d795888e454"></a><span class="emphasis">File Watcher</span>, select/clear the check box next to it on the <a name="d795888e457"></a><span class="control">File Watchers</span> page of the <a name="d795888e460"></a><span class="control">Settings</span>
+          dialog box.
+        If an error occurs while a <a name="d795888e466"></a><span class="emphasis">File Watcher</span> is running, the <a name="d795888e470"></a><span class="emphasis">File Watcher</span> is automatically disabled. To restore the status, enable the <a name="d795888e473"></a><span class="emphasis">File Watcher</span> manually.
+    </p>
+    <a name="d795888e477"></a><p>
+        When a <a name="d795888e479"></a><span class="emphasis">File Watcher</span> is enabled, it starts automatically as soon as a file to which transpilation is applicable is changed or saved,
+        see <a name="d795888e482"></a><a href="#generalOptions"><span>Configuring the behaviour of the File Watcher</span></a>.
+    </p>
+    <a name="d795888e488"></a><h2>Examples of customizing the behaviour of a transpiler</h2>
+        <a name="d795888e490"></a><p>
+             
+            Any <a name="d75433e291"></a><span class="emphasis">transpiler</span> is an external, third-party tool. Therefore the only way to influence a <a name="d75433e294"></a><span class="emphasis">transpiler</span> is pass arguments to it
+            just as if you were working in the command line mode. These arguments are specific for each tool. Below are two examples of customizing the default output location
+            for the <a name="d75433e297"></a><span class="emphasis">CoffeeScript transpiler</span>.
+     
+            </p>
+            <a name="d795888e495"></a><p>
+         
+            Suppose, you have a project with the following folder structure:
+            <figure><img alt="fileWatcherExampleImage1" width="211" height="250" title="fileWatcherExampleImage1" src="/help/img/idea/2016.1/fileWatcherExampleImage1.png"></figure>
+            By default, the generated files will be stored in the folder where the original file is. You can change this default location and have the generated files stored in the <code class="code" data-lang="Java">js</code> folder.
+            Moreover, you can have them stored in a flat list or arranged in the folder structure that repeats the original structure under the <code class="code" data-lang="Java">app</code> node.
+     
+            </p>
+        <ul class="list _bullet"><li class="list__item"><a name="d75433e218"></a>
+            To have all the generated files stored in the output <code class="code" data-lang="Java">js</code> folder without retaining the original folder structure under the <code class="code" data-lang="Java">app</code> folder:
+            <ol class="list _decimal"><li class="list__item"><a name="d75433e228"></a>
+                    In the <a name="d75433e230"></a><span class="control">Arguments</span> text box, type:
+                    <a name="d75433e233"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+--output $ProjectFileDir$\js\ --compile --map $FileName$
+                    </code></div>
+                </li><li class="list__item"><a name="d75433e237"></a>
+                    In the <a name="d75433e239"></a><span class="control">Output paths to refresh</span> text box, type:
+                    <a name="d75433e242"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+$ProjectFileDir$\js\$FileNameWithoutExtension$.js:$ProjectFileDir$\js\$FileNameWithoutExtension$.map
+                    </code></div>
+                </li></ol>
+            <a name="d75433e247"></a><p>
+                As a result, the project tree looks as follows:
+                <figure><img alt="fileWatcherExampleImage2" width="186" height="309" title="fileWatcherExampleImage2" src="/help/img/idea/2016.1/fileWatcherExampleImage2.png"></figure>
+            </p>
+        </li><li class="list__item"><a name="d75433e253"></a>
+            To have the original folder structure under the <code class="code" data-lang="Java">app</code> node retained in the output <code class="code" data-lang="Java">js</code> folder:
+            <ol class="list _decimal"><li class="list__item"><a name="d75433e263"></a>
+                    In the <a name="d75433e265"></a><span class="control">Arguments</span> text box, type:
+                    <a name="d75433e268"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+--output $ProjectFileDir$\js\$FileDirRelativeToProjectRoot$\ --compile --map $FileName$
+                    </code></div>
+                </li><li class="list__item"><a name="d75433e272"></a>
+                    In the <a name="d75433e274"></a><span class="control">Output paths to refresh</span> text box, type:
+                    <a name="d75433e277"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+$ProjectFileDir$\js\$FileDirRelativeToProjectRoot$\$FileNameWithoutExtension$.js:$ProjectFileDir$\js\$FileDirRelativeToProjectRoot$\$FileNameWithoutExtension$.map
+                    </code></div>
+                </li></ol>
+            <a name="d75433e282"></a><p>
+                As a result, the project tree looks as follows:
+                <figure><img alt="fileWatcherExampleImage3" width="229" height="515" title="fileWatcherExampleImage3" src="/help/img/idea/2016.1/fileWatcherExampleImage3.png"></figure>
+            </p>
+        </li></ul>
+        <div class="navigation-links _bottom"><a class="navigation-links__prev" href="updating-a-command-line-tool.html">Updating a Command Line Tool</a><a class="navigation-links__next" href="working-with-embedded-local-terminal.html">Working with Embedded Local Terminal</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content"><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d795888e533"></a><a href="file-watchers.html"><span>File Watchers</span></a></li><li class="list__item"><a name="d795888e535"></a><a href="new-watcher-dialog.html"><span>New Watcher Dialog</span></a></li></ul></div><div class="seealso__col"><h3>Language and Framework-Specific Guidelines:</h3><ul class="list"><li class="list__item"><a name="d795888e515"></a><a href="transpiling-coffeescript-to-javascript.html"><span>Transpiling CoffeeScript to JavaScript</span></a></li><li class="list__item"><a name="d795888e517"></a><a href="typescript-support.html"><span>TypeScript Support</span></a></li><li class="list__item"><a name="d795888e519"></a><a href="minifying-javascript.html"><span>Minifying JavaScript</span></a></li><li class="list__item"><a name="d795888e521"></a><a href="dart-support.html"><span>Dart Support</span></a></li><li class="list__item"><a name="d795888e523"></a><a href="transpiling-sass-less-and-scss-to-css.html"><span>Transpiling Sass, Less, and SCSS to CSS</span></a></li><li class="list__item"><a name="d795888e526"></a><a href="working-with-sass-and-scss-in-compass-projects.html"><span>Working with Sass and SCSS in Compass Projects</span></a></li><li class="list__item"><a name="d795888e528"></a><a href="Transpiling_Stylus_to_CSS.html"><span>Transpiling Stylus to CSS</span></a></li></ul></div><div class="seealso__col"><h3>Markup languages and style sheets:</h3><ul class="list"><li class="list__item"><a name="d795888e510"></a><a href="minifying-css.html"><span>Minifying CSS</span></a></li></ul></div></div></section><div class="last-modified">Last modified: 13 July 2016 </div></article><div id="disqus_thread"></div></div></section></main></div><script src="/help/app/app.js"></script></body></html>

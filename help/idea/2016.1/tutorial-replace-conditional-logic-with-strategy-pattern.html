@@ -1,0 +1,332 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"></meta><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><title>IntelliJ IDEA 2016.1 Help :: Tutorial. Replace conditional logic with strategy pattern</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Tutorial._Replace_conditional_logic_with_strategy_pattern"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.1 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWindow</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="wrap-return-value.html">Wrap Return Value</a><a class="navigation-links__next" href="using-local-history.html">Using Local History</a></div><h1>Tutorial. Replace conditional logic with strategy pattern</h1><a name="d756672e3"></a><p>When you have a method with lots of conditional logic (i.e., if statements), you're asking for trouble.
+        Conditional logic is notoriously difficult to manage, and may cause you to create an entire state machine inside
+        a single method.</p><ul><li class="list__item"><a href="#d756672e8">Analyzing the sample application</a></li><li class="list__item"><a href="#d756672e26">Creating and running test</a></li><li class="list__item"><a href="#d756672e87">Extracting methods</a></li><li class="list__item"><a href="#d756672e129">Using Extract Delegate refactoring</a></li><li class="list__item"><a href="#d756672e163">Fine tuning</a></li><li class="list__item"><a href="#d756672e264">Implementing the abstract class</a></li><li class="list__item"><a href="#d756672e341">Happy end</a></li></ul><a name="d756672e8"></a><h2>Analyzing the sample application</h2>
+ <a name="d756672e10"></a><p>Here's a short example. Let's say, there is a method that calculates insurance costs based on a person's income:</p>
+<a name="d756672e13"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kn">package</span> <span class="nn">ifs</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">IfElseDemo</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kt">double</span> <span class="nf">calculateInsurance</span><span class="o">(</span><span class="kt">double</span> <span class="n">income</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">income</span> <span class="o">&lt;=</span> <span class="mi">10000</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">income</span><span class="o">*</span><span class="mf">0.365</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">income</span> <span class="o">&lt;=</span> <span class="mi">30000</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="o">(</span><span class="n">income</span><span class="o">-</span><span class="mi">10000</span><span class="o">)*</span><span class="mf">0.2</span><span class="o">+</span><span class="mi">35600</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">income</span> <span class="o">&lt;=</span> <span class="mi">60000</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="o">(</span><span class="n">income</span><span class="o">-</span><span class="mi">30000</span><span class="o">)*</span><span class="mf">0.1</span><span class="o">+</span><span class="mi">76500</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="o">(</span><span class="n">income</span><span class="o">-</span><span class="mi">60000</span><span class="o">)*</span><span class="mf">0.02</span><span class="o">+</span><span class="mi">105600</span><span class="o">;</span>
+        <span class="o">}</span>
+
+    <span class="o">}</span>
+<span class="o">}</span></code></div>
+ <a name="d756672e16"></a><p>Let's analyze this example. Here we see the four "income bands widths", separated into four calculation strategies.
+        In general, they conform to the following formula:</p>
+<a name="d756672e19"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="o">(</span><span class="n">income</span> <span class="o">-</span> <span class="n">adjustment</span><span class="o">)</span> <span class="o">*</span> <span class="n">weight</span> <span class="o">+</span> <span class="n">constant</span></code></div>
+<a name="d756672e22"></a><p>Our goal is to provide separate classes to calculate each strategy, and transform the original class to make it more transparent.</p>
+<a name="d756672e26"></a><h2>Creating and running test</h2>
+    <a name="d756672e28"></a><p>First of all, let's make sure that the class works. To do that, create a test class, using the
+        <a name="d756672e30"></a><a href="http://junit.org/" data-external="true"><span>JUnit4</span></a> testing framework. </p>
+    <a name="d756672e34"></a><p>Place the caret at the class name, and then press <kbd data-default="Alt+Enter" data-default_for_gnome="Alt+Enter" data-default_for_kde="Alt+Enter" data-default_for_xwin="Alt+Enter" data-emacs="Alt+Enter" data-jbuilder="Alt+Enter" data-visual_studio="Alt+Enter" data-netbeans_6.5="N/A" data-eclipse="Alt+Enter" data-mac_os_x_10.5_="&#x2325;⏎" data-mac_os_x="&#x2325;⏎" data-eclipse_mac_os_x="&#x2318;1" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Enter</kbd> (or click
+        <img alt="intentionBulb" width="10" height="15" title="intentionBulb" src="/help/img/idea/2016.1/intentionBulb.png" class="inline-icon-15">). From the list of suggested intention actions, choose
+        <a name="d756672e40"></a><span class="control">Create Test</span>:</p>
+    <figure><img alt="ifelse_tutorial_create_test" width="365" height="230" title="ifelse_tutorial_create_test" src="/help/img/idea/2016.1/ifelse_tutorial_create_test.png"></figure>
+    <a name="d756672e46"></a><p>In the <a name="d756672e48"></a><a href="create-test.html"><span>Create Test</span></a> dialog, choose JUnit4 from the
+        <a name="d756672e51"></a><span class="control">Testing library</span> drop-down list, click <a name="d756672e54"></a><span class="control">Fix</span>, if you do not have JUnit
+        library, and then click <a name="d756672e57"></a><span class="control">OK</span>:</p>
+    <figure><img alt="ifelse_tutorial_create_test_dialog" width="444" height="547" title="ifelse_tutorial_create_test_dialog" src="/help/img/idea/2016.1/ifelse_tutorial_create_test_dialog.png"></figure>
+    <a name="d756672e64"></a><p>The stub test class is created. However, you have to provide some meaningful code, using the provided quick fix
+        (<img alt="quickfixBulb" width="16" height="18" title="quickfixBulb" src="/help/img/idea/2016.1/quickfixBulb.png" class="inline-icon-18">) to create import statement:</p>
+    <a name="d756672e69"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kn">import</span> <span class="nn">org.junit.Test</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">static</span> <span class="n">org</span><span class="o">.</span><span class="na">junit</span><span class="o">.</span><span class="na">Assert</span><span class="o">.*;</span>
+
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">IfElseDemoTest</span> <span class="o">{</span>
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">low</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">assertEquals</span><span class="o">(</span><span class="mi">1825</span><span class="o">,</span> <span class="n">insuranceFor</span><span class="o">(</span><span class="mi">5000</span><span class="o">),</span> <span class="mf">0.01</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">medium</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">assertEquals</span><span class="o">(</span><span class="mi">38600</span><span class="o">,</span> <span class="n">insuranceFor</span><span class="o">(</span><span class="mi">25000</span><span class="o">),</span> <span class="mf">0.01</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">high</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">assertEquals</span><span class="o">(</span><span class="mi">78500</span><span class="o">,</span> <span class="n">insuranceFor</span><span class="o">(</span><span class="mi">50000</span><span class="o">),</span> <span class="mf">0.01</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">veryHigh</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">assertEquals</span><span class="o">(</span><span class="mi">106400</span><span class="o">,</span> <span class="n">insuranceFor</span><span class="o">(</span><span class="mi">100_000</span><span class="o">),</span> <span class="mf">0.01</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">double</span> <span class="nf">insuranceFor</span><span class="o">(</span><span class="kt">double</span> <span class="n">income</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="n">IfElseDemo</span><span class="o">().</span><span class="na">calculateInsurance</span><span class="o">(</span><span class="n">income</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></div>
+    <a name="d756672e72"></a><p>Now let's run this test by clicking the run button <img alt="run" width="11" height="14" title="run" src="/help/img/idea/2016.1/run.png" class="inline-icon-14"> in the left gutter, or by pressing
+    <kbd data-default="Ctrl+Shift+F10" data-default_for_gnome="Ctrl+Shift+F10" data-default_for_kde="Ctrl+Shift+F10" data-default_for_xwin="Ctrl+Shift+F10" data-emacs="Ctrl+Shift+F10" data-jbuilder="Ctrl+Shift+F10" data-visual_studio="Ctrl+F9" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Shift+F10" data-mac_os_x_10.5_="&#x2303;&#x21E7;R" data-mac_os_x="&#x2303;&#x21E7;F10" data-eclipse_mac_os_x="&#x2303;&#x21E7;R" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Shift+F10</kbd>: </p>
+    <figure><img alt="ifelse_tutorial_run_test" width="302" height="124" title="ifelse_tutorial_run_test" src="/help/img/idea/2016.1/ifelse_tutorial_run_test.png"></figure>
+    <a name="d756672e81"></a><p>All 4 tests pass:</p>
+    <figure><img alt="ifelse_tutorial_run_test_pass" width="618" height="178" title="ifelse_tutorial_run_test_pass" src="/help/img/idea/2016.1/ifelse_tutorial_run_test_pass.png"></figure>
+<a name="d756672e87"></a><h2>Extracting methods</h2>
+        <a name="d756672e89"></a><p>Next, bring forward the original class, place the caret at the expression </p>
+        <a name="d756672e92"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="o">(</span><span class="n">income</span><span class="o">-</span><span class="mi">60000</span><span class="o">)*</span><span class="mf">0.02</span><span class="o">+</span><span class="mi">105600</span></code></div>
+        <a name="d756672e95"></a><p>and invoke <a name="d756672e97"></a><a href="extract-method-dialog.html"><span>Extract Method Dialog</span></a> dialog (<kbd data-default="Ctrl+Alt+M" data-default_for_gnome="Ctrl+Alt+M" data-default_for_kde="Ctrl+Alt+M" data-default_for_xwin="Ctrl+Alt+M" data-emacs="Ctrl+Alt+M" data-jbuilder="Ctrl+Shift+E" data-visual_studio="Ctrl+Alt+M" data-netbeans_6.5="N/A" data-eclipse="Shift+Alt+M" data-mac_os_x_10.5_="&#x2325;&#x2318;M" data-mac_os_x="&#x2325;&#x2318;M" data-eclipse_mac_os_x="&#x2325;&#x2318;M" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+M</kbd>): </p>
+        <figure><img alt="ifelse_tutorial_extract_method1" width="461" height="421" title="ifelse_tutorial_extract_method1" src="/help/img/idea/2016.1/ifelse_tutorial_extract_method1.png"></figure>
+        <a name="d756672e105"></a><p>You get the following code:</p>
+        <a name="d756672e109"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kn">package</span> <span class="nn">ifs</span><span class="o">;</span>
+
+
+ <span class="kd">class</span> <span class="nc">IfElseDemo</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kt">double</span> <span class="nf">calculateInsurance</span><span class="o">(</span><span class="kt">double</span> <span class="n">income</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">income</span> <span class="o">&lt;=</span> <span class="mi">10000</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">income</span><span class="o">*</span><span class="mf">0.365</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">income</span> <span class="o">&lt;=</span> <span class="mi">30000</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="o">(</span><span class="n">income</span><span class="o">-</span><span class="mi">10000</span><span class="o">)*</span><span class="mf">0.2</span><span class="o">+</span><span class="mi">35600</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">income</span> <span class="o">&lt;=</span> <span class="mi">60000</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="o">(</span><span class="n">income</span><span class="o">-</span><span class="mi">30000</span><span class="o">)*</span><span class="mf">0.1</span><span class="o">+</span><span class="mi">76500</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">calculateInsuranceVeryHigh</span><span class="o">(</span><span class="n">income</span><span class="o">);</span>
+    <span class="o">}</span>
+ <span class="o">}</span>
+        <span class="kd">public</span> <span class="kt">double</span> <span class="nf">calculateInsuranceVeryHigh</span><span class="o">(</span><span class="kt">double</span> <span class="n">income</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="o">(</span><span class="n">income</span><span class="o">-</span><span class="mi">60000</span><span class="o">)*</span><span class="mf">0.02</span><span class="o">+</span><span class="mi">105600</span><span class="o">;</span>
+        <span class="o">}</span>
+ <span class="o">}</span></code></div>
+<a name="d756672e112"></a><p>Next, use the same Extract Method refactoring for for 60000, 0.02 and 105600 fragments, and create the methods
+    <code class="code" data-lang="Java">getAdjustment</code>, <code class="code" data-lang="Java">getWeight</code> and
+    <code class="code" data-lang="Java">getConstant</code>: </p>
+<a name="d756672e124"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kn">package</span> <span class="nn">ifs</span><span class="o">;</span>
+
+
+    <span class="kd">class</span> <span class="nc">IfElseDemo</span> <span class="o">{</span>
+
+        <span class="kd">public</span> <span class="kt">double</span> <span class="nf">calculateInsurance</span><span class="o">(</span><span class="kt">double</span> <span class="n">income</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">income</span> <span class="o">&lt;=</span> <span class="mi">10000</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">return</span> <span class="n">income</span><span class="o">*</span><span class="mf">0.365</span><span class="o">;</span>
+            <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">income</span> <span class="o">&lt;=</span> <span class="mi">30000</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">return</span> <span class="o">(</span><span class="n">income</span><span class="o">-</span><span class="mi">10000</span><span class="o">)*</span><span class="mf">0.2</span><span class="o">+</span><span class="mi">35600</span><span class="o">;</span>
+            <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">income</span> <span class="o">&lt;=</span> <span class="mi">60000</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">return</span> <span class="o">(</span><span class="n">income</span><span class="o">-</span><span class="mi">30000</span><span class="o">)*</span><span class="mf">0.1</span><span class="o">+</span><span class="mi">76500</span><span class="o">;</span>
+            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                <span class="k">return</span> <span class="n">calculateInsuranceVeryHigh</span><span class="o">(</span><span class="n">income</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="kd">public</span> <span class="kt">double</span> <span class="nf">calculateInsuranceVeryHigh</span><span class="o">(</span><span class="kt">double</span> <span class="n">income</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="o">(</span><span class="n">income</span><span class="o">-</span> <span class="n">getAdjustment</span><span class="o">())*</span> <span class="n">getWeight</span><span class="o">()</span> <span class="o">+</span> <span class="n">getConstant</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getConstant</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="mi">105600</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="kd">public</span> <span class="kt">double</span> <span class="nf">getWeight</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="mf">0.02</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getAdjustment</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="mi">60000</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span></code></div>
+
+    <a name="d756672e129"></a><h2>Using Extract Delegate refactoring</h2>
+        <a name="d756672e131"></a><p>Next, select all the methods created in the previous chapter, and invoke the <a name="d756672e133"></a><a href="extract-delegate.html"><span>Extract Delegate</span></a>
+          refactoring:</p>
+<figure><a class="lightbox" href="/help/img/idea/2016.1/ifelse_tutorial_extract_delegate.png"><img alt="ifelse_tutorial_extract_delegate" width="111" height="66" title="ifelse_tutorial_extract_delegate" src="/help/img/idea/2016.1/ifelse_tutorial_extract_delegate_thumbnail.png"></a></figure>
+        <a name="d756672e140"></a><p>The newly created class has the name <code class="code" data-lang="Java">InsuranceStrategyVeryHigh</code>. </p>
+        <a name="d756672e146"></a><p>Then delete all the selected methods from the class <code class="code" data-lang="Java">IfElseDemo</code>. Thus you get
+        the following two classes:</p>
+        <a name="d756672e152"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kn">package</span> <span class="nn">ifs</span><span class="o">;</span>
+
+
+<span class="kd">class</span> <span class="nc">IfElseDemo</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">final</span> <span class="n">InsuranceStrategyVeryHigh</span> <span class="n">insuranceStrategyVeryHigh</span> <span class="o">=</span> <span class="k">new</span> <span class="n">InsuranceStrategyVeryHigh</span><span class="o">();</span>
+
+    <span class="kd">public</span> <span class="kt">double</span> <span class="nf">calculateInsurance</span><span class="o">(</span><span class="kt">double</span> <span class="n">income</span><span class="o">)</span> <span class="o">{</span>
+
+
+        <span class="k">if</span> <span class="o">(</span><span class="n">income</span> <span class="o">&lt;=</span> <span class="mi">10000</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">income</span><span class="o">*</span><span class="mf">0.365</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">income</span> <span class="o">&lt;=</span> <span class="mi">30000</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="o">(</span><span class="n">income</span><span class="o">-</span><span class="mi">10000</span><span class="o">)*</span><span class="mf">0.2</span><span class="o">+</span><span class="mi">35600</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">income</span> <span class="o">&lt;=</span> <span class="mi">60000</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="o">(</span><span class="n">income</span><span class="o">-</span><span class="mi">30000</span><span class="o">)*</span><span class="mf">0.1</span><span class="o">+</span><span class="mi">76500</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">insuranceStrategyVeryHigh</span><span class="o">.</span><span class="na">calculateInsuranceVeryHigh</span><span class="o">(</span><span class="n">income</span><span class="o">);</span>
+    <span class="o">}</span>
+
+<span class="o">}</span></code></div>
+        <a name="d756672e156"></a><p>and</p>
+        <a name="d756672e159"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kn">package</span> <span class="nn">ifs</span><span class="o">;</span>
+
+ <span class="kd">public</span> <span class="kd">class</span> <span class="nc">InsuranceStrategyVeryHigh</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="nf">InsuranceStrategyVeryHigh</span><span class="o">()</span> <span class="o">{</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">double</span> <span class="nf">calculateInsuranceVeryHigh</span><span class="o">(</span><span class="kt">double</span> <span class="n">income</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="o">(</span><span class="n">income</span> <span class="o">-</span> <span class="n">getAdjustment</span><span class="o">())</span> <span class="o">*</span> <span class="n">getWeight</span><span class="o">()</span> <span class="o">+</span> <span class="n">getConstant</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getConstant</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="mi">105600</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">double</span> <span class="nf">getWeight</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="mf">0.02</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getAdjustment</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="mi">60000</span><span class="o">;</span>
+    <span class="o">}</span>
+ <span class="o">}</span></code></div>
+    <a name="d756672e163"></a><h2>Fine tuning</h2>
+    <a name="d756672e165"></a><p>This code requires some modifications. First, let's change the class <code class="code" data-lang="Java">IfElseDemo</code>:</p>
+    <ul class="list _ul"><li class="list__item"><a name="d756672e173"></a>Rename (<kbd data-default="Shift+F6" data-default_for_gnome="Shift+F6" data-default_for_kde="Shift+F6" data-default_for_xwin="Shift+F6" data-emacs="Shift+F6" data-jbuilder="Shift+F6" data-visual_studio="Shift+F6" data-netbeans_6.5="N/A" data-eclipse="Shift+Alt+R" data-mac_os_x_10.5_="&#x21E7;F6" data-mac_os_x="&#x21E7;F6" data-eclipse_mac_os_x="&#x21E7;F6" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Shift+F6</kbd>) the field <code class="code" data-lang="Java">insuranceStrategyVeryHigh</code> to
+            <code class="code" data-lang="Java">strategy</code> </li><li class="list__item"><a name="d756672e184"></a>Make this field not final.</li><li class="list__item"><a name="d756672e187"></a>Using the intention action, split it into declaration and initialization:
+            <figure><img alt="ifelse_tutorial_split" width="635" height="411" title="ifelse_tutorial_split" src="/help/img/idea/2016.1/ifelse_tutorial_split.png"></figure>
+        </li><li class="list__item"><a name="d756672e192"></a>Move the initialization down to the corresponding <code class="code" data-lang="Java">if-else</code> branch.</li></ul>
+<a name="d756672e199"></a><p>Get the following code:</p>
+<a name="d756672e202"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kn">package</span> <span class="nn">ifs</span><span class="o">;</span>
+
+<span class="kd">class</span> <span class="nc">IfElseDemo</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="n">InsuranceStrategyVeryHigh</span> <span class="n">strategy</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="kt">double</span> <span class="nf">calculateInsurance</span><span class="o">(</span><span class="kt">double</span> <span class="n">income</span><span class="o">)</span> <span class="o">{</span>
+
+
+        <span class="k">if</span> <span class="o">(</span><span class="n">income</span> <span class="o">&lt;=</span> <span class="mi">10000</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">income</span><span class="o">*</span><span class="mf">0.365</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">income</span> <span class="o">&lt;=</span> <span class="mi">30000</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="o">(</span><span class="n">income</span><span class="o">-</span><span class="mi">10000</span><span class="o">)*</span><span class="mf">0.2</span><span class="o">+</span><span class="mi">35600</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">income</span> <span class="o">&lt;=</span> <span class="mi">60000</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="o">(</span><span class="n">income</span><span class="o">-</span><span class="mi">30000</span><span class="o">)*</span><span class="mf">0.1</span><span class="o">+</span><span class="mi">76500</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="n">strategy</span> <span class="o">=</span> <span class="k">new</span> <span class="n">InsuranceStrategyVeryHigh</span><span class="o">();</span>
+            <span class="k">return</span> <span class="n">strategy</span><span class="o">.</span><span class="na">calculateInsuranceVeryHigh</span><span class="o">(</span><span class="n">income</span><span class="o">);</span>
+        <span class="o">}</span>
+
+    <span class="o">}</span>
+
+<span class="o">}</span></code></div>
+    <a name="d756672e205"></a><p>Next, let's modify the class <code class="code" data-lang="Java">InsuranceStrategyVeryHigh</code> - invoke the
+        <a name="d756672e210"></a><a href="extract-superclass.html"><span>Extract Superclass</span></a>   refactoring for it. </p>
+    <figure><img alt="ifelse_tutorial_extract_superclass" width="565" height="590" title="ifelse_tutorial_extract_superclass" src="/help/img/idea/2016.1/ifelse_tutorial_extract_superclass.png"></figure>
+    <a name="d756672e218"></a><p>Mind the settings in the <a name="d756672e220"></a><a href="extract-superclass-dialog.html"><span>Extract Superclass Dialog</span></a> dialog:</p>
+    <ul class="list _ul"><li class="list__item"><a name="d756672e226"></a>The name of the superclass to be generated is <code class="code" data-lang="Java">InsuranceStrategy</code>.</li><li class="list__item"><a name="d756672e232"></a>All the methods of the class <code class="code" data-lang="Java">InsuranceStrategyVeryHigh</code> are checked - it means
+        that they will be included in the superclass.</li><li class="list__item"><a name="d756672e238"></a>The method <code class="code" data-lang="Java">calculateInsuranceStrategyVeryHigh</code> remains non-abstract;
+        all the other methods are made abstract by selecting the <a name="d756672e243"></a><span class="control">Make Abstract</span> check boxes.</li></ul>
+    <a name="d756672e248"></a><p>Agree to replace the usage of <code class="code" data-lang="Java">InsuranceStrategyVeryHigh</code> class (in
+        <code class="code" data-lang="Java">IfElseDemo</code> class) with the superclass, and get the following
+        <code class="code" data-lang="Java">InsuranceStrategy</code> class:</p>
+    <a name="d756672e260"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kn">package</span> <span class="nn">ifs</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">InsuranceStrategy</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">double</span> <span class="nf">calculateInsuranceVeryHigh</span><span class="o">(</span><span class="kt">double</span> <span class="n">income</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="o">(</span><span class="n">income</span> <span class="o">-</span> <span class="n">getAdjustment</span><span class="o">())</span> <span class="o">*</span> <span class="n">getWeight</span><span class="o">()</span> <span class="o">+</span> <span class="n">getConstant</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">abstract</span> <span class="kt">int</span> <span class="nf">getConstant</span><span class="o">();</span>
+
+    <span class="kd">public</span> <span class="kd">abstract</span> <span class="kt">double</span> <span class="nf">getWeight</span><span class="o">();</span>
+
+    <span class="kd">public</span> <span class="kd">abstract</span> <span class="kt">int</span> <span class="nf">getAdjustment</span><span class="o">();</span>
+<span class="o">}</span></code></div>
+<a name="d756672e264"></a><h2>Implementing the abstract class</h2>
+        <a name="d756672e266"></a><p>Next, for this abstract class, use <a name="d756672e268"></a><span class="control">Implement Abstract Class</span> intention to create
+            implementations for all strategies:</p>
+        <figure><img alt="ifelse_tutorial_implement_abstract" width="572" height="256" title="ifelse_tutorial_implement_abstract" src="/help/img/idea/2016.1/ifelse_tutorial_implement_abstract.png"></figure>
+        <a name="d756672e274"></a><p>Name the new implementation classes <code class="code" data-lang="Java">InsuranceStrategyLow</code>,
+          <code class="code" data-lang="Java">InsuranceStrategyMedium</code> and <code class="code" data-lang="Java">InsuranceStrategyHigh</code>.</p>
+        <a name="d756672e286"></a><p>For all new implementations provide correct <code class="code" data-lang="Java">return</code> statements for the methods
+            <code class="code" data-lang="Java">getAdjustment()</code>, <code class="code" data-lang="Java">getWeight()</code> and
+            <code class="code" data-lang="Java">getConstant()</code>.</p>
+        <a name="d756672e301"></a><p>Thus all implementation classes should look similar to the class
+            <code class="code" data-lang="Java">InsuranceStrategyVeryHigh</code>, but with strategy-specific adjustment, weight and
+            constant. For example:</p>
+<a name="d756672e308"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kn">package</span> <span class="nn">ifs</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">InsuranceStrategyMedium</span> <span class="kd">extends</span> <span class="n">InsuranceStrategy</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getConstant</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="mi">35600</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">double</span> <span class="nf">getWeight</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="mf">0.2</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getAdjustment</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="mi">10000</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></div>
+      <a name="d756672e311"></a><p>Note that in all newly created implementation classes the class names are grey - they are not used so far.</p>
+<a name="d756672e314"></a><p>Next, bring forward the class <code class="code" data-lang="Java">IfElseDemo</code>, and modify all the branch bodies so that they
+    initialize the <code class="code" data-lang="Java">strategy</code> field, like in the last branch: </p>
+<a name="d756672e323"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kn">package</span> <span class="nn">ifs</span><span class="o">;</span>
+
+<span class="kd">class</span> <span class="nc">IfElseDemo</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="n">InsuranceStrategy</span> <span class="n">strategy</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="kt">double</span> <span class="nf">calculateInsurance</span><span class="o">(</span><span class="kt">double</span> <span class="n">income</span><span class="o">)</span> <span class="o">{</span>
+
+
+        <span class="k">if</span> <span class="o">(</span><span class="n">income</span> <span class="o">&lt;=</span> <span class="mi">10000</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">strategy</span> <span class="o">=</span> <span class="k">new</span> <span class="n">InsuranceStrategyLow</span><span class="o">();</span>
+            <span class="k">return</span> <span class="n">strategy</span><span class="o">.</span><span class="na">calculateInsuranceVeryHigh</span><span class="o">(</span><span class="n">income</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">income</span> <span class="o">&lt;=</span> <span class="mi">30000</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">strategy</span> <span class="o">=</span> <span class="k">new</span> <span class="n">InsuranceStrategyMedium</span><span class="o">();</span>
+            <span class="k">return</span> <span class="n">strategy</span><span class="o">.</span><span class="na">calculateInsuranceVeryHigh</span><span class="o">(</span><span class="n">income</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">income</span> <span class="o">&lt;=</span> <span class="mi">60000</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">strategy</span> <span class="o">=</span> <span class="k">new</span> <span class="n">InsuranceStrategyHigh</span><span class="o">();</span>
+            <span class="k">return</span> <span class="n">strategy</span><span class="o">.</span><span class="na">calculateInsuranceVeryHigh</span><span class="o">(</span><span class="n">income</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="n">strategy</span> <span class="o">=</span> <span class="k">new</span> <span class="n">InsuranceStrategyVeryHigh</span><span class="o">();</span>
+            <span class="k">return</span> <span class="n">strategy</span><span class="o">.</span><span class="na">calculateInsuranceVeryHigh</span><span class="o">(</span><span class="n">income</span><span class="o">);</span>
+        <span class="o">}</span>
+
+    <span class="o">}</span>
+
+<span class="o">}</span></code></div>
+        <a name="d756672e326"></a><p>Finally, rename the method <code class="code" data-lang="Java">calculateInsuranceVeryHigh</code>: bring forward the class
+            <code class="code" data-lang="Java">InsuranceStrategy</code>, place the caret at the method name and press
+            <kbd data-default="Shift+F6" data-default_for_gnome="Shift+F6" data-default_for_kde="Shift+F6" data-default_for_xwin="Shift+F6" data-emacs="Shift+F6" data-jbuilder="Shift+F6" data-visual_studio="Shift+F6" data-netbeans_6.5="N/A" data-eclipse="Shift+Alt+R" data-mac_os_x_10.5_="&#x21E7;F6" data-mac_os_x="&#x21E7;F6" data-eclipse_mac_os_x="&#x21E7;F6" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Shift+F6</kbd>. The new name should be <code class="code" data-lang="Java">calculate</code>. </p>
+    <a name="d756672e341"></a><h2>Happy end</h2>
+    <a name="d756672e343"></a><p>And finally enjoy the code:</p>
+    <a name="d756672e346"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kn">package</span> <span class="nn">ifs</span><span class="o">;</span>
+
+<span class="kd">class</span> <span class="nc">IfElseDemo</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="n">InsuranceStrategy</span> <span class="n">strategy</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="kt">double</span> <span class="nf">calculateInsurance</span><span class="o">(</span><span class="kt">double</span> <span class="n">income</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">income</span> <span class="o">&lt;=</span> <span class="mi">10000</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">strategy</span> <span class="o">=</span> <span class="k">new</span> <span class="n">InsuranceStrategyLow</span><span class="o">();</span>
+            <span class="k">return</span> <span class="n">strategy</span><span class="o">.</span><span class="na">calculate</span><span class="o">(</span><span class="n">income</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">income</span> <span class="o">&lt;=</span> <span class="mi">30000</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">strategy</span> <span class="o">=</span> <span class="k">new</span> <span class="n">InsuranceStrategyMedium</span><span class="o">();</span>
+            <span class="k">return</span> <span class="n">strategy</span><span class="o">.</span><span class="na">calculate</span><span class="o">(</span><span class="n">income</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">income</span> <span class="o">&lt;=</span> <span class="mi">60000</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">strategy</span> <span class="o">=</span> <span class="k">new</span> <span class="n">InsuranceStrategyHigh</span><span class="o">();</span>
+            <span class="k">return</span> <span class="n">strategy</span><span class="o">.</span><span class="na">calculate</span><span class="o">(</span><span class="n">income</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="n">strategy</span> <span class="o">=</span> <span class="k">new</span> <span class="n">InsuranceStrategyVeryHigh</span><span class="o">();</span>
+            <span class="k">return</span> <span class="n">strategy</span><span class="o">.</span><span class="na">calculate</span><span class="o">(</span><span class="n">income</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></div>
+    <a name="d756672e349"></a><p>Next, let's run the test class again. All tests should pass – we have refactored the code, but it still produces
+        the same results.</p>
+<div class="last-modified">Last modified: 13 July 2016 </div></article><div id="disqus_thread"></div></div></section></main></div><script src="/help/app/app.js"></script></body></html>

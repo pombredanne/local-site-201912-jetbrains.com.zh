@@ -1,0 +1,348 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta charset="UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="//resources.jetbrains.com/storage/help-app/v3/analytics.js"></script><title>Building standalone IDEs for your languages - Help | MPS</title><link rel="stylesheet" href="//resources.jetbrains.com/storage/help-app/v3/app.css"></head><body data-id="Building+standalone+IDEs+for+your+languages.html"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search MPS Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>MPS 2019.2 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="primary_default" selected>Default</option><option data-group="primary" value="primary_default_for_gnome">Default for GNOME</option><option data-group="primary" value="primary_default_for_kde">Default for KDE</option><option data-group="primary" value="primary_default_for_xwin">Default for XWin</option><option data-group="primary" value="primary_eclipse">Eclipse</option><option data-group="primary" value="primary_eclipse_mac_os_x">Eclipse (Mac OS X)</option><option data-group="primary" value="primary_emacs">Emacs</option><option data-group="primary" value="primary_jbuilder">JBuilder</option><option data-group="primary" value="primary_mac_os_x">Mac OS X</option><option data-group="primary" value="primary_mac_os_x_10.5_">Mac OS X 10.5+</option><option data-group="primary" value="primary_netbeans">NetBeans</option><option data-group="primary" value="primary_visual_studio">Visual Studio</option><option data-group="secondary" value="secondary_default">Default</option><option data-group="secondary" value="secondary_default_for_gnome">Default for GNOME</option><option data-group="secondary" value="secondary_default_for_kde">Default for KDE</option><option data-group="secondary" value="secondary_default_for_xwin">Default for XWin</option><option data-group="secondary" value="secondary_eclipse">Eclipse</option><option data-group="secondary" value="secondary_eclipse_mac_os_x">Eclipse (Mac OS X)</option><option data-group="secondary" value="secondary_emacs">Emacs</option><option data-group="secondary" value="secondary_jbuilder">JBuilder</option><option data-group="secondary" value="secondary_mac_os_x">Mac OS X</option><option data-group="secondary" value="secondary_mac_os_x_10.5_">Mac OS X 10.5+</option><option data-group="secondary" value="secondary_netbeans">NetBeans</option><option data-group="secondary" value="secondary_visual_studio">Visual Studio</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="Building+standalone+IDEs+for+your+languages.html" id="building-standalone-ides-for-your-languages.xml">Building standalone IDEs for your languages</h1>   <h2 id=""></h2>   <h2 id="introduction">Introduction</h2>   <p id="a63b347b">The term standalone IDE refers to a stripped down version of the IDE that only contains those artifacts that are necessary for a given business purpose. Standalone IDEs provide a convenient way to distribute DSLs to the end users, who will be able to use the languages including all the IDE support, refactorings and code analysis prepared by language designers in the comfort of a dedicated IDE. All the distracting language-design-related functionality and unnecessary languages will have been removed.</p>   <p id="f5059351">Once you have designed your languages, MPS can help you build a stripped down version of MPS that only contains those artifacts that are necessary to use these domain-specific languages. Various aspects of MPS can be removed or customized to deliver a custom user experience for a given group of users. This article describes how.</p>   <p id="b325b0a4">&nbsp;In particular, the following aspects of MPS can be customized:</p>   <ul class="list _ul"><li class="list__item" id="9347298e"><p>various icons, slogans, splash screens and images</p></li><li class="list__item" id="7a2e7b92"><p>the help URL</p></li><li class="list__item" id="c00ffe97"><p>the set of languages available to the users</p></li><li class="list__item" id="bfa48e74"><p>the set of plugins available in MPS</p></li></ul>   <h2 id="processoverview">Process Overview</h2>   <p id="36303708">To build a custom RCP version of MPS, you have to create a solution that contains a so-called <b id="996d8a63">build script</b>. A build script is written in MPS' build language, which is optimized for building RCP applications (as well as IntelliJ and MPS plugins). When running the generator for this build script, MPS generates an <i id="47b2f752">ant</i> file that creates the actual RCP distribution.</p>   <h2 id="buildinganexamplercpbuild">Building an example RCP build</h2>   <p id="050583be">In this document we describe the development of an RCP build scripts for the robot Kaja sample that is bundled with MPS distributions. You can open the project in MPS and follow the instructions described here.</p>   <h3 id="creatingthesolutionandthebuildscript">Creating the Solution and the Build Script</h3>   <h4 id="thewizardway">The wizard way</h4>   <p id="9dcbe56f">The preferred way to create the necessary build scripts is to run the <b id="74d2504c">Build Solution Wizard</b>&nbsp;on your current project. You start it from the <b id="e9a959b7">Project View</b>&nbsp;tool window:</p>   <p id="2819b7cf">      <figure><img alt="sa1" title="sa1" src="/help/img/idea/2019.2/sa1.png" id="1ee9a716" width="1160" height="548"></figure>   </p>   <p id="bee6bce3">The wizard will create a new solution and a model to hold the scripts and set the necessary imports as well as used languages. You can instruct the wizard to reuse an existing solution or a model, instead of creating new ones. You'll then need to select the&nbsp;<b id="a69b657b">Standalone IDE</b>&nbsp;option:</p>   <p id="5e152a31">      <figure><img alt="sa2" title="sa2" src="/help/img/idea/2019.2/sa2.png" id="1d91770e" width="1136" height="792"></figure>&nbsp;</p>   <p id="96a25f5c">      <figure><img alt="sa3" title="sa3" src="/help/img/idea/2019.2/sa3.png" id="505fc7ca" width="1134" height="788"></figure>   </p>   <p id="dce3476f">On the last page of the wizard, you de-select the modules that should not be made part of the IDE. Typically you skip the sandbox modules and keep the languages as well as plugin and runtime solutions.</p>   <p id="e9417705">The new solution should now be listed in the <b id="7bd1e955">Project View</b>&nbsp;and should hold two new build scripts:</p>   <p id="997203f4">      <figure><img alt="sa4" title="sa4" src="/help/img/idea/2019.2/sa4.png" id="2e6121a2" width="1226" height="576"></figure>   </p>   <p id="e47deb93">The dependencies have been also set properly:</p>   <p id="9cf6027e">      <figure><img alt="sa5" title="sa5" src="/help/img/idea/2019.2/sa5.png" id="4222da60" width="926" height="284"></figure>   </p>   <p id="879b4d52">      <figure><img alt="sa6" title="sa6" src="/help/img/idea/2019.2/sa6.png" id="3e695207" width="914" height="298"></figure>   </p>   <h4 id="themanualway">The manual way</h4>   <p id="f1b051fa">Alternatively you could create the scripts manually. You'd have to&nbsp;create a new solution with a new model inside. In the model, configure the used languages</p>   <ul class="list _ul"><li class="list__item" id="a91f2495">         <i id="83b867da">jetbrains.mps.build</i>      </li><li class="list__item" id="31b80908">         <i id="5b4c92b9">jetbrains.mps.build.mps</i>      </li></ul>   <p id="1741285f">Also import the <i id="b5768fb9">jetbrains.mps.ide.build</i> model. You can now create a new <i id="77f96c64">build project</i> in the model (the name is confusing: it is not actually a new build <b id="693db678">project</b>, just a build script).</p>   <p id="9f9677cd">      <figure><img alt="sa7" title="sa7" src="/help/img/idea/2019.2/sa7.png" id="08e69f3d" width="1188" height="468"></figure>   </p>   <h3 id="investigatingthebuildscripts">Investigating the build scripts</h3>   <p id="b68643c8">A build scripts contains several sections, which we can observe on an empty build script:</p>   <p id="fe0eb0da">      <figure><img alt="sa15" title="sa15" src="/help/img/idea/2019.2/sa15.png" id="aa4ba038" width="2338" height="1216"></figure>   </p>   <p id="bf6333de">Let us look at the various sections of a build script:</p>   <ul class="list _ul"><li class="list__item" id="50bbb1a5"><p>         <b id="b2b654d4">base directory</b> The base directory defines an absolute path relative to which all other paths are specified. By default, this is the directory in which the resulting <i id="8dbe8061">ant</i> file will be generated, and in which it will be executed.</p></li></ul>   <ul class="list _ul"><li class="list__item" id="ca288ad8"><p>         <b id="0ca3096e">use plugins</b> The build language itself can be extended via plugins (Note that these are <b id="cf64b6af">not</b> the plugins that make up MPS itself; those will be configured later). These plugins contribute additional build language syntax. Typically, the <i id="a60a6180">java</i> and <i id="95b33230">mps</i> plugins are required. We will use syntax contributed by these plugins below.</p></li></ul>   <ul class="list _ul"><li class="list__item" id="07bbb646"><p>         <b id="a72e5c2e">macros</b> Macros are essentially name-value pairs. In the Macros section, these names are defined and values are assigned. In the remainder of the build script these macro variables will be used. MPS supports two kinds of Macros: <i id="f1256b6a">var</i> macros are strings and can be assigned any value. <i id="bdeb42d2">folder</i> represents paths, relative to the base directory defined above and/or based on other Macros. Note that MPS provides code completion for the path components in <i id="fc988ca3">folder</i> macros.</p></li></ul>   <ul class="list _ul"><li class="list__item" id="edede16a"><p>         <b id="4d61ee7a">dependencies</b> This section defines dependencies to other build scripts. MPS bundles a set of build scripts (e.g. <i id="c85f5907">buildStandalone</i>, <i id="5bffd4c2">buildWorkbench</i> or <i id="78031176">buildMPS</i>). By establishing a dependency to any one of them, the structures defined in that references build script can be used in the referencing build script. For example, the macros defined in the referenced build scripts can be used.</p></li></ul>   <ul class="list _ul"><li class="list__item" id="bcb5d28d"><p>         <b id="058ea447">project structure</b> This section defines the actual contents of the to-be-built RCP application. Such contents may be MPS modules (languages, solutions, devkits), Java libraries, IDEA branding and plugins.</p></li></ul>   <ul class="list _ul"><li class="list__item" id="d9a3441a"><p>         <b id="c2a4b27d">default layout</b> This section defines the files that are output, it creates the directory, file and JAR structure of the new RCP distribution. It references and includes the artifacts defined in the project structure section and in other build scripts this one depends on.</p></li></ul>   <p id="e8ecb841">The wizard created two builds scripts, each of which serves a separate purpose:</p>   <ol class="list _decimal"><li class="list__item" id="c6d7a74a"><p>         <b id="d81ccdfc">Kajak</b> - generates the modules, compiles the generated sources and packages them into an IDEA plugin (a plugin for the IntelliJ IDEA platform)</p></li><li class="list__item" id="62a05b5a"><p>         <b id="08f72a74">KajakDistribution</b> - creates platform-specific distributions out of the artefacts created by <b id="5222da56">Kajak</b>      </p></li></ol>   <h3 id="editingthebuildscripts">Editing the build scripts</h3>   <p id="602ef571">Lets focus on the <b id="5298a0d4">Kajak</b>&nbsp;build script first.</p>   <h4 id="nameofthegeneratedbuildscript">Name of the generated build script</h4>   <p id="81bff480">The default name of the ant xml file to generate from each MPS build script is <i id="fee90c6b">build.xml</i>. It is advisable to change the name so that you avoid clashes between multiple build scripts:</p>   <p id="b1860218">      <figure><img alt="sa8" title="sa8" src="/help/img/idea/2019.2/sa8.png" id="11faaef8" width="1008" height="286"></figure>   </p>   <p id="9590333f">      <figure><img alt="sa9" title="sa9" src="/help/img/idea/2019.2/sa9.png" id="3e0b5770" width="1070" height="308"></figure>   </p>   <h4 id="basedirectory">Base directory</h4>   <p id="0a814c1d">Specifies the directory, into which the build script will be generated.</p>   <h4 id="useplugins">Use plugins</h4>   <p id="d4f6d66c">The build language has packaged its capabilities into plugins. The plugins used in the build script are listed in its <i id="1959cf8f">use plugins</i>&nbsp;section.</p>   <ul class="list _ul"><li class="list__item" id="be43f375"><p>         <b id="66f7cf1f">java</b> - contains the capability to compile Java sources</p></li><li class="list__item" id="a4b9f022"><p>         <b id="56e19510">mps</b> - contains the capability to generate MPS models</p></li><li class="list__item" id="a267fd9c"><p>         <b id="e4c10ace">module-tests</b> - adds capability to run tests in the build script (you need to import the&nbsp;<i id="68a0af40">jetbrains.mps.build.mps.tests</i> language)</p></li></ul>   <p id="3b8daf80">The wizard has already pre-set <b id="e7dc424b">java</b>&nbsp;and&nbsp;<b id="7c6e75b8">mps</b>&nbsp;for us.</p>   <h4 id="macros">Macros</h4>   <p id="588d5a02">We should define a couple of macros to reused across the script. The first two represent string variables we will use in the build, the set of folders represent the directory for MPS itself as well as the two root directories where the MPS languages are stored. These languages will become part of the RCP distribution. Note how all of these folders are relative to the base directory.</p>   <div class="code-block" data-lang="none">macros:
+  var date = date 20150422&nbsp;
+  var build.number = Kajak-139.SNAPSHOT&nbsp;
+  folder mps_home = ./../../../../Applications/MPS 3.2.app/Contents
+</div>   <p id="7faf3619">Note that you can leave a macro undefined (i.e. just specify the name) and then define it either in the MPS <b id="25c60032">Path Variables</b>&nbsp;section of the <b id="2bf2f426">Project Settings</b>&nbsp;dialog, or&nbsp;when you call <i id="4f9d1701">ant</i> by using a property definition:</p>   <div class="code-block" data-lang="none">ant -Dsome.variable=a.value
+</div>   <h4 id="dependencies">Dependencies</h4>   <p id="022cd3e6">Next, we define the dependencies. Dependencies indicate, on which other build scripts and platforms this script depends.</p>   <p id="facc246b">We need dependencies to <i id="42838094">mpsStandalone</i> (it represents the minimal set of a standalone MPS installation) and optionally also&nbsp;<i id="28e10d9f">mpsMakePlugin</i>&nbsp;that enables creating build scripts in the standalone IDE,&nbsp;<i id="3fe647b0">mpsDebuggerPlugin</i> (because the robot Kaja sample requires debugger and Java execution integration) and mps<i id="9ab5dbe3">ExecutionPlugin</i> (because one the robot Kaja sample languages uses the execution framework to run an external executable). Most RCPs will likely just use mps<i id="1f4a527a">Standalone</i>.</p>   <div class="code-block" data-lang="none">dependencies:
+  mpsStandalone (artifacts location $mps_home)
+  mpsMakePlugin (artifacts location $mps_home/plugins) &nbsp;
+  mpsDebuggerPlugin (artifacts location $mps_home/plugins)
+  mpsExecutionPlugin (artifacts location $mps_home/plugins)
+</div>   <p id="cfde9b8c">The <i id="0db9a1c8">artifacts location</i> specifies from where the artifacts will be copied. The build scripts work by copying code from an existing MPS installation, so you don't have to check out the MPS sources. The <i id="90f6d8d1">artifacts location</i> should hence be pointing to the MPS home directory.</p>   <h4 id="projectstructure">Project Structure</h4>   <p id="7921e70c">The plugins specified in the <b id="d2bf6a6c">use plugins</b>&nbsp;section influence the options available here. With <b id="5bb45593">java</b>,&nbsp;<b id="a7038cbd">mps</b>&nbsp;and <b id="51bdb7e4">module-tests</b>&nbsp;plugins enabled we get the following ones:</p>   <ul class="list _ul"><li class="list__item" id="0ec809a3"><p>         <b id="3c4b12b1">generator options</b> - configure the generator</p></li><li class="list__item" id="62161713"><p>         <b id="c146d4e4">idea branding</b>&nbsp;- configure the visual aspect of standalone IDEs, such as icons, splash-screens, urls, images and other</p></li><li class="list__item" id="bef03197"><p>         <b id="509bf459">idea plugin</b>&nbsp;- details the information to hook the generated artefacts into the underlying IntelliJ IDEA platform</p></li><li class="list__item" id="4ac913ce"><p>         <b id="250aab7e">Java library</b>&nbsp;- groups jars and classes so they could be referred to as a unit</p></li><li class="list__item" id="7a6427cf"><p>         <b id="637c1f09">Java module</b>&nbsp;- groups Java sources&nbsp;so they could be referred to as a unit</p></li><li class="list__item" id="610aba33"><p>         <b id="c7403360">Java options</b>&nbsp;- configures the java compiler process</p></li><li class="list__item" id="c02051d4"><p>         <b id="fade3f3c">mps&nbsp;group</b>&nbsp;- groups MPS modules (solutions, languages, devkits) so that they could be referred to as a unit</p></li><li class="list__item" id="396f4056"><p>         <b id="dcdf21d5">solution</b>&nbsp;- represents a solution</p></li><li class="list__item" id="7df63e2f"><p>         <b id="0b334e30">language</b>&nbsp;-&nbsp;represents a language</p></li><li class="list__item" id="68b0b6ad"><p>         <b id="2068c88b">devkit</b>&nbsp;-&nbsp;represents a devkit</p></li></ul>   <p id="8231d1c1">In the project structure we start with the branding. The <i id="de4b0c3d">idea branding</i> section supports the definition of all kinds of icons, splash screens and the like. It is a good idea to take those from the MPS distribution and modify the pictures to suit your needs, while retaining the sizes and transparency values.You can also specify a help file and an update website.</p>   <div class="code-block" data-lang="none">idea branding Kajak&nbsp;
+&nbsp; codename Kajak&nbsp;
+&nbsp; company &lt;no company&gt;&nbsp;
+&nbsp; version 1.0, eap false&nbsp;
+&nbsp; full name Kajak&nbsp;
+&nbsp; build number ${build.number}, date ${date}&nbsp;
+&nbsp; icons&nbsp;
+&nbsp; &nbsp; 16x16 ./icons/MPS16.png&nbsp;
+&nbsp; &nbsp; 32x32 ./icons/MPS32.png&nbsp;
+&nbsp; &nbsp; 32x32 opaque ./icons/MPS32.png&nbsp;
+&nbsp; &nbsp; 128x128 &lt;no icon128&gt;&nbsp;
+&nbsp; splash screen ./icons/splash.png textcolor 002387&nbsp;
+&nbsp; about screen ./icons/about.png&nbsp;
+&nbsp; dialog image ./icons/dialogImage.png&nbsp;
+&nbsp; welcome screen&nbsp;
+&nbsp; &nbsp; caption ./icons/caption.png&nbsp;
+&nbsp; &nbsp; slogan ./icons/slogan.png&nbsp;
+&nbsp; &nbsp; logo ./icons/logo.png&nbsp;
+&nbsp; &lt;no updateWebsite&gt;&nbsp;
+&nbsp; plugins &lt;no plugins&gt;&nbsp;
+&nbsp; whats new &lt;no whatsnew&gt;&nbsp;
+&nbsp; &lt;no stats&gt;&nbsp;
+&nbsp; &lt;no help&gt;&nbsp;
+&nbsp; feedback url &lt;no feedbackUrl&gt;&nbsp;
+</div>   <p id="4bc2cb02">In the sample we have copied the MPS icons into the <i id="dea180e6">./icons</i> folder and changed them accordingly without changing the names — this is why most of them start with <i id="42e62455">mps</i>.</p>   <p id="768b8724">Next we define an <i id="44aa3621">idea plugin</i> that contains the languages and solutions to bundle. An <i id="50a0a357">idea plugin</i> is a plugin to the IDEA platform on which MPS is built.</p>   <div class="code-block" data-lang="none">idea plugin Kajak&nbsp;
+&nbsp; name Kajak&nbsp;
+&nbsp; short (folder) name Kajak&nbsp;
+&nbsp; description &lt;no description&gt;&nbsp;
+&nbsp; version 1.0&nbsp;
+&nbsp; &lt;&lt; no vendor &gt;&gt;&nbsp;
+&nbsp; content:&nbsp;
+&nbsp; &nbsp; Kajak&nbsp;
+&nbsp; dependencies:&nbsp;
+&nbsp; &nbsp; jetbrains.mps.core&nbsp;
+&nbsp; &lt;&lt; ... &gt;&gt;&nbsp;
+</div>   <p id="223cbdb0">You can define a name and a version, dependencies to other plugins as well as the actual contents. Whenever your RCP contains languages, you will need <i id="8063171f">jetbrains.mps.core</i> because it provides things like <i id="ba992f03">BaseConcept</i> or the <i id="b05661ab">INamedConcept</i> interface. The <i id="a6f85706">Kajak</i> entry in the contents is a reference to an&nbsp;<i id="7d88c5f1">mps group</i>&nbsp;defined below. An <i id="7531a196">mps group</i>&nbsp;is a group of MPS artifacts. Since we have included the <i id="9c6b2dbe">mps</i> plugin (at the very top of the build script) we can use MPS-specific language constructs. <i id="b013ab8b">mps groups</i> are an example.</p>   <p id="934ac84f">Let us look at the <i id="44aa147e">Kajak</i>&nbsp;group. It references a set of languages and solutions. A <i id="2e3962bf">language</i> reference points to a language defined in an MPS project. A language reference in a group consists of the name (which must be the same as the name of the actual language) and a pointer to the respective <i id="0865718f">mpl</i> file. The simplest way to enter it is to start with the path to the <i id="a2e03cb2">mpl</i> file and then use the <i id="3db48bbb">load required information from file</i> intention (<b id="a88726c2">Alt + Enter</b>) to adjust the name of the reference.</p>   <div class="code-block" data-lang="none">mps group Kajak&nbsp;
+&nbsp; solution jetbrains.mps.samples.JavaKaja&nbsp;
+&nbsp; &nbsp; load from ./solutions/JavaKajak/JavaKajak.msd&nbsp;
+&nbsp; &nbsp;
+&nbsp; language jetbrains.mps.samples.KajaAndOr&nbsp;
+&nbsp; &nbsp; load from ./languages/KajaAndOr/KajaAndOr.mpl&nbsp;
+&nbsp; &nbsp;
+&nbsp; language jetbrains.mps.samples.Kaja&nbsp;
+&nbsp; &nbsp; load from ./languages/Kajak/Kajak.mpl&nbsp;
+&nbsp; &nbsp;
+&nbsp; language jetbrains.mps.samples.KajaSceneConstruction&nbsp;
+&nbsp; &nbsp; load from ./languages/KajaSceneConstruction/KajaSceneConstruction.mpl&nbsp;
+</div>   <p id="82ada7ac">Note that a group has to contain the transitive closure of all languages. For example, if you have references a language A which references another language B, then B must also be included in the group. This makes sense, because otherwise the resulting RCP application would not run because dependencies could not be resolved. If a language is missing, then an error will be reported in the build script (red squiggly line). After adding the required languages you may have to rerun the <i id="ccb1d7a4">load required information from file</i> intention (<b id="55812634">Alt + Enter</b>) on the language with the error to make it "notice" that something has changed.</p>   <p id="98b109b8">In addition to languages, you can also reference solutions with the <i id="627e5e3d">solution</i> construct and devkits with the <i id="6a3c30c0">devkit</i> construct.</p>   <aside class="tip sideblock" data-title="" rel="98b109b8" id="6528439a">      <p id="c8892014">The <b id="ea13257d">Inspector</b>&nbsp;tool window contains further details on the dependencies of the selected language, solution or devkit.</p>   </aside>   <h4 id="defaultlayout">Default Layout</h4>   <p id="4c088e4e">The layout constructs the directory and file structure of the RCP distribution. It copies in files from various sources, and in particular from the project structure discussed in the previous section. It also compiles, builds and&nbsp;packages these files if necessary. It can also refer to artifacts defined in other build scripts, on which this script depends. We start out with the following code:</p>   <div class="code-block" data-lang="none">default layout:
+  import mpsStandalone::languages
+  import mpsStandalone::license
+</div>   <p id="91ff5449">Those two imported are <i id="07d06351">folder</i> elements in the referenced <i id="d271b583">mpsStandalone</i> build script. By importing them, the contents of these folders are imported (i.e. copied into) our RCP distribution.</p>   <p id="207a391a">The wizard has added code to create a <i id="1e656be4">bin</i>&nbsp;folder and copy common configuration and properties files into it. You may further customise it or leave it untouched.</p>   <div class="code-block" data-lang="none">folder bin
+  import files from mpsStandalone::bin
+    include log.xml
+    include log4j.dtd
+  file $mps_home/bin/idea.properties
+    replace regex "\.MPS(\w+)" /g -&gt; \.${build.number}
+</div>   <p id="f16c3b76">Next up, we create a new folder <i id="f02c0124">lib</i> into which we import all the stuff from <i id="d598ab32">from mpsStandalone::lib</i> except the MPS sources and the existing <i id="00299816">branding.jar</i> (which contains the default MPS splash screen etc.). We then create a new jar file <i id="72c362bd">branding.jar</i> (it has to have this name to work; the IDEA platform expects it this way) into which we put all the files defined in the <i id="81a5280d">branding</i> section of the project structure defined above.</p>   <div class="code-block" data-lang="none">folder lib
+  import files from buildStandalone::lib
+    exclude MPS-src.zip
+    exclude branding.jar
+  jar branding.jar
+    files of idea branding Kajak
+</div>   <p id="b0ab91c9">We then create a folder <i id="6003d355">plugins</i>. The <i id="13111f7b">mps-core</i> plugin is required in any RCP app, so it needs to be imported in any case. We then import various version control plugins (CVS, SVN anf git) defined in the <i id="54c9aecf">mpsStandalone</i> build script. For obvious reasons, a standalone Kaja IDE needs version control support, so it makes sense to import those plugins. Finally, we include the debugger plugin, since Kaja also integrates with the MPS debugger.</p>   <div class="code-block" data-lang="none">folder plugins
+  import mpsStandalone::plugins/svn4idea&nbsp;
+  import mpsStandalone::plugins/cvsIntegration&nbsp;
+  import mpsStandalone::plugins/git4idea&nbsp;
+  import mpsStandalone::plugins/mps-core
+  import mpsDebuggerPlugin::plugins/mps-debugger-api
+</div>   <p id="665a63ef">We then integrate the Kajak plugin defined in the project structure earlier. Using the <i id="2b403d73">plugin</i> construct we can import the complete definition of the plugin defined earlier.</p>   <div class="code-block" data-lang="none">plugin Kajak&nbsp;
+&nbsp; &lt;empty&gt;&nbsp;
+</div>   <p id="45759383">Inside the plugin we define further subdirectories that contain various library jars. These jar files are automatically made visible to the plugin classpath. Using the <i id="8c5e4b8a">file</i> construct we copy various files into the plugin directory, using the macros defined earlier.</p>   <div class="code-block" data-lang="none">plugin Kajak&nbsp;
+&nbsp; folder libs&nbsp;
+&nbsp; &nbsp; file ./solutions/JavaKajak/images/kaja_images.jar&nbsp;
+...
+</div>   <p id="a7c5adcc">Note how this plugin does not just contain the jars we copied in, but also all the language artifacts necessary. That has been accomplished by defining these <i id="fc8d6db7">mps groups</i> and referencing them from the plugin. The fact that we can use these <i id="60cb1b3b">mps groups</i> is thanks to the <i id="c0602264">mps</i> build language plugin. It provides direct support for MPS artifacts, and all the necessary files and metadata are handled automatically.</p>   <p id="85ddf3b1">We may also import mps-make:</p>   <div class="code-block" data-lang="none"># optional plugins
+import mpsMakePlugin::mps-make
+</div>   <h4 id="propertyfiles">Property Files</h4>   <p id="68dceee1">Finally we create a property file called <i id="3ffdf523">build.number</i> that contains a bunch of meta data used in the running RCP application. It is required by the underlying IntelliJ platform.</p>   <div class="code-block" data-lang="none">properties file build.number
+  build.number = ${build.number}
+  date = ${date}
+  version = 1.0
+</div>   <h3 id="creatingtheplatform-specificdistributions">Creating the Platform-Specific Distributions</h3>   <p id="20a4cd1b">At this point, the generated directory structure consitutes the platform indepenent core of a stripped down MPS distribution that contains all the artifacts you've configured into it, including your custom branding. However, you cannot run it, since the platform specific aspects are still missing.</p>   <p id="433a7bd5">It is the time to look at the second generated build script - <b id="65e11be0">KajakDistribution</b>.</p>   <div class="code-block" data-lang="none">build KajakDistribution generates buildDistribution.xml&nbsp;
+&nbsp;
+base directory: ../../ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp;
+use plugins:&nbsp;
+&nbsp; &lt;&lt; ... &gt;&gt;&nbsp;
+&nbsp;
+macros:&nbsp;
+&nbsp; folder mps_home = ./../../work/MPS 3.2
+&nbsp; var version = 1.0&nbsp;
+&nbsp;
+dependencies:&nbsp;
+&nbsp; Kajak&nbsp;
+&nbsp;
+project structure:&nbsp;
+&nbsp; &lt;&lt; ... &gt;&gt;&nbsp;
+&nbsp;
+default layout:&nbsp;
+&nbsp; tar ${build.number}-linux.tar.gz (compression gzip)&nbsp;
+&nbsp; &nbsp; folder Kajak ${version}&nbsp;
+&nbsp; &nbsp; &nbsp; import files from Kajak::/&nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp; &lt;any&gt;&nbsp;
+&nbsp; &nbsp; &nbsp; folder bin&nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp; file $mps_home/bin/linux/fsnotifier (755)&nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp; file $mps_home/bin/linux/fsnotifier64 (755)&nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp; file $mps_home/bin/mps.vmoptions (644)&nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; fix eol: convert to a single LF, remove eof (Ctrl-Z): true&nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp; file $mps_home/bin/mps64.vmoptions (644)&nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; fix eol: convert to a single LF, remove eof (Ctrl-Z): true
+&nbsp; &nbsp; &nbsp; &nbsp; files from $mps_home/bin/linux&nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; exclude **/fsnotifier&nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; exclude **/fsnotifier64&nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; file $mps_home/mps.sh (755)&nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp; fix eol: convert to a single LF, remove eof (Ctrl-Z): true&nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp; zip ${build.number}.zip&nbsp;
+...
+</div>   <p id="4b4b2e94">The build script depends on <b id="da828a46">Kajak</b>&nbsp;so that it could properly package the platform-neutral artefacts into platform-specific distributions. The&nbsp;<b id="9fa646be">mps_home</b>&nbsp;macro points to a <b id="2112b544">generic</b> MPS installation, since the distributions targeting a single platform (MacOS, Linux or Windows) would miss artefacts needed by the other platforms. The generic distribution is also available for download from the MPS website.</p>   <h3 id="creatingawindowsdistribution">Creating a Windows distribution</h3>   <p id="f22dadb6">There is no windows-specific distribution generated by the builds scripts. To run the generated standalone IDE on windows, you need to use the generated&nbsp;<b id="b40241ad">generic</b> zip file, copy the contents of the <i id="e6ca3f4e">win</i>&nbsp;directory into the <i id="eb9decc8">bin</i>&nbsp;directory and use the&nbsp;<i id="0e2dc11a">mps.bat</i>&nbsp;file to start the IDE.</p>   <p id="98e5303e">      <figure><img alt="sa14" title="sa14" src="/help/img/idea/2019.2/sa14.png" id="71952a38" width="1646" height="448"></figure>   </p>   <h3 id="tips&amp;tricks">Tips & Tricks</h3>   <p id="e9029520">All standalone IDEs built on top of MPS can offer their users a Tips &amp; Tricks dialog with useful hints that help the users familiarize with the tool.</p>   <p id="f70d8b11">      <figure><img alt="blxx6" title="blxx6" src="/help/img/idea/2019.2/blxx6.png" id="af1e0f17" width="500" height="1410"></figure>   </p>   <p id="c2c1d6d8">The content of the Tips &amp; Tricks for MPS can be customized. This can be done with build script new tips &amp; tricks concept:</p>   <p id="db66c6d6">      <figure><img alt="blxx7" title="blxx7" src="/help/img/idea/2019.2/blxx7.png" id="7f9522ad" width="500" height="159"></figure>   </p>   <p id="0db1c767">Tips can be either reused from the MPS general distribution, imported from a directory or from a solution:</p>   <p id="941423a6">      <figure><img alt="blxx8" title="blxx8" src="/help/img/idea/2019.2/blxx8.png" id="f8511157" width="500" height="133"></figure>   </p>   <ul class="list _ul"><li class="list__item" id="afc390af"><p>The first option just adds all the MPS tips to the distribution. This is the default option for build scripts generated with the build script wizard.</p></li><li class="list__item" id="d6313317"><p>The second one requires a manually created folder with the correct structure of tips. The desired structure can be obtained from the&nbsp;<b id="a169ee92">mps-tips.jar</b>&nbsp;file itself. You need a folder that contains all the html files plus the css and image folders.</p></li><li class="list__item" id="79bb0986"><p>The last option allows tips to be defined using the&nbsp;<b id="f0b73971">jetbrains.mps.build.tips</b>&nbsp;and&nbsp;<b id="189cceac">jetbrains.mps.core.xml</b>&nbsp;languages in MPS itself.</p></li></ul>   <p id="8f05b8c7">Finally, the tips must be packaged into the build script layout to the&nbsp;<i id="47793080">lib</i>&nbsp;folder. In the build script&nbsp;generated&nbsp;with the wizard&nbsp;MPS tips &amp; tricks are packaged to lib folder by default:</p>   <p id="43f61bd1">      <figure><img alt="blxx9" title="blxx9" src="/help/img/idea/2019.2/blxx9.png" id="5538a989" width="500" height="150"></figure>   </p>   <h3 id="thetips&amp;trickslanguage">The Tips & Tricks language</h3>   <p id="ddf05101">To import tips &amp; tricks from a solution, create a solution with a model and add languages&nbsp;<b id="137abc56">jetbrains.mps.build.tips</b>&nbsp;and&nbsp;<b id="b0574cab">jetbrains.mps.core.xml</b>&nbsp;to the model used languages. Then you can create an instance of the&nbsp;<b id="7772fb96">MPSTipsAndTricks</b>&nbsp;concept, where multiple tips can be created. Each tip is an HTML formatted text. One image can be added to each tip:</p>   <p id="d9652a4a">      <figure><img alt="blxx10" title="blxx10" src="/help/img/idea/2019.2/blxx10.png" id="9343fb60" width="369" height="282"></figure>   </p>   <p id="0a18a1a5">Importing from a solution to a build script&nbsp;<b id="ae4cdf79">tips &amp; tricks</b>&nbsp;is done by pointing to the solution and the generated xml from the&nbsp;<b id="1b114ffc">MPSTipsAndTricks</b>&nbsp;concept:</p>   <p id="609601ca">      <figure><img alt="blxx11" title="blxx11" src="/help/img/idea/2019.2/blxx11.png" id="e7c9cf1c" width="1216" height="76"></figure>   </p>   <h2 id="thefinalrobotkajaidebuildscripts">The final Robot Kaja IDE build scripts</h2>   <h3 id="kajak">Kajak</h3>   <div class="code-block" data-lang="none">build Kajak generates myBuild.xml&nbsp;
+&nbsp;
+base directory: ../../ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp;
+use plugins:&nbsp;
+&nbsp; java&nbsp;
+&nbsp; mps&nbsp;
+&nbsp;
+macros:&nbsp;
+&nbsp; var date = date 20150422&nbsp;
+&nbsp; var build.number = Kajak-139.SNAPSHOT&nbsp;
+&nbsp; folder mps_home = ./../../../../Applications/MPS 3.2.app/Contents&nbsp;
+&nbsp;
+dependencies:&nbsp;
+&nbsp; mpsStandalone (artifacts location $mps_home)&nbsp;
+&nbsp; mpsMakePlugin (artifacts location $mps_home/plugins)&nbsp;
+&nbsp;
+project structure:&nbsp;
+&nbsp; idea branding Kajak&nbsp;
+&nbsp; &nbsp; codename Kajak&nbsp;
+&nbsp; &nbsp; company &lt;no company&gt;&nbsp;
+&nbsp; &nbsp; version 1.0, eap false&nbsp;
+&nbsp; &nbsp; full name Kajak&nbsp;
+&nbsp; &nbsp; build number ${build.number}, date ${date}&nbsp;
+&nbsp; &nbsp; icons&nbsp;
+&nbsp; &nbsp; &nbsp; 16x16 ./icons/MPS16.png&nbsp;
+&nbsp; &nbsp; &nbsp; 32x32 ./icons/MPS32.png&nbsp;
+&nbsp; &nbsp; &nbsp; 32x32 opaque ./icons/MPS32.png&nbsp;
+&nbsp; &nbsp; &nbsp; 128x128 &lt;no icon128&gt;&nbsp;
+&nbsp; &nbsp; splash screen ./icons/splash.png textcolor 002387&nbsp;
+&nbsp; &nbsp; about screen ./icons/about.png&nbsp;
+&nbsp; &nbsp; dialog image ./icons/dialogImage.png&nbsp;
+&nbsp; &nbsp; welcome screen&nbsp;
+&nbsp; &nbsp; &nbsp; caption ./icons/caption.png&nbsp;
+&nbsp; &nbsp; &nbsp; slogan ./icons/slogan.png&nbsp;
+&nbsp; &nbsp; &nbsp; logo ./icons/logo.png&nbsp;
+&nbsp; &nbsp; &lt;no updateWebsite&gt;&nbsp;
+&nbsp; &nbsp; plugins &lt;no plugins&gt;&nbsp;
+&nbsp; &nbsp; whats new &lt;no whatsnew&gt;&nbsp;
+&nbsp; &nbsp; &lt;no stats&gt;&nbsp;
+&nbsp; &nbsp; &lt;no help&gt;&nbsp;
+&nbsp; &nbsp; feedback url &lt;no feedbackUrl&gt;&nbsp;
+&nbsp; &nbsp;
+&nbsp; idea plugin Kajak&nbsp;
+&nbsp; &nbsp; name Kajak&nbsp;
+&nbsp; &nbsp; short (folder) name Kajak&nbsp;
+&nbsp; &nbsp; description &lt;no description&gt;&nbsp;
+&nbsp; &nbsp; version 1.0&nbsp;
+&nbsp; &nbsp; &lt;&lt; no vendor &gt;&gt;&nbsp;
+&nbsp; &nbsp; content:&nbsp;
+&nbsp; &nbsp; &nbsp; Kajak&nbsp;
+&nbsp; &nbsp; dependencies:&nbsp;
+&nbsp; &nbsp; &nbsp; jetbrains.mps.core&nbsp;
+&nbsp; &nbsp; &lt;&lt; ... &gt;&gt;&nbsp;
+&nbsp; &nbsp; &nbsp;
+&nbsp; mps group Kajak&nbsp;
+&nbsp; &nbsp; solution jetbrains.mps.samples.JavaKaja&nbsp;
+&nbsp; &nbsp; &nbsp; load from ./solutions/JavaKajak/JavaKajak.msd&nbsp;
+&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; language jetbrains.mps.samples.KajaAndOr&nbsp;
+&nbsp; &nbsp; &nbsp; load from ./languages/KajaAndOr/KajaAndOr.mpl&nbsp;
+&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; language jetbrains.mps.samples.Kaja&nbsp;
+&nbsp; &nbsp; &nbsp; load from ./languages/Kajak/Kajak.mpl&nbsp;
+&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; language jetbrains.mps.samples.KajaSceneConstruction&nbsp;
+&nbsp; &nbsp; &nbsp; load from ./languages/KajaSceneConstruction/KajaSceneConstruction.mpl&nbsp;
+&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp;
+default layout:&nbsp;
+&nbsp; import mpsStandalone::languages&nbsp;
+&nbsp; import mpsStandalone::license&nbsp;
+&nbsp; folder bin&nbsp;
+&nbsp; &nbsp; import files from mpsStandalone::bin&nbsp;
+&nbsp; &nbsp; &nbsp; include log.xml&nbsp;
+&nbsp; &nbsp; &nbsp; include log4j.dtd&nbsp;
+&nbsp; &nbsp; file $mps_home/bin/idea.properties&nbsp;
+&nbsp; &nbsp; &nbsp; replace regex "\.MPS(\w+)" /g -&gt; \.${build.number}&nbsp;
+&nbsp; &nbsp; &nbsp;
+&nbsp; folder lib&nbsp;
+&nbsp; &nbsp; import files from mpsStandalone::lib&nbsp;
+&nbsp; &nbsp; &nbsp; exclude MPS-src.zip&nbsp;
+&nbsp; &nbsp; &nbsp; exclude branding.jar&nbsp;
+&nbsp; &nbsp; jar branding.jar&nbsp;
+&nbsp; &nbsp; &nbsp; files of idea branding Kajak&nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp; folder plugins&nbsp;
+&nbsp; &nbsp; import mpsStandalone::plugins/svn4idea&nbsp;
+&nbsp; &nbsp; import mpsStandalone::plugins/cvsIntegration&nbsp;
+&nbsp; &nbsp; import mpsStandalone::plugins/git4idea&nbsp;
+&nbsp; &nbsp; import mpsStandalone::plugins/mps-core&nbsp;
+&nbsp; &nbsp; plugin Kajak&nbsp;
+&nbsp; &nbsp; &nbsp; folder libs&nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp; file ./solutions/JavaKajak/images/kaja_images.jar&nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; # optional plugins&nbsp;
+&nbsp; &nbsp; import mpsMakePlugin::mps-make&nbsp;
+&nbsp; &nbsp; &nbsp;
+&nbsp; properties file build.number&nbsp;
+&nbsp; &nbsp; build.number = ${build.number}&nbsp;
+&nbsp; &nbsp; date = ${date}&nbsp;
+&nbsp; &nbsp; version = 1.0&nbsp;
+&nbsp; &nbsp;
+&nbsp; &nbsp;
+&lt;&lt;additional aspects&gt;&gt;
+</div>   <h3 id="kajakdistribution">KajakDistribution</h3>   <div class="code-block" data-lang="none">build KajakDistribution generates buildDistribution.xml
+
+base directory: ../../
+
+use plugins:
+  &lt;&lt; ... &gt;&gt;
+
+macros:
+  folder mps_home = ./../../work/MPS 3.2
+  var version = 1.0
+
+dependencies:
+  Kajak
+
+project structure:
+  &lt;&lt; ... &gt;&gt;
+
+default layout:
+  tar ${build.number}-linux.tar.gz (compression gzip)
+    folder Kajak ${version}
+      import files from Kajak::/
+        &lt;any&gt;
+      folder bin
+        file $mps_home/bin/linux/fsnotifier (755)
+        file $mps_home/bin/linux/fsnotifier64 (755)
+        file $mps_home/bin/mps.vmoptions (644)
+          fix eol: convert to a single LF, remove eof (Ctrl-Z): true
+        file $mps_home/bin/mps64.vmoptions (644)
+          fix eol: convert to a single LF, remove eof (Ctrl-Z): true
+        files from $mps_home/bin/linux
+          exclude **/fsnotifier
+          exclude **/fsnotifier64
+
+      file $mps_home/mps.sh (755)
+        fix eol: convert to a single LF, remove eof (Ctrl-Z): true
+
+  zip ${build.number}.zip
+    folder Kajak ${version}
+      import files from Kajak::/
+        &lt;any&gt;
+      folder bin
+        file $mps_home/bin/mps.vmoptions (644)
+        file $mps_home/bin/mps64.vmoptions (644)
+        file $mps_home/bin/mps.exe.vmoptions (644)
+        file $mps_home/bin/mps64.exe.vmoptions (644)
+        folder win
+          files from $mps_home/bin/win
+            exclude **/*.exe
+          filemode folders: &lt;default (755)&gt;, files: 755
+            files from $mps_home/bin/win
+              include **/*.exe
+
+        folder linux
+          files from $mps_home/bin/linux
+            exclude **/fsnotifier
+            exclude **/fsnotifier64
+          file $mps_home/bin/linux/fsnotifier (755)
+          file $mps_home/bin/linux/fsnotifier64 (755)
+
+        folder nix
+          filemode folders: &lt;default (755)&gt;, files: 755
+            files from $mps_home/bin/nix
+
+        folder mac
+          file $mps_home/bin/mac/libbreakgen.jnilib (644)
+          file $mps_home/bin/mac/libbreakgen64.jnilib (644)
+          file $mps_home/bin/mac/restarter (755)
+          file $mps_home/bin/mac/fsnotifier (755)
+          folder Contents
+            folder Resources
+              file $mps_home/bin/mac/Contents/Resources/mps.icns (644)
+
+            folder MacOS
+              file $mps_home/bin/mac/Contents/MacOS/mps (755)
+
+            file $mps_home/bin/mac/Contents/Info.plist (644)
+
+      file $mps_home/mps.sh (755)
+      file $mps_home/mps.bat (755)
+
+  zip ${build.number}-macos.zip
+    folder Kajak ${version}.app
+      folder Contents
+        import files from Kajak::/
+          &lt;any&gt;
+        folder Resources
+          file $mps_home/bin/mac/Contents/Resources/mps.icns (644)
+
+        folder MacOS
+          file $mps_home/bin/mac/Contents/MacOS/mps (755)
+
+        file $mps_home/bin/mac/Contents/Info.plist (644)
+        folder bin
+          file $mps_home/bin/mac/libbreakgen.jnilib (644)
+          file $mps_home/bin/mac/libbreakgen64.jnilib (644)
+          file $mps_home/bin/mac/restarter (755)
+          file $mps_home/bin/mac/fsnotifier (755)
+          file $mps_home/bin/mps.vmoptions (644)
+            fix eol: convert to a single LF, remove eof (Ctrl-Z): true
+          file $mps_home/bin/mps64.vmoptions (644)
+            fix eol: convert to a single LF, remove eof (Ctrl-Z): true
+
+        file $mps_home/mps.sh (755)
+          fix eol: convert to a single LF, remove eof (Ctrl-Z): true
+
+&lt;&lt;additional aspects&gt;&gt;
+</div>   <h2 id="generatingandrunningthebuildscript">Generating and running the Build Script</h2>   <p id="da2a133f">Assuming your build scripts are free of errors, you can generate them (<i id="12f15f98">Rebuild Model</i> or <i id="60cbb1fa">Ctrl-F9</i>). This creates an <i id="20d89f97">ant</i> file that has the name that is mentioned at the top of the build script:</p>   <div class="code-block" data-lang="none">build Kajak generates myBuild.xml
+</div>   <p id="f12a8632">This <i id="f15135b2">myBuild.xml</i> (in this case) resides directly in your project directory.&nbsp;You can either run the file from the command line (using <i id="2c409b00">ant -buildfile myBuild.xml</i>) or directly from within MPS (via the context menu on the build script in the project explorer).</p>   <p id="7bc84cdf">      <figure><img alt="sa10" title="sa10" src="/help/img/idea/2019.2/sa10.png" id="34626c6e" width="860" height="1326"></figure>   </p>   <aside class="tip sideblock" data-title="" rel="7bc84cdf" id="8ce3be69">      <p id="1f530c93">Note that the build script compiles and packages all your languages, but it does&nbsp;<b id="c7b2a7dd">not</b>&nbsp;regenerate them! So you have to make sure by other means that your language definitions are fully generated and up to date.</p>   </aside>   <h2 id="inspectingthegenerateddirectorystructure">Inspecting the Generated Directory Structure</h2>   <p id="19fea005">The figure below shows the project structure after running the build scripts. In particular, inside the <i id="f8397536">build/artifacts</i> directory, the structure defined in the <i id="02c86286">default layout</i> section of the build script has been created.</p>   <p id="5de8970e">      <figure><img alt="sa13" title="sa13" src="/help/img/idea/2019.2/sa13.png" id="c0168e6f" width="2054" height="270"></figure>   </p>   <p id="864c1895">      <figure><img alt="sa12" title="sa12" src="/help/img/idea/2019.2/sa12.png" id="3ba969ad" width="824" height="194"></figure>   </p>   <p id="de2b3f3d">We suggest you browse through the directory and file structure to connect what you see to the definitions in the build script.</p><div class="last-modified" data-skip-index="skip">Last modified: 30 August 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="building-mps-language-plugins.html">Building MPS language plugins</a><a class="navigation-links__next" href="removing-bootstrapping-dependency-problems.html">Removing bootstrapping dependency problems</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="//resources.jetbrains.com/storage/help-app/v3/app.js"></script></body></html>

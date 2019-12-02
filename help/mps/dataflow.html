@@ -1,0 +1,79 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta charset="UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="//resources.jetbrains.com/storage/help-app/v3/analytics.js"></script><title>Dataflow - Help | MPS</title><link rel="stylesheet" href="//resources.jetbrains.com/storage/help-app/v3/app.css"></head><body data-id="Dataflow.html"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search MPS Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>MPS 2019.2 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="primary_default" selected>Default</option><option data-group="primary" value="primary_default_for_gnome">Default for GNOME</option><option data-group="primary" value="primary_default_for_kde">Default for KDE</option><option data-group="primary" value="primary_default_for_xwin">Default for XWin</option><option data-group="primary" value="primary_eclipse">Eclipse</option><option data-group="primary" value="primary_eclipse_mac_os_x">Eclipse (Mac OS X)</option><option data-group="primary" value="primary_emacs">Emacs</option><option data-group="primary" value="primary_jbuilder">JBuilder</option><option data-group="primary" value="primary_mac_os_x">Mac OS X</option><option data-group="primary" value="primary_mac_os_x_10.5_">Mac OS X 10.5+</option><option data-group="primary" value="primary_netbeans">NetBeans</option><option data-group="primary" value="primary_visual_studio">Visual Studio</option><option data-group="secondary" value="secondary_default">Default</option><option data-group="secondary" value="secondary_default_for_gnome">Default for GNOME</option><option data-group="secondary" value="secondary_default_for_kde">Default for KDE</option><option data-group="secondary" value="secondary_default_for_xwin">Default for XWin</option><option data-group="secondary" value="secondary_eclipse">Eclipse</option><option data-group="secondary" value="secondary_eclipse_mac_os_x">Eclipse (Mac OS X)</option><option data-group="secondary" value="secondary_emacs">Emacs</option><option data-group="secondary" value="secondary_jbuilder">JBuilder</option><option data-group="secondary" value="secondary_mac_os_x">Mac OS X</option><option data-group="secondary" value="secondary_mac_os_x_10.5_">Mac OS X 10.5+</option><option data-group="secondary" value="secondary_netbeans">NetBeans</option><option data-group="secondary" value="secondary_visual_studio">Visual Studio</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="Dataflow.html" id="dataflow.xml">Dataflow</h1>   <p id="1eebecc4">This cookbook should give you quick answers and guidelines when designing dataflow for your languages. For in-depth description of the typesystem please refer to the <a href="data-flow.html">Dataflow</a> section of the user guide.</p>   <h3 id="readingavalue">Reading a value</h3>   <p id="3e398c02">The read operation instructs the dataflow engine that a particular value is read:</p>   <div class="code-block" data-lang="none">data flow builder for LocalVariableReference {
+&nbsp; (node)-&gt;void {
+&nbsp;&nbsp;&nbsp; if (node.isVariableDefinedInThisMethod()) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; read node.localVariableDeclaration
+&nbsp;&nbsp;&nbsp; }
+&nbsp; }
+}
+</div>   <h3 id="writingavalue">Writing a value</h3>   <p id="8e704399">Similarly the write operation indicates that a value gets written to. In the example, a variable declaration with an initializer first executes the initializer through the <i id="2f061900">code for</i> command and then marks the node as being written the result of the initializer:</p>   <div class="code-block" data-lang="none">data flow builder for LocalVariableDeclaration {
+&nbsp; (node)-&gt;void {
+&nbsp;&nbsp;&nbsp; nop
+&nbsp;&nbsp;&nbsp; if (node.initializer.isNotNull) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; code for node.initializer
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; write node = node.initializer
+&nbsp;&nbsp;&nbsp; }
+&nbsp; }
+}
+</div>   <h3 id="codefor">Code for</h3>   <p id="aa90bd5e">As seen above in the <i id="94fe4543">LocalVariableDeclaration</i> dataflow or below in the <i id="3d709bb7">DotExpression</i> dataflow, the <i id="e3c60b00">code for</i> command indicates nodes that get executed and when. In the <i id="8e25e1d6">DotExpression</i>, for example, code for the operand runs before the actual dot operation:</p>   <div class="code-block" data-lang="none">data flow builder for DotExpression {
+&nbsp; (node)-&gt;void {
+&nbsp;&nbsp;&nbsp; code for node.operand
+&nbsp;&nbsp;&nbsp; code for node.operation
+&nbsp; }
+}
+</div>   <h3 id="jump">Jump</h3>   <p id="6519c008">Dataflow for the <i id="21031f60">TernaryOperatorExpression</i> is a very straightforward example of using both conditional and unconditional jumps. Once the condition gets evaluated we can optionally jump to the <i id="5eedf8c5">ifFalse</i> branch. Similarly, once the <i id="708b299a">ifTrue</i> branch is completed we unconditionally jump out of the scope of the node:</p>   <div class="code-block" data-lang="none">data flow builder for TernaryOperatorExpression {
+&nbsp; (node)-&gt;void {
+&nbsp;&nbsp;&nbsp; code for node.condition
+&nbsp;&nbsp;&nbsp; ifjump before node.ifFalse
+&nbsp;&nbsp;&nbsp; code for node.ifTrue
+&nbsp;&nbsp;&nbsp; jump after node
+&nbsp;&nbsp;&nbsp; code for node.ifFalse
+&nbsp; }
+}
+</div>   <h3 id="ifjump">Ifjump</h3>   <p id="c55bb3d7">The <i id="3afd138f">WhileStatement</i> shows a more involved usage of the dataflow language. Not also the built-in detection of boolean constants. Trying to use <i id="082b9e1d">while(false)</i> will thus be correctly reported by MPS as a while-loop with unreachable body. This is thanks to the unconditional jump to <i id="c6f94f3b">after node</i> if the constant is <i id="7992234e">false</i>.</p>   <div class="code-block" data-lang="none">data flow builder for WhileStatement {
+&nbsp; (node)-&gt;void {
+&nbsp;&nbsp;&nbsp; code for node.condition
+&nbsp;&nbsp;&nbsp; if (node.condition.isInstanceOf(BooleanConstant)) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; node&lt;BooleanConstant&gt; constant = node.condition : BooleanConstant;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (!(constant.value)) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; jump after node
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+&nbsp;&nbsp;&nbsp; } else {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ifjump after node
+&nbsp;&nbsp;&nbsp; }
+&nbsp;&nbsp;&nbsp; code for node.body
+&nbsp;&nbsp;&nbsp; { jump before node }
+&nbsp; }
+}
+</div>   <h3 id="insertinginstructions">Inserting instructions</h3>   <p id="13160e1a">The <i id="3250c360">TryStatement</i> has even more needs from the dataflow language. It must insert extra <i id="f113ff80">ifjump</i> instructions to jump to a catch clause wherever the particular exception can be thrown in the code:</p>   <div class="code-block" data-lang="none">data flow builder for TryStatement {
+&nbsp; (node)-&gt;void {
+&nbsp;&nbsp;&nbsp; try
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (node&lt;CatchClause&gt; c : node.catchClause) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ifjump before c
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; code for node.body
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (instruction instruction : get code for (node.body)) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (instruction.isRet || instruction.isJump || instruction.isNop) { continue; }
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (node&lt;CatchClause&gt; catchClause : DataFlowTryCatchUtil.getPossibleCatches(instruction.getSource, node.catchClause)) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; insert ifjump before catchClause after instruction
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; insert ifjump after afterCatches after instruction
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { jump after afterCatches }
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (node&lt;CatchClause&gt; c : node.catchClause) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; code for c
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { jump after afterCatches }
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; label afterCatches
+&nbsp;&nbsp;&nbsp; finally
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; code for node.finallyBody
+&nbsp;&nbsp;&nbsp; end
+&nbsp; }
+}
+</div>   <p id="eeba446b">Notice, we're using a few other helper methods and commands here - <i id="14dbc0b0">get code for</i> to retrieve the dataflow instruction set for a node, <i id="d953962f">isRet</i>, <i id="01270094">isJump</i> and <i id="f7ad25bd">isNop</i> to exclude certain types of instructions (returns, jumps and no-operations respectively), <i id="7cc794c2">label</i> to create named places in the dataflow instruction set that we can jump to from elsewhere, and finally the <i id="815ebd33">insert</i> command to insert a new command into an existing dataflow instruction set.</p>   <p id="37ebad24">&nbsp;</p><div class="last-modified" data-skip-index="skip">Last modified: 30 August 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="regular-expressions.html">Regular expressions</a><a class="navigation-links__next" href="howto-integration-with-the-data-flow-engine.html">HowTo -- Integration with the Data Flow Engine</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="//resources.jetbrains.com/storage/help-app/v3/app.js"></script></body></html>

@@ -1,0 +1,346 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta class="swiftype" name="product" data-type="string" content="/idea/2016.3/"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><meta charset="UTF-8"><meta name="robots" content="noindex"><title>IntelliJ IDEA 2016.3 Help :: Creating, Running and Packaging Your First Java Application</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Creating_and_Running_Your_First_Java_Application"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-swiftype-index="false"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.3 Help</h3><div class="shortcuts-switcher" data-swiftype-index="false"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Windows/Linux Default</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWin</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">Mac OS X</option><option data-group="secondary" value="eclipse_mac_os_x">Eclipse (Mac OS X)</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (Mac OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper (Mac OS X)</option><option data-group="secondary" value="emacs">Emacs (Mac OS X)</option></select></div><div class="panel-trigger" data-swiftype-index="false"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="debugging-your-first-java-application.html">Debugging Your First Java Application</a></div><h1>Creating, Running and Packaging Your First Java Application</h1><a name="d66339e5"></a><p>
+        This tutorial illustrates a Java SE application development workflow.
+        The age-old <a name="d66339e7"></a><a href="#writing_code"><span>Hello, World</span></a> application is used as an example.</p><ul class="list _ul"><li class="list__item"><a name="d66339e13"></a>
+            <a name="d66339e15"></a><a href="#before_you_start"><span>Before you start</span></a></li><li class="list__item"><a name="d66339e18"></a>
+            <a name="d66339e20"></a><a href="#create_project"><span>Creating a project</span></a></li><li class="list__item"><a name="d66339e23"></a>
+            <a name="d66339e25"></a><a href="#explore_project_structure"><span>Exploring the project structure</span></a></li><li class="list__item"><a name="d66339e30"></a>
+            <a name="d66339e32"></a><a href="#create_class"><span>Creating a package and a class</span></a></li><li class="list__item"><a name="d66339e36"></a>
+            <a name="d66339e38"></a><a href="#writing_code"><span>Writing code for the HelloWorld class</span></a>
+            <ul class="list _ul"><li class="list__item"><a name="d66339e43"></a>
+                    <a name="d66339e45"></a><a href="#use_live_template"><span>Using a live template for the main() method</span></a></li><li class="list__item"><a name="d66339e48"></a>
+                    <a name="d66339e50"></a><a href="#use_completion"><span>Using code auto-completion</span></a></li><li class="list__item"><a name="d66339e53"></a>
+                    <a name="d66339e55"></a><a href="#use_live_template_println"><span>Using a live template for println()</span></a></li></ul>
+        </li><li class="list__item"><a name="d66339e62"></a>
+            <a name="d66339e64"></a><a href="#run_app"><span>Building and running the application</span></a></li><li class="list__item"><a name="d66339e67"></a>
+            <a name="d66339e69"></a><a href="#remarks"><span>Remarks: building and running applications</span></a></li><li class="list__item"><a name="d66339e72"></a>
+            <a name="d66339e74"></a><a href="#package"><span>Packaging the application in a JAR</span></a>
+            <ul class="list _ul"><li class="list__item"><a name="d66339e79"></a>
+                    <a name="d66339e81"></a><a href="#configure_artifact"><span>Creating an artifact configuration for the JAR</span></a></li><li class="list__item"><a name="d66339e84"></a>
+                    <a name="d66339e86"></a><a href="#build_artifact"><span>Building the JAR artifact</span></a></li></ul></li><li class="list__item"><a name="d66339e89"></a>
+            <a name="d66339e91"></a><a href="#run_jar_artifact"><span>Running the packaged application</span></a>
+            <ul class="list _ul"><li class="list__item"><a name="d66339e96"></a>
+                    <a name="d66339e98"></a><a href="#create_jar_run_config"><span>Creating a JAR Application run configuration</span></a></li><li class="list__item"><a name="d66339e101"></a>
+                    <a name="d66339e103"></a><a href="#run_jar_run_config"><span>Executing the run configuration</span></a></li></ul></li></ul><a name="before_you_start"></a><h2>
+        Before you start</h2><a name="d66339e109"></a><p>
+        To develop Java applications, you need a Java Development Kit
+        (<a name="d66339e111"></a><a href="http://en.wikipedia.org/wiki/Java_Development_Kit" data-external="true"><span>JDK</span></a>).
+        If you don't have a JDK installed, you can download an Oracle JDK from the
+        <a name="d66339e114"></a><a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" data-external="true"><span>Java SE Downloads page</span></a>.
+    </p><a name="create_project"></a><h2>
+        Creating a project</h2><a name="d66339e124"></a><p>
+        Any new development in IntelliJ IDEA starts with creating a <a name="d66339e126"></a><a href="project.html"><span>project</span></a>.
+ 
+        So let's create one now.
+    </p><ol class="list _decimal"><li class="list__item"><a name="d66339e134"></a>
+            If no project is currently open in IntelliJ IDEA,
+            click <a name="d66339e136"></a><span class="control">Create New Project</span> on the Welcome screen.
+            Otherwise, select <a name="d66339e139"></a><span class="control">File | New | Project</span>.
+            <a name="d66339e142"></a><p>
+                As a result, the <a name="d66339e144"></a><span class="control">New Project</span> wizard opens.</p></li><li class="list__item"><a name="d66339e148"></a>
+            In the left-hand pane, select <a name="d66339e150"></a><span class="control">Java</span>.
+            (We want a Java-enabled project to be created, or, to be more exact,
+            a project with a Java <a name="d66339e153"></a><a href="module.html"><span>module</span></a>.)
+
+            <figure><img alt="/help/img/idea/2016.3/HWJ000NewProjectJava.png" title="/help/img/idea/2016.3/HWJ000NewProjectJava.png" src="/help/img/idea/2016.3/HWJ000NewProjectJava.png" width="580" height="163"></figure>
+            </li><li class="list__item"><a name="d66339e159"></a>
+            If you haven't defined a JDK in IntelliJ IDEA yet,
+            you should do it now.
+            <a name="d66339e161"></a><p>
+                Click <a name="d66339e163"></a><span class="control">New</span> and select <a name="d66339e166"></a><span class="control">JDK</span>.</p>
+            <figure><img alt="/help/img/idea/2016.3/HWJ002NewProjectNewJDK.png" title="/help/img/idea/2016.3/HWJ002NewProjectNewJDK.png" src="/help/img/idea/2016.3/HWJ002NewProjectNewJDK.png" width="580" height="211"></figure>
+            <a name="d66339e172"></a><p>
+                In the <a name="d66339e174"></a><span class="control">Select Home Directory for JDK</span> dialog that opens,
+                select the directory in which you have the desired JDK installed.</p>
+            <figure><img alt="/help/img/idea/2016.3/HWJ003SelectHomeDirForJDK.png" title="/help/img/idea/2016.3/HWJ003SelectHomeDirForJDK.png" src="/help/img/idea/2016.3/HWJ003SelectHomeDirForJDK.png" width="426" height="332"></figure>
+            <a name="d66339e180"></a><p>
+                The JDK you have specified is shown in the <a name="d66339e182"></a><span class="control">Project SDK</span> field.
+ 
+            </p>
+            <figure><img alt="/help/img/idea/2016.3/HWJ004NewProjectJDKSet.png" title="/help/img/idea/2016.3/HWJ004NewProjectJDKSet.png" src="/help/img/idea/2016.3/HWJ004NewProjectJDKSet.png" width="580" height="163"></figure>
+            <a name="d66339e191"></a><p>
+                Because our application is going to be a "plain old Java application",
+                we don't need any additional technologies to be supported.
+                So, don't select any of the options under <a name="d66339e193"></a><span class="control">Additional Libraries and Frameworks</span>.</p>
+            <a name="d66339e197"></a><p>
+                Click <a name="d66339e199"></a><span class="control">Next</span>.</p>
+        </li><li class="list__item"><a name="d66339e204"></a>
+            The options on the next page have to do with creating a Java class with a <code class="code" data-lang="Java">main()</code> method.
+            <a name="d66339e209"></a><p>
+                Since we are going to study the very basics of IntelliJ IDEA, and do everything from scratch,
+                we don't need these options at the moment.
+ 
+                So, don't select any of the options.
+            </p>
+ 
+            <figure><img alt="/help/img/idea/2016.3/HWJ001NewProjectFromTemplate.png" title="/help/img/idea/2016.3/HWJ001NewProjectFromTemplate.png" src="/help/img/idea/2016.3/HWJ001NewProjectFromTemplate.png" width="580" height="149"></figure>
+            <a name="d66339e218"></a><p>
+                Click <a name="d66339e220"></a><span class="control">Next</span>.</p></li><li class="list__item"><a name="d66339e224"></a>
+            On the next page, specify the project name (e.g. <code class="code" data-lang="Java">HelloWorld</code>).
+            If necessary, change the project location suggested by IntelliJ IDEA.
+            <figure><img alt="/help/img/idea/2016.3/HWJ002NewProjectJavaModuleProjectName.png" title="/help/img/idea/2016.3/HWJ002NewProjectJavaModuleProjectName.png" src="/help/img/idea/2016.3/HWJ002NewProjectJavaModuleProjectName.png" width="580" height="163"></figure>
+            <a name="d66339e231"></a><p>
+                Click <a name="d66339e233"></a><span class="control">Finish</span>.</p>
+            <a name="d66339e237"></a><p>
+                Wait while IntelliJ IDEA is creating the project.
+                When this process is complete, the structure of your new project is shown in
+                the <a name="d66339e239"></a><span class="control">Project</span> tool window.</p>
+        </li></ol><a name="explore_project_structure"></a><h2>
+        Exploring the project structure</h2><a name="d66339e247"></a><p>
+        Let's take a quick look at the project structure.</p><figure><img alt="/help/img/idea/2016.3/HWJ006ProjectToolWindowInitialState.png" title="/help/img/idea/2016.3/HWJ006ProjectToolWindowInitialState.png" src="/help/img/idea/2016.3/HWJ006ProjectToolWindowInitialState.png" width="397" height="185"></figure><a name="d66339e253"></a><p>
+        There are two top-level nodes:</p><ul class="list _ul"><li class="list__item"><a name="d66339e258"></a>
+            <a name="d66339e260"></a><span class="control">HelloWorld.</span> This node represents your Java module.
+            The <code class="code" data-lang="Java">.idea</code> folder and the file <code class="code" data-lang="Java">HelloWorld.iml</code> are used to store
+            configuration data for your project and module respectively.
+            The folder <code class="code" data-lang="Java">src</code> is for your source code.</li><li class="list__item"><a name="d66339e273"></a>
+            <a name="d66339e275"></a><span class="control">External Libraries.</span> This is a category that represents all the "external" resources
+            necessary for your development work.
+            Currently in this category are the <code class="code" data-lang="Java">.jar</code> files that make up your JDK.</li></ul><a name="d66339e282"></a><p>
+        (For more information,
+        see <a name="d66339e284"></a><a href="tool-windows.html"><span>Tool Windows</span></a> and <a name="d66339e286"></a><a href="project-tool-window.html"><span>Project Tool Window</span></a>.)</p><a name="create_class"></a><h2>
+        Creating a package and a class</h2><a name="d66339e294"></a><p>
+        Now we are going to create a package and a class.
+        Let the package and the class names be <code class="code" data-lang="Java">com.example.helloworld</code> and
+        <code class="code" data-lang="Java">HelloWorld</code> respectively.</p><a name="d66339e304"></a><p>
+        Though a package can be created separately, we will create both the package and the class at once.</p><ol class="list _decimal"><li class="list__item"><a name="d66339e309"></a>
+            In the <a name="d66339e311"></a><span class="control">Project</span> tool window,
+            select the <code class="code" data-lang="Java">src</code> folder and press <kbd data-default="Alt+Insert" data-default_for_gnome="Alt+Insert" data-default_for_kde="Alt+Insert" data-default_for_xwin="Alt+Insert" data-emacs="Alt+Insert" data-jbuilder="Alt+Insert" data-visual_studio="Alt+Insert" data-netbeans_6.5="N/A" data-eclipse="Alt+Insert" data-mac_os_x_10.5_="&#x2318;N" data-mac_os_x="&#x2303;N" data-eclipse_mac_os_x="&#x2318;N" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Insert</kbd>.
+            (Alternatively, you can select <a name="d66339e319"></a><span class="control">File | New</span>,
+            or <a name="d66339e322"></a><span class="control">New</span> from the context menu for the folder <code class="code" data-lang="Java">src</code>.)</li><li class="list__item"><a name="d66339e330"></a>
+            In the <a name="d66339e332"></a><span class="control">New</span> menu, select <a name="d66339e335"></a><span class="control">Java Class</span>
+            (e.g. by pressing <kbd data-default="Enter" data-default_for_gnome="Enter" data-default_for_kde="Enter" data-default_for_xwin="Enter" data-emacs="Enter" data-jbuilder="Enter" data-visual_studio="Enter" data-netbeans_6.5="N/A" data-eclipse="Enter" data-mac_os_x_10.5_="⏎" data-mac_os_x="⏎" data-eclipse_mac_os_x="⏎" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Enter</kbd>).
+            <figure><img alt="/help/img/idea/2016.3/HWJ010ProjectToolWindowNewClass.png" title="/help/img/idea/2016.3/HWJ010ProjectToolWindowNewClass.png" src="/help/img/idea/2016.3/HWJ010ProjectToolWindowNewClass.png" width="397" height="185"></figure></li><li class="list__item"><a name="d66339e344"></a>
+            In the <a name="d66339e346"></a><span class="control">Create New Class</span> dialog that opens,
+            type <code class="code" data-lang="Java">com.example.helloworld.HelloWorld</code> in the <a name="d66339e352"></a><span class="control">Name</span> field.
+            The <a name="d66339e355"></a><span class="control">Class</span> option selected in the <a name="d66339e358"></a><span class="control">Kind</span> list is OK for creating a class.
+            Press <kbd data-default="Enter" data-default_for_gnome="Enter" data-default_for_kde="Enter" data-default_for_xwin="Enter" data-emacs="Enter" data-jbuilder="Enter" data-visual_studio="Enter" data-netbeans_6.5="N/A" data-eclipse="Enter" data-mac_os_x_10.5_="⏎" data-mac_os_x="⏎" data-eclipse_mac_os_x="⏎" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Enter</kbd> to create the package and the class, and close the dialog.
+            <figure><img alt="/help/img/idea/2016.3/HWJ011CreateNewClassName.png" title="/help/img/idea/2016.3/HWJ011CreateNewClassName.png" src="/help/img/idea/2016.3/HWJ011CreateNewClassName.png" width="347" height="151"></figure>
+            <a name="d66339e366"></a><p>
+                The package <code class="code" data-lang="Java">com.example.helloworld</code> and
+                the class <code class="code" data-lang="Java">HelloWorld</code> are shown in the <a name="d66339e374"></a><span class="control">Project</span> tool window.</p>
+            <figure><img alt="/help/img/idea/2016.3/HWJ011NewClassInProjectToolWindow.png" title="/help/img/idea/2016.3/HWJ011NewClassInProjectToolWindow.png" src="/help/img/idea/2016.3/HWJ011NewClassInProjectToolWindow.png" width="397" height="225"></figure>
+            <a name="d66339e380"></a><p>
+                At the same time, the file <code class="code" data-lang="Java">HelloWorld.java</code> (corresponding to the class) opens
+                in the editor.</p>
+            <figure><img alt="/help/img/idea/2016.3/HWJ012NewClassInEditor.png" title="/help/img/idea/2016.3/HWJ012NewClassInEditor.png" src="/help/img/idea/2016.3/HWJ012NewClassInEditor.png" width="580" height="217"></figure></li></ol><a name="d66339e388"></a><p>
+        Note the package statement at the beginning of the file and also the class declaration.
+        When creating the class, IntelliJ IDEA used a file template for a Java class.
+        (IntelliJ IDEA provides a number of predefined file templates for creating various file types.
+        For more information, see <a name="d66339e390"></a><a href="file-and-code-templates.html"><span>File and Code Templates</span></a>.)</p><a name="d66339e393"></a><p>
+        Also note a yellow light bulb <img alt="/help/img/idea/2016.3/intentionBulb.png" title="/help/img/idea/2016.3/intentionBulb.png" src="/help/img/idea/2016.3/intentionBulb.png" width="10" height="15" class="inline-icon-15">.
+        This bulb indicates that IntelliJ IDEA has suggestions for the current context.
+        Click the light bulb, or press <kbd data-default="Alt+Enter" data-default_for_gnome="Alt+Enter" data-default_for_kde="Alt+Enter" data-default_for_xwin="Alt+Enter" data-emacs="Alt+Enter" data-jbuilder="Alt+Enter" data-visual_studio="Alt+Enter" data-netbeans_6.5="N/A" data-eclipse="Alt+Enter" data-mac_os_x_10.5_="&#x2325;⏎" data-mac_os_x="&#x2325;⏎" data-eclipse_mac_os_x="&#x2318;1" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Enter</kbd> to see the suggestion list.</p><figure><img alt="/help/img/idea/2016.3/HWJ013IntentionActionsSuggestionList.png" title="/help/img/idea/2016.3/HWJ013IntentionActionsSuggestionList.png" src="/help/img/idea/2016.3/HWJ013IntentionActionsSuggestionList.png" width="580" height="280"></figure><a name="d66339e402"></a><p>
+        At the moment, we are not going to perform any of the actions suggested by IntelliJ IDEA
+        (such actions are called <a name="d66339e404"></a><a href="intention-actions.html"><span>intention actions</span></a>.)
+        Note, however, that this IntelliJ IDEA feature may sometimes be very useful.</p><a name="d66339e409"></a><p>
+        Finally, there are code folding markers next to the commented code fragment (<img alt="/help/img/idea/2016.3/foldingMinus.gif" title="/help/img/idea/2016.3/foldingMinus.gif" src="/help/img/idea/2016.3/foldingMinus.gif" width="20" height="11" class="inline-icon-11">).
+        Click one of them to collapse that fragment.
+        (For more information, see <a name="d66339e413"></a><a href="code-folding.html"><span>Code Folding</span></a>.)</p><figure><img alt="/help/img/idea/2016.3/HWJ014CommentedCodeFolded.png" title="/help/img/idea/2016.3/HWJ014CommentedCodeFolded.png" src="/help/img/idea/2016.3/HWJ014CommentedCodeFolded.png" width="580" height="181"></figure><a name="writing_code"></a><h2>
+        Writing code for the HelloWorld class</h2><a name="d66339e421"></a><p>
+        The code in its final state (as you probably know) will look this way:</p><a name="d66339e424"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kn">package</span> <span class="nn">com.example.helloworld</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HelloWorld</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Hello, World!&quot;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></div><a name="d66339e427"></a><p>
+        The package statement and the class declaration are already there.
+        Now we are going to add the missing couple of lines.</p><a name="d66339e431"></a><p>
+        Press <kbd data-default="Shift+Enter" data-default_for_gnome="Shift+Enter" data-default_for_kde="Shift+Enter" data-default_for_xwin="Shift+Enter" data-emacs="Shift+Enter" data-jbuilder="Shift+Enter" data-visual_studio="Shift+Enter" data-netbeans_6.5="N/A" data-eclipse="Shift+Enter" data-mac_os_x_10.5_="&#x21E7;⏎" data-mac_os_x="&#x21E7;⏎" data-eclipse_mac_os_x="&#x21E7;⏎" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Shift+Enter</kbd>.
+        (In contrast to <kbd data-default="Enter" data-default_for_gnome="Enter" data-default_for_kde="Enter" data-default_for_xwin="Enter" data-emacs="Enter" data-jbuilder="Enter" data-visual_studio="Enter" data-netbeans_6.5="N/A" data-eclipse="Enter" data-mac_os_x_10.5_="⏎" data-mac_os_x="⏎" data-eclipse_mac_os_x="⏎" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Enter</kbd>,
+        <kbd data-default="Shift+Enter" data-default_for_gnome="Shift+Enter" data-default_for_kde="Shift+Enter" data-default_for_xwin="Shift+Enter" data-emacs="Shift+Enter" data-jbuilder="Shift+Enter" data-visual_studio="Shift+Enter" data-netbeans_6.5="N/A" data-eclipse="Shift+Enter" data-mac_os_x_10.5_="&#x21E7;⏎" data-mac_os_x="&#x21E7;⏎" data-eclipse_mac_os_x="&#x21E7;⏎" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Shift+Enter</kbd> starts a new line without breaking the current one.)
+    </p><figure><img alt="/help/img/idea/2016.3/HWJ015NewLine.png" title="/help/img/idea/2016.3/HWJ015NewLine.png" src="/help/img/idea/2016.3/HWJ015NewLine.png" width="580" height="206"></figure><a name="use_live_template"></a><h3>
+        Using a live template for the main() method</h3><a name="d66339e445"></a><p>
+        The line</p><a name="d66339e448"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{}</span></code></div><a name="d66339e451"></a><p>
+        may well be typed. However, we suggest that you use a different method.
+ 
+        Type <code class="code" data-lang="Java">p</code> and press <kbd data-default="Ctrl+J" data-default_for_gnome="Ctrl+J" data-default_for_kde="Ctrl+J" data-default_for_xwin="Ctrl+J" data-emacs="Ctrl+J" data-jbuilder="Ctrl+J" data-visual_studio="Ctrl+J" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Shift+Alt+J" data-mac_os_x_10.5_="&#x2318;J" data-mac_os_x="&#x2318;J" data-eclipse_mac_os_x="N/A" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+J</kbd>.
+    </p><figure><img alt="/help/img/idea/2016.3/HWJ016psvm.png" title="/help/img/idea/2016.3/HWJ016psvm.png" src="/help/img/idea/2016.3/HWJ016psvm.png" width="580" height="191"></figure><a name="d66339e466"></a><p>
+        Select <a name="d66339e468"></a><span class="control">psvm - main() method declaration</span>.
+        (Use the <kbd data-default="Up" data-default_for_gnome="Up" data-default_for_kde="Up" data-default_for_xwin="Up" data-emacs="Up" data-jbuilder="Up" data-visual_studio="Up" data-netbeans_6.5="N/A" data-eclipse="Up" data-mac_os_x_10.5_="&#x2191;" data-mac_os_x="&#x2191;" data-eclipse_mac_os_x="&#x2191;" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Up</kbd> and <kbd data-default="Down" data-default_for_gnome="Down" data-default_for_kde="Down" data-default_for_xwin="Down" data-emacs="Down" data-jbuilder="Down" data-visual_studio="Down" data-netbeans_6.5="N/A" data-eclipse="Down" data-mac_os_x_10.5_="&#x2193;" data-mac_os_x="&#x2193;" data-eclipse_mac_os_x="&#x2193;" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Down</kbd> arrow keys for moving within the suggestion list,
+        <kbd data-default="Enter" data-default_for_gnome="Enter" data-default_for_kde="Enter" data-default_for_xwin="Enter" data-emacs="Enter" data-jbuilder="Enter" data-visual_studio="Enter" data-netbeans_6.5="N/A" data-eclipse="Enter" data-mac_os_x_10.5_="⏎" data-mac_os_x="⏎" data-eclipse_mac_os_x="⏎" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Enter</kbd> for selecting a highlighted element.)</p><a name="d66339e478"></a><p>
+        Here is the result:</p><figure><img alt="/help/img/idea/2016.3/HWJ017MainMethodInserted.png" title="/help/img/idea/2016.3/HWJ017MainMethodInserted.png" src="/help/img/idea/2016.3/HWJ017MainMethodInserted.png" width="580" height="186"></figure><a name="d66339e483"></a><p>
+        IntelliJ IDEA provides code snippets called live templates.
+        <code class="code" data-lang="Java">psvm</code> is an abbreviation for one of such templates.
+        To insert a live template into your code,
+        you can use <a name="d66339e488"></a><span class="menupath">Code | Insert Live Template</span> or <kbd data-default="Ctrl+J" data-default_for_gnome="Ctrl+J" data-default_for_kde="Ctrl+J" data-default_for_xwin="Ctrl+J" data-emacs="Ctrl+J" data-jbuilder="Ctrl+J" data-visual_studio="Ctrl+J" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Shift+Alt+J" data-mac_os_x_10.5_="&#x2318;J" data-mac_os_x="&#x2318;J" data-eclipse_mac_os_x="N/A" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+J</kbd>.
+        For more information, see <a name="d66339e493"></a><a href="live-templates.html"><span>Live Templates</span></a>.
+    </p><a name="use_completion"></a><h3>
+        Using code auto-completion</h3><a name="d66339e502"></a><p>
+        Now, it's time to add the remaining line of code</p><a name="d66339e505"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Hello, World!&quot;</span><span class="o">);</span></code></div><a name="d66339e508"></a><p>
+        We'll do that using code auto-completion. </p><a name="d66339e511"></a><p>
+        Type <code class="code" data-lang="Java">Sy</code></p><a name="d66339e516"></a><p>
+        The code completion suggestion list is shown.</p><figure><img alt="/help/img/idea/2016.3/HWJ018InsertSystem.png" title="/help/img/idea/2016.3/HWJ018InsertSystem.png" src="/help/img/idea/2016.3/HWJ018InsertSystem.png" width="580" height="191"></figure><a name="d66339e522"></a><p>
+        Select <a name="d66339e524"></a><span class="control">System (java.lang)</span> by pressing <kbd data-default="Enter" data-default_for_gnome="Enter" data-default_for_kde="Enter" data-default_for_xwin="Enter" data-emacs="Enter" data-jbuilder="Enter" data-visual_studio="Enter" data-netbeans_6.5="N/A" data-eclipse="Enter" data-mac_os_x_10.5_="⏎" data-mac_os_x="⏎" data-eclipse_mac_os_x="⏎" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Enter</kbd>.</p><a name="d66339e532"></a><p>
+        Type <code class="code" data-lang="Java">.o</code> and press <kbd data-default="Ctrl+Period" data-default_for_gnome="Ctrl+Period" data-default_for_kde="Ctrl+Period" data-default_for_xwin="Ctrl+Period" data-emacs="Ctrl+Period" data-jbuilder="Ctrl+Period" data-visual_studio="Ctrl+Period" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Period" data-mac_os_x_10.5_="&#x2303;." data-mac_os_x="&#x2303;." data-eclipse_mac_os_x="&#x2303;." data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Period</kbd>.</p><figure><img alt="/help/img/idea/2016.3/HWJ020InsertOut.png" title="/help/img/idea/2016.3/HWJ020InsertOut.png" src="/help/img/idea/2016.3/HWJ020InsertOut.png" width="580" height="191"></figure><a name="d66339e545"></a><p>
+        <code class="code" data-lang="Java">out</code> is inserted followed by a dot.
+        (You can select an item in the suggestion list by pressing <kbd data-default="Ctrl+Period" data-default_for_gnome="Ctrl+Period" data-default_for_kde="Ctrl+Period" data-default_for_xwin="Ctrl+Period" data-emacs="Ctrl+Period" data-jbuilder="Ctrl+Period" data-visual_studio="Ctrl+Period" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Period" data-mac_os_x_10.5_="&#x2303;." data-mac_os_x="&#x2303;." data-eclipse_mac_os_x="&#x2303;." data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Period</kbd>.
+        In that case, the selected item is inserted into the editor followed by a dot.)</p><a name="d66339e555"></a><p>
+        Type <code class="code" data-lang="Java">p</code> and then find and select <a name="d66339e560"></a><span class="control">println(String x)</span>.</p><figure><img alt="/help/img/idea/2016.3/HWJ022InsertPrintLn.png" title="/help/img/idea/2016.3/HWJ022InsertPrintLn.png" src="/help/img/idea/2016.3/HWJ022InsertPrintLn.png" width="580" height="191"></figure><a name="d66339e568"></a><p>
+        IntelliJ IDEA prompts you which parameter types can be used in the current context.</p><figure><img alt="/help/img/idea/2016.3/HWJ023PrintLnInserted.png" title="/help/img/idea/2016.3/HWJ023PrintLnInserted.png" src="/help/img/idea/2016.3/HWJ023PrintLnInserted.png" width="580" height="340"></figure><a name="d66339e574"></a><p>
+        Type <code class="code" data-lang="Java">"</code></p><a name="d66339e579"></a><p>
+        The second quotation mark is inserted automatically and the cursor is placed between the quotation marks.
+        Type <code class="code" data-lang="Java">Hello, World!</code></p><figure><img alt="/help/img/idea/2016.3/HWJ024CodeReady.png" title="/help/img/idea/2016.3/HWJ024CodeReady.png" src="/help/img/idea/2016.3/HWJ024CodeReady.png" width="580" height="191"></figure><a name="d66339e586"></a><p>
+        The code at this step is ready.</p><a name="d66339e589"></a><p>
+        (For more information, see <a name="d66339e591"></a><a href="auto-completing-code.html"><span>Auto-Completing Code</span></a>.)</p><a name="use_live_template_println"></a><h3>
+        Using a live template for println()</h3><a name="d66339e598"></a><p>
+        As a side note, we could have inserted the call to <code class="code" data-lang="Java">println()</code> by using a live template (<code class="code" data-lang="Java">sout</code>).
+        </p><a name="d66339e607"></a><p>
+        If you think that it's enough for live templates,
+        proceed to <a name="d66339e609"></a><a href="#run_app"><span>running the application</span></a>.
+        Otherwise, try that now as an additional exercise.
+        Delete</p><a name="d66339e613"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Hello, World!&quot;</span><span class="o">);</span></code></div><a name="d66339e616"></a><p>
+        Type <code class="code" data-lang="Java">s</code>, press <kbd data-default="Ctrl+J" data-default_for_gnome="Ctrl+J" data-default_for_kde="Ctrl+J" data-default_for_xwin="Ctrl+J" data-emacs="Ctrl+J" data-jbuilder="Ctrl+J" data-visual_studio="Ctrl+J" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Shift+Alt+J" data-mac_os_x_10.5_="&#x2318;J" data-mac_os_x="&#x2318;J" data-eclipse_mac_os_x="N/A" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+J</kbd> and
+        select <a name="d66339e623"></a><span class="control">sout - Prints a string to System.out</span>.</p><a name="d66339e627"></a><p>
+        The line</p><a name="d66339e631"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span></code></div><a name="d66339e634"></a><p>
+        is added and the cursor is placed between <code class="code" data-lang="Java">(</code> and <code class="code" data-lang="Java">)</code>.</p><a name="d66339e643"></a><p>
+        Type <code class="code" data-lang="Java">"</code> and then type <code class="code" data-lang="Java">Hello, World!</code></p><a name="run_app"></a><h2>
+        Building and running the application</h2><a name="d66339e659"></a><p>
+        Classes with a <code class="code" data-lang="Java">main()</code> method can be run right from the editor.
+        To show that, there are the green arrow markers (<img alt="/help/img/idea/2016.3/run.png" title="/help/img/idea/2016.3/run.png" src="/help/img/idea/2016.3/run.png" width="11" height="14" class="inline-icon-14">) in the left margin.</p><a name="d66339e667"></a><p>
+        Click one of the markers and
+        select <a name="d66339e669"></a><span class="control">Run 'HelloWorld.main()'</span>.</p><figure><img alt="/help/img/idea/2016.3/HWJ028RunHelloWorld.png" title="/help/img/idea/2016.3/HWJ028RunHelloWorld.png" src="/help/img/idea/2016.3/HWJ028RunHelloWorld.png" width="580" height="239"></figure><a name="d66339e675"></a><p>
+        Wait while IntelliJ IDEA is compiling the class.
+        When the compilation is complete, the <a name="d66339e677"></a><span class="control">Run</span> tool window opens at the bottom of the screen.</p><figure><img alt="/help/img/idea/2016.3/HWJ029RunToolWindow.png" title="/help/img/idea/2016.3/HWJ029RunToolWindow.png" src="/help/img/idea/2016.3/HWJ029RunToolWindow.png" width="580" height="131"></figure><a name="d66339e683"></a><p>
+        On the first line, there is a fragment of the command that IntelliJ IDEA used to run the class.
+        (Click the fragment to see the whole command line including all options and arguments.)
+        The last line shows that the process has exited normally, and no infinite loops occurred.
+        And, finally, you see the program output <code class="code" data-lang="Java">Hello, World!</code> between these lines.</p><a name="d66339e690"></a><p>(For more information, see <a name="d66339e692"></a><a href="run-tool-window.html"><span>Run Tool Window</span></a>.)</p><a name="remarks"></a><h2>
+        Remarks: building and running applications</h2><a name="d66339e700"></a><p>
+        Some remarks related to
+        building and running applications in IntelliJ IDEA:</p><ul class="list _ul"><li class="list__item"><a name="d66339e705"></a>
+
+                Prior to running the class, IntelliJ IDEA has automatically compiled it.
+                When necessary, you can initiate the compilation yourself.
+                The corresponding options can be found in the <a name="d66339e707"></a><span class="control">Build</span> menu.
+            <figure><img alt="/help/img/idea/2016.3/HWJ025BuildMenu.png" title="/help/img/idea/2016.3/HWJ025BuildMenu.png" src="/help/img/idea/2016.3/HWJ025BuildMenu.png" width="293" height="208"></figure>
+            <a name="d66339e712"></a><p>
+                Many of these options are also available as context menu commands
+                in the <a name="d66339e714"></a><span class="control">Project</span> tool window
+                and in the editor.</p>
+            <a name="d66339e718"></a><p>
+                Finally, there is an icon in the upper-right part of the workspace
+                that corresponds to the <a name="d66339e720"></a><span class="control">Build Project</span> command (<img alt="/help/img/idea/2016.3/build.png" title="/help/img/idea/2016.3/build.png" src="/help/img/idea/2016.3/build.png" width="14" height="14" class="inline-icon-14">).</p>
+            <figure><img alt="/help/img/idea/2016.3/HWJ025BuildIcon.png" title="/help/img/idea/2016.3/HWJ025BuildIcon.png" src="/help/img/idea/2016.3/HWJ025BuildIcon.png" width="300" height="104"></figure>
+            <a name="d66339e729"></a><p>
+                For more information, see <a name="d66339e731"></a><a href="build-process.html"><span>Build Process</span></a> and <a name="d66339e733"></a><a href="compilation-types.html"><span>Compilation Types</span></a>.</p>
+
+        </li><li class="list__item"><a name="d66339e737"></a>
+            The options for running and debugging applications can be found in the <a name="d66339e739"></a><span class="control">Run</span> menu.
+            <figure><img alt="/help/img/idea/2016.3/HWJ030RunMenu.png" title="/help/img/idea/2016.3/HWJ030RunMenu.png" src="/help/img/idea/2016.3/HWJ030RunMenu.png" width="349" height="235"></figure>
+ 
+            <a name="d66339e746"></a><p>
+                As in the case of the build operations,
+                the run options can also be accessed from the <a name="d66339e748"></a><span class="control">Project</span> tool window and the editor,
+                as well as by means of controls in the upper-right part of the workspace.
+            </p>
+            <figure><img alt="/help/img/idea/2016.3/HWJ031RunToolbarButtons.png" title="/help/img/idea/2016.3/HWJ031RunToolbarButtons.png" src="/help/img/idea/2016.3/HWJ031RunToolbarButtons.png" width="197" height="19"></figure>
+        </li><li class="list__item"><a name="d66339e755"></a>
+            Applications in IntelliJ IDEA are run according to what is called run/debug configurations.
+            Such configurations, generally, should be created prior to running an application.
+ 
+            <a name="d66339e759"></a><p>
+                When you performed the <a name="d66339e761"></a><span class="control">Run 'HelloWorld.main()'</span> command,
+                IntelliJ IDEA, first, created a run configuration and then executed it.</p>
+            <a name="d66339e765"></a><p>
+                The name of this run configuration (HelloWorld) is now shown in the run/debug configuration selector
+                to the left of <img alt="/help/img/idea/2016.3/run.png" title="/help/img/idea/2016.3/run.png" src="/help/img/idea/2016.3/run.png" width="11" height="14" class="inline-icon-14">.</p>
+            <a name="d66339e770"></a><p>
+                The HelloWorld configuration now exists as a temporary configuration and, if necessary,
+                you can save it to make it permanent.</p>
+            <figure><img alt="/help/img/idea/2016.3/HWJ032RunConfigSelectorMenu.png" title="/help/img/idea/2016.3/HWJ032RunConfigSelectorMenu.png" src="/help/img/idea/2016.3/HWJ032RunConfigSelectorMenu.png" width="225" height="100"></figure>
+        </li><li class="list__item"><a name="d66339e776"></a>
+            Run/debug configurations can do a lot more than just run applications.
+            They can also build applications and perform other useful tasks.
+            <a name="d66339e778"></a><p>
+                If you look at the settings for the HelloWorld run configuration
+                (<a name="d66339e780"></a><span class="control">Run | Edit Configurations</span> or
+                <a name="d66339e783"></a><span class="control">Edit Configurations</span> from the run configuration selector),
+                you'll see that the <a name="d66339e786"></a><span class="control">Build</span> option is included by default
+                in the <a name="d66339e789"></a><span class="control">Before launch</span> task list.
+                That's why IntelliJ IDEA compiled the class
+                when you performed the <a name="d66339e792"></a><span class="control">Run 'HelloWorld.main()'</span> command.</p>
+            <figure><img alt="/help/img/idea/2016.3/HWJ033RunConfigSettings.png" title="/help/img/idea/2016.3/HWJ033RunConfigSettings.png" src="/help/img/idea/2016.3/HWJ033RunConfigSettings.png" width="580" height="199"></figure>
+ 
+ 
+        </li><li class="list__item"><a name="d66339e803"></a>
+            If you look at the <a name="d66339e805"></a><span class="control">Project</span> tool window, you'll see that now there is the folder <code class="code" data-lang="Java">out</code> there.
+            This is the project output folder.
+ 
+            <a name="d66339e813"></a><p>
+                Inside it is the module output folder (<code class="code" data-lang="Java">production\HelloWorld</code>),
+                the folder structure for the package <code class="code" data-lang="Java">com.example.helloworld</code> and
+                the compiled class file <code class="code" data-lang="Java">HelloWorld.class</code>.</p>
+ 
+            <figure><img alt="/help/img/idea/2016.3/HWJ027HelloWorldInExplorer.png" title="/help/img/idea/2016.3/HWJ027HelloWorldInExplorer.png" src="/help/img/idea/2016.3/HWJ027HelloWorldInExplorer.png" width="397" height="379"></figure>
+            <a name="d66339e830"></a><p>
+                For more information, see <a name="d66339e832"></a><a href="configuring-project-compiler-output.html"><span>Configuring Project Compiler Output</span></a> and <a name="d66339e834"></a><a href="configuring-module-compiler-output.html"><span>Configuring Module Compiler Output</span></a>.</p>
+ 
+        </li></ul><a name="package"></a><h2>Packaging the application in a JAR</h2><a name="d66339e847"></a><p>
+        When happy with your application,
+        you may want to package it in a Java archive
+        (<a name="d66339e849"></a><a href="https://en.wikipedia.org/wiki/JAR_(file_format)" data-external="true"><span>JAR</span></a>) for distribution.
+        To do that,
+        you should create an <a name="d66339e852"></a><a href="working-with-artifacts.html#artifact_def"><span>artifact</span></a> configuration
+        for your JAR and then build the artifact.</p><a name="configure_artifact"></a><h3>Creating an artifact configuration for the JAR</h3><ol class="list _decimal"><li class="list__item"><a name="d66339e861"></a>
+            Select <a name="d66339e863"></a><span class="control">File | Project Structure</span> to
+            open the <a name="d66339e866"></a><span class="control">Project Structure</span> dialog.</li><li class="list__item"><a name="d66339e870"></a>
+            Under <a name="d66339e872"></a><span class="control">Project Settings</span>, select <a name="d66339e875"></a><span class="control">Artifacts</span>.</li><li class="list__item"><a name="d66339e879"></a>
+            Click <img alt="/help/img/idea/2016.3/new.png" title="/help/img/idea/2016.3/new.png" src="/help/img/idea/2016.3/new.png" width="12" height="12" class="inline-icon-12">, point to <a name="d66339e883"></a><span class="control">JAR</span> and
+            select <a name="d66339e886"></a><span class="control">From modules with dependencies</span>.
+            <figure><img alt="/help/img/idea/2016.3/HWJ041NewArtifact.png" title="/help/img/idea/2016.3/HWJ041NewArtifact.png" src="/help/img/idea/2016.3/HWJ041NewArtifact.png" width="580" height="255"></figure>
+        </li><li class="list__item"><a name="d66339e892"></a>
+            In the dialog that opens, specify the main application class.
+            (To the right of the <a name="d66339e894"></a><span class="control">Main Class</span> field, click <img alt="/help/img/idea/2016.3/browseButton.png" title="/help/img/idea/2016.3/browseButton.png" src="/help/img/idea/2016.3/browseButton.png" width="15" height="15" class="inline-icon-15"> and
+            select <a name="d66339e899"></a><span class="control">HelloWorld (com.example.helloworld)</span> in the dialog that opens.)
+            <figure><img alt="/help/img/idea/2016.3/HWJ041NewArtifactCreateJarFromModules.png" title="/help/img/idea/2016.3/HWJ041NewArtifactCreateJarFromModules.png" src="/help/img/idea/2016.3/HWJ041NewArtifactCreateJarFromModules.png" width="496" height="337"></figure>
+            <a name="d66339e904"></a><p>
+                As a result, the artifact configuration is created and its settings are shown in
+                the right-hand part of the <a name="d66339e906"></a><span class="control">Project Structure</span> dialog.</p>
+            <figure><img alt="/help/img/idea/2016.3/HWJ042ArtifactSettings.png" title="/help/img/idea/2016.3/HWJ042ArtifactSettings.png" src="/help/img/idea/2016.3/HWJ042ArtifactSettings.png" width="580" height="399"></figure>
+        </li><li class="list__item"><a name="d66339e914"></a>Click <a name="d66339e916"></a><span class="control">OK</span>.</li></ol><a name="build_artifact"></a><h3>Building the JAR artifact</h3><ol class="list _decimal"><li class="list__item"><a name="d66339e925"></a>
+            Select <a name="d66339e927"></a><span class="control">Build | Build Artifacts</span>.
+            <figure><img alt="/help/img/idea/2016.3/HWJ043BuildArtifacts.png" title="/help/img/idea/2016.3/HWJ043BuildArtifacts.png" src="/help/img/idea/2016.3/HWJ043BuildArtifacts.png" width="233" height="208"></figure></li><li class="list__item"><a name="d66339e932"></a>
+            Point to <a name="d66339e934"></a><span class="control">HelloWorld:jar</span> and select <a name="d66339e937"></a><span class="control">Build</span>.
+            (In this particular case, <a name="d66339e940"></a><span class="control">Build</span> is the default action,
+            so you can just press <kbd data-default="Enter" data-default_for_gnome="Enter" data-default_for_kde="Enter" data-default_for_xwin="Enter" data-emacs="Enter" data-jbuilder="Enter" data-visual_studio="Enter" data-netbeans_6.5="N/A" data-eclipse="Enter" data-mac_os_x_10.5_="⏎" data-mac_os_x="⏎" data-eclipse_mac_os_x="⏎" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Enter</kbd> instead.)
+            <figure><img alt="/help/img/idea/2016.3/HWJ044ArtifactBuild.png" title="/help/img/idea/2016.3/HWJ044ArtifactBuild.png" src="/help/img/idea/2016.3/HWJ044ArtifactBuild.png" width="189" height="137"></figure>
+            <a name="d66339e948"></a><p>If you now look at the <code class="code" data-lang="Java">out/artifacts</code> folder, you'll find your JAR there.</p>
+            <figure><img alt="/help/img/idea/2016.3/HWJ045ArtifactLocation.png" title="/help/img/idea/2016.3/HWJ045ArtifactLocation.png" src="/help/img/idea/2016.3/HWJ045ArtifactLocation.png" width="397" height="346"></figure></li></ol><a name="run_jar_artifact"></a><h2>Running the packaged application</h2><a name="d66339e960"></a><p>
+        To make sure that everything is fine with the JAR, let's run it.
+        To do that, we'll create a JAR Application run configuration and then execute that run configuration.</p><a name="create_jar_run_config"></a><h3>Creating a JAR Application run configuration</h3><a name="d66339e966"></a><p>
+        To run Java applications packaged in JARs, IntelliJ IDEA provides the JAR Application run configurations.
+        To create such a configuration:</p><ol class="list _decimal"><li class="list__item"><a name="d66339e971"></a>
+            Select <a name="d66339e973"></a><span class="control">Run | Edit Configurations</span>.</li><li class="list__item"><a name="d66339e977"></a>
+            In the <a name="d66339e979"></a><span class="control">Run/Debug Configurations</span> dialog that opens,
+            click <img alt="/help/img/idea/2016.3/new.png" title="/help/img/idea/2016.3/new.png" src="/help/img/idea/2016.3/new.png" width="12" height="12" class="inline-icon-12"> and select <a name="d66339e984"></a><span class="control">JAR Application</span>.
+            <figure><img alt="/help/img/idea/2016.3/HWJ046NewJarAppRunConfig.png" title="/help/img/idea/2016.3/HWJ046NewJarAppRunConfig.png" src="/help/img/idea/2016.3/HWJ046NewJarAppRunConfig.png" width="580" height="397"></figure>
+        </li><li class="list__item"><a name="d66339e990"></a>
+            Specify the path to the JAR file.
+            (To the right of the <a name="d66339e992"></a><span class="control">Path to JAR</span> field, click <img alt="/help/img/idea/2016.3/browseButton.png" title="/help/img/idea/2016.3/browseButton.png" src="/help/img/idea/2016.3/browseButton.png" width="15" height="15" class="inline-icon-15"> and
+            select the JAR file in the dialog that opens.)
+            <a name="d66339e997"></a><p>
+                The rest of the settings in this case don't matter, however,
+                there's one more thing that we'll do - just for convenience.</p></li><li class="list__item"><a name="d66339e1000"></a>
+            Under <a name="d66339e1002"></a><span class="control">Before launch</span>, click <img alt="/help/img/idea/2016.3/new.png" title="/help/img/idea/2016.3/new.png" src="/help/img/idea/2016.3/new.png" width="12" height="12" class="inline-icon-12">,
+            select <a name="d66339e1007"></a><span class="control">Build Artifacts</span> and
+            select the <a name="d66339e1010"></a><span class="control">HelloWorld:jar</span> artifact in the dialog that opens.
+            <a name="d66339e1013"></a><p>
+                The <a name="d66339e1015"></a><span class="control">Build 'HelloWorld:jar' artifact</span> task is included in
+                the <a name="d66339e1018"></a><span class="control">Before launch</span> task list.
+                So each time you execute this run configuration, the artifact will be built automatically.</p>
+            <figure><img alt="/help/img/idea/2016.3/HWJ047JarAppRunConfigSettings.png" title="/help/img/idea/2016.3/HWJ047JarAppRunConfigSettings.png" src="/help/img/idea/2016.3/HWJ047JarAppRunConfigSettings.png" width="580" height="515"></figure>
+        </li></ol><a name="run_jar_run_config"></a><h3>Executing the run configuration</h3><ul class="list _ul"><li class="list__item"><a name="d66339e1032"></a>
+            To the right of the run configuration selector, click <img alt="/help/img/idea/2016.3/run.png" title="/help/img/idea/2016.3/run.png" src="/help/img/idea/2016.3/run.png" width="11" height="14" class="inline-icon-14">.
+            <figure><img alt="/help/img/idea/2016.3/HWJ048RunJarApp.png" title="/help/img/idea/2016.3/HWJ048RunJarApp.png" src="/help/img/idea/2016.3/HWJ048RunJarApp.png" width="313" height="104"></figure>
+            <a name="d66339e1038"></a><p>
+                As before, the <a name="d66339e1040"></a><span class="control">Run</span> tool window opens and the application output is shown there.</p>
+            <figure><img alt="/help/img/idea/2016.3/HWJ049JarAppOutput.png" title="/help/img/idea/2016.3/HWJ049JarAppOutput.png" src="/help/img/idea/2016.3/HWJ049JarAppOutput.png" width="580" height="131"></figure>
+        </li></ul><div class="navigation-links _bottom"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="debugging-your-first-java-application.html">Debugging Your First Java Application</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content">```
+                <div class="seealso__col"><h3>External Links:</h3><ul class="list"><li class="list__item"><a name="d66339e1052"></a><a href="https://www.jetbrains.com/idea/documentation/video-tutorials.jsp" data-external="true"><span>Video tutorials</span></a></li></ul></div></div></section><div class="last-modified" data-swiftype-index="false">Last modified: 21 March 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

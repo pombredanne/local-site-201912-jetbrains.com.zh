@@ -1,0 +1,205 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="robots" content="noindex"><title>YouTrack Standalone 7.0 Help :: Import from Bugzilla</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Import-from-Bugzilla"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack Standalone Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>YouTrack Standalone 7.0 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="Import-Projects-from-JIRA.html">Import Projects from JIRA</a><a class="navigation-links__next" href="Import-from-FogBugz.html">Import from FogBugz</a></div><h1>Import from Bugzilla</h1><aside class="note sideblock">
+
+        <a name="d59692e5"></a><p>Before you begin:</p>
+        <a name="d59692e8"></a><p>If you try to re-import same project several times, then you must delete previously imported data before the next attempt.</p>
+
+    </aside><a name="Importing_Issues_from_Bugzilla_to_YouTrack"></a><ul><li class="list__item"><a href="#d59692e16">General Procedure</a></li><li class="list__item"><a href="#d59692e209">Map Bugzilla Statuses and Resolutions</a></li><li class="list__item"><a href="#d59692e344">Map Custom Field Types in Bugzilla to YouTrack</a></li></ul><a name="d59692e16"></a><h2>General Procedure</h2>
+        <a name="General_Procedure"></a>
+
+        <a name="d59692e20"></a><p><a name="d59692e21"></a><b id="d59692e21">Version compatibility note</b></p>
+        <a name="d59692e24"></a><p>Current implementation of the <a name="d59692e26"></a><a href="Python-Client-Library.html"><span>Python Client Library</span></a> and scripts is compatible with YouTrack 3.x and 4.x REST API and Python 2.6.
+            If you use YouTrack 2.x, please refer to YouTrack Release Downloads Archive for the <a name="d59692e28"></a><a href="#Tools"><span>YouTrack 2.x compatible versions of the library and scripts</span></a>.</p>
+
+        <a name="d59692e32"></a><a name="dynaProc0"></a><section class="procedure-steps"><h2>To import issues from Bugzilla:</h2><ol class=".list _decimal"><li class="list__item">Download <a name="d59692e36"></a><a href="http://www.jetbrains.com/youtrack/tools/index.html" data-external="true"><span>the latest version</span></a> of YouTrack's <a name="d59692e39"></a><a href="Python-Client-Library.html"><span>Python Client Library</span></a> and unzip it.</li><li class="list__item">Install <a name="d59692e44"></a><a href="http://www.python.org/download/" data-external="true"><span>Python</span></a>.</li><li class="list__item">Install mySQLdb Python Library.</li><li class="list__item">If needed, create a new mapping file to set the correspondence between source fields in Bugzilla and YouTrack issue's attributes.
+                This mapping file should be created in the <code class="code" data-lang="xml">&lt;library install directory&gt;\python\bugzilla</code> directory.
+                By default, the <code class="code" data-lang="xml">defaultBzMapping.py</code> file is used. For more details about structure of the library,
+                please refer to the <a name="d59692e59"></a><a href="Python-Client-Library.html"><span>Python Client Library</span></a> page.</li><li class="list__item">Import issues from a file to YouTrack running the following command:
+                <a name="d59692e64"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">python bugzilla2youtrack.py target_url target_login target_pass bz_db bz_host bz_port bz_login bz_pass [bz_product]</code></div>
+                Enter values for the following command-line parameters:
+                <table class="" width="100%" id="d59692e67"><thead><tr id="d59692e69" class="ijRowHead"><a name="d59692e69"></a><th width="15%"><a name="d59692e71"></a>
+                            Parameter
+                        </th><th><a name="d59692e74"></a>
+                            Description
+                        </th></tr></thead><tbody><tr id="d59692e78" class="ijRowOdd"><a name="d59692e78"></a><td><a name="d59692e80"></a>
+
+                            <code class="code" data-lang="Java">target_url</code>
+
+                        </td><td><a name="d59692e86"></a>
+                            URL of the YouTrack server to which data should be imported.
+                        </td></tr><tr id="d59692e90" class="ijRowEven"><a name="d59692e90"></a><td><a name="d59692e92"></a>
+
+                            <code class="code" data-lang="Java">target_login</code>
+
+                        </td><td><a name="d59692e98"></a>
+                            User name to log in to the target YouTrack server. Note that the user should have administrator permissions.
+                        </td></tr><tr id="d59692e102" class="ijRowOdd"><a name="d59692e102"></a><td><a name="d59692e104"></a>
+
+                            <code class="code" data-lang="Java">target_pass</code>
+
+                        </td><td><a name="d59692e110"></a>
+                            Password to log in to the target YouTrack server.
+                        </td></tr><tr id="d59692e114" class="ijRowEven"><a name="d59692e114"></a><td><a name="d59692e116"></a>
+
+                            <code class="code" data-lang="Java">bz_db</code>
+
+                        </td><td><a name="d59692e122"></a>
+                            Name of the source Bugzilla database. By default, in Bugzilla if no specific changes were made, the name of database is <code class="code" data-lang="xml">bugs</code>.
+                        </td></tr><tr id="d59692e130" class="ijRowOdd"><a name="d59692e130"></a><td><a name="d59692e132"></a>
+
+                            <code class="code" data-lang="Java">bz_host</code>
+
+                        </td><td><a name="d59692e138"></a>
+                            URL of the source Bugzilla database.
+                        </td></tr><tr id="d59692e142" class="ijRowEven"><a name="d59692e142"></a><td><a name="d59692e144"></a>
+
+                            <code class="code" data-lang="Java">bz_port</code>
+
+                        </td><td><a name="d59692e150"></a>
+                            Port to access the source Bugzilla database. If not configured otherwise specifically, the port number for Bugzilla database is 3306, by default.
+                        </td></tr><tr id="d59692e154" class="ijRowOdd"><a name="d59692e154"></a><td><a name="d59692e156"></a>
+
+                            <code class="code" data-lang="Java">bz_login</code>
+
+                        </td><td><a name="d59692e162"></a>
+                            Username to log in to the source Bugzilla database.
+                        </td></tr><tr id="d59692e166" class="ijRowEven"><a name="d59692e166"></a><td><a name="d59692e168"></a>
+
+                            <code class="code" data-lang="Java">bz_pass</code>
+
+                        </td><td><a name="d59692e174"></a>
+                            Password to log in to the source Bugzilla database.
+                        </td></tr><tr id="d59692e178" class="ijRowOdd"><a name="d59692e178"></a><td><a name="d59692e180"></a>
+
+                            <code class="code" data-lang="Java">bz_product</code>
+
+                        </td><td><a name="d59692e186"></a>
+                            Name(s) of the source product to be imported from Bugzilla.  <aside class="note "><a name="d59692e189"></a><p>If no product name provided, all products in the database will be imported.</p></aside>
+
+                        </td></tr></tbody></table>
+            </li></ol></section>
+        <a name="d59692e197"></a><p>User accounts are imported from Bugzilla by user's email addresses. In YouTrack, an e-mail address a user provided in Bugzilla will be used as a login name for a user account.
+            Passwords for newly imported (created) user accounts in YouTrack are randomly generated, that is:
+            for the first login to YouTrack, a user should provide his e-mail address and then click the link Restore password to create a new password for his account.</p>
+         
+        <br>
+        <a name="d59692e205"></a><p>By default, all data in Bugzilla is stored in cp866 encoding. If you have configured another encoding, then to import data to YouTrack correctly
+            you will need to change the encoding parameter in your mapping file.</p>
+    <a name="d59692e209"></a><h2>Map Bugzilla Statuses and Resolutions</h2>
+        <a name="Mapping_Notes"></a>
+
+        <a name="Mapping_Bugzilla_Statuses_and_Resolutions"></a>
+
+        <a name="d59692e215"></a><p>Both Statuses and Resolutions are imported in YouTrack as issue state:</p>
+
+        <table class="" width="100%" id="d59692e218"><thead><tr id="d59692e220" class="ijRowHead"><a name="d59692e220"></a><th width="20%"><a name="d59692e222"></a>
+                    Bugzilla Status
+                </th><th><a name="d59692e225"></a>
+                    YouTrack Issue State
+                </th></tr></thead><tbody><tr id="d59692e229" class="ijRowOdd"><a name="d59692e229"></a><td><a name="d59692e231"></a>
+                    "UNCONFIRMED"
+                </td><td><a name="d59692e234"></a>
+                    Open
+                </td></tr><tr id="d59692e238" class="ijRowEven"><a name="d59692e238"></a><td><a name="d59692e240"></a>
+                    "NEW"
+                </td><td><a name="d59692e243"></a>
+                    "Submitted"
+                </td></tr><tr id="d59692e247" class="ijRowOdd"><a name="d59692e247"></a><td><a name="d59692e249"></a>
+                    "ASSIGNED"
+                </td><td><a name="d59692e252"></a>
+                    "Submitted"
+                </td></tr><tr id="d59692e256" class="ijRowEven"><a name="d59692e256"></a><td><a name="d59692e258"></a>
+                    "REOPENED"
+                </td><td><a name="d59692e261"></a>
+                    "Reopened"
+                </td></tr></tbody></table>
+
+
+        <table class="" width="100%" id="d59692e266"><thead><tr id="d59692e268" class="ijRowHead"><a name="d59692e268"></a><th width="20%"><a name="d59692e270"></a>
+                    Bugzilla Resolution
+                </th><th><a name="d59692e273"></a>
+                    YouTrack Issue State
+                </th></tr></thead><tbody><tr id="d59692e277" class="ijRowOdd"><a name="d59692e277"></a><td><a name="d59692e279"></a>
+                    "FIXED"
+                </td><td><a name="d59692e282"></a>
+                    "Fixed"
+                </td></tr><tr id="d59692e286" class="ijRowEven"><a name="d59692e286"></a><td><a name="d59692e288"></a>
+                    "INVALID"
+                </td><td><a name="d59692e291"></a>
+                    "Can't Reproduce"
+                </td></tr><tr id="d59692e295" class="ijRowOdd"><a name="d59692e295"></a><td><a name="d59692e297"></a>
+                    "WONTFIX"
+                </td><td><a name="d59692e300"></a>
+                    "Won't fix"
+                </td></tr><tr id="d59692e304" class="ijRowEven"><a name="d59692e304"></a><td><a name="d59692e306"></a>
+                    "DUPLICATE"
+                </td><td><a name="d59692e309"></a>
+                    "Duplicate"
+                </td></tr><tr id="d59692e314" class="ijRowOdd"><a name="d59692e314"></a><td><a name="d59692e316"></a>
+                    "WORKSFORME"
+                </td><td><a name="d59692e319"></a>
+                    "Can't Reproduce"
+                </td></tr><tr id="d59692e323" class="ijRowEven"><a name="d59692e323"></a><td><a name="d59692e325"></a>
+                    "MOVED"
+                </td><td><a name="d59692e328"></a>
+                    "Won't fix",
+                </td></tr><tr id="d59692e332" class="ijRowOdd"><a name="d59692e332"></a><td><a name="d59692e334"></a>
+                    "LATER"
+                </td><td><a name="d59692e337"></a>
+                    "Won't fix"
+                </td></tr></tbody></table>
+    <a name="d59692e344"></a><h2>Map Custom Field Types in Bugzilla to YouTrack</h2>
+        <a name="Mapping_Custom_Field_Types_in_Bugzilla_with_YouTrack"></a>
+
+        <table class=" wide" width="100%" id="d59692e348"><thead><tr id="d59692e350" class="ijRowHead"><a name="d59692e350"></a><th width="20%"><a name="d59692e352"></a>
+                    Bugzilla CF_TYPE (numeric)
+                </th><th width="20%"><a name="d59692e355"></a>
+                    Bugzilla CF_TYPE
+                </th><th><a name="d59692e358"></a>
+                    YouTrack CF Type
+                </th></tr></thead><tbody><tr id="d59692e362" class="ijRowOdd"><a name="d59692e362"></a><td><a name="d59692e364"></a>
+                    "1"
+                </td><td><a name="d59692e367"></a>
+                    FIELD_TYPE_FREETEXT
+                </td><td><a name="d59692e370"></a>
+                    "string"
+                </td></tr><tr id="d59692e374" class="ijRowEven"><a name="d59692e374"></a><td><a name="d59692e376"></a>
+                    "2"
+                </td><td><a name="d59692e379"></a>
+                    FIELD_TYPE_SINGLE_SELECT
+                </td><td><a name="d59692e382"></a>
+                    "enum[1]"
+                </td></tr><tr id="d59692e386" class="ijRowOdd"><a name="d59692e386"></a><td><a name="d59692e388"></a>
+                    "3"
+                </td><td><a name="d59692e391"></a>
+                    FIELD_TYPE_MULTY_SELECT
+                </td><td><a name="d59692e394"></a>
+                    "enum[*]"
+                </td></tr><tr id="d59692e398" class="ijRowEven"><a name="d59692e398"></a><td><a name="d59692e400"></a>
+                    "4"
+                </td><td><a name="d59692e403"></a>
+                    FIELD_TYPE_TEXTAREA
+                </td><td><a name="d59692e406"></a>
+                    "string"
+                </td></tr><tr id="d59692e411" class="ijRowOdd"><a name="d59692e411"></a><td><a name="d59692e413"></a>
+                    "5"
+                </td><td><a name="d59692e416"></a>
+                    FIELD_TYPE_DATETIME
+                </td><td><a name="d59692e419"></a>
+                    "string"
+                </td></tr><tr id="d59692e423" class="ijRowEven"><a name="d59692e423"></a><td><a name="d59692e425"></a>
+                    "7"
+                </td><td><a name="d59692e428"></a>
+                    FIELD_TYPE_BUG_URLS
+                </td><td><a name="d59692e431"></a>
+                    "string"
+                </td></tr></tbody></table>
+        <a name="d59692e436"></a><p>Bugzilla's <code class="code" data-lang="xml">FIELD_TYPE_BUGID</code> (numeric id "6") will be imported to YouTrack as an issue link.
+            If you prefer a different mapping, please define it manually in your configuration mapping file.</p>
+    <div class="last-modified">Last modified: 2 February 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

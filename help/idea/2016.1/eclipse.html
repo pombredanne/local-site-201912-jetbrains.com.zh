@@ -1,0 +1,878 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"></meta><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta content="Moving from Eclipse;Exporting IntelliJ IDEA Project to Eclipse;Migration from Eclipse to IntelliJ IDEA; Import Eclipse project to IntelliJ IDEA" name="description"><meta charset="UTF-8"><title>Migration from Eclipse to IntelliJ IDEA;Import Eclipse project; Import Eclipse code style settings</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Migrating_from_Eclipse_to_IntelliJ_IDEA"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.1 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWindow</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="migration-guides.html">Migration Guides</a><a class="navigation-links__next" href="eclipse.html">Eclipse</a></div><h1>Migrating From Eclipse to IntelliJ IDEA</h1><a name="d327299e11"></a><h2>Overview</h2>
+    <a name="d327299e13"></a><p>Switching from <a name="d327299e15"></a><span class="emphasis">Eclipse</span> to <a name="d327299e18"></a><span class="emphasis">IntelliJ IDEA</span>, especially if you've been using
+        <a name="d327299e21"></a><span class="emphasis">Eclipse</span> for a long time, requires understanding some fundamental differences between the
+        two IDEs, including their <a name="d327299e24"></a><a href="#user_interface"><span>user interfaces</span></a>,
+        <a name="d327299e27"></a><a href="#RunningReloadingChanges"><span>compilation methods</span></a>, <a name="d327299e31"></a><a href="#Shortcuts"><span>shortcuts</span></a>, project
+        configuration and other aspects.</p>
+    <a name="user_interface"></a><h2>User Interface</h2>
+        <a name="d327299e43"></a><h3>No workspace</h3>
+            <a name="d327299e45"></a><p>The first thing you'll notice when launching <a name="d327299e47"></a><span class="emphasis">IntelliJ IDEA</span> is that it has no
+                <a name="d327299e50"></a><span class="emphasis">workspace</span> concept. This means that you can work with only one project at a time.
+                While in <a name="d327299e53"></a><span class="emphasis">Eclipse</span> you normally have a set of projects that may depend on each other,
+                in <a name="d327299e56"></a><span class="emphasis">IntelliJ IDEA</span> you have a single project that consists of a set of modules.</p>
+            <a name="d327299e60"></a><p>If you have several unrelated projects, you can open them in separate windows.</p>
+                 
+            <a name="d327299e65"></a><p>If you still want to have several unrelated projects opened in one window, as a workaround you can
+                configure them all in <a name="d327299e67"></a><span class="emphasis">IntelliJ IDEA</span> as modules.</p>
+           <a name="d327299e71"></a><p>The table below compares the terms in <a name="d327299e73"></a><span class="emphasis">Eclipse</span> and <a name="d327299e76"></a><span class="emphasis">IntelliJ IDEA</span>:</p>
+            <table class="" width="100%" id="d327299e81"><thead><tr id="d327299e83" class="ijRowHead"><a name="d327299e83"></a><th width="50%"><a name="d327299e85"></a>Eclipse</th><th width="50%"><a name="d327299e88"></a>IntelliJ IDEA</th></tr></thead><tbody><tr id="d327299e92" class="ijRowOdd"><a name="d327299e92"></a><td><a name="d327299e94"></a>Workspace</td><td><a name="d327299e97"></a>Project</td></tr><tr id="d327299e101" class="ijRowEven"><a name="d327299e101"></a><td><a name="d327299e103"></a>Project</td><td><a name="d327299e106"></a>Module</td></tr><tr id="d327299e110" class="ijRowOdd"><a name="d327299e110"></a><td><a name="d327299e112"></a>Facet</td><td><a name="d327299e115"></a>Facet</td></tr><tr id="d327299e119" class="ijRowEven"><a name="d327299e119"></a><td><a name="d327299e121"></a>Library</td><td><a name="d327299e124"></a>Library</td></tr><tr id="d327299e129" class="ijRowOdd"><a name="d327299e129"></a><td><a name="d327299e131"></a>JRE</td><td><a name="d327299e134"></a>SDK</td></tr><tr id="d327299e138" class="ijRowEven"><a name="d327299e138"></a><td><a name="d327299e140"></a>Classpath variable</td><td><a name="d327299e143"></a>Path variable</td></tr></tbody></table>
+         
+
+        <a name="d327299e149"></a><h3>No perspectives</h3>
+            <a name="d327299e151"></a><p>The second big surprise when people are switching to <a name="d327299e153"></a><span class="emphasis">IntelliJ IDEA</span> is that it has no
+                <a name="d327299e156"></a><span class="emphasis">perspectives</span>.</p>
+            <a name="d327299e160"></a><p>It means that you don't need to switch between different workspace layouts manually to perform different
+                tasks. The IDE follows your context and brings up the relevant tools automatically.</p>
+            <figure><img alt="migration_guide_debugger_1" width="750" height="562" title="migration_guide_debugger_1" src="/help/img/idea/2016.1/migration_guide_debugger_1.png"></figure>
+         
+
+        <a name="d327299e166"></a><h3>Tool windows</h3>
+            <a name="d327299e168"></a><p>Just like in <a name="d327299e170"></a><span class="emphasis">Eclipse</span>, in <a name="d327299e173"></a><span class="emphasis">IntelliJ IDEA</span> you also have tool windows.
+                To open a tool window, simply click it in the tool window bar:</p>
+            <figure><img alt="migration_guide_tool_window_bar_2" width="750" height="278" title="migration_guide_tool_window_bar_2" src="/help/img/idea/2016.1/migration_guide_tool_window_bar_2.png"></figure>
+            <a name="d327299e179"></a><p>If the tool window bar is hidden, you can open any tool window by hovering over the corresponding icon in
+                the bottom left corner:</p>
+            <figure><img alt="migration_guide_tool_window_bar_1" width="750" height="333" title="migration_guide_tool_window_bar_1" src="/help/img/idea/2016.1/migration_guide_tool_window_bar_1.png"></figure>
+            <a name="d327299e184"></a><p>If you want to make the tool window bar visible for a moment, you can press <code class="code" data-lang="Java">Alt</code>
+                (<code class="code" data-lang="Java">Cmd</code> for OS X) twice and hold it.</p>
+            <a name="d327299e194"></a><p>If you don't want to use the mouse, you can always switch to any toolbar by pressing the shortcut
+                assigned to it. The most important shortcuts to remember are:</p>
+            <ul class="list _bullet"><li class="list__item"><a name="d327299e199"></a><a name="d327299e200"></a><span class="control">Project</span>: <kbd data-default="Alt+1" data-default_for_gnome="Alt+1" data-default_for_kde="Alt+1" data-default_for_xwin="Alt+1" data-emacs="Alt+1" data-jbuilder="Alt+1" data-visual_studio="Alt+1" data-netbeans_6.5="N/A" data-eclipse="Alt+1" data-mac_os_x_10.5_="&#x2318;1" data-mac_os_x="&#x2318;1" data-eclipse_mac_os_x="N/A" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+1</kbd></li><li class="list__item"><a name="d327299e205"></a><a name="d327299e206"></a><span class="control">Version Control</span>: <kbd data-default="N/A" data-default_for_gnome="N/A" data-default_for_kde="N/A" data-default_for_xwin="N/A" data-emacs="N/A" data-jbuilder="N/A" data-visual_studio="N/A" data-netbeans_6.5="N/A" data-eclipse="N/A" data-mac_os_x_10.5_="N/A" data-mac_os_x="N/A" data-eclipse_mac_os_x="N/A" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">N/A</kbd></li><li class="list__item"><a name="d327299e211"></a><a name="d327299e212"></a><span class="control">Terminal</span>: <kbd data-default="Alt+F12" data-default_for_gnome="Alt+F12" data-default_for_kde="Alt+F12" data-default_for_xwin="Alt+F12" data-emacs="Alt+F12" data-jbuilder="Alt+F12" data-visual_studio="Alt+F12" data-netbeans_6.5="N/A" data-eclipse="Alt+F12" data-mac_os_x_10.5_="&#x2325;F12" data-mac_os_x="&#x2325;F12" data-eclipse_mac_os_x="&#x2325;F12" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+F12</kbd></li></ul>
+            <a name="d327299e218"></a><p>Another thing about tool windows is that you can drag, pin, unpin, attach and detach them:</p>
+            <figure><img alt="migration_guide_tool_windows" width="750" height="562" title="migration_guide_tool_windows" src="/help/img/idea/2016.1/migration_guide_tool_windows.png"></figure>
+            <a name="d327299e223"></a><p>To help store/restore the tool windows layout, there are two useful commands:</p>
+            <ul class="list _bullet"><li class="list__item"><a name="d327299e228"></a><a name="d327299e229"></a><span class="control">Window | Store Current Layout as Default</span></li><li class="list__item"><a name="d327299e232"></a><a name="d327299e233"></a><span class="control">Window | Restore Default Layout</span>
+                    (also available via <kbd data-default="Ctrl+F12" data-default_for_gnome="Ctrl+F12" data-default_for_kde="Ctrl+0" data-default_for_xwin="Ctrl+F12" data-emacs="Ctrl+F12" data-jbuilder="Ctrl+F12" data-visual_studio="Ctrl+F12" data-netbeans_6.5="N/A" data-eclipse="Ctrl+F3" data-mac_os_x_10.5_="&#x2318;F12" data-mac_os_x="&#x2318;F12" data-eclipse_mac_os_x="&#x2318;O" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+F12</kbd>)</li></ul>
+         
+        <a name="d327299e241"></a><h3>Multiple windows</h3>
+            <a name="d327299e243"></a><p>Windows management in <a name="d327299e245"></a><span class="emphasis">IntelliJ IDEA</span> is slightly different from
+                <a name="d327299e248"></a><span class="emphasis">Eclipse</span>. You can't open several windows with one project, but you can detach any
+                number of editor tabs into separate windows.</p>
+         
+        <a name="d327299e253"></a><h3>Auto-scrolling to/from sources</h3>
+            <a name="d327299e255"></a><p>By default, <a name="d327299e257"></a><span class="emphasis">IntelliJ IDEA</span> doesn't change the selection in the
+                <a name="d327299e260"></a><a href="project-tool-window.html"><span>Project tool window</span></a> when you switch between editor tabs. However, you can
+                enable it in the tool window settings:</p>
+            <figure><img alt="migration_guide_auto_scroll_from_source" width="514" height="331" title="migration_guide_auto_scroll_from_source" src="/help/img/idea/2016.1/migration_guide_auto_scroll_from_source.png"></figure>
+         
+
+        <a name="d327299e268"></a><h3>Enabling line numbers</h3>
+            <a name="d327299e270"></a><p>Line numbers are not shown in the editor by default. To enable them, go to
+                <a name="d327299e272"></a><span class="menupath">Settings/Preferences | Editor | General | Appearance | Show line numbers</span>.
+                There you will also find other useful settings.</p>
+         
+    <a name="workflows"></a><h2>General workflows</h2>
+        <a name="d327299e280"></a><h3>No 'save' button</h3>
+            <a name="d327299e282"></a><p>Time for some really shocking news: <a name="d327299e284"></a><span class="emphasis">IntelliJ IDEA</span> has no <a name="d327299e287"></a><span class="control">Save</span> button.
+                Since in <a name="d327299e290"></a><span class="emphasis">IntelliJ IDEA</span> you can undo refactorings and revert changes from
+                <a name="d327299e293"></a><a href="local-history.html"><span>Local History</span></a>, it makes no sense to ask you to save your changes every time.
+                </p>
+            <a name="d327299e297"></a><p>Still, it's worth knowing that physical saving to disk is triggered by certain events, including
+                compilation, closing a file, switching focus out of the IDE, etc. You can change this behavior via
+                <a name="d327299e299"></a><span class="control">Settings | Appearance &amp; Behavior | System Settings</span>:</p>
+            <figure><img alt="migration_guide_save_settings" width="582" height="344" title="migration_guide_save_settings" src="/help/img/idea/2016.1/migration_guide_save_settings.png"></figure>
+         
+
+        <a name="d327299e306"></a><h3>No save actions</h3>
+            <a name="d327299e308"></a><p>One of the features you may miss in <a name="d327299e310"></a><span class="emphasis">IntelliJ IDEA</span> as an Eclipse user is
+                <a name="d327299e313"></a><span class="control">save actions</span>, i.e. the actions triggered automatically on save, such as reformatting
+                code, organizing imports, adding missing annotations and the <a name="d327299e316"></a><span class="control">final</span>
+                modifier, etc. Instead, <a name="d327299e319"></a><span class="emphasis">IntelliJ IDEA</span> offers you to run the corresponding actions
+                automatically on commit:</p>
+            <figure><img alt="migration_guide_commit" width="750" height="395" title="migration_guide_commit" src="/help/img/idea/2016.1/migration_guide_commit.png"></figure>
+            <a name="d327299e325"></a><p>Or manually:</p>
+            <ul class="list _bullet"><li class="list__item"><a name="d327299e330"></a><a name="d327299e331"></a><span class="menupath">Code | Reformat Code</span> (<kbd data-default="Ctrl+Alt+L" data-default_for_gnome="Ctrl+Alt+L" data-default_for_kde="Shift+Alt+L" data-default_for_xwin="Ctrl+Alt+L" data-emacs="N/A" data-jbuilder="Ctrl+Alt+L" data-visual_studio="Alt+F8" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Alt+L" data-mac_os_x_10.5_="&#x2325;&#x2318;L" data-mac_os_x="&#x2325;&#x2318;L" data-eclipse_mac_os_x="&#x21E7;&#x2318;F" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+L</kbd>)</li><li class="list__item"><a name="d327299e337"></a><a name="d327299e338"></a><span class="menupath">Code | Optimize Imports</span> (<kbd data-default="Ctrl+Alt+O" data-default_for_gnome="Ctrl+Alt+O" data-default_for_kde="Ctrl+Alt+O" data-default_for_xwin="Ctrl+Alt+O" data-emacs="Ctrl+Alt+O" data-jbuilder="Ctrl+Alt+O" data-visual_studio="Ctrl+Alt+O" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Alt+O" data-mac_os_x_10.5_="&#x2303;&#x2325;O" data-mac_os_x="&#x2325;&#x2318;O" data-eclipse_mac_os_x="&#x21E7;&#x2318;O" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+O</kbd>)</li><li class="list__item"><a name="d327299e344"></a><a name="d327299e345"></a><span class="menupath">Analyze | Code Cleanup</span></li></ul>
+            <a name="d327299e349"></a><p>If, for some reason,  you can't live without an <a name="d327299e351"></a><span class="control">Eclipse</span> save action, you can install a
+                <a name="d327299e354"></a><a href="https://plugins.jetbrains.com/plugin/7642" data-external="true"><span>plugin that imitates Eclipse save actions</span></a>.</p>
+         
+
+        <a name="d327299e359"></a><h3>Compilation</h3>
+            <a name="d327299e361"></a><p>The way <a name="d327299e363"></a><span class="emphasis">IntelliJ IDEA</span> compiles projects is different from <a name="d327299e366"></a><span class="control">Eclipse</span>
+                in a number of ways.</p>
+            <a name="d327299e370"></a><h4>Auto-compilation</h4>
+                <a name="d327299e372"></a><p>By default, <a name="d327299e374"></a><span class="emphasis">IntelliJ IDEA</span> doesn't automatically compile projects on saving because
+                    normally we don't invoke the <a name="d327299e377"></a><span class="emphasis">save</span> action explicitly in
+                    <a name="d327299e380"></a><span class="emphasis">IntelliJ IDEA</span>.</p>
+                    <a name="d327299e384"></a><p>If you want to mimic the <a name="d327299e386"></a><span class="control">Eclipse</span>
+                    behavior, you can invoke the <a name="d327299e389"></a><span class="control">Make Project</span> action (<kbd data-default="Ctrl+F9" data-default_for_gnome="Ctrl+F9" data-default_for_kde="Ctrl+9" data-default_for_xwin="Ctrl+F9" data-emacs="Ctrl+F9" data-jbuilder="Ctrl+F9" data-visual_studio="F7" data-netbeans_6.5="N/A" data-eclipse="Ctrl+F9" data-mac_os_x_10.5_="&#x2318;F9" data-mac_os_x="&#x2318;F9" data-eclipse_mac_os_x="&#x2318;B" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+F9</kbd>)
+                    - it will save the changed files and compile them. For your convenience, you can even reassign the
+                    <kbd data-default="Ctrl+S" data-default_for_gnome="Ctrl+S" data-default_for_kde="Ctrl+S" data-default_for_xwin="Ctrl+S" data-emacs="Ctrl+X, Ctrl+S" data-jbuilder="Ctrl+S" data-visual_studio="Ctrl+S" data-netbeans_6.5="N/A" data-eclipse="Ctrl+S" data-mac_os_x_10.5_="&#x2318;S" data-mac_os_x="&#x2318;S" data-eclipse_mac_os_x="&#x2318;S" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+S</kbd> shortcut to the <a name="d327299e396"></a><span class="control">Make Project</span> action.</p>
+                    <a name="d327299e400"></a><p>To enable automatic compilation, navigate to
+                        <a name="d327299e402"></a><span class="menupath">Settings/Preferences | Build, Execution, Deployment | Compiler</span> and select
+                        the <a name="d327299e405"></a><span class="control">Make project automatically</span> option:</p>
+                <figure><img alt="migration_guide_complier_settings" width="750" height="339" title="migration_guide_complier_settings" src="/help/img/idea/2016.1/migration_guide_complier_settings.png"></figure>
+                <a name="d327299e411"></a><p>Note that automatic compilation in <a name="d327299e413"></a><span class="emphasis">IntelliJ IDEA</span> differs from that in
+                    <a name="d327299e416"></a><span class="control">Eclipse</span>. In <a name="d327299e419"></a><span class="emphasis">Eclipse</span> it's not fully automatic, as it is
+                    triggered by the <a name="d327299e422"></a><span class="control">save</span> action invoked by the user explicitly, whereas in
+                    <a name="d327299e425"></a><span class="emphasis">IntelliJ IDEA</span> it is invoked implicitly when you type in the editor.</p>
+                <a name="d327299e430"></a><p>This is why, even if the <a name="d327299e432"></a><span class="control">Make project automatically</span> option is enabled,
+                    <a name="d327299e435"></a><span class="emphasis">IntelliJ IDEA</span> doesn't perform automatic compilation if at least one application is
+                    running: it will reload classes in the application implicitly. In this case you can call
+                    <a name="d327299e438"></a><span class="menupath">Build | Make Project</span> (<kbd data-default="Ctrl+F9" data-default_for_gnome="Ctrl+F9" data-default_for_kde="Ctrl+9" data-default_for_xwin="Ctrl+F9" data-emacs="Ctrl+F9" data-jbuilder="Ctrl+F9" data-visual_studio="F7" data-netbeans_6.5="N/A" data-eclipse="Ctrl+F9" data-mac_os_x_10.5_="&#x2318;F9" data-mac_os_x="&#x2318;F9" data-eclipse_mac_os_x="&#x2318;B" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+F9</kbd>).</p>
+             
+            <a name="d327299e445"></a><h4>Problems tool window</h4>
+                <a name="d327299e447"></a><p>The <a name="d327299e449"></a><a href="problems-tool-window.html"><span>Problems tool window</span></a> appears if the
+                    <a name="d327299e452"></a><span class="control">Make project automatically</span> option is enabled in the
+                    <a name="d327299e455"></a><a href="compiler.html"><span>Compiler settings</span></a>. It shows a list of problems that were detected on
+                    project compilation:</p>
+                <figure><img alt="migration_guide_problems_tool_window" width="750" height="562" title="migration_guide_problems_tool_window" src="/help/img/idea/2016.1/migration_guide_problems_tool_window.png"></figure>
+             
+            <a name="d327299e462"></a><h4>Eclipse compiler</h4>
+                <a name="d327299e464"></a><p>While <a name="d327299e466"></a><span class="emphasis">Eclipse</span> uses its own compiler, <a name="d327299e469"></a><span class="emphasis">IntelliJ IDEA</span>
+                    uses the <a name="d327299e472"></a><span class="emphasis">javac</span> compiler bundled with the project JDK. If you must use the
+                    <a name="d327299e475"></a><span class="emphasis">Eclipse</span> compiler, navigate to
+                    <a name="d327299e478"></a><span class="menupath">Settings?Preferences | Build, Execution, Deployment | Compiler | Java Compiler</span>
+                    and select it as shown below:</p>
+                <figure><img alt="migration_guide_eclipse_compiler" width="750" height="358" title="migration_guide_eclipse_compiler" src="/help/img/idea/2016.1/migration_guide_eclipse_compiler.png"></figure>
+                <a name="d327299e484"></a><p>The biggest difference between the <a name="d327299e486"></a><span class="emphasis">Eclipse</span> and <a name="d327299e489"></a><span class="emphasis">javac</span>
+                    compilers is that the <a name="d327299e492"></a><span class="emphasis">Eclipse</span> compiler is more tolerant to errors, and sometimes
+                    lets you run code that doesn't compile.</p>
+                <a name="d327299e496"></a><p>In situations when you need to run code with compilation errors in <a name="d327299e498"></a><span class="emphasis">IntelliJ IDEA</span>,
+                    replace the <a name="d327299e501"></a><span class="control">Make</span> option in your <a name="d327299e504"></a><a href="run-debug-configurations.html"><span>run configuration</span></a> with
+                    <a name="d327299e507"></a><span class="control">Make, no error check</span>:</p>
+                <figure><img alt="migration_guide_make_no_error_check" width="750" height="474" title="migration_guide_make_no_error_check" src="/help/img/idea/2016.1/migration_guide_make_no_error_check.png"></figure>
+             
+         
+    <a name="Shortcuts"></a><h2>Shortcuts</h2>
+        <a name="d327299e518"></a><p>
+             
+            <a name="d327299e522"></a><span class="emphasis">IntelliJ IDEA</span> shortcuts are completely different from those in <a name="d327299e525"></a><span class="emphasis">Eclipse</span>.
+             
+        </p>
+
+        <a name="d327299e531"></a><p>
+            To see how the top <a name="d327299e533"></a><span class="emphasis">Eclipse</span> actions (and their shortcuts) are mapped to
+            <a name="d327299e536"></a><span class="emphasis">IntelliJ IDEA</span>, refer to <a name="d327299e539"></a><a href="#ShortcutsMap"><span>Migrating from Eclipse to IntelliJ IDEA</span></a> (you may want to print it out to always have it handy).
+        </p>
+
+        <a name="d327299e542"></a><p>
+            If you choose a keymap specific to your operating system (<a name="d327299e544"></a><span class="control">Default</span> for Windows/Linux or
+            <a name="d327299e547"></a><span class="control">OS X 10.5+</span> for OS X), there may be conflicts between shortcuts used in
+            <a name="d327299e550"></a><span class="emphasis">IntelliJ IDEA</span> and your OS. To avoid such conflicts, we recommend tweaking your OS shortcut
+            settings (refer to <a name="d327299e553"></a><a href="https://confluence.jetbrains.com/display/IntelliJIDEA/Keymap" data-external="true"><span>Keymap</span></a> for
+            more details).
+        </p>
+
+        <a name="d327299e557"></a><h3>Eclipse keymap</h3>
+            <a name="d327299e559"></a><p>
+                For <a name="d327299e561"></a><span class="emphasis">Eclipse</span> users who prefer not to learn new shortcuts, <a name="d327299e564"></a><span class="emphasis">IntelliJ IDEA</span> provides the <a name="d327299e567"></a><span class="emphasis">Eclipse</span>
+                keymap which closely mimics its shortcuts:
+            </p>
+            <figure><img alt="migration_guide_eclipse_keymap" width="750" height="331" title="migration_guide_eclipse_keymap" src="/help/img/idea/2016.1/migration_guide_eclipse_keymap.png"></figure>
+         
+
+        <a name="d327299e574"></a><h3>Find action</h3>
+            <a name="d327299e576"></a><p>
+                When you don't know the shortcut for some action, try using the <a name="d327299e578"></a><span class="control">Find action</span> feature available via <kbd data-default="Ctrl+Shift+A" data-default_for_gnome="Ctrl+Shift+A" data-default_for_kde="Ctrl+Shift+A" data-default_for_xwin="Ctrl+Shift+A" data-emacs="Ctrl+Shift+A" data-jbuilder="Ctrl+Shift+A" data-visual_studio="Ctrl+Shift+A" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Shift+A" data-mac_os_x_10.5_="&#x21E7;&#x2318;A" data-mac_os_x="&#x21E7;&#x2318;A" data-eclipse_mac_os_x="&#x2318;3" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Shift+A</kbd>.
+                Start typing to find an action by its name, see its shortcut, or call it:
+            </p>
+            <figure><img alt="migration_guide_find_action" width="750" height="456" title="migration_guide_find_action" src="/help/img/idea/2016.1/migration_guide_find_action.png"></figure>
+         
+    <a name="CodingAssistance"></a><h2>Coding assistance</h2>
+        <a name="d327299e590"></a><p>Both <a name="d327299e592"></a><span class="emphasis">Eclipse</span> and <a name="d327299e595"></a><span class="emphasis">IntelliJ IDEA</span> provide coding assistance features,
+            such as code completion, code generation, quick-fixes, live templates, etc.</p>
+
+        <a name="d327299e599"></a><h3>Quick-fixes</h3>
+            <a name="d327299e601"></a><p>To apply a quick-fix in <a name="d327299e603"></a><span class="emphasis">IntelliJ IDEA</span>, press <kbd data-default="Alt+Enter" data-default_for_gnome="Alt+Enter" data-default_for_kde="Alt+Enter" data-default_for_xwin="Alt+Enter" data-emacs="Alt+Enter" data-jbuilder="Alt+Enter" data-visual_studio="Alt+Enter" data-netbeans_6.5="N/A" data-eclipse="Alt+Enter" data-mac_os_x_10.5_="&#x2325;⏎" data-mac_os_x="&#x2325;⏎" data-eclipse_mac_os_x="&#x2318;1" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Enter</kbd>:</p>
+            <figure><img alt="migration_guide_quick_fix" width="750" height="261" title="migration_guide_quick_fix" src="/help/img/idea/2016.1/migration_guide_quick_fix.png"></figure>
+            <a name="d327299e611"></a><p>All quick-fixes are based on inspections configured in <a name="d327299e613"></a><span class="control">Settings | Inspections</span>:</p>
+            <figure><img alt="migration_guide_inspection_settings" width="650" height="387" title="migration_guide_inspection_settings" src="/help/img/idea/2016.1/migration_guide_inspection_settings.png"></figure>
+            <a name="d327299e619"></a><p>If you want to apply a quick-fix to several places at once (i.e. to a whole folder, module or even a
+                project), you can do it by running the corresponding inspection via
+                <a name="d327299e621"></a><span class="menupath">Analyze | Run Inspection By Name</span> or by running the whole batch of inspections via
+                <a name="d327299e624"></a><span class="menupath">Analyze | Inspect Code</span>:</p>
+            <figure><img alt="migration_guide_batch_inspections" width="750" height="562" title="migration_guide_batch_inspections" src="/help/img/idea/2016.1/migration_guide_batch_inspections.png"></figure>
+            <a name="d327299e631"></a><p>Apart from outright problems, <a name="d327299e633"></a><span class="emphasis">IntelliJ IDEA</span> also recognizes code constructs that can be
+                improved or optimized via the so-called <a name="d327299e636"></a><span class="emphasis">intentions</span>
+                (also available with <kbd data-default="Alt+Enter" data-default_for_gnome="Alt+Enter" data-default_for_kde="Alt+Enter" data-default_for_xwin="Alt+Enter" data-emacs="Alt+Enter" data-jbuilder="Alt+Enter" data-visual_studio="Alt+Enter" data-netbeans_6.5="N/A" data-eclipse="Alt+Enter" data-mac_os_x_10.5_="&#x2325;⏎" data-mac_os_x="&#x2325;⏎" data-eclipse_mac_os_x="&#x2318;1" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Enter</kbd>):</p>
+            <figure><img alt="migration_guide_intention" width="667" height="274" title="migration_guide_intention" src="/help/img/idea/2016.1/migration_guide_intention.png"></figure>
+            <table class="" width="100%" id="d327299e644"><thead><tr id="d327299e646" class="ijRowHead"><a name="d327299e646"></a><th width="25%" colspan="2"><a name="d327299e648"></a>Eclipse</th><th width="25%" colspan="2"><a name="d327299e651"></a>IntelliJ IDEA</th></tr></thead><tbody><tr id="d327299e655" class="ijRowOdd"><a name="d327299e655"></a><td><a name="d327299e657"></a><a name="d327299e658"></a><b id="d327299e658">Action</b></td><td><a name="d327299e661"></a><a name="d327299e662"></a><b id="d327299e662">Shortcut</b></td><td><a name="d327299e665"></a><a name="d327299e666"></a><b id="d327299e666">Action</b></td><td><a name="d327299e669"></a><a name="d327299e670"></a><b id="d327299e670">Shortcut</b></td></tr><tr id="d327299e674" class="ijRowEven"><a name="d327299e674"></a><td><a name="d327299e676"></a>Quick fix</td><td><a name="d327299e679"></a><kbd>Ctrl+1</kbd></td><td><a name="d327299e683"></a>Show intention action</td><td><a name="d327299e686"></a><kbd data-default="Alt+Enter" data-default_for_gnome="Alt+Enter" data-default_for_kde="Alt+Enter" data-default_for_xwin="Alt+Enter" data-emacs="Alt+Enter" data-jbuilder="Alt+Enter" data-visual_studio="Alt+Enter" data-netbeans_6.5="N/A" data-eclipse="Alt+Enter" data-mac_os_x_10.5_="&#x2325;⏎" data-mac_os_x="&#x2325;⏎" data-eclipse_mac_os_x="&#x2318;1" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Enter</kbd></td></tr></tbody></table>
+         
+
+        <a name="d327299e692"></a><h3>Generating code</h3>
+            <a name="d327299e694"></a><p>The key action for generating code is <a name="d327299e696"></a><span class="control">Code | Generate</span>, available via
+                <kbd data-default="Alt+Insert" data-default_for_gnome="Alt+Insert" data-default_for_kde="Alt+Insert" data-default_for_xwin="Alt+Insert" data-emacs="Alt+Insert" data-jbuilder="Alt+Insert" data-visual_studio="Ctrl+N" data-netbeans_6.5="N/A" data-eclipse="Alt+Insert" data-mac_os_x_10.5_="&#x2318;N" data-mac_os_x="&#x2303;N" data-eclipse_mac_os_x="&#x2318;N" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Insert</kbd>:</p>
+            <figure><img alt="migration_guide_generate _code" width="625" height="360" title="migration_guide_generate _code" src="/help/img/idea/2016.1/migration_guide_generate _code.png"></figure>
+            <a name="d327299e704"></a><p>This action is context-sensitive and is available not only within the editor, but also in the
+                <a name="d327299e706"></a><a href="project-tool-window.html"><span>Project tool window</span></a> and the <a name="d327299e709"></a><a href="navigation-bar.html"><span>Navigation bar</span></a>:</p>
+            <figure><img alt="migration_guide_cgenerate_code_project_tree" width="382" height="359" title="migration_guide_cgenerate_code_project_tree" src="/help/img/idea/2016.1/migration_guide_cgenerate_code_project_tree.png"></figure>
+         
+
+        <a name="d327299e716"></a><h3>Code completion</h3>
+            <a name="d327299e718"></a><p><a name="d327299e719"></a><span class="emphasis">IntelliJ IDEA</span> provides several different types of code completion, which include:</p>
+            <ul class="list _bullet"><li class="list__item"><a name="d327299e725"></a>Basic completion</li><li class="list__item"><a name="d327299e728"></a>Second basic completion</li><li class="list__item"><a name="d327299e731"></a>Smart completion</li><li class="list__item"><a name="d327299e734"></a>Second smart completion</li><li class="list__item"><a name="d327299e737"></a>Statement completion</li></ul>
+            <a name="d327299e741"></a><p>To learn more about the differences between these completion types, refer to
+                <a name="d327299e743"></a><a href="http://jetbrains.dzone.com/articles/top-20-code-completions-in-intellij-idea" data-external="true"><span>Top 20 Features of Code Completion in IntelliJ IDEA</span></a>.</p>
+            <a name="d327299e747"></a><p>By default, <a name="d327299e749"></a><span class="emphasis">IntelliJ IDEA</span> doesn't show the <a name="d327299e752"></a><span class="control">Documentation</span> popup for
+                the selected item, but you can enable it in
+                <a name="d327299e755"></a><span class="menupath">Settings/Preferences | Editor | Code Completion | Autopopup documentatoin in (ms)</span>:</p>
+            <figure><img alt="migration_guide_code_completion_settings" width="577" height="337" title="migration_guide_code_completion_settings" src="/help/img/idea/2016.1/migration_guide_code_completion_settings.png"></figure>
+            <a name="d327299e762"></a><p>If you don't want to enable this option, you can manually invoke this popup by pressing
+                <kbd data-default="Ctrl+Q" data-default_for_gnome="Ctrl+Q" data-default_for_kde="Ctrl+Q" data-default_for_xwin="Ctrl+Q" data-emacs="Ctrl+Q" data-jbuilder="Ctrl+Q" data-visual_studio="Ctrl+Q" data-netbeans_6.5="N/A" data-eclipse="Alt+Button2 Click" data-mac_os_x_10.5_="F1" data-mac_os_x="&#x2303;J" data-eclipse_mac_os_x="&#x2325;Button2 Click" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Q</kbd> when you need it:</p>
+            <figure><img alt="migration_guide_code_completion_quick_doc" width="750" height="562" title="migration_guide_code_completion_quick_doc" src="/help/img/idea/2016.1/migration_guide_code_completion_quick_doc.png"></figure>
+            <a name="d327299e769"></a><p>When the caret is within the brackets of a method or a constructor, you can get the info about the
+                parameters by calling <a name="d327299e771"></a><span class="control">Parameter Info</span> with <kbd data-default="Ctrl+P" data-default_for_gnome="Ctrl+P" data-default_for_kde="Ctrl+P" data-default_for_xwin="Ctrl+P" data-emacs="Alt+Shift+P" data-jbuilder="N/A" data-visual_studio="Ctrl+Shift+Space" data-netbeans_6.5="N/A" data-eclipse="N/A" data-mac_os_x_10.5_="&#x2318;P" data-mac_os_x="&#x2318;P" data-eclipse_mac_os_x="&#x2303;&#x21E7;Space" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+P</kbd>:</p>
+            <figure><img alt="migration_guide_parameter_info" width="750" height="562" title="migration_guide_parameter_info" src="/help/img/idea/2016.1/migration_guide_parameter_info.png"></figure>
+            <table class="" width="100%" id="d327299e779"><thead><tr id="d327299e781" class="ijRowHead"><a name="d327299e781"></a><th width="25%" colspan="2"><a name="d327299e783"></a>Eclipse</th><th width="25%" colspan="2"><a name="d327299e786"></a>IntelliJ IDEA</th></tr></thead><tbody><tr id="d327299e790" class="ijRowOdd"><a name="d327299e790"></a><td><a name="d327299e792"></a><a name="d327299e793"></a><b id="d327299e793">Action</b></td><td><a name="d327299e796"></a><a name="d327299e797"></a><b id="d327299e797">Shortcut</b></td><td><a name="d327299e800"></a><a name="d327299e801"></a><b id="d327299e801">Action</b></td><td><a name="d327299e804"></a><a name="d327299e805"></a><b id="d327299e805">Shortcut</b></td></tr><tr id="d327299e809" class="ijRowEven"><a name="d327299e809"></a><td><a name="d327299e811"></a>Code completion</td><td><a name="d327299e814"></a><kbd>Ctrl+Space</kbd></td><td><a name="d327299e818"></a>Basic completion</td><td><a name="d327299e821"></a><kbd data-default="Ctrl+Space" data-default_for_gnome="Ctrl+Space" data-default_for_kde="Ctrl+Space" data-default_for_xwin="Ctrl+Space" data-emacs="Alt+Slash" data-jbuilder="Ctrl+Space" data-visual_studio="Ctrl+Space" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Space" data-mac_os_x_10.5_="&#x2303;Space" data-mac_os_x="&#x2303;Space" data-eclipse_mac_os_x="&#x2303;Space" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Space</kbd></td></tr><tr id="d327299e825" class="ijRowOdd"><a name="d327299e825"></a><td><a name="d327299e827"></a>-</td><td><a name="d327299e830"></a>-</td><td><a name="d327299e833"></a>Smart completion</td><td><a name="d327299e836"></a><kbd data-default="Ctrl+Shift+Space" data-default_for_gnome="Ctrl+Shift+Space" data-default_for_kde="Ctrl+Shift+Space" data-default_for_xwin="Ctrl+Shift+Space" data-emacs="Ctrl+Shift+Space" data-jbuilder="Ctrl+Shift+Space" data-visual_studio="Alt+Shift+Space" data-netbeans_6.5="N/A" data-eclipse="Shift+Alt+Space" data-mac_os_x_10.5_="&#x2303;&#x21E7;Space" data-mac_os_x="&#x2303;&#x21E7;Space" data-eclipse_mac_os_x="&#x2325;&#x21E7;Space" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Shift+Space</kbd></td></tr><tr id="d327299e840" class="ijRowEven"><a name="d327299e840"></a><td><a name="d327299e842"></a>-</td><td><a name="d327299e845"></a>-</td><td><a name="d327299e848"></a>Statement completion</td><td><a name="d327299e851"></a><kbd data-default="Ctrl+Shift+Enter" data-default_for_gnome="Ctrl+Shift+Enter" data-default_for_kde="Ctrl+Shift+Enter" data-default_for_xwin="Ctrl+Shift+Enter" data-emacs="Ctrl+Shift+Enter" data-jbuilder="N/A" data-visual_studio="Ctrl+Shift+Enter" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Shift+Enter" data-mac_os_x_10.5_="&#x21E7;&#x2318;⏎" data-mac_os_x="&#x21E7;&#x2318;⏎" data-eclipse_mac_os_x="&#x21E7;&#x2318;⏎" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Shift+Enter</kbd></td></tr></tbody></table>
+         
+
+        <a name="d327299e857"></a><h3>Templates</h3>
+            <a name="d327299e859"></a><p>You may be used to typing <code class="code" data-lang="Java">main</code> in the editor and then calling code completion to have it
+                transformed into a main method definition. However, <a name="d327299e864"></a><span class="emphasis">IntelliJ IDEA</span> templates are a
+                little different:</p>
+            <table class=" wide" width="100%" id="d327299e868"><thead><tr id="d327299e870" class="ijRowHead"><a name="d327299e870"></a><th width="50%"><a name="d327299e872"></a>Template</th><th width="25%"><a name="d327299e875"></a>Eclipse</th><th width="25%"><a name="d327299e878"></a>IntelliJ IDEA</th></tr></thead><tbody><tr id="d327299e882" class="ijRowOdd"><a name="d327299e882"></a><td><a name="d327299e884"></a>Define a main method</td><td><a name="d327299e887"></a><code class="code" data-lang="Java">main</code></td><td><a name="d327299e891"></a><code class="code" data-lang="Java">psvm</code></td></tr><tr id="d327299e896" class="ijRowEven"><a name="d327299e896"></a><td><a name="d327299e898"></a>Iterate over an array</td><td><a name="d327299e901"></a><code class="code" data-lang="Java">for</code></td><td><a name="d327299e905"></a><code class="code" data-lang="Java">itar</code></td></tr><tr id="d327299e910" class="ijRowOdd"><a name="d327299e910"></a><td><a name="d327299e912"></a>Iterate over a collection</td><td><a name="d327299e915"></a><code class="code" data-lang="Java">for</code></td><td><a name="d327299e919"></a><code class="code" data-lang="Java">itco</code></td></tr><tr id="d327299e924" class="ijRowEven"><a name="d327299e924"></a><td><a name="d327299e926"></a>Iterate over a list</td><td><a name="d327299e929"></a><code class="code" data-lang="Java">for</code></td><td><a name="d327299e933"></a><code class="code" data-lang="Java">itli</code></td></tr><tr id="d327299e939" class="ijRowOdd"><a name="d327299e939"></a><td><a name="d327299e941"></a>Iterate over an iterable using foreach syntax</td><td><a name="d327299e944"></a><code class="code" data-lang="Java">foreach</code></td><td><a name="d327299e948"></a><code class="code" data-lang="Java">iter</code></td></tr><tr id="d327299e953" class="ijRowEven"><a name="d327299e953"></a><td><a name="d327299e955"></a>Print to System.out</td><td><a name="d327299e958"></a><code class="code" data-lang="Java">sysout</code></td><td><a name="d327299e962"></a><code class="code" data-lang="Java">sout</code></td></tr><tr id="d327299e967" class="ijRowOdd"><a name="d327299e967"></a><td><a name="d327299e969"></a>Print to System.err</td><td><a name="d327299e972"></a><code class="code" data-lang="Java">syserr</code></td><td><a name="d327299e976"></a><code class="code" data-lang="Java">serr</code></td></tr><tr id="d327299e981" class="ijRowEven"><a name="d327299e981"></a><td><a name="d327299e983"></a>Define a static field</td><td><a name="d327299e986"></a><code class="code" data-lang="Java">static_final</code></td><td><a name="d327299e990"></a><code class="code" data-lang="Java">psf</code></td></tr></tbody></table>
+            <a name="d327299e996"></a><p>The list of available templates can be found in
+                <a name="d327299e998"></a><span class="menupath">Settings/Preferences | Editor | Live Templates</span>. There you can also add your own
+                templates or modify any existing ones.</p>
+            <a name="d327299e1002"></a><p>While <a name="d327299e1004"></a><span class="emphasis">IntelliJ IDEA</span> suggests templates in code completion results, you can quckly expand
+                any template without using code completion simply by pressing <code class="code" data-lang="Java">Tab</code>.</p>
+         
+
+        <a name="d327299e1013"></a><h3>Postfix templates</h3>
+            <a name="d327299e1015"></a><p>In addition to 'regular' templates, <a name="d327299e1017"></a><span class="emphasis">IntelliJ IDEA</span> offers the so-called
+                <a name="d327299e1020"></a><span class="emphasis">postfix</span> templates. They are useful when you want to apply a template to an
+                expression you've already typed. For instance, type a variable name, add <code class="code" data-lang="Java">.ifn</code> and press
+                <code class="code" data-lang="Java">Tab</code>. <a name="d327299e1029"></a><span class="emphasis">IntelliJ IDEA</span> will turn your expression into a
+                <code class="code" data-lang="Java">if (...==null){...}</code> statement.</p>
+            <a name="d327299e1037"></a><p>To see a complete list of available postfix templates, go to
+                <a name="d327299e1039"></a><span class="menupath">Settings/Preferences | Editor | General | Postfix Completion</span>.</p>
+         
+
+        <a name="d327299e1044"></a><h3>Surround with live template</h3>
+            <a name="d327299e1046"></a><p>The <a name="d327299e1048"></a><span class="emphasis">surround with</span> templates is another addition that works similarly to
+                <a name="d327299e1051"></a><span class="emphasis">live templates</span> but can be applied to the selected code with
+                <kbd data-default="Ctrl+Alt+J" data-default_for_gnome="Ctrl+Alt+J" data-default_for_kde="Ctrl+Alt+J" data-default_for_xwin="Ctrl+Alt+J" data-emacs="Ctrl+Alt+J" data-jbuilder="Ctrl+Alt+J" data-visual_studio="Ctrl+Alt+J" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Alt+J" data-mac_os_x_10.5_="&#x2325;&#x2318;J" data-mac_os_x="&#x2325;&#x2318;J" data-eclipse_mac_os_x="&#x2325;&#x2318;J" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+J</kbd>.</p>
+            <a name="d327299e1057"></a><p>To define your own <a name="d327299e1059"></a><span class="emphasis">surround with</span> template, go to
+                <a name="d327299e1062"></a><span class="menupath">Settings/Preferences | Editor | General | Live Templates</span> and use
+                <code class="code" data-lang="Java">$SELECTION$</code> within the template text:</p>
+            <a name="d327299e1069"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="n">$LOCK$</span><span class="o">.</span><span class="na">readLock</span><span class="o">().</span><span class="na">lock</span><span class="o">();</span>
+ <span class="k">try</span> <span class="o">{</span>
+    <span class="n">$SELECTION$</span>
+        <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+    <span class="n">$LOCK$</span><span class="o">.</span><span class="na">readLock</span><span class="o">().</span><span class="na">unlock</span><span class="o">();</span>
+ <span class="o">}</span></code></div>
+         
+        <a name="d327299e1073"></a><h3>Navigation</h3>
+            <a name="d327299e1075"></a><p>The table below roughly maps the navigation actions available in <a name="d327299e1077"></a><span class="emphasis">Eclipse</span> with those
+                in <a name="d327299e1080"></a><span class="emphasis">IntelliJ IDEA</span>:</p>
+            <table class="" width="100%" id="d327299e1084"><thead><tr id="d327299e1086" class="ijRowHead"><a name="d327299e1086"></a><th width="25%" colspan="2"><a name="d327299e1088"></a>Eclipse</th><th width="25%" colspan="2"><a name="d327299e1091"></a>IntelliJ IDEA</th></tr></thead><tbody><tr id="d327299e1095" class="ijRowOdd"><a name="d327299e1095"></a><td><a name="d327299e1097"></a><a name="d327299e1098"></a><b id="d327299e1098">Action</b></td><td><a name="d327299e1101"></a><a name="d327299e1102"></a><b id="d327299e1102">Shortcut</b></td><td><a name="d327299e1105"></a><a name="d327299e1106"></a><b id="d327299e1106">Action</b></td><td><a name="d327299e1109"></a><a name="d327299e1110"></a><b id="d327299e1110">Shortcut</b></td></tr><tr id="d327299e1114" class="ijRowEven"><a name="d327299e1114"></a><td><a name="d327299e1116"></a>Quick access</td><td><a name="d327299e1119"></a><kbd>Ctrl+3</kbd></td><td><a name="d327299e1123"></a>Search everywhere</td><td><a name="d327299e1126"></a><kbd>Shift x 2</kbd></td></tr><tr id="d327299e1131" class="ijRowOdd"><a name="d327299e1131"></a><td><a name="d327299e1133"></a>Open type</td><td><a name="d327299e1136"></a><kbd>Ctrl+Shift+T</kbd></td><td><a name="d327299e1140"></a>Navigate to class</td><td><a name="d327299e1143"></a><kbd data-default="Ctrl+N" data-default_for_gnome="Ctrl+N" data-default_for_kde="Ctrl+N" data-default_for_xwin="Ctrl+N" data-emacs="Alt+Shift+G" data-jbuilder="Ctrl+N" data-visual_studio="Ctrl+Comma" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Shift+T" data-mac_os_x_10.5_="&#x2318;O" data-mac_os_x="&#x2318;N" data-eclipse_mac_os_x="&#x21E7;&#x2318;T" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+N</kbd></td></tr><tr id="d327299e1147" class="ijRowEven"><a name="d327299e1147"></a><td><a name="d327299e1149"></a>Open resource</td><td><a name="d327299e1152"></a><kbd>Ctrl+Shift+R</kbd></td><td><a name="d327299e1156"></a>Navigate to file</td><td><a name="d327299e1159"></a><kbd data-default="Ctrl+Shift+N" data-default_for_gnome="Ctrl+Shift+N" data-default_for_kde="Ctrl+Shift+N" data-default_for_xwin="Ctrl+Shift+N" data-emacs="Ctrl+X, Ctrl+F" data-jbuilder="Ctrl+Shift+N" data-visual_studio="Ctrl+Shift+N" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Shift+R" data-mac_os_x_10.5_="&#x21E7;&#x2318;O" data-mac_os_x="&#x21E7;&#x2318;N" data-eclipse_mac_os_x="&#x21E7;&#x2318;R" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Shift+N</kbd></td></tr><tr id="d327299e1164" class="ijRowOdd"><a name="d327299e1164"></a><td><a name="d327299e1166"></a>-</td><td><a name="d327299e1169"></a>-</td><td><a name="d327299e1172"></a>Navigate to symbol</td><td><a name="d327299e1175"></a><kbd data-default="Ctrl+Shift+Alt+N" data-default_for_gnome="Ctrl+Shift+Alt+N" data-default_for_kde="Ctrl+Shift+Alt+N" data-default_for_xwin="Ctrl+Shift+Alt+N" data-emacs="Ctrl+Alt+Shift+N" data-jbuilder="Ctrl+Shift+Alt+N" data-visual_studio="Ctrl+Alt+Shift+N" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Shift+Alt+N" data-mac_os_x_10.5_="&#x2325;&#x2318;O" data-mac_os_x="&#x2325;&#x21E7;&#x2318;N" data-eclipse_mac_os_x="&#x2325;&#x2318;O" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Shift+Alt+N</kbd></td></tr><tr id="d327299e1179" class="ijRowEven"><a name="d327299e1179"></a><td><a name="d327299e1181"></a>Quick switch editor</td><td><a name="d327299e1184"></a><kbd>Ctrl+E</kbd></td><td><a name="d327299e1188"></a>Switcher</td><td><a name="d327299e1191"></a><kbd data-default="Ctrl+Tab" data-default_for_gnome="Ctrl+Tab" data-default_for_kde="Ctrl+Tab" data-default_for_xwin="Ctrl+Tab" data-emacs="Ctrl+X, B" data-jbuilder="Ctrl+Tab" data-visual_studio="Ctrl+Tab" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Tab" data-mac_os_x_10.5_="&#x2303;&#x21E5;" data-mac_os_x="&#x2303;&#x21E5;" data-eclipse_mac_os_x="&#x2303;&#x21E5;" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Tab</kbd></td></tr><tr id="d327299e1195" class="ijRowOdd"><a name="d327299e1195"></a><td><a name="d327299e1197"></a>-</td><td><a name="d327299e1200"></a>-</td><td><a name="d327299e1203"></a>Recent files</td><td><a name="d327299e1206"></a><kbd data-default="Ctrl+E" data-default_for_gnome="Ctrl+E" data-default_for_kde="Ctrl+E" data-default_for_xwin="Ctrl+E" data-emacs="N/A" data-jbuilder="Ctrl+E" data-visual_studio="Ctrl+E" data-netbeans_6.5="N/A" data-eclipse="Ctrl+E" data-mac_os_x_10.5_="&#x2318;E" data-mac_os_x="&#x2318;E" data-eclipse_mac_os_x="&#x2318;E" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+E</kbd></td></tr><tr id="d327299e1210" class="ijRowEven"><a name="d327299e1210"></a><td><a name="d327299e1212"></a>Open declaration</td><td><a name="d327299e1215"></a><kbd>F3</kbd></td><td><a name="d327299e1219"></a>Navigate to declaration</td><td><a name="d327299e1222"></a><kbd data-default="Ctrl+B" data-default_for_gnome="Ctrl+B" data-default_for_kde="Ctrl+B" data-default_for_xwin="Ctrl+B" data-emacs="Ctrl+Alt+G" data-jbuilder="Ctrl+B" data-visual_studio="F12" data-netbeans_6.5="N/A" data-eclipse="F3" data-mac_os_x_10.5_="&#x2318;B" data-mac_os_x="&#x2318;B" data-eclipse_mac_os_x="F3" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+B</kbd></td></tr><tr id="d327299e1226" class="ijRowOdd"><a name="d327299e1226"></a><td><a name="d327299e1228"></a>Open type hierarchy</td><td><a name="d327299e1231"></a><kbd>F4</kbd></td><td><a name="d327299e1235"></a>Navigate to type hierarchy</td><td><a name="d327299e1238"></a><kbd data-default="Ctrl+H" data-default_for_gnome="Ctrl+H" data-default_for_kde="Ctrl+H" data-default_for_xwin="Ctrl+H" data-emacs="Ctrl+H" data-jbuilder="Ctrl+H" data-visual_studio="Alt+H" data-netbeans_6.5="N/A" data-eclipse="F4" data-mac_os_x_10.5_="&#x2303;H" data-mac_os_x="&#x2303;H" data-eclipse_mac_os_x="F4" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+H</kbd></td></tr><tr id="d327299e1242" class="ijRowEven"><a name="d327299e1242"></a><td><a name="d327299e1244"></a>-</td><td><a name="d327299e1247"></a>-</td><td><a name="d327299e1250"></a>Show UML popup</td><td><a name="d327299e1253"></a><kbd data-default="Ctrl+Alt+U" data-default_for_gnome="Ctrl+Alt+U" data-default_for_kde="Ctrl+Alt+U" data-default_for_xwin="Ctrl+Alt+U" data-emacs="Ctrl+Alt+U" data-jbuilder="Ctrl+Alt+U" data-visual_studio="Ctrl+Alt+U" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Alt+U" data-mac_os_x_10.5_="&#x2325;&#x2318;U" data-mac_os_x="&#x2325;&#x2318;U" data-eclipse_mac_os_x="&#x2325;&#x2318;U" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+U</kbd></td></tr><tr id="d327299e1258" class="ijRowOdd"><a name="d327299e1258"></a><td><a name="d327299e1260"></a>Quick outline</td><td><a name="d327299e1263"></a><kbd>Ctrl+O</kbd></td><td><a name="d327299e1267"></a>File structure</td><td><a name="d327299e1270"></a><kbd data-default="Ctrl+F12" data-default_for_gnome="Ctrl+F12" data-default_for_kde="Ctrl+0" data-default_for_xwin="Ctrl+F12" data-emacs="Ctrl+F12" data-jbuilder="Ctrl+F12" data-visual_studio="Ctrl+F12" data-netbeans_6.5="N/A" data-eclipse="Ctrl+F3" data-mac_os_x_10.5_="&#x2318;F12" data-mac_os_x="&#x2318;F12" data-eclipse_mac_os_x="&#x2318;O" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+F12</kbd></td></tr><tr id="d327299e1274" class="ijRowEven"><a name="d327299e1274"></a><td><a name="d327299e1276"></a>Back</td><td><a name="d327299e1279"></a><kbd>Ctrl+[</kbd></td><td><a name="d327299e1283"></a>Back</td><td><a name="d327299e1286"></a><kbd data-default="Ctrl+Alt+Left" data-default_for_gnome="Shift+Alt+Left" data-default_for_kde="Ctrl+Alt+Left" data-default_for_xwin="Ctrl+Alt+Left" data-emacs="Ctrl+Alt+Left" data-jbuilder="Ctrl+Alt+Left" data-visual_studio="Ctrl+Alt+Left" data-netbeans_6.5="N/A" data-eclipse="Alt+Left" data-mac_os_x_10.5_="&#x2318;[" data-mac_os_x="&#x2325;&#x2318;&#x2190;" data-eclipse_mac_os_x="&#x2318;[" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+Left</kbd></td></tr><tr id="d327299e1290" class="ijRowOdd"><a name="d327299e1290"></a><td><a name="d327299e1292"></a>Forward</td><td><a name="d327299e1295"></a><kbd>Ctrl+]</kbd></td><td><a name="d327299e1299"></a>Forward</td><td><a name="d327299e1302"></a><kbd data-default="Ctrl+Alt+Right" data-default_for_gnome="Shift+Alt+Right" data-default_for_kde="Ctrl+Alt+Right" data-default_for_xwin="Ctrl+Alt+Right" data-emacs="Ctrl+Alt+Right" data-jbuilder="Ctrl+Alt+Right" data-visual_studio="Ctrl+Alt+Right" data-netbeans_6.5="N/A" data-eclipse="Alt+Right" data-mac_os_x_10.5_="&#x2318;]" data-mac_os_x="&#x2325;&#x2318;&#x2192;" data-eclipse_mac_os_x="&#x2318;]" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+Right</kbd></td></tr></tbody></table>
+            <a name="d327299e1307"></a><p>Later, when you get used to these navigation options and need more, refer to
+                <a name="d327299e1309"></a><a href="http://java.dzone.com/articles/top-20-navigation-features-in-intellij-idea" data-external="true"><span>Top 20 Navigation Features in IntelliJ IDEA</span></a>.
+            </p>
+         
+
+        <a name="d327299e1314"></a><h3>Refactorings</h3>
+            <a name="d327299e1316"></a><p>The following table maps the shortcuts for the most common refactorings in
+                <a name="d327299e1318"></a><span class="emphasis">Eclipse</span> with those in <a name="d327299e1321"></a><span class="emphasis">IntelliJ IDEA</span>:</p>
+            <table class="" width="100%" id="d327299e1325"><thead><tr id="d327299e1327" class="ijRowHead"><a name="d327299e1327"></a><th width="25%" colspan="2"><a name="d327299e1329"></a>Eclipse</th><th width="25%" colspan="2"><a name="d327299e1332"></a>IntelliJ IDEA</th></tr></thead><tbody><tr id="d327299e1336" class="ijRowOdd"><a name="d327299e1336"></a><td><a name="d327299e1338"></a><a name="d327299e1339"></a><b id="d327299e1339">Action</b></td><td><a name="d327299e1342"></a><a name="d327299e1343"></a><b id="d327299e1343">Shortcut</b></td><td><a name="d327299e1346"></a><a name="d327299e1347"></a><b id="d327299e1347">Action</b></td><td><a name="d327299e1350"></a><a name="d327299e1351"></a><b id="d327299e1351">Shortcut</b></td></tr><tr id="d327299e1355" class="ijRowEven"><a name="d327299e1355"></a><td><a name="d327299e1357"></a>Extract local variable</td><td><a name="d327299e1360"></a><kbd>Ctrl+Alt+L</kbd></td><td><a name="d327299e1364"></a>Extract variable</td><td><a name="d327299e1367"></a><kbd data-default="Ctrl+Alt+V" data-default_for_gnome="Ctrl+Alt+V" data-default_for_kde="Shift+Alt+V" data-default_for_xwin="Ctrl+Alt+V" data-emacs="Ctrl+Alt+V" data-jbuilder="Ctrl+Alt+V" data-visual_studio="Ctrl+Alt+V" data-netbeans_6.5="N/A" data-eclipse="Shift+Alt+L" data-mac_os_x_10.5_="&#x2325;&#x2318;V" data-mac_os_x="&#x2325;&#x2318;V" data-eclipse_mac_os_x="&#x2325;&#x2318;L" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+V</kbd></td></tr><tr id="d327299e1371" class="ijRowOdd"><a name="d327299e1371"></a><td><a name="d327299e1373"></a>Assign to field</td><td><a name="d327299e1376"></a><kbd>Ctrl+2</kbd></td><td><a name="d327299e1380"></a>Extract field</td><td><a name="d327299e1383"></a><kbd data-default="Ctrl+Alt+F" data-default_for_gnome="Ctrl+Alt+F" data-default_for_kde="Ctrl+Alt+F" data-default_for_xwin="Ctrl+Alt+F" data-emacs="N/A" data-jbuilder="Ctrl+Alt+F" data-visual_studio="Ctrl+Alt+F" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Alt+F" data-mac_os_x_10.5_="&#x2325;&#x2318;F" data-mac_os_x="&#x2325;&#x2318;F" data-eclipse_mac_os_x="&#x2325;&#x2318;F" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+F</kbd></td></tr><tr id="d327299e1387" class="ijRowEven"><a name="d327299e1387"></a><td><a name="d327299e1389"></a>Show refactor quick menu</td><td><a name="d327299e1392"></a><kbd>Ctrl+Alt+T</kbd></td><td><a name="d327299e1396"></a>Rafactor this</td><td><a name="d327299e1399"></a><kbd data-default="Ctrl+Shift+Alt+T" data-default_for_gnome="Ctrl+Shift+Alt+T" data-default_for_kde="Ctrl+Shift+Alt+T" data-default_for_xwin="Ctrl+Shift+Alt+T" data-emacs="Ctrl+Alt+Shift+T" data-jbuilder="Ctrl+Shift+Alt+T" data-visual_studio="Ctrl+Alt+Shift+T" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Shift+Alt+T" data-mac_os_x_10.5_="&#x2303;T" data-mac_os_x="&#x2325;&#x21E7;&#x2318;T" data-eclipse_mac_os_x="&#x2303;T" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Shift+Alt+T</kbd>
+                    </td></tr><tr id="d327299e1405" class="ijRowOdd"><a name="d327299e1405"></a><td><a name="d327299e1407"></a>Rename</td><td><a name="d327299e1410"></a><kbd>Ctrl+Alt+R</kbd></td><td><a name="d327299e1414"></a>Rename</td><td><a name="d327299e1417"></a><kbd data-default="Shift+F6" data-default_for_gnome="Shift+F6" data-default_for_kde="Shift+F6" data-default_for_xwin="Shift+F6" data-emacs="Shift+F6" data-jbuilder="Shift+F6" data-visual_studio="Shift+F6" data-netbeans_6.5="N/A" data-eclipse="Shift+Alt+R" data-mac_os_x_10.5_="&#x21E7;F6" data-mac_os_x="&#x21E7;F6" data-eclipse_mac_os_x="&#x21E7;F6" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Shift+F6</kbd></td></tr></tbody></table>
+            <a name="d327299e1422"></a><p>To learn more about many additional refactorings that <a name="d327299e1424"></a><span class="emphasis">IntelliJ IDEA</span> offers, refer to
+                <a name="d327299e1427"></a><a href="http://jetbrains.dzone.com/articles/top-20-refactoring-features" data-external="true"><span>Top 20 Refactoring Features in IntelliJ IDEA</span></a>
+            </p>
+         
+        <a name="d327299e1432"></a><h3>Undo</h3>
+            <a name="d327299e1434"></a><p>Sometimes, refactorings may affect a lot of files in a project. <a name="d327299e1436"></a><span class="emphasis">IntelliJ IDEA</span> not only
+                takes care of applying changes safely, but also lets you revert them. To undo the last refactoring,
+                switch the focus to the <a name="d327299e1439"></a><a href="project-tool-window.html"><span>Project tool window</span></a> and press <kbd data-default="Ctrl+Z" data-default_for_gnome="Ctrl+Z" data-default_for_kde="Ctrl+Z" data-default_for_xwin="Ctrl+Z" data-emacs="Ctrl+Shift+Minus" data-jbuilder="Ctrl+Z" data-visual_studio="Ctrl+Z" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Z" data-mac_os_x_10.5_="&#x2318;Z" data-mac_os_x="&#x2318;Z" data-eclipse_mac_os_x="&#x2318;Z" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Z</kbd>.</p>
+         
+
+        <a name="d327299e1446"></a><h3>Search</h3>
+            <a name="d327299e1448"></a><p>Below is a map of the most common search actions and shortcuts:</p>
+            <table class="" width="100%" id="d327299e1451"><thead><tr id="d327299e1453" class="ijRowHead"><a name="d327299e1453"></a><th width="25%" colspan="2"><a name="d327299e1455"></a>Eclipse</th><th width="25%" colspan="2"><a name="d327299e1458"></a>IntelliJ IDEA</th></tr></thead><tbody><tr id="d327299e1462" class="ijRowOdd"><a name="d327299e1462"></a><td><a name="d327299e1464"></a><a name="d327299e1465"></a><b id="d327299e1465">Action</b></td><td><a name="d327299e1468"></a><a name="d327299e1469"></a><b id="d327299e1469">Shortcut</b></td><td><a name="d327299e1472"></a><a name="d327299e1473"></a><b id="d327299e1473">Action</b></td><td><a name="d327299e1476"></a><a name="d327299e1477"></a><b id="d327299e1477">Shortcut</b></td></tr><tr id="d327299e1481" class="ijRowEven"><a name="d327299e1481"></a><td><a name="d327299e1483"></a>Open search dialog</td><td><a name="d327299e1486"></a><kbd>Ctrl+H</kbd></td><td><a name="d327299e1490"></a>Find in path</td><td><a name="d327299e1493"></a><kbd data-default="Ctrl+Shift+F" data-default_for_gnome="Ctrl+Shift+F" data-default_for_kde="Ctrl+Shift+F" data-default_for_xwin="Ctrl+Shift+F" data-emacs="Ctrl+Shift+F" data-jbuilder="Ctrl+Shift+F" data-visual_studio="Ctrl+Shift+F" data-netbeans_6.5="N/A" data-eclipse="Ctrl+H" data-mac_os_x_10.5_="&#x21E7;&#x2318;F" data-mac_os_x="&#x2303;&#x21E7;F" data-eclipse_mac_os_x="&#x2303;H" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Shift+F</kbd></td></tr><tr id="d327299e1497" class="ijRowOdd"><a name="d327299e1497"></a><td><a name="d327299e1499"></a>References in workspace</td><td><a name="d327299e1502"></a><kbd>Ctrl+Shift+G</kbd></td><td><a name="d327299e1506"></a>Find usages</td><td><a name="d327299e1509"></a><kbd data-default="Alt+F7" data-default_for_gnome="Shift+Alt+7" data-default_for_kde="Shift+Alt+7" data-default_for_xwin="Alt+F7" data-emacs="Alt+F7" data-jbuilder="Alt+F7" data-visual_studio="Alt+Shift+F7" data-netbeans_6.5="N/A" data-eclipse="Ctrl+G" data-mac_os_x_10.5_="&#x2325;F7" data-mac_os_x="&#x2325;F7" data-eclipse_mac_os_x="&#x21E7;&#x2318;G" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+F7</kbd></td></tr><tr id="d327299e1513" class="ijRowEven"><a name="d327299e1513"></a><td><a name="d327299e1515"></a>-</td><td><a name="d327299e1518"></a>-</td><td><a name="d327299e1521"></a>Show usages</td><td><a name="d327299e1524"></a><kbd data-default="Ctrl+Alt+F7" data-default_for_gnome="Ctrl+Alt+7" data-default_for_kde="Ctrl+Alt+7" data-default_for_xwin="Ctrl+Alt+7" data-emacs="Ctrl+Alt+F7" data-jbuilder="Ctrl+Alt+F7" data-visual_studio="Ctrl+Alt+F7" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Alt+F7" data-mac_os_x_10.5_="&#x2325;&#x2318;F7" data-mac_os_x="&#x2325;&#x2318;F7" data-eclipse_mac_os_x="&#x2325;&#x2318;F7" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+F7</kbd></td></tr><tr id="d327299e1529" class="ijRowOdd"><a name="d327299e1529"></a><td><a name="d327299e1531"></a>-</td><td><a name="d327299e1534"></a>-</td><td><a name="d327299e1537"></a>Find usages settings</td><td><a name="d327299e1540"></a><kbd data-default="Ctrl+Shift+Alt+F7" data-default_for_gnome="Ctrl+Shift+Alt+7" data-default_for_kde="Ctrl+Shift+Alt+7" data-default_for_xwin="Ctrl+Shift+Alt+7" data-emacs="Ctrl+Alt+Shift+F7" data-jbuilder="Ctrl+Shift+Alt+F7" data-visual_studio="Ctrl+Alt+Shift+F7" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Shift+Alt+F7" data-mac_os_x_10.5_="&#x2325;&#x21E7;&#x2318;F7" data-mac_os_x="&#x2325;&#x21E7;&#x2318;F7" data-eclipse_mac_os_x="&#x2325;&#x21E7;&#x2318;F7" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Shift+Alt+F7</kbd></td></tr><tr id="d327299e1544" class="ijRowEven"><a name="d327299e1544"></a><td><a name="d327299e1546"></a>Occurrences in file</td><td><a name="d327299e1549"></a><kbd>Ctrl+Alt+U</kbd></td><td><a name="d327299e1553"></a>Highlight usages in file</td><td><a name="d327299e1556"></a><kbd data-default="Ctrl+F7" data-default_for_gnome="Ctrl+F7" data-default_for_kde="Ctrl+7" data-default_for_xwin="Ctrl+F7" data-emacs="Ctrl+F7" data-jbuilder="Ctrl+F7" data-visual_studio="Ctrl+Shift+F7" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Shift+G" data-mac_os_x_10.5_="&#x2318;F7" data-mac_os_x="&#x2318;F7" data-eclipse_mac_os_x="&#x21E7;&#x2318;U" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+F7</kbd></td></tr></tbody></table>
+         
+
+
+    <a name="CodeFormatting"></a><h2>Code formatting</h2>
+        <a name="d327299e1565"></a><p><a name="d327299e1566"></a><span class="emphasis">IntelliJ IDEA</span> code formatting rules (available via
+            <a name="d327299e1569"></a><span class="menupath">Settings/Preferences | Editor | Code Style</span>) are similar to those in
+            <a name="d327299e1572"></a><span class="emphasis">Eclipse</span>, with some minor differences. You may want to take note of the fact that
+            the <a name="d327299e1575"></a><span class="control">Using the Tab char</span> option is disabled by default, the
+            <a name="d327299e1578"></a><span class="control">Indent size</span> may be different, etc.</p>
+        <figure><img alt="migration_guide_code_style_java" width="750" height="562" title="migration_guide_code_style_java" src="/help/img/idea/2016.1/migration_guide_code_style_java.png"></figure>
+        <a name="d327299e1584"></a><p>If you would like to import your <a name="d327299e1586"></a><span class="emphasis">Eclipse</span> formatter settings, go to
+            <a name="d327299e1589"></a><span class="menupath">Settings/Preferences | Editor | Code Style | Java</span>,
+            click <a name="d327299e1592"></a><span class="control">Manage</span>, click <a name="d327299e1595"></a><span class="control">Import</span> and select the exported
+            <a name="d327299e1598"></a><span class="emphasis">Eclipse</span> formatter settings (an XML file).</p>
+        <aside class="tip sideblock"><a name="d327299e1603"></a><p>Note that if the Eclipse formatter settings cannot be imported, the following error message
+        shows up:</p>
+            <a name="d327299e1606"></a><p><a name="d327299e1607"></a><span class="emphasis">The input file is not a valid Eclipse XML profile.</span></p>
+        <figure><a class="lightbox" href="/help/img/idea/2016.1/migration_guide_error_message.png"><img alt="migration_guide_error_message" width="171" height="120" title="migration_guide_error_message" src="/help/img/idea/2016.1/migration_guide_error_message_thumbnail.png"></a></figure>
+        </aside>
+        <a name="d327299e1613"></a><p>Note that there may be some discrepancies between the code style settings in
+            <a name="d327299e1615"></a><span class="emphasis">IntelliJ IDEA</span> and <a name="d327299e1618"></a><span class="emphasis">Eclipse</span>. For example, you cannot tell
+            <a name="d327299e1621"></a><span class="emphasis">IntelliJ IDEA</span> to put space after (but not before). If you want
+            <a name="d327299e1624"></a><span class="emphasis">IntelliJ IDEA</span> to use the <a name="d327299e1627"></a><span class="emphasis">Eclipse</span>
+            formatter, consider installing the
+            <a name="d327299e1631"></a><a href="https://plugins.jetbrains.com/plugin/6546" data-external="true"><span>Eclipse code formatter plugin</span></a>.</p>
+        <table class="" width="100%" id="d327299e1636"><thead><tr id="d327299e1638" class="ijRowHead"><a name="d327299e1638"></a><th width="25%" colspan="2"><a name="d327299e1640"></a>Eclipse</th><th width="25%" colspan="2"><a name="d327299e1643"></a>IntelliJ IDEA</th></tr></thead><tbody><tr id="d327299e1647" class="ijRowOdd"><a name="d327299e1647"></a><td><a name="d327299e1649"></a><a name="d327299e1650"></a><b id="d327299e1650">Action</b></td><td><a name="d327299e1653"></a><a name="d327299e1654"></a><b id="d327299e1654">Shortcut</b></td><td><a name="d327299e1657"></a><a name="d327299e1658"></a><b id="d327299e1658">Action</b></td><td><a name="d327299e1661"></a><a name="d327299e1662"></a><b id="d327299e1662">Shortcut</b></td></tr><tr id="d327299e1666" class="ijRowEven"><a name="d327299e1666"></a><td><a name="d327299e1668"></a>Format</td><td><a name="d327299e1671"></a><kbd>Ctrl+Shift+F</kbd></td><td><a name="d327299e1675"></a>Reformat code</td><td><a name="d327299e1678"></a><kbd data-default="Ctrl+Alt+L" data-default_for_gnome="Ctrl+Alt+L" data-default_for_kde="Shift+Alt+L" data-default_for_xwin="Ctrl+Alt+L" data-emacs="N/A" data-jbuilder="Ctrl+Alt+L" data-visual_studio="Alt+F8" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Alt+L" data-mac_os_x_10.5_="&#x2325;&#x2318;L" data-mac_os_x="&#x2325;&#x2318;L" data-eclipse_mac_os_x="&#x21E7;&#x2318;F" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+L</kbd></td></tr></tbody></table>
+    <a name="RunningReloadingChanges"></a><h2>Running and reloading changes</h2>
+        <a name="d327299e1686"></a><p>Similarly to <a name="d327299e1688"></a><span class="emphasis">Eclipse</span>, <a name="d327299e1691"></a><span class="emphasis">IntelliJ IDEA</span> also has
+            <a name="d327299e1694"></a><a href="run-debug-configurations.html"><span>Run/Debug Configurations</span></a> that you can access either form the main toolbar, or the main menu.
+            Compare the related shorcuts:</p>
+        <table class="" width="100%" id="d327299e1697"><thead><tr id="d327299e1699" class="ijRowHead"><a name="d327299e1699"></a><th width="25%" colspan="2"><a name="d327299e1701"></a>Eclipse</th><th width="25%" colspan="2"><a name="d327299e1704"></a>IntelliJ IDEA</th></tr></thead><tbody><tr id="d327299e1708" class="ijRowOdd"><a name="d327299e1708"></a><td><a name="d327299e1710"></a><a name="d327299e1711"></a><b id="d327299e1711">Action</b></td><td><a name="d327299e1714"></a><a name="d327299e1715"></a><b id="d327299e1715">Shortcut</b></td><td><a name="d327299e1718"></a><a name="d327299e1719"></a><b id="d327299e1719">Action</b></td><td><a name="d327299e1722"></a><a name="d327299e1723"></a><b id="d327299e1723">Shortcut</b></td></tr><tr id="d327299e1727" class="ijRowEven"><a name="d327299e1727"></a><td><a name="d327299e1729"></a>Run</td><td><a name="d327299e1732"></a><kbd>Ctrl+Shift+F11</kbd></td><td><a name="d327299e1736"></a>Run</td><td><a name="d327299e1739"></a><kbd data-default="Shift+F10" data-default_for_gnome="Shift+F10" data-default_for_kde="Shift+F10" data-default_for_xwin="Shift+F10" data-emacs="Shift+F10" data-jbuilder="F9" data-visual_studio="Ctrl+F5" data-netbeans_6.5="N/A" data-eclipse="Shift+Alt+X" data-mac_os_x_10.5_="&#x2303;R" data-mac_os_x="&#x21E7;F10" data-eclipse_mac_os_x="&#x21E7;&#x2318;F11" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Shift+F10</kbd></td></tr><tr id="d327299e1743" class="ijRowOdd"><a name="d327299e1743"></a><td><a name="d327299e1745"></a>Debug</td><td><a name="d327299e1748"></a><kbd>Ctrl+F11</kbd></td><td><a name="d327299e1752"></a>Debug</td><td><a name="d327299e1755"></a><kbd data-default="Shift+F9" data-default_for_gnome="Shift+F9" data-default_for_kde="Shift+F9" data-default_for_xwin="Shift+F9" data-emacs="Shift+F9" data-jbuilder="Shift+F9" data-visual_studio="Alt+F5" data-netbeans_6.5="N/A" data-eclipse="Shift+Alt+D" data-mac_os_x_10.5_="&#x2303;D" data-mac_os_x="&#x21E7;F9" data-eclipse_mac_os_x="&#x2318;F11" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Shift+F9</kbd></td></tr><tr id="d327299e1759" class="ijRowEven"><a name="d327299e1759"></a><td><a name="d327299e1761"></a>-</td><td><a name="d327299e1764"></a>-</td><td><a name="d327299e1767"></a>Make</td><td><a name="d327299e1770"></a><kbd data-default="Ctrl+F9" data-default_for_gnome="Ctrl+F9" data-default_for_kde="Ctrl+9" data-default_for_xwin="Ctrl+F9" data-emacs="Ctrl+F9" data-jbuilder="Ctrl+F9" data-visual_studio="F7" data-netbeans_6.5="N/A" data-eclipse="Ctrl+F9" data-mac_os_x_10.5_="&#x2318;F9" data-mac_os_x="&#x2318;F9" data-eclipse_mac_os_x="&#x2318;B" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+F9</kbd></td></tr><tr id="d327299e1775" class="ijRowOdd"><a name="d327299e1775"></a><td><a name="d327299e1777"></a>-</td><td><a name="d327299e1780"></a>-</td><td><a name="d327299e1783"></a>Update application</td><td><a name="d327299e1786"></a><kbd data-default="Ctrl+F10" data-default_for_gnome="Ctrl+F10" data-default_for_kde="Ctrl+F10" data-default_for_xwin="Ctrl+F10" data-emacs="Ctrl+F10" data-jbuilder="Ctrl+F10" data-visual_studio="Ctrl+F10" data-netbeans_6.5="N/A" data-eclipse="Ctrl+F10" data-mac_os_x_10.5_="&#x2318;F10" data-mac_os_x="&#x2318;F10" data-eclipse_mac_os_x="&#x2318;F10" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+F10</kbd></td></tr></tbody></table>
+        <a name="d327299e1791"></a><p>As mentioned before, by default <a name="d327299e1793"></a><span class="emphasis">IntelliJ IDEA</span> doesn't compile changed files automatically
+            (unless you configure it to do so). That means the IDE doesn't reload changes automatically. To reload
+            changed classes, call the <a name="d327299e1796"></a><span class="control">Make</span> action explicitly via <kbd data-default="Ctrl+F9" data-default_for_gnome="Ctrl+F9" data-default_for_kde="Ctrl+9" data-default_for_xwin="Ctrl+F9" data-emacs="Ctrl+F9" data-jbuilder="Ctrl+F9" data-visual_studio="F7" data-netbeans_6.5="N/A" data-eclipse="Ctrl+F9" data-mac_os_x_10.5_="&#x2318;F9" data-mac_os_x="&#x2318;F9" data-eclipse_mac_os_x="&#x2318;B" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+F9</kbd>. If
+            your application is running on a server, in addition to reloading you can use the
+            <a name="d327299e1801"></a><span class="control">Update application</span> action via <kbd data-default="Ctrl+F10" data-default_for_gnome="Ctrl+F10" data-default_for_kde="Ctrl+F10" data-default_for_xwin="Ctrl+F10" data-emacs="Ctrl+F10" data-jbuilder="Ctrl+F10" data-visual_studio="Ctrl+F10" data-netbeans_6.5="N/A" data-eclipse="Ctrl+F10" data-mac_os_x_10.5_="&#x2318;F10" data-mac_os_x="&#x2318;F10" data-eclipse_mac_os_x="&#x2318;F10" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+F10</kbd>:</p>
+        <figure><img alt="migration_guide_update_application" width="652" height="408" title="migration_guide_update_application" src="/help/img/idea/2016.1/migration_guide_update_application.png"></figure>
+    <a name="Debugging"></a><h2>Debugging</h2>
+        <a name="d327299e1813"></a><p>The debuggers in <a name="d327299e1815"></a><span class="emphasis">Eclipse</span> and <a name="d327299e1818"></a><span class="emphasis">IntelliJ IDEA</span> are similar but use
+            different shortcuts:</p>
+        <table class="" width="100%" id="d327299e1822"><thead><tr id="d327299e1824" class="ijRowHead"><a name="d327299e1824"></a><th width="25%" colspan="2"><a name="d327299e1826"></a>Eclipse</th><th width="25%" colspan="2"><a name="d327299e1829"></a>IntelliJ IDEA</th></tr></thead><tbody><tr id="d327299e1833" class="ijRowOdd"><a name="d327299e1833"></a><td><a name="d327299e1835"></a><a name="d327299e1836"></a><b id="d327299e1836">Action</b></td><td><a name="d327299e1839"></a><a name="d327299e1840"></a><b id="d327299e1840">Shortcut</b></td><td><a name="d327299e1843"></a><a name="d327299e1844"></a><b id="d327299e1844">Action</b></td><td><a name="d327299e1847"></a><a name="d327299e1848"></a><b id="d327299e1848">Shortcut</b></td></tr><tr id="d327299e1852" class="ijRowEven"><a name="d327299e1852"></a><td><a name="d327299e1854"></a>Step into</td><td><a name="d327299e1857"></a><kbd>F5</kbd></td><td><a name="d327299e1861"></a>Step into</td><td><a name="d327299e1864"></a><kbd data-default="F7" data-default_for_gnome="F7" data-default_for_kde="F7" data-default_for_xwin="F7" data-emacs="F7" data-jbuilder="F7" data-visual_studio="F11" data-netbeans_6.5="N/A" data-eclipse="F5" data-mac_os_x_10.5_="F7" data-mac_os_x="F7" data-eclipse_mac_os_x="F5" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">F7</kbd></td></tr><tr id="d327299e1868" class="ijRowOdd"><a name="d327299e1868"></a><td><a name="d327299e1870"></a>-</td><td><a name="d327299e1873"></a>-</td><td><a name="d327299e1876"></a>Smart step into</td><td><a name="d327299e1879"></a><kbd data-default="Shift+F7" data-default_for_gnome="Shift+F7" data-default_for_kde="Shift+F7" data-default_for_xwin="Shift+F7" data-emacs="Shift+F7" data-jbuilder="Shift+F7" data-visual_studio="Shift+F7" data-netbeans_6.5="N/A" data-eclipse="Ctrl+F5" data-mac_os_x_10.5_="&#x21E7;F7" data-mac_os_x="&#x21E7;F7" data-eclipse_mac_os_x="&#x2325;F5" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Shift+F7</kbd></td></tr><tr id="d327299e1883" class="ijRowEven"><a name="d327299e1883"></a><td><a name="d327299e1885"></a>Step over</td><td><a name="d327299e1888"></a><kbd>F6</kbd></td><td><a name="d327299e1892"></a>Step over</td><td><a name="d327299e1895"></a><kbd data-default="F8" data-default_for_gnome="F8" data-default_for_kde="F8" data-default_for_xwin="F8" data-emacs="F8" data-jbuilder="F8" data-visual_studio="F10" data-netbeans_6.5="N/A" data-eclipse="F6" data-mac_os_x_10.5_="F8" data-mac_os_x="F8" data-eclipse_mac_os_x="F6" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">F8</kbd></td></tr><tr id="d327299e1900" class="ijRowOdd"><a name="d327299e1900"></a><td><a name="d327299e1902"></a>Step out</td><td><a name="d327299e1905"></a><kbd>F7</kbd></td><td><a name="d327299e1909"></a>Step out</td><td><a name="d327299e1912"></a><kbd data-default="Shift+F8" data-default_for_gnome="Shift+F8" data-default_for_kde="Shift+F8" data-default_for_xwin="Shift+F8" data-emacs="Shift+F8" data-jbuilder="Shift+F8" data-visual_studio="Shift+F11" data-netbeans_6.5="N/A" data-eclipse="F7" data-mac_os_x_10.5_="&#x21E7;F8" data-mac_os_x="&#x21E7;F8" data-eclipse_mac_os_x="F7" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Shift+F8</kbd></td></tr><tr id="d327299e1916" class="ijRowEven"><a name="d327299e1916"></a><td><a name="d327299e1918"></a>Resume</td><td><a name="d327299e1921"></a><kbd>F8</kbd></td><td><a name="d327299e1925"></a>Resume</td><td><a name="d327299e1928"></a><kbd data-default="F9" data-default_for_gnome="F9" data-default_for_kde="F9" data-default_for_xwin="F9" data-emacs="F9" data-jbuilder="N/A" data-visual_studio="F5" data-netbeans_6.5="N/A" data-eclipse="F8" data-mac_os_x_10.5_="&#x2325;&#x2318;R" data-mac_os_x="F9" data-eclipse_mac_os_x="F8" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">F9</kbd></td></tr><tr id="d327299e1932" class="ijRowOdd"><a name="d327299e1932"></a><td><a name="d327299e1934"></a>Toggle breakpoint</td><td><a name="d327299e1937"></a><kbd>Ctrl+Shift+B</kbd></td><td><a name="d327299e1941"></a>Toggle breakpoint</td><td><a name="d327299e1944"></a><kbd data-default="Ctrl+F8" data-default_for_gnome="Ctrl+F8" data-default_for_kde="Ctrl+8" data-default_for_xwin="Ctrl+F8" data-emacs="Ctrl+F8" data-jbuilder="Ctrl+F8" data-visual_studio="F9" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Shift+B" data-mac_os_x_10.5_="&#x2318;F8" data-mac_os_x="&#x2318;F8" data-eclipse_mac_os_x="&#x21E7;&#x2318;B" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+F8</kbd></td></tr><tr id="d327299e1948" class="ijRowEven"><a name="d327299e1948"></a><td><a name="d327299e1950"></a>-</td><td><a name="d327299e1953"></a>-</td><td><a name="d327299e1956"></a>Evaluate expression</td><td><a name="d327299e1959"></a><kbd data-default="Alt+F8" data-default_for_gnome="Shift+Alt+8" data-default_for_kde="Shift+Alt+8" data-default_for_xwin="Alt+F8" data-emacs="Alt+F8" data-jbuilder="Alt+F8" data-visual_studio="Alt+F8" data-netbeans_6.5="N/A" data-eclipse="Ctrl+U" data-mac_os_x_10.5_="&#x2325;F8" data-mac_os_x="&#x2325;F8" data-eclipse_mac_os_x="&#x2318;U" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+F8</kbd></td></tr></tbody></table>
+    <a name="ApplicationServers"></a><h2>Working with Application Servers (Tomcat/TomEE, JBoss EAP, Glassfish, WebLogic, WebSphere)</h2>
+        <a name="d327299e1967"></a><p>Deploying to application servers in <a name="d327299e1969"></a><span class="emphasis">IntelliJ IDEA</span> is more or less similar to what you are
+            probably used to in <a name="d327299e1972"></a><span class="emphasis">Eclipse</span>. To deploy your application to a server:</p>
+        <ol class="list _decimal"><li class="list__item"><a name="d327299e1978"></a>Configure your <a name="d327299e1980"></a><a href="artifact.html"><span>artifacts</span></a> via <a name="d327299e1983"></a><span class="control">Project Structure | Artifacts</span>
+                (done automatically for <a name="d327299e1986"></a><span class="emphasis">Maven</span> and <a name="d327299e1989"></a><span class="emphasis">Gradle</span> projects).</li><li class="list__item"><a name="d327299e1993"></a>Configure an <a name="d327299e1995"></a><a href="Application_Servers.html"><span>application server</span></a> via <a name="d327299e1998"></a><span class="control">Settings | Application Servers</span>.
+            </li><li class="list__item"><a name="d327299e2002"></a>Create a <a name="d327299e2004"></a><a href="run-debug-configuration.html"><span>run configuration</span></a>, and then specify the artifacts to deploy and the server to deploy to.</li></ol>
+        <a name="d327299e2009"></a><p>You can always tell the IDE to build/rebuild your artifacts once the have been configured via
+            <a name="d327299e2011"></a><span class="menupath">Build | Build Artifacts</span>.</p>
+    <a name="BuildTools"></a><h2>Working with Build Tools (Maven/Gradle)</h2>
+        <a name="d327299e2018"></a><p>
+            <a name="d327299e2020"></a><span class="emphasis">IntelliJ IDEA</span> doesn't provide visual forms for editing <a name="d327299e2023"></a><span class="emphasis">Maven/Gradle</span> configuration files.
+            Once you've imported/created your <a name="d327299e2026"></a><span class="emphasis">Maven/Gradle</span> project, you are free to edit its <code class="code" data-lang="Java">pom.xml/build.gradle</code> files
+            directly in the editor. Later, you can tell <a name="d327299e2032"></a><span class="emphasis">IntelliJ IDEA</span> to <a name="d327299e2036"></a><a href="maven-importing.html"><span>synchronize the project model</span></a> with the
+            changed files on demand, or <a name="d327299e2039"></a><a href="synchronizing-changes-in-gradle-project-and-intellij-idea-project.html"><span>automatically import changes</span></a> to the new build files.
+            Any changes to the underlying build configuration will eventually need to be synced with the project model in <a name="d327299e2042"></a><span class="emphasis">IntelliJ IDEA</span>.
+        </p>
+        <a name="d327299e2046"></a><p>
+            For operations specific to <a name="d327299e2048"></a><span class="emphasis">Maven/Gradle</span>, <a name="d327299e2051"></a><span class="emphasis">IntelliJ IDEA</span> provides the <a name="d327299e2054"></a><a href="maven-projects-tool-window.html"><span>Maven Project tool window</span></a>
+            and the <a name="d327299e2057"></a><a href="gradle-tool-window.html"><span>Gradle tool window</span></a>. Apart from your project structure, these tool windows provide a list of
+            <a name="d327299e2060"></a><span class="emphasis">goals/tasks</span> plus a toolbar with the relevant actions.
+        </p>
+        <figure><img alt="migration_guide_maven" width="714" height="360" title="migration_guide_maven" src="/help/img/idea/2016.1/migration_guide_maven.png"></figure>
+        <a name="d327299e2066"></a><p>
+            If you want the IDE to synchronize your changes immediately:
+        </p>
+        <ul class="list _bullet"><li class="list__item"><a name="d327299e2071"></a>
+                For <code class="code" data-lang="Java">pom.xml</code>, enable the corresponding options in <a name="d327299e2076"></a><span class="control">Settings | Build, Execution, Deployment | Build Tools | Maven |
+                Importing | Import Maven projects automatically</span>
+            </li><li class="list__item"><a name="d327299e2080"></a>
+                For <code class="code" data-lang="Java">build.gradle</code>, enable the corresponding option in <a name="d327299e2085"></a><span class="control">Settings | Build, Execution, Deployment | Build Tools |
+                Gradle | Use auto-import</span>.
+            </li></ul>
+        <a name="d327299e2091"></a><p>
+            For manual synchronization, use the corresponding action on the <a name="d327299e2093"></a><span class="emphasis">Maven/Gradle</span> tool window toolbar: <img alt="refresh" width="14" height="14" title="refresh" src="/help/img/idea/2016.1/refresh.png" class="inline-icon-14">.
+        </p>
+
+        <a name="d327299e2099"></a><h3>Running goals/tasks</h3>
+            <a name="d327299e2101"></a><p>
+                Use the <a name="d327299e2103"></a><span class="control">Maven/Gradle</span> tool window to run any project <a name="d327299e2106"></a><span class="emphasis">goal/task</span>. When you do, <a name="d327299e2109"></a><span class="emphasis">IntelliJ IDEA</span>
+                creates the corresponding run configuration which you can reuse later to run the <a name="d327299e2112"></a><span class="emphasis">goal/task</span> quickly.
+            </p>
+            <a name="d327299e2116"></a><p>
+                It's worth mentioning that any <a name="d327299e2118"></a><span class="emphasis">goal/task</span> can be attached to be run before a <a name="d327299e2121"></a><span class="emphasis">Run Configuration</span>. This may be
+                useful when your <a name="d327299e2124"></a><span class="emphasis">goal/task</span> generates specific files needed by the application.
+            </p>
+            <figure><img alt="migration_guide_run_before" width="750" height="474" title="migration_guide_run_before" src="/help/img/idea/2016.1/migration_guide_run_before.png"></figure>
+            <a name="d327299e2130"></a><p>
+                Both the <a name="d327299e2132"></a><span class="emphasis">Maven</span> and <a name="d327299e2135"></a><span class="emphasis">Gradle</span> tool windows provide the <a name="d327299e2138"></a><span class="control">Run Task</span> action. It runs a
+                <a name="d327299e2141"></a><span class="emphasis">Maven/Gradle</span> command similarly to how you'd run it using the console.
+            </p>
+         
+
+        <a name="d327299e2146"></a><h3>Configuring artifacts</h3>
+            <a name="d327299e2148"></a><p>
+                If you have <a name="d327299e2150"></a><span class="emphasis">WAR artifacts</span> configured in your <code class="code" data-lang="Java">pom.xml/build.gradle</code> file, <a name="d327299e2156"></a><span class="emphasis">IntelliJ IDEA</span>
+                automatically configures the corresponding artifacts in <a name="d327299e2159"></a><span class="control">Project Structure | Artifacts</span>.
+            </p>
+            <a name="d327299e2163"></a><p>
+                Note that when you compile your project or build an artifact, <a name="d327299e2165"></a><span class="emphasis">IntelliJ IDEA</span> uses its own build process which may be faster, but is not
+                guaranteed to be 100% accurate. If you notice inconsistent results when compiling your project with <a name="d327299e2168"></a><span class="control">Make</span> in
+                <a name="d327299e2171"></a><span class="emphasis">IntelliJ IDEA</span>, try using a <a name="d327299e2174"></a><span class="emphasis">Maven goal</span> or a <a name="d327299e2177"></a><span class="emphasis">Gradle task</span> instead.
+            </p>
+         
+    <a name="VCS"></a><h2>Working with VCS (Git, Mercurial, Subversion, Perforce)</h2>
+        <a name="d327299e2187"></a><h3>Configuring VCS roots</h3>
+            <a name="d327299e2189"></a><p>
+                When you open a project located under a VCS root, <a name="d327299e2191"></a><span class="emphasis">IntelliJ IDEA</span> automatically detects it and
+                suggests adding this root to the project settings. To change version control-related project settings (or
+                manually add a VCS root), go to <a name="d327299e2194"></a><span class="control">Settings | Version Control</span>:
+            </p>
+            <figure><img alt="migration_guide_vcs_settings" width="750" height="399" title="migration_guide_vcs_settings" src="/help/img/idea/2016.1/migration_guide_vcs_settings.png"></figure>
+            <a name="d327299e2200"></a><p>
+                <a name="d327299e2202"></a><span class="emphasis">IntelliJ IDEA</span> works perfectly with multi-repository projects. Just map your project directories
+                to VCS, and the IDE will take care of the rest. For <a name="d327299e2205"></a><a href="using-git-integration.html"><span>Git</span></a> and <a name="d327299e2208"></a><a href="using-mercurial-integration.html"><span>Mercurial</span></a>,
+                the IDE will even offer you synchronized branch control, so that you can perform branch operations on multiple
+                repositories simultaneously (for more details, see <a name="d327299e2211"></a><a href="git-branches-in-multirooted-projects.html"><span>Git Branches in Multirooted Projects</span></a>).
+            </p>
+         
+
+        <a name="d327299e2215"></a><h3>Editing VCS settings</h3>
+            <a name="d327299e2217"></a><p>
+                Every VCS may require specific settings, for example, <a name="d327299e2219"></a><span class="control">Path to Git executable</span>,
+                <a name="d327299e2222"></a><span class="control">GitHub/Perforce credentials</span>, etc.:
+            </p>
+            <figure><img alt="migration_guide_git_settings" width="750" height="319" title="migration_guide_git_settings" src="/help/img/idea/2016.1/migration_guide_git_settings.png"></figure>
+            <a name="d327299e2228"></a><p>
+                Once you've configured the VCS settings, you'll see the <a name="d327299e2230"></a><a href="version-control-tool-window.html"><span>Version Control tool window</span></a>.
+                You can invoke it any time by pressing <kbd data-default="N/A" data-default_for_gnome="N/A" data-default_for_kde="N/A" data-default_for_xwin="N/A" data-emacs="N/A" data-jbuilder="N/A" data-visual_studio="N/A" data-netbeans_6.5="N/A" data-eclipse="N/A" data-mac_os_x_10.5_="N/A" data-mac_os_x="N/A" data-eclipse_mac_os_x="N/A" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">N/A</kbd>.
+            </p>
+         
+
+        <a name="d327299e2237"></a><h3>Checking projects out</h3>
+            <a name="d327299e2239"></a><p>
+                To check out a project from a VCS, click <a name="d327299e2241"></a><span class="control">Checkout from Version Control</span> on the
+                <a name="d327299e2244"></a><a href="welcome-screen.html"><span>Welcome Screen</span></a>, or in the main <a name="d327299e2246"></a><span class="control">VCS</span> menu.
+            </p>
+         
+
+        <a name="d327299e2251"></a><h3>Working with local changes</h3>
+            <a name="d327299e2253"></a><p>
+                The <a name="d327299e2255"></a><a href="local-changes-tab.html"><span>Local Changes tab</span></a> of the <a name="d327299e2258"></a><a href="version-control-tool-window.html"><span>Version Control tool window</span></a> shows your
+                local changes: both <a name="d327299e2261"></a><span class="emphasis">staged</span> and <a name="d327299e2264"></a><span class="emphasis">unstaged</span>. To simplify managing changes, all
+                changes are organized into <a name="d327299e2267"></a><span class="emphasis">changelists</span>. Any changes made to source files are automatically included
+                into the active changelist. You can create new changelists, delete the existing ones (except for the <a name="d327299e2271"></a><span class="control">Default</span>
+                changelist), and move files between changelists.
+            </p>
+            <figure><img alt="migration_guide_changes" width="750" height="562" title="migration_guide_changes" src="/help/img/idea/2016.1/migration_guide_changes.png"></figure>
+            <a name="d327299e2277"></a><p>
+                To configure <a name="d327299e2279"></a><span class="emphasis">ignored files</span>, go to <a name="d327299e2282"></a><span class="control">Settings | Version Control</span>, or use the corresponding button
+                in the <a name="d327299e2285"></a><span class="control">Version Control</span> tool window.
+            </p>
+            <figure><img alt="migration_guide_ignored_files" width="691" height="312" title="migration_guide_ignored_files" src="/help/img/idea/2016.1/migration_guide_ignored_files.png"></figure>
+         
+
+        <a name="d327299e2292"></a><h3>Working with history</h3>
+            <a name="d327299e2294"></a><p>
+                The <a name="d327299e2296"></a><a href="log-tab.html"><span>Log tab</span></a> of the <a name="d327299e2299"></a><a href="version-control-tool-window.html"><span>Version Control tool window</span></a> lets you see and search through the
+                history of commits. You can sort and filter commits by the repository, branch, user, date, folder, or even a phrase in the
+                description. You can find a particular commit, or just browse through the history and the branch tree:
+            </p>
+            <figure><img alt="migration_guide_log" width="750" height="562" title="migration_guide_log" src="/help/img/idea/2016.1/migration_guide_log.png"></figure>
+         
+
+        <a name="d327299e2307"></a><h3>Working with branches</h3>
+            <a name="d327299e2309"></a><p>
+                <a name="d327299e2311"></a><span class="emphasis">IntelliJ IDEA</span> lets you create, switch, merge, compare and delete branches. For these operations, either
+                use <a name="d327299e2314"></a><span class="control">Branches</span> from the main or context <a name="d327299e2317"></a><span class="control">VCS</span> menu, or the <a name="d327299e2320"></a><span class="control">VCS operations popup</span>
+                (you can invoke it by pressing <kbd data-default="Alt+Back Quote" data-default_for_gnome="Alt+Back Quote" data-default_for_kde="Alt+Back Quote" data-default_for_xwin="Alt+Back Quote" data-emacs="Alt+Back Quote" data-jbuilder="Alt+Back Quote" data-visual_studio="Alt+Back Quote" data-netbeans_6.5="N/A" data-eclipse="Alt+Back Quote" data-mac_os_x_10.5_="&#x2303;V" data-mac_os_x="&#x2303;V" data-eclipse_mac_os_x="&#x2303;V" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Back Quote</kbd>, or the widget on the right of the status bar:
+            </p>
+            <figure><img alt="migration_guide_vcs_popup" width="642" height="432" title="migration_guide_vcs_popup" src="/help/img/idea/2016.1/migration_guide_vcs_popup.png"></figure>
+            <a name="d327299e2328"></a><p>
+                All VCS operations are available from the VCS main menu:
+            </p>
+            <table class="" width="100%" id="d327299e2331"><thead><tr id="d327299e2333" class="ijRowHead"><a name="d327299e2333"></a><th width="60%"><a name="d327299e2335"></a>Action</th><th width="40%"><a name="d327299e2338"></a>Shortcut</th></tr></thead><tbody><tr id="d327299e2342" class="ijRowOdd"><a name="d327299e2342"></a><td><a name="d327299e2344"></a>
+                        Version Control tool window
+                    </td><td><a name="d327299e2347"></a>
+                        <kbd data-default="N/A" data-default_for_gnome="N/A" data-default_for_kde="N/A" data-default_for_xwin="N/A" data-emacs="N/A" data-jbuilder="N/A" data-visual_studio="N/A" data-netbeans_6.5="N/A" data-eclipse="N/A" data-mac_os_x_10.5_="N/A" data-mac_os_x="N/A" data-eclipse_mac_os_x="N/A" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">N/A</kbd>
+                    </td></tr><tr id="d327299e2353" class="ijRowEven"><a name="d327299e2353"></a><td><a name="d327299e2355"></a>
+                        VCS operations popup
+                    </td><td><a name="d327299e2358"></a>
+                        <kbd data-default="Alt+Back Quote" data-default_for_gnome="Alt+Back Quote" data-default_for_kde="Alt+Back Quote" data-default_for_xwin="Alt+Back Quote" data-emacs="Alt+Back Quote" data-jbuilder="Alt+Back Quote" data-visual_studio="Alt+Back Quote" data-netbeans_6.5="N/A" data-eclipse="Alt+Back Quote" data-mac_os_x_10.5_="&#x2303;V" data-mac_os_x="&#x2303;V" data-eclipse_mac_os_x="&#x2303;V" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Back Quote</kbd>
+                    </td></tr><tr id="d327299e2364" class="ijRowOdd"><a name="d327299e2364"></a><td><a name="d327299e2366"></a>
+                        Commit changes
+                    </td><td><a name="d327299e2369"></a>
+                        <kbd data-default="Ctrl+K" data-default_for_gnome="Ctrl+K" data-default_for_kde="Ctrl+K" data-default_for_xwin="Ctrl+K" data-emacs="Ctrl+K" data-jbuilder="Ctrl+K" data-visual_studio="Ctrl+K" data-netbeans_6.5="N/A" data-eclipse="N/A" data-mac_os_x_10.5_="&#x2318;K" data-mac_os_x="&#x2318;K" data-eclipse_mac_os_x="N/A" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+K</kbd>
+                    </td></tr><tr id="d327299e2375" class="ijRowEven"><a name="d327299e2375"></a><td><a name="d327299e2377"></a>
+                        Update project
+                    </td><td><a name="d327299e2380"></a>
+                        <kbd data-default="Ctrl+T" data-default_for_gnome="Ctrl+T" data-default_for_kde="Ctrl+T" data-default_for_xwin="Ctrl+T" data-emacs="Ctrl+T" data-jbuilder="Ctrl+T" data-visual_studio="Ctrl+T" data-netbeans_6.5="N/A" data-eclipse="N/A" data-mac_os_x_10.5_="&#x2318;T" data-mac_os_x="&#x2318;T" data-eclipse_mac_os_x="N/A" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+T</kbd>
+                    </td></tr><tr id="d327299e2387" class="ijRowOdd"><a name="d327299e2387"></a><td><a name="d327299e2389"></a>
+                        Push commits
+                    </td><td><a name="d327299e2392"></a>
+                        <kbd data-default="Ctrl+Shift+K" data-default_for_gnome="Ctrl+Shift+K" data-default_for_kde="Ctrl+Shift+K" data-default_for_xwin="Ctrl+Shift+K" data-emacs="Ctrl+Shift+K" data-jbuilder="Ctrl+Shift+K" data-visual_studio="Ctrl+Shift+K" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Shift+K" data-mac_os_x_10.5_="&#x21E7;&#x2318;K" data-mac_os_x="&#x21E7;&#x2318;K" data-eclipse_mac_os_x="&#x21E7;&#x2318;K" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Shift+K</kbd>
+                    </td></tr></tbody></table>
+         
+    <a name="migratingEclipseProject"></a><h2>Importing an Eclipse project to IntelliJ IDEA</h2>
+        <a name="d327299e2403"></a><p>
+            Despite these differences in terms and the UI, you can import either an <a name="d327299e2405"></a><span class="emphasis">Eclipse</span> workspace or a
+            single <a name="d327299e2408"></a><span class="emphasis">Eclipse</span> project. To do this, click <a name="d327299e2411"></a><span class="control">Import Project</span> on the <a name="d327299e2414"></a><span class="control">Welcome Screen</span>,
+            or select <a name="d327299e2417"></a><span class="control">File | New | Project from Existing Sources </span> in the main menu.
+        </p>
+        <a name="d327299e2421"></a><p>
+            If your project uses a build tool such as <a name="d327299e2423"></a><a href="https://maven.apache.org/" data-external="true"><span>Maven</span></a> or <a name="d327299e2426"></a><a href="https://gradle.org/" data-external="true"><span>Gradle</span></a>,
+            we recommend choosing the corresponding option when prompted in the <a name="d327299e2429"></a><a href="import-project-or-module-wizard.html"><span>Import Project</span></a> wizard,
+            and selecting the associated build file (<code class="code" data-lang="Java">pom.xml</code> or <code class="code" data-lang="Java">build.gradle</code>):
+        </p>
+        <figure><img alt="migration_guide_import_project" width="750" height="562" title="migration_guide_import_project" src="/help/img/idea/2016.1/migration_guide_import_project.png"></figure>
+        <a name="d327299e2441"></a><p>
+            If you'd like to import your existing run configurations from <a name="d327299e2443"></a><span class="emphasis">Eclipse</span>, consider using this
+            <a name="d327299e2446"></a><a href="https://plugins.jetbrains.com/plugin?pluginId=7153" data-external="true"><span>third-party plugin</span></a>.
+        </p>
+    <a name="export"></a><h2>Exporting IntelliJ IDEA Project to Eclipse</h2>
+
+        <a name="d327299e2454"></a><p><a name="d327299e2455"></a><span class="emphasis">Prerequisite</span></p>
+        <a name="d327299e2458"></a><p>Eclipse integration plugin should be <a name="d327299e2460"></a><a href="enabling-and-disabling-plugins.html"><span>enabled</span></a>.</p>
+
+<a name="d327299e2464"></a><p>You can export an IntelliJ IDEA project to Eclipse. Such export results in creating Eclipse project files
+    (<code class="code" data-lang="Java">.project</code> and <code class="code" data-lang="Java">.classpath</code>) for each module file
+    (<code class="code" data-lang="Java">*.iml</code>) in the module directory that contains the content root.
+    Another way to export an IntelliJ IDEA module to Eclipse project lays with converting such a module to an
+    Eclipse-compatible format.</p>
+
+     <a name="d327299e2476"></a><p>To export the currently open project to Eclipse, follow these steps:</p>
+        <ol class="list _decimal"><li class="list__item"><a name="d327299e2481"></a>On the main menu, choose <a name="d327299e2483"></a><span class="menupath">File | Export to Eclipse</span>.
+        <a name="d327299e2486"></a><span class="control">Export to Eclipse</span> dialog displays the list of modules, which were not converted and
+                switched to use Eclipse format yet (the modules that have the IntelliJ IDEA module format
+                <code class="code" data-lang="Java">.iml</code>).</li><li class="list__item"><a name="d327299e2493"></a>Select the modules to be exported.</li><li class="list__item"><a name="d327299e2496"></a>Check the suggested <a name="d327299e2498"></a><a href="#export_to_eclipse"><span>options</span></a> if necessary.</li><li class="list__item"><a name="d327299e2502"></a>Click <a name="d327299e2504"></a><span class="control">OK</span>.</li></ol>
+        <a name="d327299e2510"></a><p>To convert an IntelliJ IDEA module to Eclipse-compatible format, follow these steps:</p>
+        <ol class="list _decimal"><li class="list__item"><a name="d327299e2515"></a>On the main menu, choose <a name="d327299e2517"></a><span class="menupath">File | Project Structure</span>, or press
+                <kbd data-default="Ctrl+Shift+Alt+S" data-default_for_gnome="Ctrl+Shift+Alt+S" data-default_for_kde="Ctrl+Shift+Alt+S" data-default_for_xwin="Ctrl+Shift+Alt+S" data-emacs="Ctrl+Alt+Shift+S" data-jbuilder="Ctrl+Shift+Alt+S" data-visual_studio="Ctrl+Alt+Shift+S" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Shift+Alt+S" data-mac_os_x_10.5_="&#x2318;;" data-mac_os_x="&#x2318;;" data-eclipse_mac_os_x="&#x2318;;" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Shift+Alt+S</kbd>.</li><li class="list__item"><a name="d327299e2523"></a>In the <a name="d327299e2525"></a><a href="project-structure-dialog.html"><span>Project Structure Dialog</span></a> dialog, select the module to be converted.</li><li class="list__item"><a name="d327299e2529"></a>Click <a name="d327299e2531"></a><a href="dependencies-tab.html"><span>Dependencies Tab</span></a> tab.</li><li class="list__item"><a name="d327299e2535"></a>From the <a name="d327299e2537"></a><span class="control">Dependencies storage format</span> drop-down list, select
+                <a name="d327299e2540"></a><span class="control">Eclipse (.classpath)</span>.</li></ol>
+        <aside class="note sideblock" rel="export">
+            <a name="d327299e2547"></a><p>As of this writing, migration from IntelliJ IDEA to Eclipse is subject to certain limitations:</p>
+            <ul class="list _ul"><li class="list__item"><a name="d327299e2552"></a>IntelliJ IDEA modules with multiple content roots are not migrated.</li><li class="list__item"><a name="d327299e2555"></a>External sources in Eclipse are not migrated.</li><li class="list__item"><a name="d327299e2558"></a>Only Java modules are created automatically when importing. However, any module can be converted to
+                    Eclipse compatible format manually.</li><li class="list__item"><a name="d327299e2561"></a>Default workspace JRE is not converted to/from Project SDK.</li></ul>
+        </aside>
+        <a name="export_to_eclipse"></a><h3>Export to Eclipse dialog</h3>
+            <table class="" width="100%" id="d327299e2568"><thead><tr id="d327299e2570" class="ijRowHead"><a name="d327299e2570"></a><th><a name="d327299e2572"></a>Item</th><th><a name="d327299e2575"></a>Description</th></tr></thead><tbody><tr id="d327299e2579" class="ijRowOdd"><a name="d327299e2579"></a><td><a name="d327299e2581"></a>Modules to export</td><td><a name="d327299e2584"></a>This area shows the list of modules, which were not converted and
+                        switched to use Eclipse format yet (the modules that have the IntelliJ IDEA module format
+                        <code class="code" data-lang="Java">.iml</code>).
+                    <a name="d327299e2589"></a><p>The modules to be exported should be marked via a check box to the right.</p>
+                    </td></tr><tr id="d327299e2594" class="ijRowEven"><a name="d327299e2594"></a><td><a name="d327299e2596"></a>Switch selected modules to Eclipse-competible format</td><td><a name="d327299e2599"></a>If this check box is selected, the modules selected on the <a name="d327299e2601"></a><span class="control">Modules to export</span>
+                    area, will be switched to Eclipse-compatible format.</td></tr><tr id="d327299e2606" class="ijRowOdd"><a name="d327299e2606"></a><td><a name="d327299e2608"></a>Export non-module libraries</td><td><a name="d327299e2611"></a>If this check box is selected, IntelliJ IDEA creates User Library configuration file for Eclipse
+                        (<code class="code" data-lang="Java">*.userlibraries</code>), containing definitions of all external libraries,
+                        used in project<br>
+                    If this check box is not selected, the field <a name="d327299e2618"></a><span class="control">Path to resulting .userlibraries</span> is
+                    disabled.</td></tr><tr id="d327299e2623" class="ijRowEven"><a name="d327299e2623"></a><td><a name="d327299e2625"></a>Path to resulting .userlibraries</td><td><a name="d327299e2628"></a>Specify here the path to the generated <code class="code" data-lang="Java">*.userlibraries</code> file. Note
+                    that this field is only available when the check box <a name="d327299e2633"></a><span class="control">Export non-module libraries</span>
+                    is selected. </td></tr></tbody></table>
+         
+    <a name="ShortcutsMap"></a><h2>Map of Shortcuts</h2>
+        <table class="" width="100%" id="d327299e2643"><thead><tr id="d327299e2645" class="ijRowHead"><a name="d327299e2645"></a><th width="25%" colspan="2"><a name="d327299e2647"></a>Eclipse</th><th width="25%" colspan="2"><a name="d327299e2650"></a>IntelliJ IDEA</th></tr></thead><tbody><tr id="d327299e2654" class="ijRowOdd"><a name="d327299e2654"></a><td><a name="d327299e2656"></a>
+                    <a name="d327299e2658"></a><b id="d327299e2658">Action</b>
+                </td><td><a name="d327299e2662"></a>
+                    <a name="d327299e2664"></a><b id="d327299e2664">Shortcut</b>
+                </td><td><a name="d327299e2668"></a>
+                    <a name="d327299e2670"></a><b id="d327299e2670">Action</b>
+                </td><td><a name="d327299e2674"></a>
+                    <a name="d327299e2676"></a><b id="d327299e2676">Shortcut</b>
+                </td></tr><tr id="d327299e2681" class="ijRowEven"><a name="d327299e2681"></a><td><a name="d327299e2683"></a>
+                    Code completion
+                </td><td><a name="d327299e2686"></a>
+                    <kbd>Ctrl+Space</kbd>
+                </td><td><a name="d327299e2692"></a>
+                    Basic completion
+                </td><td><a name="d327299e2695"></a>
+                    <kbd data-default="Ctrl+Space" data-default_for_gnome="Ctrl+Space" data-default_for_kde="Ctrl+Space" data-default_for_xwin="Ctrl+Space" data-emacs="Alt+Slash" data-jbuilder="Ctrl+Space" data-visual_studio="Ctrl+Space" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Space" data-mac_os_x_10.5_="&#x2303;Space" data-mac_os_x="&#x2303;Space" data-eclipse_mac_os_x="&#x2303;Space" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Space</kbd>
+                </td></tr><tr id="d327299e2701" class="ijRowOdd"><a name="d327299e2701"></a><td><a name="d327299e2703"></a>-</td><td><a name="d327299e2706"></a>-</td><td><a name="d327299e2709"></a>
+                    Smart completion
+                </td><td><a name="d327299e2712"></a>
+                    <kbd data-default="Ctrl+Shift+Space" data-default_for_gnome="Ctrl+Shift+Space" data-default_for_kde="Ctrl+Shift+Space" data-default_for_xwin="Ctrl+Shift+Space" data-emacs="Ctrl+Shift+Space" data-jbuilder="Ctrl+Shift+Space" data-visual_studio="Alt+Shift+Space" data-netbeans_6.5="N/A" data-eclipse="Shift+Alt+Space" data-mac_os_x_10.5_="&#x2303;&#x21E7;Space" data-mac_os_x="&#x2303;&#x21E7;Space" data-eclipse_mac_os_x="&#x2325;&#x21E7;Space" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Shift+Space</kbd>
+                </td></tr><tr id="d327299e2718" class="ijRowEven"><a name="d327299e2718"></a><td><a name="d327299e2720"></a>-</td><td><a name="d327299e2723"></a>-</td><td><a name="d327299e2726"></a>
+                    Statement completion
+                </td><td><a name="d327299e2729"></a>
+                    <kbd data-default="Ctrl+Shift+Enter" data-default_for_gnome="Ctrl+Shift+Enter" data-default_for_kde="Ctrl+Shift+Enter" data-default_for_xwin="Ctrl+Shift+Enter" data-emacs="Ctrl+Shift+Enter" data-jbuilder="N/A" data-visual_studio="Ctrl+Shift+Enter" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Shift+Enter" data-mac_os_x_10.5_="&#x21E7;&#x2318;⏎" data-mac_os_x="&#x21E7;&#x2318;⏎" data-eclipse_mac_os_x="&#x21E7;&#x2318;⏎" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Shift+Enter</kbd>
+                </td></tr><tr id="d327299e2736" class="ijRowOdd"><a name="d327299e2736"></a><td><a name="d327299e2738"></a>
+                    Quick access
+                </td><td><a name="d327299e2741"></a>
+                    <kbd>Ctrl+3</kbd>
+                </td><td><a name="d327299e2747"></a>
+                    Search everywhere
+                </td><td><a name="d327299e2750"></a>
+                    <kbd>Shift x 2</kbd>
+                </td></tr><tr id="d327299e2757" class="ijRowEven"><a name="d327299e2757"></a><td><a name="d327299e2759"></a>
+                    Maximize active view or editor
+                </td><td><a name="d327299e2762"></a>
+                    <kbd>Ctrl+M</kbd>
+                </td><td><a name="d327299e2768"></a>
+                    Hide all tool windows
+                </td><td><a name="d327299e2771"></a>
+                    <kbd data-default="Ctrl+Shift+F12" data-default_for_gnome="Ctrl+Shift+F12" data-default_for_kde="Ctrl+Shift+F12" data-default_for_xwin="Ctrl+Shift+F12" data-emacs="Ctrl+Shift+F12" data-jbuilder="Ctrl+Shift+F12" data-visual_studio="Ctrl+Shift+F12" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Shift+F12" data-mac_os_x_10.5_="&#x21E7;&#x2318;F12" data-mac_os_x="&#x21E7;&#x2318;F12" data-eclipse_mac_os_x="&#x21E7;&#x2318;F12" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Shift+F12</kbd>
+                </td></tr><tr id="d327299e2777" class="ijRowOdd"><a name="d327299e2777"></a><td><a name="d327299e2779"></a>
+                    Open type
+                </td><td><a name="d327299e2782"></a>
+                    <kbd>Ctrl+Shift+T</kbd>
+                </td><td><a name="d327299e2788"></a>
+                    Navigate to class
+                </td><td><a name="d327299e2791"></a>
+                    <kbd data-default="Ctrl+N" data-default_for_gnome="Ctrl+N" data-default_for_kde="Ctrl+N" data-default_for_xwin="Ctrl+N" data-emacs="Alt+Shift+G" data-jbuilder="Ctrl+N" data-visual_studio="Ctrl+Comma" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Shift+T" data-mac_os_x_10.5_="&#x2318;O" data-mac_os_x="&#x2318;N" data-eclipse_mac_os_x="&#x21E7;&#x2318;T" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+N</kbd>
+                </td></tr><tr id="d327299e2797" class="ijRowEven"><a name="d327299e2797"></a><td><a name="d327299e2799"></a>
+                    Open resource
+                </td><td><a name="d327299e2802"></a>
+                    <kbd>Ctrl+Shift+R</kbd>
+                </td><td><a name="d327299e2808"></a>
+                    Navigate to file
+                </td><td><a name="d327299e2811"></a>
+                    <kbd data-default="Ctrl+Shift+N" data-default_for_gnome="Ctrl+Shift+N" data-default_for_kde="Ctrl+Shift+N" data-default_for_xwin="Ctrl+Shift+N" data-emacs="Ctrl+X, Ctrl+F" data-jbuilder="Ctrl+Shift+N" data-visual_studio="Ctrl+Shift+N" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Shift+R" data-mac_os_x_10.5_="&#x21E7;&#x2318;O" data-mac_os_x="&#x21E7;&#x2318;N" data-eclipse_mac_os_x="&#x21E7;&#x2318;R" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Shift+N</kbd>
+                </td></tr><tr id="d327299e2817" class="ijRowOdd"><a name="d327299e2817"></a><td><a name="d327299e2819"></a>-</td><td><a name="d327299e2822"></a>-</td><td><a name="d327299e2825"></a>
+                    Navigate to symbol
+                </td><td><a name="d327299e2828"></a>
+                    <kbd data-default="Ctrl+Shift+Alt+N" data-default_for_gnome="Ctrl+Shift+Alt+N" data-default_for_kde="Ctrl+Shift+Alt+N" data-default_for_xwin="Ctrl+Shift+Alt+N" data-emacs="Ctrl+Alt+Shift+N" data-jbuilder="Ctrl+Shift+Alt+N" data-visual_studio="Ctrl+Alt+Shift+N" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Shift+Alt+N" data-mac_os_x_10.5_="&#x2325;&#x2318;O" data-mac_os_x="&#x2325;&#x21E7;&#x2318;N" data-eclipse_mac_os_x="&#x2325;&#x2318;O" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Shift+Alt+N</kbd>
+                </td></tr><tr id="d327299e2834" class="ijRowEven"><a name="d327299e2834"></a><td><a name="d327299e2836"></a>
+                    Next view
+                </td><td><a name="d327299e2839"></a>
+                    <kbd>Ctrl+F7</kbd>
+                </td><td><a name="d327299e2845"></a>-</td><td><a name="d327299e2848"></a>-</td></tr><tr id="d327299e2853" class="ijRowOdd"><a name="d327299e2853"></a><td><a name="d327299e2855"></a>-</td><td><a name="d327299e2858"></a>-</td><td><a name="d327299e2861"></a>
+                    Recent files
+                </td><td><a name="d327299e2864"></a>
+                    <kbd data-default="Ctrl+E" data-default_for_gnome="Ctrl+E" data-default_for_kde="Ctrl+E" data-default_for_xwin="Ctrl+E" data-emacs="N/A" data-jbuilder="Ctrl+E" data-visual_studio="Ctrl+E" data-netbeans_6.5="N/A" data-eclipse="Ctrl+E" data-mac_os_x_10.5_="&#x2318;E" data-mac_os_x="&#x2318;E" data-eclipse_mac_os_x="&#x2318;E" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+E</kbd>
+                </td></tr><tr id="d327299e2870" class="ijRowEven"><a name="d327299e2870"></a><td><a name="d327299e2872"></a>-</td><td><a name="d327299e2875"></a>-</td><td><a name="d327299e2878"></a>
+                    Switcher
+                </td><td><a name="d327299e2881"></a>
+                    <kbd data-default="Ctrl+Tab" data-default_for_gnome="Ctrl+Tab" data-default_for_kde="Ctrl+Tab" data-default_for_xwin="Ctrl+Tab" data-emacs="Ctrl+X, B" data-jbuilder="Ctrl+Tab" data-visual_studio="Ctrl+Tab" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Tab" data-mac_os_x_10.5_="&#x2303;&#x21E5;" data-mac_os_x="&#x2303;&#x21E5;" data-eclipse_mac_os_x="&#x2303;&#x21E5;" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Tab</kbd>
+                </td></tr><tr id="d327299e2887" class="ijRowOdd"><a name="d327299e2887"></a><td><a name="d327299e2889"></a>
+                    Quick outline
+                </td><td><a name="d327299e2892"></a>
+                    <kbd>Ctrl+O</kbd>
+                </td><td><a name="d327299e2898"></a>
+                    File structure
+                </td><td><a name="d327299e2901"></a>
+                    <kbd data-default="Ctrl+F12" data-default_for_gnome="Ctrl+F12" data-default_for_kde="Ctrl+0" data-default_for_xwin="Ctrl+F12" data-emacs="Ctrl+F12" data-jbuilder="Ctrl+F12" data-visual_studio="Ctrl+F12" data-netbeans_6.5="N/A" data-eclipse="Ctrl+F3" data-mac_os_x_10.5_="&#x2318;F12" data-mac_os_x="&#x2318;F12" data-eclipse_mac_os_x="&#x2318;O" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+F12</kbd>
+                </td></tr><tr id="d327299e2907" class="ijRowEven"><a name="d327299e2907"></a><td><a name="d327299e2909"></a>
+                    Move lines
+                </td><td><a name="d327299e2912"></a>
+                    <kbd>Alt+Up/Down</kbd>
+                </td><td><a name="d327299e2918"></a>
+                    Move lines
+                </td><td><a name="d327299e2921"></a>
+                    <kbd data-default="Shift+Alt+Up" data-default_for_gnome="N/A" data-default_for_kde="Shift+Alt+Up" data-default_for_xwin="Shift+Alt+Up" data-emacs="Alt+Shift+Up" data-jbuilder="Shift+Alt+Up" data-visual_studio="Alt+Shift+Up" data-netbeans_6.5="N/A" data-eclipse="N/A" data-mac_os_x_10.5_="&#x2325;&#x21E7;&#x2191;" data-mac_os_x="&#x2325;&#x21E7;&#x2191;" data-eclipse_mac_os_x="N/A" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Shift+Alt+Up</kbd>/<kbd data-default="Shift+Alt+Down" data-default_for_gnome="N/A" data-default_for_kde="Shift+Alt+Down" data-default_for_xwin="Shift+Alt+Down" data-emacs="Alt+Shift+Down" data-jbuilder="Shift+Alt+Down" data-visual_studio="Alt+Shift+Down" data-netbeans_6.5="N/A" data-eclipse="N/A" data-mac_os_x_10.5_="&#x2325;&#x21E7;&#x2193;" data-mac_os_x="&#x2325;&#x21E7;&#x2193;" data-eclipse_mac_os_x="N/A" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Shift+Alt+Down</kbd>
+                </td></tr><tr id="d327299e2929" class="ijRowOdd"><a name="d327299e2929"></a><td><a name="d327299e2931"></a>
+                    Delete lines
+                </td><td><a name="d327299e2934"></a>
+                    <kbd>Ctrl+D</kbd>
+                </td><td><a name="d327299e2940"></a>
+                    Delete lines
+                </td><td><a name="d327299e2943"></a>
+                    <kbd data-default="Ctrl+Y" data-default_for_gnome="Ctrl+Y" data-default_for_kde="Ctrl+Y" data-default_for_xwin="Ctrl+Y" data-emacs="N/A" data-jbuilder="Ctrl+Y" data-visual_studio="Ctrl+Shift+L" data-netbeans_6.5="N/A" data-eclipse="Ctrl+D" data-mac_os_x_10.5_="&#x2318;&#x232B;" data-mac_os_x="&#x2318;Y" data-eclipse_mac_os_x="&#x2318;D" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Y</kbd>
+                </td></tr><tr id="d327299e2949" class="ijRowEven"><a name="d327299e2949"></a><td><a name="d327299e2951"></a>
+                    Quick fix
+                </td><td><a name="d327299e2954"></a>
+                    <kbd>Ctrl+1</kbd>
+                </td><td><a name="d327299e2960"></a>
+                    Show intention action
+                </td><td><a name="d327299e2963"></a>
+                    <kbd data-default="Alt+Enter" data-default_for_gnome="Alt+Enter" data-default_for_kde="Alt+Enter" data-default_for_xwin="Alt+Enter" data-emacs="Alt+Enter" data-jbuilder="Alt+Enter" data-visual_studio="Alt+Enter" data-netbeans_6.5="N/A" data-eclipse="Alt+Enter" data-mac_os_x_10.5_="&#x2325;⏎" data-mac_os_x="&#x2325;⏎" data-eclipse_mac_os_x="&#x2318;1" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Enter</kbd>
+                </td></tr><tr id="d327299e2970" class="ijRowOdd"><a name="d327299e2970"></a><td><a name="d327299e2972"></a>
+                    Quick switch editor
+                </td><td><a name="d327299e2975"></a>
+                    <kbd>Ctrl+E</kbd>
+                </td><td><a name="d327299e2981"></a>
+                    Switcher
+                </td><td><a name="d327299e2984"></a>
+                    <kbd data-default="Ctrl+Tab" data-default_for_gnome="Ctrl+Tab" data-default_for_kde="Ctrl+Tab" data-default_for_xwin="Ctrl+Tab" data-emacs="Ctrl+X, B" data-jbuilder="Ctrl+Tab" data-visual_studio="Ctrl+Tab" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Tab" data-mac_os_x_10.5_="&#x2303;&#x21E5;" data-mac_os_x="&#x2303;&#x21E5;" data-eclipse_mac_os_x="&#x2303;&#x21E5;" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Tab</kbd>
+                </td></tr><tr id="d327299e2990" class="ijRowEven"><a name="d327299e2990"></a><td><a name="d327299e2992"></a>-</td><td><a name="d327299e2995"></a>-</td><td><a name="d327299e2998"></a>
+                    Recent files
+                </td><td><a name="d327299e3001"></a>
+                    <kbd data-default="Ctrl+E" data-default_for_gnome="Ctrl+E" data-default_for_kde="Ctrl+E" data-default_for_xwin="Ctrl+E" data-emacs="N/A" data-jbuilder="Ctrl+E" data-visual_studio="Ctrl+E" data-netbeans_6.5="N/A" data-eclipse="Ctrl+E" data-mac_os_x_10.5_="&#x2318;E" data-mac_os_x="&#x2318;E" data-eclipse_mac_os_x="&#x2318;E" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+E</kbd>
+                </td></tr><tr id="d327299e3007" class="ijRowOdd"><a name="d327299e3007"></a><td><a name="d327299e3009"></a>
+                    Quick hierarchy
+                </td><td><a name="d327299e3012"></a>
+                    <kbd>Ctrl+T</kbd>
+                </td><td><a name="d327299e3018"></a>
+                    Navigate to type hierarchy
+                </td><td><a name="d327299e3021"></a>
+                    <kbd data-default="Ctrl+H" data-default_for_gnome="Ctrl+H" data-default_for_kde="Ctrl+H" data-default_for_xwin="Ctrl+H" data-emacs="Ctrl+H" data-jbuilder="Ctrl+H" data-visual_studio="Alt+H" data-netbeans_6.5="N/A" data-eclipse="F4" data-mac_os_x_10.5_="&#x2303;H" data-mac_os_x="&#x2303;H" data-eclipse_mac_os_x="F4" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+H</kbd>
+                </td></tr><tr id="d327299e3027" class="ijRowEven"><a name="d327299e3027"></a><td><a name="d327299e3029"></a>-</td><td><a name="d327299e3032"></a>-</td><td><a name="d327299e3035"></a>
+                    Navigate to method hierarchy
+                </td><td><a name="d327299e3038"></a>
+                    <kbd data-default="Ctrl+Shift+H" data-default_for_gnome="Ctrl+Shift+H" data-default_for_kde="Ctrl+Shift+H" data-default_for_xwin="Ctrl+Shift+H" data-emacs="Ctrl+Shift+H" data-jbuilder="Ctrl+Shift+H" data-visual_studio="Ctrl+Shift+H" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Shift+H" data-mac_os_x_10.5_="&#x21E7;&#x2318;H" data-mac_os_x="&#x21E7;&#x2318;H" data-eclipse_mac_os_x="&#x21E7;&#x2318;H" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Shift+H</kbd>
+                </td></tr><tr id="d327299e3044" class="ijRowOdd"><a name="d327299e3044"></a><td><a name="d327299e3046"></a>-</td><td><a name="d327299e3049"></a>-</td><td><a name="d327299e3052"></a>
+                    Show UML popup
+                </td><td><a name="d327299e3055"></a>
+                    <kbd data-default="Ctrl+Alt+U" data-default_for_gnome="Ctrl+Alt+U" data-default_for_kde="Ctrl+Alt+U" data-default_for_xwin="Ctrl+Alt+U" data-emacs="Ctrl+Alt+U" data-jbuilder="Ctrl+Alt+U" data-visual_studio="Ctrl+Alt+U" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Alt+U" data-mac_os_x_10.5_="&#x2325;&#x2318;U" data-mac_os_x="&#x2325;&#x2318;U" data-eclipse_mac_os_x="&#x2325;&#x2318;U" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+U</kbd>
+                </td></tr><tr id="d327299e3061" class="ijRowEven"><a name="d327299e3061"></a><td><a name="d327299e3063"></a>
+                    Last edit location
+                </td><td><a name="d327299e3066"></a>
+                    <kbd>Ctrl+Q</kbd>
+                </td><td><a name="d327299e3072"></a>
+                    Last edit location
+                </td><td><a name="d327299e3075"></a>
+                    <kbd data-default="Ctrl+Shift+Backspace" data-default_for_gnome="Ctrl+Shift+Backspace" data-default_for_kde="Ctrl+Shift+Backspace" data-default_for_xwin="Ctrl+Shift+Backspace" data-emacs="Ctrl+Shift+Backspace" data-jbuilder="Ctrl+Shift+Backspace" data-visual_studio="Ctrl+Shift+F2" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Q" data-mac_os_x_10.5_="&#x21E7;&#x2318;&#x232B;" data-mac_os_x="&#x21E7;&#x2318;&#x232B;" data-eclipse_mac_os_x="&#x2303;Q" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Shift+Backspace</kbd>
+                </td></tr><tr id="d327299e3082" class="ijRowOdd"><a name="d327299e3082"></a><td><a name="d327299e3084"></a>
+                    Next editor
+                </td><td><a name="d327299e3087"></a>
+                    <kbd>Ctrl+F6</kbd>
+                </td><td><a name="d327299e3093"></a>
+                    Select next tab
+                </td><td><a name="d327299e3096"></a>
+                    <kbd data-default="Alt+Right" data-default_for_gnome="Alt+Right" data-default_for_kde="Alt+Right" data-default_for_xwin="Alt+Right" data-emacs="Alt+Right" data-jbuilder="Alt+Right" data-visual_studio="Alt+Right" data-netbeans_6.5="N/A" data-eclipse="Ctrl+F6" data-mac_os_x_10.5_="&#x21E7;&#x2318;]" data-mac_os_x="&#x2303;&#x2192;" data-eclipse_mac_os_x="&#x2318;F6" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Right</kbd>
+                </td></tr><tr id="d327299e3102" class="ijRowEven"><a name="d327299e3102"></a><td><a name="d327299e3104"></a>
+                    Run
+                </td><td><a name="d327299e3107"></a>
+                    <kbd>Ctrl+Shift+F11</kbd>
+                </td><td><a name="d327299e3113"></a>
+                    Run
+                </td><td><a name="d327299e3116"></a>
+                    <kbd data-default="Shift+F10" data-default_for_gnome="Shift+F10" data-default_for_kde="Shift+F10" data-default_for_xwin="Shift+F10" data-emacs="Shift+F10" data-jbuilder="F9" data-visual_studio="Ctrl+F5" data-netbeans_6.5="N/A" data-eclipse="Shift+Alt+X" data-mac_os_x_10.5_="&#x2303;R" data-mac_os_x="&#x21E7;F10" data-eclipse_mac_os_x="&#x21E7;&#x2318;F11" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Shift+F10</kbd>
+                </td></tr><tr id="d327299e3122" class="ijRowOdd"><a name="d327299e3122"></a><td><a name="d327299e3124"></a>
+                    Debug
+                </td><td><a name="d327299e3127"></a>
+                    <kbd>Ctrl+F11</kbd>
+                </td><td><a name="d327299e3133"></a>
+                    Debug
+                </td><td><a name="d327299e3136"></a>
+                    <kbd data-default="Shift+F9" data-default_for_gnome="Shift+F9" data-default_for_kde="Shift+F9" data-default_for_xwin="Shift+F9" data-emacs="Shift+F9" data-jbuilder="Shift+F9" data-visual_studio="Alt+F5" data-netbeans_6.5="N/A" data-eclipse="Shift+Alt+D" data-mac_os_x_10.5_="&#x2303;D" data-mac_os_x="&#x21E7;F9" data-eclipse_mac_os_x="&#x2318;F11" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Shift+F9</kbd>
+                </td></tr><tr id="d327299e3142" class="ijRowEven"><a name="d327299e3142"></a><td><a name="d327299e3144"></a>
+                    Correct indentation
+                </td><td><a name="d327299e3147"></a>
+                    <kbd>Ctrl+I</kbd>
+                </td><td><a name="d327299e3153"></a>
+                    Auto-indent lines
+                </td><td><a name="d327299e3156"></a>
+                    <kbd data-default="Ctrl+Alt+I" data-default_for_gnome="Ctrl+Alt+I" data-default_for_kde="Ctrl+Alt+I" data-default_for_xwin="Ctrl+Alt+I" data-emacs="Ctrl+Alt+I" data-jbuilder="Ctrl+Alt+I" data-visual_studio="Ctrl+Alt+I" data-netbeans_6.5="N/A" data-eclipse="Ctrl+I" data-mac_os_x_10.5_="&#x2303;&#x2325;I" data-mac_os_x="&#x2325;&#x2318;I" data-eclipse_mac_os_x="&#x2318;I" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+I</kbd>
+                </td></tr><tr id="d327299e3162" class="ijRowOdd"><a name="d327299e3162"></a><td><a name="d327299e3164"></a>
+                    Format
+                </td><td><a name="d327299e3167"></a>
+                    <kbd>Ctrl+Shift+F</kbd>
+                </td><td><a name="d327299e3173"></a>
+                    Reformat code
+                </td><td><a name="d327299e3176"></a>
+                    <kbd data-default="Ctrl+Alt+L" data-default_for_gnome="Ctrl+Alt+L" data-default_for_kde="Shift+Alt+L" data-default_for_xwin="Ctrl+Alt+L" data-emacs="N/A" data-jbuilder="Ctrl+Alt+L" data-visual_studio="Alt+F8" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Alt+L" data-mac_os_x_10.5_="&#x2325;&#x2318;L" data-mac_os_x="&#x2325;&#x2318;L" data-eclipse_mac_os_x="&#x21E7;&#x2318;F" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+L</kbd>
+                </td></tr><tr id="d327299e3182" class="ijRowEven"><a name="d327299e3182"></a><td><a name="d327299e3184"></a>
+                    Surround with
+                </td><td><a name="d327299e3187"></a>
+                    <kbd>Ctrl+Alt+Z</kbd>
+                </td><td><a name="d327299e3193"></a>
+                    Surround with
+                </td><td><a name="d327299e3196"></a>
+                    <kbd data-default="Ctrl+Alt+T" data-default_for_gnome="Ctrl+Alt+T" data-default_for_kde="Ctrl+Alt+T" data-default_for_xwin="Ctrl+Alt+T" data-emacs="Ctrl+Alt+T" data-jbuilder="Ctrl+Alt+T" data-visual_studio="Ctrl+Alt+T" data-netbeans_6.5="N/A" data-eclipse="Shift+Alt+Z" data-mac_os_x_10.5_="&#x2325;&#x2318;T" data-mac_os_x="&#x2325;&#x2318;T" data-eclipse_mac_os_x="&#x2325;&#x2318;Z" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+T</kbd>
+                </td></tr><tr id="d327299e3203" class="ijRowOdd"><a name="d327299e3203"></a><td><a name="d327299e3205"></a>-</td><td><a name="d327299e3208"></a>-</td><td><a name="d327299e3211"></a>
+                    Surround with live template
+                </td><td><a name="d327299e3214"></a>
+                    <kbd data-default="Ctrl+Alt+J" data-default_for_gnome="Ctrl+Alt+J" data-default_for_kde="Ctrl+Alt+J" data-default_for_xwin="Ctrl+Alt+J" data-emacs="Ctrl+Alt+J" data-jbuilder="Ctrl+Alt+J" data-visual_studio="Ctrl+Alt+J" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Alt+J" data-mac_os_x_10.5_="&#x2325;&#x2318;J" data-mac_os_x="&#x2325;&#x2318;J" data-eclipse_mac_os_x="&#x2325;&#x2318;J" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+J</kbd>
+                </td></tr><tr id="d327299e3220" class="ijRowEven"><a name="d327299e3220"></a><td><a name="d327299e3222"></a>
+                    Open declaration
+                </td><td><a name="d327299e3225"></a>
+                    <kbd>F3</kbd>
+                </td><td><a name="d327299e3231"></a>
+                    Navigate to declaration
+                </td><td><a name="d327299e3234"></a>
+                    <kbd data-default="Ctrl+B" data-default_for_gnome="Ctrl+B" data-default_for_kde="Ctrl+B" data-default_for_xwin="Ctrl+B" data-emacs="Ctrl+Alt+G" data-jbuilder="Ctrl+B" data-visual_studio="F12" data-netbeans_6.5="N/A" data-eclipse="F3" data-mac_os_x_10.5_="&#x2318;B" data-mac_os_x="&#x2318;B" data-eclipse_mac_os_x="F3" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+B</kbd>
+                </td></tr><tr id="d327299e3240" class="ijRowOdd"><a name="d327299e3240"></a><td><a name="d327299e3242"></a>-</td><td><a name="d327299e3245"></a>-</td><td><a name="d327299e3248"></a>
+                    Quick definition
+                </td><td><a name="d327299e3251"></a>
+                    <kbd data-default="Ctrl+Shift+I" data-default_for_gnome="Ctrl+Shift+I" data-default_for_kde="Ctrl+Shift+I" data-default_for_xwin="Ctrl+Shift+I" data-emacs="Ctrl+Shift+I" data-jbuilder="Ctrl+Shift+I" data-visual_studio="Ctrl+Shift+I" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Shift+I" data-mac_os_x_10.5_="&#x2325;Space" data-mac_os_x="&#x21E7;&#x2318;I" data-eclipse_mac_os_x="&#x2325;Space" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Shift+I</kbd>
+                </td></tr><tr id="d327299e3257" class="ijRowEven"><a name="d327299e3257"></a><td><a name="d327299e3259"></a>
+                    Open type hierarchy
+                </td><td><a name="d327299e3262"></a>
+                    <kbd>F4</kbd>
+                </td><td><a name="d327299e3268"></a>
+                    Navigate to type hierarchy
+                </td><td><a name="d327299e3271"></a>
+                    <kbd data-default="Ctrl+H" data-default_for_gnome="Ctrl+H" data-default_for_kde="Ctrl+H" data-default_for_xwin="Ctrl+H" data-emacs="Ctrl+H" data-jbuilder="Ctrl+H" data-visual_studio="Alt+H" data-netbeans_6.5="N/A" data-eclipse="F4" data-mac_os_x_10.5_="&#x2303;H" data-mac_os_x="&#x2303;H" data-eclipse_mac_os_x="F4" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+H</kbd>
+                </td></tr><tr id="d327299e3277" class="ijRowOdd"><a name="d327299e3277"></a><td><a name="d327299e3279"></a>-</td><td><a name="d327299e3282"></a>-</td><td><a name="d327299e3285"></a>
+                    Show UML popup
+                </td><td><a name="d327299e3288"></a>
+                    <kbd data-default="Ctrl+Alt+U" data-default_for_gnome="Ctrl+Alt+U" data-default_for_kde="Ctrl+Alt+U" data-default_for_xwin="Ctrl+Alt+U" data-emacs="Ctrl+Alt+U" data-jbuilder="Ctrl+Alt+U" data-visual_studio="Ctrl+Alt+U" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Alt+U" data-mac_os_x_10.5_="&#x2325;&#x2318;U" data-mac_os_x="&#x2325;&#x2318;U" data-eclipse_mac_os_x="&#x2325;&#x2318;U" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+U</kbd>
+                </td></tr><tr id="d327299e3294" class="ijRowEven"><a name="d327299e3294"></a><td><a name="d327299e3296"></a>
+                    References in workspace
+                </td><td><a name="d327299e3299"></a>
+                    <kbd>Ctrl+Shift+G</kbd>
+                </td><td><a name="d327299e3305"></a>
+                    Find usages
+                </td><td><a name="d327299e3308"></a>
+                    <kbd data-default="Alt+F7" data-default_for_gnome="Shift+Alt+7" data-default_for_kde="Shift+Alt+7" data-default_for_xwin="Alt+F7" data-emacs="Alt+F7" data-jbuilder="Alt+F7" data-visual_studio="Alt+Shift+F7" data-netbeans_6.5="N/A" data-eclipse="Ctrl+G" data-mac_os_x_10.5_="&#x2325;F7" data-mac_os_x="&#x2325;F7" data-eclipse_mac_os_x="&#x21E7;&#x2318;G" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+F7</kbd>
+                </td></tr><tr id="d327299e3315" class="ijRowOdd"><a name="d327299e3315"></a><td><a name="d327299e3317"></a>-</td><td><a name="d327299e3320"></a>-</td><td><a name="d327299e3323"></a>
+                    Show usages
+                </td><td><a name="d327299e3326"></a>
+                    <kbd data-default="Ctrl+Alt+F7" data-default_for_gnome="Ctrl+Alt+7" data-default_for_kde="Ctrl+Alt+7" data-default_for_xwin="Ctrl+Alt+7" data-emacs="Ctrl+Alt+F7" data-jbuilder="Ctrl+Alt+F7" data-visual_studio="Ctrl+Alt+F7" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Alt+F7" data-mac_os_x_10.5_="&#x2325;&#x2318;F7" data-mac_os_x="&#x2325;&#x2318;F7" data-eclipse_mac_os_x="&#x2325;&#x2318;F7" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+F7</kbd>
+                </td></tr><tr id="d327299e3332" class="ijRowEven"><a name="d327299e3332"></a><td><a name="d327299e3334"></a>-</td><td><a name="d327299e3337"></a>-</td><td><a name="d327299e3340"></a>
+                    Find usages settings
+                </td><td><a name="d327299e3343"></a>
+                    <kbd data-default="Ctrl+Shift+Alt+F7" data-default_for_gnome="Ctrl+Shift+Alt+7" data-default_for_kde="Ctrl+Shift+Alt+7" data-default_for_xwin="Ctrl+Shift+Alt+7" data-emacs="Ctrl+Alt+Shift+F7" data-jbuilder="Ctrl+Shift+Alt+F7" data-visual_studio="Ctrl+Alt+Shift+F7" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Shift+Alt+F7" data-mac_os_x_10.5_="&#x2325;&#x21E7;&#x2318;F7" data-mac_os_x="&#x2325;&#x21E7;&#x2318;F7" data-eclipse_mac_os_x="&#x2325;&#x21E7;&#x2318;F7" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Shift+Alt+F7</kbd>
+                </td></tr><tr id="d327299e3349" class="ijRowOdd"><a name="d327299e3349"></a><td><a name="d327299e3351"></a>
+                    Open search dialog
+                </td><td><a name="d327299e3354"></a>
+                    <kbd>Ctrl+H</kbd>
+                </td><td><a name="d327299e3360"></a>
+                    Find in path
+                </td><td><a name="d327299e3363"></a>
+                    <kbd data-default="Ctrl+Shift+F" data-default_for_gnome="Ctrl+Shift+F" data-default_for_kde="Ctrl+Shift+F" data-default_for_xwin="Ctrl+Shift+F" data-emacs="Ctrl+Shift+F" data-jbuilder="Ctrl+Shift+F" data-visual_studio="Ctrl+Shift+F" data-netbeans_6.5="N/A" data-eclipse="Ctrl+H" data-mac_os_x_10.5_="&#x21E7;&#x2318;F" data-mac_os_x="&#x2303;&#x21E7;F" data-eclipse_mac_os_x="&#x2303;H" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Shift+F</kbd>
+                </td></tr><tr id="d327299e3369" class="ijRowEven"><a name="d327299e3369"></a><td><a name="d327299e3371"></a>
+                    Occurrences in file
+                </td><td><a name="d327299e3374"></a>
+                    <kbd>Ctrl+Alt+U</kbd>
+                </td><td><a name="d327299e3380"></a>
+                    Highlight usages in file
+                </td><td><a name="d327299e3383"></a>
+                    <kbd data-default="Ctrl+Shift+F7" data-default_for_gnome="Ctrl+Shift+F7" data-default_for_kde="Ctrl+Shift+7" data-default_for_xwin="Ctrl+Shift+F7" data-emacs="Ctrl+Shift+F7" data-jbuilder="Ctrl+Shift+F7" data-visual_studio="Ctrl+Shift+F7" data-netbeans_6.5="N/A" data-eclipse="Shift+Alt+O" data-mac_os_x_10.5_="&#x21E7;&#x2318;F7" data-mac_os_x="&#x21E7;&#x2318;F7" data-eclipse_mac_os_x="N/A" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Shift+F7</kbd>
+                </td></tr><tr id="d327299e3389" class="ijRowOdd"><a name="d327299e3389"></a><td><a name="d327299e3391"></a>
+                    Copy lines
+                </td><td><a name="d327299e3394"></a>
+                    <kbd>Ctrl+Alt+Down</kbd>
+                </td><td><a name="d327299e3400"></a>
+                    Duplicate lines
+                </td><td><a name="d327299e3403"></a>
+                    <kbd data-default="Ctrl+D" data-default_for_gnome="Ctrl+D" data-default_for_kde="Ctrl+D" data-default_for_xwin="Ctrl+D" data-emacs="Meta+D" data-jbuilder="Ctrl+D" data-visual_studio="Ctrl+D" data-netbeans_6.5="N/A" data-eclipse="N/A" data-mac_os_x_10.5_="&#x2318;D" data-mac_os_x="&#x2318;D" data-eclipse_mac_os_x="N/A" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+D</kbd>
+                </td></tr><tr id="d327299e3409" class="ijRowEven"><a name="d327299e3409"></a><td><a name="d327299e3411"></a>
+                    Extract local variable
+                </td><td><a name="d327299e3414"></a>
+                    <kbd>Ctrl+Alt+L</kbd>
+                </td><td><a name="d327299e3420"></a>
+                    Extract variable
+                </td><td><a name="d327299e3423"></a>
+                    <kbd data-default="Ctrl+Alt+V" data-default_for_gnome="Ctrl+Alt+V" data-default_for_kde="Shift+Alt+V" data-default_for_xwin="Ctrl+Alt+V" data-emacs="Ctrl+Alt+V" data-jbuilder="Ctrl+Alt+V" data-visual_studio="Ctrl+Alt+V" data-netbeans_6.5="N/A" data-eclipse="Shift+Alt+L" data-mac_os_x_10.5_="&#x2325;&#x2318;V" data-mac_os_x="&#x2325;&#x2318;V" data-eclipse_mac_os_x="&#x2325;&#x2318;L" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+V</kbd>
+                </td></tr><tr id="d327299e3430" class="ijRowOdd"><a name="d327299e3430"></a><td><a name="d327299e3432"></a>
+                    Assign to field
+                </td><td><a name="d327299e3435"></a>
+                    <kbd>Ctrl+2</kbd>/<kbd>Ctrl+F</kbd>
+                </td><td><a name="d327299e3444"></a>
+                    Extract field
+                </td><td><a name="d327299e3447"></a>
+                    <kbd data-default="Ctrl+Alt+F" data-default_for_gnome="Ctrl+Alt+F" data-default_for_kde="Ctrl+Alt+F" data-default_for_xwin="Ctrl+Alt+F" data-emacs="N/A" data-jbuilder="Ctrl+Alt+F" data-visual_studio="Ctrl+Alt+F" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Alt+F" data-mac_os_x_10.5_="&#x2325;&#x2318;F" data-mac_os_x="&#x2325;&#x2318;F" data-eclipse_mac_os_x="&#x2325;&#x2318;F" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+F</kbd>
+                </td></tr><tr id="d327299e3453" class="ijRowEven"><a name="d327299e3453"></a><td><a name="d327299e3455"></a>
+                    Show refactor quick menu
+                </td><td><a name="d327299e3458"></a>
+                    <kbd>Ctrl+Alt+T</kbd>
+                </td><td><a name="d327299e3464"></a>
+                    Refactor this
+                </td><td><a name="d327299e3467"></a>
+                    <kbd data-default="Ctrl+Shift+Alt+T" data-default_for_gnome="Ctrl+Shift+Alt+T" data-default_for_kde="Ctrl+Shift+Alt+T" data-default_for_xwin="Ctrl+Shift+Alt+T" data-emacs="Ctrl+Alt+Shift+T" data-jbuilder="Ctrl+Shift+Alt+T" data-visual_studio="Ctrl+Alt+Shift+T" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Shift+Alt+T" data-mac_os_x_10.5_="&#x2303;T" data-mac_os_x="&#x2325;&#x21E7;&#x2318;T" data-eclipse_mac_os_x="&#x2303;T" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Shift+Alt+T</kbd>
+                </td></tr><tr id="d327299e3473" class="ijRowOdd"><a name="d327299e3473"></a><td><a name="d327299e3475"></a>
+                    Rename
+                </td><td><a name="d327299e3478"></a>
+                    <kbd>Ctrl+Alt+R</kbd>
+                </td><td><a name="d327299e3484"></a>
+                    Rename
+                </td><td><a name="d327299e3487"></a>
+                    <kbd data-default="Shift+F6" data-default_for_gnome="Shift+F6" data-default_for_kde="Shift+F6" data-default_for_xwin="Shift+F6" data-emacs="Shift+F6" data-jbuilder="Shift+F6" data-visual_studio="Shift+F6" data-netbeans_6.5="N/A" data-eclipse="Shift+Alt+R" data-mac_os_x_10.5_="&#x21E7;F6" data-mac_os_x="&#x21E7;F6" data-eclipse_mac_os_x="&#x21E7;F6" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Shift+F6</kbd>
+                </td></tr><tr id="d327299e3493" class="ijRowEven"><a name="d327299e3493"></a><td><a name="d327299e3495"></a>
+                    Go to line
+                </td><td><a name="d327299e3498"></a>
+                    <kbd>Ctrl+L</kbd>
+                </td><td><a name="d327299e3504"></a>
+                    Navigate to line
+                </td><td><a name="d327299e3507"></a>
+                    <kbd data-default="Ctrl+G" data-default_for_gnome="Ctrl+G" data-default_for_kde="Ctrl+G" data-default_for_xwin="Ctrl+G" data-emacs="Alt+G" data-jbuilder="Ctrl+G" data-visual_studio="Ctrl+G" data-netbeans_6.5="N/A" data-eclipse="Ctrl+L" data-mac_os_x_10.5_="&#x2318;L" data-mac_os_x="&#x2318;G" data-eclipse_mac_os_x="&#x2318;L" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+G</kbd>
+                </td></tr><tr id="d327299e3513" class="ijRowOdd"><a name="d327299e3513"></a><td><a name="d327299e3515"></a>
+                    Structured selection
+                </td><td><a name="d327299e3518"></a>
+                    <kbd>Shift+Alt+Up</kbd>/<kbd>Shift+Alt+Down</kbd>
+                </td><td><a name="d327299e3527"></a>
+                    Select word at caret
+                </td><td><a name="d327299e3530"></a>
+                    <kbd data-default="Ctrl+W" data-default_for_gnome="Ctrl+W" data-default_for_kde="Ctrl+W" data-default_for_xwin="Ctrl+W" data-emacs="Ctrl+Alt+W" data-jbuilder="Ctrl+W" data-visual_studio="Ctrl+W" data-netbeans_6.5="N/A" data-eclipse="Shift+Alt+Up" data-mac_os_x_10.5_="&#x2325;&#x2191;" data-mac_os_x="&#x2318;W" data-eclipse_mac_os_x="&#x2303;&#x21E7;&#x2191;" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+W</kbd>/<kbd data-default="Ctrl+Shift+W" data-default_for_gnome="Ctrl+Shift+W" data-default_for_kde="Ctrl+Shift+W" data-default_for_xwin="Ctrl+Shift+W" data-emacs="Ctrl+Shift+W" data-jbuilder="Ctrl+Shift+W" data-visual_studio="Ctrl+Shift+W" data-netbeans_6.5="N/A" data-eclipse="Shift+Alt+Down" data-mac_os_x_10.5_="&#x2325;&#x2193;" data-mac_os_x="&#x21E7;&#x2318;W" data-eclipse_mac_os_x="&#x2303;&#x21E7;&#x2193;" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Shift+W</kbd>
+                </td></tr><tr id="d327299e3538" class="ijRowEven"><a name="d327299e3538"></a><td><a name="d327299e3540"></a>
+                    Find next
+                </td><td><a name="d327299e3543"></a>
+                    <kbd>Ctrl+J</kbd>
+                </td><td><a name="d327299e3549"></a>
+                    Find next
+                </td><td><a name="d327299e3552"></a>
+                    <kbd data-default="F3" data-default_for_gnome="F3" data-default_for_kde="F3" data-default_for_xwin="F3" data-emacs="F3" data-jbuilder="F3" data-visual_studio="F3" data-netbeans_6.5="N/A" data-eclipse="Ctrl+K" data-mac_os_x_10.5_="&#x2318;G" data-mac_os_x="F3" data-eclipse_mac_os_x="&#x2318;K" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">F3</kbd>
+                </td></tr><tr id="d327299e3559" class="ijRowOdd"><a name="d327299e3559"></a><td><a name="d327299e3561"></a>
+                    Show in
+                </td><td><a name="d327299e3564"></a>
+                    <kbd>Ctrl+Alt+W</kbd>
+                </td><td><a name="d327299e3570"></a>
+                    Select in
+                </td><td><a name="d327299e3573"></a>
+                    <kbd data-default="Alt+F1" data-default_for_gnome="Shift+Alt+1" data-default_for_kde="Shift+Alt+1" data-default_for_xwin="Alt+F1" data-emacs="Alt+F1" data-jbuilder="Alt+F1" data-visual_studio="Alt+F1" data-netbeans_6.5="N/A" data-eclipse="Alt+F1" data-mac_os_x_10.5_="&#x2325;F1" data-mac_os_x="&#x2325;F1" data-eclipse_mac_os_x="&#x2325;&#x2318;W" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+F1</kbd>
+                </td></tr><tr id="d327299e3579" class="ijRowEven"><a name="d327299e3579"></a><td><a name="d327299e3581"></a>
+                    Back
+                </td><td><a name="d327299e3584"></a>
+                    <kbd>Ctrl+[</kbd>
+                </td><td><a name="d327299e3590"></a>
+                    Back
+                </td><td><a name="d327299e3593"></a>
+                    <kbd data-default="Ctrl+Alt+Left" data-default_for_gnome="Shift+Alt+Left" data-default_for_kde="Ctrl+Alt+Left" data-default_for_xwin="Ctrl+Alt+Left" data-emacs="Ctrl+Alt+Left" data-jbuilder="Ctrl+Alt+Left" data-visual_studio="Ctrl+Alt+Left" data-netbeans_6.5="N/A" data-eclipse="Alt+Left" data-mac_os_x_10.5_="&#x2318;[" data-mac_os_x="&#x2325;&#x2318;&#x2190;" data-eclipse_mac_os_x="&#x2318;[" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+Left</kbd>
+                </td></tr><tr id="d327299e3599" class="ijRowOdd"><a name="d327299e3599"></a><td><a name="d327299e3601"></a>
+                    Forward
+                </td><td><a name="d327299e3604"></a>
+                    <kbd>Ctrl+]</kbd>
+                </td><td><a name="d327299e3610"></a>
+                    Forward
+                </td><td><a name="d327299e3613"></a>
+                    <kbd data-default="Ctrl+Alt+Right" data-default_for_gnome="Shift+Alt+Right" data-default_for_kde="Ctrl+Alt+Right" data-default_for_xwin="Ctrl+Alt+Right" data-emacs="Ctrl+Alt+Right" data-jbuilder="Ctrl+Alt+Right" data-visual_studio="Ctrl+Alt+Right" data-netbeans_6.5="N/A" data-eclipse="Alt+Right" data-mac_os_x_10.5_="&#x2318;]" data-mac_os_x="&#x2325;&#x2318;&#x2192;" data-eclipse_mac_os_x="&#x2318;]" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+Right</kbd>
+                </td></tr></tbody></table>
+    <div class="navigation-links _bottom"><a class="navigation-links__prev" href="migration-guides.html">Migration Guides</a><a class="navigation-links__next" href="eclipse.html">Eclipse</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content"><div class="seealso__col"><h3>How tos:</h3><ul class="list"><li class="list__item"><a name="d327299e3627"></a><a href="_product_Quick_Start_Guide.html"><span>IntelliJ IDEA Quick Start Guide</span></a></li></ul></div></div></section><div class="last-modified">Last modified: 13 July 2016 </div></article><div id="disqus_thread"></div></div></section></main></div><script src="/help/app/app.js"></script></body></html>

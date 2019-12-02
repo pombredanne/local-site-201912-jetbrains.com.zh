@@ -1,0 +1,188 @@
+
+
+
+<!doctype html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>Obtain Components in Runtime / ReSharper  DevGuide</title>
+    <link rel="stylesheet" href="/help/resharper/sdk/app/app.css">
+    <link rel="shortcut icon" href="/help/resharper/sdk/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="57x57" href="/help/resharper/sdk/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/help/resharper/sdk/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/help/resharper/sdk/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/help/resharper/sdk/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/help/resharper/sdk/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/help/resharper/sdk/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/help/resharper/sdk/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/help/resharper/sdk/apple-touch-icon-180x180.png">
+    <link rel="mask-icon" href="/help/resharper/sdk/apple-mask-icon.svg" color="black">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-square70x70logo" content="/help/resharper/sdk/mstile-70x70.png">
+    <meta name="msapplication-TileImage" content="/help/resharper/sdk/mstile-144x144.png">
+    <meta name="msapplication-square150x150logo" content="/help/resharper/sdk/mstile-150x150.png">
+    <meta name="msapplication-wide310x150logo" content="/help/resharper/sdk/mstile-310x150.png">
+    <meta name="msapplication-square310x310logo" content="/help/resharper/sdk/mstile-310x310.png">
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="Documentation for writing extensions for ReSharper" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.jetbrains.com/help/resharper/sdk//HowTo/ObtainComponentsInRuntime.html" />
+    <meta property="og:site_name" content="JetBrains ReSharper" />
+    <meta property="og:title" content="Obtain Components in Runtime" />
+    <meta property="og:description" content="Documentation for writing extensions for ReSharper" />
+    <meta property="og:image" content="https://www.jetbrains.com/help/resharper/sdk/jetbrains.png" />
+    <meta property="article:modified_time" content="2017-07-12T17:14:56+00:00" />
+    <!-- <meta property="article:section" content="" /> 
+    <meta property="article:tag" content="" /> -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@JBPlatform" />
+    <meta name="twitter:title" content="Obtain Components in Runtime" />
+    <meta name="twitter:description" content="Documentation for writing extensions for ReSharper" />
+    <meta name="twitter:image" content="https://www.jetbrains.com/help/resharper/sdk/jetbrains.png" />
+    <meta class="swiftype" name="product" data-type="string" content="/help/resharper/sdk/"></meta>
+<link  rel="stylesheet" href="/help/resharper/sdk/app/styles.css"></head>
+<body data-id="HowTo/ObtainComponentsInRuntime">
+<div class="wrapper">
+    <section class="panel _nav">
+        <header class="panel__header">
+            <div class="container">
+                <form class="search-box">
+                    <label for="search-box__input" class="search-box__label">
+                        <input type="text" class="search-box__input" id="search-box__input" placeholder="Search ReSharper  DevGuide">
+                    </label>
+                    <div class="search-box__clear" title="Clear"></div>
+                </form>
+            </div>
+        </header>
+        <nav class="panel__content">
+            <div class="container _nav">
+                <menu class="nav-tree"></menu>
+            </div>
+            <div class="container _footer panel__footer">
+                <p><a data-bypass="true" href="//youtrack.jetbrains.com/issues/IJSDK">Send feedback</a></p>
+                <p>&copy; 2000&ndash;2018 <a href="//www.jetbrains.com">JetBrains</a> s.r.o.<br>
+                    All rights reserved.</p>
+            </div>
+        </nav>
+    </section>
+
+    <main class="panel _main" role="main">
+        <header class="panel__header">
+            <div class="container">
+                <h3>ReSharper DevGuide</h3>
+                
+                <div class="panel-trigger"></div>
+            </div>
+        </header>
+        <section class="panel__content">
+            <div class="container">
+                <article class="article" data-shortcut-switcher="false">
+                    <div class="navigation-links _top" data-swiftype-index="false">
+                        <a class="navigation-links__prev" href="/HowTo/IntegrateWithReSharper/IntegrateWithReSharper.html">Integrate with ReSharper</a>
+                        <a class="navigation-links__next" href="/HowTo/WorkWithLifetime.html">Work with Lifetime</a>
+                    </div>
+                    <a data-bypass="true" href="https://github.com/JetBrains/resharper-devguide/edit/master/HowTo/ObtainComponentsInRuntime.md" class="page-link-to-github" target="_blank" rel="noopener noreferrer" title="Edit this page on GitHub">
+                        <i class="github-icon"></i>
+                        <span class="text">Edit page</span>
+                    </a>
+
+                    <h1>Obtain Components in Runtime</h1>
+                    <p><strong>Examples:</strong></p>
+<ul>
+  <li><a href="https://github.com/JetBrains/sample-resharper-plugin/blob/master/SampleReSharperPlugin/src/SolutionComponent/SampleSolutionComponent.cs" data-external="true" target="_blank" rel="noopener noreferrer"><span>SampleSolutionComponent.cs</span></a></li>
+  <li><a href="https://github.com/JetBrains/sample-resharper-plugin/blob/master/SampleReSharperPlugin/src/SolutionStateTracker/SolutionStateTracker.cs" data-external="true" target="_blank" rel="noopener noreferrer"><span>SolutionStateTracker.cs</span></a></li>
+</ul>
+
+<p>ReSharper uses the loosely coupled design. ReSharper’s <a href="/help/resharper/sdk/Platform/ComponentModel.html"><span>component model</span></a> provides the ability to live load and unload new components, during runtime.</p>
+
+<p>Typically, you as a plugin developer should use only shell and solution components:</p>
+<ul>
+  <li><strong>Shell components</strong> have the same lifetime as ReSharper and are marked with the <code class="code highlight language-text">ShellComponent</code> attribute.</li>
+  <li><strong>Solution components</strong> have the same lifetime with a solution, thus, they are created once a solution is loaded and terminated once the solution is closed. Solution components should be marked with the <code class="code highlight language-text">SolutionComponent</code> attribute.</li>
+</ul>
+
+<p>So, how could you obtain your own or ReSharper components in runtime? Let’s take a look at the most common scenarios.</p>
+
+<a name="constructor-injection" class="elem-anchor"></a>
+<h2>Constructor injection<a href="#constructor-injection" class="anchor-link"><span></span></a></h2>
+<p>The easiest way is to use a constructor injection. All you need is to specify the required component as a constructor argument. ReSharper will care about all the dependencies on its own.</p>
+
+<p>For example, you have a solution component <code class="code highlight language-text">MyClass</code> that should run some action upon creation. To make this happen, it must obtain an <code class="code highlight language-text">ActionManager</code> instance.</p>
+
+<div class="code-block" data-lang="text"><code class="code-block__wrapper">[SolutionComponent]
+public class MyClass
+{
+    public MyClass(Lifetime lifetime, IActionManager actionManager)
+    {
+        actionManager.ExecuteAction&lt;SomeAction&gt;());
+    }
+}
+</code></div>
+<p>Here <code class="code highlight language-text">SomeAction</code> is action’s name.</p>
+
+<a name="current-context" class="elem-anchor"></a>
+<h2>Current context<a href="#current-context" class="anchor-link"><span></span></a></h2>
+<p>Sometimes, you can get components from the <code class="code highlight language-text">IDataContext</code> objects. This is true, for example, for <a href="/help/resharper/sdk/HowTo/CreateMenuItemsUsingActions.html"><span>actions</span></a>:</p>
+<div class="code-block" data-lang="text"><code class="code-block__wrapper">protected override void RunAction(IDataContext context, DelegateExecute nextExecute)
+{
+    var actionManager = context.GetComponent&lt;IActionManger&gt;();
+    ...
+ }
+</code></div>
+<a name="shell-and-solution-component" class="elem-anchor"></a>
+<h2>Shell and solution component<a href="#shell-and-solution-component" class="anchor-link"><span></span></a></h2>
+<p>Another way is to get shell components via the <code class="code highlight language-text">Shell</code> component - the root API point. This can be helpful, for example, if you want to have some “global” settings and access them from anywhere inside your plugin. To obtain the <code class="code highlight language-text">Shell</code> instance, you must use its <code class="code highlight language-text">Instance</code> property.</p>
+<div class="code-block" data-lang="text"><code class="code-block__wrapper">[ShellComponent]
+public class MySettings
+{
+    public bool AutoRefresh { get; set; }
+ 
+    public MySettings()
+    {
+        AutoRefresh = true;
+    }
+ 
+    public static MySettings Instance
+    {
+        get { return Shell.Instance.GetComponent&lt;MySettings&gt;(); }
+    }
+}
+</code></div>
+<p>Thus, you can simply access them from any point of your plugin:</p>
+<div class="code-block" data-lang="text"><code class="code-block__wrapper">if (MySettings.Instance.AutoRefresh) ...
+</code></div>
+<p>Same is true for solution components. The main difference is that you should have an object that implements the <code class="code highlight language-text">ISolution</code> interface (the one that refers to the solution currently opened in Visual Studio):</p>
+<div class="code-block" data-lang="text"><code class="code-block__wrapper">public void ObtainSomeSolutionComponent(ISolution solution)
+{
+    var component = solution.GetComponent&lt;SomeSolutionComponent&gt;();
+}
+ 
+...
+ 
+[SolutionComponent]
+public class SomeSolutionComponent {}
+</code></div>
+
+
+                    <div class="navigation-links _bottom" data-swiftype-index="false">
+                        <a class="navigation-links__prev" href="/HowTo/IntegrateWithReSharper/IntegrateWithReSharper.html">Integrate with ReSharper</a>
+                        <a class="navigation-links__next" href="/HowTo/WorkWithLifetime.html">Work with Lifetime</a>
+                    </div>
+                    <div class="last-modified">
+                        Last modified: 12 July 2017
+                    </div>
+                </article>
+
+                <section class="disqus">
+                    <div id="disqus_thread"></div>
+                </section>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="/help/resharper/sdk/app/app.js" data-baseurl="/help/resharper/sdk/"></script>
+
+</body>
+</html>
+

@@ -1,0 +1,212 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta class="swiftype" name="product" data-type="string" content="/idea/2016.3/"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><meta charset="UTF-8"><meta name="robots" content="noindex"><title>IntelliJ IDEA 2016.3 Help :: Testing RESTful Web Services</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="topicId612421"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-swiftype-index="false"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.3 Help</h3><div class="shortcuts-switcher" data-swiftype-index="false"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Windows/Linux Default</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWin</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">Mac OS X</option><option data-group="secondary" value="eclipse_mac_os_x">Eclipse (Mac OS X)</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (Mac OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper (Mac OS X)</option><option data-group="secondary" value="emacs">Emacs (Mac OS X)</option></select></div><div class="panel-trigger" data-swiftype-index="false"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="creating-and-running-your-first-restful-web-service-on-glassfish-application-server.html">Creating and Running Your First RESTful Web Service on GlassFish Application Server</a></div><h1>Testing RESTful Web Services</h1><a name="d766e18"></a><p><a name="d766e19"></a><span class="emphasis">This feature is supported in the Ultimate edition only.</span></p><a name="d872214e41"></a><p>On this page:</p><ul><li class="list__item"><a href="#d872214e47">Introduction</a></li><li class="list__item"><a href="#composeAndSubmitRequest">Composing and submitting a test request to a Web service method</a></li><li class="list__item"><a href="#viewingAndAnalyzingTestResults">Viewing and analyzing responses from Web services</a></li><li class="list__item"><a href="#cookies">Working with cookies</a></li><li class="list__item"><a href="#configuringProxy">Configuring Proxy settings</a></li><li class="list__item"><a href="#d872214e501">Reusing requests</a></li></ul><a name="d872214e47"></a><h2>Introduction</h2>
+         
+        <a name="d872214e57"></a><p>
+            Testing RESTful Web Services is supported via the <a name="d872214e59"></a><span class="keyword">REST Client</span> bundled plugin, which is by default enabled.
+            If not, activate it in the <a name="d872214e62"></a><a href="plugins-2.html"><span>Plugins</span></a> page of the <a name="d872214e64"></a><a href="settings-preferences-dialog.html"><span>Settings</span></a> dialog box.
+        </p>
+        <a name="d872214e68"></a><p>
+            There are two main use cases when you need to compose and run requests to a RESTful Web service:
+            <ul class="list _bullet"><li class="list__item"><a name="d872214e72"></a>
+                    When you have developed and deployed a RESTful Web service and want to make sure it works as expected: that it is accessible in compliance with the specification
+                    and that it responds correctly.
+                </li><li class="list__item"><a name="d872214e75"></a>
+                    When you are developing an application that addresses a RESTful Web service. In this case it is helpful to investigate the access to the service and the required input data before you start the development.
+                    During the development, you may also call the Web service from outside your application. This may help locate errors when your application results in unexpected output while no logical errors are detected in your code
+                    and you suspect that the bottleneck is the interaction with the Web service.
+                </li></ul>
+        </p>
+      <a name="d872214e80"></a><p>Testing a RESTful Web service includes the following checks:</p>
+      <ul class="list _ul"><li class="list__item"><a name="d872214e85"></a>That URL addresses are constituted correctly based on the service deployment end-point and the method annotations.</li><li class="list__item"><a name="d872214e88"></a>That the generated server requests call the corresponding methods.</li><li class="list__item"><a name="d872214e91"></a>That the methods return acceptable data.</li></ul>
+      <a name="d872214e96"></a><p>
+        IntelliJ IDEA enables you to run these checks from the REST Client tool window by <a name="d872214e98"></a><a href="#composeAndSubmitRequest"><span>composing and submitting requests</span></a> to the local server, viewing and analyzing <a name="d872214e101"></a><a href="#viewingAndAnalyzingTestResults"><span>server responses</span></a>.</p>
+      <a name="d872214e105"></a><p>
+          If necessary, configure the Proxy settings on the <a name="d872214e107"></a><a href="http-proxy.html"><span>HTTP Proxy</span></a> page
+          of the <a name="d872214e109"></a><a href="settings-preferences-dialog.html"><span>Settings</span></a> dialog box.
+      </p>
+    <a name="composeAndSubmitRequest"></a><h2>Composing and submitting a test request to a Web service method</h2>
+      <a name="d872214e116"></a><a name="dynaProc0"></a><section class="procedure-steps"><h2>To compose and submit a test request to a Web service method</h2><ol class=".list _decimal"><li class="list__item">
+              If you are going to test your own Web service, make sure it is deployed and running.
+          </li><li class="list__item">
+          Choose <a name="d872214e123"></a><span class="menupath">Tools | Test RESTful Web Service</span>. The <a name="d872214e126"></a><a href="rest-client-tool-window.html"><span>REST Client dedicated tool window</span></a> opens.
+      </li><li class="list__item">
+              To have IntelliJ IDEA generate an <a name="d872214e132"></a><span class="emphasis">authentication header</span> which will be used in <a name="d872214e135"></a><a href="http://en.wikipedia.org/wiki/Basic_access_authentication" data-external="true"><span>basic authentication</span></a>,
+              click the <a name="d872214e138"></a><span class="control">Generate Authorization Header</span> button and in the dialog box that opens, specify your user name and password for accessing the target RESTful Web service through.
+               
+        Based on these credentials IntelliJ IDEA will generate an <a name="d19550e2191"></a><span class="emphasis">authentication header</span>
+        which will be used in <a name="d19550e2194"></a><a href="http://en.wikipedia.org/wiki/Basic_access_authentication" data-external="true"><span>basic authentication</span></a>.
+        Learn more at <a name="d19550e2197"></a><a href="http://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm" data-external="true"><span>http://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm</span></a>.
+     
+          </li><li class="list__item">
+          Select the test <a name="d872214e146"></a><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html" data-external="true"><span>request method</span></a> from the <a name="d872214e149"></a><span class="control">HTTP method</span> drop-down list.
+           
+          The available options are:
+          <ul class="list _bullet"><li class="list__item"><a name="d872214e156"></a>
+                  <a name="d872214e158"></a><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.3" data-external="true"><span>GET</span></a>
+               </li><li class="list__item"><a name="d872214e162"></a>
+                  <a name="d872214e164"></a><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.5" data-external="true"><span>POST</span></a>
+               </li><li class="list__item"><a name="d872214e168"></a>
+                  <a name="d872214e170"></a><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.6" data-external="true"><span>PUT</span></a>
+               </li><li class="list__item"><a name="d872214e174"></a>
+                  <a name="d872214e176"></a><a href="https://restful-api-design.readthedocs.org/en/latest/methods.html" data-external="true"><span>PATCH</span></a>
+               </li><li class="list__item"><a name="d872214e180"></a>
+                  <a name="d872214e182"></a><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.7" data-external="true"><span>DELETE</span></a>
+               </li><li class="list__item"><a name="d872214e187"></a>
+                  <a name="d872214e189"></a><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.4" data-external="true"><span>HEAD</span></a>
+               </li><li class="list__item"><a name="d872214e193"></a>
+                  <a name="d872214e195"></a><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.2" data-external="true"><span>OPTIONS</span></a>
+               </li></ul>
+           
+      </li><li class="list__item">
+          Provide the data to calculate the URL address of the target method:
+          <ol class="list _decimal"><li class="list__item"><a name="d872214e206"></a>
+                  In the <a name="d872214e208"></a><span class="control">Host/port</span> text box, type the URL address of the host where the Web service is deployed.
+              </li><li class="list__item"><a name="d872214e212"></a>
+                  From the <a name="d872214e214"></a><span class="control">Path</span> drop-down list, choose the <a name="d872214e217"></a><span class="annotation">@path</span> annotation that corresponds to the method the call to which you need to test.
+                  <aside class="tip ">
+                      <a name="d872214e222"></a><p>
+                          IntelliJ IDEA supports integration between the contents of this list and Web service Java source code.
+                          Any changes to the <code class="code" data-lang="Java">&gt;@Path</code> annotations are reflected in the contents of the <a name="d872214e227"></a><span class="control">Path to Resource</span> list.
+                      </p>
+                      <a name="d872214e231"></a><p>
+                          To synchronize the contents of the <a name="d872214e233"></a><span class="control">Path</span> drop-down list with the <a name="d872214e236"></a><span class="control">@Path</span> annotations,
+                          click the <a name="d872214e239"></a><span class="control">Update resource paths from code</span> button <img alt="refresh" title="refresh" src="/help/img/idea/2016.3/refresh.png" width="14" height="14" class="inline-icon-14">.
+                      </p>
+                  </aside>
+              </li></ol>
+          <a name="d872214e254"></a><p>
+               
+        You can enter the entire URL address of a method to test in the <a name="d19550e2167"></a><span class="control">Host/port</span> text box. Regardless of the chosen <a name="d19550e2170"></a><span class="emphasis">HTTP method</span>,
+        upon pressing <img alt="/help/img/idea/2016.3/run.png" title="/help/img/idea/2016.3/run.png" src="/help/img/idea/2016.3/run.png" width="11" height="14" class="inline-icon-14"> IntelliJ IDEA will split the URL address into the <a name="d19550e2175"></a><span class="emphasis">host/port</span> and the path to the method.
+        The extracted relative path will be shown in the <a name="d19550e2178"></a><span class="control">Path</span> text box and the extracted parameters will be added to the list in the <a name="d19550e2182"></a><span class="control">Request Parameters</span> pane
+        of the <a name="d19550e2185"></a><span class="control">Request</span> tab.
+     
+          </p>
+      </li><li class="list__item">
+              <a name="header"></a>
+              In the <a name="d872214e265"></a><span class="control">Header data</span> pane, specify the technical data included in the <a name="d872214e268"></a><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html" data-external="true"><span>request header</span></a>.
+               
+            These data are passed through header fields and define the format of the input parameters (<a name="d34748e357"></a><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.1" data-external="true"><span>accept</span></a> field),
+            the response format (<a name="d34748e360"></a><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.17" data-external="true"><span>content-type</span></a> field),
+            the caching mechanism (<a name="d34748e363"></a><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9" data-external="true"><span>cache-control</span></a> field), etc.
+                <a name="d34748e366"></a><p>
+                    To add a field to the list, click <a name="d34748e368"></a><span class="control">Add</span>&nbsp;<img alt="/help/img/idea/2016.3/new.png" title="/help/img/idea/2016.3/new.png" src="/help/img/idea/2016.3/new.png" width="12" height="12" class="inline-icon-12">, then specify the field name in the <a name="d34748e373"></a><span class="control">Name</span> text box
+                    and the field value in the <a name="d34748e376"></a><span class="control">Value</span> drop-down list.
+                </p>
+                <a name="d34748e380"></a><p>
+                    The set of fields and their values should comply with the Web service API. In other words, the specified input format should be exactly the one expected by the Web service
+                    as well as the expected response format should be exactly the one that the service returns.
+                </p>
+                <a name="d34748e384"></a><p>
+                    For <code class="code" data-lang="Java">accept</code>, <code class="code" data-lang="Java">content-type</code>, and some other fields IntelliJ IDEA provides a list of suggested values.
+                    Choose the relevant format type from the <a name="d34748e392"></a><span class="control">Value</span> drop-down list.
+                </p>
+             
+          </li><li class="list__item">
+              Create a set of parameters to be passed to the target method  and specify their values.
+              Depending on the chosen request method, you can create a list of parameters in two ways:
+              <ul class="list _bullet"><li class="list__item"><a name="d872214e278"></a>
+                      For <code class="code" data-lang="Java">GET</code> requests, specify the parameters to be passed as a query string inside the URL. Use the <a name="d872214e283"></a><span class="control">Request Parameters</span> pane.
+                       
+            By default, the pane shows an empty list with one line.
+                <ul class="list _bullet"><li class="list__item"><a name="d34748e413"></a>
+                        To add a parameter, click <a name="d34748e415"></a><span class="control">Add</span>&nbsp;<img alt="/help/img/idea/2016.3/new.png" title="/help/img/idea/2016.3/new.png" src="/help/img/idea/2016.3/new.png" width="12" height="12" class="inline-icon-12">,
+                        then specify the name of the parameter in the <a name="d34748e420"></a><span class="control">Name</span> text box and the value of the parameter in the <a name="d34748e423"></a><span class="control">Value</span> drop-down list.
+                    </li><li class="list__item"><a name="d34748e427"></a>
+                        To delete a parameter from the list, select it and click <a name="d34748e429"></a><span class="control">Remove</span>&nbsp;<img alt="/help/img/idea/2016.3/delete.png" title="/help/img/idea/2016.3/delete.png" src="/help/img/idea/2016.3/delete.png" width="12" height="12" class="inline-icon-12">.
+                    </li><li class="list__item"><a name="d34748e435"></a>
+                        To suppress sending the specified query string parameters and disable the controls in the <a name="d34748e437"></a><span class="control">Request Parameters</span> pane,
+                        press the <a name="d34748e440"></a><span class="control">Don't send anything</span> toggle button <img alt="/help/img/idea/2016.3/closeBlack.png" title="/help/img/idea/2016.3/closeBlack.png" src="/help/img/idea/2016.3/closeBlack.png" width="14" height="15" class="inline-icon-15">.
+                    </li></ul>
+             
+                  </li><li class="list__item"><a name="d872214e289"></a>
+                     To have the parameters passed to the target method inside a <a name="d872214e291"></a><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec4.html#sec4.3" data-external="true"><span>request message body</span></a>,
+                      use the <a name="d872214e294"></a><span class="control">Request Body</span> pane  or have them inserted in the request from a local file.
+                      The <a name="d872214e297"></a><span class="control">Request Body</span> pane is disabled when the <code class="code" data-lang="Java">GET</code>, <code class="code" data-lang="Java">DELETE</code>,
+                      <code class="code" data-lang="Java">HEAD</code>, or <code class="code" data-lang="Java">OPTIONS</code> request method is selected.
+                      <ul class="list _bullet"><li class="list__item"><a name="d872214e315"></a>
+                              To specify the parameters explicitly, choose the <a name="d872214e317"></a><span class="control">Text</span> option and type the parameters and values in the text box.
+                          </li><li class="list__item"><a name="d872214e321"></a>
+                              To have the parameters inserted from a text file, choose the <a name="d872214e323"></a><span class="control">File contents</span> option and specify the file location in the <a name="d872214e326"></a><span class="control">File to send</span> field.
+                          </li><li class="list__item"><a name="d872214e330"></a>
+                              To have a binary file converted and sent in the request, choose the <a name="d872214e332"></a><span class="control">File upload(multipart/form-data)</span> option
+                              and specify the file location in the <a name="d872214e335"></a><span class="control">File to send</span> field.
+                          </li></ul>
+                  </li></ul>
+              In either case, the set of parameters and their types should comply with the Web service API, in particular, they should be exactly the same as the input parameters of the target method.
+          </li><li class="list__item">
+          To submit a request to the server, click the <a name="d872214e345"></a><span class="control">Submit request</span> button <img alt="/help/img/idea/2016.3/run.png" title="/help/img/idea/2016.3/run.png" src="/help/img/idea/2016.3/run.png" width="11" height="14" class="inline-icon-14">.
+          <a name="d872214e350"></a><p>Note that the server may lack certificate, or be untrusted.</p>
+          <a name="trusted_server"></a>
+        <aside class="note sideblock">
+            <a name="d78163e298"></a><p>If a server is not trusted, IntelliJ IDEA shows a dialog box suggesting you to accept the server, or reject it. If you accept the server as trusted, IntelliJ IDEA writes its certificate to the trust store.
+                On the next connect to the server, this dialog box will not be shown.
+            </p>
+        </aside>
+     
+      </li></ol></section>
+<a name="viewingAndAnalyzingTestResults"></a><h2>Viewing and analyzing responses from Web services</h2>
+    <a name="d872214e361"></a><a name="dynaProc1"></a><section class="procedure-steps"><h2>To view and analyze responses from a Web service</h2><ul class=".list "><li class="list__item">
+          To view the response to the server request, switch to the <a name="d872214e365"></a><span class="control">Response</span> tab. The tab is opened automatically when a response is received.
+          By default, the server response is shown in the format, specified in the request header
+          through the <a name="d872214e368"></a><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.17" data-external="true"><span>content-type</span></a> field.
+      </li><li class="list__item">
+          To have the response converted into another format and opened in a separate tab in the editor,
+          use the <a name="d872214e374"></a><span class="control">View as HTML</span>&nbsp;<img alt="/help/img/idea/2016.3/classTypeHtml.png" title="/help/img/idea/2016.3/classTypeHtml.png" src="/help/img/idea/2016.3/classTypeHtml.png" width="21" height="21" class="inline-icon-21">, <a name="d872214e379"></a><span class="control">View as XTML</span>&nbsp; ,
+          or <a name="d872214e382"></a><span class="control">View as JSON</span>&nbsp;<img alt="/help/img/idea/2016.3/viewAsJSON.png" title="/help/img/idea/2016.3/viewAsJSON.png" src="/help/img/idea/2016.3/viewAsJSON.png" width="15" height="16" class="inline-icon-16"> buttons.
+      </li><li class="list__item">
+          To view the technical data provided in the <a name="d872214e390"></a><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec6.html#sec6.2" data-external="true"><span>header of a Web service response</span></a>,
+          switch to the <a name="d872214e393"></a><span class="control">Response Headers</span> tab.</li></ul></section>
+<a name="cookies"></a><h2>Working with cookies</h2> 
+        <a name="d872214e401"></a><p>Using the dedicated <a name="d872214e403"></a><span class="control">Cookies</span> tab, you can 
+             
+        create, save, edit, and remove cookies, both received through responses and created manually.
+        The <a name="d34748e528"></a><span class="emphasis">name</span> and <a name="d34748e531"></a><span class="emphasis">value</span> of a cookie is automatically included in each request to the URL address
+        that matches the <a name="d34748e534"></a><span class="emphasis">domain</span> and <a name="d34748e537"></a><span class="emphasis">path</span> specified for the cookie, provided that the <a name="d34748e540"></a><span class="emphasis">expiry date</span> has not been reached.
+        </p>
+        <a name="d872214e408"></a><p>
+        The tab shows a list of all currently available cookies that you received through responses or created manually. The cookies are shown in the order they were added to the list.
+        When you click a cookie, its details become editable and are displayed in text boxes.
+         
+            See <a name="d872214e411"></a><a href="rest-client-tool-window.html"><span>REST Client Tool Window</span></a> for details.</p>
+    <ul class="list _ul"><li class="list__item"><a name="d872214e416"></a>
+            No specific steps are required to save a cookie received through a response, all the cookies received from servers are saved automatically.
+            To edit a received cookie, click the row with the cookie in the list and update the details that are now shown in editable text boxes.
+        </li><li class="list__item"><a name="d872214e419"></a>
+            To create a cookie manually, click <img alt="/help/img/idea/2016.3/new.png" title="/help/img/idea/2016.3/new.png" src="/help/img/idea/2016.3/new.png" width="12" height="12" class="inline-icon-12"> and specify the following:
+            <ul class="list _bullet"><li class="list__item"><a name="d872214e425"></a>
+                    The <a name="d872214e427"></a><span class="emphasis">name</span> and <a name="d872214e430"></a><span class="emphasis">value</span> of the cookie to be included in requests.
+                </li><li class="list__item"><a name="d872214e434"></a>
+                    The <a name="d872214e436"></a><span class="emphasis">domain</span> and <a name="d872214e439"></a><span class="emphasis">path</span> the requests to which must be supplied with the <a name="d872214e442"></a><span class="emphasis">name</span>, <a name="d872214e445"></a><span class="emphasis">value</span>, and <a name="d872214e448"></a><span class="emphasis">expiry date</span> of the cookie.
+                </li></ul>
+        </li><li class="list__item"><a name="d872214e454"></a>
+            To remove a cookie from the list, select the row with the cookie and click <img alt="/help/img/idea/2016.3/delete.png" title="/help/img/idea/2016.3/delete.png" src="/help/img/idea/2016.3/delete.png" width="12" height="12" class="inline-icon-12">.
+        </li></ul>
+    <a name="configuringProxy"></a><h2>Configuring Proxy settings</h2>
+    <a name="d872214e463"></a><a name="dynaProc2"></a><section class="procedure-steps"><h2>To configure Proxy settings, follow these steps</h2><ol class=".list _decimal"><li class="list__item">Click the <a name="d872214e467"></a><span class="control">Configure HTTP Proxy</span> icon <img alt="/help/img/idea/2016.3/settings.png" title="/help/img/idea/2016.3/settings.png" src="/help/img/idea/2016.3/settings.png" width="15" height="15" class="inline-icon-15">.</li><li class="list__item">In the <a name="d872214e475"></a><a href="http-proxy.html"><span>Proxy dialog</span></a> that opens, specify the following:
+            <ul class="list _bullet"><li class="list__item"><a name="d872214e480"></a>Enter the Proxy host name and Proxy port number in the <a name="d872214e482"></a><span class="control">Proxy host</span> and
+                    <a name="d872214e485"></a><span class="control">Proxy port</span> text boxes respectively.</li><li class="list__item"><a name="d872214e489"></a>To enable authorization, check the <a name="d872214e491"></a><span class="control">Use authorization</span> check box and type the User
+                    name and password in the relevant fields.
+                     
+                </li></ul>
+        </li></ol></section>
+<a name="d872214e501"></a><h2>Reusing requests</h2>
+        <a name="d872214e503"></a><p>During a IntelliJ IDEA session, IntelliJ IDEA keeps track or requests and you can run any previously executed request.
+        You can also save the settings of a request in an XML file so they are available in another IntelliJ IDEA session.
+            When necessary, you can retrieve the saved settings and run the request again.</p>
+      <a name="d872214e506"></a><a name="dynaProc3"></a><section class="procedure-steps"><h2>To rerun a request within a IntelliJ IDEA session</h2><ol class=".list _decimal"><li class="list__item">Click the <a name="d872214e510"></a><span class="control">Replay Recent Requests</span> button <img alt="/help/img/idea/2016.3/arrowBack.png" title="/help/img/idea/2016.3/arrowBack.png" src="/help/img/idea/2016.3/arrowBack.png" width="13" height="13" class="inline-icon-13">.</li><li class="list__item">From the <a name="d872214e518"></a><span class="control">Recent Requests</span> pop-up list, select the relevant request.
+                      The fields are filled in with the settings of the selected request.</li><li class="list__item">Click the <a name="d872214e524"></a><span class="control">Submit Request</span> button <img alt="/help/img/idea/2016.3/run.png" title="/help/img/idea/2016.3/run.png" src="/help/img/idea/2016.3/run.png" width="11" height="14" class="inline-icon-14">.</li></ol></section>
+<a name="d872214e531"></a><a name="dynaProc4"></a><section class="procedure-steps"><h2>To save the settings of a request so they can be retrieved in another IntelliJ IDEA session</h2><ul class=".list "><li class="list__item">Click the <a name="d872214e535"></a><span class="control">Export Request</span> button <img alt="/help/img/idea/2016.3/exportToXML.png" title="/help/img/idea/2016.3/exportToXML.png" src="/help/img/idea/2016.3/exportToXML.png" width="13" height="15" class="inline-icon-15">.
+              In the dialog box that opens,  specify the name of the file to save the settings in and its parent folder.
+          </li></ul></section>
+        <a name="d872214e542"></a><a name="dynaProc5"></a><section class="procedure-steps"><h2>To run a request saved during a previous IntelliJ IDEA session</h2><ol class=".list _decimal"><li class="list__item">Click the <a name="d872214e546"></a><span class="control"> Import Request</span> button <img alt="/help/img/idea/2016.3/importFromXML.png" title="/help/img/idea/2016.3/importFromXML.png" src="/help/img/idea/2016.3/importFromXML.png" width="12" height="15" class="inline-icon-15">.</li><li class="list__item">In the dialog box that opens, select the relevant XML file.  The fields are filled in with the
+                      settings of the selected request.</li><li class="list__item">Click the <a name="d872214e557"></a><span class="control">Submit Request</span> button <img alt="/help/img/idea/2016.3/run.png" title="/help/img/idea/2016.3/run.png" src="/help/img/idea/2016.3/run.png" width="11" height="14" class="inline-icon-14">.</li></ol></section>
+
+<div class="navigation-links _bottom"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="creating-and-running-your-first-restful-web-service-on-glassfish-application-server.html">Creating and Running Your First RESTful Web Service on GlassFish Application Server</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content">```
+                <div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d872214e570"></a><a href="restful-webservices.html"><span>RESTful WebServices</span></a></li></ul></div><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d872214e577"></a><a href="rest-client-tool-window.html"><span>REST Client Tool Window</span></a></li></ul></div><div class="seealso__col"><h3>External Links:</h3><ul class="list"><li class="list__item"><a name="d872214e584"></a><a href="http://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm" data-external="true"><span>http://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm</span></a></li></ul></div></div></section><div class="last-modified" data-swiftype-index="false">Last modified: 21 March 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

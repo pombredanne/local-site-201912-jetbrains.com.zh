@@ -1,0 +1,61 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="robots" content="noindex"><title>YouTrack Standalone 7.0 Help :: Text Search</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Full-Text-Search"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack Standalone Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>YouTrack Standalone 7.0 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="Search-for-Issues.html">Search</a><a class="navigation-links__next" href="Saved-Search.html">Saved Search</a></div><h1>Text Search</h1><a name="d36931e3"></a><p>YouTrack lets you search for issues that contain one or more words.
+        You can either search for text in all issue attributes, or limit the search query to find text in the issue summary, description, or comments.
+        You can also limit the search to search for words in lines of code. For more information, see <a href="Search-and-Command-Attributes.html#Search-Attributes">Search Attributes</a>.</p><a name="d36931e8"></a><p>Text search is case insensitive.</p><a name="d36931e11"></a><h2>Stemming</h2>
+    <a name="d36931e13"></a><p>If text indexing is enabled for the language that you use in YouTrack, related words are mapped to a common stem word.
+        When you search for text, YouTrack returns issues that contain all forms of the words that you enter in a search query.
+        For example, the search query <code class="code" data-lang="Java">description: {search attribute}</code> returns not only issues that contain either the words 'search' or 'attribute' in the description,
+        but also any issue that contains other forms of these words, including 'searches', 'searched', 'searching', 'attributes', 'attribution', and so on.
+        This feature helps you locate issues that might otherwise be excluded if the results included only exact word matches.</p>
+        <a name="d36931e20"></a><h2>Tokenization</h2>
+        <a name="d36931e22"></a><p>YouTrack breaks down each word in a string of text into tokens. All contiguous strings of alphabetic or numeric characters are part of one token.
+
+            When you search for multiple words, the query is interpreted as a string of tokens.</p>
+        <ul class="list _ul"><li class="list__item"><a name="d36931e27"></a>When the words are set in braces, each token is evaluated separately.
+            The search results include all issues that contain any words that match any token in the query.</li><li class="list__item"><a name="d36931e30"></a>When the words are set in quotation marks, the tokens are evaluated as a sequence.
+            The search results include only issues that contain words that match all tokens in the specified order.</li></ul>
+        <a name="d36931e34"></a><p>YouTrack returns issues that contain the words that correspond to the tokens that are specified in the search.
+        The text in an issue is broken down into words. Whitespaces and punctuation are used to determine where the words begin and end.
+            Periods and underscores are also recognized as delimiters.</p>
+        <a name="d36931e38"></a><h2>Using Text Search</h2>
+    <ul class="list _ul"><li class="list__item"><a name="d36931e42"></a>To find issues that contain all forms for a specific word, enter the word in the search query.</li><li class="list__item"><a name="d36931e45"></a>To find issues that contain multiple key words in any order, set the words in braces.
+            YouTrack returns any issue that contains any form of either word in the specified attribute.</li><li class="list__item"><a name="d36931e48"></a>To find issues that contain multiple words in a specific order, set the text in quotation marks.
+            YouTrack returns only issues that contain matching forms for all of the specified words in the order that they appear in the query.</li></ul>
+        <a name="d36931e54"></a><h2>Wildcards</h2>
+        <a name="d36931e56"></a><p>You can use wildcards as a placeholder for one or more characters.
+            <ul class="list _ul"><li class="list__item"><a name="d36931e60"></a>* &mdash; matches one or more characters in a string</li><li class="list__item"><a name="d36931e63"></a>? &mdash; matches any single character in a string</li></ul></p>
+        <a name="d36931e67"></a><p>You can use a wildcard at the beginning, middle, or end of any word.</p>
+
+
+    <a name="d36931e71"></a><h2>Stop Words</h2>
+        <a name="d36931e73"></a><p>If you use English as the default language in YouTrack, there are a number of common words that are filtered out before the search query is processed.
+            These words are removed to improve query performance.
+            When you enter a stop word in a search query, it is ignored. Stop words are not highlighted in the search results.
+            The following stop words are ignored by YouTrack:</p>
+            <table class="no_header wide" width="100%" id="d36931e76"><tbody><tr id="d36931e78" class="ijRowOdd"><a name="d36931e78"></a><td><a name="d36931e79"></a>a</td><td><a name="d36931e82"></a>an</td><td><a name="d36931e85"></a>and</td><td><a name="d36931e88"></a>are</td><td><a name="d36931e91"></a>as</td><td><a name="d36931e94"></a>at</td><td><a name="d36931e98"></a>be</td><td><a name="d36931e101"></a>but</td><td><a name="d36931e104"></a>by</td><td><a name="d36931e107"></a>for</td><td><a name="d36931e110"></a>if</td></tr><tr id="d36931e113" class="ijRowEven"><a name="d36931e113"></a><td><a name="d36931e114"></a>in</td><td><a name="d36931e117"></a>into</td><td><a name="d36931e120"></a>is</td><td><a name="d36931e123"></a>it</td><td><a name="d36931e126"></a>no</td><td><a name="d36931e129"></a>not</td><td><a name="d36931e133"></a>of</td><td><a name="d36931e136"></a>on</td><td><a name="d36931e139"></a>or</td><td><a name="d36931e142"></a>such</td><td><a name="d36931e145"></a>that</td></tr><tr id="d36931e148" class="ijRowOdd"><a name="d36931e148"></a><td><a name="d36931e149"></a>the</td><td><a name="d36931e152"></a>their</td><td><a name="d36931e155"></a>then</td><td><a name="d36931e158"></a>there</td><td><a name="d36931e161"></a>these</td><td><a name="d36931e164"></a>they</td><td><a name="d36931e168"></a>this</td><td><a name="d36931e171"></a>to</td><td><a name="d36931e174"></a>was</td><td><a name="d36931e177"></a>will</td><td><a name="d36931e180"></a>with</td></tr></tbody></table>
+
+
+    <a name="d36931e185"></a><h2>Fuzzy Search</h2>
+    <a name="d36931e187"></a><p>To find words that match an approximate pattern, instead of an exact pattern, use a fuzzy search.
+        Fuzzy search finds words that are just a few characters off from the word that is specified in the search query.
+        This technique helps you account for misspellings, partial words, and slight differences in names.</p>
+        <a name="d36931e190"></a><p>For example, the search query <code class="code" data-lang="Java">comments: {michael~}</code> returns issues that include not only the name <code class="code" data-lang="Java">Michael</code> in the comments, but also other spellings like <code class="code" data-lang="Java">Mikhail</code>.</p>
+        <a name="d36931e202"></a><p>Fuzzy matching usually returns a large number of irrelevant matches
+            Use this option only when you know that the word you are searching for is likely to be misspelled.</p>
+
+    <a name="d36931e206"></a><h2>Search Results</h2>
+    <a name="d36931e208"></a><p>The list of issues that is displayed when you use full text search highlights all of the word forms that match the words that are specified in the query.</p>
+        <a name="d36931e211"></a><p>When you search for a sequence of words set in quotes, the query returns only issues that contain forms for each word in the specified order.
+        Word forms that match any of the specified words are highlighted in the results.
+        At first glance, you may think that the search has returned issues that don't match your query.
+        If you open each issue, however, you can see that the issue contains the sequence of words that match your search criteria.</p>
+         
+        <a name="d36931e216"></a><p>If your text search returns too many issues, use additional search parameters to limit the results to a specific project, subsystem, or issue type.
+        You can also limit the results to show issues that include the text in the summary, description, or comments.</p>
+<div class="last-modified">Last modified: 2 February 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

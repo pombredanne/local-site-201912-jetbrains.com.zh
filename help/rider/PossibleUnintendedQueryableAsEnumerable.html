@@ -1,0 +1,59 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta charset="UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="//resources.jetbrains.com/storage/help-app/v3/analytics.js"></script><title>Code Inspection: IQueryable is possibly unintentionally used as IEnumerable - Help | JetBrains Rider</title><link rel="stylesheet" href="//resources.jetbrains.com/storage/help-app/v3/app.css"></head><body data-id="PossibleUnintendedQueryableAsEnumerable" data-breadcrumbs="Reference/PossibleUnintendedQueryableAsEnumerable.xml|Code Inspection: IQueryable is possibly unintentionally used as IEnumerable" data-main-title="Code Inspection: IQueryable is possibly unintentionally used as IEnumerable" data-article-props="&#xA;                {&#xA;                &#xA;            &#34;seeAlso&#34;:[&#xA;            &#xA;                {&#34;title&#34;: &#34;Concepts&#34;,&#xA;                 &#34;links&#34;: [&#xA;                &#xA;        {&#34;url&#34;:&#34;Finding_Code_Issues.html&#34;,&#34;text&#34;:&#34;Find Code Issues with Code Inspection&#34;}&#xA;    ,&#xA;        {&#34;url&#34;:&#34;Code_Analysis__Code_Inspections.html&#34;,&#34;text&#34;:&#34;Code Inspections&#34;}&#xA;    ,&#xA;        {&#34;url&#34;:&#34;Design_time_Inspection.html&#34;,&#34;text&#34;:&#34;Detect Code Issues in Design Time&#34;}&#xA;    &#xA;                    ]},&#xA;                {&#34;title&#34;: &#34;External Links&#34;,&#xA;                 &#34;links&#34;: [&#xA;                &#xA;        {&#34;url&#34;:&#34;https://stackoverflow.com/questions/1578778/using-iqueryable-with-linq&#34;,&#34;text&#34;:&#34;StackOverflow: Using IQueryable with Linq&#34;}&#xA;    ,&#xA;        {&#34;url&#34;:&#34;https://msdn.microsoft.com/en-us/library/bb546158.aspx&#34;,&#34;text&#34;:&#34;MSDN. Walkthrough: Creating an IQueryable LINQ Provider&#34;}&#xA;    &#xA;                    ]},&#xA;                {&#34;title&#34;: &#34;Web Resources&#34;,&#xA;                 &#34;links&#34;: [&#xA;                &#xA;        {&#34;url&#34;:&#34;http://www.jetbrains.net/devnet/community/idea/kb&#34;,&#34;text&#34;:&#34;Developer Community&#34;}&#xA;    &#xA;                    ]}&#xA;            ]&#xA;        &#xA;                }&#xA;            " data-disqus-id="PossibleUnintendedQueryableAsEnumerable_rdr"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search JetBrains Rider Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>JetBrains Rider 2019.2 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="resharper">ReSharper</option><option data-group="primary" value="_default">Default (IntelliJ IDEA)</option><option data-group="secondary" value="visual_studio_osx">Visual Studio (macOS)</option><option data-group="secondary" value="resharper_osx">ReSharper (macOS)</option><option data-group="secondary" value="mac_os_x_10.5_">Mac OS X 10.5+ (IntelliJ IDEA)</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="PossibleUnintendedQueryableAsEnumerable" id="PossibleUnintendedQueryableAsEnumerable.xml">Code Inspection: IQueryable is possibly unintentionally used as IEnumerable</h1>    <a name="tip_disable"></a>        <aside data-type="tip" class="prompt" data-title="" rel="PossibleUnintendedQueryableAsEnumerable.xml" id="d2832715">            <p id="9332e2e3">                You can configure this inspection:            </p>            <ul class="list _ul"><li class="list__item" id="58567a34"><a href="Code_Analysis__Configuring_Warnings.html#disable">disable it to ignore all related issues</a></li><li class="list__item" id="e7bab4e5"><a href="Code_Analysis__Configuring_Warnings.html#suppress">suppress it in any place in the code to ignore specific issues</a></li><li class="list__item" id="47f14ddc"><a href="Code_Analysis__Configuring_Warnings.html#change_severity">change its severity level                    to make the detected issues less or more noticeable</a>                </li></ul>        </aside>        <p id="4a1d1e60">        Objects that implement the        <a href="https://msdn.microsoft.com/en-us/library/system.linq.iqueryable.aspx" data-external="true" target="_blank" rel="noopener noreferrer">IQueryable</a>        interface are meant to be processed by LINQ providers (normally, remote databases)        with their specific implementations of this interface.    </p>    <p id="c994abbd">        However, as        <code class="code">IQueryable</code> is inherited from        <a href="https://msdn.microsoft.com/en-us/library/system.collections.ienumerable.aspx" data-external="true" target="_blank" rel="noopener noreferrer">IEnumerable</a>,        there could be cases when an        <code class="code">IQueryable</code> object is passed and processed as an        <code class="code">IEnumerable</code> object, meaning that all processing is done on the local machine.        Such implicit conversions are not a problem in test environments,        but could make a huge performance impact in production.    </p>    <p id="d71afb45">        Suppose that you get an        <code class="code">IQueryable</code> object from a database:    </p>    <div class="code-block" data-lang="csharp">
+        
+IQueryable&lt;Resource&gt; resources = myDb.GetResources();
+        
+    </div>    <p id="3ba13aa8">        ... and somewhere in your codebase there is a handy extension method for filtering out null items:    </p>    <div class="code-block" data-lang="csharp">
+
+public static IEnumerable&lt;T&gt; WhereNotNull&lt;T&gt;(this IEnumerable&lt;T&gt; items)
+{
+    return items.Where(x =&gt; x != null);
+}
+
+    </div>    <p id="49acdf55">        Now, let's see how we can use our queryable object:    </p>    <div class="code-block" data-lang="csharp">
+        
+// In this case 'Where' will be processed in the database server and we just get the result:
+var notNullResources1 = resources.Where(x =&gt; x != null);
+
+// In this second case, we will first get all Resource objects from the database and then process them locally.
+// Also, 'notNullResources2' will be of the 'IEnumerable' type,
+// so all other processing of this object will be done locally as well.
+var notNullResources2 = resources.WhereNotNull(); // IQueryable is possibly unintentionally used as IEnumerable
+        
+    </div>    <p id="03adb766">        JetBrains Rider will detect such a conversion and suggest a fix to make it explicit:    </p>    <div class="code-block" data-lang="csharp">
+        
+var notNullResources2 = resources.AsEnumerable().WhereNotNull();
+        
+    </div>    <p id="ee300db4">        Another example is method groups or expression trees,        which should not be passed as 'Expression' objects in this case,        and therefore trigger the same inspection.        The same implicit conversion to        <code class="code">IEnumerable</code> happens here and JetBrains Rider suggests adding the explicit        <code class="code">.AsEnumerable()</code> to the call:    </p>    <div class="table-wrapper"><table class="  _layout-fixed" width="100%" id="3970dbac"><thead><tr id="11d964e4" class="ijRowHead"><th id="120cca59"><p>Suboptimal code</p></th><th id="d1c272c5"><p>After the quick-fix</p></th></tr></thead><tbody><tr id="de9ae1f1" class="ijRowOdd"><td id="2e70f34f">                <div class="code-block" data-lang="csharp">
+        
+public static Func&lt;object, bool&gt; NotNullCondition =&gt; (x) =&gt; x != null;
+
+public static void Test(IQueryable&lt;object&gt; resources)
+{
+    if (resources != null)
+    {
+        var notNullResources =
+            resources.Select(NotNullCondition);
+    }
+}
+        
+                </div>            </td><td id="d9c8ce2c">                <div class="code-block" data-lang="csharp">
+        
+public static Func&lt;object, bool&gt; NotNullCondition =&gt; (x) =&gt; x != null;
+
+public static void Test(IQueryable&lt;object&gt; resources)
+{
+    if (resources != null)
+    {
+        var notNullResources =
+            resources.AsEnumerable().Select(NotNullCondition);
+    }
+}
+        
+                </div>            </td></tr></tbody></table></div>    <div class="last-modified" data-skip-index="skip">Last modified: 29 November 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="RedundantTypeSpecificationInDefaultExpression.html">Code Inspection: Redundant type specification in default expression</a><a class="navigation-links__next" href="ArrangeLocalFunctionBody.html">Code Inspection: Use preferred body style (convert to local function with preferred body style)</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="//resources.jetbrains.com/storage/help-app/v3/app.js"></script></body></html>

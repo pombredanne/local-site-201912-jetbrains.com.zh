@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+                                                    <!-- Error reporting -->
+<script>(function(){
+  window.reportError = function(msg, file, line, col, err, isUnhandledRejection){};
+  var prevOnError = window.onerror;
+  var onError = function(msg, file, line, col, err) {
+    reportError(msg, file, line, col, err, false);
+    prevOnError && prevOnError.apply(window, arguments);
+    return false;
+  };
+  window.onerror = onError;
+  // Setup reporting for unhandled Promise rejection errors
+  window.addEventListener("unhandledrejection", function(e) {
+    if (!e.reason) return;
+    var l = getSrcLocation(e.reason);
+    reportError(e.reason.message, l.file, l.line, l.col, e.reason, true);
+  });
+  // Setup reporting for console.error and console.warn calls
+  patchConsole('error');
+  patchConsole('warn');
+  // Utility functions
+  function patchConsole(fnName) {
+    var fn = console[fnName];
+    console[fnName] = function() {
+      fn.apply(console, arguments);
+      var l; try {
+        throw new Error('_');
+      } catch (err) {
+        l = getSrcLocation(err, 1);
+      }
+      var msg = 'console.' + fnName + ': ' + Array.prototype.join.call(arguments, ' ');
+      reportError(msg, l.file, l.line, l.col, undefined, false);
+    };
+  }
+  function getSrcLocation(err, sd) {
+    var s = err && err.stack;
+    var l = s && s.split("\n")[1 + (sd|0)];
+    var r = l && (/^\s*at [^(]*\((.*?):(\d+)(:\d+)?\)$/.exec(l) || /^\s*at (.*?):(\d+)(:\d+)?$/.exec(l));
+    return r ? {file: r[1], line: r[2], col: r[3]} : {};
+  }
+})();</script>
+<!-- Error reporting -->        <!-- Google Tag Manager -->
+<script>(function() {
+  // Initialize Tag Manager queue
+  window.dataLayer = window.dataLayer || [];
+  window.gtmLoaded = false;
+  // Setup reporting for errors that occurred before Tag Manager initialized
+  var prevReportError = window.reportError;
+  var reportError = function(msg, file, line, col, err, isUnhandledRejection) {
+    if (!window.gtmLoaded || isUnhandledRejection) {
+      // Reproduce the behavior of the Tag Manager error handler
+      window.dataLayer.push(makeEvt(msg, file, line));
+    }
+    prevReportError && prevReportError.apply(window, arguments);
+  };
+  window.reportError = reportError;
+  // Utility functions
+  function makeEvt(msg, file, line) {
+    return {
+      event: "gtm.pageError", "gtm.errorMessage": msg,
+      "gtm.errorUrl": file, "gtm.errorLineNumber": line
+    };
+  }
+})();</script>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;j.addEventListener(
+    'load', function(){window.gtmLoaded=true});f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5P98');</script>
+<!-- End Google Tag Manager -->        <!-- Sentry -->
+<script>
+    (function() {
+        window.sentryLoaded = false;
+        window.errorsForSentry = [];
+        var prevReportError = window.reportError;
+        var reportError = function(
+            msg,
+            file,
+            line,
+            col,
+            err,
+            isUnhandledRejection
+        ) {
+            if (!window.sentryLoaded) {
+                window.errorsForSentry.push(err);
+            }
+            prevReportError && prevReportError.apply(window, arguments);
+        };
+        window.reportError = reportError;
+    })();
+</script>
+<script>
+    window.sentryLoad = function() {
+        window.sentryLoaded = true;
+        Sentry.init({
+            dsn: 'https://1adb2a61713144eda0786e5af50ddc51@sentry.io/1423069',
+            release:
+                "jetbrainscom@a6ccaa6ddb",
+            beforeSend: function(event) {
+                Object.keys(event).forEach(function(key) {
+                    var value = event[key];
+                    if (isEmail(value)) {
+                        delete event[key];
+                    }
+                });
+                return event;
+            }
+        });
+        Sentry.configureScope(function(scope) {
+            scope.setTag('page_locale', 'en-us');
+            scope.setTag('browser.locale', getPageLocale());
+
+            scope.setTag('http.urlFull', location.href);
+            var protocol = location.protocol || '';
+            //omit `:` from location.protocol string
+            var protocolString = protocol.substring(0, protocol.length - 1);
+
+            scope.setTag('http.protocol', protocolString);
+
+            scope.setTag('http.hostname', location.hostname);
+
+            var search = location.search || '';
+            //omit ? from location.search string
+            var searchString = search.substr(1);
+            if (searchString !== '') {
+                scope.setTag('http.query', searchString || '1');
+            }
+            var hash = location.hash || '';
+            //omit # from location.hash string
+            var hashString = hash.substr(1);
+            if (hashString !== '') {
+                scope.setTag('http.fragment', hashString);
+            }
+        });
+        window.errorsForSentry.forEach(Sentry.captureException);
+
+        function getPageLocale() {
+            return (
+                (navigator.languages && navigator.languages[0]) ||
+                navigator.language
+            );
+        }
+        function isEmail(value) {
+            var emailRegex = /[\+\-\_\.a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+\.[a-zA-Z0-9]+/g;
+            return emailRegex.test(value);
+        }
+    };
+</script>
+<script src="https://browser.sentry-cdn.com/5.7.1/bundle.min.js" crossorigin="anonymous" onload="sentryLoad()" async></script>
+<!-- End Sentry -->    
+                <title>Data Science in 2018 - JetBrains</title>
+    
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, maximum-scale=1">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#000000">
+<meta name="apple-mobile-web-app-title" content="JetBrains">
+<meta name="application-name" content="JetBrains">
+<meta name="msapplication-TileColor" content="#000000">
+<meta name="theme-color" content="#000000">    <link rel="canonical" href="https://www.jetbrains.com/research/data-science-2018/" />    <!-- .61-->
+        <meta class="local" content="In spring 2018, JetBrains polled over 1,600 people involved in Data Science and based in the US, Europe, Japan, and China. Here's what we learned." name="description"><meta class="local" content="http://resources.jetbrains.com/storage/products/research/data-science-2018/img/meta/preview_1280x800.png" name="image"><meta class="local" content="Data Science in 2018 - JetBrains" property="og:title"><meta class="local" content="In spring 2018, JetBrains polled over 1,600 people involved in Data Science and based in the US, Europe, Japan, and China. Here's what we learned." property="og:description"><meta class="local" content="http://resources.jetbrains.com/storage/products/research/data-science-2018/img/meta/preview_1280x800.png" property="og:image"><meta class="local" content="JetBrains" property="og:site_name"><meta class="local" content="website" property="og:type"><meta class="local" content="https://www.jetbrains.com/research/data-science-2018/" property="og:url"><meta class="local" content="summary_large_image" name="twitter:card"><meta class="local" content="@JetBrains" name="twitter:site"><meta class="local" content="Data Science in 2018 - JetBrains" name="twitter:title"><meta class="local" content="In spring 2018, JetBrains polled over 1,600 people involved in Data Science and based in the US, Europe, Japan, and China. Here's what we learned." name="twitter:description"><meta class="local" content="@jetbrains" name="twitter:creator"><meta class="local" content="http://resources.jetbrains.com/storage/products/research/data-science-2018/img/meta/preview_1280x800.png" name="twitter:image:src"><meta class="local" content="Data Science in 2018 - JetBrains" itemprop="name"><meta class="local" content="In spring 2018, JetBrains polled over 1,600 people involved in Data Science and based in the US, Europe, Japan, and China. Here's what we learned." itemprop="description"><meta class="local" content="http://resources.jetbrains.com/storage/products/research/data-science-2018/img/meta/preview_1280x800.png" itemprop="image">
+        <link rel="alternate" hreflang="x-default" href="https://www.jetbrains.com/research/data-science-2018/" />
+
+                        <link rel="alternate" hreflang="en" href="https://www.jetbrains.com/research/data-science-2018/" />
+                                                                                                                        
+    
+    
+        
+    
+    
+    <script>
+        var current_lang = 'en-us';
+                                    var i18n_info = {"current_lang": "en-us", "languages": [{"canonical": "en", "code": "en-us", "label": "English", "page_translated": true, "url": "/research/data-science-2018/"}, {"canonical": "de", "code": "de-de", "label": "Deutsch", "page_translated": false, "url": "/de-de/research/data-science-2018/"}, {"canonical": "es", "code": "es-es", "label": "Espa\u00f1ol", "page_translated": false, "url": "/es-es/research/data-science-2018/"}, {"canonical": "fr", "code": "fr-fr", "label": "Fran\u00e7ais", "page_translated": false, "url": "/fr-fr/research/data-science-2018/"}, {"canonical": "ja", "code": "ja-jp", "label": "\u65e5\u672c\u8a9e", "page_translated": false, "url": "/ja-jp/research/data-science-2018/"}, {"canonical": "ko", "code": "ko-kr", "label": "\ud55c\uad6d\uc5b4", "page_translated": false, "url": "/ko-kr/research/data-science-2018/"}, {"canonical": "ru", "code": "ru-ru", "label": "\u0420\u0443\u0441\u0441\u043a\u0438\u0439", "page_translated": false, "url": "/ru-ru/research/data-science-2018/"}, {"canonical": "zh-CN", "code": "zh-cn", "label": "\u7b80\u4f53\u4e2d\u6587", "page_translated": false, "url": "/zh-cn/research/data-science-2018/"}, {"canonical": "pt-BR", "code": "pt-br", "label": "Portugu\u00eas do Brasil", "page_translated": false, "url": "/pt-br/research/data-science-2018/"}, {"canonical": "x-klingon", "code": "tl-aa", "label": "tlhIngan Hol", "page_translated": false, "url": "/tl-aa/research/data-science-2018/"}]};
+                            var navigationMenu = {"primary": {"id": "main_v2", "items": [{"id": "tools", "title": "Tools", "descriptionTitle": "Toolbox App", "descriptionLogoId": "toolbox", "descriptionLink": "Learn more", "descriptionUrl": "/toolbox-app/", "description": "Manage your tools the easy way", "src": "/img/banners-menu-main/toolbox-vertical.png", "horisontalSrc": "/img/banners-menu-main/toolbox-horisontal.png", "bgColor": "#3E0598", "isVisible": true, "hasCategories": true, "items": [{"title": "IDEs", "items": [{"isActive": false, "id": "appcode", "title": "AppCode", "url": "/objc/", "logoLeftActionId": "appcode", "items": [], "cleaned_url": "/objc/"}, {"isActive": false, "id": "clion", "title": "CLion", "url": "/clion/", "logoLeftActionId": "clion", "items": [], "cleaned_url": "/clion/"}, {"isActive": false, "id": "datalore", "title": "Datalore", "url": "https://datalore.io/", "isExternalLink": true, "logoLeftActionId": "datalore", "items": [], "cleaned_url": "https://datalore.io/"}, {"isActive": false, "id": "datagrip", "title": "DataGrip", "url": "/datagrip/", "logoLeftActionId": "datagrip", "items": [], "cleaned_url": "/datagrip/"}, {"isActive": false, "id": "goland", "title": "GoLand", "url": "/go/", "logoLeftActionId": "goland", "items": [], "cleaned_url": "/go/"}, {"isActive": false, "id": "idea", "title": "IntelliJ IDEA", "url": "/idea/", "logoLeftActionId": "intellij-idea", "items": [], "cleaned_url": "/idea/"}, {"isActive": false, "id": "phpstorm", "title": "PhpStorm", "url": "/phpstorm/", "logoLeftActionId": "phpstorm", "items": [], "cleaned_url": "/phpstorm/"}, {"isActive": false, "id": "pycharm", "title": "PyCharm", "url": "/pycharm/", "logoLeftActionId": "pycharm", "items": [], "cleaned_url": "/pycharm/"}, {"isActive": false, "id": "rider", "title": "Rider", "url": "/rider/", "logoLeftActionId": "rider", "items": [], "cleaned_url": "/rider/"}, {"isActive": false, "id": "rubymine", "title": "RubyMine", "url": "/ruby/", "logoLeftActionId": "rubymine", "items": [], "cleaned_url": "/ruby/"}, {"isActive": false, "id": "webstorm", "title": "WebStorm", "url": "/webstorm/", "logoLeftActionId": "webstorm", "items": [], "cleaned_url": "/webstorm/"}, {"isActive": false, "id": "toolbox", "type": "special", "title": "Toolbox App", "url": "/toolbox-app/", "logoLeftId": "toolbox", "description": "A control panel for your tools and projects", "items": [], "cleaned_url": "/toolbox-app/"}]}, {"title": ".NET & VISUAL STUDIO", "items": [{"isActive": false, "id": "resharper", "title": "ReSharper", "url": "/resharper/", "logoLeftActionId": "resharper", "items": [], "cleaned_url": "/resharper/"}, {"isActive": false, "id": "rider", "title": "Rider", "url": "/rider/", "logoLeftActionId": "rider", "items": [], "cleaned_url": "/rider/"}, {"isActive": false, "id": "resharper-cpp", "title": "ReSharper C++", "url": "/resharper-cpp/", "logoLeftActionId": "resharper-cpp", "items": [], "cleaned_url": "/resharper-cpp/"}, {"isActive": false, "id": "dotcover", "title": "dotCover", "url": "/dotcover/", "logoLeftActionId": "dotcover", "items": [], "cleaned_url": "/dotcover/"}, {"isActive": false, "id": "dotmemory", "title": "dotMemory", "url": "/dotmemory/", "logoLeftActionId": "dotmemory", "items": [], "cleaned_url": "/dotmemory/"}, {"isActive": false, "id": "dotpeek", "title": "dotPeek", "url": "/decompiler/", "logoLeftActionId": "dotpeek", "items": [], "cleaned_url": "/decompiler/"}, {"isActive": false, "id": "dottrace", "title": "dotTrace", "url": "/profiler/", "logoLeftActionId": "dottrace", "items": [], "cleaned_url": "/profiler/"}]}, {"title": "TEAM TOOLS", "items": [{"isActive": false, "id": "teamcity", "title": "TeamCity", "url": "/teamcity/", "logoLeftActionId": "teamcity", "items": [], "cleaned_url": "/teamcity/"}, {"isActive": false, "id": "upsource", "title": "Upsource", "url": "/upsource/", "logoLeftActionId": "upsource", "items": [], "cleaned_url": "/upsource/"}, {"isActive": false, "id": "youtrack", "title": "YouTrack", "url": "/youtrack/", "logoLeftActionId": "youtrack", "items": [], "cleaned_url": "/youtrack/"}, {"isActive": false, "id": "hub", "title": "Hub", "url": "/hub/", "logoLeftActionId": "hub", "items": [], "cleaned_url": "/hub/"}]}, {"title": "PLUGIN MARKETPLACE", "items": [{"isActive": false, "id": "bigdata", "title": "Big Data Tools", "url": "https://plugins.jetbrains.com/plugin/12494-big-data-tools", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/plugin/12494-big-data-tools"}, {"isActive": false, "id": "rustsupport", "title": "Rust", "url": "https://plugins.jetbrains.com/plugin/8182-rust", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/plugin/8182-rust"}, {"isActive": false, "id": "scalaplugin", "title": "Scala", "url": "https://plugins.jetbrains.com/plugin/1347-scala", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/plugin/1347-scala"}, {"isActive": false, "id": "idethemes", "title": "IDE Themes", "url": "https://plugins.jetbrains.com/search?tags=Theme", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/search?tags=Theme"}, {"isActive": false, "id": "plugins", "title": "All Plugins", "url": "https://plugins.jetbrains.com/", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/"}]}, {"title": "EDUCATION", "items": [{"isActive": false, "id": "pycharm-edu", "title": "PyCharm Edu", "url": "/education/", "urlHash": "#lang=python&role=learner", "logoLeftActionId": "pycharm-edu", "items": [], "cleaned_url": "/education/"}, {"isActive": false, "id": "idea-edu", "title": "IntelliJ IDEA Edu", "url": "/education/", "urlHash": "#lang=java&role=learner", "logoLeftActionId": "intellij-idea", "items": [], "cleaned_url": "/education/"}, {"isActive": false, "id": "jb-academy", "title": "JB Academy", "url": "/academy/", "items": [], "cleaned_url": "/academy/"}]}]}, {"id": "languages", "title": "Languages", "descriptionTitle": "Kotlin/Everywhere", "descriptionLogoId": "header-kotlin-everywhere", "descriptionLink": "Join in!", "descriptionUrl": "//everywhere.kotlinlang.org", "description": "A worldwide event series for learning the best Kotlin practices on all platforms", "descriptionBig": true, "src": "/img/banners-menu-main/kotlin-vertical.png", "horisontalSrc": "/img/banners-menu-main/kotlin-horisontal.png", "bgColor": "#D6721C", "isExternalLink": true, "isVisible": true, "hasCategories": false, "items": [{"isActive": false, "id": "kotlin", "title": "Kotlin", "url": "https://kotlinlang.org/", "isExternalLink": true, "logoLeftId": "header-kotlin-grayscale", "logoLeftActionId": "kotlin", "logoLeftSize": "50", "description": "Programming language \n for JVM & Android", "items": [], "cleaned_url": "https://kotlinlang.org/"}, {"isActive": false, "id": "mps", "title": "MPS", "url": "/mps/", "logoLeftId": "header-mps-grayscalse", "logoLeftActionId": "mps", "logoLeftSize": "50", "description": "Create your own domain-specific language", "items": [], "cleaned_url": "/mps/"}]}, {"id": "solutions", "title": "Solutions", "descriptionTitle": "JetBrains Academy", "descriptionLogoId": "academy-logo", "descriptionLink": "Join in!", "descriptionUrl": "/academy", "description": "An educational platform for future professionals", "src": "/img/banners-menu-main/academy-vertical.png", "horisontalSrc": "/img/banners-menu-main/academy-horisontal.png", "bgColor": "#53288E", "hasCategories": false, "isVisible": true, "items": [{"isActive": false, "title": "C++ Tools", "url": "/cpp/", "logoLeftId": "header-cpp-grayscale", "logoLeftActionId": "header-cpp", "description": "Tools for C/C++ development \nfor any platform", "items": [], "cleaned_url": "/cpp/"}, {"isActive": false, "title": "For Business", "url": "/store/business/", "logoLeftId": "header-for-business-grayscale", "logoLeftActionId": "header-for-business", "description": "Wide range of tools. \nAll major technologies covered", "items": [], "cleaned_url": "/store/business/"}, {"isActive": false, "title": "Game Development", "url": "/gamedev/", "logoLeftId": "header-gamedev-grayscale", "logoLeftActionId": "header-gamedev", "description": "Tools for game development \nfor any platform", "items": [], "cleaned_url": "/gamedev/"}, {"isActive": false, "title": "DevOps", "url": "/devops/", "logoLeftId": "header-devops-grayscale", "logoLeftActionId": "header-devops", "description": "Tools and integrations \nfor any infrastructure", "items": [], "cleaned_url": "/devops/"}, {"isActive": false, "title": "Education", "url": "/education/", "logoLeftId": "header-education-grayscale", "logoLeftActionId": "header-education", "description": "Products to learn and teach programming", "items": [], "cleaned_url": "/education/"}]}, {"id": "support", "title": "Support", "description": "Pricing and licensing for businesses and individuals", "descriptionTitle": "JetBrains Store", "descriptionLogoId": "header-store", "descriptionUrl": "/store/?fromMenu#edition=commercial", "descriptionLink": "visit store", "isVisible": true, "hasCategories": true, "items": [{"title": "CUSTOMERS", "items": [{"isActive": false, "title": "Sales Support", "url": "/support/sales/", "description": "Orders, payments", "items": [], "cleaned_url": "/support/sales/"}, {"isActive": false, "title": "Product Support", "url": "/support/", "description": "Tech support, documentation", "items": [], "cleaned_url": "/support/"}]}, {"title": "COMMUNITY PROGRAMS", "items": [{"isActive": false, "title": "Education", "url": "/community/education/", "description": "Students, classrooms, training", "items": [], "cleaned_url": "/community/education/"}, {"isActive": false, "title": "Open Source", "url": "/community/opensource/", "description": "Projects support", "items": [], "cleaned_url": "/community/opensource/"}, {"isActive": false, "title": "Sponsorship", "url": "/community/support/", "description": "User groups, events, technology experts", "items": [], "cleaned_url": "/community/support/"}]}]}, {"id": "company", "title": "Company", "isVisible": true, "hasCategories": true, "items": [{"title": "INITIATIVES", "items": [{"isActive": false, "title": "Open Source", "url": "/opensource/", "description": "Projects, contributions", "items": [], "cleaned_url": "/opensource/"}, {"isActive": false, "title": "Research", "url": "/research/", "description": "Market, Scientific", "items": [], "cleaned_url": "/research/"}]}, {"title": "COMPANY", "items": [{"isActive": false, "title": "About", "url": "/company/", "description": "People, customers, awards", "items": [], "cleaned_url": "/company/"}, {"isActive": false, "title": "Brand Assets", "url": "/company/brand/", "description": "Guidelines, logos", "items": [], "cleaned_url": "/company/brand/"}, {"isActive": false, "title": "Careers", "url": "/careers/apply/", "description": "Jobs, internships", "items": [], "cleaned_url": "/careers/apply/"}, {"isActive": false, "title": "Events", "url": "/company/events/", "description": "Conferences, meetups", "items": [], "cleaned_url": "/company/events/"}, {"isActive": false, "title": "Contacts", "url": "/company/contacts/", "description": "Partners, resellers, Kotlin training", "items": [], "cleaned_url": "/company/contacts/"}]}, {"title": "RESOURCES", "items": [{"isActive": false, "title": "Newsletters", "url": "/resources/newsletters/", "items": [], "cleaned_url": "/resources/newsletters/"}, {"isActive": false, "title": "Webinars", "url": "/resources/webinars/", "items": [], "cleaned_url": "/resources/webinars/"}, {"isActive": false, "title": "Early Access", "url": "/resources/eap/", "items": [], "cleaned_url": "/resources/eap/"}, {"isActive": false, "title": "Blog", "url": "//blog.jetbrains.com/", "isExternalLink": true, "items": [], "cleaned_url": "//blog.jetbrains.com/"}]}]}, {"isActive": false, "id": "store", "url": "/store/?fromNavMenu", "title": "Store", "isVisible": true, "hasCategories": false, "items": [], "cleaned_url": "/store/?fromNavMenu"}]}, "secondary": {"isActive": true, "id": "research", "url": "/research/", "title": "Research", "items": [], "cleaned_url": "/research/"}};
+        
+        var is_layout_adaptive = false;
+        
+        var disable_language_picker = false;
+        
+        var english_only_url_prefixes = [];
+            </script>
+    
+            <script></script>
+    
+        
+    
+    <link href="/_assets/common.d44d81f300d3bff87efe.css" rel="stylesheet" type="text/css">
+<link href="/_assets/default-page.fabf52db4bf34ea78af0.css" rel="stylesheet" type="text/css">
+<link href="/_assets/landing-page.8b6edb42023719387891.css" rel="stylesheet" type="text/css">
+<link href="/_assets/research/data-science-2018/index.entry.cf3e67e93e30e86402ba.css" rel="stylesheet" type="text/css">
+    <script src="/_assets/common.34604685b633d15ae3ed.js" type="text/javascript"></script>
+<script src="/_assets/default-page.2e180fc15a6b94fe7fa3.js" type="text/javascript"></script>
+<script src="/_assets/landing-page.82c83c95d1b792922f23.js" type="text/javascript"></script>
+<script src="/_assets/research/data-science-2018/index.entry.0f3c5f0e8bad4d1b6fc5.js" type="text/javascript"></script>
+
+            <!-- Social Media tag Starts -->
+    <!-- Open Graph data -->
+            <meta property="og:title" content="Data Science in 2018 - JetBrains"/>
+    
+                    <meta property="og:description" content="In spring 2018, JetBrains polled over 1,600 people involved in Data Science and based in the US, Europe, Japan, and China. Here's what we learned."/>
+    <meta property="og:image" content="http://resources.jetbrains.com/storage/products/research/data-science-2018/img/meta/preview_1280x800.png"/>
+
+    <meta property="og:site_name" content="JetBrains"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="https://www.jetbrains.com/research/data-science-2018/"/>
+    <!-- Social Media tag Ends -->
+</head>
+<body class="landing-page  ">
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<div class="page">
+    <header class="page__header landing-header">
+    <div class="wt-container">
+      <a href="/"><svg class="_jetbrains-simple sprite-img landing-header__logo" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#jetbrains-simple"></use></svg></a>
+    </div>
+</header>
+
+    <div class="page__content">
+        <section class="wt-section wt-section_bg_gray-light _header">
+<div class="wt-container wt-offset-top-96">
+<h2 class="wt-h2 wt-h2_theme_dark date-year">2018</h2>
+<h1 class="wt-hero wt-hero_theme_dark">Data Science Survey</h1>
+</div>
+</section>
+<section class="wt-section wt-section_bg_dark wt-section_theme_dark">
+<div class="wt-container wt-offset-top-96">
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-8 wt-col-md-12">
+<p class="wt-subtitle-2 wt-subtitle-2_theme_dark">In spring 2018, JetBrains polled over 1,600 people involved in Data Science and based in the US, Europe, Japan, and China, in order to gain insight into how this industry sector is evolving. Here's what we learned.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="wt-section">
+<div class="wt-container wt-offset-top-96">
+<h2 class="wt-h2">Methodology</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6 wt-col-md-12">
+<p class="wt-text-1 wt-text-1_flow">We distributed the survey via targeted ads on Facebook, Twitter, and LinkedIn. We screened respondents by excluding those who replied "I am not involved in data analysis." We collected 400 complete and valid responses from the US, Japan, and China. To represent Europe, we used quotas for select European countries to collect a set of responses which also totaled 400.</p>
+</div>
+<div class="wt-col-4 wt-col-md-12">
+<p class="wt-text-1 wt-text-1_flow">Some bias is likely present as JetBrains users may have been more willing on average to complete the survey.</p>
+<p class="wt-text-1 wt-text-1_flow" id="raw-data">The <a class="wt-link" href="http://resources.jetbrains.com/storage/products/research/data-science-2018/data/data.zip" target="_blank">raw survey data</a> are available for your perusal.</p>
+</div>
+<div class="wt-col-2 wt-col-md-12">
+<p class="wt-text-1 wt-text-1_flow"><a class="wt-link" href="http://resources.jetbrains.com/storage/products/research/data-science-2018/data/Data_Science_Survey_2018.pdf" target="_blank">Download PDF</a></p>
+</div>
+</div>
+</div>
+</section>
+<section class="wt-section wt-section_bg_gray-light" id="0">
+<div class="wt-container wt-offset-top-96">
+<h2 class="wt-h2">Key Takeaways</h2>
+<div class="wt-row wt-row_size_m wt-row_align-items_stretch wt-offset-top-24">
+<div class="wt-col-4 wt-col-md-12 wt-offset-top-24">
+<div class="wt-card wt-card_theme_light key-takeaway-card" id="primary-language">
+<div class="wt-card__section">
+<div class="key-takeaway-card__icon key-takeaway__icon_5-years"></div>
+<div class="wt-h3 wt-offset-top-16">Primary language</div>
+<div class="wt-offset-top-24 wt-text-2">
+                                Most people assume that Python will remain the primary programming language in the field for the next 5 years.
+                                <div class="js-quick-share _stick-right" data-section="primary-language" data-text="Most people assume that Python will remain the primary programming language in the field for the next 5 years. via @jetbrains"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="wt-col-4 wt-col-md-12 wt-offset-top-24">
+<div class="wt-card wt-card_theme_light key-takeaway-card" id="most-popular-language">
+<div class="wt-card__section">
+<div class="key-takeaway-card__icon key-takeaway__icon_python"></div>
+<div class="wt-h3 wt-offset-top-16">Most popular language</div>
+<div class="wt-offset-top-24 wt-text-2">
+                                Python is currently the most popular language among data scientists.
+                                <div class="js-quick-share _stick-right" data-section="most-popular-language" data-text="Python is currently the most popular language among data scientists. via @jetbrains"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="wt-col-4 wt-col-md-12 wt-offset-top-24">
+<div class="wt-card wt-card_theme_light key-takeaway-card" id="r-keras-tableau">
+<div class="wt-card__section">
+<div class="key-takeaway-card__icon key-takeaway__icon_data-scientists"></div>
+<div class="wt-h3 wt-offset-top-16">R, Keras and Tableau</div>
+<div class="wt-offset-top-24 wt-text-2">
+                                Data Science professionals tend to use R, Keras, and Tableau, while amateur data scientists are more likely to prefer Microsoft Azure ML.
+                                <div class="js-quick-share _stick-right" data-section="r-keras-tableau" data-text="Data Science professionals tend to use R, Keras, and Tableau, while amateur data scientists are more likely to prefer Microsoft Azure ML. via @jetbrains"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="separator-numeration-1"></div>
+</section>
+<section class="wt-section wt-section_bg_dark wt-section_theme_dark">
+<div class="wt-container">
+<div class="section-numeration section-numeration_item-1" id="1">
+<div class="wt-hero wt-hero_theme_dark section-numeration_num">1</div>
+</div>
+<h2 class="wt-h2 wt-h2_flow">Tasks</h2>
+<div class="wt-row wt-row_size_m wt-offset-top-24">
+<div class="wt-col-6 wt-col-md-12">
+<h3 class="wt-h3 wt-h3_theme_dark">Which of the following are you involved in?</h3>
+<p class="wt-text-3 wt-text-3_hardness_pale wt-text-3_flow">Number of respondents: 1282</p>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-48">
+<div class="wt-col-6 wt-col-md-12">
+<div class="js-react-charts" id="Tasks"></div>
+</div>
+<div class="wt-col-3 wt-col-lg-4 wt-col-md-6 wt-margin-top-vertical-unit-md">
+<div class="wt-text-3 wt-text-3_theme_dark note-box _data-content">
+                        This question was only answered by respondents who are professionally involved in data analysis.
+                    </div>
+</div>
+</div>
+</div>
+</section>
+<section class="wt-section wt-section_bg_dark wt-section_theme_dark">
+<div class="wt-container">
+<div class="wt-row wt-row_size_m wt-row_align-items_center">
+<div class="wt-col-inline">
+<img src="/research/data-science-2018/img/NataliaVassilieva@2x.png" width="96">
+</div>
+<div class="wt-col-inline group-author">
+<p class="wt-text-2 wt-text-2_theme_dark"><strong>Natalia Vassilieva</strong></p>
+<p class="wt-text-2 wt-text-2_theme_dark">Head of Software and AI, Hewlett Packard Labs</p>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-24">
+<div class="wt-col-6 wt-col-md-12">
+<p class="wt-text-2 wt-text-2_theme_dark">According to the very first table, a relatively small percentage of the respondents work on model deployment in production mode. This correlates with multiple market research studies which report that the majority of enterprises are just starting to explore machine learning and deep learning. </p>
+</div>
+<div class="wt-col-6 wt-col-md-12">
+<p class="wt-text-2 wt-text-2_theme_dark">They have small teams working on PoCs*, and model deployment in production still needs to be addressed. But I expect this type of activity to become more and more visible within the next few years when more and more businesses will proceed from PoCs to production deployments.</p>
+<p class="wt-text-3 wt-text-3_hardness_pale wt-text-3_flow">*PoCs — Proof of concepts</p>
+</div>
+</div>
+</div>
+<div class="separator-numeration-2"></div>
+</section>
+<section class="wt-section">
+<div class="wt-container">
+<div class="section-numeration section-numeration_item-2" id="2">
+<div class="wt-hero section-numeration_num">2</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-24">
+<div class="wt-col-6 wt-col-md-12">
+<h2 class="wt-h2 wt-h2_flow">Programming Languages and Tools</h2>
+<h3 class="wt-h3 wt-offset-top-24">Main programming language for data analysis</h3>
+<p class="wt-text-3 wt-text-3_hardness_pale wt-text-3_flow">Number of answers: 1522</p>
+</div>
+</div>
+<div class="wt-offset-top-48">
+<div class="js-react-charts" id="pl_and_tools_1"></div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-96">
+<div class="wt-col-6 wt-col-md-12">
+<h3 class="wt-h3">Do you plan to adopt/migrate to other languages in the next 12 months?</h3>
+<p class="wt-text-3 wt-text-3_hardness_pale wt-text-3_flow">Number of answers: 1522</p>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-48">
+<div class="wt-col-6 wt-col-md-12">
+<div class="js-react-charts" id="pl_and_tools_2"></div>
+</div>
+<div class="wt-col-4 wt-col-md-12 wt-margin-top-vertical-unit-md">
+<div class="wt-text-3 note-box"></div>
+<p class="wt-text-2 wt-offset-top-24">15% of data scientists are going to adopt or migrate to C++ in the next 12 months. This is probably due to performance issues.</p>
+<div class="wt-text-2 wt-offset-top-24 share-text">
+                        7% of respondents plan to start using the Kotlin language in the next 12 months.
+                        <div class="js-quick-share" data-section="pl_and_tools_2" data-text="7% of respondents plan to start using the Kotlin language in the next 12 months. via @jetbrains"></div>
+</div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-96">
+<div class="wt-col-6 wt-col-md-12">
+<h3 class="wt-h3">In your opinion, what programming language will be most used for data analysis in the next 5 years?</h3>
+<p class="wt-text-3 wt-text-3_hardness_pale wt-text-3_flow">Number of answers: 1522</p>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-24">
+<div class="wt-col-4 wt-col-md-12">
+<p class="wt-text-1">Most respondents believe that Python will remain on top for the next 5 years.</p>
+</div>
+<div class="wt-col-4 wt-offset-left-2 wt-col-md-12 wt-offset-left-md-0 wt-margin-top-vertical-unit-md">
+<div class="wt-text-3 note-box"></div>
+</div>
+</div>
+<div class="wt-offset-top-48">
+<div class="js-react-charts" id="Kotlin_1"></div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-48">
+<div class="wt-col-6 wt-col-md-12">
+<p class="wt-text-2 wt-offset-top-24">Overall, people tend to choose the language they use. Of those who don’t use a language they think will dominate, most want to start using it. Half of those who believe Kotlin will dominate are planning to adopt it in the nearest future.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="wt-section wt-section_bg_gray-light">
+<div class="wt-container wt-offset-top-96">
+<div class="wt-row wt-row_size_m wt-row_align-items_center">
+<div class="wt-col-inline">
+<img src="/research/data-science-2018/img/NataliaVassilieva@2x.png" width="96">
+</div>
+<div class="wt-col-inline group-author">
+<p class="wt-text-2"><strong>Natalia Vassilieva</strong></p>
+<p class="wt-text-2">Head of Software and AI, Hewlett Packard Labs</p>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-24">
+<div class="wt-col-6 wt-col-md-12">
+<p class="wt-text-2">No surprises with the programming languages. Traditional data scientists are some of the most likely to still use R, there are plenty of statistics libraries for R. The new generation of data scientists are choosing Python. </p>
+</div>
+<div class="wt-col-6 wt-col-md-12 wt-margin-top-vertical-unit-md">
+<p class="wt-text-2">When it comes to high-performance data analytics, I’d expect to see C/C++ in the picture. Currently, we are observing that many HPC techniques and tools are being adopted and re-used for high-performance data analytics and deep learning.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="wt-section">
+<div class="wt-container wt-offset-top-96">
+<p class="wt-subtitle-1">Kotlin adopters</p>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6 wt-col-md-12">
+<p class="wt-text-1 wt-text-1_flow">7% of data analysts using a programming language want to adopt Kotlin for Data Science in the nearest future.</p>
+<h3 class="wt-h3 wt-h3_flow">Which of the following best describes your job roles regardless of your position level?</h3>
+<p class="wt-text-3 wt-text-3_hardness_pale wt-text-3_flow">Number of answers: 60</p>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-48">
+<div class="wt-col-6 wt-col-md-12">
+<div class="js-react-charts" id="Kotlin_5"></div>
+</div>
+<div class="wt-col-4 wt-col-md-12 wt-margin-top-vertical-unit-md">
+<div class="wt-text-3 note-box"></div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-96">
+<div class="wt-col-6 wt-col-md-12">
+<h3 class="wt-h3">What programming languages do you regularly use for data analysis, if any?</h3>
+<p class="wt-text-3 wt-text-3_hardness_pale wt-text-3_flow">Number of answers: 112</p>
+</div>
+<div class="wt-col-4 wt-col-md-12 wt-margin-top-vertical-unit-md">
+<div class="wt-text-3 note-box"></div>
+</div>
+</div>
+<div class="wt-offset-top-48">
+<div class="js-react-charts" id="Kotlin_6"></div>
+</div>
+</div>
+</section>
+<section class="wt-section wt-section_bg_gray-light">
+<div class="wt-container wt-offset-top-96">
+<p class="wt-subtitle-1">Kotlin Learning</p>
+<div class="wt-row wt-row_size_m wt-row_align-items_center wt-offset-top-24">
+<div class="wt-col-inline">
+<img src="/research/data-science-2018/img/VitalyKhudobakhshov@2x.png" width="96">
+</div>
+<div class="wt-col-inline">
+<p class="wt-text-2"><strong>Vitaly Khudobakhshov</strong></p>
+<p class="wt-text-2">Product Manager, JetBrains</p>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-24">
+<div class="wt-col-6 wt-col-md-12">
+<p class="wt-text-2">Kotlin is a general-purpose language running on the Java virtual machine. It is concise and easily integrates with popular data processing frameworks such as Hadoop and Spark.</p>
+<p class="wt-text-2 wt-offset-top-24">Kotlin is statically typed and uses type inference that increases its reliability. These features all make Kotlin a handy instrument for data engineering and data science.</p>
+</div>
+<div class="wt-col-6 wt-col-md-12 wt-margin-top-vertical-unit-md">
+<p class="wt-text-2">Thomas Nield has assembled a helpful collection of Kotlin resources for data science on <a class="wt-link" href="https://github.com/thomasnield/kotlin-data-science-resources" target="_blank">his Github</a>.</p>
+<p class="wt-text-2 wt-offset-top-24">If you are new to Kotlin and are considering it for your next language, start from learning the <a class="wt-link" href="http://kotlinlang.org/docs/reference/basic-syntax.html" target="_blank">basic syntax</a>.</p>
+<p class="wt-text-2 wt-offset-top-24">If you are already familiar with Java, you may want to have a play with <a class="wt-link" href="https://play.kotlinlang.org/koans/overview" target="_blank">Kotlin Koans</a>.</p>
+</div>
+</div>
+</div>
+<div class="separator-numeration-3"></div>
+</section>
+<section class="wt-section wt-section_bg_dark wt-section_theme_dark _bg-extra-dark">
+<div class="wt-container">
+<div class="section-numeration section-numeration_item-3" id="3">
+<div class="wt-hero wt-hero_theme_dark section-numeration_num">3</div>
+</div>
+<h2 class="wt-h2 wt-h2_flow">Tools & Technologies & Editors</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6 wt-col-md-12">
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24">Big Data tools</h3>
+<p class="wt-text-3 wt-text-3_hardness_pale wt-text-3_flow">Number of answers: 1477</p>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-48">
+<div class="wt-col-6 wt-col-md-12">
+<div class="js-react-charts" id="toolstecheds_1"></div>
+</div>
+<div class="wt-col-4 wt-col-md-12 wt-margin-top-vertical-unit-md">
+<div class="wt-text-3 note-box"></div>
+<p class="wt-text-2 wt-text-2_theme_dark wt-offset-top-24">One third of those who say they work with big data don’t use any big data tools. Conversely, a third of those who do NOT work with Big data DO use some big data tools. Still, this self-identification does correlate with formal factors.</p>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-96">
+<div class="wt-col-6 wt-col-md-12">
+<h3 class="wt-h3 wt-h3_theme_dark">IDEs and Editors</h3>
+<p class="wt-text-3 wt-text-3_hardness_pale wt-text-3_flow">Number of answers: 1522</p>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-48">
+<div class="wt-col-6 wt-col-md-12">
+<div class="js-react-charts" id="toolstecheds_2"></div>
+</div>
+<div class="wt-col-4 wt-col-md-12 wt-margin-top-vertical-unit-md">
+<div class="wt-text-3 note-box"></div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-96">
+<div class="wt-col-6 wt-col-md-12">
+<h3 class="wt-h3 wt-h3_theme_dark">Which tools do you use for data analysis, if any?</h3>
+<p class="wt-text-3 wt-text-3_hardness_pale wt-text-3_flow">Number of answers: 1666</p>
+</div>
+<div class="wt-col-4 wt-col-md-12 wt-margin-top-vertical-unit-md">
+<div class="wt-text-3 note-box"></div>
+</div>
+</div>
+<div class="wt-offset-top-48">
+<div class="js-react-charts" id="toolstecheds_3"></div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-96">
+<div class="wt-col-6 wt-col-md-12">
+<h3 class="wt-h3 wt-h3_theme_dark">What deep learning libraries do you use, if any?</h3>
+<p class="wt-text-3 wt-text-3_hardness_pale wt-text-3_flow">Number of answers: 1666</p>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-48">
+<div class="wt-col-6 wt-col-md-12">
+<div class="js-react-charts" id="toolstecheds_4"></div>
+</div>
+<div class="wt-col-4 wt-col-md-12 wt-margin-top-vertical-unit-md">
+<div class="wt-text-3 note-box"></div>
+<div class="wt-text-2 wt-text-2_theme_dark wt-offset-top-24 share-text">
+                        Apparently, if you do deep learning, you do it with TensorFlow. Nearly 80% of those using deep learning libraries use TensorFlow, and almost all Keras users use it alongside TensorFlow.
+                        <div class="js-quick-share" data-section="toolstecheds_4" data-text="Apparently, if you do deep learning, you do it with TensorFlow. Nearly 80% of those using deep learning libraries use TensorFlow, and almost all Keras users use it alongside TensorFlow. via @jetbrains"></div>
+</div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-96">
+<div class="wt-col-6 wt-col-md-12">
+<h3 class="wt-h3 wt-h3_theme_dark">Which statistics packages do you use to analyze and visualize data, if any?</h3>
+<p class="wt-text-3 wt-text-3_hardness_pale wt-text-3_flow">Number of answers: 1666</p>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-48">
+<div class="wt-col-6 wt-col-md-12">
+<div class="js-react-charts" id="toolstecheds_5"></div>
+</div>
+<div class="wt-col-4 wt-col-md-12 wt-margin-top-vertical-unit-md">
+<div class="wt-text-3 note-box"></div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-96">
+<div class="wt-col-6 wt-col-md-12">
+<h3 class="wt-h3 wt-h3_theme_dark">What operating systems do you use as your work environment for data analysis?</h3>
+<p class="wt-text-3 wt-text-3_hardness_pale wt-text-3_flow">Number of answers: 1666</p>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-48">
+<div class="wt-col-6 wt-col-md-12">
+<div class="js-react-charts" id="toolstecheds_6"></div>
+</div>
+<div class="wt-col-4 wt-col-md-12 wt-margin-top-vertical-unit-md">
+<div class="wt-text-3 note-box"></div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-96">
+<div class="wt-col-6 wt-col-md-12">
+<h3 class="wt-h3 wt-h3_theme_dark wt-offset-top-24">What do you use to perform computations?</h3>
+<p class="wt-text-3 wt-text-3_hardness_pale wt-text-3_flow">Number of answers: 1666</p>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-48">
+<div class="wt-col-6 wt-col-md-12">
+<div class="js-react-charts" id="toolstecheds_7"></div>
+</div>
+<div class="wt-col-4 wt-col-md-12 wt-margin-top-vertical-unit-md">
+<div class="wt-text-3 note-box"></div>
+<p class="wt-text-2 wt-text-2_theme_dark wt-offset-top-24">78% data science specialists perform computations on local machines.</p>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-96">
+<div class="wt-col-6 wt-col-md-12">
+<h3 class="wt-h3 wt-h3_theme_dark">Cloud services</h3>
+<p class="wt-text-3 wt-text-3_hardness_pale wt-text-3_flow">Number of answers: 527</p>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-48">
+<div class="wt-col-6 wt-col-md-12">
+<div class="js-react-charts" id="toolstecheds_8"></div>
+</div>
+</div>
+</div>
+<div class="separator-numeration-4"></div>
+</section>
+<section class="wt-section">
+<div class="wt-container">
+<div class="section-numeration section-numeration_item-4" id="4">
+<div class="wt-hero section-numeration_num">4</div>
+</div>
+<h2 class="wt-h2 wt-h2_flow">Non-programmers</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6 wt-col-md-12">
+<p class="wt-text-1 wt-text-1_flow">We received 77 responses from people who don’t use any programming languages and aren’t about to adopt any (5% of all data analysts who responded).</p>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-48">
+<div class="wt-col-6 wt-col-md-12">
+<h3 class="wt-h3">Which statistics packages do you use to analyze and visualize data, if any?</h3>
+<p class="wt-text-3 wt-text-3_hardness_pale wt-text-3_flow">Number of answers: 77</p>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-48">
+<div class="wt-col-6 wt-col-md-12">
+<div class="js-react-charts" id="nonprogs-1"></div>
+</div>
+<div class="wt-col-4 wt-col-md-12 wt-margin-top-vertical-unit-md">
+<div class="wt-text-3 note-box"></div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-96">
+<div class="wt-col-6 wt-col-md-12">
+<h3 class="wt-h3">What is the industry you primarily analyze data for?</h3>
+<p class="wt-text-3 wt-text-3_hardness_pale wt-text-3_flow">Number of answers: 43</p>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-48">
+<div class="wt-col-6 wt-col-md-12">
+<div class="js-react-charts" id="nonprogs-2"></div>
+</div>
+<div class="wt-col-4 wt-col-md-12 wt-margin-top-vertical-unit-md">
+<p class="wt-text-2">These respondents use spreadsheet editors more often than average, and most of them work in non-IT industries. They also tend to use data analysis tools less often.</p>
+</div>
+</div>
+</div>
+<div class="separator-numeration-5"></div>
+</section>
+<section class="wt-section wt-section_bg_gray-light">
+<div class="wt-container">
+<div class="section-numeration section-numeration_item-5" id="5">
+<div class="wt-hero section-numeration_num">5</div>
+</div>
+<h2 class="wt-h2 wt-h2_flow">Manager’s expertise</h2>
+<div class="wt-row wt-row_size_m wt-offset-top-24">
+<div class="wt-col-6 wt-col-md-12">
+<h3 class="wt-h3">What is your manager's level of expertise in data analysis?</h3>
+<p class="wt-text-3 wt-text-3_hardness_pale wt-text-3_flow">Number of answers: 924</p>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-48">
+<div class="wt-col-6 wt-col-md-12">
+<div class="js-react-charts" id="manager-1"></div>
+</div>
+<div class="wt-col-4 wt-col-md-12 wt-margin-top-vertical-unit-md">
+<div class="wt-text-2 share-text">
+                        Almost half of all respondents report to managers who have little or no qualifications in data analysis.
+                        <div class="js-quick-share" data-section="manager-1" data-text="Almost half of all respondents report to managers who have little or no qualifications in data analysis. via @jetbrains"></div>
+</div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-96">
+<div class="wt-col-8 wt-col-md-12">
+<h3 class="wt-h3">To what extent do you associate the following phrase with your manager?: "My manager gives me realistic assignments that are relevant to my skills and responsibilities, with a clear and specific description of the requirements."</h3>
+<p class="wt-text-3 wt-text-3_hardness_pale wt-text-3_flow">Number of answers: 918</p>
+</div>
+</div>
+<div class="wt-row wt-row_size_m _valign-center wt-offset-top-48">
+<div class="wt-col-8 wt-col-md-12">
+<div class="js-react-charts" id="manager-2"></div>
+</div>
+<div class="wt-col-2 wt-col-md-12">
+<p class="wt-text-2"><strong>Answers:</strong></p>
+<p class="wt-text-2"><strong>1</strong> = not at all</p>
+<p class="wt-text-2"><strong>5</strong> = a great deal</p>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-96">
+<div class="wt-col-10 wt-col-md-12">
+<h3 class="wt-h3">Correlation of Manager’s expertise and assignment score</h3>
+<p class="wt-text-3 wt-text-3_hardness_pale wt-text-3_flow">Number of answers: 924</p>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-row_align-items_end wt-offset-top-24">
+<div class="wt-col-12">
+<div id="managers-expertise-table"></div>
+</div>
+<div class="wt-col-2 wt-col-md-12 wt-offset-top-24">
+<p class="wt-text-2"><strong>Answers:</strong></p>
+<p class="wt-text-2"><strong>1</strong> = not at all</p>
+<p class="wt-text-2"><strong>5</strong> = a great deal</p>
+</div>
+</div>
+</div>
+<div class="separator-numeration-6"></div>
+</section>
+<section class="wt-section wt-section_bg_dark wt-section_theme_dark">
+<div class="wt-container">
+<div class="section-numeration section-numeration_item-6" id="6">
+<div class="wt-hero wt-hero_theme_dark section-numeration_num">6</div>
+</div>
+<h2 class="wt-h2 wt-h2_flow">Industry & Demographic</h2>
+<div class="wt-row wt-row_size_m wt-offset-top-24">
+<div class="wt-col-6 wt-col-md-12">
+<h3 class="wt-h3 wt-h3_theme_dark">What is the industry you primarily analyze data for?</h3>
+<p class="wt-text-3 wt-text-3_hardness_pale wt-text-3_flow">Number of answers: 1666</p>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-48">
+<div class="wt-col-6 wt-col-md-12">
+<div class="js-react-charts" id="industry-1"></div>
+</div>
+<div class="wt-col-4 wt-col-md-12 wt-margin-top-vertical-unit-md">
+<div class="wt-text-3 note-box _data-content" data-content="This was an optional question."></div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-96">
+<div class="wt-col-6 wt-col-md-12">
+<h3 class="wt-h3 wt-h3_theme_dark">Which fields of IT do you primarily analyze data for?</h3>
+<p class="wt-text-3 wt-text-3_hardness_pale wt-text-3_flow">Number of answers: 733</p>
+</div>
+<div class="wt-col-4 wt-col-md-12 wt-margin-top-vertical-unit-md">
+<div class="wt-text-3 note-box"></div>
+</div>
+</div>
+<div class="wt-offset-top-48">
+<div class="js-react-charts" id="industry-2"></div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-96">
+<div class="wt-col-6 wt-col-md-12">
+<h3 class="wt-h3 wt-h3_theme_dark">Which industry or industries do you primarily analyze data for?</h3>
+<p class="wt-text-3 wt-text-3_hardness_pale wt-text-3_flow">Number of answers: 933</p>
+</div>
+<div class="wt-col-4 wt-col-md-12 wt-margin-top-vertical-unit-md">
+<div class="wt-text-3 note-box"></div>
+</div>
+</div>
+<div class="wt-offset-top-48">
+<div class="js-react-charts" id="industry-3"></div>
+</div>
+</div>
+</section>
+<section class="wt-section wt-section_bg_dark wt-section_theme_dark" id="7">
+<div class="wt-container wt-offset-top-96">
+<p class="wt-subtitle-1 wt-subtitle-1_theme_dark">Demographics</p>
+<div class="wt-row wt-row_size_m wt-offset-top-48">
+<div class="wt-col-6 wt-col-md-12">
+<h3 class="wt-h3 wt-h3_theme_dark">Age range</h3>
+<p class="wt-text-3 wt-text-3_hardness_pale wt-text-3_flow">Number of answers: 1666</p>
+</div>
+<div class="wt-col-10 wt-col-md-12 wt-offset-top-24">
+<div class="js-react-charts" id="demo-0"></div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-96">
+<div class="wt-col-6 wt-col-md-12">
+<h3 class="wt-h3 wt-h3_theme_dark">What is your main employment status?</h3>
+<p class="wt-text-3 wt-text-3_hardness_pale wt-text-3_flow">Number of answers: 1666</p>
+</div>
+<div class="wt-col-8 wt-col-md-12 wt-offset-top-48">
+<div class="js-react-charts" id="demo-1"></div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-96">
+<div class="wt-col-6 wt-col-md-12">
+<h3 class="wt-h3 wt-h3_theme_dark">What is the highest level of education you have completed?</h3>
+<p class="wt-text-3 wt-text-3_hardness_pale wt-text-3_flow">Number of answers: 1666</p>
+</div>
+</div>
+<div class="wt-offset-top-48">
+<div class="js-react-charts" id="demo-2"></div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-96">
+<div class="wt-col-6 wt-col-md-12">
+<h3 class="wt-h3 wt-h3_theme_dark">Work experience</h3>
+<p class="wt-text-3 wt-text-3_hardness_pale wt-text-3_flow">Number of answers: 924</p>
+</div>
+<div class="wt-col-8 wt-col-md-12 wt-offset-top-48">
+<div class="js-react-charts" id="demo-3"></div>
+</div>
+<div class="wt-col-6 wt-col-md-12 wt-offset-top-24">
+<p class="wt-text-1 wt-text-1_theme_dark">This question was directed to professionals, that is, people professionally involved in data science or data analysis and working full-time or part-time.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="wt-section wt-section_bg_dark wt-section_theme_dark" id="8">
+<div class="wt-container wt-offset-top-96">
+<p class="wt-subtitle-1 wt-subtitle-1_theme_dark">Work environment and employment</p>
+<div class="wt-row wt-row_size_m wt-offset-top-48">
+<div class="wt-col-6 wt-col-md-12">
+<h3 class="wt-h3 wt-h3_theme_dark">Position level</h3>
+<p class="wt-text-3 wt-text-3_hardness_pale wt-text-3_flow">Number of answers: 1014</p>
+</div>
+<div class="wt-col-8 wt-col-md-12 wt-offset-top-48">
+<div class="js-react-charts" id="workenvir_1"></div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-96">
+<div class="wt-col-6 wt-col-md-12">
+<h3 class="wt-h3 wt-h3_theme_dark">Company size</h3>
+<p class="wt-text-3 wt-text-3_hardness_pale wt-text-3_flow">Number of answers: 1086</p>
+</div>
+</div>
+<div class="wt-offset-top-48">
+<div class="js-react-charts" id="workenvir_2"></div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-96">
+<div class="wt-col-6 wt-col-md-12">
+<h3 class="wt-h3 wt-h3_theme_dark">Number of data analysts in company</h3>
+<p class="wt-text-3 wt-text-3_hardness_pale wt-text-3_flow">Number of answers: 1666</p>
+</div>
+</div>
+<div class="wt-offset-top-48">
+<div class="js-react-charts" id="workenvir_3"></div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-96">
+<div class="wt-col-6 wt-col-md-12">
+<h3 class="wt-h3 wt-h3_theme_dark">Job Role</h3>
+<p class="wt-text-3 wt-text-3_hardness_pale wt-text-3_flow">Number of answers: 917</p>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-48">
+<div class="wt-col-6 wt-col-md-12">
+<div class="js-react-charts" id="workenvir_4"></div>
+</div>
+<div class="wt-col-4 wt-col-md-12 wt-margin-top-vertical-unit-md">
+<div class="wt-text-3 note-box"></div>
+</div>
+</div>
+</div>
+</section>
+<section class="wt-section" id="9">
+<div class="wt-container wt-offset-top-96">
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6 wt-col-md-12">
+<h2 class="wt-h2">JetBrains products for data science and big data</h2>
+</div>
+</div>
+</div>
+<div class="wt-hr wt-offset-top-96"></div>
+<div class="wt-container wt-offset-top-96">
+<div class="jetbrains-logo _size-2">
+<svg class="_pycharm sprite-img" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#pycharm"></use></svg>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-48">
+<div class="wt-col-6 wt-col-md-12">
+<p class="wt-subtitle-2">PyCharm Professional Edition is a Python IDE that enables Data Scientists and Web developers to become far more productive. </p>
+</div>
+<div class="wt-col-6 wt-col-md-12 wt-margin-top-vertical-unit-md">
+<p class="wt-text-1">It offers in-depth Python code analysis and integrates with various libraries, frameworks, and tools. PyCharm's scientific tools are designed specifically with professional data analysts in mind and include a scientific development mode, integration with conda, code cells, Jupyter Notebook support, and much more. There is first-class support available for SQL databases as well.</p>
+</div>
+</div>
+<div class="wt-offset-top-48">
+<a class="wt-button wt-button_size_m wt-button_mode_outline" href="/pycharm/" target="_blank">Try now</a>
+</div>
+</div>
+<div class="wt-hr wt-offset-top-96"></div>
+<div class="wt-container wt-offset-top-96">
+<div class="jetbrains-logo _size-2 _full-block-datalore">
+<svg class="_datalore sprite-img" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#datalore"></use></svg>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-48">
+<div class="wt-col-6 wt-col-md-12">
+<p class="wt-subtitle-2">Datalore is an intelligent web application for data analysis and visualization for Python, with built-in tools and libraries for machine learning all included.</p>
+</div>
+<div class="wt-col-6 wt-col-md-12 wt-margin-top-vertical-unit-md">
+<p class="wt-text-1">The smart Python code editor helps users write better code with suggestions, autocompletion, and syntax highlighting. Incremental recalculation enables dependencies between multiple computations to be followed, so users don’t have to track which parts of the code were affected by recent edits. And there is access to the extended data storage and high-performance computational resources (including GPU instances) for an enhanced exploration experience.</p>
+</div>
+</div>
+<div class="wt-offset-top-48">
+<a class="wt-button wt-button_size_m wt-button_mode_outline" href="https://datalore.io/" target="_blank">Try now</a>
+</div>
+</div>
+</section>
+<section class="wt-section wt-section_bg_gray-light" id="subscribe">
+<div class="wt-container wt-offset-top-96">
+<h2 class="wt-h2">Thank you for your time!<br>We hope you found our report useful.</h2>
+<div class="share _light-background js-share wt-offset-top-48">
+<div class="share__pre-text">Share:</div>
+<div class="share__button _twitter twitter"></div>
+<div class="share__button _facebook facebook"></div>
+</div>
+<div class="social-footer wt-offset-top-48">
+<form class="form js-marketo-form">
+<div class="form__fields-wrapper">
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-4 wt-col-lg-6 wt-col-md-8 wt-col-sm-12">
+<div class="form__field self-submit-input">
+<input autocomplete="email" class="input" name="Email" placeholder="Your Email" required="" type="email">
+</div>
+<div class="form__field">
+<label class="checkbox checkbox-list__item">
+<input class="js-checkbox-validate-form js-consent" data-consent="newsletter" id="dataScienceIDENewsletter" name="dataScienceIDENewsletter" type="checkbox" value="Yes">
+<span class="checkbox__icon"></span>
+<span class="checkbox__label like-privacy">I would like to be the first to know when JetBrains releases an IDE for Data Science / Data Engineers / Big Data</span>
+</label>
+</div>
+<div class="form__field">
+<label class="checkbox checkbox-list__item">
+<input class="js-checkbox-validate-form js-consent" data-consent="marketoSurvey" id="surveyPanel" name="surveyPanel" type="checkbox" value="Yes">
+<span class="checkbox__icon"></span>
+<span class="checkbox__label like-privacy">Participate in future JetBrains surveys</span>
+</label>
+</div>
+<div class="form-privacy-checkbox" data-form-id="3345"></div>
+</div>
+</div>
+<input class="wt-button wt-button_mode_black wt-button_size_s" type="submit" value="Submit">
+</div>
+<input name="subId" type="hidden" value="62">
+<input name="formid" type="hidden" value="3345">
+</form>
+<div class="form__after-submit margin-bottom-vertical-unit-half" data-form-id="3345">
+<p>Thanks for your request!</p>
+</div>
+</div>
+<p class="wt-text-2 wt-offset-top-48">If you have any questions or suggestions,<br>please contact us at <a class="wt-link" href="mailto:surveys@jetbrains.com">surveys@jetbrains.com</a>.</p>
+</div>
+</section>    </div>
+
+    <footer class="page__footer landing-footer">
+    <div class="wt-container">
+        <div class="landing-footer__logo jetbrains-logo _full-block">
+            <a href="/"><svg class="_jetbrains-simple sprite-img" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#jetbrains-simple"></use></svg></a>
+        </div>
+        <div class="landing-footer__copy">
+            <span class="text-nowrap">Copyright &copy; 2000&ndash;2019 JetBrains s.r.o.</span>
+        </div>
+    </div>
+</footer></div>
+<script>
+(function() {
+  var STORAGE_KEY_NAME = 'firefoxDisappearedSVGWorkaround';
+  var STORAGE_KEY_VALUE = '1';
+
+  var isFirefox = /firefox/i.test(navigator.userAgent);
+  if (!isFirefox || isFirefox && sessionStorage.getItem(STORAGE_KEY_NAME) === STORAGE_KEY_VALUE) {
+    return;
+  }
+
+  var arrayFrom = function (arrayLike) {
+    return Array.prototype.slice.call(arrayLike, 0);
+  };
+
+  function workaround() {
+    var uses = document.querySelectorAll('.page svg use');
+    var badNodesCount = 0;
+
+    arrayFrom(uses).forEach(function (node) {
+      var rect = node.getBoundingClientRect();
+      if (rect.width === 0 && rect.height === 0)
+        badNodesCount++;
+    });
+
+    if (badNodesCount === uses.length) {
+      sessionStorage.setItem(STORAGE_KEY_NAME, STORAGE_KEY_VALUE);
+      if (typeof dataLayer !== 'undefined')
+        dataLayer.push({'firefoxDisappearedSVGWorkaround': STORAGE_KEY_VALUE});
+
+      window.location.replace(window.location.href);
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', workaround);
+
+})();
+</script>      <link href="/_assets/banner-rotator.entry.07ac548a2a68a7922693.css" rel="stylesheet" type="text/css">
+      <script src="/_assets/banner-rotator.entry.b9ea3aaba598786010f0.js" type="text/javascript"></script>
+      
+      
+  <script>
+(function () {
+
+  'use strict';
+
+  function ImagesSrcReplacer () {
+
+    var attribute = 'data-src';
+    var matches = document.querySelectorAll('img[' + attribute + ']');
+
+    for (var i = 0, n = matches.length; i < n; i++) {
+
+      var attrValue = matches[i].getAttribute(attribute);
+
+      if (_isHighDensity ()) {
+
+        var name = attrValue.substring(0, attrValue.lastIndexOf('.'));
+        var extention = attrValue.substring(attrValue.lastIndexOf('.'), attrValue.length);
+
+        matches[i].setAttribute('src', name + '@2x' + extention);
+
+      } else {
+        matches[i].setAttribute('src', attrValue)
+      }
+    }
+
+    /**
+     * Detect high density
+     * @returns {*|boolean}
+     */
+    function _isHighDensity () {
+      return (
+      (window.matchMedia &&
+      (window.matchMedia('only screen and (min-resolution: 124dpi), only screen and (min-resolution: 1.3dppx), only screen and (min-resolution: 48.8dpcm)').matches ||
+       window.matchMedia('only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (-o-min-device-pixel-ratio: 2.6/2), only screen and (min--moz-device-pixel-ratio: 1.3), only screen and (min-device-pixel-ratio: 1.3)').matches)) ||
+      (window.devicePixelRatio &&
+       window.devicePixelRatio > 1.3));
+    }
+  }
+
+  return new ImagesSrcReplacer()
+
+}(document, window));
+</script></body>
+</html>

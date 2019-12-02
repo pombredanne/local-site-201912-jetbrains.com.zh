@@ -1,0 +1,144 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="/help/app/v2/analytics.js"></script><meta charset="UTF-8"><meta name="robots" content="noindex"><title>Clear Values of Custom Fields - Help | YouTrack Standalone</title><link rel="stylesheet" href="/help/app/v2/app.css"></head><body data-id="api-how-to-clear-custom-fields-values"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack Standalone Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>YouTrack Standalone 2019.1 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="api-how-to-clear-custom-fields-values" id="api-how-to-clear-custom-fields-values.xml">Clear Values of Custom Fields</h1>    <h4 id="version-2019">Use Case:</h4>    <p id="278baefd">Use the REST API to clear values of issue custom fields.</p>            <aside class="note " data-title="" rel="version-2019" id="3a25fa3a"><p>Please notice that this example is valid for YouTrack 2019.1. In the previous versions, though            the principle is the same, query parameters and entity attributes may differ. Also, a number of features, like            addressing an entity by its name, were introduced in 2019.1 and are not supported in the previous versions.        </p></aside>        <div class="chapter"><h2 id="summary" data-toc="api-how-to-clear-custom-fields-values#summary">Summary</h2>        <p id="ab8b3d0b">To clear a value of an issue custom field:</p>        <ol class="list _decimal"><li class="list__item" id="af159539"><p>Make sure that the target issue custom field can have an empty value.</p></li><li class="list__item" id="592601fd"><p>Use Update Issue request:                <div class="code-block" data-lang="http">
+                    POST /api/issues/{issueID}?[fields]
+                </div>            </p></li><li class="list__item" id="0514193d"><p>In the <code class="code">fields</code> request parameter specify fields you want to get in response. For example,                field id and full value info. This will help you to confirm that your changes are applied.            </p></li><li class="list__item" id="a904e32b"><p>In the request body specify the <code class="code">id</code> or <code class="code">name</code>, and <code class="code">$type</code> for                required field. Pass <code class="code">null</code> for <code class="code">value</code>.            </p></li></ol>    </div>    <div class="chapter"><h2 id="step-by-step" data-toc="api-how-to-clear-custom-fields-values#step-by-step">Step-by-Step</h2>        <section class="procedure-steps"><ol class="list _decimal"><li class="list__item" id="91546276">                <p id="29981de9"><span class="emphasis">Optional</span>. To be sure that the target issue field can have an empty value, send a <code class="code">GET</code> request to the server:                </p>                <div class="code-block" data-lang="http">
+                    curl -X GET \
+                    'https://example.myjetbrains.com/youtrack/api/issues/2-7/customFields?fields=id,projectCustomField%28canBeEmpty,field%28name%29%29' \
+                    -H 'Accept: application/json' \
+                    -H 'Authorization: Bearer perm:am9obi5kb2U=.UG9zdG1hbiBKb2huIERvZQ==.jJe0eYhhkV271j1lCpfknNYOEakNk7' \
+                    -H 'Content-Type: application/json' \
+                    -H 'cache-control: no-cache'
+                </div>                <p id="0b2123cb">To the sample request above, the server sends a response with the following body:</p>                <div class="code-block" data-lang="json">
+                    [
+                        {
+                            "projectCustomField": {
+                                "canBeEmpty": false,
+                                "field": {
+                                    "name": "Priority",
+                                    "$type": "CustomField"
+                                },
+                                "$type": "EnumProjectCustomField"
+                            },
+                            "id": "92-1",
+                            "$type": "SingleEnumIssueCustomField"
+                        },
+                        {
+                            "projectCustomField": {
+                                "canBeEmpty": false,
+                                "field": {
+                                    "name": "Type",
+                                    "$type": "CustomField"
+                                },
+                                "$type": "EnumProjectCustomField"
+                            },
+                            "id": "92-2",
+                            "$type": "SingleEnumIssueCustomField"
+                        },
+                        {
+                            "projectCustomField": {
+                                "canBeEmpty": false,
+                                "field": {
+                                    "name": "State",
+                                    "$type": "CustomField"
+                                },
+                                "$type": "StateProjectCustomField"
+                            },
+                            "id": "92-3",
+                            "$type": "StateIssueCustomField"
+                        },
+                        {
+                            "projectCustomField": {
+                                "canBeEmpty": true,
+                                "field": {
+                                    "name": "Assignee",
+                                    "$type": "CustomField"
+                                },
+                                "$type": "UserProjectCustomField"
+                            },
+                            "id": "94-0",
+                            "$type": "SingleUserIssueCustomField"
+                        },
+                        {
+                            "projectCustomField": {
+                                "canBeEmpty": true,
+                                "field": {
+                                    "name": "Subsystem",
+                                    "$type": "CustomField"
+                                },
+                                "$type": "OwnedProjectCustomField"
+                            },
+                            "id": "92-0",
+                            "$type": "SingleOwnedIssueCustomField"
+                        },
+                        {
+                            "projectCustomField": {
+                                "canBeEmpty": true,
+                                "field": {
+                                    "name": "Fix versions",
+                                    "$type": "CustomField"
+                                },
+                                "$type": "VersionProjectCustomField"
+                            },
+                            "id": "92-4",
+                            "$type": "MultiVersionIssueCustomField"
+                        },
+                        {
+                            "projectCustomField": {
+                                "canBeEmpty": true,
+                                "field": {
+                                    "name": "Affected versions",
+                                    "$type": "CustomField"
+                                },
+                                "$type": "VersionProjectCustomField"
+                            },
+                            "id": "92-5",
+                            "$type": "MultiVersionIssueCustomField"
+                        },
+                        {
+                            "projectCustomField": {
+                                "canBeEmpty": true,
+                                "field": {
+                                    "name": "Fixed in build",
+                                    "$type": "CustomField"
+                                },
+                                "$type": "BuildProjectCustomField"
+                            },
+                            "id": "92-6",
+                            "$type": "SingleBuildIssueCustomField"
+                        }
+                    ]
+                </div>            </li><li class="list__item" id="3225733b">                <p id="723448d9">To clear the value of the <code class="code">Subsystem</code> issue field, send a <code class="code">POST</code> request as                    follows:                </p>                <div class="code-block" data-lang="http">
+                    curl -X POST \
+                    'https://example.myjetbrains.com/youtrack/api/issues/2-7?fields=customFields%28id,projectCustomField%28field%28name%29%29,value%28avatarUrl,buildLink,fullName,id,isResolved,login,minutes,name,presentation,text%29%29' \
+                    -H 'Accept: application/json' \
+                    -H 'Authorization: Bearer perm:am9obi5kb2U=.UG9zdG1hbiBKb2huIERvZQ==.jJe0eYhhkV271j1lCpfknNYOEakNk7' \
+                    -H 'Content-Type: application/json' \
+                    -H 'cache-control: no-cache' \
+                    -d '{ "customFields": [ {"name":"Subsystem","$type":"SingleOwnedIssueCustomField","value":null} ] }'
+                </div>            </li><li class="list__item" id="8aab28ae">                <p id="bcff4ad6">To confirm that the target <code class="code">Subsystem</code> field currently is set to an empty value, let's                    check the response from the server. For readability, we left only the target issue field in the                    response body sample:                </p>                <div class="code-block" data-lang="json">
+                    {
+                        "customFields": [
+                            ...,
+                            {
+                                "projectCustomField": {
+                                    "field": {
+                                        "name": "Subsystem",
+                                        "$type": "CustomField"
+                                    },
+                                    "$type": "OwnedProjectCustomField"
+                                },
+                                "value": null,
+                                "id": "92-0",
+                                "$type": "SingleOwnedIssueCustomField"
+                            },
+                            ...
+                        ],
+                        "$type": "Issue"
+                    }
+                </div>            </li></ol></section>    </div><div class="last-modified" data-skip-index="skip">Last modified: 8 July 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="api-how-to-update-custom-fields-values.html">Update Issue Custom Fields</a><a class="navigation-links__next" href="Color-Indices.html">Color Indices List</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="/help/app/v2/app.js"></script></body></html>

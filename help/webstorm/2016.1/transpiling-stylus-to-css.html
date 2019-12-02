@@ -1,0 +1,306 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"></meta><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><title>WebStorm 2016.1 Help :: Transpiling Stylus to CSS</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Transpiling_Stylus_to_CSS"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search WebStorm Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>WebStorm 2016.1 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWindow</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="working-with-sass-and-scss-in-compass-projects.html">Working with Sass and SCSS in Compass Projects</a><a class="navigation-links__next" href="emmet-support.html">Emmet Support</a></div><h1>Transpiling Stylus to CSS</h1><a name="d239433e20"></a><p>
+                <a name="d239433e22"></a><a href="http://learnboost.github.io/stylus/" data-external="true"><span>Stylus</span></a> code is not processed by browsers that work with CSS code.
+                Therefore to be executed, Stylus code has to be translated into CSS.
+                This operation is referred to as <a name="d239433e25"></a><span class="emphasis">transpilation</span> and the tools that perform it are called <a name="d239433e28"></a><span class="emphasis">transpilers</span>.
+            </p><a name="d239433e32"></a><p>
+                WebStorm supports integration with a transpiler tool that translates <a name="d239433e34"></a><span class="emphasis">Stylus</span> code into CSS.
+            </p><a name="d239433e38"></a><p>
+                 
+         
+        In WebStorm, transpiler configurations are called <a name="d25102e21"></a><span class="emphasis">File Watchers</span>.
+        For each supported transpiler, WebStorm provides a predefined <a name="d25102e24"></a><span class="emphasis">File Watcher</span> template.
+        Predefined <a name="d25102e27"></a><span class="emphasis">File Watcher</span> templates are available at the WebStorm level. To run a transpiler against your project files, you need to
+        create a project-specific <a name="d25102e30"></a><span class="emphasis">File Watcher</span> based on the relevant template, at least, specify the path to the transpiler to use on your machine.
+
+     
+            </p><a name="d9041e4576"></a><p>
+            The easiest way to install the Stylus transpiler is to use the <a name="d9041e4578"></a><span class="emphasis">Node Package Manager (npm)</span>,
+            which is a part of <a name="d9041e4581"></a><a href="http://nodejs.org/" data-external="true"><span>Node.js</span></a>. See <a name="d9041e4584"></a><a href="installing-and-removing-external-software-using-node-package-manager.html"><span>Installing and Removing External Software Using Node Package Manager</span></a> for details.
+        </p><a name="d9041e4611"></a><p>
+            Depending on the desired location of the Stylus transpiler executable file, choose one of the following methods:
+            <ul class="list _bullet"><li class="list__item"><a name="d9041e4615"></a>
+                    Install the transpiler <a name="d9041e4617"></a><span class="emphasis">globally</span> at the WebStorm level so it can be used in any WebStorm project.
+                </li><li class="list__item"><a name="d9041e4621"></a>
+                    Install the transpiler in a specific project and thus restrict its use to this project.
+                </li><li class="list__item"><a name="d9041e4624"></a>
+                    Install the transpiler in a project as a <a name="d9041e4626"></a><a href=""><span>development dependency</span></a>.
+                </li></ul>
+        </p><a name="d9041e4632"></a><p>
+            In either installation mode, make sure that the parent folder of the Stylus transpiler is added to the <code class="code" data-lang="Java">PATH</code> variable.
+            This enables you to launch the transpiler from any folder.
+        </p><a name="d9041e4592"></a><p>
+         
+            WebStorm provides user interface both for <a name="d9041e4600"></a><span class="emphasis">global</span> and <a name="d9041e4603"></a><span class="emphasis">project</span> installation as well as supports installation through the command line.
+     
+        </p><a name="d239433e49"></a><p>
+                On this page:
+            </p><ul><li class="list__item"><a href="#d239433e54">Before You Start</a></li><li class="list__item"><a href="#d239433e70">Installing the Stylus Transpiler Globally</a></li><li class="list__item"><a href="#d239433e83">Installing the Stylus Transpiler in a Project</a></li><li class="list__item"><a href="#d239433e104">Creating a File Watcher</a></li><li class="list__item"><a href="#d239433e172">Transpiling the Code</a></li></ul><a name="d239433e54"></a><h2>Before You Start</h2>
+            <ol class="list _decimal"><li class="list__item"><a name="d239433e58"></a>
+                 
+         
+         
+             
+            Download and install <a name="d25102e42"></a><a href="http://nodejs.org/" data-external="true"><span>Node.js</span></a>. The runtime environment is required for two reasons:
+            <ul class="list _bullet"><li class="list__item"><a name="d25102e47"></a>
+                    The Stylus transpiler is started through <a name="d25102e49"></a><span class="emphasis">Node.js</span>.
+                </li><li class="list__item"><a name="d25102e53"></a>
+                    <a name="d25102e55"></a><span class="emphasis">NPM</span>, which is a part of the runtime environment, is also the easiest way to download the Stylus transpiler.
+                </li></ul>
+             
+ 
+        <a name="d25102e63"></a><p>
+             
+            If you are going to use the command line mode, make sure the path to the parent folder of the <a name="d25102e67"></a><span class="emphasis">Node.js</span> executable file
+            and the path to the <code class="code" data-lang="Java">npm</code> folder are added to the <code class="code" data-lang="Java">PATH</code> variable.
+                This enables you to launch the Stylus transpiler and <a name="d25102e76"></a><span class="emphasis">npm</span> from any folder.
+             
+        </p>
+     
+            </li><li class="list__item"><a name="d239433e63"></a>
+                 
+             
+             
+                Make sure the <a name="d7162e5488"></a><span class="emphasis">Node.js</span> plugin is enabled.
+                 
+        The plugin is bundled with WebStorm and activated by default.
+        If the plugin is not activated, enable it on the <a name="d7162e5458"></a><a href="plugins-2.html"><span>Plugins</span></a> page of the <a name="d7162e5460"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> as described in <a name="d7162e5462"></a><a href="enabling-and-disabling-plugins.html"><span>Enabling and Disabling Plugins</span></a>.
+     
+             
+     
+            </li></ol>
+        <a name="d239433e70"></a><h2>Installing the Stylus Transpiler Globally</h2>
+            <a name="d239433e72"></a><p>
+                 
+         
+         
+            <a name="d9041e4299"></a><span class="emphasis">Global</span> installation makes a transpiler available at the WebStorm level so it can be used in any WebStorm project.
+            Moreover, during installation the parent folder of the transpiler is automatically added to the <code class="code" data-lang="Java">PATH</code> variable,
+            which enables you to launch the transpiler from any folder.
+            To install the transpiler <a name="d9041e4305"></a><span class="emphasis">globally</span>, do one of the following:
+     
+            </p>
+            <ul class="list _bullet"><li class="list__item"><a name="d9041e4191"></a>
+            Run the installation from the command line in the <a name="d9041e4193"></a><span class="emphasis">global</span> mode:
+            <ol class="list _decimal"><li class="list__item"><a name="d9041e4198"></a>
+                     
+ 
+        Launch the embedded <a name="d9041e48"></a><span class="control">Terminal</span>
+        by hovering  your mouse pointer over <img alt="show_tool_window_bars" width="14" height="14" title="show_tool_window_bars" src="/help/img/idea/2016.1/show_tool_window_bars.png" class="inline-icon-14"> in the lower left corner of WebStorm and choosing  <a name="d9041e53"></a><span class="control">Terminal</span> from the menu
+        (see <a name="d9041e56"></a><a href="working-with-embedded-local-terminal.html"><span>Working with Embedded Local Terminal</span></a> for details).
+     
+                </li><li class="list__item"><a name="d9041e4206"></a>
+                     
+        Switch to the directory where <a name="d9041e1467"></a><span class="emphasis">NPM</span> is stored or define a <code class="code" data-lang="Java">PATH</code> variable for it so it is available from any folder,
+        see <a name="d9041e1473"></a><a href="installing-and-removing-external-software-using-node-package-manager.html#installingNodeJs"><span>Installing NodeJs</span></a>.
+     
+                </li><li class="list__item"><a name="d9041e4211"></a>
+                    Type the following command at the command line prompt:
+                    <a name="d9041e4213"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+npm install -g stylus 
+                    </code></div>
+                    <a name="d9041e4216"></a><p>
+                         
+        The <code class="code" data-lang="Java">-g</code> key makes the transpiler run in the <a name="d1973e178"></a><span class="emphasis">global</span> mode.
+        Because the installation is performed through <a name="d1973e181"></a><span class="emphasis">NPM</span>, the Stylus transpiler is installed in the <code class="code" data-lang="Java">npm</code> folder.
+        Make sure this parent folder is added to the <code class="code" data-lang="Java">PATH</code> variable. This enables you to launch the transpiler from any folder.
+     
+                    </p>
+                    <a name="d9041e4221"></a><p>
+                        For more details on the <a name="d9041e4223"></a><span class="emphasis">NPM</span> operation modes, see <a name="d9041e4226"></a><a href="https://docs.npmjs.com/" data-external="true"><span>npm documentation</span></a>.
+                        For more information about installing the Stylus transpiler, see <a name="d9041e4229"></a><a href="https://npmjs.org/package/stylus" data-external="true"><span>https://npmjs.org/package/stylus</span></a>.
+                    </p>
+                </li></ol>
+        </li><li class="list__item"><a name="d9041e4235"></a>
+            Run <a name="d9041e4237"></a><span class="emphasis">NPM</span> from WebStorm using the <a name="d9041e4240"></a><span class="control">Node.js and NPM</span> page of the <a name="d9041e4243"></a><span class="control">Settings</span> dialog box.
+            <ol class="list _decimal"><li class="list__item"><a name="d9041e4248"></a>
+                     
+         
+            Open the <a name="d7162e7944"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by choosing <a name="d7162e7946"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d7162e7949"></a><span class="menupath">WebStorm | Preferences</span> for OS X,
+         
+         
+            and  
+         
+         
+         
+        click <a name="d7162e7972"></a><span class="control">Node.js and NPM</span> under <a name="d7162e7975"></a><span class="control">Languages&amp;Frameworks</span>.
+     
+     
+                </li><li class="list__item"><a name="d9041e4260"></a>
+                     
+         
+         
+        On the <a name="d1973e127"></a><span class="control">packagePage</span> page that opens, the <a name="d1973e130"></a><span class="control">Packages</span> area shows all the engineDependent packages
+        that are currently installed on your computer, both at the <a name="d1973e133"></a><span class="emphasis">global</span> and at the <a name="d1973e137"></a><span class="emphasis">project</span> level.
+        Click <img alt="add" width="12" height="12" title="add" src="/help/img/idea/2016.1/new.png" class="inline-icon-12">.
+     
+                </li><li class="list__item"><a name="d9041e4268"></a>
+                    In the <a name="d9041e4270"></a><span class="control">Available Packages</span> dialog box that opens, select the required package to install.
+                </li><li class="list__item"><a name="d9041e4274"></a>
+                    Select the <a name="d9041e4276"></a><span class="control">Options</span> check box and type <code class="code" data-lang="Java">-g</code> in the text box next to it.
+                </li><li class="list__item"><a name="d9041e4283"></a>
+                    Optionally specify the product version and click <a name="d9041e4285"></a><span class="control">Install Package</span> to start installation.
+                </li></ol>
+        </li></ul>
+        <a name="d239433e83"></a><h2>Installing the Stylus Transpiler in a Project</h2>
+            <a name="d239433e85"></a><p>
+                 
+         
+         
+            Installing a transpiler in a specific project restricts its use to this project.
+            To run <a name="d9041e4315"></a><span class="emphasis">project</span> installation, do one of the following:
+     
+            </p>
+            <ul class="list _bullet"><li class="list__item"><a name="d9041e4397"></a>
+            Run the installation from the command line:
+            <ol class="list _decimal"><li class="list__item"><a name="d9041e4401"></a>
+                     
+ 
+        Launch the embedded <a name="d9041e48"></a><span class="control">Terminal</span>
+        by hovering  your mouse pointer over <img alt="show_tool_window_bars" width="14" height="14" title="show_tool_window_bars" src="/help/img/idea/2016.1/show_tool_window_bars.png" class="inline-icon-14"> in the lower left corner of WebStorm and choosing  <a name="d9041e53"></a><span class="control">Terminal</span> from the menu
+        (see <a name="d9041e56"></a><a href="working-with-embedded-local-terminal.html"><span>Working with Embedded Local Terminal</span></a> for details).
+     
+                </li><li class="list__item"><a name="d9041e4409"></a>
+                    Switch to the project root folder and type the following command at the command line prompt:
+                    <a name="d9041e4411"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+npm install stylus 
+                    </code></div>
+                </li></ol>
+        </li><li class="list__item"><a name="d9041e4417"></a>
+            Run <a name="d9041e4419"></a><span class="emphasis">NPM</span> from WebStorm using the <a name="d9041e4422"></a><span class="control">Node.js and NPM</span> page of the <a name="d9041e4425"></a><span class="control">Settings</span> dialog box.
+            <ol class="list _decimal"><li class="list__item"><a name="d9041e4430"></a>
+                     
+         
+            Open the <a name="d7162e7944"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by choosing <a name="d7162e7946"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d7162e7949"></a><span class="menupath">WebStorm | Preferences</span> for OS X,
+         
+         
+            and  
+         
+         
+         
+        click <a name="d7162e7972"></a><span class="control">Node.js and NPM</span> under <a name="d7162e7975"></a><span class="control">Languages &amp; Frameworks</span>.
+     
+     
+                </li><li class="list__item"><a name="d9041e4442"></a>
+                     
+        On the <a name="d9041e82"></a><span class="control">Node.js and NPM</span> page that opens, the <a name="d9041e85"></a><span class="control">Packages</span> area shows all the Node.js-dependent packages
+        that are currently installed on your computer, both at the <a name="d9041e88"></a><span class="emphasis">global</span> and at the <a name="d9041e91"></a><span class="emphasis">project</span> level.
+        Click <img alt="add" width="12" height="12" title="add" src="/help/img/idea/2016.1/new.png" class="inline-icon-12">.
+     
+                </li><li class="list__item"><a name="d9041e4447"></a>
+                    In the <a name="d9041e4449"></a><span class="control">Available Packages</span> dialog box that opens, select the required package.
+                </li><li class="list__item"><a name="d9041e4453"></a>
+                    Optionally specify the product version and click <a name="d9041e4455"></a><span class="control">Install Package</span> to start installation.
+                </li></ol>
+        </li></ul>
+             
+         
+         
+        <a name="d9041e4325"></a><p>
+            <a name="d9041e4327"></a><span class="emphasis">Project level</span> installation is helpful and reliable in <a name="d9041e4330"></a><a href="generating-a-project-from-a-framework-template.html"><span>template-based projects</span></a>
+             
+            of the type <a name="d9041e4336"></a><span class="emphasis">Node Boilerplate</span> or <a name="d9041e4339"></a><span class="emphasis">Node.js Express</span>, which already have the <code class="code" data-lang="Java">node_modules</code> folder.
+            The latter is important because <a name="d9041e4346"></a><span class="emphasis">NPM</span> installs the Stylus transpiler
+            in a <code class="code" data-lang="Java">node_modules</code> folder. If your project already contains such folder, the  Stylus transpiler is installed there.
+        </p>
+        <a name="d9041e4353"></a><p>
+            Projects of other types or <a name="d9041e4355"></a><span class="emphasis">empty</span> projects may not have a <code class="code" data-lang="Java">node_modules</code> folder.
+            In this case <a name="d9041e4361"></a><span class="emphasis">npm</span> goes upwards in the folder tree and installs the  Stylus transpiler
+            in the first detected <code class="code" data-lang="Java">node_modules</code> folder. Keep in mind that this detected <code class="code" data-lang="Java">node_modules</code> folder may be <a name="d9041e4371"></a><span class="emphasis">outside</span> your current project root.
+        </p>
+ 
+        <a name="d9041e4378"></a><p>
+            Finally, if no <code class="code" data-lang="Java">node_modules</code> folder is detected in the folder tree either,
+            the folder is created right under the current project root and the Stylus transpiler is installed there.
+        </p>
+        <a name="d9041e4384"></a><p>
+            In either case, make sure that the parent folder of the Stylus transpiler is added to the <code class="code" data-lang="Java">PATH</code> variable.
+            This enables you to launch the transpiler from any folder.
+        </p>
+     
+        <a name="d239433e104"></a><h2>Creating a File Watcher</h2>
+            <a name="d239433e106"></a><p>
+                
+            WebStorm provides a common procedure and user interface for creating <a name="d25102e93"></a><span class="emphasis">File Watchers</span> of all types.
+            The only difference is in the predefined templates you choose in each case.
+     
+            </p>
+            <ol class="list _decimal"><li class="list__item"><a name="d239433e113"></a>
+                 
+
+             
+             
+                Make sure the <a name="d25102e339"></a><span class="emphasis">File Watchers</span> plugin is enabled.  The plugin is bundled with WebStorm and activated by default. If it is not,
+                enable the plugin. See <a name="d25102e342"></a><a href="enabling-and-disabling-plugins.html"><span>Enabling and Disabling Plugins</span></a> for details.
+             
+
+     
+            </li><li class="list__item"><a name="d239433e118"></a>
+                 
+
+            To start creating a <a name="d25102e100"></a><span class="emphasis">File Watcher</span>, open the <a name="d25102e103"></a><span class="control">Settings</span> dialog box  by choosing
+             
+             
+             
+             
+                <a name="d25102e118"></a><span class="menupath">File | Settings</span> for Windows and Linux or <a name="d25102e121"></a><span class="menupath">WebStorm | Preferences</span> for OS X
+             
+            on the main menu, and then click <a name="d25102e125"></a><span class="control">File Watchers</span> under the <a name="d25102e128"></a><span class="control">Tools</span> node.
+            The <a name="d25102e131"></a><a href="file-watchers.html"><span>File Watchers page</span></a> that opens, shows the list of <a name="d25102e134"></a><span class="emphasis">File Watchers</span> that are already configured in the project.
+
+     
+            </li><li class="list__item"><a name="d239433e125"></a>
+                Click the <a name="d239433e127"></a><span class="control">Add</span> button <img alt="new.png" width="12" height="12" title="new.png" src="/help/img/idea/2016.1/new.png" class="inline-icon-12"> or press <kbd data-default="Alt+Insert" data-default_for_gnome="Alt+Insert" data-default_for_kde="Alt+Insert" data-default_for_xwin="Alt+Insert" data-emacs="Alt+Insert" data-visual_studio="Alt+Insert" data-netbeans_6.5="N/A" data-eclipse="Alt+Insert" data-mac_os_x_10.5_="&#x2318;N" data-mac_os_x="&#x2303;N" data-eclipse_mac_os_x="&#x2318;N" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Insert</kbd>
+                and choose the <a name="d239433e134"></a><span class="control">Stylus</span> predefined template from the pop-up list.
+            </li><li class="list__item"><a name="d239433e138"></a>
+                In the <a name="d239433e140"></a><span class="control">Program</span> text box, specify the path to the executable file:
+                <ul class="list _bullet"><li class="list__item"><a name="d239433e145"></a>
+                        <code class="code" data-lang="Java">stylus</code> for OS X and Unix.
+                    </li><li class="list__item"><a name="d239433e151"></a>
+                        <code class="code" data-lang="Java">stylus.bat</code> for Windows.
+                    </li></ul>
+                Type the path manually or click the <a name="d239433e158"></a><span class="control">Browse</span> button
+                <img alt="browseButton.png" width="15" height="15" title="browseButton.png" src="/help/img/idea/2016.1/browseButton.png" class="inline-icon-15"> and choose the file location in the dialog box that opens.
+            </li><li class="list__item"><a name="d239433e165"></a>
+                 
+            Proceed as described on page <a name="d25102e140"></a><a href="using-file-watchers.html"><span>Using File Watchers</span></a>.
+     
+            </li></ol>
+        <a name="d239433e172"></a><h2>Transpiling the Code</h2>
+         
+         
+         
+         
+        <a name="d25102e147"></a><p>
+            When you open a Stylus file, WebStorm checks whether an applicable file watcher is available in the current project. If such file watcher is configured but disabled,
+            WebStorm displays a pop-up window that informs you about the configured file watcher and suggests to enable it.
+        </p>
+         
+        <a name="d25102e153"></a><p>
+            If an applicable file watcher is configured and enabled in the current project, WebStorm starts it automatically
+            upon the event specified in the <a name="d25102e155"></a><a href="new-watcher-dialog.html"><span>New Watcher dialog</span></a>.
+            <ul class="list _bullet"><li class="list__item"><a name="d25102e160"></a>
+                    If the <a name="d25102e162"></a><span class="control">Immediate file synchronization</span> check box is selected, the <a name="d25102e165"></a><span class="emphasis">File Watcher</span> is invoked as soon as any changes are made to the source code.
+                </li><li class="list__item"><a name="d25102e169"></a>
+                    If the <a name="d25102e171"></a><span class="control">Immediate file synchronization</span> check box is cleared,
+                    the <a name="d25102e174"></a><span class="emphasis">File Watcher</span>  is started upon save (<a name="d25102e177"></a><span class="menupath">File | Save All</span>, <kbd data-default="Ctrl+S" data-default_for_gnome="Ctrl+S" data-default_for_kde="Ctrl+S" data-default_for_xwin="Ctrl+S" data-emacs="Ctrl+X, Ctrl+S" data-visual_studio="Ctrl+S" data-netbeans_6.5="N/A" data-eclipse="Ctrl+S" data-mac_os_x_10.5_="&#x2318;S" data-mac_os_x="&#x2318;S" data-eclipse_mac_os_x="&#x2318;S" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+S</kbd>) or when you move focus from WebStorm
+                    (upon frame deactivation).
+                </li></ul>
+        </p>
+     
+        <a name="d239433e180"></a><p>
+             
+            WebStorm creates a separate file with the generated output. The file has the name of the source <a name="d239433e184"></a><span class="emphasis">Stylus</span> file
+            and the extension <code class="code" data-lang="Java">css</code>. The location of the generated files is defined in the <a name="d239433e190"></a><span class="control">Output paths to refresh</span> text box of the <a name="d239433e193"></a><a href="new-watcher-dialog.html"><span>New Watcher dialog</span></a>.
+            However, in the <a name="d239433e196"></a><span class="control">Project Tree</span>, they are shown under the source file which is now displayed as a node.
+             
+        </p>
+    <div class="navigation-links _bottom"><a class="navigation-links__prev" href="working-with-sass-and-scss-in-compass-projects.html">Working with Sass and SCSS in Compass Projects</a><a class="navigation-links__next" href="emmet-support.html">Emmet Support</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content"><div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d239433e206"></a><a href="using-file-watchers.html"><span>Using File Watchers</span></a></li><li class="list__item"><a name="d239433e208"></a><a href="minifying-css.html"><span>Minifying CSS</span></a></li><li class="list__item"><a name="d239433e210"></a><a href="transpiling-sass-less-and-scss-to-css.html"><span>Transpiling Sass, Less, and SCSS to CSS</span></a></li><li class="list__item"><a name="d239433e212"></a><a href="working-with-sass-and-scss-in-compass-projects.html"><span>Working with Sass and SCSS in Compass Projects</span></a></li></ul></div><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d239433e217"></a><a href="file-watchers.html"><span>File Watchers</span></a></li><li class="list__item"><a name="d239433e219"></a><a href="new-watcher-dialog.html"><span>New Watcher Dialog</span></a></li></ul></div></div></section><div class="last-modified">Last modified: 11 July 2016 </div></article><div id="disqus_thread"></div></div></section></main></div><script src="/help/app/app.js"></script></body></html>

@@ -1,0 +1,220 @@
+
+
+
+<!doctype html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>Analyze Code on the Fly / ReSharper  DevGuide</title>
+    <link rel="stylesheet" href="/help/resharper/sdk/app/app.css">
+    <link rel="shortcut icon" href="/help/resharper/sdk/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="57x57" href="/help/resharper/sdk/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/help/resharper/sdk/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/help/resharper/sdk/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/help/resharper/sdk/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/help/resharper/sdk/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/help/resharper/sdk/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/help/resharper/sdk/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/help/resharper/sdk/apple-touch-icon-180x180.png">
+    <link rel="mask-icon" href="/help/resharper/sdk/apple-mask-icon.svg" color="black">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-square70x70logo" content="/help/resharper/sdk/mstile-70x70.png">
+    <meta name="msapplication-TileImage" content="/help/resharper/sdk/mstile-144x144.png">
+    <meta name="msapplication-square150x150logo" content="/help/resharper/sdk/mstile-150x150.png">
+    <meta name="msapplication-wide310x150logo" content="/help/resharper/sdk/mstile-310x150.png">
+    <meta name="msapplication-square310x310logo" content="/help/resharper/sdk/mstile-310x310.png">
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="Documentation for writing extensions for ReSharper" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.jetbrains.com/help/resharper/sdk//HowTo/AnalyzeCode/AnalyzeCodeOnTheFly.html" />
+    <meta property="og:site_name" content="JetBrains ReSharper" />
+    <meta property="og:title" content="Analyze Code on the Fly" />
+    <meta property="og:description" content="Documentation for writing extensions for ReSharper" />
+    <meta property="og:image" content="https://www.jetbrains.com/help/resharper/sdk/jetbrains.png" />
+    <meta property="article:modified_time" content="2017-07-12T17:29:51+00:00" />
+    <!-- <meta property="article:section" content="" /> 
+    <meta property="article:tag" content="" /> -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@JBPlatform" />
+    <meta name="twitter:title" content="Analyze Code on the Fly" />
+    <meta name="twitter:description" content="Documentation for writing extensions for ReSharper" />
+    <meta name="twitter:image" content="https://www.jetbrains.com/help/resharper/sdk/jetbrains.png" />
+    <meta class="swiftype" name="product" data-type="string" content="/help/resharper/sdk/"></meta>
+<link  rel="stylesheet" href="/help/resharper/sdk/app/styles.css"></head>
+<body data-id="HowTo/AnalyzeCode/AnalyzeCodeOnTheFly">
+<div class="wrapper">
+    <section class="panel _nav">
+        <header class="panel__header">
+            <div class="container">
+                <form class="search-box">
+                    <label for="search-box__input" class="search-box__label">
+                        <input type="text" class="search-box__input" id="search-box__input" placeholder="Search ReSharper  DevGuide">
+                    </label>
+                    <div class="search-box__clear" title="Clear"></div>
+                </form>
+            </div>
+        </header>
+        <nav class="panel__content">
+            <div class="container _nav">
+                <menu class="nav-tree"></menu>
+            </div>
+            <div class="container _footer panel__footer">
+                <p><a data-bypass="true" href="//youtrack.jetbrains.com/issues/IJSDK">Send feedback</a></p>
+                <p>&copy; 2000&ndash;2018 <a href="//www.jetbrains.com">JetBrains</a> s.r.o.<br>
+                    All rights reserved.</p>
+            </div>
+        </nav>
+    </section>
+
+    <main class="panel _main" role="main">
+        <header class="panel__header">
+            <div class="container">
+                <h3>ReSharper DevGuide</h3>
+                
+                <div class="panel-trigger"></div>
+            </div>
+        </header>
+        <section class="panel__content">
+            <div class="container">
+                <article class="article" data-shortcut-switcher="false">
+                    <div class="navigation-links _top" data-swiftype-index="false">
+                        <a class="navigation-links__prev" href="/HowTo/CreateQuickFix/CreateQuickFix.html">Create a Quick-Fix</a>
+                        <a class="navigation-links__next" href="/HowTo/TrackSolutionLoadingStatus.html">Track Solution Loading Status</a>
+                    </div>
+                    <a data-bypass="true" href="https://github.com/JetBrains/resharper-devguide/edit/master/HowTo/AnalyzeCode/AnalyzeCodeOnTheFly.md" class="page-link-to-github" target="_blank" rel="noopener noreferrer" title="Edit this page on GitHub">
+                        <i class="github-icon"></i>
+                        <span class="text">Edit page</span>
+                    </a>
+
+                    <h1>Analyze Code on the Fly</h1>
+                    <p><strong>What you should know beforehand:</strong></p>
+<ul>
+  <li><a href="/help/resharper/sdk/HowTo/ObtainComponentsInRuntime.html"><span>Component model</span></a></li>
+</ul>
+
+<p><strong>Examples (<a href="/help/resharper/sdk/HowTo/HowTo.html#sample-solution"><span>?</span></a>):</strong></p>
+<ul>
+  <li><a href="https://github.com/JetBrains/sample-resharper-plugin/blob/master/SampleReSharperPlugin/src/ElementProblemAnalyzer/BadWordNamingAnalyzer.cs" data-external="true" target="_blank" rel="noopener noreferrer"><span>BadWordNamingAnalyzer.cs</span></a></li>
+  <li><a href="https://github.com/JetBrains/sample-resharper-plugin/blob/master/SampleReSharperPlugin/src/ElementProblemAnalyzer/BadWordNamingWarning.cs" data-external="true" target="_blank" rel="noopener noreferrer"><span>BadWordNamingWarning.cs</span></a></li>
+</ul>
+
+<p>Background code analysis is one of the most popular plugins tasks. The analysis is performed by <a href="/help/resharper/sdk/Features/Analysis/Daemons.html"><span>daemons</span></a> created using a special <code class="code highlight language-text">IDaemonStage</code> interface. Nevertheless, the easiest way to perform code analysis is to employ the <code class="code highlight language-text">ElementProblemAnalyzer&lt;T&gt;</code> class: it creates the corresponding daemon and daemon stage by itself.</p>
+
+<p>The analysis could be divided into two steps:</p>
+<ol>
+  <li>Actually, the analysis of code: performed by <code class="code highlight language-text">ElementProblemAnalyzer&lt;T&gt;</code>, where <code class="code highlight language-text">T</code> is the class of code elements you want to analyze.</li>
+  <li>Problematic code highlighting: performed by a class that implements the <code class="code highlight language-text">IHighlighting</code> interface.</li>
+</ol>
+
+<p>As an example, let’s create a code analyzer that checks all variable declarations on whether they contain the word “Crap” (in <a href="/help/resharper/sdk/HowTo/CreateQuickFix/CreateQuickFix.html"><span>Create a Quick-Fix</span></a>, we implement a quick-fix that suggests to replace the “Crap” occurrence with “BadWord”).</p>
+
+<p><img src="analyze-code.png" alt="analyze-code" /></p>
+
+<a name="problem-analyzer" class="elem-anchor"></a>
+<h2>Problem Analyzer<a href="#problem-analyzer" class="anchor-link"><span></span></a></h2>
+
+<div class="code-block" data-lang="csharp"><code class="code-block__wrapper"><span class="p">[</span><span class="nf">ElementProblemAnalyzer</span><span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="n">IVariableDeclaration</span><span class="p">),</span> <span class="n">HighlightingTypes</span> <span class="p">=</span>
+    <span class="k">new</span><span class="p">[]</span> <span class="p">{</span><span class="k">typeof</span><span class="p">(</span><span class="n">BadWordNamingWarning</span><span class="p">)})]</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">BadWordNamingAnalyzer</span> <span class="p">:</span> <span class="n">ElementProblemAnalyzer</span><span class="p">&lt;</span><span class="n">IVariableDeclaration</span><span class="p">&gt;</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Run</span><span class="p">(</span><span class="n">IVariableDeclaration</span> <span class="n">element</span><span class="p">,</span> <span class="n">ElementProblemAnalyzerData</span> <span class="n">data</span><span class="p">,</span>
+        <span class="n">IHighlightingConsumer</span> <span class="n">consumer</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">nodeText</span> <span class="p">=</span> <span class="n">element</span><span class="p">.</span><span class="n">DeclaredName</span><span class="p">.</span><span class="nf">ToLower</span><span class="p">();</span>            
+ 
+        <span class="k">if</span> <span class="p">(!</span><span class="n">nodeText</span><span class="p">.</span><span class="nf">Contains</span><span class="p">(</span><span class="s">"crap"</span><span class="p">))</span>
+            <span class="k">return</span><span class="p">;</span>
+ 
+        <span class="n">consumer</span><span class="p">.</span><span class="nf">AddHighlighting</span><span class="p">(</span><span class="k">new</span> <span class="nf">BadWordNamingWarning</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">element</span><span class="p">.</span><span class="n">NameIdentifier</span><span class="p">.</span><span class="nf">GetDocumentRange</span><span class="p">()));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></div>
+
+<a name="notes" class="elem-anchor"></a>
+<h3>Notes<a href="#notes" class="anchor-link"><span></span></a></h3>
+<ul>
+  <li>Problem analyzer inherits from <code class="code highlight language-text">ElementProblemAnalyzer&lt;IVariableDeclaration&gt;</code> where <code class="code highlight language-text">IVariableDeclaration</code> is the type of the analyzed code element.</li>
+  <li>Problem analyzer must be marked with the <code class="code highlight language-text">ElementProblemAnalyzer</code> attribute:
+    <ul>
+      <li><code class="code highlight language-text">typeof(IVariableDeclaration)</code> is the type of the analyzed code element.</li>
+      <li><code class="code highlight language-text">HighlightingTypes</code> is the array of classes that should provide highlighting for the problem.</li>
+    </ul>
+  </li>
+  <li>The <code class="code highlight language-text">Run</code> method of the analyzer is executed when an element of the <code class="code highlight language-text">IVariableDeclaration</code> is found. Here:
+    <ul>
+      <li><code class="code highlight language-text">element</code> is the found code element.</li>
+      <li><code class="code highlight language-text">ElementProblemAnalyzerData</code> data is a context data provider that gives you access to some useful components like <a href="/help/resharper/sdk/HowTo/AddSettingsToOptions/AddSettingsToOptions.html"><span>settings store</span></a>.</li>
+      <li><code class="code highlight language-text">IHighlightingConsumer</code> consumer is used to communicate with the code highlighter.</li>
+    </ul>
+  </li>
+  <li><code class="code highlight language-text">consumer.AddHighlighting()</code> highlights the problematic part of the code.</li>
+</ul>
+
+<a name="highlighting" class="elem-anchor"></a>
+<h2>Highlighting<a href="#highlighting" class="anchor-link"><span></span></a></h2>
+
+<div class="code-block" data-lang="csharp"><code class="code-block__wrapper"><span class="na">[StaticSeverityHighlighting(Severity.WARNING, HighlightingGroupIds.GutterMarksGroup)]</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">BadWordNamingWarning</span> <span class="p">:</span> <span class="n">IHighlighting</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="k">readonly</span> <span class="n">DocumentRange</span> <span class="n">_documentRange</span><span class="p">;</span>
+    <span class="k">public</span> <span class="k">readonly</span> <span class="n">IVariableDeclaration</span> <span class="n">VariableDeclaration</span><span class="p">;</span>
+     
+    <span class="k">public</span> <span class="nf">BadWordNamingWarning</span><span class="p">(</span><span class="n">IVariableDeclaration</span> <span class="n">variableDeclaration</span><span class="p">,</span> <span class="n">DocumentRange</span> <span class="n">documentRange</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">VariableDeclaration</span> <span class="p">=</span> <span class="n">variableDeclaration</span><span class="p">;</span>
+        <span class="n">_documentRange</span> <span class="p">=</span> <span class="n">documentRange</span><span class="p">;</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="kt">bool</span> <span class="nf">IsValid</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="n">VariableDeclaration</span><span class="p">.</span><span class="nf">IsValid</span><span class="p">();</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="n">DocumentRange</span> <span class="nf">CalculateRange</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="n">_documentRange</span><span class="p">;</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">ToolTip</span> <span class="p">=&gt;</span> <span class="s">"The name contains a bad word"</span><span class="p">;</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">ErrorStripeToolTip</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span>
+</code></div>
+
+<a name="notes-1" class="elem-anchor"></a>
+<h3>Notes<a href="#notes-1" class="anchor-link"><span></span></a></h3>
+<ul>
+  <li>The class responsible for code highlighting must implement the <code class="code highlight language-text">IHighlighting</code> interface.</li>
+  <li>The class must be also marked with either the <code class="code highlight language-text">ConfigurableSeverityHighlighting</code> attribute (used for complex cases, e.g. when you need to temporarily disable highlighting depending on some conditions) or  <code class="code highlight language-text">StaticSeverityHighlighting</code> (is always shown):
+    <ul>
+      <li><code class="code highlight language-text">Severity.WARNING</code>: the severity of the highlighting. Could be info, warning, error, etc.</li>
+      <li><code class="code highlight language-text">HighlightingGroupIds.GutterMarksGroup</code>: highlighting group. It could be e.g. a compiler warning, best practice, code style issue, etc.</li>
+    </ul>
+  </li>
+  <li><code class="code highlight language-text">IsValid</code> checks whether the highlighting is applicable.</li>
+  <li><code class="code highlight language-text">CalculateRange</code> returns the range of the highlighting in the document.</li>
+  <li>The <code class="code highlight language-text">ToolTip</code> property is responsible for the tooltip that is shown when the mouse is hold over the highlighted element.</li>
+</ul>
+
+
+                    <div class="navigation-links _bottom" data-swiftype-index="false">
+                        <a class="navigation-links__prev" href="/HowTo/CreateQuickFix/CreateQuickFix.html">Create a Quick-Fix</a>
+                        <a class="navigation-links__next" href="/HowTo/TrackSolutionLoadingStatus.html">Track Solution Loading Status</a>
+                    </div>
+                    <div class="last-modified">
+                        Last modified: 12 July 2017
+                    </div>
+                </article>
+
+                <section class="disqus">
+                    <div id="disqus_thread"></div>
+                </section>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="/help/resharper/sdk/app/app.js" data-baseurl="/help/resharper/sdk/"></script>
+
+</body>
+</html>
+

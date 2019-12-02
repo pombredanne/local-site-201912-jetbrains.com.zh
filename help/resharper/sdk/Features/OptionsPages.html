@@ -1,0 +1,214 @@
+
+
+
+<!doctype html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>Options Pages / ReSharper  DevGuide</title>
+    <link rel="stylesheet" href="/help/resharper/sdk/app/app.css">
+    <link rel="shortcut icon" href="/help/resharper/sdk/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="57x57" href="/help/resharper/sdk/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/help/resharper/sdk/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/help/resharper/sdk/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/help/resharper/sdk/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/help/resharper/sdk/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/help/resharper/sdk/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/help/resharper/sdk/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/help/resharper/sdk/apple-touch-icon-180x180.png">
+    <link rel="mask-icon" href="/help/resharper/sdk/apple-mask-icon.svg" color="black">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-square70x70logo" content="/help/resharper/sdk/mstile-70x70.png">
+    <meta name="msapplication-TileImage" content="/help/resharper/sdk/mstile-144x144.png">
+    <meta name="msapplication-square150x150logo" content="/help/resharper/sdk/mstile-150x150.png">
+    <meta name="msapplication-wide310x150logo" content="/help/resharper/sdk/mstile-310x150.png">
+    <meta name="msapplication-square310x310logo" content="/help/resharper/sdk/mstile-310x310.png">
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="Documentation for writing extensions for ReSharper" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.jetbrains.com/help/resharper/sdk//Features/OptionsPages.html" />
+    <meta property="og:site_name" content="JetBrains ReSharper" />
+    <meta property="og:title" content="Options Pages" />
+    <meta property="og:description" content="Documentation for writing extensions for ReSharper" />
+    <meta property="og:image" content="https://www.jetbrains.com/help/resharper/sdk/jetbrains.png" />
+    <meta property="article:modified_time" content="2017-07-10T19:28:42+00:00" />
+    <!-- <meta property="article:section" content="" /> 
+    <meta property="article:tag" content="" /> -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@JBPlatform" />
+    <meta name="twitter:title" content="Options Pages" />
+    <meta name="twitter:description" content="Documentation for writing extensions for ReSharper" />
+    <meta name="twitter:image" content="https://www.jetbrains.com/help/resharper/sdk/jetbrains.png" />
+    <meta class="swiftype" name="product" data-type="string" content="/help/resharper/sdk/"></meta>
+<link  rel="stylesheet" href="/help/resharper/sdk/app/styles.css"></head>
+<body data-id="Features/OptionsPages">
+<div class="wrapper">
+    <section class="panel _nav">
+        <header class="panel__header">
+            <div class="container">
+                <form class="search-box">
+                    <label for="search-box__input" class="search-box__label">
+                        <input type="text" class="search-box__input" id="search-box__input" placeholder="Search ReSharper  DevGuide">
+                    </label>
+                    <div class="search-box__clear" title="Clear"></div>
+                </form>
+            </div>
+        </header>
+        <nav class="panel__content">
+            <div class="container _nav">
+                <menu class="nav-tree"></menu>
+            </div>
+            <div class="container _footer panel__footer">
+                <p><a data-bypass="true" href="//youtrack.jetbrains.com/issues/IJSDK">Send feedback</a></p>
+                <p>&copy; 2000&ndash;2018 <a href="//www.jetbrains.com">JetBrains</a> s.r.o.<br>
+                    All rights reserved.</p>
+            </div>
+        </nav>
+    </section>
+
+    <main class="panel _main" role="main">
+        <header class="panel__header">
+            <div class="container">
+                <h3>ReSharper DevGuide</h3>
+                
+                <div class="panel-trigger"></div>
+            </div>
+        </header>
+        <section class="panel__content">
+            <div class="container">
+                <article class="article" data-shortcut-switcher="false">
+                    <div class="navigation-links _top" data-swiftype-index="false">
+                        <a class="navigation-links__prev" href="/Features/Navigation.html">Navigation</a>
+                        <a class="navigation-links__next" href="/Features/LiveTemplates.html">Live Templates</a>
+                    </div>
+                    <a data-bypass="true" href="https://github.com/JetBrains/resharper-devguide/edit/master/Features/OptionsPages.md" class="page-link-to-github" target="_blank" rel="noopener noreferrer" title="Edit this page on GitHub">
+                        <i class="github-icon"></i>
+                        <span class="text">Edit page</span>
+                    </a>
+
+                    <h1>Options Pages</h1>
+                    <aside class="warning">
+  <p> This topic relates to ReSharper 8, and has not been updated to ReSharper 9 or the ReSharper Platform.</p>
+</aside>
+
+<p>An options page allows a plugin developer to add controls to the ReSharper Options dialog. This is typically used to let the user specify various plugin settings. The plugin writer can add an unlimited amount of option pages to the dialog, and the dialogs can be nested in any of the options groups.</p>
+
+<p>Let us now discuss the way in which option pages are defined.</p>
+
+<a name="making-an-options-page" class="elem-anchor"></a>
+<h2>Making an options page<a href="#making-an-options-page" class="anchor-link"><span></span></a></h2>
+
+<p>Making an options page is surprisingly easy. You begin by defining a class which will house the options page. This class should be made to implement <code class="code highlight language-text">IOptionsPage</code>, and should be decorated with the <code class="code highlight language-text">OptionsPage</code> attribute.</p>
+
+<p>The <code class="code highlight language-text">OptionsPage</code> attribute requires the plugin author to provide the following parameters:</p>
+
+<ul>
+  <li>The page ID. This ID can be specified as a constant field inside the class. The page ID is a string which uniquely identifies this particular options page.</li>
+  <li>The name of the page. This is the text that will appear in the left-hand tree on the Options page as well as in the title and navigation elements.</li>
+  <li>The image. This refers to the glyph that appears next to the item in the tree and is specified as a type (e.g., <code class="code highlight language-text">typeof(OptionsPageThemedIcons.SamplePage)</code>). See <a href="/help/resharper/sdk/Platform/Shell/Icons.html"><span>Icons</span></a> for more information.</li>
+</ul>
+
+<p>In addition, you may specify the following optional parameters:</p>
+
+<ul>
+  <li><code class="code highlight language-text">ParentId</code> lets you define the ID of the section or element which serves as this page’s parent. If you want the parent to be one of the known ReSharper items, look inside the <code class="code highlight language-text">JetBrains.UI.Options.OptionsPages</code> namespace for the corresponding pages, and then use their <code class="code highlight language-text">Pid</code> as this parameter. For example, for an options page to appear in the Environment section, you specify the <code class="code highlight language-text">ParentId</code> of <code class="code highlight language-text">EnvironmentPage.Pid</code>.</li>
+  <li><code class="code highlight language-text">Sequence</code> lets you define the location of the item you are inserting in relation to the other items. Items are placed in order, so the higher this value, the further this page will be in the list of items. Of course, to accurately position the item, you need to know the <code class="code highlight language-text">Sequence</code> value of its siblings. Luckily, this information is available in the metadata.</li>
+</ul>
+
+<p>Having specified the attributes, your class will appear as follows:</p>
+
+<div class="code-block" data-lang="csharp"><code class="code-block__wrapper"><span class="na">[OptionsPage(PID, "Sample Page", typeof(OptionsPageThemedIcons.SamplePage), ParentId = ToolsPage.PID)]</span>
+<span class="k">public</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">SampleOptionPage</span> <span class="p">:</span> <span class="n">IOptionsPage</span>
+<span class="p">{</span>
+  <span class="k">private</span> <span class="k">const</span> <span class="kt">string</span> <span class="n">PID</span> <span class="p">=</span> <span class="s">"SamplePageId"</span><span class="p">;</span>
+<span class="p">}</span>
+</code></div>
+
+<a name="injecting-dependencies" class="elem-anchor"></a>
+<h2>Injecting dependencies<a href="#injecting-dependencies" class="anchor-link"><span></span></a></h2>
+
+<p>Options pages are created by the Component Model, which means you can inject dependencies via your constructor parameters. Your constructor should take at least the following two parameters:</p>
+
+<ul>
+  <li><code class="code highlight language-text">Lifetime</code>, which controls the lifetime of this page.</li>
+  <li><code class="code highlight language-text">OptionsSettingsSmartContext</code>, the settings context that you can use to bind UI elements.</li>
+</ul>
+
+<p>Both of these values need to be injected because they are required for binding particular settings to UI elements. If you are inheriting from <code class="code highlight language-text">AOptionsPage</code>, you will also need to inject <code class="code highlight language-text">IUIApplication</code> to pass into the base class constructor.</p>
+
+<p>In addition to these values, you may inject any other available component into the service. Note that if you implement <code class="code highlight language-text">IOptionsPage</code> on a user control, you should ensure that the generated default constructor is replaced with the constructor you wish the component model to inject dependencies for.</p>
+
+<a name="defining-the-ui" class="elem-anchor"></a>
+<h2>Defining the UI<a href="#defining-the-ui" class="anchor-link"><span></span></a></h2>
+
+<p>You can define the UI for your options page using either Windows Forms or WPF. Whichever option you choose, all you have to do to actually present the UI is to initialize it and assign it to your option page’s <code class="code highlight language-text">Control</code> variable.</p>
+
+<aside class="note">
+  <p> whichever UI framework you choose, your application <em>must</em> reference the WPF assemblies. The compiler will warn you about this if you start using the <code class="code highlight language-text">EitherControl</code> type without adding appropriate references.</p>
+</aside>
+
+<p>To create an options page using Windows Forms, simply create a <code class="code highlight language-text">UserControl</code> and assign it to the <code class="code highlight language-text">Control</code> property. Please note that since multiple inheritance is impossible, the only way to keep the options page class and the <code class="code highlight language-text">UserControl</code> class one and the same is as follows:</p>
+
+<ul>
+  <li>Inherit from <code class="code highlight language-text">UserControl</code> and implement the <code class="code highlight language-text">IOptionsPage</code> interface.</li>
+  <li>Decorate the control with the <code class="code highlight language-text">OptionsPage</code> attribute as described above.</li>
+  <li>Implement the read-only property <code class="code highlight language-text">Control</code>, returning the value of <code class="code highlight language-text">this</code>.</li>
+</ul>
+
+<p>To create an options page using WPF, simply define your UI in terms of WPF elements and then assign the <code class="code highlight language-text">Control</code> property accordingly. You can specify any WPF control, e.g., <code class="code highlight language-text">Grid</code>, as the page control.</p>
+
+<p>Needless to say, it is entirely possible to use the <code class="code highlight language-text">WindowsFormsHost</code> class to host Windows Forms controls on a WPF options page. The mechanism which binds the controls to the settings works for both WPF and Windows Forms. (Of course, if you implement <code class="code highlight language-text">IOptionsPage</code> manually, you can simply assign properties manually without using bindings at all.)</p>
+
+<a name="working-with-settings" class="elem-anchor"></a>
+<h2>Working with Settings<a href="#working-with-settings" class="anchor-link"><span></span></a></h2>
+
+<p>The <code class="code highlight language-text">OptionsSettingsSmartContext</code> class that we inject has several <code class="code highlight language-text">SetBinding()</code> methods that let us tie together settings and controls. These bind methods have two generic arguments - the name of the settings class, and the type of property that is being saved. In the case of WPF, you would specify:</p>
+
+<ul>
+  <li>The property that is being assigned on exit. Defined as a lambda expression (e.g., <code class="code highlight language-text">x =&gt; x.Name</code>).</li>
+  <li>The name of the control that the property is being read from.</li>
+  <li>The dependency property that is being read.</li>
+</ul>
+
+<p>For example, here is how one would bind a WPF text box for a username to a corresponding setting:</p>
+
+<div class="code-block" data-lang="csharp"><code class="code-block__wrapper"><span class="n">settings</span><span class="p">.</span><span class="nf">SetBinding</span><span class="p">(</span><span class="n">lifetime</span><span class="p">,</span> <span class="p">(</span><span class="n">GitHubSettings</span> <span class="n">s</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="n">s</span><span class="p">.</span><span class="n">Username</span><span class="p">,</span> <span class="n">usernameBox</span><span class="p">,</span> <span class="n">TextBox</span><span class="p">.</span><span class="n">TextProperty</span><span class="p">);</span>
+</code></div>
+
+<p>The situation with WinForms is a bit more trickly - there are no dependency properties to be used, so we use the <code class="code highlight language-text">WinFormsProperty</code> helper class. This helper class has a single method, <code class="code highlight language-text">Create()</code>, that creates an object of type <code class="code highlight language-text">IProperty&lt;T&gt;</code> (where <code class="code highlight language-text">T</code> is the property type). To create the property, it requires the following parameters:</p>
+
+<ul>
+  <li>The <code class="code highlight language-text">Lifetime</code> of the calling component. This should be obvious, since the ‘proxy property’ should only live as long as it is needed. This does, of course, imply that you <em>must</em> inject the <code class="code highlight language-text">Lifetime</code> into the constructor.</li>
+  <li>The class to take data from. In actual fact, though in the case of WinForms you’ll probably provide the corresponding control, this doesn’t have to be a control <em>per se</em> - it can be practically any object. After all, the <code class="code highlight language-text">WinFormsProperty</code> class does not use any WinForms-specific code.</li>
+  <li>A lambda expression indicating which property of the aforementioned class that is to be used.</li>
+</ul>
+
+<p>Thus, the call to bind a WinForms-based password box to a setting becomes as follows:</p>
+
+<div class="code-block" data-lang="csharp"><code class="code-block__wrapper"><span class="kt">var</span> <span class="n">property</span> <span class="p">=</span> <span class="n">WinFormsProperty</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">lifetime</span><span class="p">,</span> <span class="n">passwordBox</span><span class="p">,</span> <span class="n">box</span> <span class="p">=&gt;</span> <span class="n">box</span><span class="p">.</span><span class="n">Text</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+<span class="n">settings</span><span class="p">.</span><span class="nf">SetBinding</span><span class="p">(</span><span class="n">lifetime</span><span class="p">,</span> <span class="p">(</span><span class="n">GitHubSettings</span> <span class="n">s</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="n">s</span><span class="p">.</span><span class="n">Password</span><span class="p">,</span> <span class="n">property</span><span class="p">);</span>
+</code></div>
+
+
+                    <div class="navigation-links _bottom" data-swiftype-index="false">
+                        <a class="navigation-links__prev" href="/Features/Navigation.html">Navigation</a>
+                        <a class="navigation-links__next" href="/Features/LiveTemplates.html">Live Templates</a>
+                    </div>
+                    <div class="last-modified">
+                        Last modified: 10 July 2017
+                    </div>
+                </article>
+
+                <section class="disqus">
+                    <div id="disqus_thread"></div>
+                </section>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="/help/resharper/sdk/app/app.js" data-baseurl="/help/resharper/sdk/"></script>
+
+</body>
+</html>
+

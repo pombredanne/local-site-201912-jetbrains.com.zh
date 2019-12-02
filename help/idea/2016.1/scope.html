@@ -1,0 +1,156 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"></meta><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta content="&#xA;        How to define a scope, scope types and colorings in IntelliJ IDEA. Learn more about predefined scopes: project files, problems, non-project files, etc.&#xA;    " name="description"><meta charset="UTF-8"><title>
+        Learn about IntelliJ IDEA scope concept implementation.
+    </title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="concepts.scope"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.1 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWindow</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="supported-languages.html">Supported Languages</a><a class="navigation-links__next" href="encoding.html">Encoding</a></div><h1>Scope</h1><a name="d1014844e11"></a><p>On this page:</p><ul><li class="list__item"><a href="#d1014844e17">Basics</a></li><li class="list__item"><a href="#d1014844e51">Types of scopes</a></li><li class="list__item"><a href="#configure">Defining scopes</a></li><li class="list__item"><a href="#d1014844e179">Scopes coloring</a></li><li class="list__item"><a href="#predefined">Predefined scopes</a></li></ul><a name="d1014844e17"></a><h2>Basics</h2>
+            <a name="d1014844e19"></a><p>A <a name="d1014844e21"></a><span class="emphasis">scope</span> is a subset of files,   packages  and/or directories in your project, to which you can limit the
+                application of specific operations, e.g. <a name="d1014844e27"></a><a href="finding-and-replacing-text-in-project.html"><span>search</span></a>, <a name="d1014844e30"></a><a href="running-inspections.html"><span>code inspection</span></a>,
+                 insertion of copyright notices,  etc. Besides, you can configure <a name="d1014844e37"></a><a href="#color"><span>coloring</span></a>
+                for each scope to see at once what sort of file you are dealing with.</p>
+            <a name="d1014844e41"></a><p>Scopes get more helpful as your project grows larger. There are a lot of <a name="d1014844e43"></a><a href="#predefined"><span>predefined scopes</span></a> that cover basic cases.
+                Additionally, it is possible to <a name="d1014844e46"></a><a href="configuring-scopes-and-file-colors.html#new"><span>add custom scopes</span></a> to your project.
+                For example, you can create custom scopes for tests or for the files you are responsible for in your team.</p>
+<a name="d1014844e51"></a><h2>Types of scopes</h2>
+        <a name="d1014844e53"></a><p>Scopes can be either shared or local:</p>
+        <ul class="list _ul"><li class="list__item"><a name="shared"></a>
+                <a name="d1014844e60"></a><span class="emphasis">Shared scopes</span> are accessible for the team members via VCS and are stored at the project level.
+                  If the project has a <a name="d1014844e65"></a><a href="project.html#file_based_format"><span>file-based format</span></a>,
+                    the shared scopes are stored in the <code class="code" data-lang="Java">*.ipr</code> file; if the project has a
+                    <a name="d1014844e71"></a><a href="project.html#ProjectFiles"><span>directory-based format</span></a>, the shared scopes are stored  
+                in the <code class="code" data-lang="Java">scopes</code> directory under <code class="code" data-lang="Java">.idea</code>, as a file with the extension
+                <code class="code" data-lang="Java">xml</code>, i.e. <code class="code" data-lang="Java">.idea/scopes/&lt;scope_name&gt;.xml</code>.
+            </li><li class="list__item"><a name="d1014844e89"></a>
+                <a name="d1014844e91"></a><span class="emphasis">Local scopes</span> are intended for personal use only and are stored in your workspace
+                 (<code class="code" data-lang="Java">*.iws</code> file in the file-based project format, or
+                 
+                in the file <code class="code" data-lang="Java">workspace.xml</code> under <code class="code" data-lang="Java">.idea</code>
+                  in the directory-based format) .
+            </li></ul>
+        <a name="d1014844e112"></a><p>If necessary, you can share a local scope, make a shared scope local, or create a copy of the scope.
+                For more information, see <a name="d1014844e114"></a><a href="configuring-scopes-and-file-colors.html"><span>Configuring Scopes and File Colors</span></a>.</p>
+<a name="configure"></a><h2>Defining scopes</h2>
+     <a name="d1014844e120"></a><p>
+         IntelliJ IDEA provides a special language that enables you to flexibly define the sets of entities
+         included in a scope. See <a name="d1014844e122"></a><a href="scope-language-syntax-reference.html"><span>Scope Language Syntax Reference</span></a>
+         for details.</p>
+
+     <a name="d1014844e125"></a><p>To create and edit <a name="d1014844e127"></a><span class="emphasis">scopes</span>, use the <a name="d1014844e130"></a><a href="scopes.html"><span>Scopes</span></a> page of the Settings dialog.
+         <a name="d1014844e132"></a><span class="emphasis">Scopes</span> are defined in the following modes:
+             <ul class="list _bullet"><li class="list__item"><a name="d1014844e137"></a>Manually, by specifying file masks according to the <a name="d1014844e139"></a><a href="scope-language-syntax-reference.html"><span>scope language syntax</span></a> in the <a name="d1014844e142"></a><span class="control">Pattern</span> text box.</li><li class="list__item"><a name="d1014844e146"></a>By selecting files and folders and clicking  the buttons <a name="d1014844e148"></a><span class="control">Include</span>,
+                     <a name="d1014844e151"></a><span class="control">Include Recursively</span>, <a name="d1014844e154"></a><span class="control">Exclude</span>, and <a name="d1014844e157"></a><span class="control">Exclude Recursively</span>.
+                     Based on the inclusion/exclusion, IntelliJ IDEA creates an expression and displays it in the <a name="d1014844e160"></a><span class="control">Pattern</span>.
+                     <a name="d1014844e164"></a><p>Refer to the section <a name="d1014844e166"></a><a href="configuring-scopes-and-file-colors.html"><span>Configuring Scopes and File Colors</span></a>.</p>
+                 </li></ul>
+         </p>
+     <a name="d1014844e172"></a><p>
+         You can explore the available scopes in the <a name="d1014844e174"></a><a href="project-tool-window.html"><span>Project tool window</span></a>.
+     </p>
+ <a name="d1014844e179"></a><h2>Scopes coloring</h2>
+         
+            <a name="color"></a>
+            <a name="d1014844e185"></a><p>
+                Files belonging to different scopes can be highlighted in different colors throughout the IntelliJ IDEA's
+                user interface: in <a name="d1014844e187"></a><a href="navigating-to-class-file-or-symbol-by-name.html"><span>navigation lists</span></a>, in the editor tabs,
+                  in the <a name="d1014844e192"></a><a href="project-tool-window.html"><span>Project</span></a> window .
+                This allows much faster and easier navigation in large projects.
+            </p>
+             
+            <figure><img alt="ij_scope_highlighting" width="569" height="339" title="ij_scope_highlighting" src="/help/img/idea/2016.1/ij_scope_highlighting.png"></figure>
+             
+             
+         
+         
+            <a name="d1014844e209"></a><p>
+                If some file is included into several scopes, the order of the scopes becomes important:
+                IntelliJ IDEA uses the color of the uppermost scope (shown in the
+                <a name="d1014844e211"></a><a href="scopes.html"><span>Scopes</span></a>
+                settings page) to highlight such file.
+                Of course, you can change the order of the scopes, and thus the resulted highlighting.
+            </p>
+         
+        <a name="d1014844e215"></a><p>For detailed instructions on how to configure the scope order and scope-color associations, see
+            <a name="d1014844e217"></a><a href="configuring-scopes-and-file-colors.html"><span>Configuring Scopes and File Colors</span></a>.</p>
+<a name="predefined"></a><h2>Predefined scopes</h2>
+        <a name="d1014844e225"></a><p>IntelliJ IDEA provides a number of predefined scopes, for example:</p>
+        <ul class="list _ul"><li class="list__item"><a name="project_files_scope"></a>
+               Project Files.
+                This scope includes all the files within the project content roots
+                 
+                 
+                 
+                    (see <a name="d1014844e244"></a><a href="content-root.html"><span>Module Contents</span></a>).
+                    <a name="d1014844e247"></a><a href="dependencies.html"><span>Module dependencies</span></a>
+                    (libraries and SDKs),
+                 
+                generally, are not included in this scope.
+            </li><li class="list__item"><a name="d1014844e252"></a>
+                Problems.
+                This scope includes the files within the project content roots in which syntactic errors are found.
+            </li><li class="list__item"><a name="d1014844e255"></a>
+                Project and Libraries.
+                This scope includes all the files within the project content roots,
+                and also all <a name="d1014844e257"></a><a href="dependencies.html"><span>module dependencies,</span></a> libraries and SDKs.
+                <a name="d1014844e260"></a><p>In the <a name="d1014844e262"></a><a href="project-tool-window.html"><span>Project tool window</span></a>, this scope corresponds to
+                the scope view <a name="d1014844e265"></a><span class="control">All</span>.</p>
+            </li><li class="list__item"><a name="d1014844e270"></a>
+                Project Production Files.
+                This scope is similar to the
+                <a name="d1014844e272"></a><a href="#project_files_scope"><span>Project Files scope</span></a>.
+                The difference is that the test source roots are not included.
+                In the
+                <a name="d1014844e275"></a><a href="project-tool-window.html"><span>Project tool window</span></a>, this scope corresponds to
+                the scope view
+                <a name="d1014844e278"></a><span class="control">Production</span>.
+            </li><li class="list__item"><a name="d1014844e282"></a>
+                Project Test Files.
+                This scope is limited to the project test source roots.
+                In the
+                <a name="d1014844e284"></a><a href="project-tool-window.html"><span>Project tool window</span></a>, this scope corresponds to
+                the scope view
+                <a name="d1014844e287"></a><span class="control">Tests</span>.
+            </li><li class="list__item"><a name="d1014844e292"></a>
+                Non-Project Files.
+                This scope is available only as a view in the
+                <a name="d1014844e294"></a><a href="project-tool-window.html"><span>Project tool window</span></a>.
+                 
+                    It is limited to
+                    <a name="d1014844e299"></a><a href="dependencies.html"><span>module dependencies</span></a>
+                    (libraries and SDKs).
+                 
+                 
+            </li><li class="list__item"><a name="d1014844e307"></a>
+                Changed Files.
+                This scope corresponds to all changed files, that is, ones associated with
+                all existing
+                <a name="d1014844e309"></a><a href="changelist.html"><span>changelists</span></a>.
+            </li><li class="list__item"><a name="d1014844e313"></a>
+                Default.
+                This scope corresponds to the files associated with
+                the
+                <a name="d1014844e315"></a><a href="changelist.html"><span>changelist</span></a>&nbsp;
+                <code class="code" data-lang="Java">Default</code>.
+            </li><li class="list__item"><a name="d1014844e322"></a>
+                Favorite
+                '<code class="code" data-lang="Java">&lt;name&gt;</code>'.
+                This scope corresponds to a list of favorite items with the specified name.
+                See
+                <a name="d1014844e327"></a><a href="managing-your-project-favorites.html"><span>Managing Your Project Favorites</span></a>.
+            </li><li class="list__item"><a name="d1014844e330"></a>
+                Open files.
+                This scope corresponds to the files opened in IntelliJ IDEA editor.
+            </li><li class="list__item"><a name="d1014844e333"></a>
+                Current file.
+                This scope corresponds to the file currently active in IntelliJ IDEA editor.
+            </li><li class="list__item"><a name="d1014844e337"></a>
+                Selected files.
+                This scope corresponds to the files currently selected in IntelliJ IDEA
+                (e.g. in the
+                <a name="d1014844e339"></a><a href="project-tool-window.html"><span>Project tool window</span></a>).
+            </li></ul>
+        <a name="d1014844e344"></a><p>Predefined scopes cannot be edited.</p>
+<div class="navigation-links _bottom"><a class="navigation-links__prev" href="supported-languages.html">Supported Languages</a><a class="navigation-links__next" href="encoding.html">Encoding</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content"><div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d1014844e360"></a><a href="exporting-and-importing-settings.html"><span>Exporting and Importing Settings</span></a></li><li class="list__item"><a name="d1014844e364"></a><a href="copyright.html"><span>Copyright</span></a></li></ul></div><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d1014844e369"></a><a href="scopes.html"><span>Scopes</span></a></li><li class="list__item"><a name="d1014844e372"></a><a href="file-colors.html"><span>File Colors</span></a></li><li class="list__item"><a name="d1014844e375"></a><a href="project-tool-window.html"><span>Project Tool Window</span></a></li><li class="list__item"><a name="d1014844e378"></a><a href="todo-tool-window.html"><span>TODO Tool Window</span></a></li></ul></div><div class="seealso__col"><h3>Concepts:</h3><ul class="list"><li class="list__item"><a name="d1014844e353"></a><a href="code-inspection.html"><span>Code Inspection</span></a></li></ul></div></div></section><div class="last-modified">Last modified: 13 July 2016 </div></article><div id="disqus_thread"></div></div></section></main></div><script src="/help/app/app.js"></script></body></html>

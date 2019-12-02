@@ -1,0 +1,77 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="/help/app/v2/analytics.js"></script><meta charset="UTF-8"><meta name="robots" content="noindex"><title>Get Issues in a Project - Help | YouTrack Standalone</title><link rel="stylesheet" href="/help/app/v2/app.css"></head><body data-id="Get-Issues-in-a-Project"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack Standalone Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>YouTrack Standalone 2019.1 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="Get-Issues-in-a-Project" id="Get-Issues-in-a-Project.xml">Get Issues in a Project</h1>   <a name="GET_/issue/byproject/{project}"></a>   <h2 id="525bb197">GET /issue/byproject/{project}</h2>   <p id="28d1bd58">Get all issues by project</p>         <div class="code-block" data-lang="none">GET /rest/issue/byproject/{project}?{filter}&amp;{after}&amp;{max}&amp;{updatedAfter}&amp;{wikifyDescription}</div>               <b id="d94be457">Request parameters:</b>    <div class="table-wrapper"><table class=" wide                 " width="100%" id="7513ba05"><thead><tr id="aafd8684" class="ijRowHead"><th id="29775cdb"><p>Name</p></th><th id="69a2504c"><p>Type</p></th><th id="f0579e35"><p>Description</p></th></tr></thead><tbody><tr id="744630ea" class="ijRowOdd"><td id="446d80bf"><p>project</p></td><td id="e268aad4"><p>projectByIdForIssues</p></td><td id="b20cbcb2"><p>ProjectID of a project to get issues from.</p></td></tr><tr id="fcf2e604" class="ijRowEven"><td id="ff3bbe87"><p>filter</p></td><td id="e0bea926"><p>string</p></td><td id="12b1e91c"><p>Apply a filter to issues in a project.</p></td></tr><tr id="90198cd0" class="ijRowOdd"><td id="9973fda5"><p>after</p></td><td id="1ddbab45"><p>integer</p></td><td id="087d1eee"><p>A number of issues to skip before getting a list of issues. That is, when you specify, for example,                after=12 in request, then in the response you will get all issues matching request but without first                twelve issues found.            </p></td></tr><tr id="39e16b02" class="ijRowEven"><td id="b1ded22c"><p>max</p></td><td id="d4ff5dfa"><p>integer</p></td><td id="e4f08cd6">The maximum number of issues to include in the result. If empty, 10 issues are returned.              <aside class="note " data-title="" rel="e4f08cd6" id="2d516330">                <p id="ee9f646e">                  The maximum number of issues returned by this request is also affected by                  the value of the <span class="control">Max Issues to Export                </span> setting for your YouTrack service.                  This setting is located on the <span class="control">Global Settings</span> page.                  For example, if you use the <code class="code">max=10000</code> parameter in the REST API request                  but the <span class="control">Max Issues to Export</span> setting is limited to 5000 issues,                  the response returns a maximum of 5000 issues.</p>              </aside>            </td></tr><tr id="9d015dde" class="ijRowOdd"><td id="c9a678c8"><p>updatedAfter</p></td><td id="e967bf2e"><p>long</p></td><td id="77973915"><p>Filter issues by the date of the most recent update. Only issues that have been updated after the specified date are returned.            </p></td></tr><tr id="769470a4" class="ijRowEven"><td id="aa526ae0"><p>wikifyDescription</p></td><td id="546ca401"><p>boolean</p></td><td id="fa6f508f"><p>Optional. If '<code class="code">true</code>', the issue description in the response is formatted (that is: "wikified"). For example, the request URL with this parameter should look as                follows: "<code class="code">/rest/issue/jt-23?wikifyDescription=true</code>". By default, this parameter                is '<code class="code">false</code>' and skipped in the URL.            </p></td></tr></tbody></table></div>    <p id="51cf2b86">        <b id="e71d2886">Response parameters:</b>        <br>        For information about meaning of tags in response, see the description for the        <a href="Get-an-Issue.html">Get an Issue</a>        method.    </p>    <h3 id="c85423ac">Sample</h3>            <b id="d5aacdd8">Request</b>        <div class="code-block" data-lang="none">
+GET https://example.com/youtrack/rest/issue/byproject/TST?filter=%23Show-stopper
+Cookie: $Version=0; JSESSIONID=peji4aw1vkkj1fvtm9vev8hnh; $Path=/; jetbrains.charisma.main.security.PRINCIPAL=MTVhMjY2OGUxMTUxMTI5MGMzNjhlZWM5NTJiNGJkNmIyNzc3NjdjZmM3YWU4MTVjYzQwYWE1MWZlYTkwNTcxNzphcHBfZXhjZXB0aW9u; $Path=/
+</div>            <b id="58bda207">Response</b>   <div class="code-block" data-lang="none">
+HTTP/1.1 200 OK
+Content-Type: application/xml;charset=UTF-8
+Content-Length: 1364
+
+&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+&lt;issues&gt;
+  &lt;issue id="TST-2"&gt;
+    &lt;field name="attachments"&gt;
+    &lt;value url="/_persistent/user.properties?file=45-83&amp;amp;v=0&amp;amp;c=true"&gt;user.properties&lt;/value&gt;
+    &lt;value url="/_persistent/foo1.properties?file=45-84&amp;amp;v=0&amp;amp;c=true"&gt;foo1.properties&lt;/value&gt;
+    &lt;value url="/_persistent/foo2.properties?file=45-85&amp;amp;v=0&amp;amp;c=true"&gt;foo2.properties&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="Priority"&gt;
+    &lt;value&gt;Show-stopper&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="Type"&gt;
+    &lt;value&gt;Feature&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="State"&gt;
+    &lt;value&gt;Reopened&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="Assignee"&gt;
+    &lt;value&gt;beto&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="Subsystem"&gt;
+    &lt;value&gt;UI&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="Affected versions"&gt;
+    &lt;value&gt;2.0.1&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="Fix versions"&gt;
+    &lt;value&gt;2.0.1&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="projectShortName"&gt;
+    &lt;value&gt;TST&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="numberInProject"&gt;
+    &lt;value&gt;2&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="summary"&gt;
+    &lt;value&gt;new issue&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="description"&gt;
+    &lt;value&gt;description of new issue&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="created"&gt;
+    &lt;value&gt;1320664502969&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="updated"&gt;
+    &lt;value&gt;1320664503229&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="updaterName"&gt;
+    &lt;value&gt;app_exception&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="reporterName"&gt;
+    &lt;value&gt;app_exception&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="commentsCount"&gt;
+    &lt;value&gt;0&lt;/value&gt;
+    &lt;/field&gt;
+    &lt;field name="votes"&gt;
+    &lt;value&gt;0&lt;/value&gt;
+    &lt;/field&gt;
+  &lt;/issue&gt;
+&lt;/issues&gt;
+</div><div class="last-modified" data-skip-index="skip">Last modified: 8 July 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="Delete-an-Issue.html">Delete an Issue</a><a class="navigation-links__next" href="Intellisense-for-issue-search.html">Intellisense for issue search</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="/help/app/v2/app.js"></script></body></html>

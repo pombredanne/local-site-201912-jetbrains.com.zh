@@ -1,0 +1,173 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta class="swiftype" name="product" data-type="string" content="/idea/2016.3/"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><meta charset="UTF-8"><meta name="robots" content="noindex"><title>IntelliJ IDEA 2016.3 Help :: Creating a Project Using Yeoman Generator</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Creating_a_Project_Using_Yeoman_Generator"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-swiftype-index="false"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.3 Help</h3><div class="shortcuts-switcher" data-swiftype-index="false"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Windows/Linux Default</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWin</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">Mac OS X</option><option data-group="secondary" value="eclipse_mac_os_x">Eclipse (Mac OS X)</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (Mac OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper (Mac OS X)</option><option data-group="secondary" value="emacs">Emacs (Mac OS X)</option></select></div><div class="panel-trigger" data-swiftype-index="false"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="opening-reopening-and-closing-projects.html">Opening, Reopening and Closing Projects</a></div><h1>Creating a Project Using Yeoman Generator</h1><a name="d766e18"></a><p><a name="d766e19"></a><span class="emphasis">This feature is supported in the Ultimate edition only.</span></p>
+             
+                <aside class="warning ">
+                    <a name="d1646e296"></a><p><a name="d1646e297"></a><span class="emphasis">
+                        The following is only valid when Yeoman and Node.js Plugins are installed and enabled!
+                    </span></p>
+                </aside>
+             
+        <a name="d64907e45"></a><p>
+     
+        IntelliJ IDEA supports integration with the <a name="d19550e5100"></a><a href="http://yeoman.io/" data-external="true"><span>Yeoman</span></a> tool and provides interface for using it in generating framework-specific
+        project stubs.
+     
+</p><a name="d64907e51"></a><p>In this section:</p><ul><li class="list__item"><a href="#d64907e56">Before you start</a></li><li class="list__item"><a href="#d64907e91">Installing Yeoman</a></li><li class="list__item"><a href="#installGenerator">Configuring a list of project stub generators</a></li><li class="list__item"><a href="#d64907e274">Creating a project by a generator</a></li></ul><a name="d64907e56"></a><h2>Before you start</h2>
+      <ol class="list _decimal"><li class="list__item"><a name="d64907e60"></a>
+               
+            Download and install <a name="d37778e51"></a><a href="http://nodejs.org/" data-external="true"><span>Node.js</span></a>. The runtime environment is required for two reasons:
+            <ul class="list _bullet"><li class="list__item"><a name="d37778e56"></a>
+                    The Yeoman tool is started through <a name="d37778e58"></a><span class="emphasis">Node.js</span>.
+                </li><li class="list__item"><a name="d37778e62"></a>
+                    <a name="d37778e64"></a><span class="emphasis">NPM</span>, which is a part of the runtime environment, is also the easiest way to download the Yeoman tool.
+                </li></ul>
+             
+          </li><li class="list__item"><a name="d64907e65"></a>
+               
+            If you are going to use the command line mode, make sure the path to the parent folder of the <a name="d37778e76"></a><span class="emphasis">Node.js</span> executable file
+            and the path to the <code class="code" data-lang="Java">npm</code> folder are added to the <code class="code" data-lang="Java">PATH</code> variable.
+                This enables you to launch the Yeoman tool and <a name="d37778e85"></a><span class="emphasis">npm</span> from any folder.
+             
+          </li><li class="list__item"><a name="d64907e70"></a>
+              Make sure the <a name="d64907e72"></a><span class="emphasis">Yeoman</span> and the <a name="d64907e75"></a><span class="emphasis">NodeJS</span> plugins are installed and enabled.
+               
+               
+                   
+                The plugins are&nbsp;not&nbsp;bundled with IntelliJ IDEA, but they can be installed from the <a name="d831e5696"></a><span class="emphasis">JetBrains plugin repository</span>
+                as described in <a name="d831e5699"></a><a href="installing-updating-and-uninstalling-repository-plugins.html"><span>Installing, Updating and Uninstalling Repository Plugins</span></a> and <a name="d831e5701"></a><a href="enabling-and-disabling-plugins.html"><span>Enabling and Disabling Plugins</span></a>.
+                Once enabled, the plugins are available at the IDE level, that is, you can use them in all your IntelliJ IDEA projects.
+     
+               
+          </li></ol>
+  <a name="d64907e91"></a><h2>Installing Yeoman</h2>
+        <a name="d64907e93"></a><p>
+            The easiest way to install <a name="d64907e95"></a><span class="emphasis">Yeoman</span> is to use the <a name="d64907e98"></a><span class="emphasis">Node Package Manager (npm)</span>,
+            which is a part of <a name="d64907e101"></a><a href="http://nodejs.org/" data-external="true"><span>Node.js</span></a>.
+            <a name="d64907e104"></a><span class="emphasis">Yeoman</span> can be installed both <a name="d64907e107"></a><span class="emphasis">globally</span> or <a name="d64907e111"></a><span class="emphasis">locally</span>, in a project.
+            It is recommended that you install <a name="d64907e114"></a><span class="emphasis">globally</span> because in this case you can run it from any folder
+            but not from its installation folder.
+         </p>
+            <a name="d64907e118"></a><p>
+                IntelliJ IDEA provides interface for global and local installation modes.
+                Alternatively, you can install <a name="d64907e120"></a><span class="emphasis">Yeoman</span> manually through the command line.
+            </p>
+            <a name="d64907e124"></a><p>
+                To install <a name="d64907e126"></a><span class="emphasis">Yeoman</span> from IntelliJ IDEA using the <a name="d64907e129"></a><span class="control">Node.js and NPM</span> page of the <a name="d64907e132"></a><span class="control">Settings</span> dialog box:
+            </p>
+            <ol class="list _decimal"><li class="list__item"><a name="d64907e138"></a>
+                     
+         
+            Open the <a name="d831e8187"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by pressing <kbd data-default="Ctrl+Alt+S" data-default_for_gnome="Ctrl+Alt+S" data-default_for_kde="Ctrl+Alt+S" data-default_for_xwin="Ctrl+Alt+S" data-emacs="Ctrl+Alt+S" data-jbuilder="N/A" data-visual_studio="Alt+F7" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Alt+S" data-mac_os_x_10.5_="&#x2318;," data-mac_os_x="&#x2318;," data-eclipse_mac_os_x="&#x2318;," data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+S</kbd> or by choosing <a name="d831e8191"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d831e8194"></a><span class="menupath">IntelliJ IDEA | Preferences</span> for OS X,
+         
+         
+            and  
+         
+         
+         
+        click <a name="d831e8217"></a><span class="control">Node.js and NPM</span> under <a name="d831e8220"></a><span class="control">Languages&amp;Frameworks</span>.
+     
+     
+                </li><li class="list__item"><a name="d64907e150"></a>
+                     
+         
+         
+        On the <a name="d11855e127"></a><span class="control">Node.js and NPM</span> page that opens, the <a name="d11855e130"></a><span class="control">Packages</span> area shows all the Node.js-dependent packages
+        that are currently installed on your computer, both at the <a name="d11855e133"></a><span class="emphasis">global</span> and at the <a name="d11855e137"></a><span class="emphasis">project</span> level.
+        Click <img alt="/help/img/idea/2016.3/new.png" title="/help/img/idea/2016.3/new.png" src="/help/img/idea/2016.3/new.png" width="12" height="12" class="inline-icon-12">.
+     
+                </li><li class="list__item"><a name="d64907e160"></a>
+                    In the <a name="d64907e162"></a><span class="control">Available Packages</span> dialog box that opens, select the <a name="d64907e165"></a><span class="emphasis">yo</span> package from the list.
+                </li><li class="list__item"><a name="d64907e169"></a>
+                    For global installation, select the <a name="d64907e171"></a><span class="control">Options</span> check box and type <code class="code" data-lang="Java">-g</code> in the text box next to it.
+                </li><li class="list__item"><a name="d64907e178"></a>
+                    Click <a name="d64907e180"></a><span class="control">Install Package</span> to start installation.
+                </li></ol>
+            <a name="d64907e185"></a><p>
+                To run the installation from the command line:
+            </p>
+            <ol class="list _decimal"><li class="list__item"><a name="d64907e191"></a>
+                     
+         
+        Launch the embedded <a name="d19550e110"></a><span class="control">Terminal</span>
+        by hovering  your mouse pointer over <img alt="/help/img/idea/2016.3/show_tool_window_bars.png" title="/help/img/idea/2016.3/show_tool_window_bars.png" src="/help/img/idea/2016.3/show_tool_window_bars.png" width="14" height="14" class="inline-icon-14"> in the lower left corner of IntelliJ IDEA and choosing  <a name="d19550e115"></a><span class="control">Terminal</span> from the menu
+        (see <a name="d19550e118"></a><a href="working-with-embedded-local-terminal.html"><span>Working with Embedded Local Terminal</span></a> for details).
+     
+                </li><li class="list__item"><a name="d64907e201"></a>
+                    Type the following command at the command line prompt:
+                    <a name="d64907e203"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+npm install -g yo
+                    </code></div>
+                    where <code class="code" data-lang="Java">-g</code> means <a name="d64907e209"></a><span class="emphasis">global installation</span>
+ 
+                </li></ol>
+
+
+
+
+
+
+
+ 
+        <a name="installGenerator"></a><h2>Configuring a list of project stub generators</h2>
+        <ol class="list _decimal"><li class="list__item"><a name="d64907e223"></a>
+                 
+                 
+                    Choose <a name="d64907e232"></a><span class="menupath">File | New | Project</span> on the main menu or click the <a name="d64907e235"></a><span class="control">New Project</span> button on the <a name="d64907e238"></a><span class="control">Welcome screen</span>.
+                    In the <a name="d64907e241"></a><a href="project-category-and-options.html"><span>Project Category and Options</span></a> dialog, which is the first page of the <a name="d64907e243"></a><span class="control">New Project</span> wizard,
+                    choose <a name="d64907e247"></a><span class="control">Yeoman</span> in the left-hand pane.
+                 
+            </li><li class="list__item"><a name="d64907e258"></a>
+                    The right-hand pane shows all the previously installed <a name="d64907e260"></a><a href="http://yeoman.io/generators/" data-external="true"><span>Yeoman generators</span></a>.
+                Click <a name="d64907e263"></a><span class="control">Install Generator</span>.
+            </li><li class="list__item"><a name="d64907e267"></a>
+                 
+        From the dialog box that opens showing all the available generator packages,
+        select the required package in the left-hand pane and click the <a name="d19550e5064"></a><span class="control">Install Generator</span> button
+        that appears in the right-hand pane. You can install several packages one after another without leaving the dialog box.
+        <a name="d19550e5067"></a><p>
+            When the installation is over, click <a name="d19550e5069"></a><span class="control">Close</span> to return
+            to the list of generators which is already expanded with the newly added package.
+        </p>
+     
+            </li></ol>
+    <a name="d64907e274"></a><h2>Creating a project by a generator</h2>
+        <ol class="list _decimal"><li class="list__item"><a name="d64907e278"></a>
+                 
+                 
+                    Choose <a name="d64907e287"></a><span class="menupath">File | New | Project</span> on the main menu or click the <a name="d64907e290"></a><span class="control">New Project</span> button on the <a name="d64907e293"></a><span class="control">Welcome screen</span>.
+                    In the <a name="d64907e296"></a><a href="project-category-and-options.html"><span>Project Category and Options</span></a> dialog, which is the first page of the <a name="d64907e298"></a><span class="control">New Project</span> wizard,
+                    choose <a name="d64907e302"></a><span class="control">Yeoman</span> in the left-hand pane.
+                 
+            </li><li class="list__item"><a name="d64907e313"></a>
+                    The right-hand pane shows all the previously installed <a name="d64907e315"></a><a href="http://yeoman.io/generators/" data-external="true"><span>Yeoman generators</span></a>.
+                    To expand the list, click <a name="d64907e318"></a><span class="control">Install Generator</span>, see <a name="d64907e321"></a><a href="#installGenerator"><span>Creating a Project Using Yeoman Generator</span></a> above.
+                <a name="d64907e323"></a><p>
+                    Select the required generator from the list and click <a name="d64907e325"></a><span class="control">Next</span>.
+                </p>
+            </li><li class="list__item"><a name="d64907e330"></a>
+                 
+        Specify the required settings in the <a name="d19550e5076"></a><span class="control">New Project</span> wizard that starts.
+        The number of pages and their contents depend on the chosen generator.
+     
+            </li><li class="list__item"><a name="d64907e335"></a>
+                 
+        On the last page of the wizard, select or clear the <a name="d19550e5082"></a><span class="control">Run npm install&amp;bower install</span> check box
+        to specify whether you want to run
+        <a name="d19550e5085"></a><span class="emphasis">Node Package Manager</span> and <a name="d19550e5088"></a><span class="emphasis">Bower</span> to install the packages
+        that are required for developing  the new project.
+     
+            </li><li class="list__item"><a name="d64907e341"></a>
+                 
+        Click <a name="d19550e5094"></a><span class="control">Next</span> and choose to open the new project in the current window or in the new one.
+     
+            </li></ol>
+
+    <div class="navigation-links _bottom"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="opening-reopening-and-closing-projects.html">Opening, Reopening and Closing Projects</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content">```
+                <div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d64907e353"></a><a href="generating-a-project-from-a-framework-template.html"><span>Generating a Project from a Framework Template</span></a></li></ul></div><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d64907e358"></a><a href="yeoman.html"><span>Yeoman</span></a></li><li class="list__item"><a name="d64907e360"></a><a href="topicId897820.html"><span>New Project Dialog</span></a></li><li class="list__item"><a name="d64907e362"></a><a href="node-js-and-npm.html"><span>Node.js and NPM</span></a></li></ul></div></div></section><div class="last-modified" data-swiftype-index="false">Last modified: 21 March 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

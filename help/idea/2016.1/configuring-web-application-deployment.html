@@ -1,0 +1,62 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"></meta><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><title>IntelliJ IDEA 2016.1 Help :: Configuring Web Application Deployment</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="configure_web_app_deployment"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.1 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWindow</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="specifying-assembly-descriptor-references.html">Specifying Assembly Descriptor References</a><a class="navigation-links__next" href="viewing-pages-with-web-contents.html">Viewing Pages with Web Contents</a></div><h1>Configuring Web Application Deployment</h1><a name="d908581e3"></a><p>
+          A Web application can be deployed to the server as an <a name="d908581e5"></a><span class="keyword">exploded directory</span> where files and folders are presented in the file system as separate items
+          or as a <a name="d908581e8"></a><span class="keyword">Web archive</span> (<code class="code" data-lang="Java">WAR</code> file) which contains all the required files.
+          Therefore you need to configure the layout of your project output so it can be deployed to the server in one of these forms.
+          In IntelliJ IDEA, the layout of a project output is defined through <a name="d908581e14"></a><a href="artifact.html"><span>artifacts</span></a>.
+          </p><a name="d908581e18"></a><p>
+              When you <a name="d908581e20"></a><a href="enabling-web-application-support.html"><span>enable Web development</span></a> in a module, IntelliJ IDEA configures an <a name="d908581e23"></a><a href="artifact.html"><span>artifact</span></a> of the type <a name="d908581e26"></a><span class="control">exploded</span>
+              with the following basic structure:
+                    <figure><img alt="basic_artifact_configuration.png" width="427" height="315" title="basic_artifact_configuration.png" src="/help/img/idea/2016.1/basic_artifact_configuration.png"></figure>
+              You can <a name="d908581e31"></a><a href="#predefined"><span>use this pre-defined artifact</span></a>, possibly with necessary customization,
+              or <a name="d908581e35"></a><a href="#newArtifact"><span>configure a new artifact</span></a>.
+          </p><a name="d908581e39"></a><p>
+              Configuring an artifact to deploy involves:
+              <ol class="list _decimal"><li class="list__item"><a name="d908581e43"></a>
+                      Specifying the <a name="d908581e45"></a><a href="#general"><span>artifact type, name, and output directory</span></a>.
+                  </li><li class="list__item"><a name="d908581e49"></a>
+            <a name="d908581e51"></a><a href="#addResources"><span>Adding static Web content resources</span></a>. 
+                  </li></ol>
+   </p><a name="d908581e57"></a><p>
+              The suggested deployment configuration procedure reflects the basic workflow which can be flexibly customized
+              depending on your preferences and the requirements to a specific Web application.
+              </p><a name="general"></a><a name="d908581e63"></a><a name="dynaProc0"></a><section class="procedure-steps"><h2>To configure the basic artifact settings</h2><ol class=".list _decimal"><li class="list__item">
+        <a name="d908581e67"></a><a href="accessing-project-structure.html"><span>Open the Project Structure</span></a> dialog box (<kbd data-default="Ctrl+Shift+Alt+S" data-default_for_gnome="Ctrl+Shift+Alt+S" data-default_for_kde="Ctrl+Shift+Alt+S" data-default_for_xwin="Ctrl+Shift+Alt+S" data-emacs="Ctrl+Alt+Shift+S" data-jbuilder="Ctrl+Shift+Alt+S" data-visual_studio="Ctrl+Alt+Shift+S" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Shift+Alt+S" data-mac_os_x_10.5_="&#x2318;;" data-mac_os_x="&#x2318;;" data-eclipse_mac_os_x="&#x2318;;" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Shift+Alt+S</kbd>).
+          </li><li class="list__item">
+              Click <a name="d908581e75"></a><span class="control">Artifacts</span> to open the <a name="d908581e78"></a><a href="artifacts.html"><span>Artifacts</span></a> page.
+          </li><li class="list__item">
+              Do one of the following:
+              <ul class="list _bullet"><li class="list__item"><a name="d908581e86"></a>
+               <a name="predefined"></a>
+                      To use a pre-defined exploded directory artifact, select the <code class="code" data-lang="Java">&lt;module name&gt;war:exploded</code> artifact from the list on the left-hand pane.
+                      If necessary, change the name and output directory of the artifact in the corresponding fields on the right-hand pane.
+                  </li><li class="list__item"><a name="d908581e94"></a>
+               <a name="newArtifact"></a>
+                      To create a new artifact, click the <a name="d908581e98"></a><span class="control">New</span> toolbar button <img alt="add.png" width="12" height="12" title="add.png" src="/help/img/idea/2016.1/new.png" class="inline-icon-12"> on the left-hand pane
+                      and choose the artifact type from the <a name="d908581e103"></a><span class="control">New</span> drop-down list.
+                      <ul class="list _bullet"><li class="list__item"><a name="d908581e108"></a>
+                              To have the application deployed as a directory, choose <a name="d908581e110"></a><span class="control">Web Application: Exploded</span>.
+                          </li><li class="list__item"><a name="d908581e114"></a>
+                              To have the application deployed in the packed form, choose <a name="d908581e116"></a><span class="control">Web Application: Archive</span>.
+                          </li></ul>
+            </li></ul>
+         <a name="d908581e123"></a><p>On the right-hand pane, specify the <a name="d908581e125"></a><a href="configuring-artifacts-general-settings.html"><span>general settings of the artifact</span></a>, such as name and output directory, in the corresponding fields.  </p>
+      </li></ol></section><a name="addResources"></a><a name="d908581e133"></a><a name="dynaProc1"></a><section class="procedure-steps"><h2>To add static Web content resources</h2><ol class=".list _decimal"><li class="list__item">Open the desired artifact and switch to the right-hand pane, the <a name="d908581e137"></a><span class="control">Output Layout</span> tab.</li><li class="list__item">
+              With the select the <a name="d908581e143"></a><span class="control">output root</span> node selected, choose the <a name="d908581e146"></a><span class="control">Create Directory</span> item on the context menu
+              or click the <a name="d908581e149"></a><span class="control">Create Directory</span> toolbar button <img alt="icon_newFolder.png" width="15" height="14" title="icon_newFolder.png" src="/help/img/idea/2016.1/icon_newFolder.png" class="inline-icon-14">.
+              In the dialog box that opens specify the name of the new folder, for example <a name="d908581e154"></a><span class="control">Resources</span>:
+              <figure><img alt="artifact_add_folder.png" width="581" height="173" title="artifact_add_folder.png" src="/help/img/idea/2016.1/artifact_add_folder.png"></figure>
+      </li><li class="list__item">
+              With the new folder selected, choose the <a name="d908581e163"></a><span class="control">Add Copy of</span> item on the context menu
+              or click the <a name="d908581e166"></a><span class="control">Add Copy of</span> toolbar button <img alt="add.png" width="12" height="12" title="add.png" src="/help/img/idea/2016.1/new.png" class="inline-icon-12">.
+          </li><li class="list__item">
+              On the context menu, choose the <a name="d908581e174"></a><span class="control">Directory Content</span> item on the context menu.
+              In the <a name="d908581e177"></a><a href="select-path-dialog.html"><span>dialog that opens</span></a>, choose the directory where the required Web content resources are stored.
+              <figure><img alt="artifact_add_directory_contents.png" width="466" height="207" title="artifact_add_directory_contents.png" src="/help/img/idea/2016.1/artifact_add_directory_contents.png"></figure>
+      </li></ol></section><div class="navigation-links _bottom"><a class="navigation-links__prev" href="specifying-assembly-descriptor-references.html">Specifying Assembly Descriptor References</a><a class="navigation-links__next" href="viewing-pages-with-web-contents.html">Viewing Pages with Web Contents</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content"><div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d908581e197"></a><a href="configuring-artifacts.html"><span>Configuring Artifacts</span></a></li></ul></div><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d908581e204"></a><a href="artifacts.html"><span>Artifacts</span></a></li></ul></div><div class="seealso__col"><h3>Concepts:</h3><ul class="list"><li class="list__item"><a name="d908581e190"></a><a href="artifact.html"><span>Artifact</span></a></li></ul></div></div></section><div class="last-modified">Last modified: 13 July 2016 </div></article><div id="disqus_thread"></div></div></section></main></div><script src="/help/app/app.js"></script></body></html>

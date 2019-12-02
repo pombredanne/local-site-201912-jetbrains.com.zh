@@ -1,0 +1,386 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="robots" content="noindex"><title>YouTrack Standalone 7.0 Help :: Import from Mantis</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Import-from-Mantis"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack Standalone Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>YouTrack Standalone 7.0 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="Import-Projects-from-JIRA.html">Import Projects from JIRA</a><a class="navigation-links__next" href="Import-from-Redmine.html">Import from Redmine</a></div><h1>Import from Mantis</h1><aside class="note sideblock">
+        <a name="d61400e5"></a><p>Important!</p>
+        <a name="d61400e8"></a><p>If you try to re-import same project several times, then you must delete previously imported data before the next attempt.</p>
+    </aside><a name="Importing_Issues_from_Mantis_to_YouTrack"></a><ul><li class="list__item"><a href="#d61400e16">General Procedure</a></li><li class="list__item"><a href="#d61400e188">Importing Sub-projects</a></li><li class="list__item"><a href="#d61400e202">Importing Users</a></li><li class="list__item"><a href="#d61400e210">Encoding</a></li><li class="list__item"><a href="#d61400e224">Notes on Mapping</a><ul class="list _bullet"><li class="list__item"><a href="#d61400e231">Mapping Resolution and Status</a></li><li class="list__item"><a href="#d61400e333">Mapping Priority, Status, and Link Types</a></li><li class="list__item"><a href="#d61400e465">Mapping Reproducibility and Severity</a></li><li class="list__item"><a href="#d61400e629">Mapping Custom Field Types</a></li><li class="list__item"><a href="#d61400e770">Defining Additional Mapping for Issue Fields and Issue Field Types</a></li></ul></li></ul><a name="d61400e16"></a><h2>General Procedure</h2>
+        <a name="General_Procedure"></a>
+
+        <a name="d61400e20"></a><p>You can import issues from the <a name="d61400e22"></a><a href="http://www.mantisbt.org/" data-external="true"><span>Mantis bug tracker</span></a> into YouTrack.</p>
+        <a name="d61400e26"></a><a name="dynaProc0"></a><section class="procedure-steps"><h2>To import issues from the Mantis bug tracker:</h2><ol class=".list _decimal"><li class="list__item">Download <a name="d61400e30"></a><a href="http://www.jetbrains.com/youtrack/tools/index.html" data-external="true"><span>the latest version</span></a> of YouTrack's <a name="d61400e33"></a><a href="Python-Client-Library.html"><span>Python Client Library</span></a> and unzip it.</li><li class="list__item">Install <a name="d61400e38"></a><a href="http://www.python.org/download/" data-external="true"><span>Python</span></a> or <a name="d61400e41"></a><a href="http://wiki.python.org/jython/InstallationInstructions" data-external="true"><span>Jython</span></a>.</li><li class="list__item">Install Python library mySQLdb.</li><li class="list__item">If needed, create a new mapping file to set the correspondence between source fields in Mantis and YouTrack issue's attributes.
+                This mapping file should be created in the <code class="code" data-lang="xml">&lt;library install directory&gt;\python\mantis</code> directory. By default, the <code class="code" data-lang="xml">defaultMantis.py</code> file is used. For more details about structure of the library, please refer to the <a name="d61400e56"></a><a href="Python-Client-Library.html"><span>Python Client Library</span></a> page.</li><li class="list__item">Import issues from a file to YouTrack running the following command:
+                <a name="d61400e61"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">python mantis2youtrack.py target_url, target_login, target_pass, mantis_db_name, mantis_db_host, mantis_db_port, mantis_db_login, mantis_db_pass, mantis_project mantis_project mantis_project</code></div>
+                Enter values for the following command-line parameters:
+                <table class="" width="100%" id="d61400e64"><thead><tr id="d61400e66" class="ijRowHead"><a name="d61400e66"></a><th width="15%"><a name="d61400e68"></a>
+                            Parameter
+                        </th><th><a name="d61400e71"></a>
+                            Description
+                        </th></tr></thead><tbody><tr id="d61400e75" class="ijRowOdd"><a name="d61400e75"></a><td><a name="d61400e77"></a>
+                            <code class="code" data-lang="Java">target_url</code>
+                        </td><td><a name="d61400e83"></a>
+                            URL of the YouTrack server to which data should be imported.
+                        </td></tr><tr id="d61400e87" class="ijRowEven"><a name="d61400e87"></a><td><a name="d61400e89"></a>
+                            <code class="code" data-lang="Java">target_login</code>
+                        </td><td><a name="d61400e95"></a>
+                            User name to log in to the target YouTrack server. Note that the user should have administrator permissions.
+                        </td></tr><tr id="d61400e99" class="ijRowOdd"><a name="d61400e99"></a><td><a name="d61400e101"></a>
+                            <code class="code" data-lang="Java">target_pass</code>
+                        </td><td><a name="d61400e107"></a>
+                            Password to log in to the target YouTrack server.
+                        </td></tr><tr id="d61400e111" class="ijRowEven"><a name="d61400e111"></a><td><a name="d61400e113"></a>
+                            <code class="code" data-lang="Java">mantis_db</code>
+                        </td><td><a name="d61400e119"></a>
+                            Name of the source Mantis database.
+                        </td></tr><tr id="d61400e124" class="ijRowOdd"><a name="d61400e124"></a><td><a name="d61400e126"></a>
+                            <code class="code" data-lang="Java">mantis_host</code>
+                        </td><td><a name="d61400e132"></a>
+                            URL of the source Mantis database.
+                        </td></tr><tr id="d61400e136" class="ijRowEven"><a name="d61400e136"></a><td><a name="d61400e138"></a>
+                            <code class="code" data-lang="Java">mantis_port</code>
+                        </td><td><a name="d61400e144"></a>
+                            Port to access the source Mantis database. If not configured specifically, the port number for Mantis database is 3306, by default.
+                        </td></tr><tr id="d61400e148" class="ijRowOdd"><a name="d61400e148"></a><td><a name="d61400e150"></a>
+                            <code class="code" data-lang="Java">mantis_login</code>
+                        </td><td><a name="d61400e156"></a>
+                            Username to log in to the source Mantis database.
+                        </td></tr><tr id="d61400e160" class="ijRowEven"><a name="d61400e160"></a><td><a name="d61400e162"></a>
+                            <code class="code" data-lang="Java">mantis_pass</code>
+                        </td><td><a name="d61400e168"></a>
+                            Password to log in to the source Mantis database.
+                        </td></tr><tr id="d61400e172" class="ijRowOdd"><a name="d61400e172"></a><td><a name="d61400e174"></a>
+                            <code class="code" data-lang="Java">mantis_project</code>
+                        </td><td><a name="d61400e180"></a>
+                            Name(s) of the source projects to be imported from Mantis.
+                        </td></tr></tbody></table>
+            </li></ol></section>
+    <a name="d61400e188"></a><h2>Importing Sub-projects</h2>
+        <a name="Important_notes_"></a>
+
+        <a name="About_sub-projects"></a>
+
+        <a name="d61400e194"></a><p>If any Mantis project to be imported has one or several sub-projects, all of them are imported as a single project in YouTrack.
+            If you want to distinguish issues of different sub-projects, you should specify the <code class="code" data-lang="xml">CREATE_CF_FOR_SUBPROJECT</code> parameter in your mapping file.
+            If this variable is enabled, then for all issues in the target YouTrack project a new custom field "Subproject" will be created. As a value of this custom field,
+            the name of a subproject will be set. For issues from the main project, the Subproject custom field will be set as Undefined.</p>
+    <a name="d61400e202"></a><h2>Importing Users</h2>
+        <a name="About_user_accounts"></a>
+
+        <a name="d61400e206"></a><p>Please note that YouTrack does not support importing usernames with spaces. For such usernames the space sign will be replace with the underscore ("_") sign. </p>
+    <a name="d61400e210"></a><h2>Encoding</h2>
+        <a name="About_encodings"></a>
+
+        <a name="d61400e214"></a><p>By default, all data in Mantis is stored in <code class="code" data-lang="xml">cp866</code> encoding. If you have configured another encoding, then to import your data to YouTrack correctly, you need to change the encoding parameter in your mapping file.</p>
+        <a name="d61400e220"></a><p></p>
+    <a name="d61400e224"></a><h2>Notes on Mapping</h2>
+        <a name="Mapping_Notes"></a>
+
+        <a name="d61400e228"></a><p>All mappings except Custom Fields, could be edited, if needed.</p>
+        <a name="d61400e231"></a><h3>Mapping Resolution and Status</h3>
+            <a name="Mapping_Mantis's_RESOLUTION_and_STATUS"></a>
+
+            <a name="d61400e235"></a><p>Both Statuses and Resolutions are imported in YouTrack as issue state:</p>
+            <table class="" width="100%" id="d61400e238"><thead><tr id="d61400e240" class="ijRowHead"><a name="d61400e240"></a><th width="20%"><a name="d61400e242"></a>
+                        Mantis RESOLUTION
+                    </th><th><a name="d61400e245"></a>
+                        YouTrack State
+                    </th></tr></thead><tbody><tr id="d61400e249" class="ijRowOdd"><a name="d61400e249"></a><td><a name="d61400e251"></a>
+                        10 (open)
+                    </td><td><a name="d61400e254"></a>
+                        "Open"
+                    </td></tr><tr id="d61400e258" class="ijRowEven"><a name="d61400e258"></a><td><a name="d61400e260"></a>
+                        20 (fixed)
+                    </td><td><a name="d61400e263"></a>
+                        "Fixed"
+                    </td></tr><tr id="d61400e267" class="ijRowOdd"><a name="d61400e267"></a><td><a name="d61400e269"></a>
+                        30 (reopened)
+                    </td><td><a name="d61400e272"></a>
+                        "Reopened"
+                    </td></tr><tr id="d61400e276" class="ijRowEven"><a name="d61400e276"></a><td><a name="d61400e278"></a>
+                        40 (unable to reproduce)
+                    </td><td><a name="d61400e281"></a>
+                        "Can't Reproduce"
+                    </td></tr><tr id="d61400e286" class="ijRowOdd"><a name="d61400e286"></a><td><a name="d61400e288"></a>
+                        50 (not fixable)
+                    </td><td><a name="d61400e291"></a>
+                        "Won't fix"
+                    </td></tr><tr id="d61400e295" class="ijRowEven"><a name="d61400e295"></a><td><a name="d61400e297"></a>
+                        60 (duplicate)
+                    </td><td><a name="d61400e300"></a>
+                        "Duplicate"
+                    </td></tr><tr id="d61400e304" class="ijRowOdd"><a name="d61400e304"></a><td><a name="d61400e306"></a>
+                        70 (no change required)
+                    </td><td><a name="d61400e309"></a>
+                        "Obsolete"
+                    </td></tr><tr id="d61400e313" class="ijRowEven"><a name="d61400e313"></a><td><a name="d61400e315"></a>
+                        80 (suspended)
+                    </td><td><a name="d61400e318"></a>
+                        "Incomplete"
+                    </td></tr><tr id="d61400e322" class="ijRowOdd"><a name="d61400e322"></a><td><a name="d61400e324"></a>
+                        90 (won't fix)
+                    </td><td><a name="d61400e327"></a>
+                        "Won't fix"
+                    </td></tr></tbody></table>
+
+
+
+
+         
+        <a name="d61400e333"></a><h3>Mapping Priority, Status, and Link Types</h3>
+            <a name="Mapping_Mantis's_PRIORITY,_STATUS,_and_LINK_TYPES"></a>
+
+
+            <table class="" width="100%" id="d61400e337"><thead><tr id="d61400e339" class="ijRowHead"><a name="d61400e339"></a><th width="20%"><a name="d61400e341"></a>
+                        Mantis PRIORITY
+                    </th><th><a name="d61400e344"></a>
+                        YouTrack Priority
+                    </th></tr></thead><tbody><tr id="d61400e348" class="ijRowOdd"><a name="d61400e348"></a><td><a name="d61400e350"></a>
+                        10 (none)
+                    </td><td><a name="d61400e353"></a>
+                        "0" (Minor)
+                    </td></tr><tr id="d61400e357" class="ijRowEven"><a name="d61400e357"></a><td><a name="d61400e359"></a>
+                        20 (low)
+                    </td><td><a name="d61400e362"></a>
+                        "0" (Minor)
+                    </td></tr><tr id="d61400e366" class="ijRowOdd"><a name="d61400e366"></a><td><a name="d61400e368"></a>
+                        30 (normal)
+                    </td><td><a name="d61400e371"></a>
+                        "1" (Normal)
+                    </td></tr><tr id="d61400e375" class="ijRowEven"><a name="d61400e375"></a><td><a name="d61400e377"></a>
+                        40 (high)
+                    </td><td><a name="d61400e380"></a>
+                        "2" (Major)
+                    </td></tr><tr id="d61400e385" class="ijRowOdd"><a name="d61400e385"></a><td><a name="d61400e387"></a>
+                        50 (urgent)
+                    </td><td><a name="d61400e390"></a>
+                        "3" (Critical)
+                    </td></tr><tr id="d61400e394" class="ijRowEven"><a name="d61400e394"></a><td><a name="d61400e396"></a>
+                        60 (immediate)
+                    </td><td><a name="d61400e399"></a>
+                        "4" (Show-stoper)
+                    </td></tr></tbody></table>
+            <table class="" width="100%" id="d61400e404"><thead><tr id="d61400e406" class="ijRowHead"><a name="d61400e406"></a><th width="20%"><a name="d61400e408"></a>
+                        Mantis STATUS
+                    </th><th><a name="d61400e411"></a>
+                        YouTrack State
+                    </th></tr></thead><tbody><tr id="d61400e415" class="ijRowOdd"><a name="d61400e415"></a><td><a name="d61400e417"></a>
+                        40 (confirmed)
+                    </td><td><a name="d61400e420"></a>
+                        "Verified"
+                    </td></tr></tbody></table>
+
+            <table class="" width="100%" id="d61400e425"><thead><tr id="d61400e427" class="ijRowHead"><a name="d61400e427"></a><th width="20%"><a name="d61400e429"></a>
+                        Mantis LINK_TYPES
+                    </th><th><a name="d61400e432"></a>
+                        YouTrack's Link type
+                    </th></tr></thead><tbody><tr id="d61400e436" class="ijRowOdd"><a name="d61400e436"></a><td><a name="d61400e438"></a>
+                        0 (duplicate of)
+                    </td><td><a name="d61400e441"></a>
+                        "Duplicate"
+                    </td></tr><tr id="d61400e445" class="ijRowEven"><a name="d61400e445"></a><td><a name="d61400e447"></a>
+                        1 (related to)
+                    </td><td><a name="d61400e450"></a>
+                        "Relates"
+                    </td></tr><tr id="d61400e454" class="ijRowOdd"><a name="d61400e454"></a><td><a name="d61400e456"></a>
+                        2 (parent of)
+                    </td><td><a name="d61400e459"></a>
+                        "Depend"
+                    </td></tr></tbody></table>
+
+         
+        <a name="d61400e465"></a><h3>Mapping Reproducibility and Severity</h3>
+            <a name="Mapping_Mantis's_REPRODUCIBILITY_and_SEVERITY"></a>
+
+            <a name="d61400e469"></a><p>Both REPRODUCIBILITY and SEVERITY attributes are imported to YouTrack as new custom fields of <code class="code" data-lang="xml">enum[*]</code> type with the same names.</p>
+
+            <table class="" width="100%" id="d61400e475"><thead><tr id="d61400e477" class="ijRowHead"><a name="d61400e477"></a><th width="20%"><a name="d61400e479"></a>
+                        Mantis REPRODUCIBILITY
+                    </th><th><a name="d61400e482"></a>
+                        Reproducibility in YouTrack
+                    </th></tr></thead><tbody><tr id="d61400e486" class="ijRowOdd"><a name="d61400e486"></a><td><a name="d61400e488"></a>
+                        10
+                    </td><td><a name="d61400e491"></a>
+                        "Always"
+                    </td></tr><tr id="d61400e495" class="ijRowEven"><a name="d61400e495"></a><td><a name="d61400e497"></a>
+                        30
+                    </td><td><a name="d61400e500"></a>
+                        "Sometimes"
+                    </td></tr><tr id="d61400e504" class="ijRowOdd"><a name="d61400e504"></a><td><a name="d61400e506"></a>
+                        50
+                    </td><td><a name="d61400e509"></a>
+                        "Random"
+                    </td></tr><tr id="d61400e513" class="ijRowEven"><a name="d61400e513"></a><td><a name="d61400e515"></a>
+                        70
+                    </td><td><a name="d61400e518"></a>
+                        "Have not tried"
+                    </td></tr><tr id="d61400e523" class="ijRowOdd"><a name="d61400e523"></a><td><a name="d61400e525"></a>
+                        90
+                    </td><td><a name="d61400e528"></a>
+                        "Unable to reproduce"
+                    </td></tr><tr id="d61400e532" class="ijRowEven"><a name="d61400e532"></a><td><a name="d61400e534"></a>
+                        100
+                    </td><td><a name="d61400e537"></a>
+                        "N/A"
+                    </td></tr></tbody></table>
+
+
+            <table class="" width="100%" id="d61400e542"><thead><tr id="d61400e544" class="ijRowHead"><a name="d61400e544"></a><th width="20%"><a name="d61400e546"></a>
+                        Mantis SEVERITY
+                    </th><th><a name="d61400e549"></a>
+                        Severity value in YouTrack
+                    </th></tr></thead><tbody><tr id="d61400e553" class="ijRowOdd"><a name="d61400e553"></a><td><a name="d61400e555"></a>
+                        10
+                    </td><td><a name="d61400e558"></a>
+                        "Feature"
+                    </td></tr><tr id="d61400e562" class="ijRowEven"><a name="d61400e562"></a><td><a name="d61400e564"></a>
+                        20
+                    </td><td><a name="d61400e567"></a>
+                        "Trivial"
+                    </td></tr><tr id="d61400e571" class="ijRowOdd"><a name="d61400e571"></a><td><a name="d61400e573"></a>
+                        30
+                    </td><td><a name="d61400e576"></a>
+                        "Text"
+                    </td></tr><tr id="d61400e580" class="ijRowEven"><a name="d61400e580"></a><td><a name="d61400e582"></a>
+                        40
+                    </td><td><a name="d61400e585"></a>
+                        "Tweak"
+                    </td></tr><tr id="d61400e590" class="ijRowOdd"><a name="d61400e590"></a><td><a name="d61400e592"></a>
+                        50
+                    </td><td><a name="d61400e595"></a>
+                        "Minor"
+                    </td></tr><tr id="d61400e599" class="ijRowEven"><a name="d61400e599"></a><td><a name="d61400e601"></a>
+                        60
+                    </td><td><a name="d61400e604"></a>
+                        "Major"
+                    </td></tr><tr id="d61400e608" class="ijRowOdd"><a name="d61400e608"></a><td><a name="d61400e610"></a>
+                        70
+                    </td><td><a name="d61400e613"></a>
+                        "Crash"
+                    </td></tr><tr id="d61400e617" class="ijRowEven"><a name="d61400e617"></a><td><a name="d61400e619"></a>
+                        80
+                    </td><td><a name="d61400e622"></a>
+                        "Block"
+                    </td></tr></tbody></table>
+
+         
+        <a name="d61400e629"></a><h3>Mapping Custom Field Types</h3>
+            <a name="Mapping_Custom_Field_Types_in_Mantis_with_YouTrack"></a>
+
+            <table class=" wide" width="100%" id="d61400e633"><thead><tr id="d61400e635" class="ijRowHead"><a name="d61400e635"></a><th width="20%"><a name="d61400e637"></a>
+                        Mantis's CF_TYPE (numeric)
+                    </th><th width="20%"><a name="d61400e640"></a>
+                        Mantis's CF_TYPE
+                    </th><th><a name="d61400e643"></a>
+                        YouTrack's CF Type
+                    </th></tr></thead><tbody><tr id="d61400e647" class="ijRowOdd"><a name="d61400e647"></a><td><a name="d61400e649"></a>
+                        0
+                    </td><td><a name="d61400e652"></a>
+                        String
+                    </td><td><a name="d61400e655"></a>
+                        "string"
+                    </td></tr><tr id="d61400e659" class="ijRowEven"><a name="d61400e659"></a><td><a name="d61400e661"></a>
+                        1
+                    </td><td><a name="d61400e664"></a>
+                        Numeric
+                    </td><td><a name="d61400e667"></a>
+                        "integer"
+                    </td></tr><tr id="d61400e671" class="ijRowOdd"><a name="d61400e671"></a><td><a name="d61400e673"></a>
+                        2
+                    </td><td><a name="d61400e676"></a>
+                        Float
+                    </td><td><a name="d61400e679"></a>
+                        "string"
+                    </td></tr><tr id="d61400e683" class="ijRowEven"><a name="d61400e683"></a><td><a name="d61400e685"></a>
+                        3
+                    </td><td><a name="d61400e688"></a>
+                        Enumeration
+                    </td><td><a name="d61400e691"></a>
+                        "enum[1]"
+                    </td></tr><tr id="d61400e696" class="ijRowOdd"><a name="d61400e696"></a><td><a name="d61400e698"></a>
+                        4
+                    </td><td><a name="d61400e701"></a>
+                        Email
+                    </td><td><a name="d61400e704"></a>
+                        "string"
+                    </td></tr><tr id="d61400e708" class="ijRowEven"><a name="d61400e708"></a><td><a name="d61400e710"></a>
+                        5
+                    </td><td><a name="d61400e713"></a>
+                        Checkbox
+                    </td><td><a name="d61400e716"></a>
+                        "enum[1]"
+                    </td></tr><tr id="d61400e720" class="ijRowOdd"><a name="d61400e720"></a><td><a name="d61400e722"></a>
+                        6
+                    </td><td><a name="d61400e725"></a>
+                        List
+                    </td><td><a name="d61400e728"></a>
+                        "enum[1]"
+                    </td></tr><tr id="d61400e732" class="ijRowEven"><a name="d61400e732"></a><td><a name="d61400e734"></a>
+                        7
+                    </td><td><a name="d61400e737"></a>
+                        Multiselection list
+                    </td><td><a name="d61400e740"></a>
+                        "enum[*]"
+                    </td></tr><tr id="d61400e744" class="ijRowOdd"><a name="d61400e744"></a><td><a name="d61400e746"></a>
+                        8
+                    </td><td><a name="d61400e749"></a>
+                        Date
+                    </td><td><a name="d61400e752"></a>
+                        "date"
+                    </td></tr><tr id="d61400e756" class="ijRowEven"><a name="d61400e756"></a><td><a name="d61400e758"></a>
+                        9
+                    </td><td><a name="d61400e761"></a>
+                        Radio
+                    </td><td><a name="d61400e764"></a>
+                        "enum[1]"
+                    </td></tr></tbody></table>
+         
+        <a name="d61400e770"></a><h3>Defining Additional Mapping for Issue Fields and Issue Field Types</h3>
+            <a name="Defining_Additional_Mapping_for_Issue_Fields_and_Issue_Field_Types"></a>
+
+            <a name="d61400e774"></a><p>You can specify additional mapping between YouTrack issue fields and Mantis issue fields.
+                To define additional mapping, use <code class="code" data-lang="xml">FIELD_NAMES</code> dictionary.
+                In default provided <code class="code" data-lang="xml">defaultMantis.py</code> mapping file, the following dictionary is defined:</p>
+            <a name="d61400e783"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="n">mantis</span><span class="o">.</span><span class="na">FIELD_NAMES</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="n">u</span><span class="s">&quot;severity&quot;</span>         <span class="o">:</span>   <span class="o">[</span><span class="n">u</span><span class="s">&quot;Severity&quot;</span><span class="o">,</span> <span class="n">u</span><span class="s">&quot;Type&quot;</span><span class="o">],</span>
+    <span class="n">u</span><span class="s">&quot;handler&quot;</span>          <span class="o">:</span>   <span class="o">[</span><span class="n">u</span><span class="s">&quot;Assignee&quot;</span><span class="o">],</span>
+    <span class="n">u</span><span class="s">&quot;status&quot;</span>           <span class="o">:</span>   <span class="o">[</span><span class="n">u</span><span class="s">&quot;State&quot;</span><span class="o">],</span>
+    <span class="n">u</span><span class="s">&quot;resolution&quot;</span>       <span class="o">:</span>   <span class="o">[</span><span class="n">u</span><span class="s">&quot;State&quot;</span><span class="o">],</span>
+    <span class="n">u</span><span class="s">&quot;category&quot;</span>         <span class="o">:</span>   <span class="o">[</span><span class="n">u</span><span class="s">&quot;Subsystem&quot;</span><span class="o">],</span>
+    <span class="n">u</span><span class="s">&quot;version&quot;</span>          <span class="o">:</span>   <span class="o">[</span><span class="n">u</span><span class="s">&quot;Affected versions&quot;</span><span class="o">],</span>
+    <span class="n">u</span><span class="s">&quot;fixed_in_version&quot;</span> <span class="o">:</span>   <span class="o">[</span><span class="n">u</span><span class="s">&quot;Fix versions&quot;</span><span class="o">],</span> <span class="err">#</span> <span class="n">DO</span> <span class="n">NOT</span> <span class="n">remove</span> <span class="n">Fix</span> <span class="n">versions</span> <span class="n">form</span> <span class="k">this</span> <span class="n">list</span><span class="o">,</span> <span class="k">if</span> <span class="n">needed</span> <span class="n">you</span> <span class="n">can</span> <span class="n">add</span> <span class="n">one</span> <span class="n">more</span> <span class="n">field</span>
+    <span class="err">#</span> <span class="n">but</span> <span class="n">DO</span> <span class="n">NOT</span> <span class="n">delete</span> <span class="n">Fix</span> <span class="n">versions</span>
+    <span class="n">u</span><span class="s">&quot;build&quot;</span>            <span class="o">:</span>   <span class="o">[</span><span class="n">u</span><span class="s">&quot;Fixed in build&quot;</span><span class="o">],</span>
+    <span class="n">u</span><span class="s">&quot;os_build&quot;</span>         <span class="o">:</span>   <span class="o">[</span><span class="n">u</span><span class="s">&quot;OS version&quot;</span><span class="o">],</span>
+    <span class="n">u</span><span class="s">&quot;subproject&quot;</span>       <span class="o">:</span>   <span class="o">[</span><span class="n">u</span><span class="s">&quot;Subproject&quot;</span><span class="o">],</span>
+    <span class="n">u</span><span class="s">&quot;os&quot;</span>               <span class="o">:</span>   <span class="o">[</span><span class="n">u</span><span class="s">&quot;OS&quot;</span><span class="o">],</span>
+    <span class="n">u</span><span class="s">&quot;due_date&quot;</span>         <span class="o">:</span>   <span class="o">[</span><span class="n">u</span><span class="s">&quot;Due date&quot;</span><span class="o">],</span>
+    <span class="n">u</span><span class="s">&quot;target_version&quot;</span>   <span class="o">:</span>   <span class="o">[</span><span class="n">u</span><span class="s">&quot;Target version&quot;</span><span class="o">]</span> <span class="err">#</span> <span class="n">it</span><span class="err">&#39;</span><span class="n">s</span> <span class="n">better</span> <span class="n">to</span> <span class="kn">import</span> <span class="nn">this</span> <span class="n">fields</span> <span class="n">with</span> <span class="n">version</span> <span class="n">type</span>
+<span class="o">}</span></code></div>
+            <a name="d61400e786"></a><p>Also, you can change target field types (field types in YouTrack) using <code class="code" data-lang="xml">FIELD_TYPES</code> dictionary.
+                In the default mapping file, the following dictionary is defined:</p>
+            <a name="d61400e792"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="n">mantis</span><span class="o">.</span><span class="na">FIELD_TYPES</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="n">u</span><span class="s">&quot;Priority&quot;</span>             <span class="o">:</span>   <span class="s">&quot;enum[1]&quot;</span><span class="o">,</span>
+    <span class="n">u</span><span class="s">&quot;Type&quot;</span>                 <span class="o">:</span>   <span class="s">&quot;enum[1]&quot;</span><span class="o">,</span>
+    <span class="n">u</span><span class="s">&quot;State&quot;</span>                <span class="o">:</span>   <span class="s">&quot;state[1]&quot;</span><span class="o">,</span>
+    <span class="n">u</span><span class="s">&quot;Fix versions&quot;</span>         <span class="o">:</span>   <span class="s">&quot;version[*]&quot;</span><span class="o">,</span>
+    <span class="n">u</span><span class="s">&quot;Affected versions&quot;</span>    <span class="o">:</span>   <span class="s">&quot;version[*]&quot;</span><span class="o">,</span>
+    <span class="n">u</span><span class="s">&quot;Assignee&quot;</span>             <span class="o">:</span>   <span class="s">&quot;user[1]&quot;</span><span class="o">,</span>
+    <span class="n">u</span><span class="s">&quot;Fixed in build&quot;</span>       <span class="o">:</span>   <span class="s">&quot;build[1]&quot;</span><span class="o">,</span>
+    <span class="n">u</span><span class="s">&quot;Subsystem&quot;</span>            <span class="o">:</span>   <span class="s">&quot;ownedField[1]&quot;</span><span class="o">,</span>
+    <span class="n">u</span><span class="s">&quot;Subproject&quot;</span>           <span class="o">:</span>   <span class="s">&quot;ownedField[1]&quot;</span><span class="o">,</span>
+    <span class="n">u</span><span class="s">&quot;Severity&quot;</span>             <span class="o">:</span>   <span class="s">&quot;enum[1]&quot;</span><span class="o">,</span>
+    <span class="n">u</span><span class="s">&quot;Platform&quot;</span>             <span class="o">:</span>   <span class="s">&quot;string&quot;</span><span class="o">,</span>
+    <span class="n">u</span><span class="s">&quot;OS&quot;</span>                   <span class="o">:</span>   <span class="s">&quot;string&quot;</span><span class="o">,</span>
+    <span class="n">u</span><span class="s">&quot;OS version&quot;</span>           <span class="o">:</span>   <span class="s">&quot;string&quot;</span><span class="o">,</span>
+    <span class="n">u</span><span class="s">&quot;Reproducibility&quot;</span>      <span class="o">:</span>   <span class="s">&quot;enum[1]&quot;</span><span class="o">,</span>
+    <span class="n">u</span><span class="s">&quot;Due date&quot;</span>             <span class="o">:</span>   <span class="s">&quot;date&quot;</span><span class="o">,</span>
+    <span class="n">u</span><span class="s">&quot;Target version&quot;</span>       <span class="o">:</span>   <span class="s">&quot;version[1]&quot;</span>
+<span class="o">}</span></code></div>
+            <a name="d61400e796"></a><p> The default custom fields type mapping is used in the import rules in <code class="code" data-lang="xml">mantis2youtrack.py</code>.
+                Please update the import rules in your script when changing the mapping.</p>
+         
+    <div class="last-modified">Last modified: 2 February 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

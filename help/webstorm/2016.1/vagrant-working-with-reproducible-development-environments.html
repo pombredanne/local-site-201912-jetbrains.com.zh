@@ -1,0 +1,236 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"></meta><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><title>WebStorm 2016.1 Help :: Vagrant: Working with Reproducible Development Environments</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Vagrant_Support"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search WebStorm Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>WebStorm 2016.1 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWindow</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="using-file-watchers.html">Using File Watchers</a><a class="navigation-links__next" href="using-language-injections.html">Using Language Injections</a></div><h1>Vagrant: Working with Reproducible Development Environments</h1><a name="d269978e12"></a><p>In this section:</p><ul><li class="list__item"><a href="#d269978e94">Basics</a></li><li class="list__item"><a href="#d269978e168">Before You Start</a></li><li class="list__item"><a href="#d269978e206">Vagrant Support</a></li><li class="list__item"><a href="#d269978e269">Preparing to Work with Vagrant</a></li><li class="list__item"><a href="#d269978e378">Initializing the Vagrantfile</a><ul class="list _bullet"><li class="list__item"><a href="#d269978e419">To initialize the Vagrantfile</a></li></ul></li><li class="list__item"><a href="#vagrant_up">Creating and launching an instance (virtual machine)</a><ul class="list _bullet"><li class="list__item"><a href="#d269978e490">To create an instance, follow these steps:</a></li></ul></li><li class="list__item"><a href="#d269978e524">Stopping, suspending, resuming, reloading, and destroying an instance (virtual machine)</a><ul class="list _bullet"><li class="list__item"><a href="#d269978e526">To reload an instance</a></li><li class="list__item"><a href="#d269978e546">To suspend an instance</a></li><li class="list__item"><a href="#d269978e566">To resume an instance</a></li><li class="list__item"><a href="#d269978e586">To shut an instance down</a></li></ul></li></ul><a name="d269978e94"></a><h2>Basics</h2>
+    <a name="d269978e96"></a><p>
+        Integration with <a name="d269978e98"></a><a href="http://vagrantup.com/" data-external="true"><span>Vagrant</span></a> helps you create reproducible development environments defined by <a name="d269978e101"></a><span class="emphasis">VagrantFile</span> configuration files.
+        To have the same environment set up on the machines of all the team members you only need to put the <a name="d269978e104"></a><span class="emphasis">VagrantFile</span> under your team version control.
+        Any team member can set up the required environment by running the <code class="code" data-lang="Java">vagrant up</code> command with the relevant <a name="d269978e110"></a><span class="emphasis">VagrantFile</span>.
+        Vagrant support in WebStorm is provided through the <a name="d269978e114"></a><span class="emphasis">Vagrant</span> plugin that comes bundled with WebStorm.
+    </p>
+
+            <a name="d269978e118"></a><p>
+                In the context of WebStorm, the following terms are used to denote Vagrant-specific notions:
+            </p>
+            <ul class="list _bullet"><li class="list__item"><a name="d269978e123"></a>
+                    A <a name="d269978e125"></a><span class="emphasis">Vagrant box</span> in the WebStorm user interface or <a name="d269978e128"></a><span class="emphasis">Vagrant base box</span> in the current documentation
+                    is a <a name="d269978e131"></a><a href="http://docs.vagrantup.com/v2/boxes.html" data-external="true"><span>box</span></a> in the native Vagrant terminology. It denotes a pure image, a skeleton,
+                    on the base of which a specific environment is customized, provisioned, and deployed on your machine.
+                </li><li class="list__item"><a name="d269978e135"></a>
+                    An <a name="d269978e137"></a><span class="emphasis">instance</span> is a <a name="d269978e140"></a><span class="emphasis">virtual machine</span>. In other words, it is a specific environment customized, provisioned, and deployed on your machine
+                    on the base of a <a name="d269978e143"></a><span class="emphasis">Vagrant base box</span> and in accordance with a <a name="d269978e146"></a><span class="emphasis">VagrantFile</span>.
+                    In other similar products and documentation, an <a name="d269978e149"></a><span class="emphasis">instance</span> can be referred to as <a name="d269978e153"></a><span class="emphasis">virtual machine</span>.
+                </li><li class="list__item"><a name="d269978e157"></a>
+                    An <a name="d269978e159"></a><span class="emphasis">instance folder</span> is the folder where the relevant <a name="d269978e162"></a><span class="emphasis">VagrantFile</span> is stored after initialization and where WebStorm will look for it.
+                    By default, it is the project root folder.
+                </li></ul>
+<a name="d269978e168"></a><h2>Before You Start</h2>
+        <ol class="list _decimal"><li class="list__item"><a name="d269978e172"></a>
+                Download and install <a name="d269978e174"></a><a href="http://www.vagrantup.com/" data-external="true"><span>Vagrant</span></a>.
+            </li><li class="list__item"><a name="d269978e178"></a>
+                Download and install the <a name="d269978e180"></a><a href="https://www.virtualbox.org/" data-external="true"><span>Oracle's VirtualBox</span></a>.
+            </li><li class="list__item"><a name="d269978e184"></a>
+                 
+        Make sure that the parent folders of the following executable files are added to the system <a name="d77e324"></a><span class="emphasis">PATH</span> variable:
+        <ul class="list _ul"><li class="list__item"><a name="d77e329"></a>
+                <code class="code" data-lang="Java">vagrant.bat</code> or <code class="code" data-lang="Java">vagrant</code> from your Vagrant installation. This should be done automatically by the Vagrant installer.</li><li class="list__item"><a name="d77e338"></a>
+                <code class="code" data-lang="Java">VBoxManage.exe</code> or <code class="code" data-lang="Java">VBoxManage</code> from your Oracle's VirtualBox installation.</li></ul>
+     
+            </li><li class="list__item"><a name="d269978e189"></a>
+                 
+                     
+                 
+                 
+        <a name="d7162e5498"></a><span class="emphasis">Install</span> and <a name="d7162e5501"></a><span class="emphasis">enable</span> the Vagrant plugin.
+         
+            The plugin is&nbsp;not&nbsp;bundled with WebStorm, but it can be installed from the <a name="d7162e5517"></a><span class="emphasis">JetBrains plugin repository</span>
+            as described in <a name="d7162e5520"></a><a href="installing-updating-and-uninstalling-repository-plugins.html"><span>Installing, Updating and Uninstalling Repository Plugins</span></a> and <a name="d7162e5522"></a><a href="enabling-and-disabling-plugins.html"><span>Enabling and Disabling Plugins</span></a>.
+     
+     
+                 
+            The plugin is&nbsp;not&nbsp;bundled with WebStorm, but it can be installed from the <a name="d7162e5517"></a><span class="emphasis">JetBrains plugin repository</span>
+            as described in <a name="d7162e5520"></a><a href="installing-updating-and-uninstalling-repository-plugins.html"><span>Installing, Updating and Uninstalling Repository Plugins</span></a> and <a name="d7162e5522"></a><a href="enabling-and-disabling-plugins.html"><span>Enabling and Disabling Plugins</span></a>.
+     
+            </li></ol>
+    <a name="d269978e206"></a><h2>Vagrant Support</h2>
+        <a name="d269978e208"></a><p>Once the Vagrant plugin is enabled, the following changes are made to the WebStorm UI:</p>
+        <ul class="list _ul"><li class="list__item"><a name="d269978e213"></a>A <a name="d269978e215"></a><a href="vagrant.html"><span>Vagrant page</span></a> is added to the <a name="d269978e218"></a><span class="control">Settings</span>
+                  dialog. </li><li class="list__item"><a name="d269978e225"></a>A <a name="d269978e227"></a><span class="control">Vagrant</span> node is added to the <a name="d269978e230"></a><span class="menupath">Tools</span> menu. The node contains the following commands
+                that correspond to the standard Vagrant actions:
+                <figure><img alt="vagrant_node" width="401" height="294" title="vagrant_node" src="/help/img/idea/2016.1/vagrant_node.png"></figure>
+            </li></ul>
+        <a name="d269978e237"></a><p>Vagrant support in WebStorm features:</p>
+        <ul class="list _ul"><li class="list__item"><a name="d269978e242"></a>capability to <a name="d269978e244"></a><a href="Creating_and_Removing_Vagrant_Boxes.html"><span>create new virtual boxes, and delete</span></a> the unnecessary ones.</li><li class="list__item"><a name="d269978e254"></a>capability to <a name="d269978e256"></a><a href="Initializing_Vagrant_Boxes.html"><span>initialize Vagrant boxes</span></a>, and execute other Vagrant commands without leaving the IDE.</li><li class="list__item"><a name="per_project_vagrant"></a>Multiple Vagrant configuration: when performing the <a name="d269978e262"></a><a href="#vagrant_up"><span>vagrant up</span></a> command,
+            you are suggested to select the desired virtual box. </li></ul>
+<a name="d269978e269"></a><h2>Preparing to Work with Vagrant</h2>
+    <ol class="list _decimal"><li class="list__item"><a name="d269978e273"></a>
+             
+         
+            Open the <a name="d7162e7944"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by choosing <a name="d7162e7946"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d7162e7949"></a><span class="menupath">WebStorm | Preferences</span> for OS X,
+         
+         
+            and  
+         
+         
+         
+        click <a name="d7162e7972"></a><span class="control">Vagrant</span> under <a name="d7162e7975"></a><span class="control">Tools</span>.
+     
+     
+            The <a name="d269978e284"></a><span class="control">Vagrant</span> page opens.
+        </li><li class="list__item"><a name="d269978e288"></a>
+            Specify the <a name="d269978e290"></a><span class="emphasis">Vagrant</span> executable file. Because the parent folder of the executable file has been already added to the system <a name="d269978e293"></a><span class="emphasis">PATH</span> variable,
+            type just the name of the executable.
+        </li><li class="list__item"><a name="d269978e297"></a>
+            In the <a name="d269978e299"></a><span class="control">Instance Folder</span> field, specify the fully qualified path to the directory where the <code class="code" data-lang="Java">VagrantFile</code> is initialized and stored.
+             
+        A <code class="code" data-lang="Java">VagrantFile</code> is a configuration file that defines the <a name="d7162e5640"></a><span class="emphasis">instance</span> (<a name="d7162e5643"></a><span class="emphasis">virtual machine</span>) you need.
+        The file contains the virtual IP address, port mappings, and the memory size to assign. The file can specify which folders are shared and which third-party software should be installed.
+        According to the <code class="code" data-lang="Java">VagrantFile</code> your <a name="d7162e5649"></a><span class="emphasis">instance</span> (<a name="d7162e5653"></a><span class="emphasis">virtual machine</span>) is configured, provisioned  against the relevant <a name="d7162e5656"></a><span class="emphasis">Vagrant base box</span>,
+        and deployed on your computer. A <code class="code" data-lang="Java">VagrantFile</code> is created through the <code class="code" data-lang="Java">vagrant init</code> command.
+     
+            <a name="d269978e307"></a><p>
+                 
+        When creation of an <a name="d7162e5668"></a><span class="emphasis">instance</span> (<a name="d7162e5671"></a><span class="emphasis">virtual machine</span>) is invoked either through the <code class="code" data-lang="Java">vagrant up</code> command
+        or through the <a name="d7162e5677"></a><span class="menupath">Tools | Vagrant | Up</span> menu option, WebStorm looks for the <code class="code" data-lang="Java">VagrantFile</code>
+        in the directory specified in the <a name="d7162e5684"></a><span class="control">Instance folder</span> field.
+        For more information, see <a name="d7162e5687"></a><a href="http://docs.vagrantup.com/v2/vagrantfile/" data-external="true"><span>http://docs.vagrantup.com/v2/vagrantfile/</span></a>.
+     
+            </p>
+            <a name="d269978e312"></a><p>
+                 
+        You can create a <code class="code" data-lang="Java">VagrantFile</code>  in any directory and appoint it as <a name="d7162e5697"></a><span class="emphasis">instance folder</span>.
+        If the field is empty, WebStorm will treat the <a name="d7162e5700"></a><span class="emphasis">project root</span> as the <a name="d7162e5703"></a><span class="emphasis">instance folder</span>
+        and look for a <code class="code" data-lang="Java">VagrantFile</code> in it.
+     
+            </p>
+        </li><li class="list__item"><a name="d269978e318"></a>
+            In the <a name="d269978e320"></a><span class="control">Vagrant Boxes</span> area, configure a list of the predefined <a name="d269978e323"></a><a href="http://docs.vagrantup.com/v2/boxes.html" data-external="true"><span>Vagrant base boxes</span></a> available in WebStorm.
+             
+        Each item presents a <a name="d7162e5712"></a><span class="emphasis">Vagrant base box</span> on which Vagrant configures and launches its <a name="d7162e5715"></a><span class="emphasis">instances</span> (<a name="d7162e5718"></a><span class="emphasis">virtual machines</span>).
+        The entries of this list correspond to the output of the command <code class="code" data-lang="Java">vagrant box list</code>.
+     
+            <ul class="list _bullet"><li class="list__item"><a name="d269978e330"></a>
+                    To download a new <a name="d269978e332"></a><span class="emphasis">base box</span>, click the <a name="d269978e335"></a><span class="control">Add</span> button <img alt="add" width="12" height="12" title="add" src="/help/img/idea/2016.1/new.png" class="inline-icon-12">.
+                    In the dialog box that opens, specify the URL address to access the <a name="d269978e340"></a><span class="emphasis">base box</span> and the name to refer to it in WebStorm.
+                    By default, WebStorm suggests the URL to the <a name="d269978e343"></a><span class="emphasis">lucid32</span> box.
+                        <a name="d269978e347"></a><p>
+                            This command corresponds to <code class="code" data-lang="Java">vagrant box add &lt;name&gt; &lt;URL&gt;</code>. As a result, the specified <a name="d269978e352"></a><span class="emphasis">base box</span> is downloaded to your machine.
+                        </p>
+                </li><li class="list__item"><a name="d269978e357"></a>
+                    To remove a <a name="d269978e359"></a><span class="emphasis">base box</span>, select it in the list and click the <a name="d269978e362"></a><span class="control">Remove</span> button <img alt="delete" width="12" height="12" title="delete" src="/help/img/idea/2016.1/delete.png" class="inline-icon-12">.
+                    The <a name="d269978e367"></a><span class="emphasis">base box</span> and the nested files are physically deleted from the disk. This command corresponds to
+                    <code class="code" data-lang="Java">vagrant box remove &lt;name&gt;</code>.
+                </li></ul>
+        </li></ol>
+<a name="d269978e378"></a><h2>Initializing the Vagrantfile</h2>
+
+                    <a name="d269978e380"></a><p>
+                         
+        A <code class="code" data-lang="Java">VagrantFile</code> is a configuration file that defines the <a name="d7162e5640"></a><span class="emphasis">instance</span> (<a name="d7162e5643"></a><span class="emphasis">virtual machine</span>) you need.
+        The file contains the virtual IP address, port mappings, and the memory size to assign. The file can specify which folders are shared and which third-party software should be installed.
+        According to the <code class="code" data-lang="Java">VagrantFile</code> your <a name="d7162e5649"></a><span class="emphasis">instance</span> (<a name="d7162e5653"></a><span class="emphasis">virtual machine</span>) is configured, provisioned  against the relevant <a name="d7162e5656"></a><span class="emphasis">Vagrant base box</span>,
+        and deployed on your computer. A <code class="code" data-lang="Java">VagrantFile</code> is created through the <code class="code" data-lang="Java">vagrant init</code> command.
+     
+                    </p>
+                    <a name="d269978e385"></a><p>
+                        You can initialize the <a name="d269978e387"></a><span class="emphasis">Vagrantfile</span> in any folder, just keep in mind that this folder should be specified as the <a name="d269978e390"></a><span class="emphasis">instance folder</span>
+                        on the <a name="d269978e393"></a><span class="control">Vagrant</span> page of the <a name="d269978e396"></a><span class="control">Settings</span>
+                 dialog box. Otherwise WebStorm will be unable to find the relevant <a name="d269978e403"></a><span class="emphasis">VagrantFile</span>
+                        during the <a name="d269978e406"></a><span class="emphasis">instance</span> (<a name="d269978e409"></a><span class="emphasis">virtual machine</span>) creation.
+                    </p>
+                    <a name="d269978e413"></a><p>
+                        To initialize the <a name="d269978e415"></a><span class="emphasis">VagrantFile</span>, do one of the following:
+                    </p>
+
+               <a name="d269978e419"></a><a name="dynaProc0"></a><section class="procedure-steps"><h2>To initialize the Vagrantfile</h2><ol class=".list _decimal"><li class="list__item">
+                    To have the <a name="d269978e423"></a><span class="emphasis">Vagrantfile</span> created in the project root, choose <a name="d269978e426"></a><span class="menupath">Tools | Vagrant | Init on Project Root</span> on the main menu
+                    and select the target project root from the pop-up list that opens.
+                    The output of the <code class="code" data-lang="Java">init</code> command is displayed in the <a name="d269978e432"></a><span class="control">Run</span> tool window.
+                </li><li class="list__item">
+                    To have the <a name="d269978e438"></a><span class="emphasis">Vagrantfile</span> created in a specific folder,
+                     
+ 
+        launch the embedded <a name="d9041e48"></a><span class="control">Terminal</span>
+        by hovering  your mouse pointer over <img alt="show_tool_window_bars" width="14" height="14" title="show_tool_window_bars" src="/help/img/idea/2016.1/show_tool_window_bars.png" class="inline-icon-14"> in the lower left corner of WebStorm and choosing  <a name="d9041e53"></a><span class="control">Terminal</span> from the menu
+        (see <a name="d9041e56"></a><a href="working-with-embedded-local-terminal.html"><span>Working with Embedded Local Terminal</span></a> for details).
+     
+                    Then type the following commands at the prompt:
+                    <a name="d269978e446"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+cd &lt;directory to initialize the VagrantFile in&gt;
+vagrant init &lt;base box name&gt; &lt;base box url&gt;
+                    </code></div>
+                </li></ol></section>
+                <a name="d269978e451"></a><p>
+                    Once the <a name="d269978e453"></a><span class="emphasis">VagrantFile</span> initialization is successfully completed, you are ready
+                    to import the <a name="d269978e456"></a><span class="emphasis">base box</span>, provision and deploy it according to the <a name="d269978e459"></a><span class="emphasis">VagrantFile</span>,
+                    thus creating your own <a name="d269978e462"></a><span class="emphasis">instance</span> (<a name="d269978e465"></a><span class="emphasis">virtual machine</span>).
+                </p>
+
+            <a name="vagrant_up"></a><h2>Creating and launching an instance (virtual machine)</h2>
+    <a name="d269978e472"></a><p>
+        Creating an <a name="d269978e474"></a><span class="emphasis">instance</span> (<a name="d269978e477"></a><span class="emphasis">virtual machine</span>) means importing and provisioning a <a name="d269978e480"></a><span class="emphasis">base box</span>
+        according to the <a name="d269978e483"></a><span class="emphasis">VagrantFile</span> located in the <a name="d269978e486"></a><span class="emphasis">instance folder</span>.
+    </p>
+            <a name="d269978e490"></a><a name="dynaProc1"></a><section class="procedure-steps"><h2>To create an instance, follow these steps:</h2><ol class=".list _decimal"><li class="list__item">Do one of the following:
+                    <ul class="list _ul"><li class="list__item"><a name="d269978e496"></a>To have the instance created in the project root, choose <a name="d269978e498"></a><span class="menupath">Tools | Vagrant | Up</span>.</li><li class="list__item"><a name="d269978e502"></a>
+ 
+        Launch the embedded <a name="d9041e48"></a><span class="control">Terminal</span>
+        by hovering  your mouse pointer over <img alt="show_tool_window_bars" width="14" height="14" title="show_tool_window_bars" src="/help/img/idea/2016.1/show_tool_window_bars.png" class="inline-icon-14"> in the lower left corner of WebStorm and choosing  <a name="d9041e53"></a><span class="control">Terminal</span> from the menu
+        (see <a name="d9041e56"></a><a href="working-with-embedded-local-terminal.html"><span>Working with Embedded Local Terminal</span></a> for details).
+     
+                           <a name="d269978e508"></a><p>Then type the following commands at the prompt:</p>
+<a name="d269978e511"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+    cd &lt;instance folder&gt;
+    vagrant up
+</code></div>
+                        </li></ul>
+                    </li><li class="list__item">Select the desired virtual machine configuration from the suggestion list:
+                    <figure><img alt="vagrant_select_vm_config" width="190" height="85" title="vagrant_select_vm_config" src="/help/img/idea/2016.1/vagrant_select_vm_config.png"></figure>
+                </li></ol></section>
+<a name="d269978e524"></a><h2>Stopping, suspending, resuming, reloading, and destroying an instance (virtual machine)</h2>
+            <a name="d269978e526"></a><a name="dynaProc2"></a><section class="procedure-steps"><h2>To reload an instance</h2><ul class=".list "><li class="list__item">
+                    If you have made  some changes to the <a name="d269978e530"></a><span class="emphasis">VagrantFile</span> and want a running virtual machine updated in accordance to them,
+                    choose <a name="d269978e533"></a><span class="menupath">Tools | Vagrant | Reload</span> on the main menu or run the following command in the embedded <a name="d269978e536"></a><span class="control">Terminal</span>:
+                    <a name="d269978e539"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+vagrant reload
+                    </code></div>
+                    For details, see <a name="d269978e542"></a><a href="http://docs.vagrantup.com/v2/cli/reload.html" data-external="true"><span>http://docs.vagrantup.com/v2/cli/reload.html</span></a>.
+                </li></ul></section>
+                <a name="d269978e546"></a><a name="dynaProc3"></a><section class="procedure-steps"><h2>To suspend an instance</h2><ul class=".list "><li class="list__item">
+                    To temporary stop the operating system on a running virtual machine (<a name="d269978e550"></a><span class="emphasis">guest machine</span>) and save the exact state of the environment as it is at this moment
+                    so it can be resumed exactly from this point, choose <a name="d269978e553"></a><span class="menupath">Tools | Vagrant | Suspend</span> on the main menu or run the following command in the embedded <a name="d269978e556"></a><span class="control">Terminal</span>:
+                    <a name="d269978e559"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+vagrant suspend
+                    </code></div>
+                    For details, see <a name="d269978e562"></a><a href="http://docs.vagrantup.com/v2/cli/suspend.html" data-external="true"><span>http://docs.vagrantup.com/v2/cli/suspend.html</span></a>.
+                </li></ul></section>
+                <a name="d269978e566"></a><a name="dynaProc4"></a><section class="procedure-steps"><h2>To resume an instance</h2><ul class=".list "><li class="list__item">
+                    To resume a previously suspended operating system on a virtual machine (<a name="d269978e570"></a><span class="emphasis">guest machine</span>) and have it run from the state saved at the suspension moment,
+                    choose <a name="d269978e573"></a><span class="menupath">Tools | Vagrant | Resume</span> on the main menu or run the following command in the embedded <a name="d269978e576"></a><span class="control">Terminal</span>:
+                    <a name="d269978e579"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+vagrant resume
+                    </code></div>
+                    For details, see <a name="d269978e582"></a><a href="http://docs.vagrantup.com/v2/cli/resume.html" data-external="true"><span>http://docs.vagrantup.com/v2/cli/resume.html</span></a>.
+                </li></ul></section>
+                <a name="d269978e586"></a><a name="dynaProc5"></a><section class="procedure-steps"><h2>To shut an instance down</h2><ul class=".list "><li class="list__item">
+                    To shut down the operating system on a virtual machine (<a name="d269978e590"></a><span class="emphasis">guest machine</span>),
+                    choose <a name="d269978e593"></a><span class="menupath">Tools | Vagrant | Halt</span> on the main menu or run the following command in the embedded <a name="d269978e596"></a><span class="control">Terminal</span>:
+                    <a name="d269978e599"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+vagrant halt
+                    </code></div>
+                    For details, see <a name="d269978e602"></a><a href="http://docs.vagrantup.com/v2/cli/halt.html" data-external="true"><span>http://docs.vagrantup.com/v2/cli/halt.html</span></a>.
+                </li><li class="list__item">
+                    To shut down the operating system on a virtual machine (<a name="d269978e607"></a><span class="emphasis">guest machine</span>), stop the virtual machine itself,
+                    and remove the resources provisioned on it during the creation (<code class="code" data-lang="Java">vagrant up</code>),
+                    choose <a name="d269978e613"></a><span class="menupath">Tools | Vagrant | Destroy</span> on the main menu or run the following command in the embedded <a name="d269978e616"></a><span class="control">Terminal</span>:
+                    <a name="d269978e619"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+vagrant destroy
+                    </code></div>
+                    For details, see <a name="d269978e623"></a><a href="http://docs.vagrantup.com/v2/cli/destroy.html" data-external="true"><span>http://docs.vagrantup.com/v2/cli/destroy.html</span></a>.
+                </li></ul></section>
+        <div class="navigation-links _bottom"><a class="navigation-links__prev" href="using-file-watchers.html">Using File Watchers</a><a class="navigation-links__next" href="using-language-injections.html">Using Language Injections</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content"><div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d269978e639"></a><a href="Running_SSH_Terminal.html"><span>Running SSH Terminal</span></a></li></ul></div><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d269978e632"></a><a href="vagrant.html"><span>Vagrant</span></a></li></ul></div><div class="seealso__col"><h3>External Links:</h3><ul class="list"><li class="list__item"><a name="d269978e644"></a><a href="http://vagrantup.com/" data-external="true"><span>Vagrant</span></a></li></ul></div></div></section><div class="last-modified">Last modified: 11 July 2016 </div></article><div id="disqus_thread"></div></div></section></main></div><script src="/help/app/app.js"></script></body></html>

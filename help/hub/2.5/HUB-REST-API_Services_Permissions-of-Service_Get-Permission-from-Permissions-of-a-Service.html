@@ -1,0 +1,34 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="robots" content="noindex"><title>Hub 2.5 Help :: Get Permission from Permissions of a Service</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="HUB-REST-API_Services_Permissions-of-Service_Get-Permission-from-Permissions-of-a-Service"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search Hub Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>Hub 2.5 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="HUB-REST-API_Services_Permissions-of-Service_Add-Permission-to-Permissions-of-a-Service.html">Add Permission to Permissions of a Service</a><a class="navigation-links__next" href="HUB-REST-API_Services_Permissions-of-Service_Remove-Permission-from-Permissions-of-a-Service.html">Remove Permission from Permissions of a Service</a></div><h1>Get Permission from Permissions of a Service</h1><a name="request"></a><h2>Request</h2>
+        <div class="code-block"><code class="code-block__wrapper">GET <a name="d36294e7"></a><a href="Hub-Rest-Api-URL.html"><span>&lt;REST API URL&gt;</span></a>/services/{<a name="d36294e10"></a><b id="d36294e10">service id</b>}/permissions/{<a name="d36294e13"></a><b id="d36294e13">permission id</b>}?<font style="color:&#xA;                        #808080&#xA;                        ;&#xA;                    "><a name="d36294e17"></a><b id="d36294e17">fields</b>=<a name="d36294e20"></a><i id="d36294e20">string</i></font></code></div>
+
+        <table class="" width="100%" id="d36294e23"><thead><tr id="d36294e25" class="ijRowHead"><a name="d36294e25"></a><th><a name="d36294e27"></a> Parameter </th><th><a name="d36294e30"></a> Description </th></tr></thead><tbody><tr id="d36294e34" class="ijRowOdd"><a name="d36294e34"></a><td><a name="d36294e36"></a> <a name="d36294e38"></a><b id="d36294e38"><font style="color:&#xA;                        #808080&#xA;                        ;&#xA;                    "><code class="code" data-lang="Java">fields</code></font></b> </td><td><a name="d36294e44"></a> Optional query parameter. Specifies a subset of the fields to be returned. Use <a name="d36294e46"></a><a href="Fields-Syntax.html"><span>Fields Syntax</span></a> to define subset. </td></tr></tbody></table>
+    <a name="response"></a><h2>Response</h2>
+        <table class="" width="100%" id="d36294e55"><thead><tr id="d36294e57" class="ijRowHead"><a name="d36294e57"></a><th><a name="d36294e59"></a> Response Code </th><th><a name="d36294e62"></a> Meaning </th></tr></thead><tbody><tr id="d36294e66" class="ijRowOdd"><a name="d36294e66"></a><td><a name="d36294e68"></a> 200 OK </td><td><a name="d36294e71"></a> Successful request. </td></tr><tr id="d36294e75" class="ijRowEven"><a name="d36294e75"></a><td><a name="d36294e77"></a> 400 Bad Request </td><td><a name="d36294e80"></a> Some of the parameters of the request are invalid (for example, required fields in the passed JSON object are missing). The response contains message describing the error. </td></tr><tr id="d36294e84" class="ijRowOdd"><a name="d36294e84"></a><td><a name="d36294e86"></a> 403 Forbidden </td><td><a name="d36294e89"></a> Requester has no access to the request. </td></tr><tr id="d36294e93" class="ijRowEven"><a name="d36294e93"></a><td><a name="d36294e95"></a> 404 Not Found </td><td><a name="d36294e98"></a> Requested resource wasn't found. </td></tr><tr id="d36294e103" class="ijRowOdd"><a name="d36294e103"></a><td><a name="d36294e105"></a> 500 Internal Server Error </td><td><a name="d36294e108"></a> Failed to process request because of the server error. The response contains message describing the error. </td></tr></tbody></table>
+
+        <a name="responseBody"></a><h3>Response body</h3>
+  <a name="permission"></a><h2>permission</h2>
+
+  <div class="code-block"><code class="code-block__wrapper">
+    {
+      "id": string, 
+      "aliasIds": [string, ...], 
+      "aliases": [<a name="d36294e120"></a><a href="HUB-REST-API_JSON-Scheme.html#alias"><span>alias</span></a>, ...], 
+      "key": string, 
+      "name": string, 
+      "service": <a name="d36294e123"></a><a href="HUB-REST-API_JSON-Scheme.html#service"><span>service</span></a>, 
+      "description": string, 
+      "global": boolean, 
+      "entityType": string, 
+      "operation": string
+    }
+  </code></div>
+         
+
+    <div class="last-modified">Last modified: 31 January 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

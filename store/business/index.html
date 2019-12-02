@@ -1,0 +1,1674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+                                            
+        <!-- Error reporting -->
+<script>(function(){
+  window.reportError = function(msg, file, line, col, err, isUnhandledRejection){};
+  var prevOnError = window.onerror;
+  var onError = function(msg, file, line, col, err) {
+    reportError(msg, file, line, col, err, false);
+    prevOnError && prevOnError.apply(window, arguments);
+    return false;
+  };
+  window.onerror = onError;
+  // Setup reporting for unhandled Promise rejection errors
+  window.addEventListener("unhandledrejection", function(e) {
+    if (!e.reason) return;
+    var l = getSrcLocation(e.reason);
+    reportError(e.reason.message, l.file, l.line, l.col, e.reason, true);
+  });
+  // Setup reporting for console.error and console.warn calls
+  patchConsole('error');
+  patchConsole('warn');
+  // Utility functions
+  function patchConsole(fnName) {
+    var fn = console[fnName];
+    console[fnName] = function() {
+      fn.apply(console, arguments);
+      var l; try {
+        throw new Error('_');
+      } catch (err) {
+        l = getSrcLocation(err, 1);
+      }
+      var msg = 'console.' + fnName + ': ' + Array.prototype.join.call(arguments, ' ');
+      reportError(msg, l.file, l.line, l.col, undefined, false);
+    };
+  }
+  function getSrcLocation(err, sd) {
+    var s = err && err.stack;
+    var l = s && s.split("\n")[1 + (sd|0)];
+    var r = l && (/^\s*at [^(]*\((.*?):(\d+)(:\d+)?\)$/.exec(l) || /^\s*at (.*?):(\d+)(:\d+)?$/.exec(l));
+    return r ? {file: r[1], line: r[2], col: r[3]} : {};
+  }
+})();</script>
+<!-- Error reporting -->        <!-- Google Tag Manager -->
+<script>(function() {
+  // Initialize Tag Manager queue
+  window.dataLayer = window.dataLayer || [];
+  window.gtmLoaded = false;
+  // Setup reporting for errors that occurred before Tag Manager initialized
+  var prevReportError = window.reportError;
+  var reportError = function(msg, file, line, col, err, isUnhandledRejection) {
+    if (!window.gtmLoaded || isUnhandledRejection) {
+      // Reproduce the behavior of the Tag Manager error handler
+      window.dataLayer.push(makeEvt(msg, file, line));
+    }
+    prevReportError && prevReportError.apply(window, arguments);
+  };
+  window.reportError = reportError;
+  // Utility functions
+  function makeEvt(msg, file, line) {
+    return {
+      event: "gtm.pageError", "gtm.errorMessage": msg,
+      "gtm.errorUrl": file, "gtm.errorLineNumber": line
+    };
+  }
+})();</script>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;j.addEventListener(
+    'load', function(){window.gtmLoaded=true});f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5P98');</script>
+<!-- End Google Tag Manager -->        <!-- Sentry -->
+<script>
+    (function() {
+        window.sentryLoaded = false;
+        window.errorsForSentry = [];
+        var prevReportError = window.reportError;
+        var reportError = function(
+            msg,
+            file,
+            line,
+            col,
+            err,
+            isUnhandledRejection
+        ) {
+            if (!window.sentryLoaded) {
+                window.errorsForSentry.push(err);
+            }
+            prevReportError && prevReportError.apply(window, arguments);
+        };
+        window.reportError = reportError;
+    })();
+</script>
+<script>
+    window.sentryLoad = function() {
+        window.sentryLoaded = true;
+        Sentry.init({
+            dsn: 'https://1adb2a61713144eda0786e5af50ddc51@sentry.io/1423069',
+            release:
+                "jetbrainscom@a6ccaa6ddb",
+            beforeSend: function(event) {
+                Object.keys(event).forEach(function(key) {
+                    var value = event[key];
+                    if (isEmail(value)) {
+                        delete event[key];
+                    }
+                });
+                return event;
+            }
+        });
+        Sentry.configureScope(function(scope) {
+            scope.setTag('page_locale', 'en-us');
+            scope.setTag('browser.locale', getPageLocale());
+
+            scope.setTag('http.urlFull', location.href);
+            var protocol = location.protocol || '';
+            //omit `:` from location.protocol string
+            var protocolString = protocol.substring(0, protocol.length - 1);
+
+            scope.setTag('http.protocol', protocolString);
+
+            scope.setTag('http.hostname', location.hostname);
+
+            var search = location.search || '';
+            //omit ? from location.search string
+            var searchString = search.substr(1);
+            if (searchString !== '') {
+                scope.setTag('http.query', searchString || '1');
+            }
+            var hash = location.hash || '';
+            //omit # from location.hash string
+            var hashString = hash.substr(1);
+            if (hashString !== '') {
+                scope.setTag('http.fragment', hashString);
+            }
+        });
+        window.errorsForSentry.forEach(Sentry.captureException);
+
+        function getPageLocale() {
+            return (
+                (navigator.languages && navigator.languages[0]) ||
+                navigator.language
+            );
+        }
+        function isEmail(value) {
+            var emailRegex = /[\+\-\_\.a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+\.[a-zA-Z0-9]+/g;
+            return emailRegex.test(value);
+        }
+    };
+</script>
+<script src="https://browser.sentry-cdn.com/5.7.1/bundle.min.js" crossorigin="anonymous" onload="sentryLoad()" async></script>
+<!-- End Sentry -->    
+                <title>JetBrains Tools for Your Business</title>
+    
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, maximum-scale=1">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#000000">
+<meta name="apple-mobile-web-app-title" content="JetBrains">
+<meta name="application-name" content="JetBrains">
+<meta name="msapplication-TileColor" content="#000000">
+<meta name="theme-color" content="#000000">    <link rel="canonical" href="https://www.jetbrains.com/store/business/" />    <!-- .61-->
+        
+        <link rel="alternate" hreflang="x-default" href="https://www.jetbrains.com/store/business/" />
+
+                        <link rel="alternate" hreflang="en" href="https://www.jetbrains.com/store/business/" />
+                                <link rel="alternate" hreflang="de" href="https://www.jetbrains.com/de-de/store/business/" />
+                                <link rel="alternate" hreflang="es" href="https://www.jetbrains.com/es-es/store/business/" />
+                                <link rel="alternate" hreflang="fr" href="https://www.jetbrains.com/fr-fr/store/business/" />
+                                <link rel="alternate" hreflang="ja" href="https://www.jetbrains.com/ja-jp/store/business/" />
+                                <link rel="alternate" hreflang="ko" href="https://www.jetbrains.com/ko-kr/store/business/" />
+                                <link rel="alternate" hreflang="ru" href="https://www.jetbrains.com/ru-ru/store/business/" />
+                                <link rel="alternate" hreflang="zh-CN" href="https://www.jetbrains.com/zh-cn/store/business/" />
+                                            <link rel="alternate" hreflang="x-klingon" href="https://www.jetbrains.com/tl-aa/store/business/" />
+            
+    
+    
+        
+    
+        <script>
+        var productsData = {"currency": {"symbol": "$", "isPrefix": true, "iso": "USD"}, "countryCode": "US", "countryName": "United States", "vatInfoUrl": "https://www.jetbrains.com/shop/static/html/vat.html", "ALL": {"code": "ALL", "name": "All Products Pack", "prices": {"personal": {"monthly": ["$24.90"], "yearly": ["$249.00", "$199.00", "$149.00"]}, "commercial": {"monthly": ["$64.90"], "yearly": ["$649.00", "$519.00", "$389.00"]}}, "links": {"personal": {"monthly": {"buy": "https://www.jetbrains.com/shop/buy?item=P:N:ALL:M", "quote": "https://www.jetbrains.com/shop/quote?item=P:N:ALL:M"}, "yearly": {"buy": "https://www.jetbrains.com/shop/buy?item=P:N:ALL:Y", "quote": "https://www.jetbrains.com/shop/quote?item=P:N:ALL:Y"}}, "commercial": {"monthly": {"buy": "https://www.jetbrains.com/shop/buy?item=C:N:ALL:M", "quote": "https://www.jetbrains.com/shop/quote?item=C:N:ALL:M"}, "yearly": {"buy": "https://www.jetbrains.com/shop/buy?item=C:N:ALL:Y", "quote": "https://www.jetbrains.com/shop/quote?item=C:N:ALL:Y"}}}}, "AC": {"code": "AC", "name": "AppCode", "prices": {"personal": {"monthly": ["$8.90"], "yearly": ["$89.00", "$71.00", "$53.00"]}, "commercial": {"monthly": ["$19.90"], "yearly": ["$199.00", "$159.00", "$119.00"]}}, "links": {"personal": {"monthly": {"buy": "https://www.jetbrains.com/shop/buy?item=P:N:AC:M", "quote": "https://www.jetbrains.com/shop/quote?item=P:N:AC:M"}, "yearly": {"buy": "https://www.jetbrains.com/shop/buy?item=P:N:AC:Y", "quote": "https://www.jetbrains.com/shop/quote?item=P:N:AC:Y"}}, "commercial": {"monthly": {"buy": "https://www.jetbrains.com/shop/buy?item=C:N:AC:M", "quote": "https://www.jetbrains.com/shop/quote?item=C:N:AC:M"}, "yearly": {"buy": "https://www.jetbrains.com/shop/buy?item=C:N:AC:Y", "quote": "https://www.jetbrains.com/shop/quote?item=C:N:AC:Y"}}}}, "CL": {"code": "CL", "name": "CLion", "prices": {"personal": {"monthly": ["$8.90"], "yearly": ["$89.00", "$71.00", "$53.00"]}, "commercial": {"monthly": ["$19.90"], "yearly": ["$199.00", "$159.00", "$119.00"]}}, "links": {"personal": {"monthly": {"buy": "https://www.jetbrains.com/shop/buy?item=P:N:CL:M", "quote": "https://www.jetbrains.com/shop/quote?item=P:N:CL:M"}, "yearly": {"buy": "https://www.jetbrains.com/shop/buy?item=P:N:CL:Y", "quote": "https://www.jetbrains.com/shop/quote?item=P:N:CL:Y"}}, "commercial": {"monthly": {"buy": "https://www.jetbrains.com/shop/buy?item=C:N:CL:M", "quote": "https://www.jetbrains.com/shop/quote?item=C:N:CL:M"}, "yearly": {"buy": "https://www.jetbrains.com/shop/buy?item=C:N:CL:Y", "quote": "https://www.jetbrains.com/shop/quote?item=C:N:CL:Y"}}}}, "DB": {"code": "DB", "name": "DataGrip", "prices": {"personal": {"monthly": ["$8.90"], "yearly": ["$89.00", "$71.00", "$53.00"]}, "commercial": {"monthly": ["$19.90"], "yearly": ["$199.00", "$159.00", "$119.00"]}}, "links": {"personal": {"monthly": {"buy": "https://www.jetbrains.com/shop/buy?item=P:N:DB:M", "quote": "https://www.jetbrains.com/shop/quote?item=P:N:DB:M"}, "yearly": {"buy": "https://www.jetbrains.com/shop/buy?item=P:N:DB:Y", "quote": "https://www.jetbrains.com/shop/quote?item=P:N:DB:Y"}}, "commercial": {"monthly": {"buy": "https://www.jetbrains.com/shop/buy?item=C:N:DB:M", "quote": "https://www.jetbrains.com/shop/quote?item=C:N:DB:M"}, "yearly": {"buy": "https://www.jetbrains.com/shop/buy?item=C:N:DB:Y", "quote": "https://www.jetbrains.com/shop/quote?item=C:N:DB:Y"}}}}, "GO": {"code": "GO", "name": "GoLand", "prices": {"personal": {"monthly": ["$8.90"], "yearly": ["$89.00", "$71.00", "$53.00"]}, "commercial": {"monthly": ["$19.90"], "yearly": ["$199.00", "$159.00", "$119.00"]}}, "links": {"personal": {"monthly": {"buy": "https://www.jetbrains.com/shop/buy?item=P:N:GO:M", "quote": "https://www.jetbrains.com/shop/quote?item=P:N:GO:M"}, "yearly": {"buy": "https://www.jetbrains.com/shop/buy?item=P:N:GO:Y", "quote": "https://www.jetbrains.com/shop/quote?item=P:N:GO:Y"}}, "commercial": {"monthly": {"buy": "https://www.jetbrains.com/shop/buy?item=C:N:GO:M", "quote": "https://www.jetbrains.com/shop/quote?item=C:N:GO:M"}, "yearly": {"buy": "https://www.jetbrains.com/shop/buy?item=C:N:GO:Y", "quote": "https://www.jetbrains.com/shop/quote?item=C:N:GO:Y"}}}}, "II": {"code": "II", "name": "IntelliJ IDEA Ultimate", "prices": {"personal": {"monthly": ["$14.90"], "yearly": ["$149.00", "$119.00", "$89.00"]}, "commercial": {"monthly": ["$49.90"], "yearly": ["$499.00", "$399.00", "$299.00"]}}, "links": {"personal": {"monthly": {"buy": "https://www.jetbrains.com/shop/buy?item=P:N:II:M", "quote": "https://www.jetbrains.com/shop/quote?item=P:N:II:M"}, "yearly": {"buy": "https://www.jetbrains.com/shop/buy?item=P:N:II:Y", "quote": "https://www.jetbrains.com/shop/quote?item=P:N:II:Y"}}, "commercial": {"monthly": {"buy": "https://www.jetbrains.com/shop/buy?item=C:N:II:M", "quote": "https://www.jetbrains.com/shop/quote?item=C:N:II:M"}, "yearly": {"buy": "https://www.jetbrains.com/shop/buy?item=C:N:II:Y", "quote": "https://www.jetbrains.com/shop/quote?item=C:N:II:Y"}}}}, "PS": {"code": "PS", "name": "PhpStorm", "prices": {"personal": {"monthly": ["$8.90"], "yearly": ["$89.00", "$71.00", "$53.00"]}, "commercial": {"monthly": ["$19.90"], "yearly": ["$199.00", "$159.00", "$119.00"]}}, "links": {"personal": {"monthly": {"buy": "https://www.jetbrains.com/shop/buy?item=P:N:PS:M", "quote": "https://www.jetbrains.com/shop/quote?item=P:N:PS:M"}, "yearly": {"buy": "https://www.jetbrains.com/shop/buy?item=P:N:PS:Y", "quote": "https://www.jetbrains.com/shop/quote?item=P:N:PS:Y"}}, "commercial": {"monthly": {"buy": "https://www.jetbrains.com/shop/buy?item=C:N:PS:M", "quote": "https://www.jetbrains.com/shop/quote?item=C:N:PS:M"}, "yearly": {"buy": "https://www.jetbrains.com/shop/buy?item=C:N:PS:Y", "quote": "https://www.jetbrains.com/shop/quote?item=C:N:PS:Y"}}}}, "PC": {"code": "PC", "name": "PyCharm", "prices": {"personal": {"monthly": ["$8.90"], "yearly": ["$89.00", "$71.00", "$53.00"]}, "commercial": {"monthly": ["$19.90"], "yearly": ["$199.00", "$159.00", "$119.00"]}}, "links": {"personal": {"monthly": {"buy": "https://www.jetbrains.com/shop/buy?item=P:N:PC:M", "quote": "https://www.jetbrains.com/shop/quote?item=P:N:PC:M"}, "yearly": {"buy": "https://www.jetbrains.com/shop/buy?item=P:N:PC:Y", "quote": "https://www.jetbrains.com/shop/quote?item=P:N:PC:Y"}}, "commercial": {"monthly": {"buy": "https://www.jetbrains.com/shop/buy?item=C:N:PC:M", "quote": "https://www.jetbrains.com/shop/quote?item=C:N:PC:M"}, "yearly": {"buy": "https://www.jetbrains.com/shop/buy?item=C:N:PC:Y", "quote": "https://www.jetbrains.com/shop/quote?item=C:N:PC:Y"}}}}, "RS/RSU": {"code": "RS/RSU", "name": "ReSharper Ultimate", "prices": {"personal": {"monthly": ["$14.90"], "yearly": ["$149.00", "$119.00", "$89.00"]}, "commercial": {"monthly": ["$39.90"], "yearly": ["$399.00", "$319.00", "$239.00"]}}, "links": {"personal": {"monthly": {"buy": "https://www.jetbrains.com/shop/buy?item=P:N:RSU:M", "quote": "https://www.jetbrains.com/shop/quote?item=P:N:RSU:M"}, "yearly": {"buy": "https://www.jetbrains.com/shop/buy?item=P:N:RSU:Y", "quote": "https://www.jetbrains.com/shop/quote?item=P:N:RSU:Y"}}, "commercial": {"monthly": {"buy": "https://www.jetbrains.com/shop/buy?item=C:N:RSU:M", "quote": "https://www.jetbrains.com/shop/quote?item=C:N:RSU:M"}, "yearly": {"buy": "https://www.jetbrains.com/shop/buy?item=C:N:RSU:Y", "quote": "https://www.jetbrains.com/shop/quote?item=C:N:RSU:Y"}}}}, "RS/RS0": {"code": "RS/RS0", "name": "ReSharper", "prices": {"personal": {"monthly": ["$12.90"], "yearly": ["$129.00", "$103.00", "$77.00"]}, "commercial": {"monthly": ["$29.90"], "yearly": ["$299.00", "$239.00", "$179.00"]}}, "links": {"personal": {"monthly": {"buy": "https://www.jetbrains.com/shop/buy?item=P:N:RS0:M", "quote": "https://www.jetbrains.com/shop/quote?item=P:N:RS0:M"}, "yearly": {"buy": "https://www.jetbrains.com/shop/buy?item=P:N:RS0:Y", "quote": "https://www.jetbrains.com/shop/quote?item=P:N:RS0:Y"}}, "commercial": {"monthly": {"buy": "https://www.jetbrains.com/shop/buy?item=C:N:RS0:M", "quote": "https://www.jetbrains.com/shop/quote?item=C:N:RS0:M"}, "yearly": {"buy": "https://www.jetbrains.com/shop/buy?item=C:N:RS0:Y", "quote": "https://www.jetbrains.com/shop/quote?item=C:N:RS0:Y"}}}}, "RC": {"code": "RC", "name": "ReSharper C++", "prices": {"personal": {"monthly": ["$8.90"], "yearly": ["$89.00", "$71.00", "$53.00"]}, "commercial": {"monthly": ["$19.90"], "yearly": ["$199.00", "$159.00", "$119.00"]}}, "links": {"personal": {"monthly": {"buy": "https://www.jetbrains.com/shop/buy?item=P:N:RC:M", "quote": "https://www.jetbrains.com/shop/quote?item=P:N:RC:M"}, "yearly": {"buy": "https://www.jetbrains.com/shop/buy?item=P:N:RC:Y", "quote": "https://www.jetbrains.com/shop/quote?item=P:N:RC:Y"}}, "commercial": {"monthly": {"buy": "https://www.jetbrains.com/shop/buy?item=C:N:RC:M", "quote": "https://www.jetbrains.com/shop/quote?item=C:N:RC:M"}, "yearly": {"buy": "https://www.jetbrains.com/shop/buy?item=C:N:RC:Y", "quote": "https://www.jetbrains.com/shop/quote?item=C:N:RC:Y"}}}}, "RD": {"code": "RD", "name": "Rider", "prices": {"personal": {"monthly": ["$13.90"], "yearly": ["$139.00", "$111.00", "$83.00"]}, "commercial": {"monthly": ["$34.90"], "yearly": ["$349.00", "$279.00", "$209.00"]}}, "links": {"personal": {"monthly": {"buy": "https://www.jetbrains.com/shop/buy?item=P:N:RD:M", "quote": "https://www.jetbrains.com/shop/quote?item=P:N:RD:M"}, "yearly": {"buy": "https://www.jetbrains.com/shop/buy?item=P:N:RD:Y", "quote": "https://www.jetbrains.com/shop/quote?item=P:N:RD:Y"}}, "commercial": {"monthly": {"buy": "https://www.jetbrains.com/shop/buy?item=C:N:RD:M", "quote": "https://www.jetbrains.com/shop/quote?item=C:N:RD:M"}, "yearly": {"buy": "https://www.jetbrains.com/shop/buy?item=C:N:RD:Y", "quote": "https://www.jetbrains.com/shop/quote?item=C:N:RD:Y"}}}}, "RM": {"code": "RM", "name": "RubyMine", "prices": {"personal": {"monthly": ["$8.90"], "yearly": ["$89.00", "$71.00", "$53.00"]}, "commercial": {"monthly": ["$19.90"], "yearly": ["$199.00", "$159.00", "$119.00"]}}, "links": {"personal": {"monthly": {"buy": "https://www.jetbrains.com/shop/buy?item=P:N:RM:M", "quote": "https://www.jetbrains.com/shop/quote?item=P:N:RM:M"}, "yearly": {"buy": "https://www.jetbrains.com/shop/buy?item=P:N:RM:Y", "quote": "https://www.jetbrains.com/shop/quote?item=P:N:RM:Y"}}, "commercial": {"monthly": {"buy": "https://www.jetbrains.com/shop/buy?item=C:N:RM:M", "quote": "https://www.jetbrains.com/shop/quote?item=C:N:RM:M"}, "yearly": {"buy": "https://www.jetbrains.com/shop/buy?item=C:N:RM:Y", "quote": "https://www.jetbrains.com/shop/quote?item=C:N:RM:Y"}}}}, "WS": {"code": "WS", "name": "WebStorm", "prices": {"personal": {"monthly": ["$5.90"], "yearly": ["$59.00", "$47.00", "$35.00"]}, "commercial": {"monthly": ["$12.90"], "yearly": ["$129.00", "$103.00", "$77.00"]}}, "links": {"personal": {"monthly": {"buy": "https://www.jetbrains.com/shop/buy?item=P:N:WS:M", "quote": "https://www.jetbrains.com/shop/quote?item=P:N:WS:M"}, "yearly": {"buy": "https://www.jetbrains.com/shop/buy?item=P:N:WS:Y", "quote": "https://www.jetbrains.com/shop/quote?item=P:N:WS:Y"}}, "commercial": {"monthly": {"buy": "https://www.jetbrains.com/shop/buy?item=C:N:WS:M", "quote": "https://www.jetbrains.com/shop/quote?item=C:N:WS:M"}, "yearly": {"buy": "https://www.jetbrains.com/shop/buy?item=C:N:WS:Y", "quote": "https://www.jetbrains.com/shop/quote?item=C:N:WS:Y"}}}}, "US": {"code": "US", "name": "Upsource", "upgradeTables": [{"from": {"users": 25, "usersFormated": "25", "new": {"license": "1300", "subscription": null, "shopToken": "U:N:USN25"}, "update": {"pastDue": "975", "renew": "650", "shopToken": "U:U:USN25", "upgrade": null, "upgradeSubscription": null}, "renewPrice": "650", "name": "Upsource 25-User Pack"}, "to": [{"token": "U:U:USN25->USN50", "price": 1200, "users": 50}, {"token": "U:U:USN25->USN100", "price": 3200, "users": 100}, {"token": "U:U:USN25->USN250", "price": 7700, "users": 250}, {"token": "U:U:USN25->USN500", "price": 10700, "users": 500}, {"token": "U:U:USN25->USN1000", "price": 19700, "users": 1000}]}, {"from": {"users": 50, "usersFormated": "50", "new": {"license": "2500", "subscription": null, "shopToken": "U:N:USN50"}, "update": {"pastDue": "1875", "renew": "1250", "shopToken": "U:U:USN50", "upgrade": null, "upgradeSubscription": null}, "renewPrice": "1250", "name": "Upsource 50-User Pack"}, "to": [{"token": "U:U:USN50->USN100", "price": 2000, "users": 100}, {"token": "U:U:USN50->USN250", "price": 6500, "users": 250}, {"token": "U:U:USN50->USN500", "price": 9500, "users": 500}, {"token": "U:U:USN50->USN1000", "price": 18500, "users": 1000}]}, {"from": {"users": 100, "usersFormated": "100", "new": {"license": "4500", "subscription": null, "shopToken": "U:N:USN100"}, "update": {"pastDue": "3375", "renew": "2250", "shopToken": "U:U:USN100", "upgrade": null, "upgradeSubscription": null}, "renewPrice": "2250", "name": "Upsource 100-User Pack"}, "to": [{"token": "U:U:USN100->USN250", "price": 4500, "users": 250}, {"token": "U:U:USN100->USN500", "price": 7500, "users": 500}, {"token": "U:U:USN100->USN1000", "price": 16500, "users": 1000}]}, {"from": {"users": 250, "usersFormated": "250", "new": {"license": "9000", "subscription": null, "shopToken": "U:N:USN250"}, "update": {"pastDue": "6750", "renew": "4500", "shopToken": "U:U:USN250", "upgrade": null, "upgradeSubscription": null}, "renewPrice": "4500", "name": "Upsource 250-User Pack"}, "to": [{"token": "U:U:USN250->USN500", "price": 3000, "users": 500}, {"token": "U:U:USN250->USN1000", "price": 12000, "users": 1000}]}, {"from": {"users": 500, "usersFormated": "500", "new": {"license": "12000", "subscription": null, "shopToken": "U:N:USN500"}, "update": {"pastDue": "9000", "renew": "6000", "shopToken": "U:U:USN500", "upgrade": null, "upgradeSubscription": null}, "renewPrice": "6000", "name": "Upsource 500-User Pack"}, "to": [{"token": "U:U:USN500->USN1000", "price": 9000, "users": 1000}]}], "editions": [{"users": 25, "usersFormated": "25", "new": {"license": "1300", "subscription": null, "shopToken": "U:N:USN25"}, "update": {"pastDue": "975", "renew": "650", "shopToken": "U:U:USN25", "upgrade": null, "upgradeSubscription": null}, "renewPrice": "650", "name": "Upsource 25-User Pack"}, {"users": 50, "usersFormated": "50", "new": {"license": "2500", "subscription": null, "shopToken": "U:N:USN50"}, "update": {"pastDue": "1875", "renew": "1250", "shopToken": "U:U:USN50", "upgrade": null, "upgradeSubscription": null}, "renewPrice": "1250", "name": "Upsource 50-User Pack"}, {"users": 100, "usersFormated": "100", "new": {"license": "4500", "subscription": null, "shopToken": "U:N:USN100"}, "update": {"pastDue": "3375", "renew": "2250", "shopToken": "U:U:USN100", "upgrade": null, "upgradeSubscription": null}, "renewPrice": "2250", "name": "Upsource 100-User Pack"}, {"users": 250, "usersFormated": "250", "new": {"license": "9000", "subscription": null, "shopToken": "U:N:USN250"}, "update": {"pastDue": "6750", "renew": "4500", "shopToken": "U:U:USN250", "upgrade": null, "upgradeSubscription": null}, "renewPrice": "4500", "name": "Upsource 250-User Pack"}, {"users": 500, "usersFormated": "500", "new": {"license": "12000", "subscription": null, "shopToken": "U:N:USN500"}, "update": {"pastDue": "9000", "renew": "6000", "shopToken": "U:U:USN500", "upgrade": null, "upgradeSubscription": null}, "renewPrice": "6000", "name": "Upsource 500-User Pack"}, {"users": 1000, "usersFormated": "1,000", "new": {"license": "21000", "subscription": null, "shopToken": "U:N:USN1000"}, "update": {"pastDue": "15750", "renew": "10500", "shopToken": "U:U:USN1000", "upgrade": null, "upgradeSubscription": null}, "renewPrice": "10500", "name": "Upsource 1000-User Pack"}]}, "YT": {"code": "YT", "name": "YouTrack", "standalone": {"editions": [{"users": 25, "usersFormated": "25", "new": {"license": "500", "subscription": null, "shopToken": "U:N:YTD25"}, "update": {"pastDue": "425", "renew": "350", "shopToken": "U:U:YTD25", "upgrade": null, "upgradeSubscription": null}, "renewPrice": "350", "name": "YouTrack Stand-Alone 25-User Pack"}, {"users": 50, "usersFormated": "50", "new": {"license": "750", "subscription": null, "shopToken": "U:N:YTD50"}, "update": {"pastDue": "650", "renew": "525", "shopToken": "U:U:YTD50", "upgrade": null, "upgradeSubscription": null}, "renewPrice": "525", "name": "YouTrack Stand-Alone 50-User Pack"}, {"users": 100, "usersFormated": "100", "new": {"license": "1500", "subscription": null, "shopToken": "U:N:YTD100"}, "update": {"pastDue": "1300", "renew": "1050", "shopToken": "U:U:YTD100", "upgrade": null, "upgradeSubscription": null}, "renewPrice": "1050", "name": "YouTrack Stand-Alone 100-User Pack"}, {"users": 500, "usersFormated": "500", "new": {"license": "3000", "subscription": null, "shopToken": "U:N:YTD500"}, "update": {"pastDue": "2600", "renew": "2100", "shopToken": "U:U:YTD500", "upgrade": null, "upgradeSubscription": null}, "renewPrice": "2100", "name": "YouTrack Stand-Alone 500-User Pack"}, {"users": 2000, "usersFormated": "2,000", "new": {"license": "6000", "subscription": null, "shopToken": "U:N:YTD2000"}, "update": {"pastDue": "5100", "renew": "4200", "shopToken": "U:U:YTD2000", "upgrade": null, "upgradeSubscription": null}, "renewPrice": "4200", "name": "YouTrack Stand-Alone 2000-User Pack"}, {"users": 10000, "usersFormated": "10,000", "new": {"license": "10000", "subscription": null, "shopToken": "U:N:YTD10000"}, "update": {"pastDue": "8500", "renew": "7000", "shopToken": "U:U:YTD10000", "upgrade": null, "upgradeSubscription": null}, "renewPrice": "7000", "name": "YouTrack Stand-Alone 10000-User Pack"}, {"users": null, "usersFormated": null, "new": {"license": "12000", "subscription": null, "shopToken": "U:N:YTDE"}, "update": {"pastDue": "10500", "renew": "8400", "shopToken": "U:U:YTDE", "upgrade": null, "upgradeSubscription": null}, "renewPrice": "8400", "name": "YouTrack Stand-Alone Enterprise pack"}], "upgradeTables": [{"from": {"users": 25, "usersFormated": "25", "new": {"license": "500", "subscription": null, "shopToken": "U:N:YTD25"}, "update": {"pastDue": "425", "renew": "350", "shopToken": "U:U:YTD25", "upgrade": null, "upgradeSubscription": null}, "renewPrice": "350", "name": "YouTrack Stand-Alone 25-User Pack"}, "to": [{"token": "U:U:YTD25->YTD50", "price": 250, "users": 50}, {"token": "U:U:YTD25->YTD100", "price": 1000, "users": 100}, {"token": "U:U:YTD25->YTD500", "price": 2500, "users": 500}, {"token": "U:U:YTD25->YTD2000", "price": 5500, "users": 2000}, {"token": "U:U:YTD25->YTD10000", "price": 9500, "users": 10000}]}, {"from": {"users": 50, "usersFormated": "50", "new": {"license": "750", "subscription": null, "shopToken": "U:N:YTD50"}, "update": {"pastDue": "650", "renew": "525", "shopToken": "U:U:YTD50", "upgrade": null, "upgradeSubscription": null}, "renewPrice": "525", "name": "YouTrack Stand-Alone 50-User Pack"}, "to": [{"token": "U:U:YTD50->YTD100", "price": 750, "users": 100}, {"token": "U:U:YTD50->YTD500", "price": 2250, "users": 500}, {"token": "U:U:YTD50->YTD2000", "price": 5250, "users": 2000}, {"token": "U:U:YTD50->YTD10000", "price": 9250, "users": 10000}]}, {"from": {"users": 100, "usersFormated": "100", "new": {"license": "1500", "subscription": null, "shopToken": "U:N:YTD100"}, "update": {"pastDue": "1300", "renew": "1050", "shopToken": "U:U:YTD100", "upgrade": null, "upgradeSubscription": null}, "renewPrice": "1050", "name": "YouTrack Stand-Alone 100-User Pack"}, "to": [{"token": "U:U:YTD100->YTD500", "price": 1500, "users": 500}, {"token": "U:U:YTD100->YTD2000", "price": 4500, "users": 2000}, {"token": "U:U:YTD100->YTD10000", "price": 8500, "users": 10000}]}, {"from": {"users": 500, "usersFormated": "500", "new": {"license": "3000", "subscription": null, "shopToken": "U:N:YTD500"}, "update": {"pastDue": "2600", "renew": "2100", "shopToken": "U:U:YTD500", "upgrade": null, "upgradeSubscription": null}, "renewPrice": "2100", "name": "YouTrack Stand-Alone 500-User Pack"}, "to": [{"token": "U:U:YTD500->YTD2000", "price": 3000, "users": 2000}, {"token": "U:U:YTD500->YTD10000", "price": 7000, "users": 10000}]}, {"from": {"users": 2000, "usersFormated": "2,000", "new": {"license": "6000", "subscription": null, "shopToken": "U:N:YTD2000"}, "update": {"pastDue": "5100", "renew": "4200", "shopToken": "U:U:YTD2000", "upgrade": null, "upgradeSubscription": null}, "renewPrice": "4200", "name": "YouTrack Stand-Alone 2000-User Pack"}, "to": [{"token": "U:U:YTD2000->YTD10000", "price": 4000, "users": 10000}]}, {"from": {"users": null, "usersFormated": null, "new": {"license": "12000", "subscription": null, "shopToken": "U:N:YTDE"}, "update": {"pastDue": "10500", "renew": "8400", "shopToken": "U:U:YTDE", "upgrade": null, "upgradeSubscription": null}, "renewPrice": "8400", "name": "YouTrack Stand-Alone Enterprise pack"}, "to": []}]}, "incloudPlans": [{"annual": 0, "monthly": "", "shopTokenNew": "U:N:YTIUSGPR", "shopTokenUpgrade": "U:U:YTIUSGPR", "users": null, "usersFormatted": null, "priceLevels": [{"annual": "0", "annualPerMonth": "0", "monthly": "0", "min": 1, "max": 3, "discount_percentage": 100, "formattedAnnual": "Free", "formattedMonthly": "Free"}, {"annual": "50", "annualPerMonth": "4.17", "monthly": "0", "min": 4, "max": 100, "discount_percentage": 0, "formattedAnnual": "$50.00", "formattedMonthly": "Free"}, {"annual": "40", "annualPerMonth": "3.33", "monthly": "0", "min": 101, "max": 200, "discount_percentage": 20, "formattedAnnual": "$40.00", "formattedMonthly": "Free"}, {"annual": "30", "annualPerMonth": "2.5", "monthly": "0", "min": 201, "max": 300, "discount_percentage": 40, "formattedAnnual": "$30.00", "formattedMonthly": "Free"}, {"annual": "20", "annualPerMonth": "1.67", "monthly": "0", "min": 301, "max": 400, "discount_percentage": 60, "formattedAnnual": "$20.00", "formattedMonthly": "Free"}, {"annual": "10", "annualPerMonth": "0.83", "monthly": "0", "min": 401, "discount_percentage": 80, "formattedAnnual": "$10.00", "formattedMonthly": "Free"}]}, {"annual": 0, "monthly": "", "shopTokenNew": "U:N:YTIUSG", "shopTokenUpgrade": "U:U:YTIUSG", "users": null, "usersFormatted": null, "priceLevels": [{"monthly": "0", "annual": "0", "min": 1, "max": 3, "discount_percentage": 100, "formattedAnnual": "Free", "formattedMonthly": "Free"}, {"monthly": "5", "annual": "50", "min": 4, "max": 100, "discount_percentage": 0, "formattedAnnual": "$50.00", "formattedMonthly": "$5.00"}, {"monthly": "4", "annual": "40", "min": 101, "max": 200, "discount_percentage": 20, "formattedAnnual": "$40.00", "formattedMonthly": "$4.00"}, {"monthly": "3", "annual": "30", "min": 201, "max": 300, "discount_percentage": 40, "formattedAnnual": "$30.00", "formattedMonthly": "$3.00"}, {"monthly": "2", "annual": "20", "min": 301, "max": 400, "discount_percentage": 60, "formattedAnnual": "$20.00", "formattedMonthly": "$2.00"}, {"monthly": "1", "annual": "10", "min": 401, "discount_percentage": 80, "formattedAnnual": "$10.00", "formattedMonthly": "$1.00"}]}, {"annual": 0, "monthly": "", "shopTokenNew": "U:N:YTIUSG100", "shopTokenUpgrade": "U:U:YTIUSG100", "users": 100, "usersFormatted": "100", "priceLevels": null}]}};
+    </script>
+
+    <script>
+        var current_lang = 'en-us';
+                                    var i18n_info = {"current_lang": "en-us", "languages": [{"canonical": "en", "code": "en-us", "label": "English", "page_translated": true, "url": "/store/business/"}, {"canonical": "de", "code": "de-de", "label": "Deutsch", "page_translated": true, "url": "/de-de/store/business/"}, {"canonical": "es", "code": "es-es", "label": "Espa\u00f1ol", "page_translated": true, "url": "/es-es/store/business/"}, {"canonical": "fr", "code": "fr-fr", "label": "Fran\u00e7ais", "page_translated": true, "url": "/fr-fr/store/business/"}, {"canonical": "ja", "code": "ja-jp", "label": "\u65e5\u672c\u8a9e", "page_translated": true, "url": "/ja-jp/store/business/"}, {"canonical": "ko", "code": "ko-kr", "label": "\ud55c\uad6d\uc5b4", "page_translated": true, "url": "/ko-kr/store/business/"}, {"canonical": "ru", "code": "ru-ru", "label": "\u0420\u0443\u0441\u0441\u043a\u0438\u0439", "page_translated": true, "url": "/ru-ru/store/business/"}, {"canonical": "zh-CN", "code": "zh-cn", "label": "\u7b80\u4f53\u4e2d\u6587", "page_translated": true, "url": "/zh-cn/store/business/"}, {"canonical": "pt-BR", "code": "pt-br", "label": "Portugu\u00eas do Brasil", "page_translated": false, "url": "/pt-br/store/business/"}, {"canonical": "x-klingon", "code": "tl-aa", "label": "tlhIngan Hol", "page_translated": true, "url": "/tl-aa/store/business/"}]};
+                            var navigationMenu = {"primary": {"id": "main_v2", "items": [{"id": "tools", "title": "Tools", "descriptionTitle": "Toolbox App", "descriptionLogoId": "toolbox", "descriptionLink": "Learn more", "descriptionUrl": "/toolbox-app/", "description": "Manage your tools the easy way", "src": "/img/banners-menu-main/toolbox-vertical.png", "horisontalSrc": "/img/banners-menu-main/toolbox-horisontal.png", "bgColor": "#3E0598", "isVisible": true, "hasCategories": true, "items": [{"title": "IDEs", "items": [{"isActive": false, "id": "appcode", "title": "AppCode", "url": "/objc/", "logoLeftActionId": "appcode", "items": [], "cleaned_url": "/objc/"}, {"isActive": false, "id": "clion", "title": "CLion", "url": "/clion/", "logoLeftActionId": "clion", "items": [], "cleaned_url": "/clion/"}, {"isActive": false, "id": "datalore", "title": "Datalore", "url": "https://datalore.io/", "isExternalLink": true, "logoLeftActionId": "datalore", "items": [], "cleaned_url": "https://datalore.io/"}, {"isActive": false, "id": "datagrip", "title": "DataGrip", "url": "/datagrip/", "logoLeftActionId": "datagrip", "items": [], "cleaned_url": "/datagrip/"}, {"isActive": false, "id": "goland", "title": "GoLand", "url": "/go/", "logoLeftActionId": "goland", "items": [], "cleaned_url": "/go/"}, {"isActive": false, "id": "idea", "title": "IntelliJ IDEA", "url": "/idea/", "logoLeftActionId": "intellij-idea", "items": [], "cleaned_url": "/idea/"}, {"isActive": false, "id": "phpstorm", "title": "PhpStorm", "url": "/phpstorm/", "logoLeftActionId": "phpstorm", "items": [], "cleaned_url": "/phpstorm/"}, {"isActive": false, "id": "pycharm", "title": "PyCharm", "url": "/pycharm/", "logoLeftActionId": "pycharm", "items": [], "cleaned_url": "/pycharm/"}, {"isActive": false, "id": "rider", "title": "Rider", "url": "/rider/", "logoLeftActionId": "rider", "items": [], "cleaned_url": "/rider/"}, {"isActive": false, "id": "rubymine", "title": "RubyMine", "url": "/ruby/", "logoLeftActionId": "rubymine", "items": [], "cleaned_url": "/ruby/"}, {"isActive": false, "id": "webstorm", "title": "WebStorm", "url": "/webstorm/", "logoLeftActionId": "webstorm", "items": [], "cleaned_url": "/webstorm/"}, {"isActive": false, "id": "toolbox", "type": "special", "title": "Toolbox App", "url": "/toolbox-app/", "logoLeftId": "toolbox", "description": "A control panel for your tools and projects", "items": [], "cleaned_url": "/toolbox-app/"}]}, {"title": ".NET & VISUAL STUDIO", "items": [{"isActive": false, "id": "resharper", "title": "ReSharper", "url": "/resharper/", "logoLeftActionId": "resharper", "items": [], "cleaned_url": "/resharper/"}, {"isActive": false, "id": "rider", "title": "Rider", "url": "/rider/", "logoLeftActionId": "rider", "items": [], "cleaned_url": "/rider/"}, {"isActive": false, "id": "resharper-cpp", "title": "ReSharper C++", "url": "/resharper-cpp/", "logoLeftActionId": "resharper-cpp", "items": [], "cleaned_url": "/resharper-cpp/"}, {"isActive": false, "id": "dotcover", "title": "dotCover", "url": "/dotcover/", "logoLeftActionId": "dotcover", "items": [], "cleaned_url": "/dotcover/"}, {"isActive": false, "id": "dotmemory", "title": "dotMemory", "url": "/dotmemory/", "logoLeftActionId": "dotmemory", "items": [], "cleaned_url": "/dotmemory/"}, {"isActive": false, "id": "dotpeek", "title": "dotPeek", "url": "/decompiler/", "logoLeftActionId": "dotpeek", "items": [], "cleaned_url": "/decompiler/"}, {"isActive": false, "id": "dottrace", "title": "dotTrace", "url": "/profiler/", "logoLeftActionId": "dottrace", "items": [], "cleaned_url": "/profiler/"}]}, {"title": "TEAM TOOLS", "items": [{"isActive": false, "id": "teamcity", "title": "TeamCity", "url": "/teamcity/", "logoLeftActionId": "teamcity", "items": [], "cleaned_url": "/teamcity/"}, {"isActive": false, "id": "upsource", "title": "Upsource", "url": "/upsource/", "logoLeftActionId": "upsource", "items": [], "cleaned_url": "/upsource/"}, {"isActive": false, "id": "youtrack", "title": "YouTrack", "url": "/youtrack/", "logoLeftActionId": "youtrack", "items": [], "cleaned_url": "/youtrack/"}, {"isActive": false, "id": "hub", "title": "Hub", "url": "/hub/", "logoLeftActionId": "hub", "items": [], "cleaned_url": "/hub/"}]}, {"title": "PLUGIN MARKETPLACE", "items": [{"isActive": false, "id": "bigdata", "title": "Big Data Tools", "url": "https://plugins.jetbrains.com/plugin/12494-big-data-tools", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/plugin/12494-big-data-tools"}, {"isActive": false, "id": "rustsupport", "title": "Rust", "url": "https://plugins.jetbrains.com/plugin/8182-rust", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/plugin/8182-rust"}, {"isActive": false, "id": "scalaplugin", "title": "Scala", "url": "https://plugins.jetbrains.com/plugin/1347-scala", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/plugin/1347-scala"}, {"isActive": false, "id": "idethemes", "title": "IDE Themes", "url": "https://plugins.jetbrains.com/search?tags=Theme", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/search?tags=Theme"}, {"isActive": false, "id": "plugins", "title": "All Plugins", "url": "https://plugins.jetbrains.com/", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/"}]}, {"title": "EDUCATION", "items": [{"isActive": false, "id": "pycharm-edu", "title": "PyCharm Edu", "url": "/education/", "urlHash": "#lang=python&role=learner", "logoLeftActionId": "pycharm-edu", "items": [], "cleaned_url": "/education/"}, {"isActive": false, "id": "idea-edu", "title": "IntelliJ IDEA Edu", "url": "/education/", "urlHash": "#lang=java&role=learner", "logoLeftActionId": "intellij-idea", "items": [], "cleaned_url": "/education/"}, {"isActive": false, "id": "jb-academy", "title": "JB Academy", "url": "/academy/", "items": [], "cleaned_url": "/academy/"}]}]}, {"id": "languages", "title": "Languages", "descriptionTitle": "Kotlin/Everywhere", "descriptionLogoId": "header-kotlin-everywhere", "descriptionLink": "Join in!", "descriptionUrl": "//everywhere.kotlinlang.org", "description": "A worldwide event series for learning the best Kotlin practices on all platforms", "descriptionBig": true, "src": "/img/banners-menu-main/kotlin-vertical.png", "horisontalSrc": "/img/banners-menu-main/kotlin-horisontal.png", "bgColor": "#D6721C", "isExternalLink": true, "isVisible": true, "hasCategories": false, "items": [{"isActive": false, "id": "kotlin", "title": "Kotlin", "url": "https://kotlinlang.org/", "isExternalLink": true, "logoLeftId": "header-kotlin-grayscale", "logoLeftActionId": "kotlin", "logoLeftSize": "50", "description": "Programming language \n for JVM & Android", "items": [], "cleaned_url": "https://kotlinlang.org/"}, {"isActive": false, "id": "mps", "title": "MPS", "url": "/mps/", "logoLeftId": "header-mps-grayscalse", "logoLeftActionId": "mps", "logoLeftSize": "50", "description": "Create your own domain-specific language", "items": [], "cleaned_url": "/mps/"}]}, {"id": "solutions", "title": "Solutions", "descriptionTitle": "JetBrains Academy", "descriptionLogoId": "academy-logo", "descriptionLink": "Join in!", "descriptionUrl": "/academy", "description": "An educational platform for future professionals", "src": "/img/banners-menu-main/academy-vertical.png", "horisontalSrc": "/img/banners-menu-main/academy-horisontal.png", "bgColor": "#53288E", "hasCategories": false, "isVisible": true, "items": [{"isActive": false, "title": "C++ Tools", "url": "/cpp/", "logoLeftId": "header-cpp-grayscale", "logoLeftActionId": "header-cpp", "description": "Tools for C/C++ development \nfor any platform", "items": [], "cleaned_url": "/cpp/"}, {"isActive": true, "title": "For Business", "url": "/store/business/", "logoLeftId": "header-for-business-grayscale", "logoLeftActionId": "header-for-business", "description": "Wide range of tools. \nAll major technologies covered", "items": [], "cleaned_url": "/store/business/"}, {"isActive": false, "title": "Game Development", "url": "/gamedev/", "logoLeftId": "header-gamedev-grayscale", "logoLeftActionId": "header-gamedev", "description": "Tools for game development \nfor any platform", "items": [], "cleaned_url": "/gamedev/"}, {"isActive": false, "title": "DevOps", "url": "/devops/", "logoLeftId": "header-devops-grayscale", "logoLeftActionId": "header-devops", "description": "Tools and integrations \nfor any infrastructure", "items": [], "cleaned_url": "/devops/"}, {"isActive": false, "title": "Education", "url": "/education/", "logoLeftId": "header-education-grayscale", "logoLeftActionId": "header-education", "description": "Products to learn and teach programming", "items": [], "cleaned_url": "/education/"}]}, {"id": "support", "title": "Support", "description": "Pricing and licensing for businesses and individuals", "descriptionTitle": "JetBrains Store", "descriptionLogoId": "header-store", "descriptionUrl": "/store/?fromMenu#edition=commercial", "descriptionLink": "visit store", "isVisible": true, "hasCategories": true, "items": [{"title": "CUSTOMERS", "items": [{"isActive": false, "title": "Sales Support", "url": "/support/sales/", "description": "Orders, payments", "items": [], "cleaned_url": "/support/sales/"}, {"isActive": false, "title": "Product Support", "url": "/support/", "description": "Tech support, documentation", "items": [], "cleaned_url": "/support/"}]}, {"title": "COMMUNITY PROGRAMS", "items": [{"isActive": false, "title": "Education", "url": "/community/education/", "description": "Students, classrooms, training", "items": [], "cleaned_url": "/community/education/"}, {"isActive": false, "title": "Open Source", "url": "/community/opensource/", "description": "Projects support", "items": [], "cleaned_url": "/community/opensource/"}, {"isActive": false, "title": "Sponsorship", "url": "/community/support/", "description": "User groups, events, technology experts", "items": [], "cleaned_url": "/community/support/"}]}]}, {"id": "company", "title": "Company", "isVisible": true, "hasCategories": true, "items": [{"title": "INITIATIVES", "items": [{"isActive": false, "title": "Open Source", "url": "/opensource/", "description": "Projects, contributions", "items": [], "cleaned_url": "/opensource/"}, {"isActive": false, "title": "Research", "url": "/research/", "description": "Market, Scientific", "items": [], "cleaned_url": "/research/"}]}, {"title": "COMPANY", "items": [{"isActive": false, "title": "About", "url": "/company/", "description": "People, customers, awards", "items": [], "cleaned_url": "/company/"}, {"isActive": false, "title": "Brand Assets", "url": "/company/brand/", "description": "Guidelines, logos", "items": [], "cleaned_url": "/company/brand/"}, {"isActive": false, "title": "Careers", "url": "/careers/apply/", "description": "Jobs, internships", "items": [], "cleaned_url": "/careers/apply/"}, {"isActive": false, "title": "Events", "url": "/company/events/", "description": "Conferences, meetups", "items": [], "cleaned_url": "/company/events/"}, {"isActive": false, "title": "Contacts", "url": "/company/contacts/", "description": "Partners, resellers, Kotlin training", "items": [], "cleaned_url": "/company/contacts/"}]}, {"title": "RESOURCES", "items": [{"isActive": false, "title": "Newsletters", "url": "/resources/newsletters/", "items": [], "cleaned_url": "/resources/newsletters/"}, {"isActive": false, "title": "Webinars", "url": "/resources/webinars/", "items": [], "cleaned_url": "/resources/webinars/"}, {"isActive": false, "title": "Early Access", "url": "/resources/eap/", "items": [], "cleaned_url": "/resources/eap/"}, {"isActive": false, "title": "Blog", "url": "//blog.jetbrains.com/", "isExternalLink": true, "items": [], "cleaned_url": "//blog.jetbrains.com/"}]}]}, {"isActive": false, "id": "store", "url": "/store/?fromNavMenu", "title": "Store", "isVisible": true, "hasCategories": false, "items": [], "cleaned_url": "/store/?fromNavMenu"}]}, "secondary": {"isActive": true, "id": "store", "url": "/store/", "title": "Store", "items": [{"isActive": false, "title": "JetBrains Toolbox", "url": "/store/", "items": [], "cleaned_url": "/store/"}, {"isActive": false, "title": "Team Tools", "url": "/store/teamware/", "items": [], "cleaned_url": "/store/teamware/"}, {"isActive": false, "title": "Plugins", "url": "/store/plugins/", "items": [], "cleaned_url": "/store/plugins/"}, {"isActive": true, "title": "For Business", "url": "/store/business/", "items": [], "cleaned_url": "/store/business/"}, {"isActive": false, "title": "Contact Sales", "url": "/support/sales/", "items": [], "cleaned_url": "/support/sales/"}], "cleaned_url": "/store/"}};
+        
+        var is_layout_adaptive = false;
+        
+        var disable_language_picker = false;
+        
+        var english_only_url_prefixes = [];
+            </script>
+    
+            <script></script>
+    
+        
+    
+            <link href="/_assets/common.d44d81f300d3bff87efe.css" rel="stylesheet" type="text/css">
+<link href="/_assets/default-page.fabf52db4bf34ea78af0.css" rel="stylesheet" type="text/css">
+<link href="/_assets/store/inc/business-content/index.entry.859f4f143ac70dc2d2b9.css" rel="stylesheet" type="text/css">
+        <script src="/_assets/common.34604685b633d15ae3ed.js" type="text/javascript"></script>
+<script src="/_assets/default-page.2e180fc15a6b94fe7fa3.js" type="text/javascript"></script>
+<script src="/_assets/store/inc/business-content/index.entry.0aba4b775c1c67a89d6a.js" type="text/javascript"></script>
+<script src="/_assets/store/business/index.entry.4e601255d96978017a44.js" type="text/javascript"></script>
+    
+            <!-- Social Media tag Starts -->
+    <!-- Open Graph data -->
+            <meta property="og:title" content="JetBrains Tools for Your Business"/>
+    
+                    <meta property="og:description" content="JetBrains tools are focused around development team collaboration, and can save you money and resources, help you keep release schedules, and even boost revenues by improving the quality of your software products."/>
+    <meta property="og:image" content="http://resources.jetbrains.com/storage/products/jetbrains/img/meta/jetbrains_1280x800.png"/>
+
+    <meta property="og:site_name" content="JetBrains"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="https://www.jetbrains.com/store/business/"/>
+    <!-- Social Media tag Ends -->
+</head>
+
+<body class="nojs  ">
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<script>
+/*! modernizr 3.2.0 (Custom Build) | MIT *
+ * http://modernizr.com/download/?-flexbox-flexboxtweener !*/
+!function(e,n,t){function r(e,n){return typeof e===n}function o(){var e,n,t,o,i,s,l;for(var f in v)if(v.hasOwnProperty(f)){if(e=[],n=v[f],n.name&&(e.push(n.name.toLowerCase()),n.options&&n.options.aliases&&n.options.aliases.length))for(t=0;t<n.options.aliases.length;t++)e.push(n.options.aliases[t].toLowerCase());for(o=r(n.fn,"function")?n.fn():n.fn,i=0;i<e.length;i++)s=e[i],l=s.split("."),1===l.length?Modernizr[l[0]]=o:(!Modernizr[l[0]]||Modernizr[l[0]]instanceof Boolean||(Modernizr[l[0]]=new Boolean(Modernizr[l[0]])),Modernizr[l[0]][l[1]]=o),C.push((o?"":"no-")+l.join("-"))}}function i(e,n){return!!~(""+e).indexOf(n)}function s(e){return e.replace(/([a-z])-([a-z])/g,function(e,n,t){return n+t.toUpperCase()}).replace(/^-/,"")}function l(e,n){return function(){return e.apply(n,arguments)}}function f(e,n,t){var o;for(var i in e)if(e[i]in n)return t===!1?e[i]:(o=n[e[i]],r(o,"function")?l(o,t||n):o);return!1}function a(e){return e.replace(/([A-Z])/g,function(e,n){return"-"+n.toLowerCase()}).replace(/^ms-/,"-ms-")}function u(){return"function"!=typeof n.createElement?n.createElement(arguments[0]):b?n.createElementNS.call(n,"http://www.w3.org/2000/svg",arguments[0]):n.createElement.apply(n,arguments)}function d(){var e=n.body;return e||(e=u(b?"svg":"body"),e.fake=!0),e}function p(e,t,r,o){var i,s,l,f,a="modernizr",p=u("div"),c=d();if(parseInt(r,10))for(;r--;)l=u("div"),l.id=o?o[r]:a+(r+1),p.appendChild(l);return i=u("style"),i.type="text/css",i.id="s"+a,(c.fake?c:p).appendChild(i),c.appendChild(p),i.styleSheet?i.styleSheet.cssText=e:i.appendChild(n.createTextNode(e)),p.id=a,c.fake&&(c.style.background="",c.style.overflow="hidden",f=_.style.overflow,_.style.overflow="hidden",_.appendChild(c)),s=t(p,e),c.fake?(c.parentNode.removeChild(c),_.style.overflow=f,_.offsetHeight):p.parentNode.removeChild(p),!!s}function c(n,r){var o=n.length;if("CSS"in e&&"supports"in e.CSS){for(;o--;)if(e.CSS.supports(a(n[o]),r))return!0;return!1}if("CSSSupportsRule"in e){for(var i=[];o--;)i.push("("+a(n[o])+":"+r+")");return i=i.join(" or "),p("@supports ("+i+") { #modernizr { position: absolute; } }",function(e){return"absolute"==getComputedStyle(e,null).position})}return t}function m(e,n,o,l){function f(){d&&(delete E.style,delete E.modElem)}if(l=r(l,"undefined")?!1:l,!r(o,"undefined")){var a=c(e,o);if(!r(a,"undefined"))return a}for(var d,p,m,h,y,v=["modernizr","tspan"];!E.style;)d=!0,E.modElem=u(v.shift()),E.style=E.modElem.style;for(m=e.length,p=0;m>p;p++)if(h=e[p],y=E.style[h],i(h,"-")&&(h=s(h)),E.style[h]!==t){if(l||r(o,"undefined"))return f(),"pfx"==n?h:!0;try{E.style[h]=o}catch(g){}if(E.style[h]!=y)return f(),"pfx"==n?h:!0}return f(),!1}function h(e,n,t,o,i){var s=e.charAt(0).toUpperCase()+e.slice(1),l=(e+" "+x.join(s+" ")+s).split(" ");return r(n,"string")||r(n,"undefined")?m(l,n,o,i):(l=(e+" "+S.join(s+" ")+s).split(" "),f(l,n,t))}function y(e,n,r){return h(e,t,t,n,r)}var v=[],g={_version:"3.2.0",_config:{classPrefix:"",enableClasses:!0,enableJSClass:!0,usePrefixes:!0},_q:[],on:function(e,n){var t=this;setTimeout(function(){n(t[e])},0)},addTest:function(e,n,t){v.push({name:e,fn:n,options:t})},addAsyncTest:function(e){v.push({name:null,fn:e})}},Modernizr=function(){};Modernizr.prototype=g,Modernizr=new Modernizr;var C=[],w="Moz O ms Webkit",x=g._config.usePrefixes?w.split(" "):[];g._cssomPrefixes=x;var S=g._config.usePrefixes?w.toLowerCase().split(" "):[];g._domPrefixes=S;var _=n.documentElement,b="svg"===_.nodeName.toLowerCase(),z={elem:u("modernizr")};Modernizr._q.push(function(){delete z.elem});var E={style:z.elem.style};Modernizr._q.unshift(function(){delete E.style}),g.testAllProps=h,g.testAllProps=y,Modernizr.addTest("flexbox",y("flexBasis","1px",!0)),Modernizr.addTest("flexboxtweener",y("flexAlign","end",!0)),o(),delete g.addTest,delete g.addAsyncTest;for(var P=0;P<Modernizr._q.length;P++)Modernizr._q[P]();e.Modernizr=Modernizr}(window,document);
+
+if (!Modernizr.flexbox && !Modernizr.flexboxtweener) {
+
+  var $body = $('body');
+
+  var nodesClasses = {
+    wrapper: 'not-supported-browser',
+    container: 'not-supported-browser__container',
+
+    title: 'not-supported-browser__title',
+    content: 'not-supported-browser__content',
+    logo: 'not-supported-browser__logo'
+  };
+
+  var nodes = {
+    wrapper: $('<div class="' + nodesClasses.wrapper + '"></div>'),
+    title: $('<div class="' + nodesClasses.title + '">Sorry, your browser is not fully supported</div>'),
+    content: $('<div class="' + nodesClasses.content + '">There may be some issues with pages layout in your current browser.<br/>Please use an alternate browser until we resolve the issues.<br/>Thank you.</div>'),
+    container: $('<div class="' + nodesClasses.container + '"></div>'),
+    logo: $('<div class="' + nodesClasses.logo + '"><svg class="sprite-img _jetbrains" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#jetbrains"></use></svg></div>')
+  };
+
+  $body.addClass('overflow-hidden');
+
+
+  nodes.content
+    .prepend(nodes.title)
+    .prepend(nodes.logo);
+
+  nodes.container
+    .append(nodes.content);
+
+  nodes.wrapper
+    .append(nodes.container)
+    .appendTo($body);
+}
+</script>
+<div class="page">
+                <div class="page__header">
+                <header class="menu-main header"  id="js-menu-main">
+    <div class="wt-container">
+        <div class="wt-row wt-row_nowrap wt-row_size_s wt-row_align-items_center">
+            <div class="wt-col-auto-fill">
+                <a href="/" class="menu-main__logo-link"><svg class="_jetbrains-simple sprite-img menu-main__logo" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#jetbrains-simple"></use></svg></a>
+            </div>
+            <div class="wt-col-inline wt-display-md-none menu-main-skeleton-text-1" style="min-width: 69px"></div>
+            <div class="wt-col-inline wt-display-md-none menu-main-skeleton-text-1" style="min-width: 81px"></div>
+            <div class="wt-col-inline wt-display-md-none menu-main-skeleton-text-1" style="min-width: 46px"></div>
+            <div class="wt-col-inline menu-main-skeleton-button"></div>
+            <div class="wt-col-inline menu-main-skeleton-button"></div>
+        </div>
+    </div>
+</header>
+
+
+
+  <div class="menu-second" id="js-menu-second">
+    <div class="wt-container">
+        <div id="js-menu-second-mobile-wrapper" class="wt-display-none">
+            <div id="js-menu-second-mobile" >
+                <div class="menu-second-mobile wt-row wt-row_size_m wt-row_align-items_center wt-row_justify_between">
+                    <div class="wt-col-inline menu-second-skeleton-text-2" style="max-width: 120px"></div>
+                    <div class="wt-col-inline menu-second-skeleton-button" style="max-width: 80px"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="js-menu-second-desktop" class="menu-second-desktop
+                       wt-row wt-row_size_0 wt-row_align-items_center">
+            <div class="wt-col-auto-fill">
+                <a class="menu-second-title-box"
+                   href="/store/">
+                    
+                    <span class="menu-second-title-box__title wt-h3">Store</span>
+                </a>
+            </div>
+
+                            
+                                                        <a href="/store/"
+                       class="wt-col-inline wt-text-2 wt-text-2_hardness_average menu-second__link
+                                                                ">
+                        JetBrains Toolbox
+                                            </a>
+                                            
+                                                        <a href="/store/teamware/"
+                       class="wt-col-inline wt-text-2 wt-text-2_hardness_average menu-second__link
+                                                                ">
+                        Team Tools
+                                            </a>
+                                            
+                                                        <a href="/store/plugins/"
+                       class="wt-col-inline wt-text-2 wt-text-2_hardness_average menu-second__link
+                                                                ">
+                        Plugins
+                                            </a>
+                                            
+                                                        <a href="/store/business/"
+                       class="wt-col-inline wt-text-2 wt-text-2_hardness_average menu-second__link
+                                                                wt-text-2_hardness_primary">
+                        For Business
+                                            </a>
+                                            
+                                                        <a href="/support/sales/"
+                       class="wt-col-inline wt-text-2 wt-text-2_hardness_average menu-second__link
+                                                                ">
+                        Contact Sales
+                                            </a>
+                            
+                        
+                    </div>
+
+    </div>
+</div>
+
+            </div>
+    
+    <div class="page__content ">
+        <div class="sticky-form__global-container" id="screen-trigger">
+  
+<section class="section _bg-medium js-sticky-form section-sticky-form _absolute-top" id="overview-screen">
+<div class="form-container">
+<div class="js-form-close sticky-form__badge" id="sticky-form-badge"></div>
+<div class="wt-container">
+<div class="article-content _text-dark">
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<h2>Contact an Account Manager</h2>
+<div class="section__description">
+<p>Have questions about our products, pricing, licensing models or how best to address your
+                                developers' needs? We'd love to help.</p>
+</div>
+</div>
+</div>
+</div>
+
+                <form class="form js-form sticky-form _fixed" action="/contact-me/" method="post"
+                    >
+        <div class="form__fields-wrapper">
+                            <div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="form__field country-select-wrapper _required">
+<label class="form__label" for="ncountryCodeForm-manager">Country/Region</label>
+<select class="select country-select" data-value-format="name" id="ncountryCodeForm-manager" name="ncountryCodeForm"></select>
+</div>
+<div class="form__field _required">
+<label class="form__label" for="email">Email</label>
+<input autocomplete="email" class="input" id="email" name="email" placeholder="Email" required="" tabindex="1" type="email">
+</div>
+<div class="form__field _required">
+<label class="form__label" for="message">Your message</label>
+<textarea class="textarea sticky-form__textarea" cols="10" id="message" name="comment" required="" rows="3" tabindex="3"></textarea>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="form__field _required">
+<label class="form__label" for="product">Product</label>
+<select class="select js-select-products switch-product" id="product" name="zd_product" required="" tabindex="3">
+<option data-value="all" selected="" value="el_all">All Products Pack</option>
+<option data-value="appcode" value="el_appcode">AppCode</option>
+<option data-value="clion" value="el_clion">CLion</option>
+<option data-value="datagrip" value="el_datagrip">DataGrip</option>
+<option data-value="goland" value="el_goland">GoLand</option>
+<option data-value="idea" value="el_idea">IntelliJ IDEA</option>
+<option data-value="phpstorm" value="el_phpstorm">PhpStorm</option>
+<option data-value="pycharm" value="el_pycharm">PyCharm</option>
+<option data-value="resharper" value="el_resharper">ReSharper</option>
+<option data-value="resharper-cpp" value="el_resharper-cpp">ReSharper C++</option>
+<option data-value="rider" value="el_rider">Rider</option>
+<option data-value="rubymine" value="el_rubymine">RubyMine</option>
+<option data-value="teamcity" value="el_teamcity">TeamCity</option>
+<option data-value="upsource" value="el_upsource">Upsource</option>
+<option data-value="webstorm" value="el_webstorm">WebStorm</option>
+<option data-value="youtrack" value="el_youtrack">YouTrack</option>
+</select>
+</div>
+<div class="form__field _required">
+<label class="form__label" for="decision-timeframe">Decision timeframe</label>
+<select class="select js-select-timeframe" id="decision-timeframe" name="zd_decision_timeframe" required="" tabindex="4">
+<option disabled="" selected="">Select decision timeframe</option>
+<option value="immediately">Immediately</option>
+<option value="within_the_next_3_months">Within the next 3 months</option>
+<option value="within_a_year">Within a year</option>
+<option value="no_particular_date">No particular date</option>
+</select>
+</div>
+<div class="form__field _required">
+<label class="form__label" for="number-of-developers">Number of developers</label>
+<select class="select js-select-developers" id="number-of-developers" name="zd_number_of_developers" required="" tabindex="5">
+<option disabled="" selected="">Select number of developers</option>
+<option value="0-25_developers">0-25</option>
+<option value="25-100_developers">25-100</option>
+<option value="100-200_developers">100-200</option>
+<option value="200-500_developers">200-500</option>
+<option value="more_than_500_developers">500+</option>
+</select>
+</div>
+</div>
+</div>
+<input name="form" type="hidden" value="contact_manager">
+            
+
+            <div class="form-privacy-checkbox"></div>
+            <div class="g-recaptcha" data-sitekey="6Lc3VnUUAAAAAAwb63PaNIhJ6iWROIvZOAJqIEJ5"></div>
+            <div class="wt-row wt-row_size_m wt-row_justify_end wt-offset-left-8">
+                <div class="wt-col-inline">
+                    <input type="submit" class="button" value="Send request">
+                </div>
+            </div>
+        </div>
+    </form>
+        </div>
+</div>
+</section>  <header class="section-content _header margin-top-vertical-unit">
+<div class="page__beam _beam-jb">
+<svg class="sprite-img _beam-jb" xmlns:xlink="http://www.w3.org/1999/xlink">
+<use xlink:href="#beam-jb"></use>
+</svg>
+</div>
+<div class="wt-container">
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12 article-content">
+<h1>Developer Tools <br>for Your Business</h1>
+</div>
+</div>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6 wt-col-lg-8">
+<div class="section__description">
+<p>JetBrains products enable developers to
+              build great software faster by
+              writing clean, quality code and automating tasks during all
+              stages of development.</p>
+</div>
+<div class="margin-top-vertical-unit-half">
+<ul>
+<li><a class="link-black" href="#remarkable-return">Remarkable Return</a></li>
+<li><a class="link-black" href="#how-jb-helps">How JetBrains Tools Help Your Business</a></li>
+<li><a class="link-black" href="#enterprise-licensing">Enterprise licensing models</a></li>
+<li><a class="link-black" href="#product-specific-info">Product-specific Information</a></li>
+<li><a class="link-black" href="#industry-recognition">Industry Recognition</a></li>
+<li><a class="link-black" href="#customers-awards">Customers and Awards</a></li>
+<li><a class="link-black" href="#testimonials">What Developers Say About Us</a></li>
+<li><a class="js-form-badge link-black" href="#contact-us">Contact Account Manager</a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</header>
+<section class="section section-customers _bg-medium">
+<div class="wt-container">
+<div class="wt-row wt-row_size_m wt-row_align-items_end wt-col-12 text-center">
+<div class="wt-col-auto-fill">
+<div class="sprite-img customer-list__logo _volkswagen-grayscale"></div>
+</div>
+<div class="wt-col-auto-fill">
+<div class="sprite-img customer-list__logo _procter-and-gamble-grayscale"></div>
+</div>
+<div class="wt-col-auto-fill">
+<div class="sprite-img customer-list__logo _google-grayscale"></div>
+</div>
+<div class="wt-col-auto-fill">
+<div class="sprite-img customer-list__logo _salesforce-grayscale"></div>
+</div>
+<div class="wt-col-auto-fill">
+<div class="sprite-img customer-list__logo _toyota-grayscale"></div>
+</div>
+<div class="wt-col-auto-fill">
+<div class="sprite-img customer-list__logo _valve-grayscale"></div>
+</div>
+<div class="wt-col-auto-fill">
+<div class="sprite-img customer-list__logo _hp-grayscale"></div>
+</div>
+</div>
+</div>
+</section>
+<section class="section margin-top-vertical-unit-twice no-padding-bottom _bg-light">
+<div class="wt-container article-content">
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<p class="sub-title _big">Professional tools with&nbsp;measurable value</p>
+<p class="section__description">JetBrains tools are focused around development team collaboration and can
+            save you money and resources by reducing software development and maintenance costs, help you keep
+            release schedules, and even boost revenues by improving the quality of your software products.
+          </p>
+</div>
+<div class="wt-col-6 wt-row wt-row_size_m">
+<div class="wt-col-auto-fill">
+<div class="features-block">
+<div class="features-block__icon margin-bottom-vertical-unit">
+<div class="features-icon _team _bg-transparent">
+<svg class="sprite-img _team" xmlns:xlink="http://www.w3.org/1999/xlink">
+<use xlink:href="#team"></use>
+</svg>
+</div>
+</div>
+<div class="features-block__num">170K</div>
+<p>companies <br> rely on our tools</p>
+</div>
+</div>
+<div class="wt-col-auto-fill">
+<div class="features-block">
+<div class="features-block__icon margin-bottom-vertical-unit">
+<div class="features-icon _leads _bg-transparent">
+<svg class="sprite-img _leads" xmlns:xlink="http://www.w3.org/1999/xlink">
+<use xlink:href="#leads"></use>
+</svg>
+</div>
+</div>
+<div class="features-block__num">418</div>
+<p>companies on the <br> Fortune 500 list</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="section _text-dark js-trigger-start">
+<div class="wt-container">
+<!--roi calc-->
+<div class="js-scroll-to-roi-calculator margin-top-vertical-unit">
+<h3 class="h3-section" id="remarkable-return">Remarkable Return</h3>
+<p class="section__description">At least 30% of developers time can be taken up working on code issues
+          that could have been avoided altogether if the right development tools were used. Newly hired
+          developers can spend up to 70% of their initial working time getting up to speed with an existing
+          codebase. This figure increases if developers have to regularly switch between projects. With the best
+          development tools, this time can be significantly lowered.
+        </p>
+<p class="section__description">JetBrains tools are designed for productivity and deliver a remarkable Return on
+          Investment (ROI):<br><br></p>
+</div>
+
+      <script>var globalCurrency = "$";
+
+
+var pricesJson = {
+ALL: {
+  price: 649,
+  currency: globalCurrency
+},
+AC: {
+  price: 199,
+  currency: globalCurrency
+},
+CL: {
+  price: 199,
+  currency: globalCurrency
+},
+DB: {
+  price: 199,
+  currency: globalCurrency
+},
+GO: {
+  price: 199,
+  currency: globalCurrency
+},
+II: {
+  price: 499,
+  currency: globalCurrency
+},
+PS: {
+  price: 199,
+  currency: globalCurrency
+},
+PC: {
+  price: 199,
+  currency: globalCurrency
+},
+RSU: {
+    price: 399,
+  currency: globalCurrency
+},
+RC: {
+  price: 199,
+  currency: globalCurrency
+},
+RD: {
+  price: 349,
+  currency: globalCurrency
+},
+RM: {
+  price: 199,
+  currency: globalCurrency
+},
+WS: {
+  price: 129,
+  currency: globalCurrency
+},
+US: {
+  price: { 10: 0, 25: 1300, 50: 2500, 100: 4500, 250: 9000, 500: 12000, 1000: 21000,  2000: 42000 },
+  currency: globalCurrency
+},
+YTD: {
+  price: {25: 500,
+          50: 750,
+          100: 1500,
+          500: 3000,
+          2000: 6000
+         },
+  currency: globalCurrency
+},
+YTI: {
+new_price: [
+    {
+    "users": null,
+    "annual": 0,
+    "priceLevels": [{"annual": "0", "annualPerMonth": "0", "discount_percentage": 100, "max": 3, "min": 1, "monthly": "0"}, {"annual": "50", "annualPerMonth": "4.17", "discount_percentage": 0, "max": 100, "min": 4, "monthly": "0"}, {"annual": "40", "annualPerMonth": "3.33", "discount_percentage": 20, "max": 200, "min": 101, "monthly": "0"}, {"annual": "30", "annualPerMonth": "2.5", "discount_percentage": 40, "max": 300, "min": 201, "monthly": "0"}, {"annual": "20", "annualPerMonth": "1.67", "discount_percentage": 60, "max": 400, "min": 301, "monthly": "0"}, {"annual": "10", "annualPerMonth": "0.83", "discount_percentage": 80, "min": 401, "monthly": "0"}]
+    },     {
+    "users": null,
+    "annual": 0,
+    "priceLevels": [{"annual": "0", "discount_percentage": 100, "max": 3, "min": 1, "monthly": "0"}, {"annual": "50", "discount_percentage": 0, "max": 100, "min": 4, "monthly": "5"}, {"annual": "40", "discount_percentage": 20, "max": 200, "min": 101, "monthly": "4"}, {"annual": "30", "discount_percentage": 40, "max": 300, "min": 201, "monthly": "3"}, {"annual": "20", "discount_percentage": 60, "max": 400, "min": 301, "monthly": "2"}, {"annual": "10", "discount_percentage": 80, "min": 401, "monthly": "1"}]
+    },     {
+    "users": 100,
+    "annual": 0,
+    "priceLevels": null
+    }],
+currency: globalCurrency
+}
+}</script>
+<div class="margin-bottom-vertical-unit-twice">
+<div id="js-roi-calc"></div>
+</div>
+      <!--roi calc ends-->
+<div class="article-content margin-top-vertical-unit">
+<h2 class="h3-section margin-bottom-vertical-unit" id="how-jb-helps">How JetBrains Tools Help Your Business</h2>
+</div>
+<div class="tabs js-tabs">
+<ul class="tabs__nav">
+<li class="tabs__tab is-active">Wide range of tools</li>
+<li class="tabs__tab">Code quality</li>
+<li class="tabs__tab">Unified experience</li>
+<li class="tabs__tab">New technologies</li>
+<li class="tabs__tab">Project management</li>
+</ul>
+<div class="tabs__content no-margin-bottom margin-top-vertical-unit">
+<div class="tabs__pane is-active">
+<div class="features-block">
+<h4 class="features-block__title">Wide range of tools</h4>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<p>JetBrains tools cover every aspect of your development
+                    team's workflow, including project management, coding,
+                    debugging, static code analysis, unit testing, code coverage
+                    analysis, bug tracking, code review, continuous integration,
+                    deployment, and performance and memory profiling.</p>
+</div>
+<div class="wt-col-6">
+<p>Most of our tools are extensible and provide integration
+                    options, so you can create your own development
+                    ecosystem based on your needs, goals, and processes.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="tabs__pane">
+<div class="features-block">
+<h4 class="features-block__title">Built-in code quality</h4>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<p>Built-in code quality control helps developers adopt good
+                    coding and design practices. As problems are discovered
+                    before they ever cause trouble, you get clearer, more
+                    maintainable code bases, highly reliable applications,
+                    and savings of time and money.
+                  </p>
+</div>
+<div class="wt-col-6">
+<p>JetBrains tools assist
+                    you in following uniform conventions and standards
+                    across your team or organization. This helps to
+                    significantly improve your overall productivity,
+                    by allowing all team members to better understand
+                    the code and work more efficiently together.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="tabs__pane">
+<div class="features-block">
+<h4 class="features-block__title">Multi-platform, with all major technologies covered</h4>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<p>Working with multiple environments and platforms is so
+                    common today, which is why we offer high-quality tools
+                    for .NET, Java, C++, PHP, Ruby, Python, and JavaScript,
+                    among others. Whenever developers have to switch technologies or work in a
+                    multi-platform setup, JetBrains tools help ease the learning
+                    curve by providing a familiar development
+                    environment across languages and platforms.</p>
+</div>
+<div class="wt-col-6">
+<p>Should you require integration with already existing solutions, services or technologies used
+                    in
+                    your company, you can take advantage of building a custom integration on top of IntelliJ
+                    Platform, ReSharper Platform,
+                    or TeamCity Platform through API. A powerful and rich API is
+                    available to extend the platform based on your needs.
+                  </p>
+</div>
+</div>
+</div>
+</div>
+<div class="tabs__pane">
+<div class="features-block">
+<h4 class="features-block__title">Early support for new technologies</h4>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-8">
+<p>At JetBrains we are committed to supporting the latest technologies, to help you break into new
+                    markets or improve your development processes. We are quick to implement support for new
+                    languages and frameworks that help your developers become as productive as possible with the
+                    latest industry trends and technologies.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="tabs__pane">
+<div class="features-block">
+<h4 class="features-block__title">Team collaboration</h4>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<p>JetBrains tools allow you to automate routine tasks, streamline the delivery of code to
+                    production, achieve transparency in team communications and collaboration, better plan
+                    development process iterations, and accurately distribute responsibilities. This creates a
+                    development ecosystem that enables your team to accelerate the delivery of high-quality software
+                    products and develop their expertise.
+                  </p>
+</div>
+<div class="wt-col-6">
+<p>A bird's-eye view of the overall development process and smart analytics let you evaluate your
+                    team's dynamics, discover trends early, and assist with managerial decisions. With powerful
+                    customization capabilities fine-tuning your process is a breeze.
+                  </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="article-content margin-top-vertical-unit-twice">
+<h2 class="h3-section margin-top-vertical-unit margin-bottom-vertical-unit" id="enterprise-licensing">Enterprise Licensing</h2>
+</div>
+<div class="tabs js-tabs">
+<ul class="tabs__nav">
+<li class="tabs__tab is-active">Policy and discount</li>
+<li class="tabs__tab">License Server</li>
+<li class="tabs__tab">True up billing</li>
+</ul>
+<div class="tabs__content no-margin-bottom margin-top-vertical-unit">
+<div class="tabs__pane is-active">
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-3">
+<div class="features-block">
+<div class="features-block__icon">
+<div class="features-icon _bg-transparent">
+<svg class="sprite-img _bulk-discounts" xmlns:xlink="http://www.w3.org/1999/xlink">
+<use xlink:href="#bulk-discounts"></use>
+</svg>
+</div>
+</div>
+<p class="text-main">
+<a href="https://sales.jetbrains.com/hc/en-gb/articles/206544559-Do-you-offer-discounts-for-switching-from-a-competitor-s-product-" target="_blank">Competitive</a> & <a href="https://sales.jetbrains.com/hc/en-gb/articles/207240655-What-volume-discounts-does-JetBrains-offer-" target="_blank">bulk</a> discounts are offered.
+                  </p>
+<p class="text-landing">
+                    Competitive & discounts are offered.
+                  </p>
+<div class="button js-form-badge margin-top-vertical-unit">contact us</div>
+</div>
+</div>
+<div class="wt-col-3">
+<div class="features-block">
+<div class="features-block__icon">
+<div class="features-icon _bg-transparent">
+<svg class="sprite-img _calendar" xmlns:xlink="http://www.w3.org/1999/xlink">
+<use xlink:href="#calendar"></use>
+</svg>
+</div>
+</div>
+<p>Greatest flexibility: you can
+                    get a monthly or yearly subscription
+                    for one product
+                    or for all tools with the All
+                    Products Pack (desktop tools only).</p>
+</div>
+</div>
+<div class="wt-col-3">
+<div class="features-block">
+<div class="features-block__icon">
+<div class="features-icon _bg-transparent">
+<svg class="sprite-img _ok-computer" xmlns:xlink="http://www.w3.org/1999/xlink">
+<use xlink:href="#ok-computer"></use>
+</svg>
+</div>
+</div>
+<p class="text-main">Every yearly subscription
+                    comes with a <a href="https://sales.jetbrains.com/hc/en-gb/articles/207240845-What-is-perpetual-fallback-license-" target="_blank">perpetual fallback
+                      license</a> that allows you
+                    to use a certain version of
+                    a product even without an
+                    active subscription.</p>
+<p class="text-landing">Every yearly subscription
+                    comes with a perpetual fallback
+                    license that allows you
+                    to use a certain version of
+                    a product even without an
+                    active subscription.</p>
+</div>
+</div>
+<div class="wt-col-3">
+<div class="features-block">
+<div class="features-block__icon">
+<div class="features-icon _bg-transparent">
+<svg class="sprite-img _discount-coupon" xmlns:xlink="http://www.w3.org/1999/xlink">
+<use xlink:href="#discount-coupon"></use>
+</svg>
+</div>
+</div>
+<p>
+                    You can qualify for a 20%
+                    discount on the initial price
+                    when extending a subscription
+                    for the second year,
+                    and a 40% discount for the
+                    third year and onwards.
+                  </p>
+</div>
+</div>
+<div class="wt-col-3">
+<div class="features-block">
+<div class="features-block__icon">
+<div class="features-icon _bg-transparent">
+<svg class="sprite-img _find" xmlns:xlink="http://www.w3.org/1999/xlink">
+<use xlink:href="#find"></use>
+</svg>
+</div>
+</div>
+<p>Extensive network of resellers and partners all around the world.</p>
+<a class="button _secondary _light margin-top-vertical-unit text-main" href="/company/partners/#profession=reseller">find a reseller</a>
+</div>
+</div>
+<div class="wt-col-3">
+<div class="features-block">
+<div class="features-block__icon">
+<div class="features-icon _bg-transparent">
+<svg class="sprite-img _settings" xmlns:xlink="http://www.w3.org/1999/xlink">
+<use xlink:href="#settings"></use>
+</svg>
+</div>
+</div>
+<p class="text-main">The product subscriptions
+                    can be easily managed and
+                    distributed inside your company
+                    and team through the
+                    <a href="https://account.jetbrains.com/" target="_blank ">JetBrains Account</a>.</p>
+<p class="text-landing">The product subscriptions
+                    can be easily managed and
+                    distributed inside your company
+                    and team through the
+                    JetBrains Account.</p>
+</div>
+</div>
+<div class="wt-col-3">
+<div class="features-block">
+<div class="features-block__icon">
+<div class="features-icon _bg-transparent">
+<svg class="sprite-img _perpetual" xmlns:xlink="http://www.w3.org/1999/xlink">
+<use xlink:href="#perpetual"></use>
+</svg>
+</div>
+</div>
+<p>Perpetual licenses for our
+                    team tools come with free
+                    updates for one year and an
+                    option to extend an update
+                    subscription at a discount.</p>
+</div>
+</div>
+<div class="wt-col-3">
+<div class="features-block">
+<div class="features-block__icon">
+<div class="features-icon _bg-transparent">
+<svg class="sprite-img _global" xmlns:xlink="http://www.w3.org/1999/xlink">
+<use xlink:href="#global"></use>
+</svg>
+</div>
+</div>
+<p>Global company operating in more than 140 countries and having 15 years of
+                    experience.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="tabs__pane">
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-3">
+<div class="features-block">
+<div class="features-block__icon">
+<div class="features-icon _bg-transparent">
+<svg class="sprite-img _license" xmlns:xlink="http://www.w3.org/1999/xlink">
+<use xlink:href="#license"></use>
+</svg>
+</div>
+</div>
+<p>Replaces your standard,
+                    end user based subscriptions
+                    with a flexible, floating
+                    license model.</p>
+</div>
+</div>
+<div class="wt-col-3">
+<div class="features-block">
+<div class="features-block__icon">
+<div class="features-icon _bg-transparent">
+<svg class="sprite-img _support" xmlns:xlink="http://www.w3.org/1999/xlink">
+<use xlink:href="#support"></use>
+</svg>
+</div>
+</div>
+<p>Supports your growing user
+                    base seamlessly, without the
+                    need to manually issue and revoke
+                    subscriptions individually.</p>
+</div>
+</div>
+<div class="wt-col-3">
+<div class="features-block">
+<div class="features-block__icon">
+<div class="features-icon _bg-transparent">
+<svg class="sprite-img _reports-paper" xmlns:xlink="http://www.w3.org/1999/xlink">
+<use xlink:href="#reports-paper"></use>
+</svg>
+</div>
+</div>
+<p>Comprehensive usage
+                    reporting available on
+                    demand</p>
+</div>
+</div>
+<div class="wt-col-3">
+<div class="features-block">
+<div class="features-block__icon">
+<div class="features-icon _bg-transparent">
+<svg class="sprite-img _licenses" xmlns:xlink="http://www.w3.org/1999/xlink">
+<use xlink:href="#licenses"></use>
+</svg>
+</div>
+</div>
+<p>Offered as a free bundle
+                    for customers purchasing
+                    or already owning
+                    50 or more licenses.</p>
+</div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-3">
+<div class="features-block">
+<a class="button" href="/license-server/" target="_blank">Learn more</a>
+</div>
+</div>
+</div>
+</div>
+<div class="tabs__pane">
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-3">
+<div class="features-block">
+<div class="features-block__icon">
+<div class="features-icon _bg-transparent">
+<svg class="sprite-img _license-server" xmlns:xlink="http://www.w3.org/1999/xlink">
+<use xlink:href="#license-server"></use>
+</svg>
+</div>
+</div>
+<p>Used in conjunction with the
+                      <a href="/license-server/" target="_blank">JetBrains License Server</a></p>
+</div>
+</div>
+<div class="wt-col-3">
+<div class="features-block">
+<div class="features-block__icon">
+<div class="features-icon _bg-transparent">
+<svg class="sprite-img _administrator" xmlns:xlink="http://www.w3.org/1999/xlink">
+<use xlink:href="#administrator"></use>
+</svg>
+</div>
+</div>
+<p>Allows the administrator
+                    to set a minimum usage
+                    threshold with additional
+                    “overage” flexibility</p>
+</div>
+</div>
+<div class="wt-col-3">
+<div class="features-block">
+<div class="features-block__icon">
+<div class="features-icon _bg-transparent">
+<svg class="sprite-img _calendar-payment" xmlns:xlink="http://www.w3.org/1999/xlink">
+<use xlink:href="#calendar-payment"></use>
+</svg>
+</div>
+</div>
+<p>Less transactional churn:
+                    receive billing on a monthly
+                    or quarterly basis</p>
+</div>
+</div>
+<div class="wt-col-3">
+<div class="features-block">
+<div class="features-block__icon">
+<div class="features-icon _bg-transparent">
+<svg class="sprite-img _shopping-cart" xmlns:xlink="http://www.w3.org/1999/xlink">
+<use xlink:href="#shopping-cart"></use>
+</svg>
+</div>
+</div>
+<p>Cost savings:
+                    eliminates
+                    over-purchasing, allows
+                    you to license exactly what
+                    your company needs</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="features-block margin-top-vertical-unit">
+<h4 class="features-block__title">Comprehensive customer support</h4>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<p>You can be sure to get quality support for JetBrains
+              products. All our tools offer detailed documentation,
+              reference materials, and guides. If you have a question,
+              you can get quick, helpful and responsive email support
+              at any time. If you require training, we can
+              arrange on-site training or remote, webinar-based sessions
+              for your team.</p>
+</div>
+<div class="wt-col-6">
+<p>Our online resources such as community forums and
+              public issue trackers are available to submit your bug reports
+              and feature requests or discuss product functionality
+              with JetBrains developers and other users. We're
+              also listening to you on Twitter and Facebook.</p>
+</div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-4">
+<div class="features-block">
+<div class="features-block__icon">
+<div class="features-icon _bg-transparent margin-bottom-vertical-unit">
+<svg class="sprite-img _happy-face" xmlns:xlink="http://www.w3.org/1999/xlink">
+<use xlink:href="#happy-face"></use>
+</svg>
+</div>
+</div>
+<div class="features-block__num">98%</div>
+<p>satisfaction rating</p>
+</div>
+</div>
+<div class="wt-col-4">
+<div class="features-block">
+<div class="features-block__icon">
+<div class="features-icon _bg-transparent margin-bottom-vertical-unit">
+<svg class="sprite-img _reply-email" xmlns:xlink="http://www.w3.org/1999/xlink">
+<use xlink:href="#reply-email"></use>
+</svg>
+</div>
+</div>
+<div class="features-block__num">4.3h</div>
+<p>median first reply time<br> (3.4h for sales & licensing requests)</p>
+</div>
+</div>
+<div class="wt-col-4">
+<div class="features-block">
+<div class="features-block__icon">
+<div class="features-icon _bg-transparent margin-bottom-vertical-unit">
+<svg class="sprite-img _support-ticket" xmlns:xlink="http://www.w3.org/1999/xlink">
+<use xlink:href="#support-ticket"></use>
+</svg>
+</div>
+</div>
+<div class="features-block__num">>70%</div>
+<p>of all support requests are resolved with a single reply</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="section _bg-medium section-product-info">
+<div class="wt-container">
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-8">
+<div class="article-content">
+<h2 class="h3-section margin-bottom-vertical-unit" id="product-specific-info">Product-Specific Information</h2>
+</div>
+<div class="section__description">
+<p>Please select a JetBrains tool from the list to see relevant documents:</p>
+</div>
+<div class="margin-top-vertical-unit margin-bottom-vertical-unit">
+<div class="js-select-product-wrapper">
+<select class="select js-select-product-select switch-product">
+<option selected="" value="all">All Products Pack</option>
+<option value="appcode">AppCode</option>
+<option value="clion">CLion</option>
+<option value="datagrip">DataGrip</option>
+<option value="dottrace">dotTrace</option>
+<option value="dotpeek">dotPeek</option>
+<option value="dotmemory">dotMemory</option>
+<option value="dotcover">dotCover</option>
+<option value="goland">GoLand</option>
+<option value="idea">IntelliJ IDEA</option>
+<option value="phpstorm">PhpStorm</option>
+<option value="pycharm">PyCharm</option>
+<option value="resharper">ReSharper</option>
+<option value="resharper-cpp">ReSharper C++</option>
+<option value="rider">Rider</option>
+<option value="rubymine">RubyMine</option>
+<option value="teamcity">TeamCity</option>
+<option value="upsource">Upsource</option>
+<option value="webstorm">WebStorm</option>
+<option value="youtrack">YouTrack</option>
+</select>
+<div class="js-select-product-info margin-top-vertical-unit"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="section _bg-extra-dark">
+<div class="wt-container">
+<div class="wt-row wt-row_size_m margin-bottom-vertical-unit-twice">
+<div class="wt-col-6 article-content">
+<div class="article-content">
+<h2 class="h3-section _color-light" id="industry-recognition">Industry Recognition</h2>
+</div>
+<p class="_sub-title _text-size-medium _color-light">
+            JetBrains developer tools are trusted by Salesforce, Citibank, Twitter, Hewlett-Packard,
+            Toyota,
+            NASA,
+            and 170,000 other companies worldwide, including 418 on the Fortune 500 list. Over 7,000,000
+            developers already use our products, and&nbsp;100,000 join every month.
+          </p>
+</div>
+<div class="wt-col-6 margin-top-vertical-unit">
+<div class="wt-row wt-row_size_m customers-list">
+<div class="wt-row wt-row_size_m wt-row_align-items_end wt-col-12 text-center">
+<div class="wt-col-auto-fill">
+<svg class="sprite-img customer-list__logo _smaller _citibank-grayscale" xmlns:xlink="http://www.w3.org/1999/xlink">
+<use xlink:href="#citibank-grayscale"></use>
+</svg>
+</div>
+<div class="wt-col-auto-fill">
+<svg class="sprite-img customer-list__logo _smaller _procter-and-gamble-grayscale" xmlns:xlink="http://www.w3.org/1999/xlink">
+<use xlink:href="#procter-and-gamble-grayscale"></use>
+</svg>
+</div>
+<div class="wt-col-auto-fill">
+<svg class="sprite-img customer-list__logo _smaller _google-grayscale" xmlns:xlink="http://www.w3.org/1999/xlink">
+<use xlink:href="#google-grayscale"></use>
+</svg>
+</div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-row_align-items_end wt-col-12 text-center">
+<div class="wt-col-auto-fill">
+<svg class="sprite-img customer-list__logo _smaller _twitter-grayscale" xmlns:xlink="http://www.w3.org/1999/xlink">
+<use xlink:href="#twitter-grayscale"></use>
+</svg>
+</div>
+<div class="wt-col-auto-fill">
+<svg class="sprite-img customer-list__logo _smaller _salesforce-grayscale" xmlns:xlink="http://www.w3.org/1999/xlink">
+<use xlink:href="#salesforce-grayscale"></use>
+</svg>
+</div>
+<div class="wt-col-auto-fill">
+<svg class="sprite-img customer-list__logo _smaller _valve-grayscale" xmlns:xlink="http://www.w3.org/1999/xlink">
+<use xlink:href="#valve-grayscale"></use>
+</svg>
+</div>
+<div class="wt-row wt-row_size_m wt-row_align-items_center wt-col-12 text-center">
+<div class="wt-col-auto-fill">
+<svg class="sprite-img customer-list__logo _smaller _volkswagen-grayscale" xmlns:xlink="http://www.w3.org/1999/xlink">
+<use xlink:href="#volkswagen-grayscale"></use>
+</svg>
+</div>
+<div class="wt-col-auto-fill">
+<svg class="sprite-img customer-list__logo _smaller _toyota-grayscale" xmlns:xlink="http://www.w3.org/1999/xlink">
+<use xlink:href="#toyota-grayscale"></use>
+</svg>
+</div>
+<div class="wt-col-auto-fill">
+<svg class="sprite-img customer-list__logo _smaller _hp-grayscale" xmlns:xlink="http://www.w3.org/1999/xlink">
+<use xlink:href="#hp-grayscale"></use>
+</svg>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m margin-bottom-vertical-unit-twice">
+<div class="wt-col-12 margin-bottom-vertical-unit-half">
+<h2 class="h4-section _color-light">Fortune Companies</h2>
+</div>
+<div class="wt-col-4">
+<div class="features-block">
+<div class="features-block__num">418</div>
+<p class="_color-light">Fortune 500 companies<br>use our tools</p>
+</div>
+</div>
+<div class="wt-col-4">
+<div class="features-block">
+<div class="features-block__num">95</div>
+<p class="_color-light">Fortune 100 companies <br> use our tools</p>
+</div>
+</div>
+</div>
+<div id="net-promoter-1">
+<div class="wt-row wt-row_size_m margin-top-vertical-unit">
+<div class="wt-col-12">
+<h3 class="_color-light margin-bottom-vertical-unit">How likely are you to recommend
+              JetBrains to a friend or colleague?</h3>
+</div>
+<div class="wt-col-4">
+<div class="features-block">
+<div class="features-block__num">28</div>
+<p>Software &amp; Apps <br> Industry Average</p>
+</div>
+</div>
+<div class="wt-col-8">
+<div class="features-block">
+<div class="features-block__num">68</div>
+<p>JetBrains <br> Net Promoter Score <span class="jb-tooltip-target" data-target="The Net Promoter Score is an index ranging from -100 to 100 that measures the willingness of customers to recommend a company's products or services to others. It is used as a proxy for gauging the customer's overall satisfaction with a company's product or service and the customer's loyalty to the brand.">?</span>
+</p>
+</div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-8 wt-row wt-row_size_m chart text-center section-netpromoter">
+<div class="chart__block _8-percent">
+<p>6%</p>
+<div class="chart__block-block"></div>
+<p>Detractors</p>
+</div>
+<div class="chart__block _20-percent">
+<p>20%</p>
+<div class="chart__block-block"></div>
+<p>Passives</p>
+</div>
+<div class="chart__block _72-percent">
+<p>74%</p>
+<div class="chart__block-block"></div>
+<p>Promoters</p>
+</div>
+</div>
+</div>
+</div>
+<div id="net-promoter-2">
+<div class="wt-row wt-row_size_m margin-top-vertical-unit">
+<div class="wt-col-12">
+<h3 class="_color-light margin-bottom-vertical-unit">How likely is it that you would recommend
+              JetBrains to a friend or colleague?</h3>
+</div>
+<div class="wt-col-2">
+<div class="features-block">
+<div class="features-block__num">28</div>
+<p>Software &amp; Apps <br> Industry Average</p>
+</div>
+</div>
+<div class="wt-col-3">
+<div class="features-block">
+<div class="features-block__num">68</div>
+<p>JetBrains <br> Net Promoter Score <span class="jb-tooltip-target" data-target="The Net Promoter Score is an index ranging from -100 to 100 that measures the willingness of customers to recommend a company's products or services to others. It is used as a proxy for gauging the customer's overall satisfaction with a company's product or service and the customer's loyalty to the brand.">?</span>
+</p>
+</div>
+</div>
+<div class="wt-col-7 wt-row wt-row_size_m chart text-center section-netpromoter">
+<div class="chart__block _8-percent">
+<p>6%</p>
+<div class="chart__block-block"></div>
+<p>Detractors</p>
+</div>
+<div class="chart__block _20-percent">
+<p>20%</p>
+<div class="chart__block-block"></div>
+<p>Passives</p>
+</div>
+<div class="chart__block _72-percent">
+<p>74%</p>
+<div class="chart__block-block"></div>
+<p>Promoters</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="section _bg-light margin-bottom-vertical-unit">
+<div class="wt-container article-content" id="testimonials-wrapper">
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-8" id="testimonials"><h1>What Developers Say <br>About Us</h1></div>
+<div class="wt-col-4 wt-col_align-self_center" id="select-testimonials-wrapper">
+<label for="filter-by-product">Filter by product</label>
+<select class="select js-filter-by-product switch-product" id="filter-by-product"></select>
+</div>
+</div>
+<div class="article-content testimonials js-testimonials-container _no-margin-bottom"></div>
+<div class="wt-row wt-row_size_m" id="button-testimonials">
+<div class="wt-col-12">
+<a class="button _secondary _light _margin-top-vertical-unit-half _margin-bottom-vertical-unit" href="/company/customers/testimonials.html">View More
+            Testimonials</a>
+</div>
+</div>
+</div>
+<div class="wt-container margin-bottom-vertical-unit-twice">
+
+      <div id="predefined-testimonials-wrapper">
+<div class="wt-row wt-row_size_m article-content">
+<div class="wt-col-12"><h1>What Developers Say <br>About Us</h1></div>
+<div class="wt-col-6 quote margin-top-vertical-unit">
+<div class="wt-row wt-row_size_m">
+<div class="quote__photo">
+<img alt="Martin Fowler" src="https://resources-prod.jetbrains.com/storage/testimonials/martin-fowler.jpg">
+</div>
+<div class="quote__information">
+<div class="quote__author">
+<span>Martin Fowler</span>
+</div>
+<div class="quote__author-occupation">
+<span>Chief Scientist</span>
+</div>
+<div class="quote__author-company">
+                        Thoughtworks Inc.
+                    </div>
+<div class="quote__text">
+<p>When I started writing about refactoring I looked forward to the days when Java programmers
+                            could
+                            have the same tools that Smalltalkers used to refactor their programs. IntelliJ IDEA gives
+                            Java
+                            programmers that power, not just through refactorings, but also through innovative code
+                            assistance
+                            capabilities. These days every Java programmer should use a refactoring tool every day.</p>
+</div>
+<div class="quote__product" data-tag="idea">
+                        IntelliJ IDEA
+                    </div>
+</div>
+</div>
+</div>
+<div class="wt-col-6 quote margin-top-vertical-unit">
+<div class="wt-row wt-row_size_m">
+<div class="quote__photo">
+<img alt="Gerard de Brieder" src="https://resources-prod.jetbrains.com/storage/testimonials/gerard_de_brieder.jpeg">
+</div>
+<div class="quote__information">
+<div class="quote__author">
+                        Gerard de Brieder
+                    </div>
+<div class="quote__author-occupation">
+<span>Founder</span>
+</div>
+<div class="quote__author-company">
+                        Govannon
+                    </div>
+<div class="quote__text">
+<p>The things that ReSharper showed me and taught me is simply amazing. It's like having your
+                            own
+                            personal pair programmer sitting right next to you all the time. <br>It tells you if your
+                            code is
+                            good, if you actually use the code you create and it even helps you reformat/refactor your
+                            code to
+                            make it more robust. <br>An example that blew me out of the field was with an iteration I
+                            was
+                            working on which went over a List. ReSharper offered a suggestion to use LINQ and went right
+                            ahead
+                            rewriting the whole iteration into a LINQ statement. This is great for teaching you new
+                            stuff!</p>
+</div>
+<div class="quote__product" data-tag="resharper">
+                        ReSharper
+                    </div>
+</div>
+</div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6 quote margin-top-vertical-unit">
+<div class="wt-row wt-row_size_m">
+<div class="quote__photo">
+<img alt="Chris Eidhof" src="https://resources-prod.jetbrains.com/storage/testimonials/customer__ChrisEidhof.png">
+</div>
+<div class="quote__information">
+<div class="quote__author">
+<span>Chris Eidhof</span>
+</div>
+<div class="quote__author-occupation">
+<span>iOS/macOS software developer</span>
+</div>
+<div class="quote__author-company">
+                        objc.io
+                    </div>
+<div class="quote__text">
+<p>Anyone who's not using AppCode is wasting precious time every day. I save hours every week,
+                            and
+                            feel impeded whenever I'm editing Objective-C outside of AppCode.</p>
+</div>
+<div class="quote__product" data-tag="appcode">
+                        AppCode
+                    </div>
+</div>
+</div>
+</div>
+<div class="wt-col-6 quote margin-top-vertical-unit">
+<div class="wt-row wt-row_size_m">
+<div class="quote__photo">
+<img src="/company/customers/img/noPhoto_young.svg">
+</div>
+<div class="quote__information">
+<div class="quote__author">
+<span>Mathias Meyer</span>
+</div>
+<div class="quote__author-occupation">
+<span>freelance software developer, consultant and coach</span>
+</div>
+<div class="quote__author-company">
+                        PAPERPLANES
+                    </div>
+<div class="quote__text">
+<p>If you're one of these people who put free cost above time and money gained a small
+                            investment,
+                            you should give IDEA a try... It didn't win the Java Developer Journal Reader's Choice award
+                            for
+                            best Java IDE for nothing.</p>
+</div>
+<div class="quote__product" data-tag="idea">
+                        IntelliJ IDEA
+                    </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+      <div class="wt-row wt-row_size_m row-awards margin-top-vertical-unit-twice">
+<div class="wt-col-5">
+<h3 class="h3-section margin-bottom-vertical-unit-half" id="customers-awards">
+            Customers and Awards
+          </h3>
+<p>JetBrains' products have won 50+ international industry awards in the past 16 years.</p>
+</div>
+<div class="wt-col-7 wt-row wt-row_size_m text-center">
+<div class="wt-col-auto-fill">
+<div class="award">
+<img alt="" class="award__image" height="90" src="/company/img/awards/vsm-award-gold-2019.jpeg">
+</div>
+</div>
+<div class="wt-col-auto-fill">
+<div class="award">
+<img alt="" class="award__image" height="90" src="/company/img/awards/g2-top-100-software-companies-2019.png">
+</div>
+</div>
+<div class="wt-col-auto-fill">
+<div class="award">
+<img alt="" class="award__image" height="90" src="/company/img/awards/g2-top-50-enterprise-products-2019.png">
+</div>
+</div>
+<div class="wt-col-auto-fill">
+<div class="award">
+<img alt="" class="award__image" height="80" src="/company/img/awards/developer-week-2019.png">
+</div>
+</div>
+</div>
+</div>
+<a class="js-trigger-end button _secondary _light _margin-top _button-trigger-end" href="/company/customers/awards/" id="button-awards">View More
+        Awards</a>
+</div>
+</section>
+</div>    </div>
+
+            
+<div class="page__footer">
+    <footer class="footer" id="footer">
+        <div class="wt-container">
+            <div class="footer__main wt-row wt-row_size_m wt-row-sm_direction_column-reverse">
+                <div class="footer__logo wt-col-inline wt-display-md-none">
+                    <div class="jetbrains-logo _size-3 _full-block">
+                        <svg class="sprite-img jetbrains">
+                            <use xlink:href="#jetbrains" />
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="wt-col-auto-fill wt-col-sm-12">
+                    <div class="wt-row wt-row_size_xs wt-row-sm_size_m wt-offset-top-12">
+                        <div class="wt-col-inline footer-skeleton-button"></div>
+                        <div class="wt-col-inline footer-skeleton-button"></div>
+                        <div class="wt-col-inline footer-skeleton-button"></div>
+                        <div class="wt-col-inline footer-skeleton-button"></div>
+                    </div>
+
+                    <div class="footer-skeleton-text-2 wt-offset-top-24" style="max-width: 45%"></div>
+                    <div class="footer-skeleton-text-2 wt-offset-top-12" style="max-width: 70%"></div>
+                </div>
+
+                <div class="wt-col-inline wt-col-sm-12 wt-col_align-self_end wt-col-sm_align-self_start">
+                    <div class="wt-row wt-row_size_m wt-row_justify_end wt-row-sm_justify_start">
+                        <div class="wt-col-inline footer-skeleton-button" style="min-width: 180px"></div>
+                        <div class="wt-col-inline footer-skeleton-button" style="min-width: 80px"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+    </div>
+
+<script>
+(function () {
+  function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+      results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+  }
+
+  function updateQueryStringParameter(uri, key, value) {
+    var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+    var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+    if (uri.match(re)) {
+      return uri.replace(re, '$1' + key + "=" + value + '$2');
+    }
+    else {
+      return uri + separator + key + "=" + value;
+    }
+  }
+
+  var downloadLink = document.getElementById("download-link");
+  if (downloadLink != null) {
+    var platform = getParameterByName('platform');
+    platform = platform != null ? platform : "windows";
+    var href = downloadLink.getAttribute("href");
+    var code = getParameterByName("code");
+
+    if(code != null) {
+      href = updateQueryStringParameter(href, "code", code)
+    }
+    href = updateQueryStringParameter(href, "platform", platform);
+    downloadLink.setAttribute("href", href);
+  }
+})();
+</script><script>
+(function() {
+  var STORAGE_KEY_NAME = 'firefoxDisappearedSVGWorkaround';
+  var STORAGE_KEY_VALUE = '1';
+
+  var isFirefox = /firefox/i.test(navigator.userAgent);
+  if (!isFirefox || isFirefox && sessionStorage.getItem(STORAGE_KEY_NAME) === STORAGE_KEY_VALUE) {
+    return;
+  }
+
+  var arrayFrom = function (arrayLike) {
+    return Array.prototype.slice.call(arrayLike, 0);
+  };
+
+  function workaround() {
+    var uses = document.querySelectorAll('.page svg use');
+    var badNodesCount = 0;
+
+    arrayFrom(uses).forEach(function (node) {
+      var rect = node.getBoundingClientRect();
+      if (rect.width === 0 && rect.height === 0)
+        badNodesCount++;
+    });
+
+    if (badNodesCount === uses.length) {
+      sessionStorage.setItem(STORAGE_KEY_NAME, STORAGE_KEY_VALUE);
+      if (typeof dataLayer !== 'undefined')
+        dataLayer.push({'firefoxDisappearedSVGWorkaround': STORAGE_KEY_VALUE});
+
+      window.location.replace(window.location.href);
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', workaround);
+
+})();
+</script>      <link href="/_assets/banner-rotator.entry.07ac548a2a68a7922693.css" rel="stylesheet" type="text/css">
+      <script src="/_assets/banner-rotator.entry.b9ea3aaba598786010f0.js" type="text/javascript"></script>
+      
+      
+  <script>
+(function () {
+
+  'use strict';
+
+  function ImagesSrcReplacer () {
+
+    var attribute = 'data-src';
+    var matches = document.querySelectorAll('img[' + attribute + ']');
+
+    for (var i = 0, n = matches.length; i < n; i++) {
+
+      var attrValue = matches[i].getAttribute(attribute);
+
+      if (_isHighDensity ()) {
+
+        var name = attrValue.substring(0, attrValue.lastIndexOf('.'));
+        var extention = attrValue.substring(attrValue.lastIndexOf('.'), attrValue.length);
+
+        matches[i].setAttribute('src', name + '@2x' + extention);
+
+      } else {
+        matches[i].setAttribute('src', attrValue)
+      }
+    }
+
+    /**
+     * Detect high density
+     * @returns {*|boolean}
+     */
+    function _isHighDensity () {
+      return (
+      (window.matchMedia &&
+      (window.matchMedia('only screen and (min-resolution: 124dpi), only screen and (min-resolution: 1.3dppx), only screen and (min-resolution: 48.8dpcm)').matches ||
+       window.matchMedia('only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (-o-min-device-pixel-ratio: 2.6/2), only screen and (min--moz-device-pixel-ratio: 1.3), only screen and (min-device-pixel-ratio: 1.3)').matches)) ||
+      (window.devicePixelRatio &&
+       window.devicePixelRatio > 1.3));
+    }
+  }
+
+  return new ImagesSrcReplacer()
+
+}(document, window));
+</script></body>
+</html>

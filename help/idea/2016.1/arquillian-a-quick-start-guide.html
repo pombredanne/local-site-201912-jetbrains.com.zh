@@ -1,0 +1,248 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"></meta><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><title>IntelliJ IDEA 2016.1 Help :: Arquillian: a quick start guide</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Arquillian"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.1 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWindow</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="creating-a-gradle-android-project.html">Creating a Gradle-Android Project</a><a class="navigation-links__next" href="aspectj.html">AspectJ</a></div><h1>Arquillian: a quick start guide</h1><a name="d16064e3"></a><p>
+        This guide shows main IntelliJ IDEA features for writing and running <a name="d16064e5"></a><a href="http://arquillian.org/" data-external="true"><span>Arquillian</span></a> tests.</p><ul><li class="list__item"><a href="#d16064e11">Before you start</a></li><li class="list__item"><a href="#d16064e47">Creating a project with Arquillian JUnit support</a></li><li class="list__item"><a href="#d16064e149">
+        Creating a class</a></li><li class="list__item"><a href="#d16064e210">
+        Developing code for the Greeter class</a></li><li class="list__item"><a href="#d16064e228">Defining javax-inject.jar as a library</a></li><li class="list__item"><a href="#d16064e293">Creating a folder for test sources</a></li><li class="list__item"><a href="#d16064e314">Creating a test class</a></li><li class="list__item"><a href="#d16064e395">Completing the code for the GreteerTest class</a></li><li class="list__item"><a href="#d16064e426">Creating a run configuration for running the test</a></li><li class="list__item"><a href="#d16064e479">Running the test in an embedded container</a></li><li class="list__item"><a href="#d16064e508">Editing the run configuration: adding a managed container</a></li><li class="list__item"><a href="#d16064e615">Creating the arquillian.xml configuration file</a></li><li class="list__item"><a href="#d16064e662">Running the test in a managed container</a></li><li class="list__item"><a href="#d16064e687">Modifying arquillian.xml</a></li><li class="list__item"><a href="#d16064e705">Running the test: deploying to a running server</a></li></ul><a name="d16064e11"></a><h2>Before you start</h2><a name="d16064e14"></a><p>
+        Make sure that the following software is installed on your computer:</p><ul class="list _ul"><li class="list__item"><a name="d16064e19"></a>
+            IntelliJ IDEA ULTIMATE Edition. Also check if the JBoss Arquillian Support <a name="d16064e21"></a><a href="plugins.html"><span>plugin</span></a> is enabled.</li><li class="list__item"><a name="d16064e25"></a>
+            Java SE Development Kit (JDK), version 8.
+            <a name="d16064e27"></a><a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" data-external="true"><span>Download Oracle JDK</span></a>.</li><li class="list__item"><a name="d16064e31"></a>
+            GlassFish Server, version 4.
+            The server will be used as a managed Arquillian container.
+            <a name="d16064e33"></a><a href="https://glassfish.java.net/download.html" data-external="true"><span>Download GlassFish</span></a>.</li></ul><a name="d16064e38"></a><p>
+        You should also
+        <a name="d16064e40"></a><a href="http://www.java2s.com/Code/Jar/j/Downloadjavaxinjectjar.htm" data-external="true"><span>download javax-inject.jar</span></a>.
+        This file will be used as a <a name="d16064e43"></a><a href="library.html"><span>library</span></a> when developing our sample test class.</p><a name="d16064e47"></a><h2>Creating a project with Arquillian JUnit support</h2><ol class="list _decimal"><li class="list__item"><a name="d16064e52"></a>
+            Click <a name="d16064e54"></a><span class="control">Create New Project</span> on the Welcome screen, or
+            select <a name="d16064e57"></a><span class="control">File | New | Project</span>.
+            <a name="d16064e60"></a><p>The <a name="d16064e62"></a><span class="control">New Project</span> wizard opens.</p></li><li class="list__item"><a name="d16064e66"></a>
+            In the left-hand pane, select <a name="d16064e68"></a><span class="control">Java Enterprise</span>.</li><li class="list__item"><a name="d16064e72"></a>
+            If the JDK that you want to use is already defined in IntelliJ IDEA,
+            select that JDK from the <a name="d16064e74"></a><span class="control">Project SDK</span> list.
+            Otherwise, click <a name="d16064e77"></a><span class="control">New</span>, select <a name="d16064e80"></a><span class="control">JDK</span>,
+            and select the JDK installation folder in the dialog that opens.</li><li class="list__item"><a name="d16064e84"></a>
+            If GlassFish is not defined in IntelliJ IDEA yet,
+            click <a name="d16064e86"></a><span class="control">New</span> to the right of the <a name="d16064e89"></a><span class="control">Application Server</span> field and
+            select <a name="d16064e92"></a><span class="control">Glassfish Server</span>.
+            <a name="d16064e95"></a><p>
+                In the <a name="d16064e97"></a><span class="control">Glassfish Server</span> dialog,
+                specify the GlassFish Server installation directory.</p></li><li class="list__item"><a name="d16064e101"></a>
+            Under <a name="d16064e103"></a><span class="control">Additional Libraries and Frameworks</span>,
+            select the <a name="d16064e106"></a><span class="control">Arquillian JUnit</span> check box.
+            <figure><img alt="arq01NewProject" width="616" height="448" title="arq01NewProject" src="/help/img/idea/2016.1/arq01NewProject.png"></figure>
+            <a name="d16064e111"></a><p>
+                Click <a name="d16064e113"></a><span class="control">Next</span>.</p></li><li class="list__item"><a name="d16064e118"></a>
+            Specify the name for your new project (e.g. <code class="code" data-lang="Java">HelloArquillian</code>) and
+            click <a name="d16064e123"></a><span class="control">Finish</span>.
+            <figure><img alt="arq02NewProject" width="616" height="132" title="arq02NewProject" src="/help/img/idea/2016.1/arq02NewProject.png"></figure>
+            <a name="d16064e128"></a><p>
+                When the project is created, you'll see something similar to this
+                in the <a name="d16064e130"></a><span class="control">Project</span> tool window.</p>
+            <figure><img alt="arq03Project" width="616" height="206" title="arq03Project" src="/help/img/idea/2016.1/arq03Project.png"></figure></li></ol><a name="d16064e137"></a><p>
+        (To add Arquillian JUnit support for an existing project:
+        in the <a name="d16064e139"></a><span class="control">Project</span> tool window,
+        right-click your project or module folder and select <a name="d16064e142"></a><span class="control">Add Framework Support</span>.
+        Then, select the <a name="d16064e145"></a><span class="control">Arquillian JUnit</span> check box in the dialog that opens.)</p><a name="d16064e149"></a><h2>
+        Creating a class</h2><a name="d16064e152"></a><p>
+        Now we are going to create a class that we'll test.
+        Let the class name be <code class="code" data-lang="Java">com.example.hello.Greeter</code>.</p><ol class="list _decimal"><li class="list__item"><a name="d16064e161"></a>
+            In the <a name="d16064e163"></a><span class="control">Project</span> tool window,
+            right-click the <code class="code" data-lang="Java">src</code> folder,
+            point to <a name="d16064e169"></a><span class="control">New</span> and select <a name="d16064e172"></a><span class="control">Java Class</span>.</li><li class="list__item"><a name="d16064e176"></a>
+            In the <a name="d16064e178"></a><span class="control">Create New Class</span> dialog that opens,
+            type <code class="code" data-lang="Java">com.example.hello.Greeter</code> in the <a name="d16064e184"></a><span class="control">Name</span> field and
+            press <kbd data-default="Enter" data-default_for_gnome="Enter" data-default_for_kde="Enter" data-default_for_xwin="Enter" data-emacs="Enter" data-jbuilder="Enter" data-visual_studio="Enter" data-netbeans_6.5="N/A" data-eclipse="Enter" data-mac_os_x_10.5_="⏎" data-mac_os_x="⏎" data-eclipse_mac_os_x="⏎" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Enter</kbd>.
+            <a name="d16064e189"></a><p>
+                The package <code class="code" data-lang="Java">com.example.hello</code> and
+                the class <code class="code" data-lang="Java">Greeter</code> are shown in the <a name="d16064e197"></a><span class="control">Project</span> tool window.</p>
+            <figure><img alt="arq04ProjectGreeter" width="616" height="247" title="arq04ProjectGreeter" src="/help/img/idea/2016.1/arq04ProjectGreeter.png"></figure>
+            <a name="d16064e204"></a><p>
+                At the same time, the file <code class="code" data-lang="Java">Greeter.java</code> opens
+                in the editor.</p></li></ol><a name="d16064e210"></a><h2>
+        Developing code for the Greeter class</h2><a name="d16064e213"></a><p>
+        Here is the code for the <code class="code" data-lang="Java">Greeter</code> class.</p><a name="d16064e219"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kn">package</span> <span class="nn">com.example.hello</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.io.PrintStream</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Greeter</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">greet</span><span class="o">(</span><span class="n">PrintStream</span> <span class="n">to</span><span class="o">,</span> <span class="n">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">to</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">createGreeting</span><span class="o">(</span><span class="n">name</span><span class="o">));</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">createGreeting</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="s">&quot;Hello, &quot;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s">&quot;!&quot;</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></div><a name="d16064e222"></a><p>
+        Copy the code into the editor.</p><figure><img alt="arq05EditorGreeter" width="616" height="269" title="arq05EditorGreeter" src="/help/img/idea/2016.1/arq05EditorGreeter.png"></figure><a name="d16064e228"></a><h2>Defining javax-inject.jar as a library</h2><a name="d16064e231"></a><p>To be able to write and run our Arquillian test, we need <code class="code" data-lang="Java">javax-inject.jar</code> as a library.</p><ol class="list _decimal"><li class="list__item"><a name="d16064e239"></a>
+            In the project root folder,
+            create the folder <code class="code" data-lang="Java">lib</code>
+            (<a name="d16064e244"></a><span class="menupath">New | Directory</span>) and
+            copy <code class="code" data-lang="Java">javax-inject.jar</code> into that folder.
+            <figure><img alt="arq06ProjectJavaxInject" width="616" height="287" title="arq06ProjectJavaxInject" src="/help/img/idea/2016.1/arq06ProjectJavaxInject.png"></figure></li><li class="list__item"><a name="d16064e252"></a>
+            Open the <a name="d16064e254"></a><span class="control">Project Structure</span> dialog (<kbd data-default="Ctrl+Shift+Alt+S" data-default_for_gnome="Ctrl+Shift+Alt+S" data-default_for_kde="Ctrl+Shift+Alt+S" data-default_for_xwin="Ctrl+Shift+Alt+S" data-emacs="Ctrl+Alt+Shift+S" data-jbuilder="Ctrl+Shift+Alt+S" data-visual_studio="Ctrl+Alt+Shift+S" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Shift+Alt+S" data-mac_os_x_10.5_="&#x2318;;" data-mac_os_x="&#x2318;;" data-eclipse_mac_os_x="&#x2318;;" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Shift+Alt+S</kbd>) and
+            select <a name="d16064e259"></a><span class="control">Libraries</span>.</li><li class="list__item"><a name="d16064e263"></a>
+            Click <img alt="add" width="12" height="12" title="add" src="/help/img/idea/2016.1/new.png" class="inline-icon-12">, select <a name="d16064e267"></a><span class="control">Java</span> and
+            select <code class="code" data-lang="Java">javax-inject.jar</code> in the dialog that opens.</li><li class="list__item"><a name="d16064e274"></a>
+            Click <a name="d16064e276"></a><span class="control">OK</span> in the <a name="d16064e279"></a><span class="control">Choose Modules</span> dialog.
+            <figure><img alt="arq07LibrariesJavaxInject" width="616" height="210" title="arq07LibrariesJavaxInject" src="/help/img/idea/2016.1/arq07LibrariesJavaxInject.png"></figure></li><li class="list__item"><a name="d16064e284"></a>
+            Click <a name="d16064e286"></a><span class="control">OK</span> in the <a name="d16064e289"></a><span class="control">Project Structure</span> dialog.</li></ol><a name="d16064e293"></a><h2>Creating a folder for test sources</h2><ol class="list _decimal"><li class="list__item"><a name="d16064e298"></a>
+            In the project root folder, create the folder <code class="code" data-lang="Java">test</code>.</li><li class="list__item"><a name="d16064e304"></a>
+            Right-click that folder, point to <a name="d16064e306"></a><span class="control">Mark Directory As</span> and
+            select <a name="d16064e309"></a><span class="control">Test Sources Root</span>.
+            <figure><img alt="arq08ProjectTest" width="616" height="311" title="arq08ProjectTest" src="/help/img/idea/2016.1/arq08ProjectTest.png"></figure></li></ol><a name="d16064e314"></a><h2>Creating a test class</h2><ol class="list _decimal"><li class="list__item"><a name="d16064e320"></a>
+            In the editor, place the cursor within the name of the class (<code class="code" data-lang="Java">Greeter</code>).</li><li class="list__item"><a name="d16064e326"></a>
+            Click the light bulb <img alt="intentionBulb" width="10" height="15" title="intentionBulb" src="/help/img/idea/2016.1/intentionBulb.png" class="inline-icon-15"> (<kbd data-default="Alt+Enter" data-default_for_gnome="Alt+Enter" data-default_for_kde="Alt+Enter" data-default_for_xwin="Alt+Enter" data-emacs="Alt+Enter" data-jbuilder="Alt+Enter" data-visual_studio="Alt+Enter" data-netbeans_6.5="N/A" data-eclipse="Alt+Enter" data-mac_os_x_10.5_="&#x2325;⏎" data-mac_os_x="&#x2325;⏎" data-eclipse_mac_os_x="&#x2318;1" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Enter</kbd>) and
+            select <a name="d16064e332"></a><span class="control">Create Test</span>.
+            <figure><img alt="arq09GreeterCreateTest" width="616" height="278" title="arq09GreeterCreateTest" src="/help/img/idea/2016.1/arq09GreeterCreateTest.png"></figure></li><li class="list__item"><a name="d16064e337"></a>
+            In the <a name="d16064e339"></a><span class="control">Create Test</span> dialog that opens,
+            select <a name="d16064e342"></a><span class="control">Arquillian JUnit4</span> from the <a name="d16064e345"></a><span class="control">Testing library</span> list.
+            Under <a name="d16064e348"></a><span class="control">Create test methods for</span>,
+            select the method that doesn't return a value (<code class="code" data-lang="Java">greet</code>). Click <a name="d16064e355"></a><span class="control">OK</span>.
+            <figure><img alt="arq10DialogCreateTest" width="458" height="414" title="arq10DialogCreateTest" src="/help/img/idea/2016.1/arq10DialogCreateTest.png"></figure>
+            <a name="d16064e360"></a><p>
+                The new test class is shown in the <a name="d16064e362"></a><span class="control">Project</span> tool window.</p>
+            <figure><img alt="arq11ProjectGreeterTest" width="616" height="350" title="arq11ProjectGreeterTest" src="/help/img/idea/2016.1/arq11ProjectGreeterTest.png"></figure>
+            <a name="d16064e368"></a><p>
+                At the same time, the file <code class="code" data-lang="Java">GreeterTest.java</code> opens in the editor.</p>
+            <figure><img alt="arq12EditorGreeterTest" width="616" height="475" title="arq12EditorGreeterTest" src="/help/img/idea/2016.1/arq12EditorGreeterTest.png"></figure>
+            <a name="d16064e377"></a><p>
+                The initial content of the test class is defined by the corresponding template.
+                You can edit that template on the <a name="d16064e379"></a><span class="control">Code</span> tab
+                of the <a name="d16064e382"></a><span class="control">File and Code Templates</span> page
+                in the <a name="d16064e385"></a><span class="control">Settings / Preferences</span> dialog
+                (<kbd data-default="Ctrl+Alt+S" data-default_for_gnome="Ctrl+Alt+S" data-default_for_kde="Ctrl+Alt+S" data-default_for_xwin="Ctrl+Alt+S" data-emacs="Ctrl+Alt+S" data-jbuilder="N/A" data-visual_studio="Alt+F7" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Alt+S" data-mac_os_x_10.5_="&#x2318;," data-mac_os_x="&#x2318;," data-eclipse_mac_os_x="&#x2318;," data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+S</kbd> <a name="d16064e390"></a><span class="menupath">| Editor | File and Code Templates</span>).</p>
+        </li></ol><a name="d16064e395"></a><h2>Completing the code for the GreteerTest class</h2><a name="d16064e398"></a><p>Here is the code for the test class in its final state:</p><a name="d16064e401"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kn">package</span> <span class="nn">com.example.hello</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.jboss.arquillian.container.test.api.Deployment</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.jboss.arquillian.junit.Arquillian</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.jboss.shrinkwrap.api.ShrinkWrap</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.jboss.shrinkwrap.api.asset.EmptyAsset</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.jboss.shrinkwrap.api.spec.JavaArchive</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.junit.Assert</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.junit.Test</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.junit.runner.RunWith</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.inject.Inject</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">static</span> <span class="n">org</span><span class="o">.</span><span class="na">junit</span><span class="o">.</span><span class="na">Assert</span><span class="o">.*;</span>
+
+<span class="nd">@RunWith</span><span class="o">(</span><span class="n">Arquillian</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">GreeterTest</span> <span class="o">{</span>
+    <span class="nd">@Deployment</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">JavaArchive</span> <span class="nf">createDeployment</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">ShrinkWrap</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">JavaArchive</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">addClass</span><span class="o">(</span><span class="n">Greeter</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">addAsManifestResource</span><span class="o">(</span><span class="n">EmptyAsset</span><span class="o">.</span><span class="na">INSTANCE</span><span class="o">,</span> <span class="s">&quot;beans.xml&quot;</span><span class="o">);</span>
+        <span class="o">}</span>
+
+    <span class="nd">@Inject</span>
+    <span class="n">Greeter</span> <span class="n">greeter</span><span class="o">;</span>
+
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">greet</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="n">String</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;Arquillian&quot;</span><span class="o">;</span>
+        <span class="n">Assert</span><span class="o">.</span><span class="na">assertEquals</span><span class="o">(</span><span class="s">&quot;Hello, Arquillian!&quot;</span><span class="o">,</span> <span class="n">greeter</span><span class="o">.</span><span class="na">createGreeting</span><span class="o">(</span><span class="n">name</span><span class="o">));</span>
+        <span class="n">greeter</span><span class="o">.</span><span class="na">greet</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">,</span> <span class="n">name</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></div><ol class="list _decimal"><li class="list__item"><a name="d16064e406"></a>
+            To insert a proper <code class="code" data-lang="Java">import</code> statement for <code class="code" data-lang="Java">@Inject</code>,
+            type <code class="code" data-lang="Java">@Inj</code> and select <a name="d16064e417"></a><span class="control">@Inject (javax.inject)</span>.
+            <figure><img alt="arq13EditorGreeterTestInject" width="616" height="523" title="arq13EditorGreeterTestInject" src="/help/img/idea/2016.1/arq13EditorGreeterTestInject.png"></figure></li><li class="list__item"><a name="d16064e422"></a>
+            Add the remaining code by copying.
+            <figure><img alt="arq14EditorGreeterTestComplete" width="616" height="617" title="arq14EditorGreeterTestComplete" src="/help/img/idea/2016.1/arq14EditorGreeterTestComplete.png"></figure></li></ol><a name="d16064e426"></a><h2>Creating a run configuration for running the test</h2><ol class="list _decimal"><li class="list__item"><a name="d16064e432"></a>
+            To the left of <code class="code" data-lang="Java">public class GreeterTest</code>, click <img alt="runTwoGreenArrows" width="10" height="10" title="runTwoGreenArrows" src="/help/img/idea/2016.1/runTwoGreenArrows.png" class="inline-icon-10"> and
+            select <a name="d16064e439"></a><span class="control">Run 'GreeterTest'</span>.
+            <figure><img alt="arq15EditorRunGreeterTest" width="616" height="176" title="arq15EditorRunGreeterTest" src="/help/img/idea/2016.1/arq15EditorRunGreeterTest.png"></figure></li><li class="list__item"><a name="d16064e444"></a>
+            In the <a name="d16064e446"></a><span class="control">Edit configuration</span> dialog that opens,
+            click <a name="d16064e449"></a><span class="control">Configure</span>.
+            <figure><img alt="arq16EditConfiguration" width="616" height="188" title="arq16EditConfiguration" src="/help/img/idea/2016.1/arq16EditConfiguration.png"></figure></li><li class="list__item"><a name="d16064e454"></a>
+            In the <a name="d16064e456"></a><span class="control">Arquillian Containers</span> dialog,
+            click <img alt="add" width="12" height="12" title="add" src="/help/img/idea/2016.1/new.png" class="inline-icon-12">, point to <a name="d16064e461"></a><span class="control">Embedded</span> and
+            select <a name="d16064e464"></a><span class="control">GlassFish Embedded 3.1</span>.
+            (We'll start by running the test in an embedded container.)
+            <figure><img alt="arq17ArquillianContainers" width="616" height="326" title="arq17ArquillianContainers" src="/help/img/idea/2016.1/arq17ArquillianContainers.png"></figure></li><li class="list__item"><a name="d16064e469"></a>
+            In the <a name="d16064e471"></a><span class="control">Edit configuration</span> dialog,
+            select <a name="d16064e474"></a><span class="control">GlassFish Embedded 3.1</span>.
+            <figure><img alt="arq18EditConfiguration" width="616" height="188" title="arq18EditConfiguration" src="/help/img/idea/2016.1/arq18EditConfiguration.png"></figure></li></ol><a name="d16064e479"></a><h2>Running the test in an embedded container</h2><ol class="list _decimal"><li class="list__item"><a name="d16064e484"></a>
+            In the <a name="d16064e486"></a><span class="control">Edit configuration</span> dialog, click <a name="d16064e489"></a><span class="control">Run</span>.
+            <a name="d16064e492"></a><p>
+                The <a name="d16064e494"></a><span class="control">Run</span> tool window opens and, after some time, the test result is shown there.</p>
+            <figure><img alt="arq19TestResult" width="616" height="246" title="arq19TestResult" src="/help/img/idea/2016.1/arq19TestResult.png"></figure></li><li class="list__item"><a name="d16064e500"></a>
+            Close the <a name="d16064e502"></a><span class="control">Run</span> tool window by clicking <img alt="close" width="12" height="12" title="close" src="/help/img/idea/2016.1/close.png" class="inline-icon-12">.</li></ol><a name="d16064e508"></a><h2>Editing the run configuration: adding a managed container</h2><a name="d16064e511"></a><p>
+        Now let's change our run configuration so that it could be used for running the test in a managed container.</p><ol class="list _decimal"><li class="list__item"><a name="d16064e516"></a>
+            Click the run configuration selector and select <a name="d16064e518"></a><span class="control">Edit Configurations</span>.
+            <figure><img alt="arq20EditConfigurations" width="343" height="134" title="arq20EditConfigurations" src="/help/img/idea/2016.1/arq20EditConfigurations.png"></figure></li><li class="list__item"><a name="d16064e523"></a>
+            In the <a name="d16064e525"></a><span class="control">Run/Debug Configurations</span> dialog,
+            click <a name="d16064e528"></a><span class="control">Configure</span>.
+            <figure><img alt="arq21EditConfigurationsDialog" width="616" height="199" title="arq21EditConfigurationsDialog" src="/help/img/idea/2016.1/arq21EditConfigurationsDialog.png"></figure></li><li class="list__item"><a name="d16064e533"></a>
+            In the <a name="d16064e535"></a><span class="control">Arquillian Containers</span> dialog, click <img alt="add" width="12" height="12" title="add" src="/help/img/idea/2016.1/new.png" class="inline-icon-12"> and
+            select <a name="d16064e540"></a><span class="control">Manual container configuration</span>.</li><li class="list__item"><a name="d16064e544"></a>
+            Change the name of the configuration (e.g. to <code class="code" data-lang="Java">GlassFish Managed</code>).</li><li class="list__item"><a name="d16064e550"></a>
+            Under <a name="d16064e552"></a><span class="control">Dependencies</span>, click <img alt="add" width="12" height="12" title="add" src="/help/img/idea/2016.1/new.png" class="inline-icon-12"> and
+            select <a name="d16064e557"></a><span class="control">Add maven dependency</span>.</li><li class="list__item"><a name="d16064e562"></a>
+            In the <a name="d16064e564"></a><span class="control">Download Library From Maven Repository</span> dialog,
+            type <code class="code" data-lang="Java">arquillian-glassfish-managed-3.1</code> and click <img alt="find" width="15" height="15" title="find" src="/help/img/idea/2016.1/find.png" class="inline-icon-15">.
+            Then select <a name="d16064e572"></a><span class="control">org.jboss.arquillian.container:arquillian-glassfish-managed-3.1:1.0.0.CR4</span>
+            from the list.
+            <a name="d16064e575"></a><p>
+                Select the <a name="d16064e577"></a><span class="control">Download to</span> check box and click <a name="d16064e580"></a><span class="control">OK</span>.</p>
+            <figure><img alt="arq22DownloadLibraryFromMaven" width="615" height="221" title="arq22DownloadLibraryFromMaven" src="/help/img/idea/2016.1/arq22DownloadLibraryFromMaven.png"></figure>
+            <a name="d16064e587"></a><p>
+                At this step, your <a name="d16064e589"></a><span class="control">Arquillian Containers</span> dialog should look something like this:</p>
+            <figure><img alt="arq23ArquillianContainers" width="616" height="341" title="arq23ArquillianContainers" src="/help/img/idea/2016.1/arq23ArquillianContainers.png"></figure>
+            <a name="d16064e595"></a><p>Click <a name="d16064e597"></a><span class="control">OK</span>.</p></li><li class="list__item"><a name="d16064e601"></a>
+            In the <a name="d16064e603"></a><span class="control">Run/Debug Configurations</span> dialog,
+            select <a name="d16064e606"></a><span class="control">GlassFish Managed</span> and click <a name="d16064e609"></a><span class="control">OK</span>.
+            <figure><img alt="arq24RunConfigurationsDialog" width="616" height="228" title="arq24RunConfigurationsDialog" src="/help/img/idea/2016.1/arq24RunConfigurationsDialog.png"></figure></li></ol><a name="d16064e615"></a><h2>Creating the arquillian.xml configuration file</h2><a name="d16064e618"></a><p>
+        To be able to run an Arquillian test in a managed container,
+        the container adapter needs to know the container location.
+        So let's create the <code class="code" data-lang="Java">arquillian.xml</code> configuration file with the necessary info.</p><ol class="list _decimal"><li class="list__item"><a name="d16064e626"></a>
+            In the project root folder, create the folder <code class="code" data-lang="Java">test-resources</code>.</li><li class="list__item"><a name="d16064e632"></a>
+            Right-click the new folder, point to <a name="d16064e634"></a><span class="control">Mark Directory As</span> and
+            select <a name="d16064e637"></a><span class="control">Test Resources Root</span>.</li><li class="list__item"><a name="d16064e641"></a>
+            In the test-resources folder, create a new file <code class="code" data-lang="Java">arquillian.xml</code>.
+            <figure><img alt="arq25ProjectArquillianXml" width="616" height="392" title="arq25ProjectArquillianXml" src="/help/img/idea/2016.1/arq25ProjectArquillianXml.png"></figure></li><li class="list__item"><a name="d16064e648"></a>
+            Copy the following into the file:
+            <a name="d16064e650"></a><div class="code-block" data-lang="XML"><code class="code-block__wrapper"><span class="cp">&lt;?xml version=&quot;1.0&quot;?&gt;</span>
+<span class="nt">&lt;arquillian</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+        <span class="na">xmlns=</span><span class="s">&quot;http://jboss.org/schema/arquillian&quot;</span>
+        <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://jboss.org/schema/arquillian</span>
+<span class="s">    http://jboss.org/schema/arquillian/arquillian_1_0.xsd&quot;</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;container</span> <span class="na">qualifier=</span><span class="s">&quot;glassfish&quot;</span> <span class="na">default=</span><span class="s">&quot;true&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;configuration&gt;</span>
+            <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;glassFishHome&quot;</span><span class="nt">&gt;</span>C:\GlassFish\glassfish4<span class="nt">&lt;/property&gt;</span>
+        <span class="nt">&lt;/configuration&gt;</span>
+    <span class="nt">&lt;/container&gt;</span>
+
+<span class="nt">&lt;/arquillian&gt;</span></code></div>
+            <figure><img alt="arq26EditorArquillianXml" width="616" height="298" title="arq26EditorArquillianXml" src="/help/img/idea/2016.1/arq26EditorArquillianXml.png"></figure>
+            <a name="d16064e655"></a><p>
+                Use your actual path to the GlassFish Server installation folder
+                in place of <code class="code" data-lang="Java">C:\GlassFish\glassfish4</code>.</p>
+        </li></ol><a name="d16064e662"></a><h2>Running the test in a managed container</h2><ol class="list _decimal"><li class="list__item"><a name="d16064e667"></a>
+            To the right of the run configuration selector, click <img alt="run" width="11" height="14" title="run" src="/help/img/idea/2016.1/run.png" class="inline-icon-14">.
+            <figure><img alt="arq27GlassFishManagedRun" width="299" height="29" title="arq27GlassFishManagedRun" src="/help/img/idea/2016.1/arq27GlassFishManagedRun.png"></figure>
+            <a name="d16064e673"></a><p>
+                The <a name="d16064e675"></a><span class="control">Run</span> tool window opens and the test result is shown there.</p>
+            <figure><img alt="arq28TestResult" width="616" height="249" title="arq28TestResult" src="/help/img/idea/2016.1/arq28TestResult.png"></figure>
+        </li><li class="list__item"><a name="d16064e682"></a>
+            Close the tool window (<img alt="close" width="12" height="12" title="close" src="/help/img/idea/2016.1/close.png" class="inline-icon-12">).</li></ol><a name="d16064e687"></a><h2>Modifying arquillian.xml</h2><a name="d16064e691"></a><p>
+        Sometimes, you need to deploy your test to a container that is already running.
+        In such cases, you can just change the container configuration file a little and
+        continue using the managed container adapter.</p><a name="d16064e694"></a><p>Add the following to <code class="code" data-lang="Java">arquillian.xml</code>:</p><a name="d16064e700"></a><div class="code-block" data-lang="XML"><code class="code-block__wrapper"><span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;allowConnectingToRunningServer&quot;</span><span class="nt">&gt;</span>true<span class="nt">&lt;/property&gt;</span></code></div><figure><img alt="arq29EditorArquillianXml" width="616" height="318" title="arq29EditorArquillianXml" src="/help/img/idea/2016.1/arq29EditorArquillianXml.png"></figure><a name="d16064e705"></a><h2>Running the test: deploying to a running server</h2><ol class="list _decimal"><li class="list__item"><a name="d16064e710"></a>
+            Start GlassFish Server: select <a name="d16064e712"></a><span class="control">GlassFish</span> and click <img alt="run" width="11" height="14" title="run" src="/help/img/idea/2016.1/run.png" class="inline-icon-14">.
+            <figure><img alt="arq30SelectGlassFish" width="318" height="134" title="arq30SelectGlassFish" src="/help/img/idea/2016.1/arq30SelectGlassFish.png"></figure>
+            <a name="d16064e719"></a><p>When the server is started, you'll see something like this in the <a name="d16064e721"></a><span class="control">Run</span> tool window.</p>
+            <figure><img alt="arq31GlassFishStarted" width="616" height="249" title="arq31GlassFishStarted" src="/help/img/idea/2016.1/arq31GlassFishStarted.png"></figure></li><li class="list__item"><a name="d16064e727"></a>
+            Select <a name="d16064e729"></a><span class="control">GlassFish Managed: GreeterTest</span> and click <img alt="run" width="11" height="14" title="run" src="/help/img/idea/2016.1/run.png" class="inline-icon-14">.
+            <figure><img alt="arq32SelectGreeterTest" width="318" height="134" title="arq32SelectGreeterTest" src="/help/img/idea/2016.1/arq32SelectGreeterTest.png"></figure>
+            <a name="d16064e736"></a><p>After some time, the test result is shown in the <a name="d16064e738"></a><span class="control">Run</span> tool window.</p>
+            <figure><img alt="arq33TestResult" width="616" height="249" title="arq33TestResult" src="/help/img/idea/2016.1/arq33TestResult.png"></figure>
+        </li></ol><div class="navigation-links _bottom"><a class="navigation-links__prev" href="creating-a-gradle-android-project.html">Creating a Gradle-Android Project</a><a class="navigation-links__next" href="aspectj.html">AspectJ</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content"><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d16064e750"></a><a href="arquillian-containers.html"><span>Arquillian Containers</span></a></li><li class="list__item"><a name="d16064e752"></a><a href="run-debug-configuration-arquillian-junit.html"><span>Run/Debug Configuration: Arquillian JUnit</span></a></li><li class="list__item"><a name="d16064e754"></a><a href="run-debug-configuration-arquillian-testng.html"><span>Run/Debug Configuration: Arquillian TestNG</span></a></li></ul></div></div></section><div class="last-modified">Last modified: 13 July 2016 </div></article><div id="disqus_thread"></div></div></section></main></div><script src="/help/app/app.js"></script></body></html>

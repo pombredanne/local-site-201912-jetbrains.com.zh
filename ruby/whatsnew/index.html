@@ -1,0 +1,1736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+                                            
+        <!-- Error reporting -->
+<script>(function(){
+  window.reportError = function(msg, file, line, col, err, isUnhandledRejection){};
+  var prevOnError = window.onerror;
+  var onError = function(msg, file, line, col, err) {
+    reportError(msg, file, line, col, err, false);
+    prevOnError && prevOnError.apply(window, arguments);
+    return false;
+  };
+  window.onerror = onError;
+  // Setup reporting for unhandled Promise rejection errors
+  window.addEventListener("unhandledrejection", function(e) {
+    if (!e.reason) return;
+    var l = getSrcLocation(e.reason);
+    reportError(e.reason.message, l.file, l.line, l.col, e.reason, true);
+  });
+  // Setup reporting for console.error and console.warn calls
+  patchConsole('error');
+  patchConsole('warn');
+  // Utility functions
+  function patchConsole(fnName) {
+    var fn = console[fnName];
+    console[fnName] = function() {
+      fn.apply(console, arguments);
+      var l; try {
+        throw new Error('_');
+      } catch (err) {
+        l = getSrcLocation(err, 1);
+      }
+      var msg = 'console.' + fnName + ': ' + Array.prototype.join.call(arguments, ' ');
+      reportError(msg, l.file, l.line, l.col, undefined, false);
+    };
+  }
+  function getSrcLocation(err, sd) {
+    var s = err && err.stack;
+    var l = s && s.split("\n")[1 + (sd|0)];
+    var r = l && (/^\s*at [^(]*\((.*?):(\d+)(:\d+)?\)$/.exec(l) || /^\s*at (.*?):(\d+)(:\d+)?$/.exec(l));
+    return r ? {file: r[1], line: r[2], col: r[3]} : {};
+  }
+})();</script>
+<!-- Error reporting -->        <!-- Google Tag Manager -->
+<script>(function() {
+  // Initialize Tag Manager queue
+  window.dataLayer = window.dataLayer || [];
+  window.gtmLoaded = false;
+  // Setup reporting for errors that occurred before Tag Manager initialized
+  var prevReportError = window.reportError;
+  var reportError = function(msg, file, line, col, err, isUnhandledRejection) {
+    if (!window.gtmLoaded || isUnhandledRejection) {
+      // Reproduce the behavior of the Tag Manager error handler
+      window.dataLayer.push(makeEvt(msg, file, line));
+    }
+    prevReportError && prevReportError.apply(window, arguments);
+  };
+  window.reportError = reportError;
+  // Utility functions
+  function makeEvt(msg, file, line) {
+    return {
+      event: "gtm.pageError", "gtm.errorMessage": msg,
+      "gtm.errorUrl": file, "gtm.errorLineNumber": line
+    };
+  }
+})();</script>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;j.addEventListener(
+    'load', function(){window.gtmLoaded=true});f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5P98');</script>
+<!-- End Google Tag Manager -->        <!-- Sentry -->
+<script>
+    (function() {
+        window.sentryLoaded = false;
+        window.errorsForSentry = [];
+        var prevReportError = window.reportError;
+        var reportError = function(
+            msg,
+            file,
+            line,
+            col,
+            err,
+            isUnhandledRejection
+        ) {
+            if (!window.sentryLoaded) {
+                window.errorsForSentry.push(err);
+            }
+            prevReportError && prevReportError.apply(window, arguments);
+        };
+        window.reportError = reportError;
+    })();
+</script>
+<script>
+    window.sentryLoad = function() {
+        window.sentryLoaded = true;
+        Sentry.init({
+            dsn: 'https://1adb2a61713144eda0786e5af50ddc51@sentry.io/1423069',
+            release:
+                "jetbrainscom@a6ccaa6ddb",
+            beforeSend: function(event) {
+                Object.keys(event).forEach(function(key) {
+                    var value = event[key];
+                    if (isEmail(value)) {
+                        delete event[key];
+                    }
+                });
+                return event;
+            }
+        });
+        Sentry.configureScope(function(scope) {
+            scope.setTag('page_locale', 'en-us');
+            scope.setTag('browser.locale', getPageLocale());
+
+            scope.setTag('http.urlFull', location.href);
+            var protocol = location.protocol || '';
+            //omit `:` from location.protocol string
+            var protocolString = protocol.substring(0, protocol.length - 1);
+
+            scope.setTag('http.protocol', protocolString);
+
+            scope.setTag('http.hostname', location.hostname);
+
+            var search = location.search || '';
+            //omit ? from location.search string
+            var searchString = search.substr(1);
+            if (searchString !== '') {
+                scope.setTag('http.query', searchString || '1');
+            }
+            var hash = location.hash || '';
+            //omit # from location.hash string
+            var hashString = hash.substr(1);
+            if (hashString !== '') {
+                scope.setTag('http.fragment', hashString);
+            }
+        });
+        window.errorsForSentry.forEach(Sentry.captureException);
+
+        function getPageLocale() {
+            return (
+                (navigator.languages && navigator.languages[0]) ||
+                navigator.language
+            );
+        }
+        function isEmail(value) {
+            var emailRegex = /[\+\-\_\.a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+\.[a-zA-Z0-9]+/g;
+            return emailRegex.test(value);
+        }
+    };
+</script>
+<script src="https://browser.sentry-cdn.com/5.7.1/bundle.min.js" crossorigin="anonymous" onload="sentryLoad()" async></script>
+<!-- End Sentry -->    
+                <title>What's new in RubyMine 2019.3: better code insight and RuboCop support, improvements for Git, HTTP client, and more!</title>
+    
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, maximum-scale=1">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#000000">
+<meta name="apple-mobile-web-app-title" content="JetBrains">
+<meta name="application-name" content="JetBrains">
+<meta name="msapplication-TileColor" content="#000000">
+<meta name="theme-color" content="#000000">    <link rel="canonical" href="https://www.jetbrains.com/ruby/whatsnew/" />    <!-- .61-->
+        <meta class="local" content="RubyMine 2019.3: better code insight and RuboCop support, improvements for Git, HTTP client, and more!" name="description"><meta class="local" content="http://resources.jetbrains.com/storage/products/rubymine/img/meta/rubymine_2019.3.png" name="image"><meta class="local" content="summary_large_image" name="twitter:card"><meta class="local" content="@rubymine" name="twitter:site"><meta class="local" content="RubyMine 2019.3: better code insight and RuboCop support, improvements for Git, HTTP client, and more!" name="twitter:title"><meta class="local" content="RubyMine 2019.3: better code insight and RuboCop support, improvements for Git, HTTP client, and more!" name="twitter:description"><meta class="local" content="@rubymine" name="twitter:creator"><meta class="local" content="http://resources.jetbrains.com/storage/products/rubymine/img/meta/rubymine_2019.3.png" name="twitter:image:src"><meta class="local" content="Platforms:" name="twitter:label1"><meta class="local" content="Windows, macOS, Linux" name="twitter:data1"><meta class="local" content="RubyMine 2019.3: better code insight and RuboCop support, improvements for Git, HTTP client, and more!" itemprop="name"><meta class="local" content="RubyMine 2019.3: better code insight and RuboCop support, improvements for Git, HTTP client, and more!" itemprop="description"><meta class="local" content="http://resources.jetbrains.com/storage/products/rubymine/img/meta/rubymine_2019.3.png" itemprop="image">
+        <link rel="alternate" hreflang="x-default" href="https://www.jetbrains.com/ruby/whatsnew/" />
+
+                        <link rel="alternate" hreflang="en" href="https://www.jetbrains.com/ruby/whatsnew/" />
+                                <link rel="alternate" hreflang="de" href="https://www.jetbrains.com/de-de/ruby/whatsnew/" />
+                                <link rel="alternate" hreflang="es" href="https://www.jetbrains.com/es-es/ruby/whatsnew/" />
+                                <link rel="alternate" hreflang="fr" href="https://www.jetbrains.com/fr-fr/ruby/whatsnew/" />
+                                <link rel="alternate" hreflang="ja" href="https://www.jetbrains.com/ja-jp/ruby/whatsnew/" />
+                                <link rel="alternate" hreflang="ko" href="https://www.jetbrains.com/ko-kr/ruby/whatsnew/" />
+                                <link rel="alternate" hreflang="ru" href="https://www.jetbrains.com/ru-ru/ruby/whatsnew/" />
+                                <link rel="alternate" hreflang="zh-CN" href="https://www.jetbrains.com/zh-cn/ruby/whatsnew/" />
+                                            <link rel="alternate" hreflang="x-klingon" href="https://www.jetbrains.com/tl-aa/ruby/whatsnew/" />
+            
+    
+    
+        
+    
+    
+    <script>
+        var current_lang = 'en-us';
+                                    var i18n_info = {"current_lang": "en-us", "languages": [{"canonical": "en", "code": "en-us", "label": "English", "page_translated": true, "url": "/ruby/whatsnew/"}, {"canonical": "de", "code": "de-de", "label": "Deutsch", "page_translated": true, "url": "/de-de/ruby/whatsnew/"}, {"canonical": "es", "code": "es-es", "label": "Espa\u00f1ol", "page_translated": true, "url": "/es-es/ruby/whatsnew/"}, {"canonical": "fr", "code": "fr-fr", "label": "Fran\u00e7ais", "page_translated": true, "url": "/fr-fr/ruby/whatsnew/"}, {"canonical": "ja", "code": "ja-jp", "label": "\u65e5\u672c\u8a9e", "page_translated": true, "url": "/ja-jp/ruby/whatsnew/"}, {"canonical": "ko", "code": "ko-kr", "label": "\ud55c\uad6d\uc5b4", "page_translated": true, "url": "/ko-kr/ruby/whatsnew/"}, {"canonical": "ru", "code": "ru-ru", "label": "\u0420\u0443\u0441\u0441\u043a\u0438\u0439", "page_translated": true, "url": "/ru-ru/ruby/whatsnew/"}, {"canonical": "zh-CN", "code": "zh-cn", "label": "\u7b80\u4f53\u4e2d\u6587", "page_translated": true, "url": "/zh-cn/ruby/whatsnew/"}, {"canonical": "pt-BR", "code": "pt-br", "label": "Portugu\u00eas do Brasil", "page_translated": false, "url": "/pt-br/ruby/whatsnew/"}, {"canonical": "x-klingon", "code": "tl-aa", "label": "tlhIngan Hol", "page_translated": true, "url": "/tl-aa/ruby/whatsnew/"}]};
+                            var navigationMenu = {"primary": {"id": "main_v2", "items": [{"id": "tools", "title": "Tools", "descriptionTitle": "Toolbox App", "descriptionLogoId": "toolbox", "descriptionLink": "Learn more", "descriptionUrl": "/toolbox-app/", "description": "Manage your tools the easy way", "src": "/img/banners-menu-main/toolbox-vertical.png", "horisontalSrc": "/img/banners-menu-main/toolbox-horisontal.png", "bgColor": "#3E0598", "isVisible": true, "hasCategories": true, "items": [{"title": "IDEs", "items": [{"isActive": false, "id": "appcode", "title": "AppCode", "url": "/objc/", "logoLeftActionId": "appcode", "items": [], "cleaned_url": "/objc/"}, {"isActive": false, "id": "clion", "title": "CLion", "url": "/clion/", "logoLeftActionId": "clion", "items": [], "cleaned_url": "/clion/"}, {"isActive": false, "id": "datalore", "title": "Datalore", "url": "https://datalore.io/", "isExternalLink": true, "logoLeftActionId": "datalore", "items": [], "cleaned_url": "https://datalore.io/"}, {"isActive": false, "id": "datagrip", "title": "DataGrip", "url": "/datagrip/", "logoLeftActionId": "datagrip", "items": [], "cleaned_url": "/datagrip/"}, {"isActive": false, "id": "goland", "title": "GoLand", "url": "/go/", "logoLeftActionId": "goland", "items": [], "cleaned_url": "/go/"}, {"isActive": false, "id": "idea", "title": "IntelliJ IDEA", "url": "/idea/", "logoLeftActionId": "intellij-idea", "items": [], "cleaned_url": "/idea/"}, {"isActive": false, "id": "phpstorm", "title": "PhpStorm", "url": "/phpstorm/", "logoLeftActionId": "phpstorm", "items": [], "cleaned_url": "/phpstorm/"}, {"isActive": false, "id": "pycharm", "title": "PyCharm", "url": "/pycharm/", "logoLeftActionId": "pycharm", "items": [], "cleaned_url": "/pycharm/"}, {"isActive": false, "id": "rider", "title": "Rider", "url": "/rider/", "logoLeftActionId": "rider", "items": [], "cleaned_url": "/rider/"}, {"isActive": false, "id": "rubymine", "title": "RubyMine", "url": "/ruby/", "logoLeftActionId": "rubymine", "items": [], "cleaned_url": "/ruby/"}, {"isActive": false, "id": "webstorm", "title": "WebStorm", "url": "/webstorm/", "logoLeftActionId": "webstorm", "items": [], "cleaned_url": "/webstorm/"}, {"isActive": false, "id": "toolbox", "type": "special", "title": "Toolbox App", "url": "/toolbox-app/", "logoLeftId": "toolbox", "description": "A control panel for your tools and projects", "items": [], "cleaned_url": "/toolbox-app/"}]}, {"title": ".NET & VISUAL STUDIO", "items": [{"isActive": false, "id": "resharper", "title": "ReSharper", "url": "/resharper/", "logoLeftActionId": "resharper", "items": [], "cleaned_url": "/resharper/"}, {"isActive": false, "id": "rider", "title": "Rider", "url": "/rider/", "logoLeftActionId": "rider", "items": [], "cleaned_url": "/rider/"}, {"isActive": false, "id": "resharper-cpp", "title": "ReSharper C++", "url": "/resharper-cpp/", "logoLeftActionId": "resharper-cpp", "items": [], "cleaned_url": "/resharper-cpp/"}, {"isActive": false, "id": "dotcover", "title": "dotCover", "url": "/dotcover/", "logoLeftActionId": "dotcover", "items": [], "cleaned_url": "/dotcover/"}, {"isActive": false, "id": "dotmemory", "title": "dotMemory", "url": "/dotmemory/", "logoLeftActionId": "dotmemory", "items": [], "cleaned_url": "/dotmemory/"}, {"isActive": false, "id": "dotpeek", "title": "dotPeek", "url": "/decompiler/", "logoLeftActionId": "dotpeek", "items": [], "cleaned_url": "/decompiler/"}, {"isActive": false, "id": "dottrace", "title": "dotTrace", "url": "/profiler/", "logoLeftActionId": "dottrace", "items": [], "cleaned_url": "/profiler/"}]}, {"title": "TEAM TOOLS", "items": [{"isActive": false, "id": "teamcity", "title": "TeamCity", "url": "/teamcity/", "logoLeftActionId": "teamcity", "items": [], "cleaned_url": "/teamcity/"}, {"isActive": false, "id": "upsource", "title": "Upsource", "url": "/upsource/", "logoLeftActionId": "upsource", "items": [], "cleaned_url": "/upsource/"}, {"isActive": false, "id": "youtrack", "title": "YouTrack", "url": "/youtrack/", "logoLeftActionId": "youtrack", "items": [], "cleaned_url": "/youtrack/"}, {"isActive": false, "id": "hub", "title": "Hub", "url": "/hub/", "logoLeftActionId": "hub", "items": [], "cleaned_url": "/hub/"}]}, {"title": "PLUGIN MARKETPLACE", "items": [{"isActive": false, "id": "bigdata", "title": "Big Data Tools", "url": "https://plugins.jetbrains.com/plugin/12494-big-data-tools", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/plugin/12494-big-data-tools"}, {"isActive": false, "id": "rustsupport", "title": "Rust", "url": "https://plugins.jetbrains.com/plugin/8182-rust", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/plugin/8182-rust"}, {"isActive": false, "id": "scalaplugin", "title": "Scala", "url": "https://plugins.jetbrains.com/plugin/1347-scala", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/plugin/1347-scala"}, {"isActive": false, "id": "idethemes", "title": "IDE Themes", "url": "https://plugins.jetbrains.com/search?tags=Theme", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/search?tags=Theme"}, {"isActive": false, "id": "plugins", "title": "All Plugins", "url": "https://plugins.jetbrains.com/", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/"}]}, {"title": "EDUCATION", "items": [{"isActive": false, "id": "pycharm-edu", "title": "PyCharm Edu", "url": "/education/", "urlHash": "#lang=python&role=learner", "logoLeftActionId": "pycharm-edu", "items": [], "cleaned_url": "/education/"}, {"isActive": false, "id": "idea-edu", "title": "IntelliJ IDEA Edu", "url": "/education/", "urlHash": "#lang=java&role=learner", "logoLeftActionId": "intellij-idea", "items": [], "cleaned_url": "/education/"}, {"isActive": false, "id": "jb-academy", "title": "JB Academy", "url": "/academy/", "items": [], "cleaned_url": "/academy/"}]}]}, {"id": "languages", "title": "Languages", "descriptionTitle": "Kotlin/Everywhere", "descriptionLogoId": "header-kotlin-everywhere", "descriptionLink": "Join in!", "descriptionUrl": "//everywhere.kotlinlang.org", "description": "A worldwide event series for learning the best Kotlin practices on all platforms", "descriptionBig": true, "src": "/img/banners-menu-main/kotlin-vertical.png", "horisontalSrc": "/img/banners-menu-main/kotlin-horisontal.png", "bgColor": "#D6721C", "isExternalLink": true, "isVisible": true, "hasCategories": false, "items": [{"isActive": false, "id": "kotlin", "title": "Kotlin", "url": "https://kotlinlang.org/", "isExternalLink": true, "logoLeftId": "header-kotlin-grayscale", "logoLeftActionId": "kotlin", "logoLeftSize": "50", "description": "Programming language \n for JVM & Android", "items": [], "cleaned_url": "https://kotlinlang.org/"}, {"isActive": false, "id": "mps", "title": "MPS", "url": "/mps/", "logoLeftId": "header-mps-grayscalse", "logoLeftActionId": "mps", "logoLeftSize": "50", "description": "Create your own domain-specific language", "items": [], "cleaned_url": "/mps/"}]}, {"id": "solutions", "title": "Solutions", "descriptionTitle": "JetBrains Academy", "descriptionLogoId": "academy-logo", "descriptionLink": "Join in!", "descriptionUrl": "/academy", "description": "An educational platform for future professionals", "src": "/img/banners-menu-main/academy-vertical.png", "horisontalSrc": "/img/banners-menu-main/academy-horisontal.png", "bgColor": "#53288E", "hasCategories": false, "isVisible": true, "items": [{"isActive": false, "title": "C++ Tools", "url": "/cpp/", "logoLeftId": "header-cpp-grayscale", "logoLeftActionId": "header-cpp", "description": "Tools for C/C++ development \nfor any platform", "items": [], "cleaned_url": "/cpp/"}, {"isActive": false, "title": "For Business", "url": "/store/business/", "logoLeftId": "header-for-business-grayscale", "logoLeftActionId": "header-for-business", "description": "Wide range of tools. \nAll major technologies covered", "items": [], "cleaned_url": "/store/business/"}, {"isActive": false, "title": "Game Development", "url": "/gamedev/", "logoLeftId": "header-gamedev-grayscale", "logoLeftActionId": "header-gamedev", "description": "Tools for game development \nfor any platform", "items": [], "cleaned_url": "/gamedev/"}, {"isActive": false, "title": "DevOps", "url": "/devops/", "logoLeftId": "header-devops-grayscale", "logoLeftActionId": "header-devops", "description": "Tools and integrations \nfor any infrastructure", "items": [], "cleaned_url": "/devops/"}, {"isActive": false, "title": "Education", "url": "/education/", "logoLeftId": "header-education-grayscale", "logoLeftActionId": "header-education", "description": "Products to learn and teach programming", "items": [], "cleaned_url": "/education/"}]}, {"id": "support", "title": "Support", "description": "Pricing and licensing for businesses and individuals", "descriptionTitle": "JetBrains Store", "descriptionLogoId": "header-store", "descriptionUrl": "/store/?fromMenu#edition=commercial", "descriptionLink": "visit store", "isVisible": true, "hasCategories": true, "items": [{"title": "CUSTOMERS", "items": [{"isActive": false, "title": "Sales Support", "url": "/support/sales/", "description": "Orders, payments", "items": [], "cleaned_url": "/support/sales/"}, {"isActive": false, "title": "Product Support", "url": "/support/", "description": "Tech support, documentation", "items": [], "cleaned_url": "/support/"}]}, {"title": "COMMUNITY PROGRAMS", "items": [{"isActive": false, "title": "Education", "url": "/community/education/", "description": "Students, classrooms, training", "items": [], "cleaned_url": "/community/education/"}, {"isActive": false, "title": "Open Source", "url": "/community/opensource/", "description": "Projects support", "items": [], "cleaned_url": "/community/opensource/"}, {"isActive": false, "title": "Sponsorship", "url": "/community/support/", "description": "User groups, events, technology experts", "items": [], "cleaned_url": "/community/support/"}]}]}, {"id": "company", "title": "Company", "isVisible": true, "hasCategories": true, "items": [{"title": "INITIATIVES", "items": [{"isActive": false, "title": "Open Source", "url": "/opensource/", "description": "Projects, contributions", "items": [], "cleaned_url": "/opensource/"}, {"isActive": false, "title": "Research", "url": "/research/", "description": "Market, Scientific", "items": [], "cleaned_url": "/research/"}]}, {"title": "COMPANY", "items": [{"isActive": false, "title": "About", "url": "/company/", "description": "People, customers, awards", "items": [], "cleaned_url": "/company/"}, {"isActive": false, "title": "Brand Assets", "url": "/company/brand/", "description": "Guidelines, logos", "items": [], "cleaned_url": "/company/brand/"}, {"isActive": false, "title": "Careers", "url": "/careers/apply/", "description": "Jobs, internships", "items": [], "cleaned_url": "/careers/apply/"}, {"isActive": false, "title": "Events", "url": "/company/events/", "description": "Conferences, meetups", "items": [], "cleaned_url": "/company/events/"}, {"isActive": false, "title": "Contacts", "url": "/company/contacts/", "description": "Partners, resellers, Kotlin training", "items": [], "cleaned_url": "/company/contacts/"}]}, {"title": "RESOURCES", "items": [{"isActive": false, "title": "Newsletters", "url": "/resources/newsletters/", "items": [], "cleaned_url": "/resources/newsletters/"}, {"isActive": false, "title": "Webinars", "url": "/resources/webinars/", "items": [], "cleaned_url": "/resources/webinars/"}, {"isActive": false, "title": "Early Access", "url": "/resources/eap/", "items": [], "cleaned_url": "/resources/eap/"}, {"isActive": false, "title": "Blog", "url": "//blog.jetbrains.com/", "isExternalLink": true, "items": [], "cleaned_url": "//blog.jetbrains.com/"}]}]}, {"isActive": false, "id": "store", "url": "/store/?fromNavMenu", "title": "Store", "isVisible": true, "hasCategories": false, "items": [], "cleaned_url": "/store/?fromNavMenu"}]}, "secondary": {"isActive": true, "id": "product_rubymine", "logoId": "rubymine", "url": "/ruby/", "title": "RubyMine", "items": [{"isActive": true, "title": "What's New", "url": "/ruby/whatsnew/", "items": [], "cleaned_url": "/ruby/whatsnew/"}, {"isActive": false, "title": "Features", "url": "/ruby/features/", "items": [{"isActive": false, "title": "Ruby Development", "url": "/ruby/features/ruby_ide.html", "items": [], "cleaned_url": "/ruby/features/ruby_ide.html"}, {"isActive": false, "title": "Ruby on Rails", "url": "/ruby/features/rails_editor.html", "items": [], "cleaned_url": "/ruby/features/rails_editor.html"}, {"isActive": false, "title": "Code Analysis & Refactorings", "url": "/ruby/features/ruby_coding.html", "items": [], "cleaned_url": "/ruby/features/ruby_coding.html"}, {"isActive": false, "title": "Testing Assistance", "url": "/ruby/features/ruby_unit_testing.html", "items": [], "cleaned_url": "/ruby/features/ruby_unit_testing.html"}, {"isActive": false, "title": "Powerful Debugging", "url": "/ruby/features/ruby_debugger.html", "items": [], "cleaned_url": "/ruby/features/ruby_debugger.html"}, {"isActive": false, "title": "Integrated Tools", "url": "/ruby/features/ruby_version_control.html", "items": [], "cleaned_url": "/ruby/features/ruby_version_control.html"}], "cleaned_url": "/ruby/features/"}, {"isActive": false, "title": "Learn", "url": "/ruby/learn/", "items": [], "cleaned_url": "/ruby/learn/"}, {"isActive": false, "title": "Buy", "url": "/ruby/buy/", "items": [], "cleaned_url": "/ruby/buy/"}, {"isActive": false, "title": "Download", "url": "/ruby/download/", "type": "button", "items": [], "cleaned_url": "/ruby/download/"}], "cleaned_url": "/ruby/"}};
+        
+        var is_layout_adaptive = false;
+        
+        var disable_language_picker = false;
+        
+        var english_only_url_prefixes = [];
+            </script>
+    
+            <script></script>
+    
+        
+    
+            <link href="/_assets/common.d44d81f300d3bff87efe.css" rel="stylesheet" type="text/css">
+<link href="/_assets/default-page.fabf52db4bf34ea78af0.css" rel="stylesheet" type="text/css">
+<link href="/_assets/ruby/inc/whatsnew-content/index.entry.fc01ed35f2a48233ea7d.css" rel="stylesheet" type="text/css">
+        <script src="/_assets/common.34604685b633d15ae3ed.js" type="text/javascript"></script>
+<script src="/_assets/default-page.2e180fc15a6b94fe7fa3.js" type="text/javascript"></script>
+<script src="/_assets/ruby/inc/whatsnew-content/index.entry.5db44c4914a37913a489.js" type="text/javascript"></script>
+    
+            <!-- Social Media tag Starts -->
+    <!-- Open Graph data -->
+            <meta property="og:title" content="What's new in RubyMine 2019.3: better code insight and RuboCop support, improvements for Git, HTTP client, and more!"/>
+    
+                    <meta property="og:description" content="RubyMine 2019.3: better code insight and RuboCop support, improvements for Git, HTTP client, and more!"/>
+    <meta property="og:image" content="http://resources.jetbrains.com/storage/products/rubymine/img/meta/rubymine_2019.3.png"/>
+
+    <meta property="og:site_name" content="JetBrains"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="https://www.jetbrains.com/ruby/whatsnew/"/>
+    <!-- Social Media tag Ends -->
+</head>
+
+<body class="nojs  ">
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<script>
+/*! modernizr 3.2.0 (Custom Build) | MIT *
+ * http://modernizr.com/download/?-flexbox-flexboxtweener !*/
+!function(e,n,t){function r(e,n){return typeof e===n}function o(){var e,n,t,o,i,s,l;for(var f in v)if(v.hasOwnProperty(f)){if(e=[],n=v[f],n.name&&(e.push(n.name.toLowerCase()),n.options&&n.options.aliases&&n.options.aliases.length))for(t=0;t<n.options.aliases.length;t++)e.push(n.options.aliases[t].toLowerCase());for(o=r(n.fn,"function")?n.fn():n.fn,i=0;i<e.length;i++)s=e[i],l=s.split("."),1===l.length?Modernizr[l[0]]=o:(!Modernizr[l[0]]||Modernizr[l[0]]instanceof Boolean||(Modernizr[l[0]]=new Boolean(Modernizr[l[0]])),Modernizr[l[0]][l[1]]=o),C.push((o?"":"no-")+l.join("-"))}}function i(e,n){return!!~(""+e).indexOf(n)}function s(e){return e.replace(/([a-z])-([a-z])/g,function(e,n,t){return n+t.toUpperCase()}).replace(/^-/,"")}function l(e,n){return function(){return e.apply(n,arguments)}}function f(e,n,t){var o;for(var i in e)if(e[i]in n)return t===!1?e[i]:(o=n[e[i]],r(o,"function")?l(o,t||n):o);return!1}function a(e){return e.replace(/([A-Z])/g,function(e,n){return"-"+n.toLowerCase()}).replace(/^ms-/,"-ms-")}function u(){return"function"!=typeof n.createElement?n.createElement(arguments[0]):b?n.createElementNS.call(n,"http://www.w3.org/2000/svg",arguments[0]):n.createElement.apply(n,arguments)}function d(){var e=n.body;return e||(e=u(b?"svg":"body"),e.fake=!0),e}function p(e,t,r,o){var i,s,l,f,a="modernizr",p=u("div"),c=d();if(parseInt(r,10))for(;r--;)l=u("div"),l.id=o?o[r]:a+(r+1),p.appendChild(l);return i=u("style"),i.type="text/css",i.id="s"+a,(c.fake?c:p).appendChild(i),c.appendChild(p),i.styleSheet?i.styleSheet.cssText=e:i.appendChild(n.createTextNode(e)),p.id=a,c.fake&&(c.style.background="",c.style.overflow="hidden",f=_.style.overflow,_.style.overflow="hidden",_.appendChild(c)),s=t(p,e),c.fake?(c.parentNode.removeChild(c),_.style.overflow=f,_.offsetHeight):p.parentNode.removeChild(p),!!s}function c(n,r){var o=n.length;if("CSS"in e&&"supports"in e.CSS){for(;o--;)if(e.CSS.supports(a(n[o]),r))return!0;return!1}if("CSSSupportsRule"in e){for(var i=[];o--;)i.push("("+a(n[o])+":"+r+")");return i=i.join(" or "),p("@supports ("+i+") { #modernizr { position: absolute; } }",function(e){return"absolute"==getComputedStyle(e,null).position})}return t}function m(e,n,o,l){function f(){d&&(delete E.style,delete E.modElem)}if(l=r(l,"undefined")?!1:l,!r(o,"undefined")){var a=c(e,o);if(!r(a,"undefined"))return a}for(var d,p,m,h,y,v=["modernizr","tspan"];!E.style;)d=!0,E.modElem=u(v.shift()),E.style=E.modElem.style;for(m=e.length,p=0;m>p;p++)if(h=e[p],y=E.style[h],i(h,"-")&&(h=s(h)),E.style[h]!==t){if(l||r(o,"undefined"))return f(),"pfx"==n?h:!0;try{E.style[h]=o}catch(g){}if(E.style[h]!=y)return f(),"pfx"==n?h:!0}return f(),!1}function h(e,n,t,o,i){var s=e.charAt(0).toUpperCase()+e.slice(1),l=(e+" "+x.join(s+" ")+s).split(" ");return r(n,"string")||r(n,"undefined")?m(l,n,o,i):(l=(e+" "+S.join(s+" ")+s).split(" "),f(l,n,t))}function y(e,n,r){return h(e,t,t,n,r)}var v=[],g={_version:"3.2.0",_config:{classPrefix:"",enableClasses:!0,enableJSClass:!0,usePrefixes:!0},_q:[],on:function(e,n){var t=this;setTimeout(function(){n(t[e])},0)},addTest:function(e,n,t){v.push({name:e,fn:n,options:t})},addAsyncTest:function(e){v.push({name:null,fn:e})}},Modernizr=function(){};Modernizr.prototype=g,Modernizr=new Modernizr;var C=[],w="Moz O ms Webkit",x=g._config.usePrefixes?w.split(" "):[];g._cssomPrefixes=x;var S=g._config.usePrefixes?w.toLowerCase().split(" "):[];g._domPrefixes=S;var _=n.documentElement,b="svg"===_.nodeName.toLowerCase(),z={elem:u("modernizr")};Modernizr._q.push(function(){delete z.elem});var E={style:z.elem.style};Modernizr._q.unshift(function(){delete E.style}),g.testAllProps=h,g.testAllProps=y,Modernizr.addTest("flexbox",y("flexBasis","1px",!0)),Modernizr.addTest("flexboxtweener",y("flexAlign","end",!0)),o(),delete g.addTest,delete g.addAsyncTest;for(var P=0;P<Modernizr._q.length;P++)Modernizr._q[P]();e.Modernizr=Modernizr}(window,document);
+
+if (!Modernizr.flexbox && !Modernizr.flexboxtweener) {
+
+  var $body = $('body');
+
+  var nodesClasses = {
+    wrapper: 'not-supported-browser',
+    container: 'not-supported-browser__container',
+
+    title: 'not-supported-browser__title',
+    content: 'not-supported-browser__content',
+    logo: 'not-supported-browser__logo'
+  };
+
+  var nodes = {
+    wrapper: $('<div class="' + nodesClasses.wrapper + '"></div>'),
+    title: $('<div class="' + nodesClasses.title + '">Sorry, your browser is not fully supported</div>'),
+    content: $('<div class="' + nodesClasses.content + '">There may be some issues with pages layout in your current browser.<br/>Please use an alternate browser until we resolve the issues.<br/>Thank you.</div>'),
+    container: $('<div class="' + nodesClasses.container + '"></div>'),
+    logo: $('<div class="' + nodesClasses.logo + '"><svg class="sprite-img _jetbrains" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#jetbrains"></use></svg></div>')
+  };
+
+  $body.addClass('overflow-hidden');
+
+
+  nodes.content
+    .prepend(nodes.title)
+    .prepend(nodes.logo);
+
+  nodes.container
+    .append(nodes.content);
+
+  nodes.wrapper
+    .append(nodes.container)
+    .appendTo($body);
+}
+</script>
+<div class="page">
+                <div class="page__header">
+                <header class="menu-main header"  id="js-menu-main">
+    <div class="wt-container">
+        <div class="wt-row wt-row_nowrap wt-row_size_s wt-row_align-items_center">
+            <div class="wt-col-auto-fill">
+                <a href="/" class="menu-main__logo-link"><svg class="_jetbrains-simple sprite-img menu-main__logo" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#jetbrains-simple"></use></svg></a>
+            </div>
+            <div class="wt-col-inline wt-display-md-none menu-main-skeleton-text-1" style="min-width: 69px"></div>
+            <div class="wt-col-inline wt-display-md-none menu-main-skeleton-text-1" style="min-width: 81px"></div>
+            <div class="wt-col-inline wt-display-md-none menu-main-skeleton-text-1" style="min-width: 46px"></div>
+            <div class="wt-col-inline menu-main-skeleton-button"></div>
+            <div class="wt-col-inline menu-main-skeleton-button"></div>
+        </div>
+    </div>
+</header>
+
+
+
+  <div class="menu-second" id="js-menu-second">
+    <div class="wt-container">
+        <div id="js-menu-second-mobile-wrapper" class="wt-display-none">
+            <div id="js-menu-second-mobile" >
+                <div class="menu-second-mobile wt-row wt-row_size_m wt-row_align-items_center wt-row_justify_between">
+                    <div class="wt-col-inline menu-second-skeleton-text-2" style="max-width: 120px"></div>
+                    <div class="wt-col-inline menu-second-skeleton-button" style="max-width: 80px"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="js-menu-second-desktop" class="menu-second-desktop
+                       wt-row wt-row_size_0 wt-row_align-items_center">
+            <div class="wt-col-auto-fill">
+                <a class="menu-second-title-box"
+                   href="/ruby/">
+                                            <span class="menu-second-title-box__logo jetbrains-logo">
+                            <svg class="_rubymine sprite-img" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#rubymine"></use></svg>
+                        </span>
+                    
+                    <span class="menu-second-title-box__title wt-h3">RubyMine</span>
+                </a>
+            </div>
+
+                            
+                                                        <a href="/ruby/whatsnew/"
+                       class="wt-col-inline wt-text-2 wt-text-2_hardness_average menu-second__link
+                                                                wt-text-2_hardness_primary">
+                        What&#39;s New
+                                            </a>
+                                            
+                                                        <a href="/ruby/features/"
+                       class="wt-col-inline wt-text-2 wt-text-2_hardness_average menu-second__link
+                                                                ">
+                        Features
+                                            </a>
+                                            
+                                                        <a href="/ruby/learn/"
+                       class="wt-col-inline wt-text-2 wt-text-2_hardness_average menu-second__link
+                                                                ">
+                        Learn
+                                            </a>
+                                            
+                                                        <a href="/ruby/buy/"
+                       class="wt-col-inline wt-text-2 wt-text-2_hardness_average menu-second__link
+                                                                ">
+                        Buy
+                                            </a>
+                                            
+                            
+                                                    
+                            <a href="/ruby/download/"
+                   class="wt-col-inline menu-second__download-button wt-button wt-button_size_s wt-button_mode_primary">
+                    Download
+                </a>
+                    </div>
+
+    </div>
+</div>
+
+            </div>
+    
+    <div class="page__content ">
+        <nav class="js-add-side-toc"></nav>
+<div class="section-content _bg-medium no-padding-bottom">
+<div class="wt-container article-content">
+<h1 class="_big no-margin-bottom">What's new in RubyMine</h1>
+</div>
+</div>
+<div class="section-content _bg-medium version-2019-3" id="v2019-3">
+<div class="wt-container article-content">
+<div class="wt-row wt-row_size_m version-label">
+<span class="version-label__text">2019.3 (Nov 28)</span>
+</div>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-8">
+<p class="sub-title margin-top-vertical-unit-half">RubyMine 2019.3 adds better code insight,
+            improves the debugger, and incorporates many platform improvements for Git, JavaScript, and HTTP
+            client. Check out all the new things below and update today. We also encourage you to <a href="https://youtrack.jetbrains.com/issues/ruby" target="_blank">let us
+                know</a> of any issues and join the <a href="http://slack.rubymine.org/" target="_blank">RubyMine
+                Slack</a>!
+        </p>
+<div class="button-group _align-left">
+<div class="button-with-note">
+<div class="button-with-note">
+<div class="button-dropdown js-button-dropdown">
+<a class="button button-dropdown__link" href="/ruby/download/download-thanks.html">Download 2019.3</a>
+<button class="button button-dropdown__action js-button-dropdown-action">.exe
+                        </button>
+<ul class="dropdown-link-list js-button-dropdown-content">
+<li><a class="dropdown-link-list__link" data-windows=".exe" href="/ruby/download/download-thanks.html?platform=windows">Windows
+                                (.exe)</a>
+</li>
+<li><a class="dropdown-link-list__link" data-windowszip=".win.zip" href="/ruby/download/download-thanks.html?platform=windowsZip">Windows
+                                (.zip)</a>
+</li>
+<li><a class="dropdown-link-list__link" data-mac=".dmg" href="/ruby/download/download-thanks.html?platform=mac">macOS
+                                (.dmg)</a>
+</li>
+<li><a class="dropdown-link-list__link" data-linux=".tar.gz" href="/ruby/download/download-thanks.html?platform=linux">Linux
+                                (.tar.gz)</a>
+</li>
+</ul>
+</div>
+</div>
+<div class="button-with-note__note">Free 30-day trial</div>
+</div>
+</div>
+</div>
+</div>
+<!-- RuboCop -->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<h2>RuboCop</h2>
+</div>
+<div class="wt-col-8">
+<div class="features-block__image">
+<div class="gif-wrapper">
+<img alt="RuboCop" src="/ruby/whatsnew/screenshots/2019.3/rubocop_severities-670@2x.png">
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Severities mapping</h3>
+<div class="features-block">
+<p>Previously, RubyMine used predefined logic for mapping RuboCop and IDE inspection severities.
+                Now, you can change the default mapping to increase or decrease severities for specific
+                RuboCop offenses. Read this <a href="https://www.jetbrains.com/help/ruby/2019.3/rubocop.html#severity" target="_blank">RuboCop
+                    help topic</a> to learn more.</p>
+</div>
+</div>
+</div>
+<!-- Code insight -->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<h2>Code insight</h2>
+</div>
+<div class="wt-col-8">
+<div class="features-block__image">
+<div class="gif-wrapper">
+<img alt="Better code insight for Struct" src="/ruby/whatsnew/screenshots/2019.3/code_insight_struct-670@2x.png">
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Better code insight for Struct</h3>
+<div class="features-block">
+<p>Thanks to improved code insight for structure types, you can now find usages of the required
+                structure type and navigate back to its declaration. To learn more about the other Find
+                usages improvements, read this <a href="https://blog.jetbrains.com/ruby/2019/10/find-usages-in-rubymine/#improvements" target="_blank">blog
+                    post</a>.
+            </p>
+</div>
+</div>
+<div class="wt-col-8">
+<div class="features-block__image">
+<div class="gif-wrapper">
+<img alt="Type support for fixture calls" src="/ruby/whatsnew/screenshots/2019.3/code_insight_fixtures-670@2x.png">
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Type support for fixture calls</h3>
+<div class="features-block">
+<p>The new version of RubyMine provides improved code insight for fixture calls in
+                Minitest/Test::Unit tests. The editor now offers autocompletion for such calls and can
+                navigate you to the related database fields.</p>
+</div>
+</div>
+</div>
+<!-- Rails -->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<h2>Rails</h2>
+</div>
+<div class="wt-col-8">
+<div class="features-block__image">
+<div class="gif-wrapper">
+<img alt="Run Rails tasks with Run Anything" src="/ruby/whatsnew/screenshots/2019.3/rails_rake_run_any-670@2x.png">
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Run Rails tasks with Run Anything</h3>
+<div class="features-block">
+<p>Before v2019.3, Rails generators and Rake tasks could be run via dedicated popups. Now, you can
+                use <i>Run anything</i> as a single entry point for running tasks/generators. For example,
+                pressing
+                <b>⌥R / Ctrl+Alt+R</b> invokes the <i>Run Anything</i> popup and adds the <b>rake</b>
+                command automatically.
+                Learn more in this <a href="https://blog.jetbrains.com/ruby/2019/10/running-rails-tasks-with-run-anything/" target="_blank">blog post</a>.
+            </p>
+</div>
+</div>
+<div class="wt-col-8">
+<div class="features-block__image">
+<div class="gif-wrapper">
+<img alt="Stimulus and Elm for new Rails projects" src="/ruby/whatsnew/screenshots/2019.3/rails_stimulus_elm-670@2x.png">
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Stimulus and Elm for new Rails projects</h3>
+<div class="features-block">
+<p>With 2019.3, you can specify <b>Stimulus</b> or <b>Elm</b> as the JavaScript library for new
+                Rails projects.</p>
+</div>
+</div>
+</div>
+<!-- Debugger -->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<h2>Debugger</h2>
+</div>
+<div class="wt-col-8">
+<div class="features-block__image">
+<div class="gif-wrapper">
+<img alt="Interactive debugging for the Rails console" class="js-gif" data-gif-src="/ruby/whatsnew/screenshots/2019.3/debugger_rails_interactive_console-670@2x.gif" src="/ruby/whatsnew/screenshots/2019.3/debugger_rails_interactive_console-670@2x.png">
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Interactive debugging for the Rails console</h3>
+<div class="features-block">
+<p>RubyMine now allows you to examine your program’s state when debugging in the Rails console.
+                To do this, just switch to the <b>Interactive console</b> tab after hitting a breakpoint.
+            </p>
+</div>
+</div>
+</div>
+<!-- YARD -->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<h2>YARD</h2>
+</div>
+<div class="wt-col-8">
+<div class="features-block__image">
+<div class="gif-wrapper">
+<img alt="Inferring types for @param and @return annotations" class="js-gif" data-gif-src="/ruby/whatsnew/screenshots/2019.3/yard_infer_param_type-670@2x.gif" src="/ruby/whatsnew/screenshots/2019.3/yard_infer_param_type-670@2x.png">
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Inferring types for @param and @return annotations</h3>
+<div class="features-block">
+<p>We’re constantly improving our support for YARD to help you create and manage YARD tags. In
+                v2019.3, RubyMine infers parameter and return types from the parent class for using it in
+                the <b>Add @param</b> tag and <b>Add @return tag</b> intentions.</p>
+<p>Read about <a href="https://blog.jetbrains.com/ruby/2019/06/yard-support-in-rubymine/" target="_blank">YARD support</a> for an overview of RubyMine’s YARD features.
+            </p>
+</div>
+</div>
+</div>
+<!-- Code Style -->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<h2>Code Style</h2>
+</div>
+<div class="wt-col-8">
+<div class="features-block__image">
+<div class="gif-wrapper">
+<img alt="Aligning method chains" class="js-gif" data-gif-src="/ruby/whatsnew/screenshots/2019.3/code_style_initial_receiver-670@2x.gif" src="/ruby/whatsnew/screenshots/2019.3/code_style_initial_receiver-670@2x.png">
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Aligning method chains</h3>
+<div class="features-block">
+<p>With v2019.3, we’ve added a new code style option which allows you to align chained method
+                calls in different ways – by the initial receiver or leading dots. To configure this option,
+                <b>open Settings/Preferences | Editor | Code Style | Ruby | Wrapping and Braces</b> and go
+                to the
+                <b>Chained method calls</b> group.
+            </p>
+</div>
+</div>
+</div>
+<!-- Copyright -->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<h2>Copyright</h2>
+</div>
+<div class="wt-col-8">
+<div class="features-block__image">
+<div class="gif-wrapper">
+<img alt="Copyright notices for Ruby files" src="/ruby/whatsnew/screenshots/2019.3/copyright-670@2x.png">
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Copyright notices for Ruby files</h3>
+<div class="features-block">
+<p>Now you can quickly add a predefined copyright notice to Ruby files. For more details, see
+                this <a href="https://www.jetbrains.com/help/ruby/copyright.html" target="_blank">Copyright</a> help topic.
+            </p>
+</div>
+</div>
+</div>
+<!-- JavaScript/CSS -->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<h2>JavaScript/CSS</h2>
+</div>
+<div class="wt-col-8">
+<div class="features-block__image">
+<div class="gif-wrapper">
+<img alt="Complete CSS classes added using CDN" src="/ruby/whatsnew/screenshots/2019.3/js_linked_cdn-670@2x.png">
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Complete CSS classes added using CDN</h3>
+<div class="features-block">
+<p>If you’re using Twitter Bootstrap or another CSS library in your project and you have it
+                linked from a CDN in your view file, you can now get completion for the class names from
+                this library, without adding its sources to the project.
+            </p>
+</div>
+</div>
+<div class="wt-col-8">
+<div class="features-block__image">
+<div class="gif-wrapper">
+<img alt="Quote style settings for CSS" src="/ruby/whatsnew/screenshots/2019.3/js_css_quote_style-670@2x.png">
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Quote style settings for CSS</h3>
+<div class="features-block">
+<p>You can now choose whether double or single quotes should be used in CSS (as well as SCSS and
+                Less files) using the new <b>Quote Marks</b> option. If you select <b>Enforce on
+                    Reformat</b>, the
+                selected quote style will be applied when reformatting code (and not only when using code
+                completion to add new code).
+            </p>
+</div>
+</div>
+<div class="wt-col-8">
+<div class="features-block__image">
+<div class="gif-wrapper">
+<img alt="Support for Vue.js components from separate files" src="/ruby/whatsnew/screenshots/2019.3/js_vue_separate-670@2x.png">
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Support for Vue.js components from separate files</h3>
+<div class="features-block">
+<p>RubyMine can now understand the link between different parts of the component located in
+                separate files, and provide proper code completion for props, data, and methods.
+            </p>
+</div>
+</div>
+</div>
+<!-- Git -->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<h2>Git</h2>
+</div>
+<div class="wt-col-8">
+<div class="features-block__image">
+<div class="gif-wrapper">
+<img alt="Reworked Clone dialog" src="/ruby/whatsnew/screenshots/2019.3/git_clone-670@2x.png">
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Reworked Clone dialog</h3>
+<div class="features-block">
+<p>We’ve improved the <b>Clone</b> dialog (<b>VCS | Get from Version</b> control). Now you can
+                log in from this dialog, and the IDE will instantly preview the lists of all repositories
+                grouped by accounts or organizations.
+            </p>
+</div>
+</div>
+<div class="wt-col-8">
+<div class="features-block__image">
+<div class="gif-wrapper">
+<img alt="Push any branch" src="/ruby/whatsnew/screenshots/2019.3/git_push_any_branch-670@2x.png">
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Push any branch</h3>
+<div class="features-block">
+<p>You can now push changes from any branch right from the <b>Branches popup</b> – select a
+                branch and then use the <b>Push</b> action in the menu.
+            </p>
+</div>
+</div>
+</div>
+<!-- DB tools -->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<h2>Database tools</h2>
+</div>
+<div class="wt-col-8">
+<div class="features-block__image">
+<div class="gif-wrapper">
+<img alt="Basic MongoDB support" src="/ruby/whatsnew/screenshots/2019.3/db_mongo-670@2x.png">
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Basic MongoDB support</h3>
+<div class="features-block">
+<p>RubyMine 2019.3 provides initial support for MongoDB. You can view collections and fields in
+                the database explorer, run queries, and so on.
+            </p>
+</div>
+</div>
+</div>
+<!-- HTTP Client -->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<h2>HTTP Client</h2>
+</div>
+<div class="wt-col-8">
+<div class="features-block__image">
+<div class="gif-wrapper">
+<img alt="Dynamic variables in .http files" class="js-gif" data-gif-src="/ruby/whatsnew/screenshots/2019.3/http_dynamic_variable-670@2x.gif" src="/ruby/whatsnew/screenshots/2019.3/http_dynamic_variable-670@2x.png">
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Dynamic variables in .http files</h3>
+<div class="features-block">
+<p>With v2019.3, you can use dynamic variables in <a href="https://www.jetbrains.com/help/ruby/http-client-in-product-code-editor.html" target="_blank">HTTP requests</a>. These variables include <b>$uuid, $timestamp,</b> and
+                <b>$randomInt.</b> Use double curly braces to insert one of these variables where needed.
+            </p>
+</div>
+</div>
+<div class="wt-col-8">
+<div class="features-block__image">
+<div class="gif-wrapper">
+<img alt="Run all requests in file" class="js-gif" data-gif-src="/ruby/whatsnew/screenshots/2019.3/http_run_all-670@2x.gif" src="/ruby/whatsnew/screenshots/2019.3/http_run_all-670@2x.png">
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Run all requests in file</h3>
+<div class="features-block">
+<p>The HTTP Client now lets you write multiple requests in one .http file. This can be useful if
+                you need to do request chains when one request depends on the results of the previous ones.
+                Try the new capabilities using <a href="https://github.com/rubyminedoc/sample-rails-api" target="_blank">this sample app</a>.
+            </p>
+</div>
+</div>
+</div>
+<!-- Other -->
+<div class="wt-row wt-row_size_m wt-row_align-items_center">
+<div class="wt-col-12">
+<h3>Other changes:</h3>
+<ul>
+<li><a href="https://blog.jetbrains.com/ruby/2019/09/ending-support-for-rubymotion-and-heroku-integration-plugins/" target="_blank">Discontinued support</a> for the RubyMotion and Heroku Integration plugins
+            </li>
+<li>Sort lines alphabetically using the <b>Edit | Sort Lines</b> command</li>
+<li>Search in a selected area when using the Find action</li>
+<li>Improved plugin management without restarting the IDE</li>
+<li>Better Docker terminal</li>
+<li>Improved Kubernetes support</li>
+</ul>
+</div>
+<!--Download buttons-->
+<div class="wt-col-4">
+<div class="button-with-note">
+<div class="button-dropdown js-button-dropdown">
+<a class="button button-dropdown__link" href="/ruby/download/download-thanks.html">Download 2019.3 </a>
+<button class="button button-dropdown__action js-button-dropdown-action">.exe</button>
+<ul class="dropdown-link-list js-button-dropdown-content">
+<li><a class="dropdown-link-list__link" data-windows=".exe" href="/ruby/download/download-thanks.html?platform=windows">Windows
+                        (.exe)</a>
+</li>
+<li><a class="dropdown-link-list__link" data-mac=".dmg" href="/ruby/download/download-thanks.html?platform=mac">macOS (.dmg)</a>
+</li>
+<li><a class="dropdown-link-list__link" data-linux=".tar.gz" href="/ruby/download/download-thanks.html?platform=linux">Linux
+                        (.tar.gz)</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div>
+</div>
+<div class="section-content _bg-medium version-2019-2" id="v2019-2">
+<div class="wt-container article-content">
+<div class="wt-row wt-row_size_m version-label">
+<span class="version-label__text">2019.2 (Jul 29)</span>
+</div>
+<!-- Debugger -->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<h2>Debugger</h2>
+</div>
+<div class="wt-col-8">
+<div class="features-block__image">
+<div class="gif-wrapper">
+<img alt="Debugger speed comparison v2019.1 v2019.2" src="/ruby/whatsnew/screenshots/2019.2/debugger_speed-670@2x.png">
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Faster debugger</h3>
+<div class="features-block">
+<p>Our debugger used <code>TracePoint :line</code> to trace the program execution line by line.
+                            For
+                            v2019.2, we have designed a native extension for MRI that lets the debugger choose at which
+                            fragments of code the execution should be suspended, and free the rest of the code from
+                            overhead. As a result, we've been able to dramatically speed up the debugger and implement
+                            the new
+                            features below.</p>
+</div>
+</div>
+<div class="wt-col-8">
+<div class="features-block">
+<div class="gif-wrapper">
+<img alt="Smart Step Into" class="js-gif" data-gif-src="/ruby/whatsnew/screenshots/2019.2/smart_step_into-670@2x.gif" src="/ruby/whatsnew/screenshots/2019.2/smart_step_into-670@2x.png">
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Smart Step Into</h3>
+<div class="features-block">
+<p>Previously, if you stumbled across a line with lots of methods in a debug session, RubyMine
+                            was only
+                            capable to step into the first method in a line. The newly added <i>Smart Step Into</i>
+                            lifts this
+                            restraint
+                            and allows you to step into and investigate every particular method or a block call located
+                            on the same
+                            line.</p>
+</div>
+</div>
+<div class="wt-col-8">
+<div class="features-block">
+<div class="gif-wrapper">
+<img alt="Block breakpoints" class="js-gif" data-gif-src="/ruby/whatsnew/screenshots/2019.2/block_breakpoints-670@2x.gif" src="/ruby/whatsnew/screenshots/2019.2/block_breakpoints-670@2x.png">
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Block breakpoints</h3>
+<div class="features-block">
+<p>With the new version you can set breakpoints not only at lines but also at blocks. When you
+                            click the
+                            left gutter to set a breakpoint at a line that contains a block, RubyMine will ask if you
+                            want to set a
+                            breakpoint at a line, block, or both.</p>
+<p>Read <a href="https://blog.jetbrains.com/ruby/2019/06/debugging-in-rubymine/" target="_blank">Debugging
+                            in RubyMine</a> to learn in detail how to debug Ruby and Rails scripts in RubyMine.</p>
+</div>
+</div>
+</div>
+<!-- Ruby -->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<h2>Ruby 2.7</h2>
+</div>
+<div class="wt-col-8">
+<div class="features-block">
+<div class="features-block__image js-carousel-dots _two-block-in-row">
+<div class="gif-wrapper">
+<img alt="Pattern matching navigation" class="js-gif" data-gif-src="/ruby/whatsnew/screenshots/2019.2/pattern_matching_resolve-670@2x.gif" src="/ruby/whatsnew/screenshots/2019.2/pattern_matching_resolve-670@2x.png"></div>
+<div class="gif-wrapper">
+<img alt="Find usages for pattern matching" class="js-gif" data-gif-src="/ruby/whatsnew/screenshots/2019.2/pattern_matching_find_usages-670@2x.gif" src="/ruby/whatsnew/screenshots/2019.2/pattern_matching_find_usages-670@2x.png">
+</div>
+<div class="gif-wrapper">
+<img alt="Renaming for pattern matching" class="js-gif" data-gif-src="/ruby/whatsnew/screenshots/2019.2/pattern_matching_rename-670@2x.gif" src="/ruby/whatsnew/screenshots/2019.2/pattern_matching_rename-670@2x.png">
+</div>
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Pattern Matching</h3>
+<div class="features-block">
+<p>RubyMine 2019.2 supports Pattern Matching, which was introduced in the first preview of Ruby
+                            2.7 as an
+                            experimental feature. The IDE identifies the new syntax and helps you navigate, find usages,
+                            and rename
+                            the objects.</p>
+<p><a href="https://rubykaigi.org/2019/presentations/k_tsj.html" target="_blank">More about
+                            Pattern Matching
+                            in Ruby</a></p>
+</div>
+</div>
+<div class="wt-col-8">
+<div class="features-block__image">
+<img alt="Numbered block parameters" src="/ruby/whatsnew/screenshots/2019.2/numbered_parameters-670@2x.png">
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Numbered block parameters</h3>
+<div class="features-block">
+<p>The new version of RubyMine recognizes the syntax of numbered parameters and shows/finds
+                            their usages.
+                            This is one more experimental feature of Ruby 2.7 which allows you to assign values in
+                            blocks using a
+                            parameter number as a default parameter, instead of defining a block variable.</p>
+</div>
+</div>
+</div>
+<!--Rails 6-->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<h2>Rails 6</h2>
+</div>
+<div class="wt-col-8">
+<div class="features-block">
+<div class="gif-wrapper">
+<img alt="Action Mailbox support" class="js-gif" data-gif-src="/ruby/whatsnew/screenshots/2019.2/action_mailbox-670@2x.gif" src="/ruby/whatsnew/screenshots/2019.2/action_mailbox-670@2x.png">
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Action Mailbox</h3>
+<div class="features-block">
+<p>RubyMine 2019.2 supports Action Mailbox which will ship with Rails 6. The IDE suggests
+                            autocompleting
+                            routing methods and callbacks, and navigates between their implementations and usages.</p>
+</div>
+</div>
+<div class="wt-col-8">
+<div class="features-block">
+<div class="gif-wrapper">
+<img alt="Action Mailbox inspections" class="js-gif" data-gif-src="/ruby/whatsnew/screenshots/2019.2/action_maibox_inspections-670@2x.gif" src="/ruby/whatsnew/screenshots/2019.2/action_maibox_inspections-670@2x.png">
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<div class="features-block">
+<p>We’ve also added a couple of inspections that let you know if you’ve forgotten to add a
+                            <code>routing</code> call in <code>ApplicationMailbox</code> and a <code>process</code>
+                            method in your
+                            mailbox. The latter also offers a quick-fix.</p>
+<p>Learn more about how to use Action Mailbox <a href="https://gorails.com/episodes/action-mailbox-rails-6" target="_blank">in this detailed GoRails episode</a>.</p>
+</div>
+</div>
+<div class="wt-col-8">
+<div class="features-block">
+<div class="features-block__image js-carousel-dots _two-block-in-row">
+<div class="gif-wrapper">
+<img alt="Enum support" class="js-gif" data-gif-src="/ruby/whatsnew/screenshots/2019.2/enum_code_insight-670@2x.gif" src="/ruby/whatsnew/screenshots/2019.2/enum_code_insight-670@2x.png"></div>
+<div class="gif-wrapper">
+<img alt="Enum negative scopes support" src="/ruby/whatsnew/screenshots/2019.2/enum_negative_scopes-670@2x.png">
+</div>
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Enum support</h3>
+<div class="features-block">
+<p>We've added proper code insight support for <code>ActiveRecord::Enum</code>. This includes
+                            code
+                            autocompletion,
+                            navigation, and finding usages for enums’ names and methods. Negative scopes for enums,
+                            introduced in
+                            Rails 6, are supported as well.</p>
+</div>
+</div>
+</div>
+<!-- YARD -->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<h2>YARD</h2>
+</div>
+<div class="wt-col-8">
+<div class="features-block__image">
+<div class="gif-wrapper">
+<img alt="Improved YARD support" class="js-gif" data-gif-src="/ruby/whatsnew/screenshots/2019.2/yard_overload-670@2x.gif" src="/ruby/whatsnew/screenshots/2019.2/yard_overload-670@2x.png">
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Improved YARD support</h3>
+<div class="features-block">
+<p>We’re gradually improving our support for YARD to help you create and manage YARD tags, and
+                            get better
+                            code autocompletion in RubyMine based on YARD annotations. The new version adds proper type
+                            annotation
+                            and inspections for <code>@overload</code> and <code>@yieldparam</code> tags.</p>
+<p>Read <a href="https://blog.jetbrains.com/ruby/2019/06/yard-support-in-rubymine/" target="_blank">YARD
+                            support in RubyMine</a> for a detailed overview of RubyMine’s features and fresh
+                            improvements
+                            around YARD.</p>
+</div>
+</div>
+</div>
+<!-- Factory Bot-->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<h2>Factory Bot</h2>
+</div>
+<div class="wt-col-8">
+<div class="features-block__image">
+<img alt="Rename factories" src="/ruby/whatsnew/screenshots/2019.2/rename_factories_670@2x.png">
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Rename factories</h3>
+<div class="features-block">
+<p>With v2019.2 you can rename (<i>Shift+F6</i>) factories, sequences, and traits. The IDE finds
+                            their
+                            definitions and suggests renaming it and all usages, as well as the file name if it matches
+                            the factory
+                            name.</p>
+<p>We've also added factories, sequences, and traits to the <i>File Structure</i> view (<i>Cmd/Alt+F7</i>)
+                            and
+                            popup
+                            (<i>Cmd/Ctrl + F12</i>), and added the ability to safely delete them (<i>Refactor | Safe
+                                Delete</i>).
+                        </p>
+</div>
+</div>
+</div>
+<!-- JavaScript -->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<h2>JavaScript</h2>
+</div>
+<div class="wt-col-8">
+<div class="features-block__image">
+<div class="gif-wrapper">
+<img alt="Destructuring intentions" src="/ruby/whatsnew/screenshots/2019.2/intentions-for-destructuring-670@2x.png">
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">New intention actions</h3>
+<div class="features-block">
+<p>The new <i>Propagate to destructuring</i> intention (<i>Alt-Enter</i>) allows you to replace
+                            an extra
+                            variable if possible with another destructuring. To remove a destructuring completely, use
+                            the intention
+                            action called <i>Replace destructuring with property or index access</i>.</p>
+</div>
+</div>
+<div class="wt-col-8">
+<div class="features-block__image">
+<div class="gif-wrapper">
+<img alt="Dynamic usages in Refactoring Preview" src="/ruby/whatsnew/screenshots/2019.2/dynamic-usages-670@2x.png">
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Improved Rename refactoring</h3>
+<div class="features-block">
+<p>When you rename a symbol in a JavaScript or TypeScript file, the IDE now groups together
+                            dynamic usages
+                            and, by default, excludes them from the refactoring. This makes the refactoring more
+                            accurate and gives
+                            you more control over what exactly should be renamed in the <i>Refactoring Preview</i> tool
+                            window.</p>
+</div>
+</div>
+<div class="wt-col-8">
+<div class="features-block__image">
+<div class="gif-wrapper">
+<img alt="Vuetify props" src="/ruby/whatsnew/screenshots/2019.2/vuetify-props-670@2x.png">
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Better support for Vue.js component libraries</h3>
+<div class="features-block">
+<p>Code completion for components and their props from Vuetify, BootstrapVue, Quasar, and some
+                            other Vue
+                            component libraries is now more precise. This was made possible by a new approach we’ve
+                            adopted to
+                            working
+                            with these libraries in the IDE.</p>
+</div>
+</div>
+<div class="wt-col-8">
+<div class="features-block__image">
+<div class="gif-wrapper">
+<img alt="Duplicate code inspection" src="/ruby/whatsnew/screenshots/2019.2/duplicate-code-670@2x.png">
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Searching for duplicate code</h3>
+<div class="features-block">
+<p>The new <i>Duplicate code fragment</i> inspection checks your code on the fly and immediately
+                            highlights
+                            potential duplicates in the editor. It works for JavaScript, TypeScript, CSS, Sass, SCSS,
+                            and Less.</p>
+<p>See <a href="https://www.jetbrains.com/webstorm/whatsnew/" target="_blank">what's new in
+                            WebStorm</a> for
+                            more of the JavaScript improvements available in RubyMine 2019.2.</p>
+</div>
+</div>
+</div>
+<!-- Code style-->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<h2>Code style</h2>
+</div>
+<div class="wt-col-8">
+<div class="features-block__image">
+<img alt="Edit code style configurations" src="/ruby/whatsnew/screenshots/2019.2/editor_config-670@2x.png">
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Improved EditorConfig support</h3>
+<div class="features-block">
+<p>With v2019.2 you can maintain different code styles in different parts of your projects by
+                            adding
+                            multiple <code>.editorconfig</code> files. In addition to the standard <a href="https://editorconfig.org/" target="_blank">EditorConfig</a> options,
+                            which have been supported for a long time, you can now use IDE-specific properties that
+                            cover all
+                            available IDE code
+                            style options.</p>
+</div>
+</div>
+</div>
+<!-- Shell support-->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<h2>Shell scripts</h2>
+</div>
+<div class="wt-col-8">
+<div class="features-block__image">
+<img alt="Shell script editing" src="/ruby/whatsnew/screenshots/2019.2/shell_script_support-670@2x.png">
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Edit Shell scripts</h3>
+<div class="features-block">
+<p>The new version adds support for shell scripts. This includes code completion, quick
+                            documentation,
+                            textual rename for <code>.sh</code> and <code>.bash</code> files, and run configurations for
+                            shell
+                            scripts. The IDE also
+                            integrates with <a href="https://www.shellcheck.net/" target="_blank">ShellCheck</a> for
+                            linting and
+                            <a href="https://github.com/mvdan/sh" target="_blank">shfmt</a> for formatting the code.</p>
+</div>
+</div>
+</div>
+<!-- Git -->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<h2>Git</h2>
+</div>
+<div class="wt-col-8">
+<div class="features-block__image">
+<img alt=".gitignore autocompletion" src="/ruby/whatsnew/screenshots/2019.2/gitignore-670@2x.png">
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Autocompletion in .gitignore</h3>
+<div class="features-block">
+<p>In <code>.gitignore</code> files, the IDE now offers code completion suggestions for files
+                            and folders.
+                            <i>Cmd/Ctrl-click</i> on the name to jump to this file or folder in the <i>Project</i> tool
+                            window. You
+                            can also quickly add
+                            files to <code>.gitignore</code> from the <i>Project</i> view and <i>Local Changes</i> tab –
+                            right-click
+                            on it and select <i>Add to .gitignore</i>.</p>
+</div>
+</div>
+</div>
+<!-- DB tools -->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<h2>Database tools</h2>
+</div>
+<div class="wt-col-8">
+<div class="features-block__image">
+<img alt="Improvements in Database tools – Full-text search" src="/ruby/whatsnew/screenshots/2019.2/datasource_full_text_search-670@2x.png">
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Find data with Full-text Search</h3>
+<div class="features-block">
+<p>Now you can search for data in your databases even if you don’t know where it is located.
+                            Right-click the
+                            data source that you want to search through and select <i>Full-text Search (Ctrl+Alt+Shift+F
+                                /
+                                Cmd+Alt+Shift+F)</i>. The results of your query will be filtered to show only those
+                            strings in which
+                            the data is found.</p>
+<p>See <a href="https://www.jetbrains.com/datagrip/whatsnew/" target="_blank">what’s new in
+                            DataGrip</a>
+                            for the other database improvements that are also available in RubyMine 2019.2.
+                        </p>
+</div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-row_align-items_center">
+<!--Other-->
+<div class="wt-col-12">
+<h3>Other improvements:</h3>
+<ul>
+<li><a href="https://rubygems.org/gems/standard/" target="_blank">Standard gem</a> support</li>
+<li>Support for Action Text</li>
+<li>Support for Cucumber 4</li>
+<li>Minor UI improvements in the Version Control tool window</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="section-content _bg-medium version-2019-1" id="v2019-1">
+<div class="wt-container article-content">
+<div class="wt-row wt-row_size_m version-label">
+<span class="version-label__text">2019.1 (Apr 4)</span>
+</div>
+<!-- Docker -->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<h2>Docker</h2>
+</div>
+<div class="wt-col-8">
+<div class="features-block__image">
+<img alt="Docker-compose exec" src="/ruby/whatsnew/screenshots/2019.1/docker_compose_exec-670@2x.png">
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Rethink Docker with <code>docker-compose exec</code></h3>
+<div class="features-block">
+<p>RubyMine adds support for <br><code>docker-compose exec</code>. Simply put, this command when
+                            enabled allows you to run and debug applications, install gems and do other development
+                            tasks faster
+                            than before.
+                        </p>
+<p>Read <a href="https://blog.jetbrains.com/ruby/2019/03/rubymine-docker/" target="_blank">How
+                            to work with
+                            Docker/Docker
+                            Compose from RubyMine</a> for details.</p>
+</div>
+</div>
+<div class="wt-col-8">
+<div class="features-block">
+<div class="gif-wrapper">
+<img alt="Experimental: Run with docker compose." class="js-gif" data-gif-src="/ruby/whatsnew/screenshots/2019.1/run_via_docker_exec-670@2x.gif" src="/ruby/whatsnew/screenshots/2019.1/run_via_docker_exec-670@2x.png">
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Speed RubyMine up</h3>
+<div class="features-block">
+<p>In <i>Experimental features</i>, enable
+                            <code>ruby.docker.internal.via.exec</code> to speed up RubyMine when you're working with a
+                            <a href="https://blog.jetbrains.com/ruby/2019/03/rubymine-docker/#use_docker_docker_compose_as_a_remote_interpreter" target="_blank">Docker SDK</a>.</p>
+<p>Now you can add gems, run rake tasks, rails commands and other things that update your
+                            environment,
+                            without rebuilding Docker images.</p>
+</div>
+</div>
+</div>
+<!--Recent locations popup-->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<h2>Recent locations</h2>
+</div>
+<div class="wt-col-8">
+<div class="features-block__image">
+<div class="gif-wrapper">
+<img alt="Recent locations" src="/ruby/whatsnew/screenshots/2019.1/recent_locations-670@2x.png">
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Recent locations popup</h3>
+<div class="features-block">
+<p>The new <i>Recent Locations</i> popup reinvents the way you navigate your codebase. This
+                            popup helps you find the actual code when you only remember what it was about, but don’t
+                            have
+                            any idea where you have seen it. Start typing to filter the results and jump to the code you
+                            need.</p>
+<p>Read <a href="https://blog.jetbrains.com/ruby/2019/04/recent-locations/" target="_blank">RubyMine
+                            Navigation: Recent Locations Popup</a> for details.</p>
+</div>
+</div>
+</div>
+<!-- Profiler -->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<h2>Profiler</h2>
+</div>
+<div class="wt-col-8">
+<div class="features-block">
+<div class="gif-wrapper">
+<img alt="Create i18n translation" class="js-gif" data-gif-src="/ruby/whatsnew/screenshots/2019.1/ruby_rails_profiler-670@2x.gif" src="/ruby/whatsnew/screenshots/2019.1/ruby_rails_profiler-670@2x.png">
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Profile applications</h3>
+<div class="features-block">
+<p>RubyMine 2019.1 integrates <a href="https://github.com/rbspy/rbspy" target="_blank">rbspy</a>
+                            and
+                            provides a
+                            native profiler to help you discover parts of code that slow down your application and/or
+                            tests.</p>
+<p>For a detailed tutorial, read <a href="https://blog.jetbrains.com/ruby/2019/03/rubymine-profiler/" target="_blank">Profile Ruby & Rails Apps With rbspy in RubyMine</a>.
+                        </p>
+</div>
+</div>
+<div class="wt-col-8">
+<div class="features-block">
+<div class="gif-wrapper">
+<img alt="Attach profiler to running app" class="js-gif" data-gif-src="/ruby/whatsnew/screenshots/2019.1/attach_profiler-670@2x.gif" src="/ruby/whatsnew/screenshots/2019.1/attach_profiler-670@2x.png">
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Attach to running apps</h3>
+<div class="features-block">
+<p>Note that you can attach the profiler (<i>Find action / Attach Profiler to Process</i>) to
+                            your running
+                            application and investigate it in real time!</p>
+</div>
+</div>
+</div>
+<!-- Factory Bot-->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<h2>Factory Bot</h2>
+</div>
+<div class="wt-col-8">
+<div class="features-block">
+<div class="features-block__image js-carousel-dots _two-block-in-row">
+<div class="gif-wrapper">
+<img alt="Factory bot completion and navigation" class="js-gif" data-gif-src="/ruby/whatsnew/screenshots/2019.1/factory_bot_completion_navigation-670@2x.gif" src="/ruby/whatsnew/screenshots/2019.1/factory_bot_completion_navigation-670@2x.png"></div>
+<div class="gif-wrapper">
+<img alt="Autocomplete and navigate to associations" class="js-gif" data-gif-src="/ruby/whatsnew/screenshots/2019.1/autocomplete_navigate_association-670@2x.gif" src="/ruby/whatsnew/screenshots/2019.1/autocomplete_navigate_association-670@2x.png">
+</div>
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Autocomplete and navigate attributes</h3>
+<div class="features-block">
+<p>When you are adding a factory, RubyMine autocompletes its attributes and, if possible, their
+                            values too.
+                            For
+                            instance, for a Rails model factory, the IDE will autocomplete its fields with their
+                            content, and
+                            even associations. And of course you can navigate between the definitions and usages of
+                            those
+                            objects.</p>
+</div>
+</div>
+<div class="wt-col-8">
+<div class="features-block">
+<div class="gif-wrapper">
+<img alt="Complete factory creation methods in test files" class="js-gif" data-gif-src="/ruby/whatsnew/screenshots/2019.1/creation_methods_completion-670@2x.gif" src="/ruby/whatsnew/screenshots/2019.1/creation_methods_completion-670@2x.png">
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Autocomplete and navigate methods</h3>
+<div class="features-block">
+<p>When you are writing tests, you can autocomplete and navigate to the definitions of factory
+                            creation
+                            methods, such as <code>create</code>, <code>build</code>, <code>build_stubbed</code>, and
+                            others.</p>
+<p>Other cool features of Factory Bot, such as sequences, traits, and aliases are also fully
+                            supported.</p>
+</div>
+</div>
+<div class="wt-col-8">
+<div class="features-block">
+<div class="features-block__image js-carousel-dots _two-block-in-row">
+<div class="gif-wrapper">
+<img alt="Factories in related files" src="/ruby/whatsnew/screenshots/2019.1/related_files_factories-670@2x.png"></div>
+<div class="gif-wrapper">
+<img alt="Gutter for partial factories" src="/ruby/whatsnew/screenshots/2019.1/partial_factory-670@2x.png"></div>
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Full MVC integration</h3>
+<div class="features-block">
+<p>We also added factories to the <i>Related files</i> popup (<i>Navigate / Related symbol</i>),
+                            and added a
+                            gutter that allows you to go to partial factory declarations if they exist.</p>
+</div>
+</div>
+</div>
+<!-- Call Hierarchy -->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<h2>Call Hierarchy</h2>
+</div>
+<div class="wt-col-8">
+<div class="features-block__image">
+<div class="gif-wrapper">
+<img alt="Call Hierarchy" class="js-gif" data-gif-src="/ruby/whatsnew/screenshots/2019.1/call_hierarchy-670@2x.gif" src="/ruby/whatsnew/screenshots/2019.1/call_hierarchy-670@2x.png">
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Investigate method calls</h3>
+<div class="features-block">
+<p>The new <i>Call Hierarchy</i> action helps you dig into methods (“callers”) that use the
+                            method you are
+                            investigating, the methods that call these callers, and further as deep as you need.</p>
+<p>For more information, refer to <a href="https://blog.jetbrains.com/ruby/2019/02/rubymine-2019-1-call-hierarchy-truffle-ruby/#call_hierarchy_ruby" target="_blank">this blog post</a>.</p>
+</div>
+</div>
+</div>
+<!--Truffle Ruby-->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<h2>TruffleRuby</h2>
+</div>
+<div class="wt-col-8">
+<div class="features-block__image">
+<div class="gif-wrapper">
+<img alt="TruffleRuby" src="/ruby/whatsnew/screenshots/2019.1/truffle_ruby-670@2x.png">
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">TruffleRuby support</h3>
+<div class="features-block">
+<p>RubyMine 2019.1 adds support for TruffleRuby! To switch your current Ruby SDK to TruffleRuby,
+                            make sure
+                            you have the interpreter installed, and choose it in the Ruby SDK settings.</p>
+<p>By the way, in this release we also fixed many issues with Ruby version managers.</p>
+</div>
+</div>
+</div>
+<!-- JavaScript -->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<h2>JavaScript</h2>
+</div>
+<div class="wt-col-8">
+<div class="features-block">
+<div class="features-block__image">
+<img alt="TypeScript in Vue" src="/ruby/whatsnew/screenshots/2019.1/typescript_in_vue_670@2x.png">
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Improved support for TypeScript in Vue apps</h3>
+<p>RubyMine now uses the TypeScript language service together with its own TypeScript support for
+                        any TypeScript
+                        code in .vue files. This means that you’ll now get more accurate type checking and type info,
+                        you will be
+                        able to use the quick-fixes provided by the service, and see all the TypeScript errors in the
+                        current file
+                        in the TypeScript tool window.</p>
+</div>
+<div class="wt-col-8">
+<div class="features-block">
+<div class="features-block__image">
+<img alt="Highlight errors in tests" src="/ruby/whatsnew/screenshots/2019.1/highlight_error_in_test-670@2x.png">
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Highlighting for failed line in test</h3>
+<p>When you run tests with Jest, Karma, Mocha, or Protractor and some tests fail, you can now see
+                        right in the
+                        editor where the problem happened. The IDE will use the information from the stack trace and
+                        highlight the
+                        failed code. On hover, you’ll see the error message from the test runner and you can immediately
+                        start
+                        debugging the test.</p>
+</div>
+<div class="wt-col-8">
+<div class="features-block">
+<div class="features-block__image">
+<img alt="New debugger console" src="/ruby/whatsnew/screenshots/2019.1/debug_console-670@2x.png">
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">New debugger console</h3>
+<p>Meet the new, improved interactive debugger console in the JavaScript and Node.js debug tool
+                        windows! It now
+                        displays objects using a tree view, and it supports styling of log messages with CSS and
+                        grouping them using
+                        console.group() and console.groupEnd(). You can also filter out any type of log messages.</p>
+</div>
+<div class="wt-col-8">
+<div class="features-block">
+<div class="features-block__image">
+<img alt="New debugger console" src="/ruby/whatsnew/screenshots/2019.1/completion_npm_scripts-670@2x.png">
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Completion for npm scripts</h3>
+<p>When adding new scripts to the package.json file, the IDE now provides suggestions for available
+                        commands
+                        provided by the installed packages. After typing node, the IDE will suggest folder and file
+                        names. And after
+                        typing npm run, you’ll see a list of tasks defined in the current file.</p>
+<p>See <a href="https://www.jetbrains.com/webstorm/whatsnew/" target="_blank">
+                        what's new in WebStorm</a> for more of the JavaScript improvements available in RubyMine 2019.1.
+                    </p>
+</div>
+</div>
+<!-- HTML & CSS-->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<h2>HTML & CSS</h2>
+</div>
+<div class="wt-col-8">
+<div class="features-block__image">
+<img alt="HTML and CSS" src="/ruby/whatsnew/screenshots/2019.1/updated_css_docs-670@2x.png">
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Updated documentation</h3>
+<div class="features-block">
+<p>The documentation (F1) for CSS properties and HTML tags and attributes now shows up-to-date
+                            descriptions
+                            and information about the browser support from MDN as well as links to the full MDN
+                            articles.</p>
+</div>
+</div>
+</div>
+<!--Custom themes-->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<h2>Custom themes</h2>
+</div>
+<div class="wt-col-8">
+<div class="features-block__image">
+<img alt="Custom themes" src="/ruby/whatsnew/screenshots/2019.1/dark_purple_ui_theme-670@2x.png">
+</div>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">New UI themes</h3>
+<div class="features-block">
+<p>You can now use the new colorful UI themes in RubyMine that are available as plugins. Choose
+                            between the
+                            <a href="https://plugins.jetbrains.com/plugin/12100-dark-purple-theme" target="_blank">Dark
+                                Purple</a>,
+                            <a href="https://plugins.jetbrains.com/plugin/12103-gray-theme" target="_blank">Gray</a>,
+                            and
+                            <a href="https://plugins.jetbrains.com/plugin/12102-cyan-light-theme" target="_blank">Cyan
+                                Light</a>
+                            themes,
+                            or
+                            <a href="http://www.jetbrains.org/intellij/sdk/docs/reference_guide/ui_themes/themes_intro.html" target="_blank">create
+                                your own</a>.
+                        </p>
+</div>
+</div>
+</div>
+<!-- DB tools -->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<h2>Database tools</h2>
+</div>
+<div class="wt-col-8">
+<div class="features-block__image">
+<img alt="Improvements in Database tools – New Sources" src="/ruby/whatsnew/screenshots/2019.1/db_tools_new_sources-670@2x.png">
+</div>
+</div>
+<div class="wt-col-4">
+<div class="features-block">
+<p>The database tools in RubyMine have got some cool improvements thanks to our colleagues on
+                            the DataGrip
+                            team:</p>
+<ul>
+<li>Support for new databases: Greenplum, Vertica, and Apache Hive</li>
+<li>Code completion supports combined statements for CREATE and DROP</li>
+<li>Support for DEFINER attributes in MySQL and MariaDB</li>
+<li>Support for the Oracle mode in MariaDB</li>
+<li>You can now set the default folder for a project</li>
+</ul>
+</div>
+</div>
+</div>
+<!--Other-->
+<div class="wt-col-12">
+<h3>Other improvements:</h3>
+<ul>
+<li>Ability to run and debug tests with Spring</li>
+<li>Polymorphic associations: supported source and source_type params</li>
+<li>Specify alternative gemfiles using bundle.config</li>
+<li>Specify local gems path using bundle.config</li>
+<li>I18n: support for default option</li>
+<li>Improved support for query field methods in Rails models</li>
+</ul>
+</div>
+</div>
+</div>    </div>
+
+            
+<div class="page__footer">
+    <footer class="footer" id="footer">
+        <div class="wt-container">
+            <div class="footer__main wt-row wt-row_size_m wt-row-sm_direction_column-reverse">
+                <div class="footer__logo wt-col-inline wt-display-md-none">
+                    <div class="jetbrains-logo _size-3 _full-block">
+                        <svg class="sprite-img jetbrains">
+                            <use xlink:href="#jetbrains" />
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="wt-col-auto-fill wt-col-sm-12">
+                    <div class="wt-row wt-row_size_xs wt-row-sm_size_m wt-offset-top-12">
+                        <div class="wt-col-inline footer-skeleton-button"></div>
+                        <div class="wt-col-inline footer-skeleton-button"></div>
+                        <div class="wt-col-inline footer-skeleton-button"></div>
+                        <div class="wt-col-inline footer-skeleton-button"></div>
+                    </div>
+
+                    <div class="footer-skeleton-text-2 wt-offset-top-24" style="max-width: 45%"></div>
+                    <div class="footer-skeleton-text-2 wt-offset-top-12" style="max-width: 70%"></div>
+                </div>
+
+                <div class="wt-col-inline wt-col-sm-12 wt-col_align-self_end wt-col-sm_align-self_start">
+                    <div class="wt-row wt-row_size_m wt-row_justify_end wt-row-sm_justify_start">
+                        <div class="wt-col-inline footer-skeleton-button" style="min-width: 180px"></div>
+                        <div class="wt-col-inline footer-skeleton-button" style="min-width: 80px"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+    </div>
+
+<script>
+(function () {
+  function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+      results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+  }
+
+  function updateQueryStringParameter(uri, key, value) {
+    var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+    var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+    if (uri.match(re)) {
+      return uri.replace(re, '$1' + key + "=" + value + '$2');
+    }
+    else {
+      return uri + separator + key + "=" + value;
+    }
+  }
+
+  var downloadLink = document.getElementById("download-link");
+  if (downloadLink != null) {
+    var platform = getParameterByName('platform');
+    platform = platform != null ? platform : "windows";
+    var href = downloadLink.getAttribute("href");
+    var code = getParameterByName("code");
+
+    if(code != null) {
+      href = updateQueryStringParameter(href, "code", code)
+    }
+    href = updateQueryStringParameter(href, "platform", platform);
+    downloadLink.setAttribute("href", href);
+  }
+})();
+</script><script>
+(function() {
+  var STORAGE_KEY_NAME = 'firefoxDisappearedSVGWorkaround';
+  var STORAGE_KEY_VALUE = '1';
+
+  var isFirefox = /firefox/i.test(navigator.userAgent);
+  if (!isFirefox || isFirefox && sessionStorage.getItem(STORAGE_KEY_NAME) === STORAGE_KEY_VALUE) {
+    return;
+  }
+
+  var arrayFrom = function (arrayLike) {
+    return Array.prototype.slice.call(arrayLike, 0);
+  };
+
+  function workaround() {
+    var uses = document.querySelectorAll('.page svg use');
+    var badNodesCount = 0;
+
+    arrayFrom(uses).forEach(function (node) {
+      var rect = node.getBoundingClientRect();
+      if (rect.width === 0 && rect.height === 0)
+        badNodesCount++;
+    });
+
+    if (badNodesCount === uses.length) {
+      sessionStorage.setItem(STORAGE_KEY_NAME, STORAGE_KEY_VALUE);
+      if (typeof dataLayer !== 'undefined')
+        dataLayer.push({'firefoxDisappearedSVGWorkaround': STORAGE_KEY_VALUE});
+
+      window.location.replace(window.location.href);
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', workaround);
+
+})();
+</script>      <link href="/_assets/banner-rotator.entry.07ac548a2a68a7922693.css" rel="stylesheet" type="text/css">
+      <script src="/_assets/banner-rotator.entry.b9ea3aaba598786010f0.js" type="text/javascript"></script>
+      
+      
+  <script>
+(function () {
+
+  'use strict';
+
+  function ImagesSrcReplacer () {
+
+    var attribute = 'data-src';
+    var matches = document.querySelectorAll('img[' + attribute + ']');
+
+    for (var i = 0, n = matches.length; i < n; i++) {
+
+      var attrValue = matches[i].getAttribute(attribute);
+
+      if (_isHighDensity ()) {
+
+        var name = attrValue.substring(0, attrValue.lastIndexOf('.'));
+        var extention = attrValue.substring(attrValue.lastIndexOf('.'), attrValue.length);
+
+        matches[i].setAttribute('src', name + '@2x' + extention);
+
+      } else {
+        matches[i].setAttribute('src', attrValue)
+      }
+    }
+
+    /**
+     * Detect high density
+     * @returns {*|boolean}
+     */
+    function _isHighDensity () {
+      return (
+      (window.matchMedia &&
+      (window.matchMedia('only screen and (min-resolution: 124dpi), only screen and (min-resolution: 1.3dppx), only screen and (min-resolution: 48.8dpcm)').matches ||
+       window.matchMedia('only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (-o-min-device-pixel-ratio: 2.6/2), only screen and (min--moz-device-pixel-ratio: 1.3), only screen and (min-device-pixel-ratio: 1.3)').matches)) ||
+      (window.devicePixelRatio &&
+       window.devicePixelRatio > 1.3));
+    }
+  }
+
+  return new ImagesSrcReplacer()
+
+}(document, window));
+</script></body>
+</html>

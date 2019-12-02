@@ -1,0 +1,244 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta class="swiftype" name="product" data-type="string" content="/idea/2016.3/"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><meta charset="UTF-8"><meta name="robots" content="noindex"><title>IntelliJ IDEA 2016.3 Help :: Running NPM Scripts</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Running_NPM_Scripts"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-swiftype-index="false"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.3 Help</h3><div class="shortcuts-switcher" data-swiftype-index="false"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Windows/Linux Default</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWin</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">Mac OS X</option><option data-group="secondary" value="eclipse_mac_os_x">Eclipse (Mac OS X)</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (Mac OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper (Mac OS X)</option><option data-group="secondary" value="emacs">Emacs (Mac OS X)</option></select></div><div class="panel-trigger" data-swiftype-index="false"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="osgi-and-osmorc.html">OSGi and OSMORC</a></div><h1>Running NPM Scripts</h1><a name="d766e18"></a><p><a name="d766e19"></a><span class="emphasis">This feature is supported in the Ultimate edition only.</span></p>
+             
+                <aside class="warning ">
+                    <a name="d1646e280"></a><p><a name="d1646e281"></a><span class="emphasis">
+                        The following is only valid when Node.js Plugin is installed and enabled!
+                    </span></p>
+                </aside>
+             
+        <a name="d357912e26"></a><p>In this section:</p><ul><li class="list__item"><a href="#d357912e31">Introduction</a></li><li class="list__item"><a href="#d357912e57">Before you start</a></li><li class="list__item"><a href="#d357912e152">Building a tree of scripts</a></li><li class="list__item"><a href="#d357912e212">Running npm scripts from the tree of scripts</a></li><li class="list__item"><a href="#d357912e243">Running tasks according to a run configuration</a></li><li class="list__item"><a href="#d357912e322">Running npm scripts automatically</a></li><li class="list__item"><a href="#d357912e355">Running a script as a as a before-launch task</a></li></ul><a name="d357912e31"></a><h2>Introduction</h2>
+    <a name="d357912e33"></a><p>
+        IntelliJ IDEA provides interface for <a name="d357912e35"></a><a href="https://docs.npmjs.com/misc/scripts" data-external="true"><span>running npm scripts</span></a>.
+        <a name="d357912e38"></a><span class="emphasis">npm scripts</span> support involves:
+    </p>
+    <ul class="list _bullet"><li class="list__item"><a name="d19550e60"></a>
+            Parsing <code class="code" data-lang="Java">package.json</code> files, recognizing definitions of scripts.
+        </li><li class="list__item"><a name="d19550e67"></a>
+            Building trees of scripts.
+        </li><li class="list__item"><a name="d19550e70"></a>
+            Navigation between a script in the tree and its definition in the <code class="code" data-lang="Java">package.json</code> file.
+        </li><li class="list__item"><a name="d19550e76"></a>
+            Running and debugging scripts.
+        </li><li class="list__item"><a name="d19550e79"></a>
+            Configuring the script execution mode and output.
+        </li></ul>
+
+<a name="d357912e57"></a><h2>Before you start</h2>
+        <ol class="list _decimal"><li class="list__item"><a name="d357912e61"></a>
+                Download and install <a name="d357912e63"></a><a href="http://nodejs.org/" data-external="true"><span>Node.js</span></a> which contains <a name="d357912e66"></a><a href="https://www.npmjs.com/" data-external="true"><span>npm</span></a>.
+            </li><li class="list__item"><a name="d357912e70"></a>
+                 
+                    Install and enable the <a name="d357912e74"></a><span class="emphasis">NodeJS</span> plugin.
+                     
+         
+        The <a name="d831e5668"></a><span class="emphasis"></span> plugin is&nbsp;not&nbsp;bundled with IntelliJ IDEA, but it can be installed from the <a name="d831e5671"></a><span class="emphasis">JetBrains plugin repository</span>
+            as described in <a name="d831e5674"></a><a href="installing-updating-and-uninstalling-repository-plugins.html"><span>Installing, Updating and Uninstalling Repository Plugins</span></a> and <a name="d831e5676"></a><a href="enabling-and-disabling-plugins.html"><span>Enabling and Disabling Plugins</span></a>.
+     
+                 
+                 
+            </li><li class="list__item"><a name="d357912e89"></a>
+                Create a <code class="code" data-lang="Java">package.json</code> file with the <code class="code" data-lang="Java">scripts</code> property with the definitions of the scripts to run.
+            </li><li class="list__item"><a name="d357912e98"></a>
+                To enable debugging a script, add the <code class="code" data-lang="Java">$NODE_DEBUG_OPTION</code> to its definition in the <code class="code" data-lang="Java">package.json</code> file, for example:
+                <a name="d357912e106"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="o">{</span>
+    <span class="s">&quot;name&quot;</span><span class="o">:</span> <span class="s">&quot;application-name&quot;</span><span class="o">,</span>
+    <span class="s">&quot;version&quot;</span><span class="o">:</span> <span class="s">&quot;0.0.1&quot;</span><span class="o">,</span>
+    <span class="s">&quot;scripts&quot;</span><span class="o">:</span> <span class="o">{</span>
+        <span class="s">&quot;main&quot;</span><span class="o">:</span> <span class="s">&quot;node $NODE_DEBUG_OPTION ./app-compiled.js&quot;</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></div>
+            </li></ol>
+        <a name="d357912e111"></a><p>
+            Scripts are launched in four ways:
+            <ul class="list _bullet"><li class="list__item"><a name="d357912e115"></a>
+                    From a tree of scripts in the dedicated <a name="d357912e117"></a><a href="npm-tool-window.html"><span>NPM Tool Window</span></a>.
+                     
+        The tool window opens when you invoke <a name="d19550e214"></a><span class="emphasis">npm</span> by choosing <a name="d19550e217"></a><span class="control">Show npm Scripts</span>
+        on the context menu of a <code class="code" data-lang="Java">package.json</code> in the <a name="d19550e223"></a><span class="control">Project</span> tool window
+        or of a <code class="code" data-lang="Java">package.json</code> opened in the editor.
+     
+                </li><li class="list__item"><a name="d357912e122"></a>
+                    According to a dedicated run configuration, see <a name="d357912e124"></a><a href="run-debug-configuration-npm.html"><span>Run/Debug Configuration: NPM</span></a>.
+                </li><li class="list__item"><a name="d357912e127"></a>
+                    Automatically, as a start-up task.
+                </li><li class="list__item"><a name="d357912e130"></a>
+                    As a before-launch task, from another run configuration.
+                </li></ul>
+        </p>
+        <a name="d357912e135"></a><p>
+             
+            The result of executing a script is displayed in the <a name="d357912e139"></a><a href="run-tool-window.html"><span>Run tool window</span></a>.
+             
+             
+             
+            The tool window shows the npm script output, reports the errors occurred, lists the packages or plugins that have not been found, etc.
+            The name of the last executed script is displayed on the title bar of the tool window.
+         
+        </p>
+
+    <a name="d357912e152"></a><h2>Building a tree of scripts</h2>
+        <ul class="list _bullet"><li class="list__item"><a name="d357912e156"></a>
+                If the <a name="d357912e158"></a><span class="control">npm</span> tool window is not opened yet, do one of the following:
+                <ul class="list _ul"><li class="list__item"><a name="d19550e168"></a>
+            Select the required <code class="code" data-lang="Java">package.json</code> file in the <a name="d19550e173"></a><span class="control">Project</span> tool window and choose <a name="d19550e176"></a><span class="control">Show npm Scripts</span> on the context menu of the selection.
+        </li><li class="list__item"><a name="d19550e180"></a>
+            Open the required <code class="code" data-lang="Java">package.json</code> file in the editor and choose <a name="d19550e185"></a><span class="control">Show npm Scripts</span> on the context menu of the editor.
+        </li></ul>
+                <a name="d357912e171"></a><p>
+                    In either case, the <a name="d357912e173"></a><span class="control">npm</span> tool window opens showing the scripts  tree
+                    built according to the selected or opened <code class="code" data-lang="Java">package.json</code> file.
+                </p>
+            </li><li class="list__item"><a name="d357912e181"></a>
+                 
+         
+         
+         
+         
+        If the <a name="d19550e240"></a><span class="control">npm</span> tool window is already opened, click <img alt="add_black.png" title="add_black.png" src="/help/img/idea/2016.3/add_black.png" width="18" height="10" class="inline-icon-10"> on the toolbar and
+        choose the required <code class="code" data-lang="Java">package.json</code> file from the list. IntelliJ IDEA adds a new node and builds a scripts tree under it.
+        The title of the node shows the path to the  <code class="code" data-lang="Java">package.json</code> file according to which the tree is built.
+     
+            </li><li class="list__item"><a name="d357912e195"></a>
+                 
+        To re-build a tree, switch to the required node and click <img alt="icon_reload_grunt.png" title="icon_reload_grunt.png" src="/help/img/idea/2016.3/icon_reload_grunt.png" width="14" height="14" class="inline-icon-14"> on the toolbar.
+     
+            </li></ul>
+
+            <a name="d357912e201"></a><p>
+                 
+         
+         
+        By default, the scripts in a tree a listed  in the order in which they are defined in <code class="code" data-lang="Java">package.json</code> (option <a name="d19550e199"></a><span class="control">Definition order</span>).
+        To have them listed in the alphabetic order, click the <img alt="viewMode.png" title="viewMode.png" src="/help/img/idea/2016.3/viewMode.png" width="19" height="12" class="inline-icon-12"> toolbar button, then choose <a name="d19550e205"></a><span class="control">Sort by</span>
+        on the menu, and then choose <a name="d19550e208"></a><span class="control">Name</span>.
+     
+            </p>
+
+
+    <a name="d357912e212"></a><h2>Running npm scripts from the tree of scripts</h2>
+ 
+            <ul class="list _bullet"><li class="list__item"><a name="d357912e218"></a>
+                    <a name="d357912e220"></a><p>
+                        To run a script, do one of the following:
+                    </p>
+                     
+         
+         
+        <ul class="list _ul"><li class="list__item"><a name="d19550e267"></a>
+                Double click the required script in the tree.
+            </li><li class="list__item"><a name="d19550e270"></a>
+                Select the required script and choose <a name="d19550e272"></a><span class="control">Run &lt;script name&gt;</span> on the context menu of the selection.
+            </li><li class="list__item"><a name="d19550e276"></a>
+                Select the required script and press <kbd data-default="Enter" data-default_for_gnome="Enter" data-default_for_kde="Enter" data-default_for_xwin="Enter" data-emacs="Enter" data-jbuilder="Enter" data-visual_studio="Enter" data-netbeans_6.5="N/A" data-eclipse="Enter" data-mac_os_x_10.5_="⏎" data-mac_os_x="⏎" data-eclipse_mac_os_x="⏎" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Enter</kbd>.
+            </li></ul>
+     
+ 
+                </li><li class="list__item"><a name="d357912e233"></a>
+                     
+         
+            To run several scripts, use the multiselect mode: hold <kbd>Shift</kbd> (for adjacent items) or <kbd>Ctrl</kbd>
+            (for non-adjacent items) keys and select the required scripts, then choose <a name="d19550e427"></a><span class="control">Run</span> on the context menu of the selection.
+     
+                </li></ul>
+
+        <a name="d357912e243"></a><h2>Running tasks according to a run configuration</h2>
+            <a name="d357912e245"></a><p>
+                Besides using <a name="d357912e247"></a><span class="emphasis">temporary</span> run configurations that IntelliJ IDEA creates automatically,
+                you can create and launch your own <a name="d357912e250"></a><span class="emphasis">npm</span> run configurations.
+                For details about run configurations, see <a name="d357912e253"></a><a href="run-debug-configuration.html"><span>Run/Debug Configuration</span></a> and <a name="d357912e255"></a><a href="creating-and-editing-run-debug-configurations.html"><span>Creating and Editing Run/Debug Configurations</span></a>.    
+            </p>
+<a name="d357912e262"></a><p>
+    To create an <a name="d357912e264"></a><span class="emphasis">npm</span> run configuration:
+</p>
+            <ol class="list _decimal"><li class="list__item"><a name="d357912e270"></a>
+                     
+            Choose <a name="d831e8086"></a><span class="menupath">Run | Edit Configuration</span> on the main menu.
+            Alternatively, click <kbd data-default="Shift+Alt+F10" data-default_for_gnome="Shift+Alt+F10" data-default_for_kde="Shift+Alt+F10" data-default_for_xwin="Shift+Alt+F10" data-emacs="Alt+Shift+F10" data-jbuilder="Shift+Alt+F10" data-visual_studio="Alt+Shift+F10" data-netbeans_6.5="N/A" data-eclipse="Shift+Alt+F10" data-mac_os_x_10.5_="&#x2303;&#x2325;R" data-mac_os_x="&#x2325;&#x21E7;F10" data-eclipse_mac_os_x="&#x2303;&#x2325;R" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Shift+Alt+F10</kbd>  and select <a name="d831e8091"></a><span class="control">Edit Configuration</span>
+            from the pop-up menu.
+         
+                </li><li class="list__item"><a name="d357912e275"></a>
+                     
+         
+        Click the <a name="d831e8099"></a><span class="control">Add New Configuration</span> button <img alt="add.png" title="add.png" src="/help/img/idea/2016.3/new.png" width="12" height="12" class="inline-icon-12"> on the toolbar
+        and select <a name="d831e8104"></a><span class="control">npm</span> from the pop-up list.
+     
+                </li><li class="list__item"><a name="d357912e283"></a>
+                    In the <a name="d357912e285"></a><a href="run-debug-configuration-npm.html"><span>Run/Debug Configuration: NPM</span></a> dialog box that opens, specify the name of the run configuration,
+                    the <a name="d357912e287"></a><a href="https://docs.npmjs.com/" data-external="true"><span>npm command line command</span></a> to execute, the scripts to run (use blank spaces as separators),
+                    the location of the <code class="code" data-lang="Java">package.json</code> file to retrieve the definitions of the scripts from,
+                    and the command line arguments to execute the script with.
+                    <a name="d357912e293"></a><p>
+                        Specify the location of the Node executable file and the NodeJS-specific options to be passed to this executable file,
+                        see <a name="d357912e295"></a><a href="run-debug-configuration-node-js.html#node_parameters"><span>Node parameters</span></a> for details.
+                    </p>
+                    <a name="d357912e299"></a><p>
+                        If applicable, specify the <a name="d357912e301"></a><a href="http://en.wikipedia.org/wiki/Environment_variable" data-external="true"><span>environment variables</span></a> for the NodeJS executable file.
+                    </p>
+                </li></ol>
+        <a name="d357912e307"></a><p>
+            To run a script according to a run configuration, select the run configuration from the list on the main tool bar
+            and then choose <a name="d357912e309"></a><span class="menupath">Run | Run &lt;configuration name&gt;</span>
+            on the main menu or click the <a name="d357912e312"></a><span class="control">Run</span> toolbar button <img alt="run.png" title="run.png" src="/help/img/idea/2016.3/run.png" width="11" height="14" class="inline-icon-14">.
+            The output is displayed in the <a name="d357912e317"></a><a href="run-tool-window.html"><span>Run tool window</span></a>.
+        </p>
+
+        <a name="d357912e322"></a><h2>Running npm scripts automatically</h2>
+        <a name="d357912e324"></a><p>
+             
+         
+        If you have some scripts that you run on a regular basis, you can add the corresponding run configurations
+        to a list of <a name="d19550e5109"></a><span class="emphasis">startup tasks</span>. The tasks will be executed automatically on the project start-up.
+     
+        </p>
+        <ol class="list _decimal"><li class="list__item"><a name="d357912e334"></a>
+                 
+         
+            Open the <a name="d831e8187"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by pressing <kbd data-default="Ctrl+Alt+S" data-default_for_gnome="Ctrl+Alt+S" data-default_for_kde="Ctrl+Alt+S" data-default_for_xwin="Ctrl+Alt+S" data-emacs="Ctrl+Alt+S" data-jbuilder="N/A" data-visual_studio="Alt+F7" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Alt+S" data-mac_os_x_10.5_="&#x2318;," data-mac_os_x="&#x2318;," data-eclipse_mac_os_x="&#x2318;," data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+S</kbd> or by choosing <a name="d831e8191"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d831e8194"></a><span class="menupath">IntelliJ IDEA | Preferences</span> for OS X,
+         
+         
+            and  
+         
+         
+         
+        click <a name="d831e8217"></a><span class="control">Startup Tasks</span> under <a name="d831e8220"></a><span class="control">Tools</span>.
+     
+     
+            </li><li class="list__item"><a name="d19550e5119"></a>
+            On the <a name="d19550e5121"></a><a href="startup-tasks.html"><span>Startup Tasks</span></a> page that opens, click <img alt="add.png" title="add.png" src="/help/img/idea/2016.3/new.png" width="12" height="12" class="inline-icon-12"> on the toolbar.
+        </li><li class="list__item"><a name="d19550e5126"></a>
+            From the drop-down list, choose the required <a name="d19550e5128"></a><span class="emphasis">npm</span> run configuration. The configuration is added to the list.
+            <a name="d19550e5131"></a><p>
+                If no applicable configuration is available in the project, click <img alt="add.png" title="add.png" src="/help/img/idea/2016.3/new.png" width="12" height="12" class="inline-icon-12">
+                and choose <a name="d19550e5135"></a><span class="control">Edit Configurations</span>. Then define a configuration with the required settings
+                in the <a name="d19550e5138"></a><a href="run-debug-configuration-npm.html"><span>Run/Debug Configuration: NPM</span></a> page that opens.
+                When you save the new configuration it is automatically added to the list of startup tasks.
+            </p>
+        </li></ol>
+    <a name="d357912e355"></a><h2>Running a script as a as a before-launch task</h2>
+        <ol class="list _decimal"><li class="list__item"><a name="d357912e359"></a>
+                Open the <a name="d357912e361"></a><a href="run-debug-configurations.html"><span>Run/Debug Configurations</span></a> dialog by choosing <a name="d357912e363"></a><span class="menupath">Run | Edit Configurations</span> on the main menu,
+                and select the required configuration from the list or create it anew by clicking <img alt="/help/img/idea/2016.3/new.png" title="/help/img/idea/2016.3/new.png" src="/help/img/idea/2016.3/new.png" width="12" height="12" class="inline-icon-12">
+                and choosing the relevant run configuration type.
+            </li><li class="list__item"><a name="d357912e369"></a>
+                In the dialog box that opens, click <img alt="/help/img/idea/2016.3/new.png" title="/help/img/idea/2016.3/new.png" src="/help/img/idea/2016.3/new.png" width="12" height="12" class="inline-icon-12"> in the <a name="d357912e373"></a><span class="control">Before launch</span> area
+                and choose <a name="d357912e376"></a><span class="control">Run npm script</span> from the drop-down list.
+            </li><li class="list__item"><a name="d357912e380"></a>
+                 
+        In the <a name="d19550e5167"></a><span class="control">NPM Script</span> dialog box that opens, specify the <code class="code" data-lang="Java">package.json</code> file where the required script is defined,
+        select the script to execute, choose the command to apply to it, and specify the arguments to execute the script with.
+        <a name="d19550e5173"></a><p>
+            Specify the location of the Node.js interpreter and the parameters to pass to it.
+        </p>
+     
+            </li></ol>
+
+    <div class="navigation-links _bottom"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="osgi-and-osmorc.html">OSGi and OSMORC</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content">```
+                <div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d357912e391"></a><a href="run-debug-configuration-npm.html"><span>Run/Debug Configuration: NPM</span></a></li><li class="list__item"><a name="d357912e393"></a><a href="npm-tool-window.html"><span>NPM Tool Window</span></a></li><li class="list__item"><a name="d357912e395"></a><a href="startup-tasks.html"><span>Startup Tasks</span></a></li></ul></div></div></section><div class="last-modified" data-swiftype-index="false">Last modified: 21 March 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

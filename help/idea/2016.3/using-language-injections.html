@@ -1,0 +1,235 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta class="swiftype" name="product" data-type="string" content="/idea/2016.3/"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><meta charset="UTF-8"><meta name="robots" content="noindex"><title>IntelliJ IDEA 2016.3 Help :: Using Language Injections</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="topicId109964"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-swiftype-index="false"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.3 Help</h3><div class="shortcuts-switcher" data-swiftype-index="false"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Windows/Linux Default</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWin</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">Mac OS X</option><option data-group="secondary" value="eclipse_mac_os_x">Eclipse (Mac OS X)</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (Mac OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper (Mac OS X)</option><option data-group="secondary" value="emacs">Emacs (Mac OS X)</option></select></div><div class="panel-trigger" data-swiftype-index="false"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="internationalization-and-localization-support.html">Internationalization and Localization Support</a></div><h1>Using Language Injections</h1><a name="d595246e11"></a><p>
+        You can inject a language
+         
+         
+            (such as SQL, RegExp, XML, HTML, CSS, etc.) into a string literal in your code 
+         
+        and, as a result, get comprehensive coding assistance when editing that
+         
+         literal. 
+    </p><ul><li class="list__item"><a href="#d595246e64">Prerequisite</a></li><li class="list__item"><a href="#inject_language_command_example">Example: Injecting HTML. Opening a fragment editor</a></li><li class="list__item"><a href="#d595246e207">Accessing language injection functions</a></li><li class="list__item"><a href="#d595246e224">Ways to inject a language</a></li><li class="list__item"><a href="#injection_comments">Using language injection comments</a></li><li class="list__item"><a href="#language_annotation">Using the @Language annotation</a></li><li class="list__item"><a href="#d595246e644">Accessing injection settings</a></li><li class="list__item"><a href="#injection_prefix_and_suffix">Using language injection prefixes and suffixes</a></li></ul><a name="d595246e64"></a><h2>Prerequisite</h2>
+        <a name="d595246e66"></a><p>
+            For language injection features to be available, the IntelliLang
+             
+            <a name="d595246e72"></a><a href="plugins.html"><span>plugin</span></a>
+            must be enabled.
+            (This plugin is bundled with the IDE and enabled by default.)</p>
+    <a name="inject_language_command_example"></a><h2>Example: Injecting HTML. Opening a fragment editor</h2>
+        <a name="d595246e79"></a><p>To get an impression of how language injections work:</p>
+        <ol class="list _decimal"><li class="list__item"><a name="d595246e87"></a>
+                Create a Java class and open that class in the editor.</li><li class="list__item"><a name="d595246e103"></a>
+                Within the class body, type:
+                <a name="d595246e105"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="n">String</span> <span class="n">s</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">;</span></code></div>
+            </li><li class="list__item"><a name="d595246e109"></a>
+                Place the cursor between the quotation marks.</li><li class="list__item"><a name="d595246e115"></a>
+                Click <img alt="/help/img/idea/2016.3/intentionBulb.png" title="/help/img/idea/2016.3/intentionBulb.png" src="/help/img/idea/2016.3/intentionBulb.png" width="10" height="15" class="inline-icon-15"> or press <kbd data-default="Alt+Enter" data-default_for_gnome="Alt+Enter" data-default_for_kde="Alt+Enter" data-default_for_xwin="Alt+Enter" data-emacs="Alt+Enter" data-jbuilder="Alt+Enter" data-visual_studio="Alt+Enter" data-netbeans_6.5="N/A" data-eclipse="Alt+Enter" data-mac_os_x_10.5_="&#x2325;⏎" data-mac_os_x="&#x2325;⏎" data-eclipse_mac_os_x="&#x2318;1" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Enter</kbd>,
+                select <a name="d595246e121"></a><span class="control">Inject language or reference</span>, and then
+                select <a name="d595246e124"></a><span class="control">HTML (HTML files)</span>.
+                 
+                <figure><img alt="/help/img/idea/2016.3/java_inject_html.png" title="/help/img/idea/2016.3/java_inject_html.png" src="/help/img/idea/2016.3/java_inject_html.png" width="595" height="246"></figure>
+            </li><li class="list__item"><a name="d595246e133"></a>
+                Type:
+                <a name="d595246e135"></a><div class="code-block" data-lang="HTML"><code class="code-block__wrapper"><span class="nt">&lt;body&gt;&lt;h1&gt;</span>Hello, World!<span class="nt">&lt;/h1&gt;&lt;/body&gt;</span></code></div>
+                 
+                <figure><img alt="/help/img/idea/2016.3/java_injected_html_added.png" title="/help/img/idea/2016.3/java_injected_html_added.png" src="/help/img/idea/2016.3/java_injected_html_added.png" width="595" height="141"></figure>
+                <a name="d595246e142"></a><p>
+                    When typing, note that auto-completion for HTML tags is now available.
+                    Also note how the HTML code is highlighted.</p>
+            </li><li class="list__item"><a name="d595246e146"></a>
+                Let's now open a fragment editor for the injected HTML code:
+                press <kbd data-default="Alt+Enter" data-default_for_gnome="Alt+Enter" data-default_for_kde="Alt+Enter" data-default_for_xwin="Alt+Enter" data-emacs="Alt+Enter" data-jbuilder="Alt+Enter" data-visual_studio="Alt+Enter" data-netbeans_6.5="N/A" data-eclipse="Alt+Enter" data-mac_os_x_10.5_="&#x2325;⏎" data-mac_os_x="&#x2325;⏎" data-eclipse_mac_os_x="&#x2318;1" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Enter</kbd> and select <a name="d595246e150"></a><span class="control">Edit HTML Fragment</span>.
+                 
+                <figure><img alt="/help/img/idea/2016.3/java_injected_html_edit.png" title="/help/img/idea/2016.3/java_injected_html_edit.png" src="/help/img/idea/2016.3/java_injected_html_edit.png" width="595" height="193"></figure>
+                <a name="d595246e157"></a><p>Here is the result:</p>
+                 
+                <figure><img alt="/help/img/idea/2016.3/java_injected_html_editor.png" title="/help/img/idea/2016.3/java_injected_html_editor.png" src="/help/img/idea/2016.3/java_injected_html_editor.png" width="595" height="242"></figure>
+                <a name="d595246e165"></a><p>
+                    You can use the fragment editor as an alternative (or in addition) to
+                    editing injected
+                     
+                     string literals 
+                    in the "main editor".</p>
+            </li><li class="list__item"><a name="d595246e176"></a>To complete the example, let's cancel the injection: switch to the main editor,
+                press <kbd data-default="Alt+Enter" data-default_for_gnome="Alt+Enter" data-default_for_kde="Alt+Enter" data-default_for_xwin="Alt+Enter" data-emacs="Alt+Enter" data-jbuilder="Alt+Enter" data-visual_studio="Alt+Enter" data-netbeans_6.5="N/A" data-eclipse="Alt+Enter" data-mac_os_x_10.5_="&#x2325;⏎" data-mac_os_x="&#x2325;⏎" data-eclipse_mac_os_x="&#x2318;1" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Enter</kbd> and
+                select <a name="d595246e180"></a><span class="control">Un-inject Language/Reference</span>.
+                <a name="d595246e183"></a><p>
+                    Note that the text between the quotation marks has become green
+                    which is the default color for string values.
+                    This indicates that the value in the quotation marks is now treated simply as text.</p>
+                 
+                <figure><img alt="/help/img/idea/2016.3/java_html_uninjected.png" title="/help/img/idea/2016.3/java_html_uninjected.png" src="/help/img/idea/2016.3/java_html_uninjected.png" width="595" height="141"></figure>
+                <a name="d595246e191"></a><p>
+                    Don't close the editor yet.
+                    Later in this topic, we'll use our
+                     
+                     Java class 
+                     
+                    for showing other language injection features.</p>
+            </li></ol>
+    <a name="d595246e207"></a><h2>Accessing language injection functions</h2>
+        <a name="d595246e209"></a><p>
+            Most of the functions related to language injections are accessed through
+             
+            <a name="d595246e215"></a><a href="intention-actions.html"><span>intention actions</span></a>
+            (<img alt="/help/img/idea/2016.3/intentionBulb.png" title="/help/img/idea/2016.3/intentionBulb.png" src="/help/img/idea/2016.3/intentionBulb.png" width="10" height="15" class="inline-icon-15"> or <kbd data-default="Alt+Enter" data-default_for_gnome="Alt+Enter" data-default_for_kde="Alt+Enter" data-default_for_xwin="Alt+Enter" data-emacs="Alt+Enter" data-jbuilder="Alt+Enter" data-visual_studio="Alt+Enter" data-netbeans_6.5="N/A" data-eclipse="Alt+Enter" data-mac_os_x_10.5_="&#x2325;⏎" data-mac_os_x="&#x2325;⏎" data-eclipse_mac_os_x="&#x2318;1" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Enter</kbd>).</p>
+    <a name="d595246e224"></a><h2>Ways to inject a language</h2>
+        <a name="d595246e226"></a><p>You can inject a language by using:</p>
+        <ul class="list _ul"><li class="list__item"><a name="d595246e231"></a>
+                <a name="d595246e233"></a><span class="control">Inject language or reference</span>
+                 
+                <a name="d595246e240"></a><a href="intention-actions.html"><span>intention action</span></a>. 
+                You have already seen that in
+                <a href="#inject_language_command_example">Example: Injecting HTML. Opening a fragment editor</a>.
+                This way of injecting a language is temporary:
+                the
+                 
+                 string literal 
+                stays injected for a limited period of time.
+            </li><li class="list__item"><a name="d595246e254"></a>
+                 
+                <a name="d595246e261"></a><span class="control">// language=&lt;language_ID&gt;,</span>
+                 
+                see <a href="#injection_comments">Using language injection comments</a>.</li><li class="list__item"><a name="d595246e271"></a><a name="d595246e272"></a><span class="control">@Language("&lt;language_ID&gt;"),</span>
+                see <a href="#language_annotation">Using the @Language annotation</a>.</li></ul>
+    <a name="injection_comments"></a><h2>Using language injection comments</h2>
+         
+        <a name="d595246e301"></a><p>
+            To inject a language by means of an injection comment,
+            on a separate line preceding the one that contains the target string literal, add:</p>
+         
+        <a name="d595246e307"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="c1">// language=&lt;language_ID&gt;</span></code></div>
+         
+        <a name="d595246e314"></a><p>e.g.</p>
+         
+        <a name="d595246e320"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="c1">// language=HTML</span></code></div>
+         
+        <a name="d595246e326"></a><p>
+            NOTE: The syntax of comments should be appropriate for the language that you are using.
+            So you may want to use
+            <code class="code" data-lang="Python"># language=...</code>
+             
+            or
+            <code class="code" data-lang="SQL">-- language=...</code> rather than
+            <code class="code" data-lang="Java">// language=...</code>. 
+             
+        </p>
+        <a name="d595246e350"></a><p><a name="d595246e351"></a><b id="d595246e351">Example</b></p>
+        <ol class="list _decimal"><li class="list__item"><a name="d595246e366"></a>
+                On the line preceding <code class="code" data-lang="Java">String s = "...";</code>,
+                type <code class="code" data-lang="Java">// language=HTML</code>.</li><li class="list__item"><a name="d595246e384"></a>
+                Check the light bulb menu (<kbd data-default="Alt+Enter" data-default_for_gnome="Alt+Enter" data-default_for_kde="Alt+Enter" data-default_for_xwin="Alt+Enter" data-emacs="Alt+Enter" data-jbuilder="Alt+Enter" data-visual_studio="Alt+Enter" data-netbeans_6.5="N/A" data-eclipse="Alt+Enter" data-mac_os_x_10.5_="&#x2325;⏎" data-mac_os_x="&#x2325;⏎" data-eclipse_mac_os_x="&#x2318;1" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Enter</kbd>).
+                 
+                <figure><img alt="/help/img/idea/2016.3/java_injection_comment_html.png" title="/help/img/idea/2016.3/java_injection_comment_html.png" src="/help/img/idea/2016.3/java_injection_comment_html.png" width="595" height="210"></figure>
+                <a name="d595246e392"></a><p>
+                     As you can see, 
+                     
+                    HTML has been injected into the
+                     
+                     string literal. 
+                </p></li><li class="list__item"><a name="d595246e410"></a>
+                Remove the commented line (e.g. <kbd data-default="Ctrl+Y" data-default_for_gnome="Ctrl+Y" data-default_for_kde="Ctrl+Y" data-default_for_xwin="Ctrl+Y" data-emacs="N/A" data-jbuilder="Ctrl+Y" data-visual_studio="Ctrl+Shift+L" data-netbeans_6.5="N/A" data-eclipse="Ctrl+D" data-mac_os_x_10.5_="&#x2318;&#x232B;" data-mac_os_x="&#x2318;Y" data-eclipse_mac_os_x="&#x2318;D" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Y</kbd>) to come back to
+                the previous state.</li></ol>
+        <a name="d595246e416"></a><p><a name="d595246e417"></a><b id="d595246e417">Language IDs</b></p>
+        <a name="d595246e420"></a><p>
+            The language IDs, generally, are intuitive, e.g.
+             
+             MySQL,  RegExp, XML, HTML. 
+            If not sure about the language ID,
+            use the suggestion list for the <a name="d595246e430"></a><span class="control">Inject language or reference</span> command.
+            What precedes the opening parentheses there is the language IDs.</p>
+        <a name="d595246e434"></a><p>See also, <a href="#injection_prefix_and_suffix">Using language injection prefixes and suffixes</a>.</p>
+    <a name="language_annotation"></a><h2>Using the @Language annotation</h2>
+        <a name="d595246e442"></a><p>
+            In Java code, you can use the <code class="code" data-lang="Java">@Language("language_ID")</code> annotation.</p>
+        <a name="d595246e448"></a><p>
+            To be able to use this annotation:
+            1) the <code class="code" data-lang="Java">annotations.jar</code> (or <code class="code" data-lang="Java">annotations-java8.jar</code>) file should be included
+            in your module dependencies and
+            2) the <code class="code" data-lang="Java">import org.intellij.lang.annotations.Language;</code> statement should be added
+            to your class file.
+            For both these tasks, IntelliJ IDEA provides the intention actions as shown in the Example that follows.</p>
+        <a name="d595246e460"></a><p>
+            In other respects, the <code class="code" data-lang="Java">@Language</code> annotation works similarly to
+            the injection comments.</p>
+        <a name="d595246e466"></a><p><a name="d595246e467"></a><b id="d595246e467">Example</b></p>
+        <ol class="list _decimal"><li class="list__item"><a name="d595246e472"></a>
+                On the line preceding <code class="code" data-lang="Java">String s = "...";</code>,
+                type <code class="code" data-lang="Java">@Language("HTML")</code>.
+                <a name="d595246e480"></a><p>If you haven't used this annotation in your project yet:</p>
+            </li><li class="list__item"><a name="d595246e484"></a>
+                To add <code class="code" data-lang="Java">annotations.jar</code> to the module dependencies:
+                place the cursor within <code class="code" data-lang="Java">Language</code>,
+                press <kbd data-default="Alt+Enter" data-default_for_gnome="Alt+Enter" data-default_for_kde="Alt+Enter" data-default_for_xwin="Alt+Enter" data-emacs="Alt+Enter" data-jbuilder="Alt+Enter" data-visual_studio="Alt+Enter" data-netbeans_6.5="N/A" data-eclipse="Alt+Enter" data-mac_os_x_10.5_="&#x2325;⏎" data-mac_os_x="&#x2325;⏎" data-eclipse_mac_os_x="&#x2318;1" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Enter</kbd> and
+                select <a name="d595246e494"></a><span class="control">Add 'annotations' to classpath</span>.
+                <figure><img alt="/help/img/idea/2016.3/java_inject_html_annotation_to_classpath.png" title="/help/img/idea/2016.3/java_inject_html_annotation_to_classpath.png" src="/help/img/idea/2016.3/java_inject_html_annotation_to_classpath.png" width="595" height="181"></figure>
+                <a name="d595246e500"></a><p>In the dialog that opens, just click <a name="d595246e502"></a><span class="control">OK</span>.</p>
+                <figure><img alt="/help/img/idea/2016.3/java_inject_annotations_lib.png" title="/help/img/idea/2016.3/java_inject_annotations_lib.png" src="/help/img/idea/2016.3/java_inject_annotations_lib.png" width="306" height="186"></figure>
+            </li><li class="list__item"><a name="d595246e509"></a>
+                If IntelliJ IDEA suggests adding the import statement, just press <kbd data-default="Alt+Enter" data-default_for_gnome="Alt+Enter" data-default_for_kde="Alt+Enter" data-default_for_xwin="Alt+Enter" data-emacs="Alt+Enter" data-jbuilder="Alt+Enter" data-visual_studio="Alt+Enter" data-netbeans_6.5="N/A" data-eclipse="Alt+Enter" data-mac_os_x_10.5_="&#x2325;⏎" data-mac_os_x="&#x2325;⏎" data-eclipse_mac_os_x="&#x2318;1" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Enter</kbd>.
+                Otherwise, press <kbd data-default="Alt+Enter" data-default_for_gnome="Alt+Enter" data-default_for_kde="Alt+Enter" data-default_for_xwin="Alt+Enter" data-emacs="Alt+Enter" data-jbuilder="Alt+Enter" data-visual_studio="Alt+Enter" data-netbeans_6.5="N/A" data-eclipse="Alt+Enter" data-mac_os_x_10.5_="&#x2325;⏎" data-mac_os_x="&#x2325;⏎" data-eclipse_mac_os_x="&#x2318;1" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Enter</kbd> and select <a name="d595246e515"></a><span class="control">Import class</span>.
+                <figure><img alt="/help/img/idea/2016.3/java_inject_html_annotation_import_class.png" title="/help/img/idea/2016.3/java_inject_html_annotation_import_class.png" src="/help/img/idea/2016.3/java_inject_html_annotation_import_class.png" width="595" height="181"></figure>
+                <a name="d595246e520"></a><p>
+                    In both cases, the result will look something like this:</p>
+                <figure><img alt="/help/img/idea/2016.3/java_inject_annotation_html_injected.png" title="/help/img/idea/2016.3/java_inject_annotation_html_injected.png" src="/help/img/idea/2016.3/java_inject_annotation_html_injected.png" width="595" height="204"></figure>
+            </li><li class="list__item"><a name="d595246e527"></a>
+                Place the cursor within the string literal and check the light bulb menu
+                (<kbd data-default="Alt+Enter" data-default_for_gnome="Alt+Enter" data-default_for_kde="Alt+Enter" data-default_for_xwin="Alt+Enter" data-emacs="Alt+Enter" data-jbuilder="Alt+Enter" data-visual_studio="Alt+Enter" data-netbeans_6.5="N/A" data-eclipse="Alt+Enter" data-mac_os_x_10.5_="&#x2325;⏎" data-mac_os_x="&#x2325;⏎" data-eclipse_mac_os_x="&#x2318;1" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Enter</kbd>) to see that HTML has been injected.
+                <figure><img alt="/help/img/idea/2016.3/java_inject_annotation_html_edit.png" title="/help/img/idea/2016.3/java_inject_annotation_html_edit.png" src="/help/img/idea/2016.3/java_inject_annotation_html_edit.png" width="595" height="244"></figure>
+            </li><li class="list__item"><a name="d595246e534"></a>
+                Remove the <code class="code" data-lang="Java">@Language("HTML")</code> line to return to the previous state
+                (<kbd data-default="Ctrl+Y" data-default_for_gnome="Ctrl+Y" data-default_for_kde="Ctrl+Y" data-default_for_xwin="Ctrl+Y" data-emacs="N/A" data-jbuilder="Ctrl+Y" data-visual_studio="Ctrl+Shift+L" data-netbeans_6.5="N/A" data-eclipse="Ctrl+D" data-mac_os_x_10.5_="&#x2318;&#x232B;" data-mac_os_x="&#x2318;Y" data-eclipse_mac_os_x="&#x2318;D" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Y</kbd>).</li></ol>
+
+    <a name="d595246e644"></a><h2>Accessing injection settings</h2>
+        <a name="d595246e646"></a><p>To access the language injection settings:</p>
+        <ol class="list _decimal"><li class="list__item"><a name="d595246e651"></a>
+                Open the <a name="d595246e653"></a><span class="control">Settings&nbsp;/&nbsp;Preferences</span> dialog
+                (e.g. <kbd data-default="Ctrl+Alt+S" data-default_for_gnome="Ctrl+Alt+S" data-default_for_kde="Ctrl+Alt+S" data-default_for_xwin="Ctrl+Alt+S" data-emacs="Ctrl+Alt+S" data-jbuilder="N/A" data-visual_studio="Alt+F7" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Alt+S" data-mac_os_x_10.5_="&#x2318;," data-mac_os_x="&#x2318;," data-eclipse_mac_os_x="&#x2318;," data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+S</kbd>).</li><li class="list__item"><a name="d595246e659"></a>
+                Go to the <a name="d595246e661"></a><span class="control">Language Injections</span> page:
+                <a name="d595246e664"></a><span class="menupath">Editor | Language Injections</span>.</li></ol>
+        <a name="d595246e668"></a><p>For more info, see <a name="d595246e670"></a><a href="language-injections.html"><span>Language Injections page</span></a>.</p>
+    <a name="injection_prefix_and_suffix"></a><h2>Using language injection prefixes and suffixes</h2>
+        <a name="d595246e677"></a><p>
+            Injecting a language may be accompanied with adding a prefix and a suffix.
+            The prefix is added before the injected fragment, and the suffix - after the fragment.</p>
+        <a name="d595246e680"></a><p>
+            Adding the prefix and the suffix is "imaginary".
+            It doesn't change the actual string value.
+            The prefix and the suffix act as a "wrapper" and
+            their main purpose is to turn the injected fragment into
+            a syntactically complete language unit.
+            In this way, you give IntelliJ IDEA a broader context for validating the injected code fragment.</p>
+        <a name="d595246e683"></a><p>
+            When editing your code, you can see the prefix and the suffix only in the fragment editor;
+            the prefix and the suffix are not shown in the main editor.</p>
+        <a name="d595246e686"></a><p>
+            The prefix and the suffix can be included in the injection comment whose complete form is</p>
+         
+        <a name="d595246e693"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="c1">// language=&lt;language_ID&gt; prefix=&lt;prefix&gt; suffix=&lt;suffix&gt;</span></code></div>
+         
+        <a name="d595246e699"></a><p>where the prefix and the suffix are optional.</p>
+        <a name="d595246e702"></a><p><a name="d595246e703"></a><b id="d595246e703">Example</b></p>
+        <a name="d595246e706"></a><p>
+            In this example,
+            we'll remove the opening and closing <code class="code" data-lang="Java">&lt;body&gt;</code> tags from the injected code fragment and
+            add these tags to the injection comment as the prefix and suffix.</p>
+        <ol class="list _decimal"><li class="list__item"><a name="d595246e714"></a>
+                Remove the opening and closing <code class="code" data-lang="Java">&lt;body&gt;</code> tags:
+                e.g. place the cursor within the injected fragment,
+                press <kbd data-default="Ctrl+Shift+Delete" data-default_for_gnome="Ctrl+Shift+Delete" data-default_for_kde="Ctrl+Shift+Delete" data-default_for_xwin="Ctrl+Shift+Delete" data-emacs="Ctrl+Shift+Delete" data-jbuilder="Ctrl+Shift+Delete" data-visual_studio="Ctrl+Shift+Delete" data-netbeans_6.5="N/A" data-eclipse="Alt+R" data-mac_os_x_10.5_="&#x21E7;&#x2318;&#x2326;" data-mac_os_x="&#x21E7;&#x2318;&#x2326;" data-eclipse_mac_os_x="N/A" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Shift+Delete</kbd> and
+                select <a name="d595246e721"></a><span class="control">Remove Enclosing Tag body</span>.</li><li class="list__item"><a name="d595246e733"></a>
+                On the line preceding <code class="code" data-lang="Java">String s = "...";</code>, type
+                <code class="code" data-lang="Java">// language=HTML prefix=&lt;body&gt; suffix=&lt;/body&gt;</code></li><li class="list__item"><a name="d595246e750"></a>
+                For the injected fragment, open the fragment editor.
+                 
+                <figure><img alt="/help/img/idea/2016.3/java_inject_html_prefix_and_suffix.png" title="/help/img/idea/2016.3/java_inject_html_prefix_and_suffix.png" src="/help/img/idea/2016.3/java_inject_html_prefix_and_suffix.png" width="595" height="266"></figure>
+                <a name="d595246e756"></a><p>Compare the fragments shown in the main and in the fragment editors.</p>
+            </li></ol>
+    <div class="navigation-links _bottom"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="internationalization-and-localization-support.html">Internationalization and Localization Support</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content">```
+                <div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d595246e793"></a><a href="using-language-injections-in-sql.html"><span>Using Language Injections in SQL</span></a></li></ul></div><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d595246e765"></a><a href="language-injections.html"><span>Language Injections</span></a></li></ul></div><div class="seealso__col"><h3>Getting Started:</h3><ul class="list"><li class="list__item"><a name="d595246e785"></a><a href="intellij-idea-editor.html"><span>Editor</span></a></li></ul></div><div class="seealso__col"><h3>External Links:</h3><ul class="list"><li class="list__item"><a name="d595246e773"></a><a href="intellilang.html"><span>IntelliLang</span></a></li><li class="list__item"><a name="d595246e776"></a><a href="http://blogs.jetbrains.com/idea/2010/08/full-featured-intellij-idea-editor-for-injected-language-fragments/" data-external="true"><span>Full-featured Editor for Injected Language Fragments</span></a></li></ul></div></div></section><div class="last-modified" data-swiftype-index="false">Last modified: 21 March 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

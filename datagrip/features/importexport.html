@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+                    <!-- Error reporting -->
+<script>(function(){
+  window.reportError = function(msg, file, line, col, err, isUnhandledRejection){};
+  var prevOnError = window.onerror;
+  var onError = function(msg, file, line, col, err) {
+    reportError(msg, file, line, col, err, false);
+    prevOnError && prevOnError.apply(window, arguments);
+    return false;
+  };
+  window.onerror = onError;
+  // Setup reporting for unhandled Promise rejection errors
+  window.addEventListener("unhandledrejection", function(e) {
+    if (!e.reason) return;
+    var l = getSrcLocation(e.reason);
+    reportError(e.reason.message, l.file, l.line, l.col, e.reason, true);
+  });
+  // Setup reporting for console.error and console.warn calls
+  patchConsole('error');
+  patchConsole('warn');
+  // Utility functions
+  function patchConsole(fnName) {
+    var fn = console[fnName];
+    console[fnName] = function() {
+      fn.apply(console, arguments);
+      var l; try {
+        throw new Error('_');
+      } catch (err) {
+        l = getSrcLocation(err, 1);
+      }
+      var msg = 'console.' + fnName + ': ' + Array.prototype.join.call(arguments, ' ');
+      reportError(msg, l.file, l.line, l.col, undefined, false);
+    };
+  }
+  function getSrcLocation(err, sd) {
+    var s = err && err.stack;
+    var l = s && s.split("\n")[1 + (sd|0)];
+    var r = l && (/^\s*at [^(]*\((.*?):(\d+)(:\d+)?\)$/.exec(l) || /^\s*at (.*?):(\d+)(:\d+)?$/.exec(l));
+    return r ? {file: r[1], line: r[2], col: r[3]} : {};
+  }
+})();</script>
+<!-- Error reporting -->        <!-- Google Tag Manager -->
+<script>(function() {
+  // Initialize Tag Manager queue
+  window.dataLayer = window.dataLayer || [];
+  window.gtmLoaded = false;
+  // Setup reporting for errors that occurred before Tag Manager initialized
+  var prevReportError = window.reportError;
+  var reportError = function(msg, file, line, col, err, isUnhandledRejection) {
+    if (!window.gtmLoaded || isUnhandledRejection) {
+      // Reproduce the behavior of the Tag Manager error handler
+      window.dataLayer.push(makeEvt(msg, file, line));
+    }
+    prevReportError && prevReportError.apply(window, arguments);
+  };
+  window.reportError = reportError;
+  // Utility functions
+  function makeEvt(msg, file, line) {
+    return {
+      event: "gtm.pageError", "gtm.errorMessage": msg,
+      "gtm.errorUrl": file, "gtm.errorLineNumber": line
+    };
+  }
+})();</script>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;j.addEventListener(
+    'load', function(){window.gtmLoaded=true});f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5P98');</script>
+<!-- End Google Tag Manager -->        <!-- Sentry -->
+<script>
+    (function() {
+        window.sentryLoaded = false;
+        window.errorsForSentry = [];
+        var prevReportError = window.reportError;
+        var reportError = function(
+            msg,
+            file,
+            line,
+            col,
+            err,
+            isUnhandledRejection
+        ) {
+            if (!window.sentryLoaded) {
+                window.errorsForSentry.push(err);
+            }
+            prevReportError && prevReportError.apply(window, arguments);
+        };
+        window.reportError = reportError;
+    })();
+</script>
+<script>
+    window.sentryLoad = function() {
+        window.sentryLoaded = true;
+        Sentry.init({
+            dsn: 'https://1adb2a61713144eda0786e5af50ddc51@sentry.io/1423069',
+            release:
+                "jetbrainscom@a6ccaa6ddb",
+            beforeSend: function(event) {
+                Object.keys(event).forEach(function(key) {
+                    var value = event[key];
+                    if (isEmail(value)) {
+                        delete event[key];
+                    }
+                });
+                return event;
+            }
+        });
+        Sentry.configureScope(function(scope) {
+            scope.setTag('page_locale', 'en-us');
+            scope.setTag('browser.locale', getPageLocale());
+
+            scope.setTag('http.urlFull', location.href);
+            var protocol = location.protocol || '';
+            //omit `:` from location.protocol string
+            var protocolString = protocol.substring(0, protocol.length - 1);
+
+            scope.setTag('http.protocol', protocolString);
+
+            scope.setTag('http.hostname', location.hostname);
+
+            var search = location.search || '';
+            //omit ? from location.search string
+            var searchString = search.substr(1);
+            if (searchString !== '') {
+                scope.setTag('http.query', searchString || '1');
+            }
+            var hash = location.hash || '';
+            //omit # from location.hash string
+            var hashString = hash.substr(1);
+            if (hashString !== '') {
+                scope.setTag('http.fragment', hashString);
+            }
+        });
+        window.errorsForSentry.forEach(Sentry.captureException);
+
+        function getPageLocale() {
+            return (
+                (navigator.languages && navigator.languages[0]) ||
+                navigator.language
+            );
+        }
+        function isEmail(value) {
+            var emailRegex = /[\+\-\_\.a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+\.[a-zA-Z0-9]+/g;
+            return emailRegex.test(value);
+        }
+    };
+</script>
+<script src="https://browser.sentry-cdn.com/5.7.1/bundle.min.js" crossorigin="anonymous" onload="sentryLoad()" async></script>
+<!-- End Sentry -->    
+                <title>Import/Export options from CSV to database - Features | DataGrip</title>
+    
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, maximum-scale=1">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#000000">
+<meta name="apple-mobile-web-app-title" content="JetBrains">
+<meta name="application-name" content="JetBrains">
+<meta name="msapplication-TileColor" content="#000000">
+<meta name="theme-color" content="#000000">    <link rel="canonical" href="https://www.jetbrains.com/datagrip/features/importexport.html" />    <!-- .61-->
+                
+        
+                    <meta name="description" content="JetBrains is a cutting-edge software vendor specializing in the creation of intelligent development tools, including IntelliJ IDEA – the leading Java IDE, and the Kotlin programming language."/>
+            <meta name="keywords" content="JetBrains, IntelliJ, IntelliJ IDEA, java, Java IDE, C#, .NET, refactoring, productivity, Visual Studio plugins, developer productivity tools."/>
+            
+        <link rel="alternate" hreflang="x-default" href="https://www.jetbrains.com/datagrip/features/importexport.html" />
+
+                        <link rel="alternate" hreflang="en" href="https://www.jetbrains.com/datagrip/features/importexport.html" />
+                                <link rel="alternate" hreflang="de" href="https://www.jetbrains.com/de-de/datagrip/features/importexport.html" />
+                                <link rel="alternate" hreflang="es" href="https://www.jetbrains.com/es-es/datagrip/features/importexport.html" />
+                                <link rel="alternate" hreflang="fr" href="https://www.jetbrains.com/fr-fr/datagrip/features/importexport.html" />
+                                <link rel="alternate" hreflang="ja" href="https://www.jetbrains.com/ja-jp/datagrip/features/importexport.html" />
+                                <link rel="alternate" hreflang="ko" href="https://www.jetbrains.com/ko-kr/datagrip/features/importexport.html" />
+                                <link rel="alternate" hreflang="ru" href="https://www.jetbrains.com/ru-ru/datagrip/features/importexport.html" />
+                                <link rel="alternate" hreflang="zh-CN" href="https://www.jetbrains.com/zh-cn/datagrip/features/importexport.html" />
+                                            <link rel="alternate" hreflang="x-klingon" href="https://www.jetbrains.com/tl-aa/datagrip/features/importexport.html" />
+            
+    
+    
+        
+    
+    
+    <script>
+        var current_lang = 'en-us';
+                                    var i18n_info = {"current_lang": "en-us", "languages": [{"canonical": "en", "code": "en-us", "label": "English", "page_translated": true, "url": "/datagrip/features/importexport.html"}, {"canonical": "de", "code": "de-de", "label": "Deutsch", "page_translated": true, "url": "/de-de/datagrip/features/importexport.html"}, {"canonical": "es", "code": "es-es", "label": "Espa\u00f1ol", "page_translated": true, "url": "/es-es/datagrip/features/importexport.html"}, {"canonical": "fr", "code": "fr-fr", "label": "Fran\u00e7ais", "page_translated": true, "url": "/fr-fr/datagrip/features/importexport.html"}, {"canonical": "ja", "code": "ja-jp", "label": "\u65e5\u672c\u8a9e", "page_translated": true, "url": "/ja-jp/datagrip/features/importexport.html"}, {"canonical": "ko", "code": "ko-kr", "label": "\ud55c\uad6d\uc5b4", "page_translated": true, "url": "/ko-kr/datagrip/features/importexport.html"}, {"canonical": "ru", "code": "ru-ru", "label": "\u0420\u0443\u0441\u0441\u043a\u0438\u0439", "page_translated": true, "url": "/ru-ru/datagrip/features/importexport.html"}, {"canonical": "zh-CN", "code": "zh-cn", "label": "\u7b80\u4f53\u4e2d\u6587", "page_translated": true, "url": "/zh-cn/datagrip/features/importexport.html"}, {"canonical": "pt-BR", "code": "pt-br", "label": "Portugu\u00eas do Brasil", "page_translated": false, "url": "/pt-br/datagrip/features/importexport.html"}, {"canonical": "x-klingon", "code": "tl-aa", "label": "tlhIngan Hol", "page_translated": true, "url": "/tl-aa/datagrip/features/importexport.html"}]};
+                            var navigationMenu = {"primary": {"id": "main_v2", "items": [{"id": "tools", "title": "Tools", "descriptionTitle": "Toolbox App", "descriptionLogoId": "toolbox", "descriptionLink": "Learn more", "descriptionUrl": "/toolbox-app/", "description": "Manage your tools the easy way", "src": "/img/banners-menu-main/toolbox-vertical.png", "horisontalSrc": "/img/banners-menu-main/toolbox-horisontal.png", "bgColor": "#3E0598", "isVisible": true, "hasCategories": true, "items": [{"title": "IDEs", "items": [{"isActive": false, "id": "appcode", "title": "AppCode", "url": "/objc/", "logoLeftActionId": "appcode", "items": [], "cleaned_url": "/objc/"}, {"isActive": false, "id": "clion", "title": "CLion", "url": "/clion/", "logoLeftActionId": "clion", "items": [], "cleaned_url": "/clion/"}, {"isActive": false, "id": "datalore", "title": "Datalore", "url": "https://datalore.io/", "isExternalLink": true, "logoLeftActionId": "datalore", "items": [], "cleaned_url": "https://datalore.io/"}, {"isActive": false, "id": "datagrip", "title": "DataGrip", "url": "/datagrip/", "logoLeftActionId": "datagrip", "items": [], "cleaned_url": "/datagrip/"}, {"isActive": false, "id": "goland", "title": "GoLand", "url": "/go/", "logoLeftActionId": "goland", "items": [], "cleaned_url": "/go/"}, {"isActive": false, "id": "idea", "title": "IntelliJ IDEA", "url": "/idea/", "logoLeftActionId": "intellij-idea", "items": [], "cleaned_url": "/idea/"}, {"isActive": false, "id": "phpstorm", "title": "PhpStorm", "url": "/phpstorm/", "logoLeftActionId": "phpstorm", "items": [], "cleaned_url": "/phpstorm/"}, {"isActive": false, "id": "pycharm", "title": "PyCharm", "url": "/pycharm/", "logoLeftActionId": "pycharm", "items": [], "cleaned_url": "/pycharm/"}, {"isActive": false, "id": "rider", "title": "Rider", "url": "/rider/", "logoLeftActionId": "rider", "items": [], "cleaned_url": "/rider/"}, {"isActive": false, "id": "rubymine", "title": "RubyMine", "url": "/ruby/", "logoLeftActionId": "rubymine", "items": [], "cleaned_url": "/ruby/"}, {"isActive": false, "id": "webstorm", "title": "WebStorm", "url": "/webstorm/", "logoLeftActionId": "webstorm", "items": [], "cleaned_url": "/webstorm/"}, {"isActive": false, "id": "toolbox", "type": "special", "title": "Toolbox App", "url": "/toolbox-app/", "logoLeftId": "toolbox", "description": "A control panel for your tools and projects", "items": [], "cleaned_url": "/toolbox-app/"}]}, {"title": ".NET & VISUAL STUDIO", "items": [{"isActive": false, "id": "resharper", "title": "ReSharper", "url": "/resharper/", "logoLeftActionId": "resharper", "items": [], "cleaned_url": "/resharper/"}, {"isActive": false, "id": "rider", "title": "Rider", "url": "/rider/", "logoLeftActionId": "rider", "items": [], "cleaned_url": "/rider/"}, {"isActive": false, "id": "resharper-cpp", "title": "ReSharper C++", "url": "/resharper-cpp/", "logoLeftActionId": "resharper-cpp", "items": [], "cleaned_url": "/resharper-cpp/"}, {"isActive": false, "id": "dotcover", "title": "dotCover", "url": "/dotcover/", "logoLeftActionId": "dotcover", "items": [], "cleaned_url": "/dotcover/"}, {"isActive": false, "id": "dotmemory", "title": "dotMemory", "url": "/dotmemory/", "logoLeftActionId": "dotmemory", "items": [], "cleaned_url": "/dotmemory/"}, {"isActive": false, "id": "dotpeek", "title": "dotPeek", "url": "/decompiler/", "logoLeftActionId": "dotpeek", "items": [], "cleaned_url": "/decompiler/"}, {"isActive": false, "id": "dottrace", "title": "dotTrace", "url": "/profiler/", "logoLeftActionId": "dottrace", "items": [], "cleaned_url": "/profiler/"}]}, {"title": "TEAM TOOLS", "items": [{"isActive": false, "id": "teamcity", "title": "TeamCity", "url": "/teamcity/", "logoLeftActionId": "teamcity", "items": [], "cleaned_url": "/teamcity/"}, {"isActive": false, "id": "upsource", "title": "Upsource", "url": "/upsource/", "logoLeftActionId": "upsource", "items": [], "cleaned_url": "/upsource/"}, {"isActive": false, "id": "youtrack", "title": "YouTrack", "url": "/youtrack/", "logoLeftActionId": "youtrack", "items": [], "cleaned_url": "/youtrack/"}, {"isActive": false, "id": "hub", "title": "Hub", "url": "/hub/", "logoLeftActionId": "hub", "items": [], "cleaned_url": "/hub/"}]}, {"title": "PLUGIN MARKETPLACE", "items": [{"isActive": false, "id": "bigdata", "title": "Big Data Tools", "url": "https://plugins.jetbrains.com/plugin/12494-big-data-tools", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/plugin/12494-big-data-tools"}, {"isActive": false, "id": "rustsupport", "title": "Rust", "url": "https://plugins.jetbrains.com/plugin/8182-rust", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/plugin/8182-rust"}, {"isActive": false, "id": "scalaplugin", "title": "Scala", "url": "https://plugins.jetbrains.com/plugin/1347-scala", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/plugin/1347-scala"}, {"isActive": false, "id": "idethemes", "title": "IDE Themes", "url": "https://plugins.jetbrains.com/search?tags=Theme", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/search?tags=Theme"}, {"isActive": false, "id": "plugins", "title": "All Plugins", "url": "https://plugins.jetbrains.com/", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/"}]}, {"title": "EDUCATION", "items": [{"isActive": false, "id": "pycharm-edu", "title": "PyCharm Edu", "url": "/education/", "urlHash": "#lang=python&role=learner", "logoLeftActionId": "pycharm-edu", "items": [], "cleaned_url": "/education/"}, {"isActive": false, "id": "idea-edu", "title": "IntelliJ IDEA Edu", "url": "/education/", "urlHash": "#lang=java&role=learner", "logoLeftActionId": "intellij-idea", "items": [], "cleaned_url": "/education/"}, {"isActive": false, "id": "jb-academy", "title": "JB Academy", "url": "/academy/", "items": [], "cleaned_url": "/academy/"}]}]}, {"id": "languages", "title": "Languages", "descriptionTitle": "Kotlin/Everywhere", "descriptionLogoId": "header-kotlin-everywhere", "descriptionLink": "Join in!", "descriptionUrl": "//everywhere.kotlinlang.org", "description": "A worldwide event series for learning the best Kotlin practices on all platforms", "descriptionBig": true, "src": "/img/banners-menu-main/kotlin-vertical.png", "horisontalSrc": "/img/banners-menu-main/kotlin-horisontal.png", "bgColor": "#D6721C", "isExternalLink": true, "isVisible": true, "hasCategories": false, "items": [{"isActive": false, "id": "kotlin", "title": "Kotlin", "url": "https://kotlinlang.org/", "isExternalLink": true, "logoLeftId": "header-kotlin-grayscale", "logoLeftActionId": "kotlin", "logoLeftSize": "50", "description": "Programming language \n for JVM & Android", "items": [], "cleaned_url": "https://kotlinlang.org/"}, {"isActive": false, "id": "mps", "title": "MPS", "url": "/mps/", "logoLeftId": "header-mps-grayscalse", "logoLeftActionId": "mps", "logoLeftSize": "50", "description": "Create your own domain-specific language", "items": [], "cleaned_url": "/mps/"}]}, {"id": "solutions", "title": "Solutions", "descriptionTitle": "JetBrains Academy", "descriptionLogoId": "academy-logo", "descriptionLink": "Join in!", "descriptionUrl": "/academy", "description": "An educational platform for future professionals", "src": "/img/banners-menu-main/academy-vertical.png", "horisontalSrc": "/img/banners-menu-main/academy-horisontal.png", "bgColor": "#53288E", "hasCategories": false, "isVisible": true, "items": [{"isActive": false, "title": "C++ Tools", "url": "/cpp/", "logoLeftId": "header-cpp-grayscale", "logoLeftActionId": "header-cpp", "description": "Tools for C/C++ development \nfor any platform", "items": [], "cleaned_url": "/cpp/"}, {"isActive": false, "title": "For Business", "url": "/store/business/", "logoLeftId": "header-for-business-grayscale", "logoLeftActionId": "header-for-business", "description": "Wide range of tools. \nAll major technologies covered", "items": [], "cleaned_url": "/store/business/"}, {"isActive": false, "title": "Game Development", "url": "/gamedev/", "logoLeftId": "header-gamedev-grayscale", "logoLeftActionId": "header-gamedev", "description": "Tools for game development \nfor any platform", "items": [], "cleaned_url": "/gamedev/"}, {"isActive": false, "title": "DevOps", "url": "/devops/", "logoLeftId": "header-devops-grayscale", "logoLeftActionId": "header-devops", "description": "Tools and integrations \nfor any infrastructure", "items": [], "cleaned_url": "/devops/"}, {"isActive": false, "title": "Education", "url": "/education/", "logoLeftId": "header-education-grayscale", "logoLeftActionId": "header-education", "description": "Products to learn and teach programming", "items": [], "cleaned_url": "/education/"}]}, {"id": "support", "title": "Support", "description": "Pricing and licensing for businesses and individuals", "descriptionTitle": "JetBrains Store", "descriptionLogoId": "header-store", "descriptionUrl": "/store/?fromMenu#edition=commercial", "descriptionLink": "visit store", "isVisible": true, "hasCategories": true, "items": [{"title": "CUSTOMERS", "items": [{"isActive": false, "title": "Sales Support", "url": "/support/sales/", "description": "Orders, payments", "items": [], "cleaned_url": "/support/sales/"}, {"isActive": false, "title": "Product Support", "url": "/support/", "description": "Tech support, documentation", "items": [], "cleaned_url": "/support/"}]}, {"title": "COMMUNITY PROGRAMS", "items": [{"isActive": false, "title": "Education", "url": "/community/education/", "description": "Students, classrooms, training", "items": [], "cleaned_url": "/community/education/"}, {"isActive": false, "title": "Open Source", "url": "/community/opensource/", "description": "Projects support", "items": [], "cleaned_url": "/community/opensource/"}, {"isActive": false, "title": "Sponsorship", "url": "/community/support/", "description": "User groups, events, technology experts", "items": [], "cleaned_url": "/community/support/"}]}]}, {"id": "company", "title": "Company", "isVisible": true, "hasCategories": true, "items": [{"title": "INITIATIVES", "items": [{"isActive": false, "title": "Open Source", "url": "/opensource/", "description": "Projects, contributions", "items": [], "cleaned_url": "/opensource/"}, {"isActive": false, "title": "Research", "url": "/research/", "description": "Market, Scientific", "items": [], "cleaned_url": "/research/"}]}, {"title": "COMPANY", "items": [{"isActive": false, "title": "About", "url": "/company/", "description": "People, customers, awards", "items": [], "cleaned_url": "/company/"}, {"isActive": false, "title": "Brand Assets", "url": "/company/brand/", "description": "Guidelines, logos", "items": [], "cleaned_url": "/company/brand/"}, {"isActive": false, "title": "Careers", "url": "/careers/apply/", "description": "Jobs, internships", "items": [], "cleaned_url": "/careers/apply/"}, {"isActive": false, "title": "Events", "url": "/company/events/", "description": "Conferences, meetups", "items": [], "cleaned_url": "/company/events/"}, {"isActive": false, "title": "Contacts", "url": "/company/contacts/", "description": "Partners, resellers, Kotlin training", "items": [], "cleaned_url": "/company/contacts/"}]}, {"title": "RESOURCES", "items": [{"isActive": false, "title": "Newsletters", "url": "/resources/newsletters/", "items": [], "cleaned_url": "/resources/newsletters/"}, {"isActive": false, "title": "Webinars", "url": "/resources/webinars/", "items": [], "cleaned_url": "/resources/webinars/"}, {"isActive": false, "title": "Early Access", "url": "/resources/eap/", "items": [], "cleaned_url": "/resources/eap/"}, {"isActive": false, "title": "Blog", "url": "//blog.jetbrains.com/", "isExternalLink": true, "items": [], "cleaned_url": "//blog.jetbrains.com/"}]}]}, {"isActive": false, "id": "store", "url": "/store/?fromNavMenu", "title": "Store", "isVisible": true, "hasCategories": false, "items": [], "cleaned_url": "/store/?fromNavMenu"}]}, "secondary": {"isActive": true, "id": "product_datagrip", "logoId": "datagrip", "url": "/datagrip/", "title": "DataGrip", "items": [{"isActive": false, "title": "Coming in", "url": "/datagrip/nextversion/", "label": "2019.3", "items": [], "cleaned_url": "/datagrip/nextversion/"}, {"isActive": false, "title": "What's New", "url": "/datagrip/whatsnew/", "items": [], "cleaned_url": "/datagrip/whatsnew/"}, {"isActive": true, "title": "Features", "url": "/datagrip/features/", "items": [{"isActive": false, "title": "Database objects", "url": "/datagrip/features/dbobjects.html", "items": [], "cleaned_url": "/datagrip/features/dbobjects.html"}, {"isActive": false, "title": "Smart text editor", "url": "/datagrip/features/editor.html", "items": [], "cleaned_url": "/datagrip/features/editor.html"}, {"isActive": false, "title": "Running queries", "url": "/datagrip/features/executing.html", "items": [], "cleaned_url": "/datagrip/features/executing.html"}, {"isActive": false, "title": "Working with files", "url": "/datagrip/features/files.html", "items": [], "cleaned_url": "/datagrip/features/files.html"}, {"isActive": false, "title": "Data editor", "url": "/datagrip/features/data_editor.html", "items": [], "cleaned_url": "/datagrip/features/data_editor.html"}, {"isActive": true, "title": "Import/Export options", "url": "/datagrip/features/importexport.html", "items": [], "cleaned_url": "/datagrip/features/importexport.html"}, {"isActive": false, "title": "Code generation", "url": "/datagrip/features/generation.html", "items": [], "cleaned_url": "/datagrip/features/generation.html"}, {"isActive": false, "title": "Code completion", "url": "/datagrip/features/completion.html", "items": [], "cleaned_url": "/datagrip/features/completion.html"}, {"isActive": false, "title": "Code insight", "url": "/datagrip/features/coding_assistance.html", "items": [], "cleaned_url": "/datagrip/features/coding_assistance.html"}, {"isActive": false, "title": "Refactoring and finding usages", "url": "/datagrip/features/refactoring.html", "items": [], "cleaned_url": "/datagrip/features/refactoring.html"}, {"isActive": false, "title": "Navigation", "url": "/datagrip/features/navigation.html", "items": [], "cleaned_url": "/datagrip/features/navigation.html"}, {"isActive": false, "title": "Customize IDE", "url": "/datagrip/features/look_and_feel.html", "items": [], "cleaned_url": "/datagrip/features/look_and_feel.html"}, {"isActive": false, "title": "Keymap", "url": "http://resources.jetbrains.com/storage/products/datagrip/docs/DataGrip_keymap.pdf", "items": [], "cleaned_url": "http://resources.jetbrains.com/storage/products/datagrip/docs/DataGrip_keymap.pdf"}], "cleaned_url": "/datagrip/features/"}, {"isActive": false, "title": "Quick Start", "url": "/datagrip/quick-start/", "items": [], "cleaned_url": "/datagrip/quick-start/"}, {"isActive": false, "title": "Buy", "url": "/datagrip/buy/", "items": [], "cleaned_url": "/datagrip/buy/"}, {"isActive": false, "title": "Download", "url": "/datagrip/download/", "type": "button", "items": [], "cleaned_url": "/datagrip/download/"}], "cleaned_url": "/datagrip/"}};
+        
+        var is_layout_adaptive = false;
+        
+        var disable_language_picker = false;
+        
+        var english_only_url_prefixes = [];
+            </script>
+    
+            <script></script>
+    
+        
+    
+        <link href="/_assets/common.d44d81f300d3bff87efe.css" rel="stylesheet" type="text/css">
+<link href="/_assets/default-page.fabf52db4bf34ea78af0.css" rel="stylesheet" type="text/css">
+    <script src="/_assets/common.34604685b633d15ae3ed.js" type="text/javascript"></script>
+<script src="/_assets/default-page.2e180fc15a6b94fe7fa3.js" type="text/javascript"></script>
+    
+            <!-- Social Media tag Starts -->
+    <!-- Open Graph data -->
+            <meta property="og:title" content="Import/Export options from CSV to database - Features | DataGrip"/>
+    
+                    <meta property="og:description" content="JetBrains is a cutting-edge software vendor specializing in the creation of intelligent development tools, including IntelliJ IDEA – the leading Java IDE, and the Kotlin programming language."/>
+    <meta property="og:image" content="http://resources.jetbrains.com/storage/products/datagrip/img/meta/datagrip_1280x800.png"/>
+
+    <meta property="og:site_name" content="JetBrains"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="https://www.jetbrains.com/datagrip/features/importexport.html"/>
+    <!-- Social Media tag Ends -->
+</head>
+<body class=" ">
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<div class="page _has-page-sidebar-left">
+        <div class="page__header">
+        <header class="menu-main header"  id="js-menu-main">
+    <div class="wt-container">
+        <div class="wt-row wt-row_nowrap wt-row_size_s wt-row_align-items_center">
+            <div class="wt-col-auto-fill">
+                <a href="/" class="menu-main__logo-link"><svg class="_jetbrains-simple sprite-img menu-main__logo" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#jetbrains-simple"></use></svg></a>
+            </div>
+            <div class="wt-col-inline wt-display-md-none menu-main-skeleton-text-1" style="min-width: 69px"></div>
+            <div class="wt-col-inline wt-display-md-none menu-main-skeleton-text-1" style="min-width: 81px"></div>
+            <div class="wt-col-inline wt-display-md-none menu-main-skeleton-text-1" style="min-width: 46px"></div>
+            <div class="wt-col-inline menu-main-skeleton-button"></div>
+            <div class="wt-col-inline menu-main-skeleton-button"></div>
+        </div>
+    </div>
+</header>
+
+
+
+  <div class="menu-second" id="js-menu-second">
+    <div class="wt-container">
+        <div id="js-menu-second-mobile-wrapper" class="wt-display-none">
+            <div id="js-menu-second-mobile" >
+                <div class="menu-second-mobile wt-row wt-row_size_m wt-row_align-items_center wt-row_justify_between">
+                    <div class="wt-col-inline menu-second-skeleton-text-2" style="max-width: 120px"></div>
+                    <div class="wt-col-inline menu-second-skeleton-button" style="max-width: 80px"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="js-menu-second-desktop" class="menu-second-desktop
+                       wt-row wt-row_size_0 wt-row_align-items_center">
+            <div class="wt-col-auto-fill">
+                <a class="menu-second-title-box"
+                   href="/datagrip/">
+                                            <span class="menu-second-title-box__logo jetbrains-logo">
+                            <svg class="_datagrip sprite-img" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#datagrip"></use></svg>
+                        </span>
+                    
+                    <span class="menu-second-title-box__title wt-h3">DataGrip</span>
+                </a>
+            </div>
+
+                            
+                                                        <a href="/datagrip/nextversion/"
+                       class="wt-col-inline wt-text-2 wt-text-2_hardness_average menu-second__link
+                                                                ">
+                        Coming in
+                         2019.3                    </a>
+                                            
+                                                        <a href="/datagrip/whatsnew/"
+                       class="wt-col-inline wt-text-2 wt-text-2_hardness_average menu-second__link
+                                                                ">
+                        What&#39;s New
+                                            </a>
+                                            
+                                                        <a href="/datagrip/features/"
+                       class="wt-col-inline wt-text-2 wt-text-2_hardness_average menu-second__link
+                                                                wt-text-2_hardness_primary">
+                        Features
+                                            </a>
+                                            
+                                                        <a href="/datagrip/quick-start/"
+                       class="wt-col-inline wt-text-2 wt-text-2_hardness_average menu-second__link
+                                                                ">
+                        Quick Start
+                                            </a>
+                                            
+                                                        <a href="/datagrip/buy/"
+                       class="wt-col-inline wt-text-2 wt-text-2_hardness_average menu-second__link
+                                                                ">
+                        Buy
+                                            </a>
+                                            
+                            
+                                                    
+                            <a href="/datagrip/download/"
+                   class="wt-col-inline menu-second__download-button wt-button wt-button_size_s wt-button_mode_primary">
+                    Download
+                </a>
+                    </div>
+
+    </div>
+</div>
+
+    </div>
+    
+<div class="page__content">
+            
+                    <nav class="page-sidebar _align-left-fixed _shadow" id="pageSidebarLeft">
+            <div class="page-sidebar__toggle-btn">
+                <svg class="_hamburger sprite-img _gray" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#hamburger"></use></svg>
+                <svg class="_close sprite-img _gray" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#close"></use></svg>
+            </div>
+            <div class="page-sidebar__title">
+                <a href="/datagrip/features/" class="page-sidebar__title-link">Features</a>
+            </div>
+            <ul class="page-sidebar__list">
+                                                  <li class="page-sidebar__item">
+                      <a href="/datagrip/features/dbobjects.html" class="page-sidebar__link  ">Database objects</a>
+                  </li>
+                                                  <li class="page-sidebar__item">
+                      <a href="/datagrip/features/editor.html" class="page-sidebar__link  ">Smart text editor</a>
+                  </li>
+                                                  <li class="page-sidebar__item">
+                      <a href="/datagrip/features/executing.html" class="page-sidebar__link  ">Running queries</a>
+                  </li>
+                                                  <li class="page-sidebar__item">
+                      <a href="/datagrip/features/files.html" class="page-sidebar__link  ">Working with files</a>
+                  </li>
+                                                  <li class="page-sidebar__item">
+                      <a href="/datagrip/features/data_editor.html" class="page-sidebar__link  ">Data editor</a>
+                  </li>
+                                                  <li class="page-sidebar__item">
+                      <a href="/datagrip/features/importexport.html" class="page-sidebar__link  _active">Import/Export options</a>
+                  </li>
+                                                  <li class="page-sidebar__item">
+                      <a href="/datagrip/features/generation.html" class="page-sidebar__link  ">Code generation</a>
+                  </li>
+                                                  <li class="page-sidebar__item">
+                      <a href="/datagrip/features/completion.html" class="page-sidebar__link  ">Code completion</a>
+                  </li>
+                                                  <li class="page-sidebar__item">
+                      <a href="/datagrip/features/coding_assistance.html" class="page-sidebar__link  ">Code insight</a>
+                  </li>
+                                                  <li class="page-sidebar__item">
+                      <a href="/datagrip/features/refactoring.html" class="page-sidebar__link  ">Refactoring and finding usages</a>
+                  </li>
+                                                  <li class="page-sidebar__item">
+                      <a href="/datagrip/features/navigation.html" class="page-sidebar__link  ">Navigation</a>
+                  </li>
+                                                  <li class="page-sidebar__item">
+                      <a href="/datagrip/features/look_and_feel.html" class="page-sidebar__link  ">Customize IDE</a>
+                  </li>
+                                                  <li class="page-sidebar__item">
+                      <a href="http://resources.jetbrains.com/storage/products/datagrip/docs/DataGrip_keymap.pdf" class="page-sidebar__link  ">Keymap</a>
+                  </li>
+                          </ul>
+        </nav>
+                        <section class="wt-section">
+<div class="wt-container">
+<div class="f-page-header">
+<h1 class="f-title">Import/Export options</h1>
+</div>
+</div>
+</section>
+<section class="wt-section">
+<div class="wt-container">
+<div class="f-section">
+<h2 class="f-title" id="import">Import CSV</h2>
+<div class="f-block f-block_1-of-1 f-block_text-top">
+<h3 class="f-title">Import data from file</h3>
+</div>
+<div class="f-block f-block_1-of-2 f-block_text-top">
+<img alt="" class="f-img" src="/datagrip/features/img/importexport/Browser.png" width="640">
+<div class="f-text">
+<!--<h3 class="f-title">Modify data</h3>-->
+<p>There is a dedicated UI for importing DSV (CSV and TSV) files to the database. Click the
+                            schema you wish to import data to, and choose <i>Import From File… </i> from the context
+                            menu.
+                            Then select the CSV file where your data is stored.
+                        </p>
+<p>
+                            You will see the Import dialog window. The left-hand panel is for format specification:
+                            choose the delimiter, if the first row is the header (the separate format options are
+                            available for it), and specify if you have quoted values in the file. <br> <br>
+                            On the right-hand side, you see the frame describing the table to be created and the
+                            result
+                            data
+                            preview. Press <kbd data-mac="Delete">Delete</kbd> to remove a column from the result.
+                            If
+                            you want to import data from an existing table, just use the context menu of this
+                            particular
+                            table to choose <i>Import From File…</i>
+</p>
+</div>
+</div>
+<div class="f-block f-block_1-of-2 f-block_text-top">
+<img alt="" class="f-img" src="/datagrip/features/img/importexport/Dialog.png" width="640">
+<!--<h3 class="f-title">Text search</h3>-->
+<p class="f-text"> What happens if there are errors in the file? <i>A write error records to
+                        file </i>option
+                        is
+                        available. The import process will not be interrupted, but all the wrong lines will be
+                        recorded in this file.
+                    </p>
+</div>
+<div class="f-block f-block_1-of-1 f-block_img-right f-block_text-top">
+<img alt="" class="f-img f-img_2-of-3" src="/datagrip/features/img/importexport/PasteFromCSV.gif" width="852">
+<div class="f-description">
+<h3 class="f-title" id="paste">Paste CSV to the data editor</h3>
+<p class="f-text">Paste data from <i>Excel</i> tables. Generally to do this, you need the ability to
+                            paste
+                            data in
+                            a
+                            DSV format. In DataGrip you can define any format you
+                            want, or you can let the IDE detect the format automatically: <i>Gear icon → Paste
+                                format</i>.
+                        </p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="wt-section">
+<div class="wt-container">
+<div class="f-section">
+<h2 class="f-title" id="csv">CSV editor</h2>
+<div class="f-block f-block_1-of-1 f-block_img-right f-block_text-top">
+<img alt="" class="f-img f-img_2-of-3" src="/datagrip/features/img/importexport/CsvEditor.png" width="852">
+<div class="f-description">
+<div class="f-text">
+<p>DataGrip can edit CSV files as tables. Click on <em>Edit As Table</em> in the context
+                                menu.
+                            </p>
+<p><img class="f-img" src="/datagrip/features/img/importexport/EditAsMenu.png" width="300"></p>
+<p> Then choose the delimiter, specify if the table has a header, and when to quote values,
+                                etc. An instant table preview is available.
+                            </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="wt-section">
+<div class="wt-container">
+<div class="f-section">
+<h2 class="f-title" id="export">Export data</h2>
+<div class="f-block f-block_1-of-1 f-block_text-top">
+<h3 class="f-title">What and where</h3>
+</div>
+<div class="f-block f-block_1-of-2 f-block_text-top">
+<img class="f-img" src="/datagrip/features/img/importexport/CopyTable.gif">
+<h3 class="f-title">Table</h3>
+<div class="f-text">
+<p>A table can be exported to: <br>
+                            — <b>File</b>. Context menu of a table → Dump data to file.<br>
+                            — <b>Another existing table.</b> <i>Context menu of a table</i> → <i>Copy Table to</i> (or
+                            just
+                            <kbd>F5</kbd> on a table) → Choose existing table.<br>
+                            — <b>New table in any data source of any database vendor.</b> <i>Context menu of a table</i>
+                            →
+                            <i>Copy
+                                Table to</i> (or just <kbd>F5</kbd> on a table) → Choose target schema. Or just drag-n-drop it
+                            there!
+                            This gif illustrates how a <i>PostgreSQL</i> table can be copied to a <i>SQLite</i> data
+                            source.
+                        </p>
+</div>
+</div>
+<div class="f-block f-block_1-of-2 f-block_text-top">
+<img class="f-img" src="/datagrip/features/img/importexport/ExportSQL.png">
+<h3 class="f-title">SQL query</h3>
+<p class="f-text">SQL query can be <b>exported to a file</b> as a result. <i>Context menu on a
+                        statement</i> →
+                        <i>Execute
+                            to file</i> → Choose the format. It is useful if the query is
+                        slow, if
+                        you export the result-set, the query will run again. In this case you run it only once.
+                    </p>
+</div>
+<div class="f-block f-block_1-of-2 f-block_text-top">
+<img class="f-img" src="/datagrip/features/img/importexport/ExportResult-Set.png">
+<h3 class="f-title">Result-set</h3>
+<p class="f-text">A result-set can be exported to: <br>
+                        — <b>File</b>. Dump button <img class="f-img" src="/datagrip/features/img/importexport/DumpIcon.png" width="20"> → <i>To
+                            File</i>.<br>
+                        — <b>Clipboard</b>. Dump button <img class="f-img" src="/datagrip/features/img/importexport/DumpIcon.png" width="20"> → <i>To
+                            Clipboard</i>.<br>
+                        — <b>Another existing table.</b> Export button <img class="f-img" src="/datagrip/features/img/importexport/CopyIcon.png" width="20">
+                        → Choose existing table.<br>
+                        — <b>New table in any data source of any database vendor.</b> Export button <img class="f-img" src="/datagrip/features/img/importexport/CopyIcon.png" width="20"> → Choose target
+                        schema. </p>
+</div>
+<div class="f-block f-block_1-of-2 f-block_text-top">
+<img class="f-img" src="/datagrip/features/img/importexport/ExportSelection.png">
+<h3 class="f-title">Selection</h3>
+<p class="f-text">A selection in the data editor can be copied to the clipboard: it can be done
+                       in the usual way with <i>Context
+                            menu</i> → <i>Copy
+                        </i> or <kbd data-mac="Cmd+C">Ctrl+C</kbd>.
+                    </p>
+</div>
+<div class="f-block f-block_1-of-1 f-block_text-top">
+<h3 class="f-title" id="exportformats">Export formats</h3>
+<p class="f-text">Every time you export to a file or to the clipboard, you need to choose a format.
+                        Usually, it is CSV,
+                        but in many cases you need JSON, XML or even DML statements. Choose the appropriate <i>Data
+                            Extractor </i>from the drop-down list. Or create your own export format.
+                    </p>
+</div>
+<div class="f-block f-block_1-of-2 f-block_text-top">
+<img class="f-img" src="/datagrip/features/img/importexport/FormatInsertStatement.png">
+<h3 class="f-title">SQL queries</h3>
+<div class="f-text">
+<p>Any table or result-set can be <a class="wt-link" href="/datagrip/features/img/code_generation/GenInsert.gif">presented</a>
+                            as a batch of <code>INSERT</code> statements. To do this, choose <i>SQL Inserts</i> from
+                            the
+                            drop-down list. In some situations
+                            it can be faster than writing a <code>INSERT</code>+<code>SELECT</code> query for adding
+                            data to another table. This generation is aware of auto increment <em>ID</em>s.
+                        </p>
+<p>It can be also can be also <a class="wt-link" href="/datagrip/features/img/code_generation/GenUpdate.gif">presented</a>
+                            as
+                            a batch of <code>UPDATE</code> statements, which
+                            can help you to modify data.</p>
+</div>
+</div>
+<div class="f-block f-block_1-of-2 f-block_text-top">
+<img class="f-img" src="/datagrip/features/img/importexport/FromatCSV.png">
+<h3 class="f-title">CSV, TSV</h3>
+<p class="f-text">There are two pre-built formats in the <a class="wt-link" href="/datagrip/features/img/importexport/Exportmenu.png">list</a>:
+                        <i>Comma Separated Values</i> and <i>Tab Separated
+                            Values</i>. You can create any custom format based on DSV. For instance, it can be
+                        <a class="wt-link" href="/datagrip/features/img/importexport/Markup.png">Confluence Wiki Markup</a>.
+                    </p>
+</div>
+<div class="f-block f-block_1-of-2 f-block_text-top">
+<img class="f-img" src="/datagrip/features/img/importexport/Html.png">
+<h3 class="f-title">HTML/XML</h3>
+<p class="f-text">There is one pre-built extractor you cannot change: <i>HTML table</i>. There are
+                        also
+                        scripted
+                        extractors: <i>HTML-Groovy.html.groovy</i>, <i>XML-Groovy.xml.groovy</i> and others. You
+                        can
+                        modify these extractors.
+                    </p>
+</div>
+<div class="f-block f-block_1-of-2 f-block_text-top">
+<img class="f-img" src="/datagrip/features/img/importexport/Json.png">
+<h3 class="f-title">JSON</h3>
+<p class="f-text"><i>JSON-Groovy.json.groovy</i> extractor will export your table or result-set to
+                        JSON.
+                    </p>
+</div>
+<div class="f-block f-block_1-of-1 f-block_text-top">
+<h3 class="f-title">Custom formats</h3>
+</div>
+<div class="f-block f-block_1-of-2 f-block_text-top">
+<img class="f-img" src="/datagrip/features/img/importexport/GoToScripts.png">
+<p class="f-text">For more complicated cases, consider using scripting extractors. Several of them
+                        are already
+                        available such as <i>CSV-Groovy.csv.groovy</i>, <i>HTML-Groove.html.groovy</i>, and others.
+                        Select
+                        <i>Go to scripts directory</i> in the extractor menu to navigate
+                        to the folder where they are stored.
+                    </p>
+</div>
+<div class="f-block f-block_1-of-2 f-block_text-top">
+<img class="f-img" src="/datagrip/features/img/importexport/ScriptsFolder.png">
+<p class="f-text">These scripts are written in Groovy, but they can also be written in JavaScript
+                        and are
+                        usually
+                        located in Scratches and
+                        <i>Consoles/Extensions/Database Tools and
+                            SQL/data/extractors</i>. Modify existing extractors or add your own extractors here.</p>
+</div>
+<div class="f-block f-block_1-of-1 f-block_text-top">
+<p class="f-text">To learn more about creating extractors, please, read
+                        <a class="wt-link wt-link_external" href="https://blog.jetbrains.com/datagrip/2017/11/08/export-data-in-any-way-with-intellij-based-ides/">this
+                            tutorial.</a></p>
+</div>
+</div>
+</div>
+</section>
+<section class="wt-section">
+<div class="wt-container">
+<div class="f-section">
+<h2 class="f-title" id="dump">Dump/restore tools</h2>
+<div class="f-block f-block_1-of-1 f-block_img-right f-block_text-top">
+<img alt="" class="f-img f-img_2-of-3" src="/datagrip/features/img/other/DumpTools.png" width="852">
+<div class="f-description">
+<p class="f-text">We've integrated DataGrip with
+                            <a class="wt-link wt-link_external" href="http://dev.mysql.com/doc/refman/5.7/en/mysqldump.html"><i>mysqldump</i></a>&nbsp;and
+                            <a class="wt-link wt-link_external" href="https://www.postgresql.org/docs/9.5/static/app-pgdump.html"><i>pg_dump</i></a>.
+                            To dump
+                            the
+                            objects, use the <i>Dump with…</i> context menu option. Restore tools for <i>MySQL</i>
+                            and <i>PostgreSQL</i>
+                            also can be accessed from the context
+                            menu. In the case of <i>PostgreSQL</i>, the restore operation can be done with
+                            <i>pg_dump</i>
+                            or
+                            <i>psql</i>: there is a way to choose in the
+                            <i>Restore </i>dialog.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+
+            
+<div class="page__footer">
+    <footer class="footer" id="footer">
+        <div class="wt-container">
+            <div class="footer__main wt-row wt-row_size_m wt-row-sm_direction_column-reverse">
+                <div class="footer__logo wt-col-inline wt-display-md-none">
+                    <div class="jetbrains-logo _size-3 _full-block">
+                        <svg class="sprite-img jetbrains">
+                            <use xlink:href="#jetbrains" />
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="wt-col-auto-fill wt-col-sm-12">
+                    <div class="wt-row wt-row_size_xs wt-row-sm_size_m wt-offset-top-12">
+                        <div class="wt-col-inline footer-skeleton-button"></div>
+                        <div class="wt-col-inline footer-skeleton-button"></div>
+                        <div class="wt-col-inline footer-skeleton-button"></div>
+                        <div class="wt-col-inline footer-skeleton-button"></div>
+                    </div>
+
+                    <div class="footer-skeleton-text-2 wt-offset-top-24" style="max-width: 45%"></div>
+                    <div class="footer-skeleton-text-2 wt-offset-top-12" style="max-width: 70%"></div>
+                </div>
+
+                <div class="wt-col-inline wt-col-sm-12 wt-col_align-self_end wt-col-sm_align-self_start">
+                    <div class="wt-row wt-row_size_m wt-row_justify_end wt-row-sm_justify_start">
+                        <div class="wt-col-inline footer-skeleton-button" style="min-width: 180px"></div>
+                        <div class="wt-col-inline footer-skeleton-button" style="min-width: 80px"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+    </div>
+<script>
+(function() {
+  var STORAGE_KEY_NAME = 'firefoxDisappearedSVGWorkaround';
+  var STORAGE_KEY_VALUE = '1';
+
+  var isFirefox = /firefox/i.test(navigator.userAgent);
+  if (!isFirefox || isFirefox && sessionStorage.getItem(STORAGE_KEY_NAME) === STORAGE_KEY_VALUE) {
+    return;
+  }
+
+  var arrayFrom = function (arrayLike) {
+    return Array.prototype.slice.call(arrayLike, 0);
+  };
+
+  function workaround() {
+    var uses = document.querySelectorAll('.page svg use');
+    var badNodesCount = 0;
+
+    arrayFrom(uses).forEach(function (node) {
+      var rect = node.getBoundingClientRect();
+      if (rect.width === 0 && rect.height === 0)
+        badNodesCount++;
+    });
+
+    if (badNodesCount === uses.length) {
+      sessionStorage.setItem(STORAGE_KEY_NAME, STORAGE_KEY_VALUE);
+      if (typeof dataLayer !== 'undefined')
+        dataLayer.push({'firefoxDisappearedSVGWorkaround': STORAGE_KEY_VALUE});
+
+      window.location.replace(window.location.href);
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', workaround);
+
+})();
+</script>      <link href="/_assets/banner-rotator.entry.07ac548a2a68a7922693.css" rel="stylesheet" type="text/css">
+      <script src="/_assets/banner-rotator.entry.b9ea3aaba598786010f0.js" type="text/javascript"></script>
+      
+      
+  
+<script>
+(function () {
+
+  'use strict';
+
+  function ImagesSrcReplacer () {
+
+    var attribute = 'data-src';
+    var matches = document.querySelectorAll('img[' + attribute + ']');
+
+    for (var i = 0, n = matches.length; i < n; i++) {
+
+      var attrValue = matches[i].getAttribute(attribute);
+
+      if (_isHighDensity ()) {
+
+        var name = attrValue.substring(0, attrValue.lastIndexOf('.'));
+        var extention = attrValue.substring(attrValue.lastIndexOf('.'), attrValue.length);
+
+        matches[i].setAttribute('src', name + '@2x' + extention);
+
+      } else {
+        matches[i].setAttribute('src', attrValue)
+      }
+    }
+
+    /**
+     * Detect high density
+     * @returns {*|boolean}
+     */
+    function _isHighDensity () {
+      return (
+      (window.matchMedia &&
+      (window.matchMedia('only screen and (min-resolution: 124dpi), only screen and (min-resolution: 1.3dppx), only screen and (min-resolution: 48.8dpcm)').matches ||
+       window.matchMedia('only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (-o-min-device-pixel-ratio: 2.6/2), only screen and (min--moz-device-pixel-ratio: 1.3), only screen and (min-device-pixel-ratio: 1.3)').matches)) ||
+      (window.devicePixelRatio &&
+       window.devicePixelRatio > 1.3));
+    }
+  }
+
+  return new ImagesSrcReplacer()
+
+}(document, window));
+</script></body>
+</html>

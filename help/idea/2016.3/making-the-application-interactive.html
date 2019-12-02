@@ -1,0 +1,134 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta class="swiftype" name="product" data-type="string" content="/idea/2016.3/"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><meta charset="UTF-8"><meta name="robots" content="noindex"><title>IntelliJ IDEA 2016.3 Help :: Making the Application Interactive</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Making_the_Application_Interactive"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-swiftype-index="false"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.3 Help</h3><div class="shortcuts-switcher" data-swiftype-index="false"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Windows/Linux Default</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWin</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">Mac OS X</option><option data-group="secondary" value="eclipse_mac_os_x">Eclipse (Mac OS X)</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (Mac OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper (Mac OS X)</option><option data-group="secondary" value="emacs">Emacs (Mac OS X)</option></select></div><div class="panel-trigger" data-swiftype-index="false"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="creating-unit-tests.html">Creating Unit Tests</a></div><h1>Making the Application Interactive</h1><a name="d151781e3"></a><p>
+        Although our sample application is fully functional at this point, it does not support any form of interaction yet.
+        To make the application support tap events, you need to edit the <a name="d151781e5"></a><span class="control">HelloDroid</span> class defined in the <code class="code" data-lang="Java">src</code> folder.
+    </p><a name="d151781e12"></a><h2>1. Open the MyActivity class</h2>
+        <a name="d151781e14"></a><p>
+        In the <a name="d151781e16"></a><a href="project-tool-window.html"><span>Project</span></a> view, locate the <code class="code" data-lang="Java">HelloDroid.java</code> file under the <code class="code" data-lang="Java">src | com.example.HelloDroid</code>
+        folder and click on it:
+        </p>
+        <figure><img alt="/help/img/idea/2016.3/android_activity.png" title="/help/img/idea/2016.3/android_activity.png" src="/help/img/idea/2016.3/android_activity.png" width="955" height="609"></figure>
+    <a name="d151781e29"></a><h2>2. Add references to visual elements</h2>
+        <a name="d151781e31"></a><p>
+            In Android, you need to explicitly obtain references to visual elements in order to manipulate them programmatically.
+            You need to define private members on the activity class to hold these references, and then initialize these members in a newly
+            created method invoked from within <code class="code" data-lang="Java">onCreate</code>.
+        </p>
+        <ol class="list _decimal"><li class="list__item"><a name="d151781e39"></a>
+                Add the following code to the <code class="code" data-lang="Java">HelloDroid</code> class:
+                <a name="d151781e44"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kd">private</span> <span class="n">TextView</span> <span class="n">message</span><span class="o">;</span>
+<span class="kd">private</span> <span class="n">ImageView</span> <span class="n">droid</span><span class="o">;</span></code></div>
+            </li><li class="list__item"><a name="d151781e48"></a>
+                Add a call to a new method called <code class="code" data-lang="Java">InitializeApp</code> in <code class="code" data-lang="Java">OnCreate</code>. IntelliJ IDEA promptly detects that this method is missing
+                and suggests generating it for you:
+                <figure><img alt="/help/img/idea/2016.3/android_make_interactive_create_method.png" title="/help/img/idea/2016.3/android_make_interactive_create_method.png" src="/help/img/idea/2016.3/android_make_interactive_create_method.png" width="489" height="422"></figure>
+            </li><li class="list__item"><a name="d151781e59"></a>
+                In the <code class="code" data-lang="Java">InitializeApp</code> method, assign private members a reference to a visual element:
+                <a name="d151781e64"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="n">message</span> <span class="o">=</span> <span class="o">(</span><span class="n">TextView</span><span class="o">)</span> <span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">message</span><span class="o">);</span>
+<span class="n">droid</span> <span class="o">=</span> <span class="o">(</span><span class="n">ImageView</span><span class="o">)</span> <span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">imageView</span><span class="o">);</span></code></div>
+                <a name="d151781e67"></a><p>
+                    The expression <code class="code" data-lang="Java">R.id.xxx</code> indicates a member of the auto-generated <a name="d151781e72"></a><a href="http://developer.android.com/reference/android/R.html" data-external="true"><span>R class</span></a>.
+                </p>
+            </li></ol>
+    <a name="d151781e79"></a><h2>3. Add an event handler</h2>
+        <a name="d151781e81"></a><p>
+            In an application, no interaction is possible without events and event handlers. As an example, let's add a click handler to the droid image view and
+            display a message every time the user touches the image.
+        </p>
+        <a name="d151781e84"></a><p>
+            In Java, an event handler takes the following form:
+        </p>
+        <a name="d151781e87"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kd">private</span> <span class="n">View</span><span class="o">.</span><span class="na">OnClickListener</span> <span class="n">droidTapListener</span><span class="o">;</span></code></div>
+        <a name="d151781e90"></a><p>
+            Add this member to the <code class="code" data-lang="Java">HelloDroid</code> class and initialize it in the <code class="code" data-lang="Java">InitializeApp</code> method.
+            You code should now look as following:
+        </p>
+        <a name="d151781e99"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kd">private</span> <span class="kt">void</span> <span class="nf">InitializeApp</span><span class="o">()</span> <span class="o">{</span>
+<span class="n">message</span> <span class="o">=</span> <span class="o">(</span><span class="n">TextView</span><span class="o">)</span> <span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">message</span><span class="o">);</span>
+<span class="n">droid</span> <span class="o">=</span> <span class="o">(</span><span class="n">ImageView</span><span class="o">)</span> <span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">imageView</span><span class="o">);</span>
+
+<span class="c1">// Define and attach listeners</span>
+<span class="n">droidTapListener</span> <span class="o">=</span> <span class="k">new</span> <span class="n">View</span><span class="o">.</span><span class="na">OnClickListener</span><span class="o">()</span>  <span class="o">{</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">onClick</span><span class="o">(</span><span class="n">View</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span>
+<span class="n">TapDroid</span><span class="o">();</span>
+<span class="o">}</span>
+<span class="o">};</span>
+<span class="n">droid</span><span class="o">.</span><span class="na">setOnClickListener</span><span class="o">(</span><span class="n">droidTapListener</span><span class="o">);</span>
+<span class="o">}</span></code></div>
+        <a name="d151781e103"></a><p>
+            The net effect of this code is that every time the user taps the image, the <code class="code" data-lang="Java">TapDroid</code> method is invoked.
+        </p>
+    <a name="d151781e110"></a><h2>4. Handle the 'Click' event</h2>
+        <ol class="list _decimal"><li class="list__item"><a name="d151781e114"></a>
+                The <code class="code" data-lang="Java">TapDroid</code> method just counts the times the user touched the image, and displays a message. You need to add a new private
+                member to the <code class="code" data-lang="Java">HelloDroid</code> class to count clicks:
+                <a name="d151781e122"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyActivity</span> <span class="kd">extends</span> <span class="n">Activity</span>
+<span class="o">{</span>
+<span class="kd">private</span> <span class="n">TextView</span> <span class="n">message</span><span class="o">;</span>
+<span class="kd">private</span> <span class="n">ImageView</span> <span class="n">droid</span><span class="o">;</span>
+<span class="kd">private</span> <span class="n">View</span><span class="o">.</span><span class="na">OnClickListener</span> <span class="n">droidTapListener</span><span class="o">;</span>
+<span class="kd">private</span> <span class="kt">int</span> <span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+
+<span class="c1">// More code goes here ...</span>
+<span class="o">}</span></code></div>
+            </li><li class="list__item"><a name="d151781e126"></a>
+                Next, define the <code class="code" data-lang="Java">TapDroid</code> method as shown below:
+                <a name="d151781e131"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kd">private</span> <span class="kt">void</span> <span class="nf">TapDroid</span><span class="o">()</span> <span class="o">{</span>
+<span class="n">counter</span><span class="o">++;</span>
+<span class="n">String</span> <span class="n">temp</span><span class="o">;</span>
+<span class="k">switch</span> <span class="o">(</span><span class="n">counter</span><span class="o">)</span>
+<span class="o">{</span>
+<span class="k">case</span> <span class="mi">1</span><span class="o">:</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="s">&quot;once&quot;</span><span class="o">;</span>
+<span class="k">break</span><span class="o">;</span>
+<span class="k">case</span> <span class="mi">2</span><span class="o">:</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="s">&quot;twice&quot;</span><span class="o">;</span>
+<span class="k">break</span><span class="o">;</span>
+<span class="k">default</span><span class="o">:</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="n">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;%d times&quot;</span><span class="o">,</span> <span class="n">counter</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="n">message</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;You touched the droid %s&quot;</span><span class="o">,</span> <span class="n">temp</span><span class="o">));</span>
+<span class="o">}</span></code></div>
+            </li></ol>
+    <a name="d151781e138"></a><h2>5. Build an application and launch it on a device</h2>
+        <a name="d151781e140"></a><p>
+            Your sample application is now complete. You can build and deploy it to an Android device.
+        </p>
+        <ol class="list _decimal"><li class="list__item"><a name="d151781e145"></a>
+                <a name="d151781e147"></a><a href="building-and-running-the-application.html#AddRunConfig"><span>Create a run/debug configuration</span></a> and select
+                <a name="d151781e150"></a><span class="control">USB device</span> under <a name="d151781e153"></a><span class="control">Target Device</span>.
+            </li><li class="list__item"><a name="d151781e157"></a>
+                Connect an Android device to the computer through a USB cable. If the device is connected for the first time, wait until all drivers are installed.
+            </li><li class="list__item"><a name="d151781e160"></a>
+                If this is the first time you are deploying an application outside of the Android application stores, enable the <a name="d151781e162"></a><span class="control">USB Debugging</span> mode
+                on your device.
+                 
+        <a name="d461e1999"></a><p>
+            On Android 4.2 or higher, do the following:
+        </p>
+        <ul class="list _bullet"><li class="list__item"><a name="d461e2004"></a>
+                Open your device's <a name="d461e2006"></a><span class="control">Settings</span>.
+            </li><li class="list__item"><a name="d461e2010"></a>
+                Scroll to <a name="d461e2012"></a><span class="control">About phone</span> or <a name="d461e2015"></a><span class="control">About tablet</span> and tap it.
+            </li><li class="list__item"><a name="d461e2019"></a>
+                Scroll to the bottom and tap <a name="d461e2021"></a><span class="control">Build number</span> 7 times until you see the "You are a developer!" message. By doing so, you've unlocked the
+                USB debugging mode on your device.
+            </li><li class="list__item"><a name="d461e2025"></a>
+                Now navigate to <a name="d461e2027"></a><span class="control">Settings | Developer Options | Debugging | USB Debugging</span> to let your phone deploy non-packaged applications.
+            </li></ul>
+     
+            </li><li class="list__item"><a name="d151781e168"></a>
+                Make sure the appropriate run/debug configuration is selected in the drop-down in the top-right corner of the editor and click the <a name="d151781e170"></a><span class="control">Run</span> icon:
+                <figure><img alt="/help/img/idea/2016.3/android_application_run_physical.png" title="/help/img/idea/2016.3/android_application_run_physical.png" src="/help/img/idea/2016.3/android_application_run_physical.png" width="324" height="61"></figure>
+            </li><li class="list__item"><a name="d151781e176"></a>
+                When the application has been successfully deployed on the device, tap the image and look at the changes to the user interface:
+                <figure><img alt="/help/img/idea/2016.3/android_application_physical.png" title="/help/img/idea/2016.3/android_application_physical.png" src="/help/img/idea/2016.3/android_application_physical.png" width="360" height="640"></figure>
+            </li></ol>
+    <div class="navigation-links _bottom"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="creating-unit-tests.html">Creating Unit Tests</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content">```
+                <div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d151781e187"></a><a href="building-and-running-the-application.html"><span>Building and Running the Application</span></a></li></ul></div></div></section><div class="last-modified" data-swiftype-index="false">Last modified: 21 March 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

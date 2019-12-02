@@ -1,0 +1,105 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="robots" content="noindex"><title>YouTrack Standalone 7.0 Help :: Import from Redmine</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Import-from-Redmine"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack Standalone Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>YouTrack Standalone 7.0 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="Import-Projects-from-JIRA.html">Import Projects from JIRA</a><a class="navigation-links__next" href="Import-from-Trac.html">Import from Trac</a></div><h1>Import from Redmine</h1><aside class="note sideblock">
+            <a name="d62340e5"></a><p>Before you begin:</p>
+            <a name="d62340e8"></a><p>Please note that if you try to re-import same project several times, then you must delete previously imported data before the next attempt.</p>
+    </aside><a name="d62340e12"></a><p>This page provides instructions for importing issues from a Redmine instance to YouTrack with the <a name="d62340e14"></a><a href="Python-Client-Library.html"><span>Python Client Library</span></a>.</p><aside class="note sideblock"><a name="d62340e18"></a><p>Version Compatibility</p>
+            <ul class="list _ul"><li class="list__item"><a name="d62340e23"></a>Current implementation of the import script is compatible with YouTrack 4.x REST API and Python 2.6.</li><li class="list__item"><a name="d62340e26"></a>YouTrack supports import from Redmine 1.4.6 and higher</li><li class="list__item"><a name="d62340e29"></a>Depending on rhe Redmine version, some import options are not supported:
+                    <ul class="list _ul"><li class="list__item"><a name="d62340e33"></a>User groups import is supported starting with Redmine 2.1</li><li class="list__item"><a name="d62340e36"></a>Role permissions import is supported starting with Redmine 2.2</li></ul>
+                </li></ul></aside><a name="d62340e42"></a><h2>Import Details</h2>
+        <a name="Import_notes"></a>
+        <a name="d62340e46"></a><p>When you import issues from Redmine, be aware of the following mechanics:</p>
+
+        <ul class="list _ul"><li class="list__item"><a name="d62340e51"></a>The Redmine REST API does not support watchers and tags. These elements are not imported to YouTrack.</li><li class="list__item"><a name="d62340e54"></a>
+                <a name="TimeTracking_Import_Support"></a>
+                When you import work items from Redmine, the values that are stored in the <a name="d62340e58"></a><span class="control">SpentTime</span> field are not imported to YouTrack.
+            This data is derived from imported work items.</li></ul>
+
+
+ 
+    <a name="d62340e66"></a><p>The Python script lets you import all issues from a source project at once. The target project is created automatically.
+
+    </p><a name="d62340e70"></a><a name="dynaProc0"></a><section class="procedure-steps"><h2>To import issues from a Redmine server to YouTrack:</h2><ol class=".list _decimal"><li class="list__item">In your Redmine instance, ensure that REST support is enabled: open <a name="d62340e85"></a><span class="menupath">Administration &gt; Settings &gt; Authentication</span> tab and
+                select the <a name="d62340e88"></a><span class="control">Enable REST web service</span> check box.</li><li class="list__item">Download <a name="d62340e94"></a><a href="https://github.com/JetBrains/youtrack-rest-python-library/zipball/master" data-external="true"><span>the latest version</span></a> of YouTrack's <a name="d62340e97"></a><a href="Python-Client-Library.html"><span>Python Client Library</span></a> and unzip it.</li><li class="list__item">Ensure that <a name="d62340e102"></a><a href="http://www.python.org/download/" data-external="true"><span>Python</span></a> is installed in your system.</li><li class="list__item">If needed, correct the default mapping file.</li><li class="list__item">Run the script. The script supports two authentication options for Redmine: using login/password pair or using the API key.
+                Thus, you can use either of them with the respective command:
+                <ul class="list _ul"><li class="list__item"><a name="d62340e114"></a>To run import with API key authentication use <a name="d62340e116"></a><b id="d62340e116">
+                        <code class="code" data-lang="xml">-a</code>
+                    </b> option:
+                        <a name="d62340e122"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">python redmine2youtrack.py -a api_key r_url y_url y_user y_password [project_id ...]</code></div>
+                        <table class="" width="100%" id="d62340e125"><thead><tr id="d62340e127" class="ijRowHead"><a name="d62340e127"></a><th width="20%"><a name="d62340e129"></a>
+                                    <a name="d62340e131"></a><p>Parameter </p>
+                                </th><th><a name="d62340e135"></a>
+                                    <a name="d62340e137"></a><p>Description </p>
+                                </th></tr></thead><tbody><tr id="d62340e142" class="ijRowOdd"><a name="d62340e142"></a><td><a name="d62340e144"></a>
+                                    <a name="d62340e146"></a><p>r_url </p>
+                                </td><td><a name="d62340e150"></a>
+                                    <a name="d62340e152"></a><p>Redmine URL </p>
+                                </td></tr><tr id="d62340e157" class="ijRowEven"><a name="d62340e157"></a><td><a name="d62340e159"></a>
+                                    <a name="d62340e161"></a><p>api_key </p>
+                                </td><td><a name="d62340e165"></a>
+                                    <a name="d62340e167"></a><p>Redmine API Key. Redmine API key can be found on your user account page. </p>
+                                </td></tr><tr id="d62340e172" class="ijRowOdd"><a name="d62340e172"></a><td><a name="d62340e174"></a>
+                                    <a name="d62340e176"></a><p>y_url </p>
+                                </td><td><a name="d62340e180"></a>
+                                    <a name="d62340e182"></a><p>YouTrack base URL </p>
+                                </td></tr><tr id="d62340e187" class="ijRowEven"><a name="d62340e187"></a><td><a name="d62340e189"></a>
+                                    <a name="d62340e191"></a><p>y_user </p>
+                                </td><td><a name="d62340e195"></a>
+                                    <a name="d62340e197"></a><p>YouTrack user </p>
+                                </td></tr><tr id="d62340e203" class="ijRowOdd"><a name="d62340e203"></a><td><a name="d62340e205"></a>
+                                    <a name="d62340e207"></a><p>y_password </p>
+                                </td><td><a name="d62340e211"></a>
+                                    <a name="d62340e213"></a><p>YouTrack user's password </p>
+                                </td></tr><tr id="d62340e218" class="ijRowEven"><a name="d62340e218"></a><td><a name="d62340e220"></a>
+                                    <a name="d62340e222"></a><p>project_id </p>
+                                </td><td><a name="d62340e226"></a>
+                                    <a name="d62340e228"></a><p>Redmine project identifier </p>
+                                </td></tr></tbody></table>
+                    </li><li class="list__item"><a name="d62340e235"></a>To run import using login/password pair, use the following command:
+                        <a name="d62340e237"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">python redmine2youtrack.py r_url r_user r_pass y_url y_user y_password [project_id ...]</code></div>
+                        <table class="" width="100%" id="d62340e240"><thead><tr id="d62340e242" class="ijRowHead"><a name="d62340e242"></a><th width="20%"><a name="d62340e244"></a>
+                                    <a name="d62340e246"></a><p>Parameter </p>
+                                </th><th><a name="d62340e250"></a>
+                                    <a name="d62340e252"></a><p>Description </p>
+                                </th></tr></thead><tbody><tr id="d62340e257" class="ijRowOdd"><a name="d62340e257"></a><td><a name="d62340e259"></a>
+                                    <a name="d62340e261"></a><p>r_url </p>
+                                </td><td><a name="d62340e265"></a>
+                                    <a name="d62340e267"></a><p>Redmine URL </p>
+                                </td></tr><tr id="d62340e272" class="ijRowEven"><a name="d62340e272"></a><td><a name="d62340e274"></a>
+                                    <a name="d62340e276"></a><p>r_user </p>
+                                </td><td><a name="d62340e280"></a>
+                                    <a name="d62340e282"></a><p>Redmine user </p>
+                                </td></tr><tr id="d62340e287" class="ijRowOdd"><a name="d62340e287"></a><td><a name="d62340e289"></a>
+                                    <a name="d62340e291"></a><p>r_password </p>
+                                </td><td><a name="d62340e295"></a>
+                                    <a name="d62340e297"></a><p>Redmine user's password </p>
+                                </td></tr><tr id="d62340e302" class="ijRowEven"><a name="d62340e302"></a><td><a name="d62340e304"></a>
+                                    <a name="d62340e306"></a><p>y_url </p>
+                                </td><td><a name="d62340e310"></a>
+                                    <a name="d62340e312"></a><p>YouTrack base URL </p>
+                                </td></tr><tr id="d62340e318" class="ijRowOdd"><a name="d62340e318"></a><td><a name="d62340e320"></a>
+                                    <a name="d62340e322"></a><p>y_user </p>
+                                </td><td><a name="d62340e326"></a>
+                                    <a name="d62340e328"></a><p>YouTrack user </p>
+                                </td></tr><tr id="d62340e333" class="ijRowEven"><a name="d62340e333"></a><td><a name="d62340e335"></a>
+                                    <a name="d62340e337"></a><p>y_password </p>
+                                </td><td><a name="d62340e341"></a>
+                                    <a name="d62340e343"></a><p>YouTrack user's password </p>
+                                </td></tr><tr id="d62340e348" class="ijRowOdd"><a name="d62340e348"></a><td><a name="d62340e350"></a>
+                                    <a name="d62340e352"></a><p>project_id </p>
+                                </td><td><a name="d62340e356"></a>
+                                    <a name="d62340e358"></a><p>Redmine project identifier </p>
+                                </td></tr></tbody></table>
+                    </li></ul>
+                <a name="d62340e366"></a><p>That's it. </p>
+                <a name="d62340e369"></a><p> If you run the script with <a name="d62340e371"></a><b id="d62340e371">
+                    <code class="code" data-lang="xml">-h</code>
+                </b> option, then short help file will be displayed.</p>
+            </li></ol><aside class="note sideblock"><a name="d62340e73"></a><p>Permissions</p>
+                <a name="d62340e76"></a><p>This procedure requires multiple permissions. Use an account that is granted the <a name="d62340e78"></a><span class="control">System Admin</span> role.</p>
+            </aside></section><div class="last-modified">Last modified: 2 February 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

@@ -1,0 +1,365 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="robots" content="noindex"><title>YouTrack Standalone 7.0 Help :: Search Query Reference</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Search-and-Command-Attributes"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack Standalone Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>YouTrack Standalone 7.0 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="Full-Text-Search.html">Text Search</a><a class="navigation-links__next" href="Search-Query-Grammar.html">Search Query Grammar</a></div><h1>Search Query Reference</h1><aside class="note sideblock" data-title="On this page:">
+    <br>
+    <br>
+        <ul><li class="list__item"><a href="#Text-Search">Text Search</a></li><li class="list__item"><a href="#Operators">Operators</a></li><li class="list__item"><a href="#Symbols">Symbols</a></li><li class="list__item"><a href="#Keywords">Keywords</a></li><li class="list__item"><a href="#d128523e632">Boolean Search</a></li><li class="list__item"><a href="#Search-Attributes">Search Attributes</a></li><li class="list__item"><a href="#Wildcards">Wildcards in Search Attributes</a></li><li class="list__item"><a href="#d128523e1523">Search Attributes for Time Tracking</a></li><li class="list__item"><a href="#d128523e1613">Date and Period Values</a></li><li class="list__item"><a href="#Sort-Attributes">Sort Attributes</a></li></ul>
+    </aside><a name="d128523e12"></a><p>This page provides a list of attributes and keywords that are used in YouTrack query language.
+        Each attribute is followed by a value in a search query. Keywords represent a single value.</p><a name="d128523e15"></a><p>For predefined attribute values, you can use both singular and plural forms.
+        For example, <code class="code" data-lang="Java">#my #show-stopper</code> and <code class="code" data-lang="Java">#my #show-stoppers</code> yield identical results.<br>
+        For more information on YouTrack search syntax, see <a name="d128523e25"></a><a href="Search-Query-Grammar.html"><span>Search Query Grammar</span></a>.</p><a name="Text-Search"></a><h2>Text Search</h2>
+
+        <a name="d128523e30"></a><p>YouTrack lets you search for issues that contain words or combinations of words.
+            You can either search for words in any issue attribute, or limit the search query to find words in a specific attribute.</p>
+        <a name="d128523e33"></a><p>If text indexing is enabled for the language that you use in YouTrack, YouTrack returns issues that contain all forms of the words that you enter in a search query.
+            Text in English is indexed by default.
+            For more information, see <a name="d128523e35"></a><a href="Full-Text-Search.html"><span>Text Search</span></a>.</p>
+
+        <a name="d128523e38"></a><p>Follow these guidelines to search for text in a query:</p>
+
+        <ul class="list _ul"><li class="list__item"><a name="d128523e43"></a>Enter a single word to find issues that contain this word.
+                If the language has been indexed, YouTrack also returns issues that contain morphological variants of the specified word.</li><li class="list__item"><a name="d128523e46"></a>Set multiple words in braces to find issues that contain any of these words in any order.
+                If the language has been indexed, YouTrack also returns issues that contain morphological variants of the specified words.</li><li class="list__item"><a name="d128523e49"></a>Set text in quotes to find issues that contain words in a specific order.
+                If the language has been indexed, YouTrack returns issues that contain variants of every word in the specified order.</li><li class="list__item"><a name="d128523e52"></a>Use wildcards to expand the text search to include characters that do not exactly match your search criteria.
+                <ul class="list _ul"><li class="list__item"><a name="d128523e56"></a><code class="code" data-lang="Java">*</code> &mdash; matches zero or more characters in a string. You can also use this wildcard in other search attributes. For more information, see <a href="#Wildcards">Wildcards in Search Attributes</a></li><li class="list__item"><a name="d128523e62"></a><code class="code" data-lang="Java">?</code> &mdash; matches any single character in a string. You can only use this wildcard to search the text attributes that appear in the following table.
+                    You cannot use this wildcard to search for values in custom fields that store values as a <code class="code" data-lang="Java">string</code> type.</li></ul></li></ul>
+
+        <a name="d128523e72"></a><p>If you do not specify which attribute to search in, YouTrack returns all issues that contain matching words and their morphological variants in any text attribute.
+            You can limit the search to find words in one of the following attributes.</p>
+
+        <table class=" wide" width="100%" id="d128523e76"><thead><tr id="d128523e78" class="ijRowHead"><a name="d128523e78"></a><th width="15%"><a name="d128523e80"></a>Attribute</th><th width="15%"><a name="d128523e83"></a>Values</th><th width="30%"><a name="d128523e86"></a>Description</th><th width="40%"><a name="d128523e89"></a>Examples</th></tr></thead><tbody><tr id="d128523e93" class="ijRowOdd"><a name="d128523e93"></a><td><a name="d128523e95"></a>summary</td><td><a name="d128523e98"></a>word<br>{multiple words}<br>"sequence of words"</td><td><a name="d128523e105"></a>Returns issues that contain word forms that match the specified word or words in the issue summary.</td><td><a name="d128523e108"></a>To find issues with either 'scrum' or 'board' in the summary, enter:<br>
+                    <code class="code" data-lang="Java">summary: {scrum board}</code>
+                    <br>
+                    To find issues in the 'TS' project that are assigned to the user 'john.johnson' with the words 'Agile management' in the summary (appearing in this order), enter:<br>
+                    <code class="code" data-lang="Java">in: TS assigned to: john.johnson summary: "Agile management"</code>
+                </td></tr><tr id="d128523e124" class="ijRowEven"><a name="d128523e124"></a><td><a name="d128523e126"></a>description</td><td><a name="d128523e129"></a>word<br>{multiple words}<br>"sequence of words"</td><td><a name="d128523e136"></a>Returns issues that contain word forms that match the specified word or words in the issue description.</td><td><a name="d128523e139"></a>To find unresolved issues in the 'GR' project with the string 'groovy.lang.resolve.CollectClassMembersUtil' in the description, enter:<br>
+                    <code class="code" data-lang="Java">in: GR #unresolved description: "groovy.lang.resolve.CollectClassMembersUtil"</code>
+                </td></tr><tr id="d128523e148" class="ijRowOdd"><a name="d128523e148"></a><td><a name="d128523e150"></a>comments</td><td><a name="d128523e153"></a>word<br>{multiple words}<br>"sequence of words"</td><td><a name="d128523e160"></a>Returns issues that contain word forms that match the specified word or words in a comment.</td><td><a name="d128523e163"></a>To find issues in the 'JT' project with the type 'Feature' in the 'Agile management' subsystem
+                    that have comments that contain the word 'burndown', enter:<br>
+                    <code class="code" data-lang="Java">in: JT #Feature Subsystem: {Agile management} comments: burndown</code>
+
+                </td></tr><tr id="d128523e172" class="ijRowEven"><a name="d128523e172"></a><td><a name="d128523e174"></a>attachments</td><td><a name="d128523e177"></a>filename</td><td><a name="d128523e180"></a>Returns issues that include attachments with the specified filename.</td><td><a name="d128523e183"></a>To find unresolved issues that are assigned to me and have an attachment with a filename that starts with 'sketch', enter:<br>
+                    <code class="code" data-lang="Java">#unresolved for: me attachments: sketch*</code>
+                </td></tr><tr id="d128523e193" class="ijRowOdd"><a name="d128523e193"></a><td><a name="d128523e195"></a>code</td><td><a name="d128523e198"></a>word<br>{multiple words}<br>"sequence of words"</td><td><a name="d128523e205"></a>Returns issues that contain word forms that match the specified word or words inside {code} markup tags. <br>
+                    The {code} markup can be used in the issue description and comments.
+                    When you search by <code class="code" data-lang="Java">code</code>, the query returns issues that contain variants of the specified words in the description or a comment.
+                </td><td><a name="d128523e213"></a>To find unresolved issues in the TS project with the words 'foo' and 'bar' inside {code} tags in a description or comment, enter:<br>
+                    <code class="code" data-lang="Java">in: TS #unresolved code: {foo bar}</code>
+                </td></tr></tbody></table>
+    <a name="Operators"></a><h2>Operators</h2>
+
+        <a name="d128523e226"></a><p>Use the following operators to create logical combinations of attributes in a search query.</p>
+        <table class=" wide" width="100%" id="d128523e229"><thead><tr id="d128523e231" class="ijRowHead"><a name="d128523e231"></a><th width="15%"><a name="d128523e233"></a>Operator</th><th width="45%"><a name="d128523e236"></a>Description</th><th width="40%"><a name="d128523e239"></a>Examples</th></tr></thead><tbody><tr id="d128523e243" class="ijRowOdd"><a name="d128523e243"></a><td><a name="d128523e245"></a>-</td><td><a name="d128523e248"></a>Exclude a subset from a set of search query results.
+                    When you use this operator with an attribute value, do not use the number sign.</td><td><a name="d128523e251"></a>To find all unresolved issues except for issues with minor priority and
+                    sort the list of results by priority in ascending order, enter:<br>
+                    <code class="code" data-lang="Java">#unresolved -minor sort by: priority asc</code></td></tr><tr id="d128523e259" class="ijRowEven"><a name="d128523e259"></a><td><a name="d128523e261"></a>AND</td><td><a name="d128523e264"></a>Combine multiple search attribute subsets to expand the search request.
+                    Use this operator for issue fields with <code class="code" data-lang="Java">enum[*]</code> types and tags.<br>
+                    The AND-expression is always processed as group and has a higher priority than OR-expressions in the query.
+                </td><td><a name="d128523e272"></a>To find all issues in the 'TEST project' that have both the 'Next build' and 'to be tested' tags, enter:<br>
+                    <code class="code" data-lang="Java">in: TEST and (tag:{Next build} and tag:{to be tested})</code><br>
+                    To find all issues that are have the priority 'Critical' in project 'A'
+                    or have the priority 'Major' and are assigned to the current user in project 'B', enter:<br>
+                    <code class="code" data-lang="Java">in: A #Critical or in: B #Major and for: me</code>
+                </td></tr><tr id="d128523e287" class="ijRowOdd"><a name="d128523e287"></a><td><a name="d128523e289"></a>OR</td><td><a name="d128523e292"></a>Combine multiple search attribute subsets to restrict the search request.
+                </td><td><a name="d128523e295"></a>To find all issues in the 'TEST' project that are assigned to the current user or have the tag 'to be tested' in any project, enter:<br>
+                    <code class="code" data-lang="Java">in: TEST for: me or tag: {to be tested}</code>
+
+                </td></tr><tr id="d128523e304" class="ijRowEven"><a name="d128523e304"></a><td><a name="d128523e306"></a>( )</td><td><a name="d128523e309"></a>Combine various search attributes to change the order in which attributes and operators are processed.
+                    The part of a search query inside the parentheses has priority and is always processed as a single unit.
+                    <a name="d128523e311"></a><p>A parentheses-expression can be used only as argument for OR- or AND-expressions.
+                        For example, the search query <code class="code" data-lang="Java">in:A #Critical (in:B and for:me)</code> cannot be processed.</p>
+
+                </td><td><a name="d128523e318"></a>To find all issues that are assigned to the current user and are either 'Critical' in project 'A' or 'Major' in project 'B', enter:<br>
+                    <code class="code" data-lang="Java">(in: A #Critical or in: B #Major) and for: me</code>
+
+                </td></tr></tbody></table>
+    <a name="Symbols"></a><h2>Symbols</h2>
+
+        <a name="d128523e332"></a><p>The following symbols can be used to extend or refine a search query.</p>
+        <table class=" wide" width="100%" id="d128523e335"><thead><tr id="d128523e337" class="ijRowHead"><a name="d128523e337"></a><th width="15%"><a name="d128523e339"></a>Symbol</th><th width="45%"><a name="d128523e342"></a>Description</th><th width="40%"><a name="d128523e345"></a>Examples</th></tr></thead><tbody><tr id="d128523e349" class="ijRowOdd"><a name="d128523e349"></a><td><a name="d128523e351"></a>,</td><td><a name="d128523e354"></a>List multiple values for a single attribute. Can be used in combination with a range.</td><td><a name="d128523e357"></a>To find all issues assigned to, reported or commented by the current user, which were created today or yesterday, enter:<br>
+                    <code class="code" data-lang="Java">#my created: Today, Yesterday</code>
+
+                </td></tr><tr id="d128523e366" class="ijRowEven"><a name="d128523e366"></a><td><a name="d128523e368"></a>..</td><td><a name="d128523e371"></a>Defines a range of values.</td><td><a name="d128523e374"></a>To find all issues fixed in version 1.2.1 and in all versions from 1.3 to 1.5, enter:<br>
+                    <code class="code" data-lang="Java">fixed in: 1.2.1, 1.3 .. 1.5</code>
+                    <br>
+                    To find all issues created since March 10 until March 13, 2011, enter:<br>
+                    <code class="code" data-lang="Java">created: 2011-03-10 .. 2011-03-13</code>
+
+                </td></tr><tr id="d128523e390" class="ijRowOdd"><a name="d128523e390"></a><td><a name="d128523e392"></a>#</td><td><a name="d128523e395"></a>Indicates that the attribute is a <a name="d128523e397"></a><a href="#Keywords"><span>keyword</span></a> or a single value.
+                </td><td><a name="d128523e401"></a>To find all unresolved issues in the 'MRK' project that were reported by, assigned to, or commented by the current user, enter:<br>
+                    <code class="code" data-lang="Java">#my #unresolved in: MRK</code>
+
+                </td></tr><tr id="d128523e410" class="ijRowEven"><a name="d128523e410"></a><td><a name="d128523e412"></a>{ }</td><td><a name="d128523e415"></a>Encloses attribute values that contain spaces.</td><td><a name="d128523e418"></a>To find all issues with the 'Fixed' state that have the tag 'to be tested', enter:<br>
+                    <code class="code" data-lang="Java">#Fixed tag: {to be tested}</code>
+
+                </td></tr></tbody></table>
+    <a name="Keywords"></a><h2>Keywords</h2>
+
+        <a name="d128523e431"></a><p>The attributes in the following table are <a name="d128523e433"></a><i id="d128523e433">keywords</i>.
+            When you use a keyword in a search query, you do not specify a value for the attribute.
+            A keyword is preceded by the number sign (#) or the minus operator.
+            In the YouTrack <a name="d128523e436"></a><a href="Search-Query-Grammar.html"><span>Search Query Grammar</span></a>, these keywords correspond to a <code class="code" data-lang="Java">&lt;SingleValue&gt;</code>.</p>
+        <aside class="note sideblock">
+            <a name="d128523e444"></a><p>Some of the values that are mentioned in the <a name="d128523e446"></a><a href="#Search-Attributes"><span>Search Attributes</span></a> section
+                can also be used in a search query as a <code class="code" data-lang="Java">&lt;SingleValue&gt;</code>.</p>
+
+        </aside>
+        <table class=" wide" width="100%" id="d128523e454"><thead><tr id="d128523e456" class="ijRowHead"><a name="d128523e456"></a><th width="15%"><a name="d128523e458"></a>Keyword</th><th width="45%"><a name="d128523e461"></a>Description</th><th width="40%"><a name="d128523e464"></a>Examples</th></tr></thead><tbody><tr id="d128523e468" class="ijRowOdd"><a name="d128523e468"></a><td><a name="d128523e470"></a>me<br>
+                    my</td><td><a name="d128523e475"></a>Returns issues that are assigned to, reported by, or commented by the current user.</td><td><a name="d128523e478"></a>To find all issues assigned to or reported by current user that have any state except 'Resolved', enter:<br>
+                    <code class="code" data-lang="Java">#issues assigned to: me or reported by: me -Resolved</code>
+                    <a name="d128523e485"></a><p>returns the same result as <code class="code" data-lang="Java">#me -Resolved</code> and <code class="code" data-lang="Java">#my -Resolved</code></p></td></tr><tr id="d128523e494" class="ijRowEven"><a name="d128523e494"></a><td><a name="d128523e496"></a>user</td><td><a name="d128523e499"></a>Returns issues that are assigned to, reported by, or commented by the specified user.
+                </td><td><a name="d128523e502"></a>To find all issues that were assigned to, or reported by, or commented by the user with the login 'john' and were updated yesterday, enter:<br>
+                    <code class="code" data-lang="Java">#john updated: Yesterday</code>
+
+                </td></tr><tr id="d128523e511" class="ijRowOdd"><a name="d128523e511"></a><td><a name="d128523e513"></a>issue ID</td><td><a name="d128523e516"></a>Returns an issue with the specified ID.
+                    You do not need to use the number sign to search by issue ID.
+                    When you search for an issue by ID, the result is displayed in full page view.
+                </td><td><a name="d128523e519"></a>To find an issue with the ID 'JT-4232', enter:<br>
+                    <code class="code" data-lang="Java">JT-4232</code>
+
+                </td></tr><tr id="d128523e531" class="ijRowEven"><a name="d128523e531"></a><td><a name="d128523e533"></a>unassigned</td><td><a name="d128523e536"></a>Returns issues that are not assigned to a specific user.</td><td><a name="d128523e539"></a>To find unassigned issues in the 'ReSharper' project, enter:<br>
+                    <code class="code" data-lang="Java">project: ReSharper #unassigned</code>
+
+                </td></tr><tr id="d128523e548" class="ijRowOdd"><a name="d128523e548"></a><td><a name="d128523e550"></a>{has attachment}</td><td><a name="d128523e553"></a>Returns issues that include attachments. This keyword follows the syntax for attribute values and requires both the number sign and braces.
+                    <aside class="note "><a name="d128523e556"></a><p>This keyword was deprecated in YouTrack 3.1 in favor of the <code class="code" data-lang="Java">has: attachments</code> syntax.</p></aside>
+
+                </td><td><a name="d128523e563"></a>To find all unresolved issues with attachments, enter:<br>
+                    <code class="code" data-lang="Java">#unresolved #{has attachment}</code>
+
+                </td></tr><tr id="d128523e572" class="ijRowEven"><a name="d128523e572"></a><td><a name="d128523e574"></a>resolved</td><td><a name="d128523e577"></a>Returns issues that are assigned a <a name="d128523e579"></a><span class="control">State</span> that is considered to be resolved.
+                    For example, <a name="d128523e582"></a><span class="control">Fixed</span>, <a name="d128523e585"></a><span class="control">Duplicate</span>, or <a name="d128523e588"></a><span class="control">Obsolete</span>.</td><td><a name="d128523e592"></a>To find all resolved issues that were updated today, enter:<br>
+                    <code class="code" data-lang="Java">#resolved updated: Today</code>
+
+                </td></tr><tr id="d128523e601" class="ijRowOdd"><a name="d128523e601"></a><td><a name="d128523e603"></a>unresolved</td><td><a name="d128523e606"></a>Returns issues that are assigned a <a name="d128523e608"></a><span class="control">State</span> that is considered to be unresolved.
+                    For example, <a name="d128523e611"></a><span class="control">Submitted</span>, <a name="d128523e614"></a><span class="control">Open</span>, or <a name="d128523e617"></a><span class="control">In Progress</span>.</td><td><a name="d128523e621"></a>To find all unresolved issues that are assigned to the user 'john.doe' in the 'Test' project, enter:<br>
+                    <code class="code" data-lang="Java">#unresolved project: Test for: john.doe</code>
+
+                </td></tr></tbody></table>
+    <a name="d128523e632"></a><h2>Boolean Search</h2>
+
+        <a name="d128523e634"></a><p>The <code class="code" data-lang="Java">has</code> keyword functions as a Boolean search term.
+            When used in a search query, it returns all issues that contain a value for the specified attribute.
+        Use the minus operator (<code class="code" data-lang="Java">-</code>) before the specified attribute to find issues that have empty values.</p>
+        <a name="d128523e643"></a><p>For example, to find all issues in the 'TST' project that are assigned to the current user,
+            have a duplicates link, have attachments, but do not have any comments, enter:<br>
+            <code class="code" data-lang="Java">in: TST for: me has: duplicates , attachments , -comments</code></p>
+        <a name="d128523e650"></a><p>You can use the <code class="code" data-lang="Java">has</code> keyword in combination with the following attributes:</p>
+
+        <table class="" width="100%" id="d128523e656"><thead><tr id="d128523e658" class="ijRowHead"><a name="d128523e658"></a><th width="15%"><a name="d128523e660"></a>Attribute</th><th><a name="d128523e663"></a>Description</th></tr></thead><tbody><tr id="d128523e667" class="ijRowOdd"><a name="d128523e667"></a><td><a name="d128523e669"></a>attachments</td><td><a name="d128523e672"></a>Returns issues that have attachments.</td></tr><tr id="d128523e676" class="ijRowEven"><a name="d128523e676"></a><td><a name="d128523e678"></a>{Board &lt;board name&gt;}</td><td><a name="d128523e681"></a>Returns issues that are assigned to the specified agile board.</td></tr><tr id="d128523e685" class="ijRowOdd"><a name="d128523e685"></a><td><a name="d128523e687"></a>comments</td><td><a name="d128523e690"></a>Returns issues that have comments.</td></tr><tr id="d128523e694" class="ijRowEven"><a name="d128523e694"></a><td><a name="d128523e696"></a>description</td><td><a name="d128523e699"></a>Returns issues that do not have an empty description.</td></tr><tr id="d128523e704" class="ijRowOdd"><a name="d128523e704"></a><td><a name="d128523e706"></a>&lt;field name&gt;</td><td><a name="d128523e709"></a>Returns issues that contain any value in the specified custom field.
+                Enclose field names that contain spaces in brackets.</td></tr><tr id="d128523e713" class="ijRowEven"><a name="d128523e713"></a><td><a name="d128523e715"></a>&lt;link name&gt;</td><td><a name="d128523e718"></a>Returns issues that have links that match the specified outward name or inward name.
+                Enclose link names that contain spaces in brackets.</td></tr><tr id="d128523e722" class="ijRowOdd"><a name="d128523e722"></a><td><a name="d128523e724"></a>links</td><td><a name="d128523e727"></a>Returns issues that have any issue link type.</td></tr><tr id="d128523e731" class="ijRowEven"><a name="d128523e731"></a><td><a name="d128523e733"></a>star</td><td><a name="d128523e736"></a>Returns issues that have the star tag for the current user.</td></tr><tr id="d128523e740" class="ijRowOdd"><a name="d128523e740"></a><td><a name="d128523e742"></a>votes</td><td><a name="d128523e745"></a>Returns issues that have one or more votes.</td></tr><tr id="d128523e749" class="ijRowEven"><a name="d128523e749"></a><td><a name="d128523e751"></a>work</td><td><a name="d128523e754"></a>Returns issues that have one or more work items.</td></tr></tbody></table>
+    <a name="Search-Attributes"></a><h2>Search Attributes</h2>
+
+        <a name="d128523e762"></a><p>The following table includes all supported search attributes and their corresponding values.
+            These attributes represent an <code class="code" data-lang="Java">&lt;Attribute&gt;</code> in the <a name="d128523e767"></a><a href="Search-Query-Grammar.html"><span>Search Query Grammar</span></a>.
+            Their values correspond to the <code class="code" data-lang="Java">&lt;Value&gt;</code> or <code class="code" data-lang="Java">&lt;ValueRange&gt;</code> parameter.</p>
+        <table class=" wide" width="100%" id="d128523e776"><thead><tr id="d128523e778" class="ijRowHead"><a name="d128523e778"></a><th width="15%"><a name="d128523e780"></a>Attribute</th><th width="15%"><a name="d128523e783"></a>Values</th><th width="30%"><a name="d128523e786"></a>Description</th><th width="40%"><a name="d128523e789"></a>Examples</th></tr></thead><tbody><tr id="d128523e793" class="ijRowOdd"><a name="d128523e793"></a><td><a name="d128523e795"></a>commented</td><td><a name="d128523e798"></a>&lt;date&gt; <br>
+                    &lt;custom period&gt; <br>
+                    <a name="d128523e804"></a><a href="#relative-date-parameters"><span>relative date parameter</span></a> <br>
+                   user<br>
+                   group
+                </td><td><a name="d128523e812"></a>Returns issues to which comments were added on the specified date, within the specified period, by the specified user, or by a member of the specified group.</td><td><a name="d128523e815"></a>To find all issues in the 'YouTrack' project that are assigned to the current user and were commented during the last week, enter:<br>
+                    <code class="code" data-lang="Java">#YouTrack for: me commented: {Last Week}</code>
+                </td></tr><tr id="d128523e824" class="ijRowEven"><a name="d128523e824"></a><td><a name="d128523e826"></a>commented by<br>
+                    commenter</td><td><a name="d128523e831"></a>user<br>
+                group</td><td><a name="d128523e836"></a>Returns issues that were commented by the specified user or by a member of the specified group</td><td><a name="d128523e839"></a>To find all issues which were created today, assigned to the current user, and commented by the user with the login 'John', enter:<br>
+                    <code class="code" data-lang="Java">created: today for: me commented by: John</code>
+
+                </td></tr><tr id="d128523e848" class="ijRowOdd"><a name="d128523e848"></a><td><a name="d128523e850"></a>&lt;issue link type&gt;</td><td><a name="d128523e853"></a>issue ID</td><td><a name="d128523e856"></a>Returns issues that have links of the specified type to the specified issue.
+                    You can enter the outward name or inward name of any issue link type used in your YouTrack instance.
+
+                </td><td><a name="d128523e859"></a>To find all tasks that are assigned to the current user and are related to the issue with the ID 'JT-5072' or duplicate the issue with the ID 'JT-4367', enter:<br>
+                    <code class="code" data-lang="Java">for: me #task relates to: JT-5072 or duplicates: JT-4367</code>
+
+                </td></tr><tr id="d128523e868" class="ijRowEven"><a name="d128523e868"></a><td><a name="d128523e870"></a>links</td><td><a name="d128523e873"></a>issue ID</td><td><a name="d128523e876"></a>Returns all issues that contains links to the specified issue.</td><td><a name="d128523e879"></a>To find all issues in the 'TEST' project that are linked to the issue 'ABC-4532', enter:<br>
+                    <code class="code" data-lang="Java">in: TEST links: ABC-4532</code>
+                </td></tr><tr id="d128523e889" class="ijRowOdd"><a name="d128523e889"></a><td><a name="d128523e891"></a>for <br>
+                    assigned to</td><td><a name="d128523e896"></a>user<br>
+                    me<br>
+                    group
+                </td><td><a name="d128523e903"></a>Returns all issues that are assigned to the specified user, the current user, or a member of the specified group.</td><td><a name="d128523e906"></a>To find all issues with priority 'Show-stopper' that are assigned to the user with the login 'John', enter:<br>
+                    <code class="code" data-lang="Java">priority: show-stopper for: John</code>
+
+                </td></tr><tr id="d128523e915" class="ijRowEven"><a name="d128523e915"></a><td><a name="d128523e917"></a>by <br>
+                    created by<br>
+                    reported by</td><td><a name="d128523e924"></a>user<br>
+                    me<br>
+                    group
+                </td><td><a name="d128523e931"></a>Returns issues that were created by the specified user, the current user, or a member of the specified user group.</td><td><a name="d128523e934"></a>To find all bugs reported by the user with the login 'yarko' except for those with minor or normal priority, enter:<br>
+                    <code class="code" data-lang="Java">#bug by: yarko -minor -normal</code>
+                    or<br>
+                    <code class="code" data-lang="Java">#bug created by: yarko -minor -normal</code>
+
+                </td></tr><tr id="d128523e948" class="ijRowOdd"><a name="d128523e948"></a><td><a name="d128523e950"></a>updater <br>
+                    updated by
+                </td><td><a name="d128523e955"></a>user<br>
+                    me<br>
+                    group
+                </td><td><a name="d128523e962"></a>Returns issues that were updated by the specified user, the current user, or a member of the specified user group.</td><td><a name="d128523e965"></a>To find all major issues that were updated yesterday by the current user, enter:<br>
+                    <code class="code" data-lang="Java">updater: me updated: yesterday priority: major</code>
+                    or<br>
+                    <code class="code" data-lang="Java">updater: me #yesterday #major</code>
+
+                </td></tr><tr id="d128523e979" class="ijRowEven"><a name="d128523e979"></a><td><a name="d128523e981"></a>issue id</td><td><a name="d128523e984"></a>issue ID</td><td><a name="d128523e987"></a>Returns issues that match the specified issue ID.
+                    The issue ID is an auto-generated identifier that typically consists of the project short name followed by a dash and a number.
+                </td><td><a name="d128523e990"></a>To find two specific issues: 'XX-2' and 'MPS-3143', enter:<br>
+                    <code class="code" data-lang="Java">issue id: XX-2, MPS-3143</code>
+
+                </td></tr><tr id="d128523e999" class="ijRowOdd"><a name="d128523e999"></a><td><a name="d128523e1001"></a>state</td><td><a name="d128523e1004"></a>
+                    submitted <br>
+                    open <br>
+                    in progress <br>
+                    reopened <br>
+                    resolved <br>
+                    unresolved <br>
+                    fixed <br>
+                    won't fix <br>
+                    can't reproduce <br>
+                    duplicate <br>
+                    incomplete <br>
+                    obsolete <br>
+                    to be discussed
+                </td><td><a name="d128523e1033"></a>Returns issues that match the specified state.<br>
+                    The <a name="d128523e1037"></a><span class="control">Resolved</span> and <a name="d128523e1040"></a><span class="control">Unresolved</span> states cannot be assigned to an issue directly,
+                    as they are properties of specific values that are stored in the <a name="d128523e1043"></a><span class="control">State</span> field.<br>
+                    By default, <a name="d128523e1049"></a><span class="control">Fixed</span>, <a name="d128523e1052"></a><span class="control">Won't fix</span>, <a name="d128523e1055"></a><span class="control">Duplicate</span>, <a name="d128523e1058"></a><span class="control">Incomplete</span>, <a name="d128523e1061"></a><span class="control">Obsolete</span>, and <a name="d128523e1064"></a><span class="control">Can't reproduce</span>
+                    states are set as <a name="d128523e1068"></a><span class="control">Resolved</span>.<br>
+                    The <a name="d128523e1073"></a><span class="control">Submitted</span>, <a name="d128523e1076"></a><span class="control">Open</span>, <a name="d128523e1079"></a><span class="control">In Progress</span>, <a name="d128523e1082"></a><span class="control">Reopened</span>, and <a name="d128523e1086"></a><span class="control">To be discussed</span> states
+                    are set as <a name="d128523e1089"></a><span class="control">Unresolved</span>.
+                </td><td><a name="d128523e1093"></a>To find all critical bugs that are assigned to the user with the login 'john' that were closed with the state 'Won't fix', enter:<br>
+                    <code class="code" data-lang="Java">#{won't fix} #critical #bug for: john</code>
+                    or<br>
+                    <code class="code" data-lang="Java">state: {won't fix} priority: critical #bug for: john</code>
+
+                </td></tr><tr id="d128523e1107" class="ijRowEven"><a name="d128523e1107"></a><td><a name="d128523e1109"></a>created</td><td><a name="d128523e1112"></a>&lt;date&gt; <br>
+                    &lt;custom period&gt; <br>
+                    <a name="d128523e1118"></a><a href="#relative-date-parameters"><span>relative date parameter</span></a>
+                </td><td><a name="d128523e1122"></a>Returns issues that were created on a specific date or within a specified time frame.</td><td><a name="d128523e1125"></a>To find all issues that were created today and are assigned to the current user, enter:<br>
+                    <code class="code" data-lang="Java">#my #issues created: today</code>
+                    or<br>
+                    <code class="code" data-lang="Java">#my created: today</code>
+
+                </td></tr><tr id="d128523e1140" class="ijRowOdd"><a name="d128523e1140"></a><td><a name="d128523e1142"></a>updated</td><td><a name="d128523e1145"></a>&lt;date&gt; <br>
+                    &lt;custom period&gt; <br>
+                    <a name="d128523e1151"></a><a href="#relative-date-parameters"><span>relative date parameter</span></a>
+                </td><td><a name="d128523e1155"></a>Returns issues that were updated on a specific date or within a specified time frame.
+                </td><td><a name="d128523e1158"></a>To find all issues that are resolved in the 'MPS' project that were updated this month, enter:<br>
+                    <code class="code" data-lang="Java">#MPS updated: {this month} #resolved</code>
+
+                </td></tr><tr id="d128523e1167" class="ijRowEven"><a name="d128523e1167"></a><td><a name="d128523e1169"></a>type</td><td><a name="d128523e1172"></a>
+                    bug <br>
+                    task <br>
+                    feature <br>
+                    cosmetics <br>
+                    exception <br>
+                    meta issue <br>
+                    usability problem <br>
+                    performance problem
+                </td><td><a name="d128523e1190"></a>Returns issues that match the specified issue type.</td><td><a name="d128523e1193"></a>To find all issues that are assigned the 'Exception' type and are assigned to the current user, enter:<br>
+                    <code class="code" data-lang="Java">#exception assigned to: me</code>
+                </td></tr><tr id="d128523e1202" class="ijRowOdd"><a name="d128523e1202"></a><td><a name="d128523e1204"></a>priority</td><td><a name="d128523e1207"></a>
+                    minor <br>
+                    normal <br>
+                    major <br>
+                    critical <br>
+                    show-stopper
+                </td><td><a name="d128523e1218"></a>Returns issues that match the specified priority level.</td><td><a name="d128523e1221"></a>To find all unresolved issues with the priority 'Show-stopper' that are assigned to the current user, enter:<br>
+                    <code class="code" data-lang="Java">#my #unresolved #show-stoppers</code>
+                    or<br>
+                    <code class="code" data-lang="Java">#my state: unresolved priority: show-stopper</code>
+                </td></tr><tr id="d128523e1235" class="ijRowEven"><a name="d128523e1235"></a><td><a name="d128523e1237"></a>project</td><td><a name="d128523e1240"></a>&lt;project name&gt;</td><td><a name="d128523e1243"></a>Returns issues that were created in the specified project.</td><td><a name="d128523e1246"></a>To find all issues that were created in the 'ReSharper' project that are assigned to current user, enter:<br>
+                    <code class="code" data-lang="Java">#my #ReSharper #issues</code>
+                    or<br>
+                    <code class="code" data-lang="Java">#my #ReSharper</code>
+
+                </td></tr><tr id="d128523e1260" class="ijRowOdd"><a name="d128523e1260"></a><td><a name="d128523e1262"></a>subsystem</td><td><a name="d128523e1265"></a>&lt;field value&gt;</td><td><a name="d128523e1268"></a>Returns issues that are assigned to a specific subsystem within a project.</td><td><a name="d128523e1271"></a>To find all issues that belong to the 'Smart UI' subsystem, enter:<br>
+                    <code class="code" data-lang="Java">subsystem: {smart ui}</code>
+                </td></tr><tr id="d128523e1280" class="ijRowEven"><a name="d128523e1280"></a><td><a name="d128523e1282"></a>&lt;custom field&gt;</td><td><a name="d128523e1285"></a>&lt;field value&gt;</td><td><a name="d128523e1288"></a>Returns issues that contain a matching value in the specified custom field.</td><td><a name="d128523e1291"></a>To find all issues that are assigned to the current user with the a value in the 'Deadline' field that matches today's date, enter:<br>
+                    <code class="code" data-lang="Java">for: me Deadline: Today</code>
+
+                </td></tr><tr id="d128523e1301" class="ijRowOdd"><a name="d128523e1301"></a><td><a name="d128523e1303"></a>in</td><td><a name="d128523e1306"></a>project or subsystem</td><td><a name="d128523e1309"></a>Returns issues that are assigned to the specified project or subsystem.</td><td><a name="d128523e1312"></a>To find all issues that were reported by the user 'kostik' in the 'MPS' project, enter:<br>
+                    <code class="code" data-lang="Java">#issues created by: kostik in: MPS</code>
+
+                </td></tr><tr id="d128523e1321" class="ijRowEven"><a name="d128523e1321"></a><td><a name="d128523e1323"></a>that affect</td><td><a name="d128523e1326"></a>&lt;version field value&gt;</td><td><a name="d128523e1329"></a>Returns issues that were detected in the specified version or build.</td><td><a name="d128523e1332"></a>To find all issues that are assigned to the user 'John' that were observed in version 'EAP3' of the product, enter:<br>
+                    <code class="code" data-lang="Java">affects: EAP3 assigned to: John</code>
+                    or
+                    <code class="code" data-lang="Java">#issues affecting: EAP3 assigned to: John</code>
+                    or<br>
+                    <code class="code" data-lang="Java">#issues that affect: EAP3 assigned to: John</code>
+
+                </td></tr><tr id="d128523e1349" class="ijRowOdd"><a name="d128523e1349"></a><td><a name="d128523e1351"></a>fix for</td><td><a name="d128523e1354"></a>&lt;version field value&gt;</td><td><a name="d128523e1357"></a>Returns issues that are to be fixed in a specified version of the product.</td><td><a name="d128523e1360"></a>To find all issues in the 'TEST' project that are assigned to the user 'John' and should be fixed for version '1.0.2' of the product, enter:<br>
+                    <code class="code" data-lang="Java">in: Test for: John fix for: 1.0.2</code>
+
+                </td></tr><tr id="d128523e1369" class="ijRowEven"><a name="d128523e1369"></a><td><a name="d128523e1371"></a>fixed in</td><td><a name="d128523e1374"></a>&lt;version field value&gt;</td><td><a name="d128523e1377"></a>Returns issues that were fixed in a specified version of the product.</td><td><a name="d128523e1380"></a>To find all issues that are assigned to the user 'John' that were fixed in version 'EAP3' of the product, enter:<br>
+                    <code class="code" data-lang="Java">for: John fixed in: EAP3</code>
+
+                </td></tr><tr id="d128523e1389" class="ijRowOdd"><a name="d128523e1389"></a><td><a name="d128523e1391"></a>tag <br>
+                    tagged as</td><td><a name="d128523e1396"></a>&lt;tag&gt;</td><td><a name="d128523e1399"></a>Returns issues that match a specified tag.</td><td><a name="d128523e1402"></a>To find all issues with the priority 'Minor' that were associated with the 'myparser' tag, enter:<br>
+                    <code class="code" data-lang="Java">#minor tag: myparser</code>
+                    or<br>
+                    <code class="code" data-lang="Java">#minor #issues tagged as: myparser</code>
+
+                </td></tr><tr id="d128523e1416" class="ijRowEven"><a name="d128523e1416"></a><td><a name="d128523e1418"></a>saved search</td><td><a name="d128523e1421"></a>&lt;saved search&gt;</td><td><a name="d128523e1424"></a>Returns issues that match the search criteria of a saved search.</td><td><a name="d128523e1427"></a>To find issues that match the search query that was saved as 'resharper this week', enter:<br>
+                    <code class="code" data-lang="Java">saved search: {resharper this week}</code>
+                </td></tr><tr id="d128523e1437" class="ijRowOdd"><a name="d128523e1437"></a><td><a name="d128523e1439"></a>Board &lt;board name&gt;</td><td><a name="d128523e1442"></a>&lt;sprint name&gt;</td><td><a name="d128523e1445"></a>Returns issues that are assigned to the specified sprint on the specified agile board.
+                Enclose sprint names with more than one word in braces.</td><td><a name="d128523e1448"></a>To find all issues that are assigned to sprint 21 on the YouTrack scrum board, enter:<br>
+                <code class="code" data-lang="Java">Board YouTrack scrum: {sprint 21}</code></td></tr></tbody></table>
+    <a name="Wildcards"></a><h2>Wildcards in Search Attributes</h2>
+        <a name="d128523e1460"></a><p>You can use the <code class="code" data-lang="Java">*</code> character as a wildcard in search attributes that reference values in many custom fields and sprints.
+            This wildcard matches zero or more characters in the search request.
+            You can only add a wildcard to the end of an attribute value.</p>
+        <ul class="list _ul"><li class="list__item"><a name="d128523e1468"></a>You can use the <code class="code" data-lang="Java">*</code> wildcard to find values in custom fields that store an <code class="code" data-lang="Java">enum</code>, <code class="code" data-lang="Java">state</code>, <code class="code" data-lang="Java">ownedField</code>, <code class="code" data-lang="Java">version</code>, or <code class="code" data-lang="Java">build</code>.
+            You can also use this wildcard for sprint names.</li><li class="list__item"><a name="d128523e1490"></a>Wildcards are not supported for fields that store a <code class="code" data-lang="Java">user</code>, <code class="code" data-lang="Java">date</code>, <code class="code" data-lang="Java">period</code>, <code class="code" data-lang="Java">float</code>, or <code class="code" data-lang="Java">integer</code>.</li><li class="list__item"><a name="d128523e1508"></a>The <code class="code" data-lang="Java">?</code> wildcard is not supported in attribute-based search queries, even for custom fields that store a <code class="code" data-lang="Java">string</code> type.</li></ul>
+    <a name="d128523e1519"></a><p></p><a name="d128523e1523"></a><h2>Search Attributes for Time Tracking</h2>
+        <a name="d128523e1525"></a><p>There is a dedicated set of search attributes that you can use to find issues that contain time tracking data.
+        These attributes look for specific values that have been added as work items to an issue.</p>
+
+        <table class=" wide" width="100%" id="d128523e1528"><thead><tr id="d128523e1530" class="ijRowHead"><a name="d128523e1530"></a><th width="15%"><a name="d128523e1532"></a>Attribute</th><th width="15%"><a name="d128523e1535"></a>Values</th><th width="30%"><a name="d128523e1538"></a>Description</th><th width="40%"><a name="d128523e1541"></a>Examples</th></tr></thead><tbody><tr id="d128523e1545" class="ijRowOdd"><a name="d128523e1545"></a><td><a name="d128523e1547"></a>work author</td><td><a name="d128523e1550"></a>user<br>
+                me</td><td><a name="d128523e1555"></a>Returns issues that have work items that were added by the specified user.</td><td><a name="d128523e1558"></a>To find all issues in the 'TST' project that have work items that were added by the current user, enter:
+                    <code class="code" data-lang="Java">in: TST work author: me</code></td></tr><tr id="d128523e1564" class="ijRowEven"><a name="d128523e1564"></a><td><a name="d128523e1566"></a>work type</td><td><a name="d128523e1569"></a>&lt;work item type&gt;</td><td><a name="d128523e1572"></a>Returns issues that have work items that are assigned the specified work item type.
+                The query <code class="code" data-lang="Java">work type: {No type}</code> returns issues that have work items that are not assigned a work item type.</td><td><a name="d128523e1578"></a>To find all issues in the 'TST' project that have work items that are assigned the <code class="code" data-lang="Java">Development</code> work item type, enter:
+                    <code class="code" data-lang="Java">in: TST work type: Development</code></td></tr><tr id="d128523e1587" class="ijRowOdd"><a name="d128523e1587"></a><td><a name="d128523e1589"></a>work date</td><td><a name="d128523e1592"></a>&lt;date&gt; <br>
+                    &lt;custom period&gt; <br>
+                    <a name="d128523e1598"></a><a href="#relative-date-parameters"><span>relative date parameter</span></a>
+                </td><td><a name="d128523e1602"></a>Returns issues that have work items that are recorded for the specified date or within the specified time frame.</td><td><a name="d128523e1605"></a>To find all issues in the 'TST' project that have work items that were added last week by the current user, enter:
+                    <code class="code" data-lang="Java">in: TST work date: {Last week} work author: me</code></td></tr></tbody></table>
+    <a name="d128523e1613"></a><h2>Date and Period Values</h2>
+        <a name="d128523e1615"></a><p>Several search attributes reference values that are stored as a date.
+        You can search for dates as single values or use a range of values to define a period.</p>
+        <a name="d128523e1618"></a><p>Specify dates in the format: <code class="code" data-lang="Java">YYYY-MM-DD</code> or <code class="code" data-lang="Java">YYYY-MM</code> or <code class="code" data-lang="Java">MM-DD</code>.
+            You also can specify a time in 24h format: <code class="code" data-lang="Java">HH:MM:SS</code> or <code class="code" data-lang="Java">HH:MM</code>.
+            To specify both date and time, use the format: <code class="code" data-lang="Java">YYYY-MM-DD}}T{{HH:MM:SS</code>.
+            For example, the search query <code class="code" data-lang="Java">created: 2010-01-01T12:00 .. 2010-01-01T15:00</code> returns all issues that were created on 1 January 2010 between 12:00 and 15:00.</p>
+        <a name="d128523e1643"></a><p>You can also use pre-defined relative parameters to search for date values.
+            The values for these parameters are calculated relative to the current date according to the time zone of the current user.
+            The actual value for each parameter is shown in the query assist panel.</p>
+            <figure><a class="lightbox" href="/help/img/youtrack/7.0/relativeDateCalculations.zoomed.png"><img alt="/help/img/youtrack/7.0/relativeDateCalculations.png" title="/help/img/youtrack/7.0/relativeDateCalculations.png" src="/help/img/youtrack/7.0/relativeDateCalculations.png" width="600" height="211"></a></figure>
+        <a name="d128523e1648"></a><p>The following relative date parameters are supported:</p>
+        <table class="" width="100%" id="relative-date-parameters"><thead><tr id="d128523e1654" class="ijRowHead"><a name="d128523e1654"></a><th width="20%"><a name="d128523e1656"></a>Parameter</th><th><a name="d128523e1659"></a>Description</th></tr></thead><tbody><tr id="d128523e1663" class="ijRowOdd"><a name="d128523e1663"></a><td><a name="d128523e1665"></a>Today</td><td><a name="d128523e1668"></a>The current calendar day.</td></tr><tr id="d128523e1672" class="ijRowEven"><a name="d128523e1672"></a><td><a name="d128523e1674"></a>Yesterday</td><td><a name="d128523e1677"></a>The previous calendar day.</td></tr><tr id="d128523e1681" class="ijRowOdd"><a name="d128523e1681"></a><td><a name="d128523e1683"></a>Sunday</td><td><a name="d128523e1686"></a>The calendar Sunday for the current week.</td></tr><tr id="d128523e1690" class="ijRowEven"><a name="d128523e1690"></a><td><a name="d128523e1692"></a>Monday</td><td><a name="d128523e1695"></a>The calendar Monday for the current week.</td></tr><tr id="d128523e1700" class="ijRowOdd"><a name="d128523e1700"></a><td><a name="d128523e1702"></a>Tuesday</td><td><a name="d128523e1705"></a>The calendar Tuesday for the current week.</td></tr><tr id="d128523e1709" class="ijRowEven"><a name="d128523e1709"></a><td><a name="d128523e1711"></a>Wednesday</td><td><a name="d128523e1714"></a>The calendar Wednesday for the current week.</td></tr><tr id="d128523e1718" class="ijRowOdd"><a name="d128523e1718"></a><td><a name="d128523e1720"></a>Thursday</td><td><a name="d128523e1723"></a>The calendar Thursday for the current week.</td></tr><tr id="d128523e1727" class="ijRowEven"><a name="d128523e1727"></a><td><a name="d128523e1729"></a>Friday</td><td><a name="d128523e1732"></a>The calendar Friday for the current week.</td></tr><tr id="d128523e1736" class="ijRowOdd"><a name="d128523e1736"></a><td><a name="d128523e1738"></a>Saturday</td><td><a name="d128523e1741"></a>The calendar Saturday for the current week.</td></tr><tr id="d128523e1745" class="ijRowEven"><a name="d128523e1745"></a><td><a name="d128523e1747"></a>{This week}</td><td><a name="d128523e1750"></a>The period from 00:00 Monday to 23:59 Sunday for the current week.</td></tr><tr id="d128523e1755" class="ijRowOdd"><a name="d128523e1755"></a><td><a name="d128523e1757"></a>{Last week}</td><td><a name="d128523e1760"></a>The period from 00:00 Monday to 23:59 for the previous week.</td></tr><tr id="d128523e1764" class="ijRowEven"><a name="d128523e1764"></a><td><a name="d128523e1766"></a>{Two weeks ago}</td><td><a name="d128523e1769"></a>The period from 00:00 Monday to 23:59 for the calendar week two weeks prior to the current date.</td></tr><tr id="d128523e1773" class="ijRowOdd"><a name="d128523e1773"></a><td><a name="d128523e1775"></a>{Three weeks ago}</td><td><a name="d128523e1778"></a>The period from 00:00 Monday to 23:59 for the calendar week three weeks prior to the current date.</td></tr><tr id="d128523e1782" class="ijRowEven"><a name="d128523e1782"></a><td><a name="d128523e1784"></a>{This month}</td><td><a name="d128523e1787"></a>The period from the first day to the last day of the current calendar month.</td></tr><tr id="d128523e1791" class="ijRowOdd"><a name="d128523e1791"></a><td><a name="d128523e1793"></a>{Last month}</td><td><a name="d128523e1796"></a>The period from the first day to the last day of the previous calendar month.</td></tr><tr id="d128523e1800" class="ijRowEven"><a name="d128523e1800"></a><td><a name="d128523e1802"></a>Older</td><td><a name="d128523e1805"></a>The period from 1 January 1970 to the last day of the month two months prior to the current date.</td></tr></tbody></table>
+    <a name="Sort-Attributes"></a><h2>Sort Attributes</h2>
+
+        <a name="d128523e1813"></a><p>You can specify the sort order for the list of issues that are returned by the search query.</p>
+        <table class=" wide" width="100%" id="d128523e1816"><thead><tr id="d128523e1818" class="ijRowHead"><a name="d128523e1818"></a><th width="15%"><a name="d128523e1820"></a>Attribute</th><th width="15%"><a name="d128523e1823"></a>Value</th><th width="30%"><a name="d128523e1826"></a>Sort Criteria</th><th width="40%"><a name="d128523e1829"></a>Example</th></tr></thead><tbody><tr id="d128523e1833" class="ijRowOdd"><a name="d128523e1833"></a><td><a name="d128523e1835"></a>sort by <br>
+                    order by</td><td><a name="d128523e1840"></a>attribute name</td><td><a name="d128523e1843"></a>asc<br>
+                    desc</td><td><a name="d128523e1848"></a>To find all issues with the 'Fixed' state that were either assigned to or reported by the current user,
+                    and sort them by the date of the last update in descending order,
+                    displaying the most recently updated issue first, enter:<br>
+                    <code class="code" data-lang="Java">#my #fixed sort by: updated desc</code>
+
+                </td></tr></tbody></table>
+        <a name="d128523e1858"></a><p>You can sort issues by any of the attributes on the following list.
+            In the <a name="d128523e1860"></a><a href="Search-Query-Grammar.html"><span>Search Query Grammar</span></a>, these attributes represent the <code class="code" data-lang="Java">&lt;SortAttribute&gt;</code> value.</p>
+        <table class="no_header wide" width="100%" id="d128523e1866"><tbody><tr id="d128523e1868" class="ijRowOdd"><a name="d128523e1868"></a><td><a name="d128523e1870"></a>star<br>
+                    updated<br>
+                    updater</td><td><a name="d128523e1877"></a>{resolved date}<br>
+                    project<br>
+                    reporter</td><td><a name="d128523e1884"></a>{issue id}<br>
+                    links<br>
+                    votes</td><td><a name="d128523e1891"></a>summary<br>
+                    &lt;custom field&gt;</td></tr></tbody></table>
+    <div class="last-modified">Last modified: 2 February 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

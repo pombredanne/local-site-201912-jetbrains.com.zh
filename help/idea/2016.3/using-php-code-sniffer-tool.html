@@ -1,0 +1,327 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta class="swiftype" name="product" data-type="string" content="/idea/2016.3/"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><meta charset="UTF-8"><meta name="robots" content="noindex"><title>IntelliJ IDEA 2016.3 Help :: Using PHP Code Sniffer Tool</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Using_PHP_Code_Sniffer_Tool"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-swiftype-index="false"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.3 Help</h3><div class="shortcuts-switcher" data-swiftype-index="false"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Windows/Linux Default</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWin</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">Mac OS X</option><option data-group="secondary" value="eclipse_mac_os_x">Eclipse (Mac OS X)</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (Mac OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper (Mac OS X)</option><option data-group="secondary" value="emacs">Emacs (Mac OS X)</option></select></div><div class="panel-trigger" data-swiftype-index="false"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="using-php-mess-detector.html">Using PHP Mess Detector</a></div><h1>Using PHP Code Sniffer Tool</h1><a name="d766e18"></a><p><a name="d766e19"></a><span class="emphasis">This feature is supported in the Ultimate edition only.</span></p>
+             
+                <aside class="warning ">
+                    <a name="d1646e280"></a><p><a name="d1646e281"></a><span class="emphasis">
+                        The following is only valid when PHP Plugin is installed and enabled!
+                    </span></p>
+                </aside>
+             
+        <a name="d464804e43"></a><p>In this section:</p><ul><li class="list__item"><a href="#d464804e49">Introduction</a></li><li class="list__item"><a href="#d464804e79">Before you start</a></li><li class="list__item"><a href="#d464804e92">Choosing the Code Sniffer script to use</a></li><li class="list__item"><a href="#d464804e128">Configuring a local Code Sniffer script</a></li><li class="list__item"><a href="#d464804e207">Configuring a Code Sniffer associated with a PHP interpreter</a></li><li class="list__item"><a href="#d464804e238">Configuring advanced PHP Code Sniffer options</a></li><li class="list__item"><a href="#enablingCodeSniffer">Configuring PHP Code Sniffer as a IntelliJ IDEA inspection</a></li><li class="list__item"><a href="#appointCodingStyle">Choosing a custom coding style to check your code against</a></li><li class="list__item"><a href="#d464804e431">Sharing a custom coding style with the team</a></li><li class="list__item"><a href="#d464804e477">Running Code Sniffer in the batch mode</a></li><li class="list__item"><a href="#d464804e500">Excluding files from Code Sniffer inspection</a></li></ul><a name="d464804e49"></a><h2>Introduction</h2>
+    <a name="d464804e51"></a><p>
+              In addition to built-in coding assistance, IntelliJ IDEA provides code style check through integration with the <a name="d464804e53"></a><a href="http://pear.php.net/package/PHP_CodeSniffer" data-external="true"><span>PHP Code Sniffer</span></a> tool,
+              which validates your code for consistence with a coding standard of your choice.
+              You can appoint one of the predefined <a name="d464804e56"></a><a href="http://pear.php.net/manual/en/package.php.php-codesniffer.coding-standard-tutorial.php" data-external="true"><span>coding standards</span></a>
+              or use <a name="d464804e59"></a><a href="http://pear.php.net/manual/en/package.php.php-codesniffer.coding-standard-tutorial.php" data-external="true"><span>your own previously defined coding standard</span></a>
+              with the root directory outside the default PHP Code Sniffer’s Standards directory. Moreover, you can share your custom coding style with your team fellows.
+          </p>
+          <a name="d464804e63"></a><p>
+              To use PHP Code Sniffer right from IntelliJ IDEA instead of from a command line, you need to register it in IntelliJ IDEA and configure it
+              as a IntelliJ IDEA <a name="d464804e65"></a><a href="code-inspection.html"><span>code inspection</span></a>. Once installed and enabled in IntelliJ IDEA, the tool is available in any opened PHP file,
+              so no steps are required from your side to launch it. The on-the-fly code check is activated upon every update in the file
+              thus making it extremely easy to get rid of problems reported by PHP Code Sniffer.
+          </p>
+
+    <a name="d464804e69"></a><p>
+              Errors and warnings reported by PHP Code Sniffer on-the-fly are displayed as pop-up messages. When the tool is run in the batch mode, the errors and warnings
+              are displayed in the <a name="d464804e71"></a><span class="control">Inspection Results</span> tool window.
+              Anyway, each message has the <code class="code" data-lang="Java">phpcs</code> prefix to distinguish it from IntelliJ IDEA  internal inspections.
+          </p>
+
+<a name="d464804e79"></a><h2>Before you start</h2>
+        <a name="d464804e81"></a><p>
+                Make sure the <a name="d464804e83"></a><span class="keyword">PHP</span> plugin is enabled.
+                 
+                 
+         
+        The <a name="d831e5668"></a><span class="emphasis"></span> plugin is&nbsp;not&nbsp;bundled with IntelliJ IDEA, but it can be installed from the <a name="d831e5671"></a><span class="emphasis">JetBrains plugin repository</span>
+            as described in <a name="d831e5674"></a><a href="installing-updating-and-uninstalling-repository-plugins.html"><span>Installing, Updating and Uninstalling Repository Plugins</span></a> and <a name="d831e5676"></a><a href="enabling-and-disabling-plugins.html"><span>Enabling and Disabling Plugins</span></a>.
+     
+        </p>
+    <a name="d464804e92"></a><h2>Choosing the Code Sniffer script to use</h2>
+        <a name="d464804e94"></a><p>
+             
+     
+    You can use PHP Code Sniffer local scripts or scripts associated with PHP interpreters. There can be a number of local and remote PHP interpreters,
+    the one specified on the <a name="d604e1305"></a><span class="control">PHP</span> page of the <a name="d604e1308"></a><span class="control">Settings</span> dialog box is considered <a name="d604e1311"></a><span class="emphasis">Project Default</span>.
+    Learn more about configuring PHP interpreters in <a name="d604e1314"></a><a href="configuring-remote-php-interpreters.html"><span>Configuring Remote PHP Interpreters</span></a> or in <a name="d604e1317"></a><a href="configuring-local-php-interpreters.html"><span>Configuring Local PHP Interpreters</span></a>.
+ 
+
+        </p>
+        <ol class="list _decimal"><li class="list__item"><a name="d464804e101"></a>
+                 
+         
+         
+         
+            Open the <a name="d831e8113"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by pressing <kbd data-default="Ctrl+Alt+S" data-default_for_gnome="Ctrl+Alt+S" data-default_for_kde="Ctrl+Alt+S" data-default_for_xwin="Ctrl+Alt+S" data-emacs="Ctrl+Alt+S" data-jbuilder="N/A" data-visual_studio="Alt+F7" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Alt+S" data-mac_os_x_10.5_="&#x2318;," data-mac_os_x="&#x2318;," data-eclipse_mac_os_x="&#x2318;," data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+S</kbd> or by choosing <a name="d831e8117"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d831e8120"></a><span class="menupath">IntelliJ IDEA | Preferences</span> for OS X.
+         
+         
+     
+        Expand the <a name="d831e8231"></a><span class="control">Languages&amp;Frameworks</span> node, and then  
+         
+         
+         
+        click <a name="d831e8217"></a><span class="control">Code Sniffer</span> under <a name="d831e8220"></a><span class="control">PHP</span>.
+     
+     
+            </li><li class="list__item"><a name="d464804e115"></a>
+                From the <a name="d464804e117"></a><span class="control">Configuration</span> drop-down list in the <a name="d464804e120"></a><span class="control">Development Environment</span> area,
+                 
+         
+         
+         
+        choose the script to use:
+        <ul class="list _bullet"><li class="list__item"><a name="d604e1373"></a>
+                To use the script associated with a specific remote PHP interpreter, choose the name of this interpreter.
+            </li><li class="list__item"><a name="d604e1376"></a>
+                To use the script associated with the default project interpreter,
+                that is, the one chosen on the <a name="d604e1378"></a><span class="control">PHP</span> page of the <a name="d604e1381"></a><span class="control">Settings</span> dialog box,
+                choose <a name="d604e1384"></a><span class="control">By default project interpreter</span>.
+            </li><li class="list__item"><a name="d604e1388"></a>
+                To use a local script, choose <a name="d604e1390"></a><span class="control">Local</span>. In this case the local Code Sniffer will be executed no matter
+                which PHP interpreter - local or remote - is used in the project. Note that there can be only one
+                <a name="d604e1393"></a><span class="emphasis">Local</span> configuration for Code Sniffer because IntelliJ IDEA runs a script
+                (<code class="code" data-lang="Java">phpcs.bat</code> for Windows or <code class="code" data-lang="Java">phpcs</code> for Linux)
+                which contains a path to a PHP engine.
+            </li></ul>
+     
+
+            </li></ol>
+    <a name="d464804e128"></a><h2>Configuring a local Code Sniffer script</h2>
+        <ol class="list _decimal"><li class="list__item"><a name="d464804e132"></a>
+                Make sure the <a name="d464804e134"></a><a href="http://pear.php.net/manual/en/about.pear.php" data-external="true"><span>PEAR</span></a> package manager is installed on your machine.
+            </li><li class="list__item"><a name="d464804e138"></a>
+                Download and install the <a name="d464804e140"></a><a href="http://pear.php.net/package/PHP_CodeSniffer" data-external="true"><span>PHP Code Sniffer</span></a>.
+                To check it, switch to the directory with the <code class="code" data-lang="Java">pear.bat</code> file and run the following command:
+                <code class="code" data-lang="Java">phpcs --version</code>
+                <a name="d464804e149"></a><p>
+                    If the tool is available, you will get a message in the following format:
+                    <code class="code" data-lang="Java">PHP_CodeSniffer version &lt;version&gt; (stable) by Squiz Pty Ltd. (http://www.squiz.net)</code>
+                </p>
+                <a name="d464804e155"></a><p>
+                    To have code checked against your own custom coding standard, <a name="d464804e157"></a><a href="http://pear.php.net/manual/en/package.php.php-codesniffer.coding-standard-tutorial.php" data-external="true"><span>create it</span></a>.
+                    Store the rules and the <code class="code" data-lang="Java">ruleset.xml</code> file that points to them in the coding standard root directory.
+                </p>
+            </li><li class="list__item"><a name="d464804e165"></a>
+                Register the local PHP Code Sniffer script in IntelliJ IDEA:
+                <ol class="list _decimal"><li class="list__item"><a name="d464804e169"></a>
+                         
+         
+         
+         
+            Open the <a name="d831e8113"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by pressing <kbd data-default="Ctrl+Alt+S" data-default_for_gnome="Ctrl+Alt+S" data-default_for_kde="Ctrl+Alt+S" data-default_for_xwin="Ctrl+Alt+S" data-emacs="Ctrl+Alt+S" data-jbuilder="N/A" data-visual_studio="Alt+F7" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Alt+S" data-mac_os_x_10.5_="&#x2318;," data-mac_os_x="&#x2318;," data-eclipse_mac_os_x="&#x2318;," data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+S</kbd> or by choosing <a name="d831e8117"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d831e8120"></a><span class="menupath">IntelliJ IDEA | Preferences</span> for OS X.
+         
+         
+     
+        Expand the <a name="d831e8231"></a><span class="control">Languages&amp;Frameworks</span> node, and then  
+         
+         
+         
+        click <a name="d831e8217"></a><span class="control">Code Sniffer</span> under <a name="d831e8220"></a><span class="control">PHP</span>.
+     
+     
+                    </li><li class="list__item"><a name="d464804e183"></a>
+                        On the <a name="d464804e185"></a><a href="code-sniffer.html"><span>Code Sniffer</span></a> page that opens, click <img alt="/help/img/idea/2016.3/browseButton.png" title="/help/img/idea/2016.3/browseButton.png" src="/help/img/idea/2016.3/browseButton.png" width="15" height="15" class="inline-icon-15"> next to the <a name="d464804e189"></a><span class="control">Configuration</span> drop-down list.
+                    </li><li class="list__item"><a name="d464804e193"></a>
+                         
+                 
+                 
+                 
+            In the <a name="d604e1413"></a><span class="control">Code Sniffer</span> dialog box that opens, specify the location of the Code Sniffer executable <code class="code" data-lang="Java">phpcs.bat</code>
+                or <code class="code" data-lang="Java">phpcs</code> in the <a name="d604e1423"></a><span class="control">PHP Code Sniffer path</span> text box.
+            Type the path manually or click the <a name="d604e1426"></a><span class="control">Browse</span> button <img alt="browseButton.png" title="browseButton.png" src="/help/img/idea/2016.3/browseButton.png" width="15" height="15" class="inline-icon-15">
+            and select the path in the dialog box, that opens.
+             
+                        <a name="d464804e197"></a><p>
+                             
+         
+         
+         
+         
+        To check that the specified path to <code class="code" data-lang="Java">phpcs.bat</code> or <code class="code" data-lang="Java">phpcs</code> ensures interaction between IntelliJ IDEA and Code Sniffer, that is,
+        the tool can be launched from IntelliJ IDEA
+        and IntelliJ IDEA will receive problem reports from it, click the <a name="d604e1449"></a><span class="control">Validate</span> button.
+        This validation is equal to running the <code class="code" data-lang="Java">phpcs --version</code> command.
+        If validation passes successfully, IntelliJ IDEA displays the information on the detected Code Sniffer version.
+     
+                        </p>
+                    </li></ol>
+            </li></ol>
+    <a name="d464804e207"></a><h2>Configuring a Code Sniffer associated with a PHP interpreter</h2>
+        <ol class="list _decimal"><li class="list__item"><a name="d464804e211"></a>
+                 
+         
+         
+         
+            Open the <a name="d831e8113"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by pressing <kbd data-default="Ctrl+Alt+S" data-default_for_gnome="Ctrl+Alt+S" data-default_for_kde="Ctrl+Alt+S" data-default_for_xwin="Ctrl+Alt+S" data-emacs="Ctrl+Alt+S" data-jbuilder="N/A" data-visual_studio="Alt+F7" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Alt+S" data-mac_os_x_10.5_="&#x2318;," data-mac_os_x="&#x2318;," data-eclipse_mac_os_x="&#x2318;," data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+S</kbd> or by choosing <a name="d831e8117"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d831e8120"></a><span class="menupath">IntelliJ IDEA | Preferences</span> for OS X.
+         
+         
+     
+        Expand the <a name="d831e8231"></a><span class="control">Languages&amp;Frameworks</span> node, and then  
+         
+         
+         
+        click <a name="d831e8217"></a><span class="control">Code Sniffer</span> under <a name="d831e8220"></a><span class="control">PHP</span>.
+     
+     
+            </li><li class="list__item"><a name="d464804e225"></a>
+                 
+         
+         
+        On the <a name="d604e1472"></a><a href="code-sniffer.html"><span>Code Sniffer</span></a> page that opens, click <img alt="/help/img/idea/2016.3/browseButton.png" title="/help/img/idea/2016.3/browseButton.png" src="/help/img/idea/2016.3/browseButton.png" width="15" height="15" class="inline-icon-15"> next to the <a name="d604e1476"></a><span class="control">Configuration</span> drop-down list.
+        The <a name="d604e1480"></a><span class="control">Code Sniffer</span> dialog box opens showing a list of all the configured Code Sniffer scripts in the left-hand pane,
+        one of them is of the type <a name="d604e1483"></a><span class="emphasis">Local</span> and others are named after the PHP interpreters with which the scripts are associated.
+        Click <img alt="/help/img/idea/2016.3/new.png" title="/help/img/idea/2016.3/new.png" src="/help/img/idea/2016.3/new.png" width="12" height="12" class="inline-icon-12"> on the toolbar.
+     
+            </li><li class="list__item"><a name="d464804e230"></a>
+                 
+         
+        In the <a name="d604e1493"></a><span class="control">Code Sniffer by Remote Interpreter</span> dialog box that opens, choose the remote PHP interpreter to use the associated script from.
+        If the list does not contain a relevant interpreter, click <img alt="/help/img/idea/2016.3/browseButton.png" title="/help/img/idea/2016.3/browseButton.png" src="/help/img/idea/2016.3/browseButton.png" width="15" height="15" class="inline-icon-15">
+        and configure a remote interpreter in the <a name="d604e1498"></a><span class="control">CLI Interpreters</span> dialog box
+        as described in <a name="d604e1501"></a><a href="configuring-remote-php-interpreters.html"><span>Configuring Remote PHP Interpreters</span></a>.
+        <a name="d604e1504"></a><p>
+            When you click <a name="d604e1506"></a><span class="control">OK</span>, IntelliJ IDEA brings you back to the <a name="d604e1509"></a><span class="control">Code Sniffer</span> dialog box
+            where the new <a name="d604e1512"></a><span class="emphasis">Code Sniffer</span> configuration is added to the list and the right-hand pane shows the chosen remote PHP interpreter,
+            the path to the Code Sniffer associated with it, and the advanced PHP Code Sniffer options.
+        </p>
+     
+            </li></ol>
+    <a name="d464804e238"></a><h2>Configuring advanced PHP Code Sniffer options</h2>
+
+                <a name="d464804e240"></a><p>
+                    IntelliJ IDEA provides the ability to specify advanced PHP Code Sniffer options and thus fine tune the PHP Code Sniffer process behavior
+                    depending on the configuration of your computer and the rule sets used.
+                </p>
+            <ol class="list _decimal"><li class="list__item"><a name="d464804e245"></a>
+                 
+         
+         
+         
+            Open the <a name="d831e8113"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by pressing <kbd data-default="Ctrl+Alt+S" data-default_for_gnome="Ctrl+Alt+S" data-default_for_kde="Ctrl+Alt+S" data-default_for_xwin="Ctrl+Alt+S" data-emacs="Ctrl+Alt+S" data-jbuilder="N/A" data-visual_studio="Alt+F7" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Alt+S" data-mac_os_x_10.5_="&#x2318;," data-mac_os_x="&#x2318;," data-eclipse_mac_os_x="&#x2318;," data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+S</kbd> or by choosing <a name="d831e8117"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d831e8120"></a><span class="menupath">IntelliJ IDEA | Preferences</span> for OS X.
+         
+         
+     
+        Expand the <a name="d831e8231"></a><span class="control">Languages&amp;Frameworks</span> node, and then  
+         
+         
+         
+        click <a name="d831e8217"></a><span class="control">Code Sniffer</span> under <a name="d831e8220"></a><span class="control">PHP</span>.
+     
+     
+            </li><li class="list__item"><a name="d464804e259"></a>
+                In the <a name="d464804e261"></a><span class="control">Maximum number of messages per file</span> text box, set the upper limit for the total number of messages to be reported for a file.
+                All the messages above this limit will be rejected and IntelliJ IDEA will display the following warning right in the code:
+                <a name="d464804e264"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+Too many PHP Code Sniffer messages
+                </code></div>
+            </li><li class="list__item"><a name="d464804e268"></a>
+                In the <a name="d464804e270"></a><span class="control">Tool process timeout</span> text box, specify how long you want IntelliJ IDEA to wait for a result from PHP Code Sniffer,
+                whereupon the process is killed to prevent excessive CPU and memory usage.
+            </li></ol>
+        <a name="enablingCodeSniffer"></a><h2>Configuring PHP Code Sniffer as a IntelliJ IDEA inspection</h2>
+            <ol class="list _decimal"><li class="list__item"><a name="d464804e280"></a>
+                 
+         
+            Open the <a name="d831e8187"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by pressing <kbd data-default="Ctrl+Alt+S" data-default_for_gnome="Ctrl+Alt+S" data-default_for_kde="Ctrl+Alt+S" data-default_for_xwin="Ctrl+Alt+S" data-emacs="Ctrl+Alt+S" data-jbuilder="N/A" data-visual_studio="Alt+F7" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Alt+S" data-mac_os_x_10.5_="&#x2318;," data-mac_os_x="&#x2318;," data-eclipse_mac_os_x="&#x2318;," data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+S</kbd> or by choosing <a name="d831e8191"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d831e8194"></a><span class="menupath">IntelliJ IDEA | Preferences</span> for OS X,
+         
+         
+            and  
+         
+         
+         
+        click <a name="d831e8217"></a><span class="control">Inspections</span> under <a name="d831e8220"></a><span class="control">Editor</span>.
+     
+     
+
+            </li><li class="list__item"><a name="d464804e292"></a>
+                On the <a name="d464804e294"></a><a href="inspections-2.html"><span>Inspections</span></a> page that opens, select the <a name="d464804e296"></a><span class="control">PHP Code Sniffer validation</span> check box under the <a name="d464804e299"></a><span class="control">PHP</span> node.
+            </li><li class="list__item"><a name="d464804e303"></a>
+                On the right-hand pane of the page, configure the PHP Code Sniffer tool using the controls in  the <a name="d464804e305"></a><span class="control">Options</span> area:
+                <ol class="list _decimal"><li class="list__item"><a name="d464804e310"></a>
+                        From the <a name="d464804e312"></a><span class="control">Severity</span> drop-down list, choose the <a name="d464804e315"></a><a href="configuring-inspection-severities.html"><span>severity degree</span></a> for the Code Sniffer inspection.
+                        The selected value determines how serious the detected discrepancies will be treated by IntelliJ IDEA
+                        and presented in the <a name="d464804e318"></a><a href="running-inspections.html"><span>inspection results</span></a>.
+                    </li><li class="list__item"><a name="d464804e322"></a>
+                        In the <a name="d464804e324"></a><span class="control">Coding standard</span> drop-down list, appoint the coding style to check your code against.
+                        The list contains all the coding standards installed inside the main <code class="code" data-lang="Java">PHP_CodeSniffer</code> directory structure.
+                        <a name="d464804e330"></a><p>
+                            Use one of the predefined <a name="d464804e332"></a><a href="http://pear.php.net/manual/en/package.php.php-codesniffer.coding-standard-tutorial.php" data-external="true"><span>coding standards</span></a>
+                            or choose <a name="d464804e335"></a><span class="control">Custom</span> to <a name="d464804e338"></a><a href="#appointCodingStyle"><span>appoint your own standard</span></a>.
+                        </p>
+                    </li><li class="list__item"><a name="d464804e343"></a>
+                        Optionally, select the <a name="d464804e345"></a><span class="control">Ignore warnings</span> check box to have only errors reported and suppress reporting warnings.
+                        This option is equal to the <code class="code" data-lang="Java">-n</code> command line argument.
+                    </li></ol>
+            </li></ol>
+        <a name="appointCodingStyle"></a><h2>Choosing a custom coding style to check your code against</h2>
+
+                <a name="d464804e358"></a><p>
+                    You can have code checked against <a name="d464804e360"></a><a href="http://pear.php.net/manual/en/package.php.php-codesniffer.coding-standard-tutorial.php" data-external="true"><span>your own previously defined coding standard</span></a>
+                    with the root directory outside the default PHP Code Sniffer’s Standards directory.
+                    This root directory should contain the rules themselves and the <code class="code" data-lang="Java">ruleset.xml</code> file that points to them.
+                </p>
+            <ol class="list _decimal"><li class="list__item"><a name="d464804e369"></a>
+                <a name="d464804e371"></a><a href="accessing-settings.html"><span>Open the Settings dialog box</span></a>, and click <a name="d464804e374"></a><span class="control">Inspections</span>. The <a name="d464804e377"></a><a href="inspections-2.html"><span>Inspections</span></a> page opens.
+                Select the <a name="d464804e379"></a><span class="control">PHP Code Sniffer validation</span> check box under the <a name="d464804e382"></a><span class="control">PHP</span> node.
+            </li><li class="list__item"><a name="d464804e386"></a>
+                From the <a name="d464804e388"></a><span class="control">Coding standard</span> drop-down list, choose <a name="d464804e391"></a><span class="control">Custom</span>.
+            </li><li class="list__item"><a name="d464804e395"></a>
+                Click the <a name="d464804e397"></a><span class="control">Browse</span> button <img alt="browseButton.png" title="browseButton.png" src="/help/img/idea/2016.3/browseButton.png" width="15" height="15" class="inline-icon-15">.
+            </li><li class="list__item"><a name="d464804e403"></a>
+                In the <a name="d464804e405"></a><span class="control">Custom Coding Standard</span> dialog box that opens, specify the path to the root directory of your own coding standard
+                in the <a name="d464804e408"></a><span class="control">Root directory</span>. Type the path manually or click the <a name="d464804e411"></a><span class="control">Browse</span> button <img alt="browseButton.png" title="browseButton.png" src="/help/img/idea/2016.3/browseButton.png" width="15" height="15" class="inline-icon-15">
+                and choose the relevant folder in the <a name="d464804e416"></a><a href="select-path-dialog.html"><span>dialog that opens</span></a>.
+
+                    <a name="d464804e422"></a><p>
+                        The selected root directory should contain the <code class="code" data-lang="Java">ruleset.xml</code> file that points to the rules.
+                    </p>
+            </li></ol>
+        <a name="d464804e431"></a><h2>Sharing a custom coding style with the team</h2>
+            <ol class="list _decimal"><li class="list__item"><a name="d464804e435"></a>
+                Put the root directory of your coding standard under the <a name="d464804e437"></a><a href="project.html"><span>project root</span></a>.
+            </li><li class="list__item"><a name="d464804e441"></a>
+                <a name="d464804e443"></a><a href="#enablingCodeSniffer"><span>Configure Code Sniffer as a IntelliJ IDEA inspection</span></a>.
+            </li><li class="list__item"><a name="d464804e447"></a>
+                <a name="d464804e449"></a><a href="#appointCodingStyle"><span>Appoint your coding standard</span></a>.
+            </li><li class="list__item"><a name="d464804e453"></a>
+                At the top of the <a name="d464804e455"></a><a href="inspections-2.html"><span>Inspections</span></a> page, select the <a name="d464804e457"></a><span class="control">Share Profile</span> check box.
+            </li><li class="list__item"><a name="d464804e461"></a>
+                On the <a name="d464804e463"></a><a href="version-control.html"><span>Version Control</span></a> page of the <a name="d464804e465"></a><span class="control">Settings</span>
+           dialog box,
+                put the root directory of your coding standard <a name="d464804e471"></a><a href="associating-a-directory-with-a-specific-version-control-system.html"><span>under version control</span></a>.
+            </li></ol>
+        <a name="d464804e477"></a><h2>Running Code Sniffer in the batch mode</h2>
+            <ol class="list _decimal"><li class="list__item"><a name="d464804e481"></a>
+                To <a name="d464804e483"></a><a href="running-inspections.html"><span>run the inspection</span></a>, choose <a name="d464804e486"></a><span class="menupath">Code | Inspect code</span> on the main menu. Specify the inspection scope and profile.
+            </li><li class="list__item"><a name="d464804e490"></a>
+                View the inspection results in the <a name="d464804e492"></a><a href="inspection-results-tool-window.html"><span>Inspection Results Tool Window</span></a>. Errors and warnings reported by PHP Code Sniffer have the <code class="code" data-lang="Java">phpcs</code> prefix
+                to distinguish them from IntelliJ IDEA  internal inspections.
+            </li></ol>
+        <a name="d464804e500"></a><h2>Excluding files from Code Sniffer inspection</h2>
+             
+         
+         
+        <a name="d604e1326"></a><p>
+            When waiting for Code Sniffer response  exceeds the limit specified in the <a name="d604e1328"></a><span class="control">Tool process timeout</span> field on <a name="d604e1331"></a><a href="code-sniffer.html"><span>Code Sniffer</span></a> page, IntelliJ IDEA suggests adding the file to the <a name="d604e1333"></a><span class="emphasis">ignore list</span>.
+            This list is shown on the <a name="d604e1336"></a><span class="control">Code Sniffer</span> page in the <a name="d604e1339"></a><span class="control">Ignored files</span> area.  For each file, IntelliJ IDEA displays its name and location.
+        </p>
+        <ul class="list _bullet"><li class="list__item"><a name="d604e1345"></a>
+                To delete a file from the list and have Code Sniffer process it again, select the file and click the <a name="d604e1347"></a><span class="control">Remove file</span> button <img alt="delete.png" title="delete.png" src="/help/img/idea/2016.3/delete.png" width="12" height="12" class="inline-icon-12">.
+            </li><li class="list__item"><a name="d604e1353"></a>
+                To remove all the files from the list, click the <a name="d604e1355"></a><span class="control">Clean the list</span> button <img alt="close.png" title="close.png" src="/help/img/idea/2016.3/close.png" width="12" height="12" class="inline-icon-12">.
+            </li></ul>
+     
+        <div class="navigation-links _bottom"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="using-php-mess-detector.html">Using PHP Mess Detector</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content">```
+                <div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d464804e510"></a><a href="code-inspection.html"><span>Code Inspection</span></a></li><li class="list__item"><a name="d464804e514"></a><a href="php-specific-guidelines.html"><span>PHP-Specific Guidelines</span></a></li></ul></div><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d464804e521"></a><a href="code-sniffer.html"><span>Code Sniffer</span></a></li><li class="list__item"><a name="d464804e523"></a><a href="inspections-2.html"><span>Inspections</span></a></li></ul></div><div class="seealso__col"><h3>External Links:</h3><ul class="list"><li class="list__item"><a name="d464804e538"></a><a href="http://pear.php.net/package/PHP_CodeSniffer" data-external="true"><span>http://pear.php.net/package/PHP_CodeSniffer</span></a></li></ul></div></div></section><div class="last-modified" data-swiftype-index="false">Last modified: 21 March 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

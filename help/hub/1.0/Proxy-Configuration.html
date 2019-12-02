@@ -1,0 +1,212 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"></meta><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><title>Hub  Help :: Proxy Configuration</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Proxy-Configuration"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search Hub Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>Hub  Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="Starting-and-Stopping-Hub.html">Starting and Stopping Hub</a><a class="navigation-links__next" href="Providing-Hub-Configuration-Parameters.html">Providing Hub Configuration Parameters</a></div><h1>Proxy Configuration</h1><a name="d52587e3"></a><p>
+        <a name="d52587e5"></a><span class="emphasis">Note:</span> <code class="code" data-lang="Java">&lt;hub_home&gt;/directory_name</code>
+        should be read as “open the console and change directory to
+        <code class="code" data-lang="Java">directory_name</code> under Hub home directory.”
+    </p><a name="d52587e15"></a><p>All commands listed below are Unix/Linux/Mac OS X commands. If you’re working on a Windows server, simply replace
+        <code class="code" data-lang="Java">.sh</code> with <code class="code" data-lang="Java">.bat</code>.
+    </p><ul><li class="list__item"><a href="#d52587e26">Configuring Hub to Work Behind Reverse Proxy</a></li><li class="list__item"><a href="#d52587e72">Nginx configuration</a><ul class="list _bullet"><li class="list__item"><a href="#d52587e74">Sample Nginx headers configuration (non SSL)</a></li><li class="list__item"><a href="#d52587e104">Sample Nginx headers configuration (SSL)</a></li><li class="list__item"><a href="#d52587e124">Converting Java Key Store to Format Required by Nginx</a></li></ul></li><li class="list__item"><a href="#d52587e176">Apache HTTP server configuration</a></li><li class="list__item"><a href="#d52587e225">IIS reverse proxy</a></li></ul><a name="d52587e26"></a><h2>Configuring Hub to Work Behind Reverse Proxy</h2>
+        <a name="d52587e28"></a><p>You can set up Hub to work behind a reverse proxy server.</p>
+
+        <a name="d52587e31"></a><p>Start with configuring Hub to use a Base URL (the URL that end users will request
+            for to access your Hub installation):
+        </p>
+        <a name="d52587e34"></a><div class="code-block" data-lang="Console"><code class="code-block__wrapper">&lt;hub_home&gt;/bin/hub.sh configure --listen-port <span class="m">1111</span> --base-url http://hub.mydomain.com:2222</code></div>
+
+        <a name="d52587e37"></a><p>where:</p>
+        <ul class="list _bullet"><li class="list__item"><a name="d52587e42"></a><code class="code" data-lang="Console">1111</code> is the port number Hub will listen to</li><li class="list__item"><a name="d52587e47"></a><code class="code" data-lang="Console">http://hub.mydomain.com</code> is the address of your proxy server</li><li class="list__item"><a name="d52587e52"></a><code class="code" data-lang="Console">2222</code> is the port number your proxy will listen to</li></ul>
+
+        <a name="d52587e59"></a><p>
+            <a name="d52587e61"></a><span class="emphasis">NOTE:</span>
+            Make sure to execute <code class="code" data-lang="Java">configure</code> command on behalf of the same OS user that runs Hub service itself.
+            This command creates configuration files and folders; Hub service user should have enough file system
+            permissions to access them afterwards.
+        </p>
+
+        <a name="d52587e68"></a><p>Now configure headers in your proxy server, and you’re done. Configuration guidelines for Nginx, Apache
+            HTTP Server, and IIS are provided below.
+        </p>
+    <a name="d52587e72"></a><h2>Nginx configuration</h2>
+
+        <a name="d52587e74"></a><h3>Sample Nginx headers configuration (non SSL)</h3>
+            <a name="d52587e76"></a><div class="code-block" data-lang="Shell"><code class="code-block__wrapper">server <span class="o">{</span>
+    listen 2222<span class="p">;</span>
+    server_name localhost<span class="p">;</span>
+
+    location / <span class="o">{</span>
+        proxy_set_header X-Forwarded-Host <span class="nv">$http_host</span><span class="p">;</span>
+        proxy_set_header X-Forwarded-For <span class="nv">$proxy_add_x_forwarded_for</span><span class="p">;</span>
+        proxy_set_header X-Forwarded-Proto <span class="nv">$scheme</span><span class="p">;</span>
+        proxy_http_version 1.1<span class="p">;</span>
+
+        proxy_pass http://hubmachine.domain.local:1111<span class="p">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></div>
+
+            <a name="d52587e79"></a><p>where:</p>
+
+            <ul class="list _bullet"><li class="list__item"><a name="d52587e84"></a>
+                    <code class="code" data-lang="Shell">listen 2222</code>
+                    is the port that you have previously specified as a
+                    <code class="code" data-lang="Console">--base-url</code>
+                    parameter
+                </li><li class="list__item"><a name="d52587e93"></a>
+                    <code class="code" data-lang="Console">proxy_pass http://hubmachine.domain.local:1111</code>
+                    is the path to your Hub machine with the port that you have previously specified using the
+                    <code class="code" data-lang="Console">-–listen-port</code>
+                    command
+                </li></ul>
+         
+
+
+        <a name="d52587e104"></a><h3>Sample Nginx headers configuration (SSL)</h3>
+            <a name="d52587e106"></a><div class="code-block" data-lang="Shell"><code class="code-block__wrapper">server <span class="o">{</span>
+    listen <span class="m">443</span> ssl<span class="p">;</span>
+
+    ssl_certificate         &lt;path_to_certificate&gt;
+    ssl_certificate_key     &lt;path_to_key&gt;
+
+    server_name localhost<span class="p">;</span>
+
+    location / <span class="o">{</span>
+        proxy_set_header X-Forwarded-Host <span class="nv">$http_host</span><span class="p">;</span>
+        proxy_set_header X-Forwarded-For <span class="nv">$proxy_add_x_forwarded_for</span><span class="p">;</span>
+        proxy_set_header X-Forwarded-Proto <span class="nv">$scheme</span><span class="p">;</span>
+        proxy_http_version 1.1<span class="p">;</span>
+
+        proxy_pass http://hubmachine.domain.local:1111<span class="p">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></div>
+
+            <a name="d52587e109"></a><p><a name="d52587e110"></a><span class="emphasis">Note:</span> Please refer to the corresponding Nginx documentation pages for a description
+                of
+                <a name="d52587e113"></a><a href="http://nginx.org/en/docs/http/server_names.html" data-external="true"><span>server_name</span></a>,
+                <a name="d52587e116"></a><a href="http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_set_header" data-external="true"><span>proxy_set_header</span></a>
+                ,
+                <a name="d52587e119"></a><a href="http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_pass" data-external="true"><span>proxy_pass</span></a>.
+            </p>
+         
+
+        <a name="d52587e124"></a><h3>Converting Java Key Store to Format Required by Nginx</h3>
+
+            <a name="d52587e126"></a><p>If you currently use Java Key Store, in order to configure SSL terminating proxy with Nginx you must
+                convert it to the format required by Nginx &mdash; PKCS12 key store.
+            </p>
+
+
+            <a name="d52587e129"></a><p>You will use keytool and openssl to perform conversion.</p>
+
+
+            <a name="d52587e132"></a><a name="dynaProc0"></a><section class="procedure-steps"><h2>To get a PKCS12 key store:</h2><ol class="list _decimal"><li class="list__item">Convert your current .jks file to PKCS12 key store format .p12:
+                    <a name="d52587e136"></a><div class="code-block" data-lang="Console"><code class="code-block__wrapper">keytool -importkeystore -srckeystore oldkeystore.jks -destkeystore newkeystore.p12 -deststoretype PKCS12
+Enter destination keystore password: <span class="o">[</span>enter private key password from oldkeystore.jks, it will be password <span class="k">for</span> newkeystore.p12<span class="o">]</span>
+Re-enter new password: <span class="o">[</span>same as above<span class="o">]</span>
+Enter <span class="nb">source </span>keystore password: <span class="o">[</span>enter password <span class="k">for</span> oldkeystore.jks<span class="o">]</span>
+...
+Enter key password <span class="k">for</span> &lt;key <span class="nb">alias </span>name&gt; <span class="o">[</span>enter private key password from oldkeystore.jks<span class="o">]</span>
+...
+                    
+</code></div>
+                    <a name="d52587e139"></a><p><a name="d52587e140"></a><span class="emphasis">Note:</span> You will be required to enter a "destination keystore password". If your
+                        <code class="code" data-lang="Java">.jks</code> keystore contains a private key with a password, then the
+                        "destination keystore password" should equal the password of the private key.
+                    </p>
+                </li><li class="list__item">List the new keystore file contents:
+
+                    <a name="d52587e150"></a><div class="code-block" data-lang="Console"><code class="code-block__wrapper">keytool -deststoretype PKCS12 -keystore newkeystore.p12 -list
+Enter keystore password: <span class="o">[</span>enter password <span class="k">for</span> newkeystore.p12 provided on step 1<span class="o">]</span>
+...
+                    
+</code></div>
+
+                </li><li class="list__item">Extract pem (certificate) from <code class="code" data-lang="Java">.p12</code> keystore file:
+
+                    <a name="d52587e159"></a><div class="code-block" data-lang="Console"><code class="code-block__wrapper">openssl pkcs12 -nokeys -in newkeystore.p12 -out certfile.pem
+Enter Import Password: <span class="o">[</span>enter password <span class="k">for</span> newkeystore.p12 provided on step 1<span class="o">]</span>
+...
+                    
+</code></div>
+
+                </li><li class="list__item">Extract unencrypted key file from <code class="code" data-lang="Java">.p12</code> keystore file:
+
+                    <a name="d52587e168"></a><div class="code-block" data-lang="Console"><code class="code-block__wrapper">openssl pkcs12 -nocerts -nodes -in newkeystore.p12 -out keyfile.key
+Enter Import Password: <span class="o">[</span>enter password <span class="k">for</span> newkeystore.p12 provided on step 1<span class="o">]</span>
+...
+                    
+</code></div>
+                </li></ol></section>
+         
+    <a name="d52587e176"></a><h2>Apache HTTP server configuration</h2>
+
+        <a name="d52587e178"></a><p>Make sure to enable <code class="code" data-lang="Java">proxy_http</code>,
+            <code class="code" data-lang="Java">rewrite modules</code> (and optionally <code class="code" data-lang="Java">headers</code>
+            if you want to use SSL) using the <code class="code" data-lang="Java">a2enmod</code> script:
+        </p>
+
+        <a name="d52587e193"></a><div class="code-block" data-lang="Console"><code class="code-block__wrapper"><span class="nv">$ </span>a2enmod headers
+<span class="nv">$ </span>a2enmod rewrite
+<span class="nv">$ </span>a2enmod proxy_http
+        
+</code></div>
+
+        <a name="d52587e196"></a><p>Add the following directives to the <code class="code" data-lang="Java">VirtualHost</code> section of a relevant <code class="code" data-lang="Java">.conf</code> file:
+        </p>
+
+
+        <a name="d52587e205"></a><div class="code-block" data-lang="Shell"><code class="code-block__wrapper">DefaultType none
+
+RewriteEngine on
+AllowEncodedSlashes on
+
+RewriteCond %<span class="o">{</span>QUERY_STRING<span class="o">}</span> <span class="nv">transport</span><span class="o">=</span>polling
+RewriteRule /<span class="o">(</span>.*<span class="o">)</span><span class="nv">$ </span>http://127.0.0.1:1111/<span class="nv">$1</span> <span class="o">[</span>P<span class="o">]</span>
+
+ProxyRequests off
+
+ProxyPass / http://127.0.0.1:1111/
+ProxyPassReverse / http://127.0.0.1:1111/
+        
+</code></div>
+
+        <a name="d52587e208"></a><p>where
+            <code class="code" data-lang="Java">1111</code>
+            is the port number you configured Hub to listen to.
+        </p>
+
+
+        <a name="d52587e215"></a><p>If you want to use SSL, additionally add the following directives to the
+            <code class="code" data-lang="Java">VirtualHost</code>
+            section:</p>
+
+
+        <a name="d52587e221"></a><div class="code-block" data-lang="Shell"><code class="code-block__wrapper">RequestHeader <span class="nb">set </span>X-Forwarded-Proto <span class="s2">&quot;https&quot;</span></code></div>
+
+    <a name="d52587e225"></a><h2>IIS reverse proxy</h2>
+        <a name="d52587e227"></a><p><a name="d52587e228"></a><span class="emphasis">Note:</span> Please make sure that Anonymous Auth is enabled in IIS!</p>
+
+        <a name="d52587e232"></a><a name="dynaProc1"></a><section class="procedure-steps"><h2>To use IIS and ARR as a reverse proxy:</h2><ol class="list _decimal"><li class="list__item">Install ARR from
+                <a name="d52587e236"></a><a href="http://www.iis.net/downloads/microsoft/application-request-routing" data-external="true"><span>here</span></a>
+            </li><li class="list__item">
+                In IIS Manager, connect to the IIS server - in this case,
+                <code class="code" data-lang="Java">localhost</code>.
+            </li><li class="list__item">Highlight the server in the <a name="d52587e248"></a><b id="d52587e248">Connections</b> pane.</li><li class="list__item">Double-click URL Rewrite.</li><li class="list__item">Click <a name="d52587e257"></a><b id="d52587e257">View server variables</b> on the right pane.</li><li class="list__item">Add <code class="code" data-lang="Java">HTTP_X_FORWARDED_HOST</code>,
+                <code class="code" data-lang="Java">HTTP_X_FORWARDED_SCHEMA</code>, and <code class="code" data-lang="Java">HTTP_X_FORWARDED_PROTO</code> to the list.
+            </li><li class="list__item">Highlight the server in the <a name="d52587e276"></a><b id="d52587e276">Connections</b> pane.</li><li class="list__item">Double-click <a name="d52587e282"></a><b id="d52587e282">Application Request Routing Cache</b>.</li><li class="list__item">Click <a name="d52587e288"></a><b id="d52587e288">Server Proxy Settings</b> under the Proxy heading in the <a name="d52587e291"></a><b id="d52587e291">Actions</b> pane.</li><li class="list__item">Tick the <a name="d52587e297"></a><b id="d52587e297">Enable proxy</b> checkbox.</li><li class="list__item">Clear the <a name="d52587e303"></a><b id="d52587e303">Reverse rewrite host in response headers</b> checkbox and then click <a name="d52587e306"></a><span class="control">Apply</span>.</li><li class="list__item">In the <a name="d52587e313"></a><b id="d52587e313">Connections</b> pane, under Sites, highlight <a name="d52587e316"></a><b id="d52587e316">Default Web Site</b>.</li><li class="list__item">Double-click the <a name="d52587e322"></a><b id="d52587e322">URL Rewrite</b> feature, and click <a name="d52587e325"></a><span class="control">Add Rule(s)…</span> in the Actions pane.</li><li class="list__item">Add a reverse proxy rule, with server name: <code class="code" data-lang="Java">localhost:1111</code> (replace with
+                real location and port of your Hub service).
+            </li><li class="list__item">Open created rule, check rewrite url, add server variables:
+                <ul class="list _bullet"><li class="list__item"><a name="d52587e339"></a>set <code class="code" data-lang="Java">HTTP_X_FORWARDED_HOST</code> to <code class="code" data-lang="Java">{HTTP_HOST}</code>
+                    </li><li class="list__item"><a name="d52587e348"></a>set <code class="code" data-lang="Java">HTTP_X_FORWARDED_SCHEMA</code> to <code class="code" data-lang="Java">https</code>
+                        (if the IIS site is configured to https, else set to <code class="code" data-lang="Java">http</code>)
+                    </li><li class="list__item"><a name="d52587e360"></a>set <code class="code" data-lang="Java">HTTP_X_FORWARDED_PROTO</code> to <code class="code" data-lang="Java">https</code>
+                        (if the IIS site is configured to https, else set to <code class="code" data-lang="Java">http</code>)
+                    </li></ul>
+            </li></ol></section>
+    <div class="last-modified">Last modified: 2 June 2016 </div></article><div id="disqus_thread"></div></div></section></main></div><script src="/help/app/app.js"></script></body></html>

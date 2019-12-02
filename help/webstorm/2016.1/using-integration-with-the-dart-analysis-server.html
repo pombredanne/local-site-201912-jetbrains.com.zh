@@ -1,0 +1,136 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"></meta><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><title>WebStorm 2016.1 Help :: Using Integration with the Dart Analysis Server</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Using_Integration_with_the_Dart_Analysis_Server"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search WebStorm Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>WebStorm 2016.1 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWindow</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="using-integration-with-the-pub-tool.html">Using Integration with the Pub Tool</a><a class="navigation-links__next" href="running-and-debugging-dart-applications.html">Running and Debugging Dart Applications</a></div><h1>Using Integration with the Dart Analysis Server</h1><a name="d256544e7"></a><p>
+         
+        WebStorm provides interface for using the <a name="d9041e4782"></a><a href="https://github.com/dart-lang/analyzer_cli#dartanalyzer" data-external="true"><span>Dart Analyzer tool</span></a>.
+        The tool is intended for static analysis of your Dart source code.
+        All inconsistencies and potential problems are reported in the dedicated <a name="d9041e4785"></a><span class="control">Dart Analysis</span> tool window
+        with the possibility to navigate to the fragment of the source code where the problem was detected.
+        <figure><img alt="tool_window_dart_analysis.png" width="610" height="243" title="tool_window_dart_analysis.png" src="/help/img/idea/2016.1/tool_window_dart_analysis.png"></figure>
+     
+    </p><a name="d256544e12"></a><p>
+        On this page:
+    </p><ul><li class="list__item"><a href="#d256544e18">Messages List</a></li><li class="list__item"><a href="#d256544e23">Grouping and Sorting</a></li><li class="list__item"><a href="#d256544e28">Navigation and Speed Search</a></li><li class="list__item"><a href="#d256544e66">Configuring the Scope of Files to View Problem Reports From</a></li></ul><a name="d256544e18"></a><h2>Messages List</h2>
+         
+        <a name="d9041e4794"></a><p>
+            All the problem reports are displayed in a table which consists of two columns, <a name="d9041e4796"></a><span class="control">Description</span> and <a name="d9041e4799"></a><span class="control">Location</span>,
+            and a summary below.
+        </p>
+        <ul class="list _bullet"><li class="list__item"><a name="d9041e4805"></a>
+                The <a name="d9041e4807"></a><span class="control">Description</span> column shows  the message itself,
+                which can be an <a name="d9041e4810"></a><span class="emphasis">error message</span>, a <a name="d9041e4813"></a><span class="emphasis">warning</span>, or a <a name="d9041e4816"></a><span class="emphasis">hint</span>.
+            </li><li class="list__item"><a name="d9041e4820"></a>
+                The <a name="d9041e4822"></a><span class="control">Location</span> column shows the following data:
+                <ul class="list _ul"><li class="list__item"><a name="d9041e4827"></a>
+                        The name of the Dart package in which the problem arose. The Dart package name corresponds to the <code class="code" data-lang="Java">project name</code> from <code class="code" data-lang="Java">pubspec.yaml</code>.
+                    </li><li class="list__item"><a name="d9041e4836"></a>
+                        The relative from the the Dart package root to the file where the problem arose.
+                    </li><li class="list__item"><a name="d9041e4839"></a>
+                        The line number where the problem arose.
+                    </li></ul>
+            </li><li class="list__item"><a name="d9041e4844"></a>
+                The <a name="d9041e4846"></a><span class="control">Summary</span> area below the table shows the number of detected errors, warnings, or hints and the <a name="d9041e4849"></a><span class="emphasis">filter</span> status.
+            </li></ul>
+     
+    <a name="d256544e23"></a><h2>Grouping and Sorting</h2>
+         
+        <a name="d9041e4857"></a><p>
+            The messages in the <a name="d9041e4859"></a><span class="control">Dart Analysis</span> tool window can be grouped and sorted. By default, the messages are primarily sorted by their <a name="d9041e4862"></a><span class="emphasis">severity</span>, that is,
+             
+        the error messages are shown at the top of the list, then come warnings,
+        and finally hints are displayed.
+        In each severity group, messages are grouped by the Dart package name, which is super handy for projects with multiple <code class="code" data-lang="Java">pubspec.yaml</code> files.
+        In each package group, the messages are grouped by their file paths.
+        Finally, in each file group, the problems are sorted by the line number where they occurred.
+     
+        </p>
+        <a name="d9041e4868"></a><p>
+             
+        You can re-configure the secondary sorting:
+        <ul class="list _bullet"><li class="list__item"><a name="d9041e4741"></a>
+                Click the <a name="d9041e4743"></a><span class="control">Location</span> column header to
+                 
+        switch between the ascending and descending order
+        of the <a name="d9041e4776"></a><span class="emphasis">Dart package name + file path</span> sorting.
+        Note that this does not affect the order of severity groups, that is, errors are always shown first.
+        Line numbers are not taken into consideration either, for each particular file problems are always shown in ascending order of line numbers.
+     
+            </li><li class="list__item"><a name="d9041e4749"></a>
+                Click the <a name="d9041e4751"></a><span class="control">Description</span> column header
+                 
+        to perform the secondary sorting alphabetically by the problem description.
+        Note that this does no affect the primary grouping by severity.
+     
+            </li></ul>
+
+     
+        </p>
+        <a name="d9041e4873"></a><p>
+            To disable the primary grouping by severity, release the <a name="d9041e4875"></a><span class="control">Group by Severity</span> toggle button <img alt="icon_run_tool_window_dart_group_by_severity.png" width="14" height="14" title="icon_run_tool_window_dart_group_by_severity.png" src="/help/img/idea/2016.1/icon_run_tool_window_dart_group_by_severity.png" class="inline-icon-14">
+            on the toolbar.
+             
+        After that the severity of a problem is not taken into consideration at all and problem reports are sorted only by their <a name="d9041e4764"></a><span class="control">Description</span>
+        or <a name="d9041e4767"></a><span class="control">Location</span> (<a name="d9041e4770"></a><span class="emphasis">Dart package name + file path</span>).
+        This sorting method guarantees that all the problems for each particular file are grouped together in the table, regardless of their severity.
+     
+        </p>
+     
+    <a name="d256544e28"></a><h2>Navigation and Speed Search</h2>
+    <a name="d256544e30"></a><p>
+        WebStorm provides speed search through the messages in the <a name="d256544e32"></a><span class="control">Dart Analysis</span> tol window
+        with the possibility to navigate from a problem report to the fragment of the source code where the problem was detected.
+    </p>
+    <ul class="list _bullet"><li class="list__item"><a name="d256544e38"></a>
+            To locate problems for a specific file or to find a particular message, move the focus to the table and start typing the file name
+            or the text of the message.
+            WebStorm detects the matching row and selects it.
+            <a name="d256544e40"></a><p>
+                Fuzzy search with partial and middle matching is also supported. For example, if you start typing <code class="code" data-lang="Java">ain</code>,
+                the messages related to the <code class="code" data-lang="Java">main.dart</code> fill be also detected.
+            </p>
+        </li><li class="list__item"><a name="d256544e50"></a>
+            To navigate from a problem report to the source code where the problem occurred,
+            select the message in question and choose <a name="d256544e52"></a><span class="control">Jump to Source</span> on the context menu of the selection.
+        </li><li class="list__item"><a name="d256544e56"></a>
+            To have WebStorm automatically open the source file with the problem reported in the selected row,
+            press the <a name="d256544e58"></a><span class="control">Autoscroll to Source</span> toggle button <img alt="autoScrollToSource.png" width="20" height="21" title="autoScrollToSource.png" src="/help/img/idea/2016.1/autoScrollToSource.png" class="inline-icon-21"> on the toolbar.
+        </li></ul>
+<a name="d256544e66"></a><h2>Configuring the Scope of Files to View Problem Reports From</h2>
+        <a name="d256544e68"></a><p>
+             
+         
+         
+        You can configure the criteria according to which a problem report is displayed in the tool window or not:
+     
+        </p>
+        <ol class="list _decimal"><li class="list__item"><a name="d256544e80"></a>
+                Click the <a name="d256544e82"></a><span class="control">Filter</span> button <img alt="filter.png" width="16" height="16" title="filter.png" src="/help/img/idea/2016.1/filter.png" class="inline-icon-16"> on the toolbar.
+            </li><li class="list__item"><a name="d256544e88"></a>
+                In the <a name="d256544e90"></a><span class="control">Dart Problems Filter</span> pop-up window, specify the following:
+                <ul class="list _bullet"><li class="list__item"><a name="d9041e4886"></a>
+            In the <a name="d9041e4888"></a><span class="control">Severity</span> area, specify the types of messages to be shown, the available types are <a name="d9041e4891"></a><span class="control">Errors</span>,
+            <a name="d9041e4894"></a><span class="control">Warnings</span>, and <a name="d9041e4897"></a><span class="control">Hints</span>.
+            To have the problems of a severity level displayed, select the check box next to this severity level.
+        </li><li class="list__item"><a name="d9041e4901"></a>
+            In the <a name="d9041e4903"></a><span class="control">Files</span> area, choose the scope for which you want to see problem reports. The available options are:
+            <ul class="list _bullet"><li class="list__item"><a name="d9041e4908"></a><a name="d9041e4909"></a><span class="control">Whole project</span></li><li class="list__item"><a name="d9041e4912"></a><a name="d9041e4913"></a><span class="control">Current content root</span></li><li class="list__item"><a name="d9041e4916"></a>
+                    <a name="d9041e4918"></a><span class="control">Current package:</span> when this option is selected but no <code class="code" data-lang="Java">pubspec.yaml</code> file is detected
+                    up the folder hierarchy starting from the current file,
+                    then filtering is performed according to the content root where current file is located.
+                </li><li class="list__item"><a name="d9041e4925"></a><a name="d9041e4926"></a><span class="control">Current file</span></li></ul>
+        </li><li class="list__item"><a name="d9041e4931"></a>
+            Click the <a name="d9041e4933"></a><span class="control">Reset all filters</span> link to restore the default filter settings.
+        </li></ul>
+                <figure><img alt="tool_window_dart_analysis_filter_pop_up.png" width="330" height="254" title="tool_window_dart_analysis_filter_pop_up.png" src="/help/img/idea/2016.1/tool_window_dart_analysis_filter_pop_up.png"></figure>
+            </li></ol>
+        <a name="d256544e102"></a><p>
+             
+        Filtering is applied immediately as soon as you change the current settings.
+     
+        </p>
+    <div class="navigation-links _bottom"><a class="navigation-links__prev" href="using-integration-with-the-pub-tool.html">Using Integration with the Pub Tool</a><a class="navigation-links__next" href="running-and-debugging-dart-applications.html">Running and Debugging Dart Applications</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content"><div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d256544e112"></a><a href="dart-support.html"><span>Dart Support</span></a></li></ul></div><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d256544e129"></a><a href="dart-analysis-tool-window.html"><span>Dart Analysis Tool Window</span></a></li></ul></div><div class="seealso__col"><h3>Language and Framework-Specific Guidelines:</h3><ul class="list"><li class="list__item"><a name="d256544e122"></a><a href="javascript-specific-guidelines.html"><span>JavaScript-Specific Guidelines</span></a></li></ul></div><div class="seealso__col"><h3>External Links:</h3><ul class="list"><li class="list__item"><a name="d256544e117"></a><a href="http://www.dartlang.org/" data-external="true"><span>http://www.dartlang.org/</span></a></li></ul></div></div></section><div class="last-modified">Last modified: 11 July 2016 </div></article><div id="disqus_thread"></div></div></section></main></div><script src="/help/app/app.js"></script></body></html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"></meta><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta content="&#xA;       Increasing productivity of WebStorm, increasing the heap size and managing case of unicode literals.&#xA;    " name="description"><meta charset="UTF-8"><title>
+        WebStorm precise adjustments reference.
+    </title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Tuning_product_"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search WebStorm Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>WebStorm 2016.1 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWindow</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="scope-language-syntax-reference.html">Scope Language Syntax Reference</a><a class="navigation-links__next" href="directories-used-by-webstorm-to-store-settings-caches-plugins-and-logs.html">Directories Used by WebStorm to Store Settings, Caches, Plugins and Logs</a></div><h1>Tuning WebStorm</h1><a name="d242420e20"></a><p>In this section:</p><ul><li class="list__item"><a href="#d242420e92">Changing WebStorm properties</a></li><li class="list__item"><a href="#copy1">Managing *.vmoptions file</a><ul class="list _bullet"><li class="list__item"><a href="#d242420e178">Example: Increasing the heap size</a></li></ul></li><li class="list__item"><a href="#d242420e193">Managing idea.properties file</a><ul class="list _bullet"><li class="list__item"><a href="#d242420e199">Example: Changing case of unicode literals</a></li></ul></li><li class="list__item"><a href="#d242420e231">Specifying custom JDK, properties or vmoptions files across platforms</a></li></ul><a name="d242420e92"></a><h2>Changing WebStorm properties</h2>
+        <a name="d242420e94"></a><p>You can make WebStorm work faster by editing the default
+            <a name="d242420e96"></a><span class="emphasis">Java Virtual Machine (JVM)</span> settings. These operations require certain understanding of
+            the <a name="d242420e99"></a><span class="emphasis">JVM</span> functionality and may cause unexpected problems. Therefore it is strongly
+            recommended that you address the
+            <a name="d242420e102"></a><a href="https://intellij-support.jetbrains.com/hc/en-us" data-external="true"><span>JetBrains Support</span></a>
+            whereupon you will be provided with detailed instructions regarding which settings you need to update
+            and what values should be assigned to them.<br><br>
+            See also <a name="d242420e108"></a><a href="reporting-issues-and-sharing-your-feedback.html"><span>Reporting Issues and Sharing Your Feedback</span></a>.</p>
+         
+      
+        <a name="d242420e122"></a><p>WebStorm makes it possible to change <code class="code" data-lang="Java">*.vmoptions</code> and
+            <code class="code" data-lang="Java">idea.properties</code> files without editing them in the WebStorm installation folder.
+        </p>
+        <a name="d242420e131"></a><p>To create an empty <code class="code" data-lang="Java">idea.properties</code> file or to copy
+            <code class="code" data-lang="Java">*.vmoptions</code> file, choose
+            the <a name="d242420e139"></a><span class="menupath">Help | Edit Custom Properties</span> or <a name="d242420e142"></a><span class="menupath">Help | Edit Custom VM Options</span>
+            on the main menu respectively. Refer to the
+            <a name="d242420e145"></a><a href="index-of-menu-items.html#edit_custom_properties"><span>menu items description</span></a> for details.</p>
+     
+    <a name="copy1"></a><h2>Managing *.vmoptions file</h2>
+
+            <aside class="tip sideblock" rel="copy1"><a name="d242420e155"></a><p>You should edit a copy of the file. The reason is that app bundle is
+            signed and you should not modify any files inside the bundle; therefore, you need to make a copy in IDE
+                preferences folder, which you will modify.</p></aside>
+
+             
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         For <a name="d242491e128"></a><span class="emphasis">Mac OS X</span> systems: 
+             
+             
+             
+             
+            The file <code class="code" data-lang="Java">/Applications/WebStormXX.app/Contents/bin/webstorm.vmoptions</code>
+             
+            should be copied to <code class="code" data-lang="Java">~/Library/Preferences/WebStorm XX/webstorm.vmoptions</code>
+             
+             
+             
+             
+             
+             
+         
+
+     
+        <aside class="tip sideblock"><a name="d242420e161"></a><p>Mind the abbreviation scheme of the WebStorm name: <code class="code" data-lang="Java">XX</code> corresponds to the WebStorm
+            version.</p></aside>
+
+        <a name="d242420e167"></a><p>For <a name="d242420e169"></a><span class="emphasis">*NIX and Windows</span> systems:</p>
+             
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+
+        <a name="d242491e299"></a><p>To avoid editing files in the WebStorm installation folder, one should: </p>
+        <ol class="list _decimal"><li class="list__item"><a name="d242491e304"></a>Do one of the following:
+                <ul class="list _ul"><li class="list__item"><a name="d242491e308"></a>Copy the existing file from the WebStorm installation folder somewhere and save the
+                        path to this location in the environment variable <code class="code" data-lang="Java">WEBIDE_VM_OPTIONS</code>.</li><li class="list__item"><a name="d242491e314"></a>Copy the existing file
+                        <code class="code" data-lang="Java">&lt;WebStorm installation folder&gt;/bin/webstorm$BITS.vmoptions</code> from
+                        the WebStorm installation folder into the location under user home:
+                        <ul class="list _ul"><li class="list__item"><a name="d242491e321"></a>For <a name="d242491e323"></a><span class="emphasis">*NIX</span>: <br>
+                                <code class="code" data-lang="Java">$HOME/.WebStorm XX/webstorm$BITS.vmoptions</code>
+                             
+                            </li><li class="list__item"><a name="d242491e337"></a>For <a name="d242491e339"></a><span class="emphasis">Windows</span>:<br>
+                                <code class="code" data-lang="Java">%USERPROFILE%\.WebStorm XX\webstorm%BITS%.exe.vmoptions</code>
+                                 
+                            </li></ul>
+                        <a name="d242491e355"></a><p>The value of the variable BITS depends in the JVM used to run WebStorm: </p>
+                        <ul class="list _ul"><li class="list__item"><a name="d242491e360"></a>For 32-bit JVM it is empty.</li><li class="list__item"><a name="d242491e363"></a>For 64-bit JVM it is 64.</li></ul>
+                        <a name="d242491e367"></a><p>Refer to the support article
+                            <a name="d242491e369"></a><a href="https://intellij-support.jetbrains.com/hc/en-us/articles/206827547-Selecting-the-JDK-version-the-IDE-will-run-under" data-external="true"><span>Selecting the JDK version the IDE will run under</span></a>
+                        for details.
+                        </p>
+                     
+                    </li></ul>
+            </li><li class="list__item"><a name="d242491e378"></a>Edit this file in the new location. </li></ol>
+        <a name="d242491e382"></a><p>If <code class="code" data-lang="Java">WEBIDE_VM_OPTIONS</code> environment variable is defined, or the
+            <code class="code" data-lang="Java">*.vmoptions</code> file exists,
+            then this file is used instead of the file located in the WebStorm installation folder.</p>
+
+     
+         
+            <a name="d242420e178"></a><h3>Example: Increasing the heap size</h3>
+            <a name="d242420e180"></a><p>To increase WebStorm heap size, you should copy the original <code class="code" data-lang="Java">webstorm.vmoptions</code> file to the
+                above-mentioned location, and then modify the <code class="code" data-lang="Java">-Xmx</code> setting.</p>
+         
+    <a name="d242420e193"></a><h2>Managing IDEA.properties file</h2>
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+
+        <a name="d242491e413"></a><p>The file <code class="code" data-lang="Java">idea.properties</code>, located in the <code class="code" data-lang="Java">bin</code>
+            directory of the WebStorm installation folder, should not be edited. Instead of editing the original
+            <code class="code" data-lang="Java">idea.properties</code>, create file <code class="code" data-lang="Java">idea.properties</code>
+            in the location specified below, open it for editing and add the required
+            properties. </p>
+
+         
+            <a name="d242491e430"></a><p>So, depending on your platform:</p>
+            <ul class="list _ul"><li class="list__item"><a name="d242491e435"></a>For <a name="d242491e437"></a><span class="emphasis">Windows</span>: in <code class="code" data-lang="Java">%USERPROFILE%\.WebStorm XX</code>
+                      </li><li class="list__item"><a name="d242491e449"></a>For <a name="d242491e451"></a><span class="emphasis">*NIX</span>: in <code class="code" data-lang="Java">~/.WebStorm XX</code>
+                     
+                </li><li class="list__item"><a name="d242491e463"></a>For <a name="d242491e465"></a><span class="emphasis">Mac OS X</span>: in <code class="code" data-lang="Java">~/Library/Preferences/WebStorm XX</code>
+                     
+                </li></ul>
+         
+
+     
+  
+    <a name="d242420e199"></a><h3>Example: Changing case of unicode literals</h3>
+        <a name="unicode"></a>
+        <a name="d242420e203"></a><p>WebStorm allows defining whether non-ascii characters should use literals like <code class="code" data-lang="Java">'\u00AB'</code>
+            or <code class="code" data-lang="Java">'\00ab'</code>. </p>
+        <a name="d242420e212"></a><p>This behavior is controlled by the system property <code class="code" data-lang="Java">idea.native2ascii.lowercase</code>. By default,
+            upper case characters are used.</p>
+        <a name="d242420e218"></a><p>If it is desirable to use lower case characters, create the file <code class="code" data-lang="Java">idea.properties</code>
+            in the location specified above, open it for editing and add the following line:
+              </p>
+        <a name="d242420e226"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+idea.native2ascii.lowercase=true
+        </code></div>
+     
+    <a name="d242420e231"></a><h2>Specifying custom JDK, properties or vmoptions files across platforms</h2>
+        <a name="d242420e233"></a><p>A custom JDK, <code class="code" data-lang="Java">*.properties</code> and <code class="code" data-lang="Java">*.vmoptions</code> files are specified across platforms in
+            a unified way.</p>
+        <a name="d242420e242"></a><p>All the launchers look at the following environment variables:</p>
+        <ul class="list _ul"><li class="list__item"><a name="d242420e247"></a><code class="code" data-lang="Java">$&lt;IDE-NAME&gt;_JDK</code> (<code class="code" data-lang="Java">&lt;IDE-NAME&gt;_JDK_64</code>)</li><li class="list__item"><a name="d242420e255"></a><code class="code" data-lang="Java">$&lt;IDE-NAME&gt;_PROPERTIES</code></li><li class="list__item"><a name="d242420e259"></a><code class="code" data-lang="Java">$&lt;IDE-NAME&gt;_VM_OPTIONS</code></li></ul>
+    <div class="navigation-links _bottom"><a class="navigation-links__prev" href="scope-language-syntax-reference.html">Scope Language Syntax Reference</a><a class="navigation-links__next" href="directories-used-by-webstorm-to-store-settings-caches-plugins-and-logs.html">Directories Used by WebStorm to Store Settings, Caches, Plugins and Logs</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content"><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d242420e269"></a><a href="index-of-menu-items.html#edit_custom_properties"><span>Edit custom properties</span></a></li></ul></div><div class="seealso__col"><h3>External Links:</h3><ul class="list"><li class="list__item"><a name="d242420e275"></a><a href="http://devnet.jetbrains.com/docs/DOC-181" data-external="true"><span>Product files locations (caches, plugins, logs) on different operating systems</span></a></li></ul></div></div></section><div class="last-modified">Last modified: 11 July 2016 </div></article><div id="disqus_thread"></div></div></section></main></div><script src="/help/app/app.js"></script></body></html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta class="swiftype" name="product" data-type="string" content="/idea/2016.3/"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><meta charset="UTF-8"><meta name="robots" content="noindex"><title>IntelliJ IDEA 2016.3 Help :: Extract Parameter in ActionScript</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="ActionScriptIntroduce"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-swiftype-index="false"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.3 Help</h3><div class="shortcuts-switcher" data-swiftype-index="false"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Windows/Linux Default</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWin</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">Mac OS X</option><option data-group="secondary" value="eclipse_mac_os_x">Eclipse (Mac OS X)</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (Mac OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper (Mac OS X)</option><option data-group="secondary" value="emacs">Emacs (Mac OS X)</option></select></div><div class="panel-trigger" data-swiftype-index="false"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="android.html">Android</a></div><h1>Extract Parameter in ActionScript</h1><a name="d766e18"></a><p><a name="d766e19"></a><span class="emphasis">This feature is supported in the Ultimate edition only.</span></p><a name="d748e8"></a><p>This section discusses the <a name="d748e10"></a><a href="extract-parameter.html"><span>Extract Parameter</span></a> refactoring in ActionScript.</p><ul><li class="list__item"><a href="#actionscript">Example</a></li><li class="list__item"><a href="#actionscript_proc">Extracting parameter in ActionScript</a></li></ul><a name="actionscript"></a><h2>Example</h2>
+    <table class="              _layout-fixed" width="100%" id="d748e17"><thead><tr id="d748e19" class="ijRowHead"><a name="d748e19"></a><th width="50%"><a name="d748e21"></a>Before</th><th width="50%"><a name="d748e24"></a>After</th></tr></thead><tbody><tr id="d748e28" class="ijRowOdd"><a name="d748e28"></a><td><a name="d748e30"></a>
+            <a name="d748e32"></a><div class="code-block" data-lang="Actionscript"><code class="code-block__wrapper"><span class="c1">// Two ways of extracting a parameter for the function</span>
+<span class="c1">// formatPrice() will be shown.</span>
+
+<span class="kd">public</span> <span class="kd">function</span> <span class="nx">foo</span><span class="p">()</span><span class="o">:</span><span class="nx">void</span> <span class="p">{</span>
+    <span class="nx">formatPrice</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// The new parameter will be optional in the first</span>
+<span class="c1">// of the examples and required in the second example.</span>
+
+<span class="kd">public</span> <span class="kd">function</span> <span class="nx">formatPrice</span><span class="p">(</span><span class="nx">value</span><span class="o">:</span><span class="nb">int</span><span class="p">)</span><span class="o">:</span><span class="nb">String</span> <span class="p">{</span>
+    <span class="nf">trace</span><span class="p">(</span><span class="s2">&quot;currency: &quot;</span> <span class="o">+</span> <span class="s2">&quot;$&quot;</span><span class="p">);</span>
+    <span class="k">return</span> <span class="s2">&quot;$&quot;</span> <span class="o">+</span> <span class="nx">value</span><span class="o">;</span>
+<span class="p">}</span></code></div>
+        </td><td><a name="d748e36"></a>
+            <a name="d748e38"></a><div class="code-block" data-lang="Actionscript"><code class="code-block__wrapper"><span class="c1">// The function formatPrice() may be called as before because</span>
+<span class="c1">// the new parameter is introduced as an optional parameter.</span>
+
+<span class="kd">public</span> <span class="kd">function</span> <span class="nx">foo</span><span class="p">()</span><span class="o">:</span><span class="nx">void</span> <span class="p">{</span>
+    <span class="nx">formatPrice</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// The default value for the new parameter is specified</span>
+<span class="c1">// in the function definition.</span>
+
+<span class="kd">public</span> <span class="kd">function</span> <span class="nx">formatPrice</span><span class="p">(</span><span class="nx">value</span><span class="o">:</span><span class="nb">int</span><span class="o">,</span> <span class="nx">s</span><span class="o">:</span><span class="nb">String</span> <span class="o">=</span> <span class="s2">&quot;$&quot;</span><span class="p">)</span><span class="o">:</span><span class="nb">String</span> <span class="p">{</span>
+    <span class="nf">trace</span><span class="p">(</span><span class="s2">&quot;currency: &quot;</span> <span class="o">+</span> <span class="nx">s</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">s</span> <span class="o">+</span> <span class="nx">value</span><span class="o">;</span>
+<span class="p">}</span>
+
+
+<span class="c1">// The new parameter in this example is a required parameter.</span>
+<span class="c1">// So two values must be passed to formatPrice() now.</span>
+
+<span class="kd">public</span> <span class="kd">function</span> <span class="nx">foo</span><span class="p">()</span><span class="o">:</span><span class="nx">void</span> <span class="p">{</span>
+    <span class="nx">formatPrice</span><span class="p">(</span><span class="mi">0</span><span class="o">,</span> <span class="s2">&quot;$&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// The new parameter is a required parameter because the default</span>
+<span class="c1">// value for it is not specified in the function definition.</span>
+
+<span class="kd">public</span> <span class="kd">function</span> <span class="nx">formatPrice</span><span class="p">(</span><span class="nx">value</span><span class="o">:</span><span class="nb">int</span><span class="o">,</span> <span class="nx">s</span><span class="o">:</span><span class="nb">String</span><span class="p">)</span><span class="o">:</span><span class="nb">String</span> <span class="p">{</span>
+    <span class="nf">trace</span><span class="p">(</span><span class="s2">&quot;currency: &quot;</span> <span class="o">+</span> <span class="nx">s</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">s</span> <span class="o">+</span> <span class="nx">value</span><span class="o">;</span>
+<span class="p">}</span></code></div>
+        </td></tr></tbody></table>
+    <a name="actionscript_proc"></a><h2>Extracting parameter in ActionScript</h2>
+    <a name="d748e47"></a><a name="dynaProc0"></a><section class="procedure-steps"><h2>To extract a parameter in ActionScript</h2><ol class=".list _decimal"><li class="list__item">In the editor, place the cursor within the expression to be replaced by a parameter.</li><li class="list__item">
+           
+    Do one of the following:
+    <ul class="list _ul"><li class="list__item"><a name="d831e4861"></a>Press <kbd data-default="Ctrl+Alt+P" data-default_for_gnome="Ctrl+Alt+P" data-default_for_kde="Ctrl+Alt+P" data-default_for_xwin="Ctrl+Alt+P" data-emacs="Ctrl+Alt+P" data-jbuilder="N/A" data-visual_studio="Ctrl+Alt+P" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Alt+P" data-mac_os_x_10.5_="&#x2325;&#x2318;P" data-mac_os_x="&#x2325;&#x2318;P" data-eclipse_mac_os_x="&#x2325;&#x2318;P" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+P</kbd>.</li><li class="list__item"><a name="d831e4866"></a>Choose <a name="d831e4868"></a><span class="control">Refactor | Extract | Parameter</span> on the main menu.</li><li class="list__item"><a name="d831e4872"></a>Choose <a name="d831e4874"></a><span class="control">Refactor | Extract | Parameter</span> from the context menu.</li></ul>
+ 
+      </li><li class="list__item">
+         
+
+    If more than one expression is detected for the current cursor position, the <a name="d831e4940"></a><span class="control">Expressions</span> list appears.
+    If this is the case, select the required expression. To do that, click the expression.
+    Alternatively, use the <kbd>Up</kbd> and <kbd>Down</kbd> arrow keys to navigate to the expression of interest,
+    and then press <kbd data-default="Enter" data-default_for_gnome="Enter" data-default_for_kde="Enter" data-default_for_xwin="Enter" data-emacs="Enter" data-jbuilder="Enter" data-visual_studio="Enter" data-netbeans_6.5="N/A" data-eclipse="Enter" data-mac_os_x_10.5_="⏎" data-mac_os_x="⏎" data-eclipse_mac_os_x="⏎" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Enter</kbd> to select it.
+       
+
+     
+        <figure><img alt="/help/img/idea/2016.3/ActionScript_IntroduceParameter_SelectExpression.png" title="/help/img/idea/2016.3/ActionScript_IntroduceParameter_SelectExpression.png" src="/help/img/idea/2016.3/ActionScript_IntroduceParameter_SelectExpression.png" width="354" height="135"></figure>
+        </li><li class="list__item">In the <a name="d748e60"></a><a href="extract-parameter-dialog-for-actionscript.html"><span>Extract Parameter dialog</span></a>:
+                <ol class="list _decimal"><li class="list__item"><a name="d748e65"></a>Usually, IntelliJ IDEA sets a proper parameter type itself.
+                        If necessary, you can select another appropriate type from the
+                <a name="d748e67"></a><span class="control">Type</span> list.</li><li class="list__item"><a name="d748e71"></a>
+        Specify the parameter name in the <a name="d831e4959"></a><span class="control">Name</span> field.
+    </li><li class="list__item"><a name="d748e74"></a>The <a name="d748e76"></a><span class="control">Value</span> field, initially, contains the expression that you have selected.
+                Normally, you don't need to change this.
+                <a name="d748e79"></a><p>If the new parameter is going to be an optional parameter, the specified value will be used as
+                the default parameter value in the function definition.</p>
+                <a name="d748e82"></a><p>If the new parameter is introduced as a required parameter, the specified value will be added to the
+                function calls.</p>
+                <a name="d748e85"></a><p>For information about required and optional parameters, see the discussion of function parameters in
+<a name="d748e87"></a><a href="http://livedocs.adobe.com/flex/3/html/03_Language_and_Syntax_19.html" data-external="true"><span>Flex/ActionScript documentation</span></a>.</p>
+            </li><li class="list__item"><a name="d748e92"></a>If you want the new parameter to be an optional parameter, select the
+                <a name="d748e94"></a><span class="control">Optional parameter</span> check box.</li><li class="list__item"><a name="d748e98"></a>
+        If more than one occurrence of the expression is found within the function body, you can choose to replace only the selected occurrence or
+        all the found occurrences with the references to the new parameter. Use the <a name="d831e4967"></a><span class="control">Replace all occurrences</span> check box
+        to specify your intention.
+    </li><li class="list__item"><a name="d748e102"></a>Click <a name="d748e104"></a><span class="control">OK</span>.</li></ol>
+         <figure><img alt="/help/img/idea/2016.3/ActionScript_IntroduceParameter_Result.png" title="/help/img/idea/2016.3/ActionScript_IntroduceParameter_Result.png" src="/help/img/idea/2016.3/ActionScript_IntroduceParameter_Result.png" width="463" height="78"></figure>
+      </li></ol></section>
+<div class="navigation-links _bottom"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="android.html">Android</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content">```
+                <div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d748e119"></a><a href="extract-parameter-dialog-for-actionscript.html"><span>Extract Parameter Dialog for ActionScript</span></a></li></ul></div></div></section><div class="last-modified" data-swiftype-index="false">Last modified: 21 March 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"></meta><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><title>Hub 2.0 Help :: Refresh Token</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Refresh-Token"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search Hub Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>Hub 2.0 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="Authorization-Code.html">Authorization Code</a><a class="navigation-links__next" href="Resource-Owner-Password-Credentials.html">Resource Owner Password Credentials</a></div><h1>Refresh Token</h1><ul><li class="list__item"><a href="#AuthorizationCodewithaRefreshTokenFlow">Reference to the Standard</a></li><li class="list__item"><a href="#Prerequisites">Prerequisites</a></li><li class="list__item"><a href="#d71212e42">Refreshing an Access Token</a></li><li class="list__item"><a href="#AccessTokenRequestError">Error Response from Hub for the Access Token Request</a></li></ul><a name="AuthorizationCodewithaRefreshTokenFlow"></a><h2>Reference to the Standard</h2>
+        <a name="d71212e7"></a><p><a name="d71212e8"></a><a href="http://tools.ietf.org/html/rfc6749#section-4.1" data-external="true"><span>Specification for Authorization Code with a Refresh Token Flow (RFC 6749)</span></a></p>
+    <a name="Prerequisites"></a><h2>Prerequisites</h2>
+        <a name="d71212e14"></a><p><a name="d71212e15"></a><b id="d71212e15">Client is a desktop or mobile application</b>.</p>
+        <a name="d71212e19"></a><p>The client is registered as a service in Hub. That is, the client "knows" its <code class="code" data-lang="Java">serviceId</code>
+            and <code class="code" data-lang="Java">serviceSecret</code>. It should be able to store
+            <code class="code" data-lang="Java">refreshToken</code>. With refresh token it can access resources server even when
+            end-user is not online.</p>
+        <a name="d71212e31"></a><p>The client application obtained a <code class="code" data-lang="Java">refresh_token</code> from Hub. Hub supports issuing refresh tokens for the <a name="d71212e36"></a><a href="Authorization-Code.html"><span>Authorization Code</span></a> and <a name="d71212e38"></a><a href="Resource-Owner-Password-Credentials.html"><span>Resource Owner Password Credentials</span></a> authorization flows. </p>
+    <a name="d71212e42"></a><h2>Refreshing an Access Token</h2>
+
+
+        <a name="d71212e44"></a><p>If Hub issued a refresh token to the client, the
+            client makes a refresh request to the token endpoint by adding the
+            following parameters using the
+            <code class="code" data-lang="Java">"application/x-www-form-urlencoded"</code>
+            format with a character encoding of UTF-8 in the HTTP
+            request entity-body:
+        </p>
+
+        <dl><dt>grant_type</dt><dd>
+                Required. Value must be set to "refresh_token".
+            </dd><dt>refresh_token</dt><dd>
+                Required. The refresh token issued to the client.
+            </dd><dt>scope</dt><dd>
+                <a name="d71212e60"></a><p>Required. The scope of the access request: A space separated list of IDs of the registered in Hub
+                    services associated with the
+                    resource servers. For example, if the client wants to access issues in YouTrack it should find out the
+                    ID
+                    of YouTrack service in Hub. The client can access more then one resource server with a single access
+                    token.
+                </p>
+
+                <a name="d71212e63"></a><p><a name="d71212e64"></a><b id="d71212e64">Note:</b>The requested scope must not include any scope
+                    not originally granted by the resource owner, and if omitted is
+                    treated as equal to the scope originally granted by the
+                    resource owner.
+                </p>
+
+            </dd></dl>
+
+
+        <a name="d71212e70"></a><p>Because refresh tokens are typically long-lasting credentials used to
+            request additional access tokens, the refresh token is bound to the
+            client to which it was issued. If the client type is confidential or
+            the client was issued client credentials (or assigned other
+            authentication requirements), the client must authenticate with the Hub server as
+            <a name="d71212e72"></a><a href="http://tools.ietf.org/html/rfc6749#section-3.2.1" data-external="true"><span>described in RFC 6749</span></a>.
+        </p>
+
+
+        <a name="d71212e76"></a><p>For example, the client makes the following HTTP request using
+            transport-layer security (with extra line breaks for display purposes
+            only):
+        </p>
+
+
+        <a name="d71212e79"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="n">POST</span> <span class="o">/</span><span class="n">api</span><span class="o">/</span><span class="n">rest</span><span class="o">/</span><span class="n">oauth2</span><span class="o">/</span><span class="n">token</span>
+            <span class="n">Host</span><span class="o">:</span> <span class="n">hub</span><span class="o">.</span><span class="na">company</span><span class="o">.</span><span class="na">com</span>
+            <span class="n">Authorization</span><span class="o">:</span> <span class="n">Basic</span> <span class="n">czZCaGRSa3F0MzpnWDFmQmF0M2JW</span>
+            <span class="n">Content</span><span class="o">-</span><span class="n">Type</span><span class="o">:</span> <span class="n">application</span><span class="o">/</span><span class="n">x</span><span class="o">-</span><span class="n">www</span><span class="o">-</span><span class="n">form</span><span class="o">-</span><span class="n">urlencoded</span>
+
+            <span class="n">grant_type</span><span class="o">=</span><span class="n">refresh_token</span><span class="o">&amp;</span><span class="n">refresh_token</span><span class="o">=</span><span class="n">tGzv3JOkF0XG5Qx2TlKWIA</span></code></div>
+
+
+        <a name="d71212e83"></a><p>The authorization server (Hub) will:</p>
+
+        <ol class="list _decimal"><li class="list__item"><a name="d71212e88"></a>Require client authentication for confidential clients or for any
+                client that was issued client credentials (or with other
+                authentication requirements)</li><li class="list__item"><a name="d71212e91"></a>Authenticate the client if client authentication is included and
+                ensure that the refresh token was issued to the authenticated
+                client.</li><li class="list__item"><a name="d71212e94"></a>Validate the refresh token.</li></ol>
+
+        <a name="d71212e98"></a><p>If the refresh token is valid and authorized, Hub issues an access token.</p>
+
+        <a name="d71212e101"></a><p>If the request failed verification or is invalid, Hub returns
+            <a name="d71212e103"></a><a href="#AccessTokenRequestError"><span>an error response.</span></a>
+
+        </p>
+
+
+        <a name="d71212e107"></a><p>Along with new access token, Hub may issue a new refresh token, in which case
+            the client must discard the old refresh token and replace it with the
+            new one. The authorization server (Hub) may revoke the old
+            refresh token after issuing a new refresh token to the client. If a
+            new refresh token is issued, the refresh token scope must be
+            identical to that of the refresh token included by the client in the
+            request.
+        </p>
+
+    <a name="AccessTokenRequestError"></a><h2>Error Response from Hub for the Access Token Request</h2>
+        <dl><dt>error</dt><dd>
+                <a name="d71212e117"></a><p>A single ASCII [USASCII] error code from the following:</p>
+
+                <ul class="list _bullet"><li class="list__item"><a name="d71212e122"></a>
+                        <code class="code" data-lang="Java">invalid_request</code>
+                        -
+                        The request is missing a required parameter, includes an
+                        unsupported parameter value (other than grant type),
+                        repeats a parameter, includes multiple credentials,
+                        utilizes more than one mechanism for authenticating the
+                        client, or is otherwise malformed.
+                    </li><li class="list__item"><a name="d71212e128"></a>
+                        <code class="code" data-lang="Java">invalid_client</code>
+                        -
+                        Client authentication failed (e.g., unknown client, no
+                        client authentication included, or unsupported
+                        authentication method). The authorization server may
+                        return an HTTP 401 (Unauthorized) status code to indicate
+                        which HTTP authentication schemes are supported. If the
+                        client attempted to authenticate via the "Authorization"
+                        request header field, the Hub server will
+                        respond with an HTTP 401 (Unauthorized) status code and
+                        include the "WWW-Authenticate" response header field
+                        matching the authentication scheme used by the client.
+                    </li><li class="list__item"><a name="d71212e134"></a>
+                        <code class="code" data-lang="Java">invalid_grant</code>
+                        -
+                        The provided authorization grant (e.g., authorization
+                        code, resource owner credentials) or refresh token is
+                        invalid, expired, revoked, does not match the redirection
+                        URI used in the authorization request, or was issued to
+                        another client.
+                    </li><li class="list__item"><a name="d71212e140"></a>
+                        <code class="code" data-lang="Java">unauthorized_client</code>
+                        -
+                        The authenticated client is not authorized to use this
+                        authorization grant type.
+                    </li><li class="list__item"><a name="d71212e146"></a>
+                        <code class="code" data-lang="Java">unsupported_grant_type</code>
+                        -
+                        The authorization grant type is not supported by Hub.
+                    </li><li class="list__item"><a name="d71212e153"></a>
+                        <code class="code" data-lang="Java">invalid_scope</code>
+                        -
+                        The requested scope is invalid, unknown, malformed, or
+                        exceeds the scope granted by the resource owner.
+                    </li></ul>
+            </dd><dt>error_description</dt><dd>
+                Human-readable ASCII [USASCII] text providing
+                additional information, used to assist the client developer in
+                understanding the error that occurred.
+            </dd><dt>error_uri</dt><dd>
+                A URI identifying a human-readable web page with
+                information about the error, used to provide the client
+                developer with additional information about the error.
+            </dd></dl>
+
+        <a name="d71212e168"></a><p>The parameters are included in the entity-body of the HTTP response
+            using the "application/json" media type. The
+            parameters are serialized into a JSON structure by adding each
+            parameter at the highest structure level. Parameter names and string
+            values are included as JSON strings. Numerical values are included
+            as JSON numbers. The order of parameters does not matter and can
+            vary.
+        </p>
+
+
+        <a name="d71212e171"></a><p>For example:</p>
+
+
+        <a name="d71212e174"></a><div class="code-block" data-lang="HTML"><code class="code-block__wrapper">HTTP/1.1 400 Bad Request
+            Content-Type: application/json;charset=UTF-8
+            Cache-Control: no-store
+            Pragma: no-cache
+
+            {
+            &quot;error&quot;:&quot;invalid_request&quot;
+            }</code></div>
+    <div class="last-modified">Last modified: 19 September 2016 </div></article><div id="disqus_thread"></div></div></section></main></div><script src="/help/app/app.js"></script></body></html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="robots" content="noindex"><title>YouTrack Standalone 7.0 Help :: Python Client Library</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Python-Client-Library"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack Standalone Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>YouTrack Standalone 7.0 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="Import-Projects-from-JIRA.html">Import Projects from JIRA</a><a class="navigation-links__next" href="Import-from-CSV-File.html">Import from a CSV File</a></div><h1>Python Client Library</h1><aside class="note sideblock">
+        <a name="d121790e5"></a><p>Before you begin:</p>
+        <a name="d121790e8"></a><p>If you try to re-import same project several times, then you must delete previously imported data before the next attempt. </p>
+    </aside><a name="d121790e12"></a><p></p><ul><li class="list__item"><a href="#d121790e30">Compatibility</a></li><li class="list__item"><a href="#d121790e41">Installation</a></li><li class="list__item"><a href="#d121790e61">Authenticating</a></li><li class="list__item"><a href="#d121790e69">Get Issues</a></li><li class="list__item"><a href="#d121790e78">Create Issue</a></li><li class="list__item"><a href="#d121790e86">Other Methods</a></li></ul><a name="Intro"></a><a name="d121790e19"></a><p>This document describes <a name="d121790e21"></a><a href="http://python.org/" data-external="true"><span>Python</span></a> library that wraps YouTrack REST API.</p><a name="Getting_Started"></a><a name="Compatibility"></a><a name="d121790e30"></a><h2>Compatibility</h2>
+
+        <a name="d121790e32"></a><p>Current implementation of the Python Client Library and scripts is compatible with YouTrack 3.x and higher REST API and Python 2.6. <br>
+            If you use YouTrack 2.x, please refer to YouTrack Release Downloads Archive for the <a name="d121790e36"></a><a href="#Tools"><span>YouTrack 2.x compatible versions of the library and scripts</span></a>.</p>
+    <a name="d121790e41"></a><h2>Installation</h2>
+        <a name="Installation"></a>
+
+        <ol class="list _decimal"><li class="list__item"><a name="d121790e47"></a>Download <a name="d121790e49"></a><a href="https://github.com/JetBrains/youtrack-rest-python-library/" data-external="true"><span>the latest version of YouTrack Python Client library</span></a> and unzip it.</li><li class="list__item"><a name="d121790e53"></a>Install <a name="d121790e55"></a><a href="https://www.python.org/download/releases/2.7.6/" data-external="true"><span>Python</span></a>
+            </li></ol>
+    <a name="d121790e61"></a><h2>Authenticating</h2>
+        <a name="Authenticating"></a>
+
+        <a name="d121790e65"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="n">from</span> <span class="n">youtrack</span><span class="o">.</span><span class="na">connection</span> <span class="kn">import</span> <span class="nn">Connection</span>
+
+<span class="n">connection</span> <span class="o">=</span> <span class="n">Connection</span><span class="o">(</span><span class="err">&#39;</span><span class="n">http</span><span class="o">:</span><span class="c1">//teamsys.intellij.net&#39;, &#39;xxx&#39;, &#39;xxx&#39;)</span></code></div>
+    <a name="d121790e69"></a><h2>Get Issues</h2>
+        <a name="Get_Issues"></a>
+
+        <a name="d121790e73"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper"># get one issue
+connection.getIssue(&#39;SB-1&#39;)
+
+# get first 10 issues in project JT for query &#39;for: me #unresolved&#39;
+connection.getIssues(&#39;JT&#39;, &#39;for: me #unresolved&#39;, 0, 10)</code></div>
+    <a name="d121790e78"></a><h2>Create Issue</h2>
+        <a name="Create_Issue"></a>
+
+        <a name="d121790e82"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="n">connection</span><span class="o">.</span><span class="na">createIssue</span><span class="o">(</span><span class="err">&#39;</span><span class="n">SB</span><span class="err">&#39;</span><span class="o">,</span> <span class="err">&#39;</span><span class="n">resttest</span><span class="err">&#39;</span><span class="o">,</span> <span class="err">&#39;</span><span class="n">Test</span> <span class="n">issue</span><span class="err">&#39;</span><span class="o">,</span> <span class="err">&#39;</span><span class="n">Test</span> <span class="n">description</span><span class="err">&#39;</span><span class="o">,</span> <span class="sc">&#39;2&#39;</span><span class="o">,</span> <span class="err">&#39;</span><span class="n">Bug</span><span class="err">&#39;</span><span class="o">,</span> <span class="err">&#39;</span><span class="n">First</span><span class="err">&#39;</span><span class="o">,</span> <span class="err">&#39;</span><span class="n">Open</span><span class="err">&#39;</span><span class="o">,</span> <span class="err">&#39;&#39;</span><span class="o">,</span> <span class="err">&#39;&#39;</span><span class="o">,</span> <span class="err">&#39;&#39;</span><span class="o">)</span></code></div>
+    <a name="d121790e86"></a><h2>Other Methods</h2>
+        <a name="Other_Methods"></a>
+
+        <a name="d121790e90"></a><p>See method of class <a name="d121790e92"></a><span class="control">Connection</span> in <code class="code" data-lang="xml">youtrack/connection.py</code>
+        </p>
+    <div class="last-modified">Last modified: 2 February 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

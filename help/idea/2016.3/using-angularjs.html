@@ -1,0 +1,341 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta class="swiftype" name="product" data-type="string" content="/idea/2016.3/"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><meta charset="UTF-8"><meta name="robots" content="noindex"><title>IntelliJ IDEA 2016.3 Help :: Using AngularJS</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Using_AngularJS"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-swiftype-index="false"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.3 Help</h3><div class="shortcuts-switcher" data-swiftype-index="false"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Windows/Linux Default</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWin</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">Mac OS X</option><option data-group="secondary" value="eclipse_mac_os_x">Eclipse (Mac OS X)</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (Mac OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper (Mac OS X)</option><option data-group="secondary" value="emacs">Emacs (Mac OS X)</option></select></div><div class="panel-trigger" data-swiftype-index="false"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="using-angular-cli.html">Using Angular CLI</a></div><h1>Using AngularJS</h1><a name="d766e18"></a><p><a name="d766e19"></a><span class="emphasis">This feature is supported in the Ultimate edition only.</span></p><a name="d436261e17"></a><p>On this page:</p><ul><li class="list__item"><a href="#d436261e22">Overview</a></li><li class="list__item"><a href="#d436261e149">Before you start</a></li><li class="list__item"><a href="#generate_angular_project_stub">Generating an AngularJS application stub</a></li><li class="list__item"><a href="#d436261e321">Creating an empty IntelliJ IDEA project</a></li><li class="list__item"><a href="#installManually">Configuring AngularJS coding assistance in an empty project manually</a></li><li class="list__item"><a href="#d436261e502">Installing AngularJS in an empty project through NPM and Bower</a></li><li class="list__item"><a href="#d436261e682">Testing AngularJS using Protractor</a></li></ul><a name="d436261e22"></a><h2>Overview</h2>
+    <a name="d436261e24"></a><p>
+        IntelliJ IDEA provides integration with the <a name="d436261e26"></a><a href="http://angularjs.org/" data-external="true"><span>AngularJS framework</span></a>, versions 1 and 2. This support involves:
+    </p>
+    <ul class="list _bullet"><li class="list__item"><a name="d436261e32"></a>
+            <a name="d436261e34"></a><span class="emphasis">AngularJS</span>-aware code completion for <code class="code" data-lang="Java">ng</code> directives (also including custom directives), controller and application names,
+            and code insights for data bindings inside curly-brace expressions <code class="code" data-lang="Java">{{}}</code>.
+        </li><li class="list__item"><a name="d436261e44"></a>
+            <a name="d436261e46"></a><span class="emphasis">AngularJS</span>-specific navigation:
+            <ul class="list _bullet"><li class="list__item"><a name="d436261e51"></a>
+                    Between the name of a controller name in HTML and its definition in JavaScript.
+                </li><li class="list__item"><a name="d436261e54"></a>
+                    Between <code class="code" data-lang="Java">ngView</code> or <code class="code" data-lang="Java">&amp;routeProvider</code> to the template.
+                </li><li class="list__item"><a name="d436261e63"></a>
+                    <a name="d436261e65"></a><span class="emphasis">Go To Symbol</span> navigation for entities.
+                </li></ul>
+        </li><li class="list__item"><a name="d436261e71"></a>
+            Quick documentation look-up by pressing <kbd data-default="Ctrl+Q" data-default_for_gnome="Ctrl+Q" data-default_for_kde="Ctrl+Q" data-default_for_xwin="Ctrl+Q" data-emacs="Ctrl+Q" data-jbuilder="Ctrl+Q" data-visual_studio="Ctrl+Q" data-netbeans_6.5="N/A" data-eclipse="Alt+Button2 Click" data-mac_os_x_10.5_="F1" data-mac_os_x="&#x2303;J" data-eclipse_mac_os_x="&#x2325;Button2 Click" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Q</kbd>, see <a name="d436261e75"></a><a href="viewing-inline-documentation.html"><span>Viewing Inline Documentation</span></a> for details.  
+        </li><li class="list__item"><a name="d436261e80"></a>
+            <a name="d436261e82"></a><a href="https://docs.angularjs.org/tutorial/step_07" data-external="true"><span>AngularJS router diagrams</span></a>.
+        </li></ul>
+    <a name="d436261e87"></a><p>
+        You can get <a name="d436261e89"></a><span class="emphasis">AngularJS</span> support in a IntelliJ IDEA project in two ways:
+    </p>
+    <ul class="list _bullet"><li class="list__item"><a name="d436261e95"></a>
+            Have IntelliJ IDEA generate an <a name="d436261e97"></a><span class="emphasis">Angular 1</span>-specific project stub.
+             
+         
+        IntelliJ IDEA generates the <a name="d19550e1693"></a><span class="emphasis">Angular Angular 1</span>-specific project structure with all the required configuration files.
+         
+     
+            See <a name="d436261e105"></a><a href="#generate_angular_project_stub"><span>Generating an AngularJS Application Stub</span></a> below on this page.
+        </li><li class="list__item"><a name="d436261e109"></a>
+            Create an <a name="d436261e111"></a><span class="emphasis">Angular 2</span> project using <a name="d436261e114"></a><span class="emphasis">Angular CLI</span>, see <a name="d436261e117"></a><a href="using-angular-cli.html"><span>Using Angular CLI</span></a>.
+        </li><li class="list__item"><a name="d436261e120"></a>
+            Create an <a name="d436261e122"></a><span class="emphasis">empty</span> project and install <a name="d436261e125"></a><span class="emphasis">AngularJS</span> in it.
+            This can be done either manually, by downloading the <a name="d436261e128"></a><span class="emphasis">AngularJS</span> framework
+            or by means of the <a name="d436261e131"></a><span class="emphasis">Bower</span> package manager,
+            see <a name="d436261e134"></a><a href="installing-and-removing-bower-packages.html"><span>Installing and Removing Bower Packages</span></a>.
+            <a name="d436261e137"></a><p>
+                If you choose manual installation, you will need to configure <a name="d436261e139"></a><span class="emphasis">AngularJS</span> as a IntelliJ IDEA JavaScript library.
+                If you use <a name="d436261e142"></a><span class="emphasis">Bower</span>, this will be done automatically, without any steps from your side.
+            </p>
+        </li></ul>
+<a name="d436261e149"></a><h2>Before you start</h2>
+         
+         
+            <a name="d436261e167"></a><p>
+            Make sure the <a name="d436261e169"></a><span class="emphasis">NodeJS</span> and <a name="d436261e172"></a><span class="emphasis">AngularJS</span> plugins are installed and enabled.
+             
+                The plugins are&nbsp;not&nbsp;bundled with IntelliJ IDEA, but they can be installed from the <a name="d831e5696"></a><span class="emphasis">JetBrains plugin repository</span>
+                as described in <a name="d831e5699"></a><a href="installing-updating-and-uninstalling-repository-plugins.html"><span>Installing, Updating and Uninstalling Repository Plugins</span></a> and <a name="d831e5701"></a><a href="enabling-and-disabling-plugins.html"><span>Enabling and Disabling Plugins</span></a>.
+                Once enabled, the plugins are available at the IDE level, that is, you can use them in all your IntelliJ IDEA projects.
+     
+            </p>
+         
+         
+    <a name="generate_angular_project_stub"></a><h2>Generating an AngularJS application stub</h2>
+        <a name="d436261e209"></a><p>
+             
+        IntelliJ IDEA can generate a project stub for developing applications using <a name="d19550e1701"></a><span class="emphasis">Angular 1</span>.
+        To generate an <a name="d19550e1704"></a><span class="emphasis">Angular 2</span> stub, use <a name="d19550e1707"></a><span class="emphasis">Angular CLI</span>,
+        see <a name="d19550e1710"></a><a href="using-angular-cli.html"><span>Using Angular CLI</span></a>.
+     
+        </p>
+        <ol class="list _decimal"><li class="list__item"><a name="d19550e1801"></a>
+            Choose <a name="d19550e1803"></a><span class="menupath">File | New | Project</span> on the main menu or click the <a name="d19550e1806"></a><span class="control">New Project</span> button on the <a name="d19550e1809"></a><span class="control">Welcome screen</span>.
+        </li><li class="list__item"><a name="d19550e1813"></a>
+            In the <a name="d19550e1815"></a><a href="project-category-and-options.html"><span>Project Category and Options</span></a> dialog, which is the first page of the <a name="d19550e1817"></a><span class="control">New Project</span> wizard,
+            choose <a name="d19550e1820"></a><span class="control">Static Web</span> in the left-hand pane.
+        </li><li class="list__item"><a name="d436261e247"></a>
+                    In the right-hand pane, choose <a name="d436261e249"></a><span class="control">AngularJS</span> and click <a name="d436261e252"></a><span class="control">Next</span>.
+                </li><li class="list__item"><a name="d436261e256"></a>
+                    On the second page of the wizard, specify the project name and the folder to create it in.
+                    <a name="d436261e258"></a><p>
+                         
+        From the <a name="d19550e2155"></a><span class="control">Version</span> drop-down list, choose the branch <a name="d19550e2158"></a><a href="https://github.com/angular/angular.js" data-external="true"><span>https://github.com/angular/angular.js</span></a> to download the project template from.
+        By default, <code class="code" data-lang="Java">master</code> if shown.
+     
+                    </p>
+                </li><li class="list__item"><a name="d436261e265"></a>
+                When you click  Finish ,
+                 
+         
+        IntelliJ IDEA generates the <a name="d19550e1693"></a><span class="emphasis">Angular Angular 1</span>-specific project structure with all the required configuration files.
+         
+     
+            </li><li class="list__item"><a name="d436261e279"></a>
+                Download the <a name="d436261e281"></a><span class="emphasis">AngularJS</span> dependencies that contain  the <a name="d436261e284"></a><span class="emphasis">AngularJS</span> code and the tools that support development and testing.
+                <ol class="list _decimal"><li class="list__item"><a name="d436261e289"></a>
+                         
+         
+        Launch the embedded <a name="d19550e110"></a><span class="control">Terminal</span>
+        by hovering  your mouse pointer over <img alt="/help/img/idea/2016.3/show_tool_window_bars.png" title="/help/img/idea/2016.3/show_tool_window_bars.png" src="/help/img/idea/2016.3/show_tool_window_bars.png" width="14" height="14" class="inline-icon-14"> in the lower left corner of IntelliJ IDEA and choosing  <a name="d19550e115"></a><span class="control">Terminal</span> from the menu
+        (see <a name="d19550e118"></a><a href="working-with-embedded-local-terminal.html"><span>Working with Embedded Local Terminal</span></a> for details).
+     
+                    </li><li class="list__item"><a name="d436261e297"></a>
+                         
+        Switch to the directory where <a name="d19550e1715"></a><span class="emphasis">NPM</span> is stored or define a <code class="code" data-lang="Java">PATH</code> variable for it so it is available from any folder,
+        see <a name="d19550e1721"></a><a href="installing-and-removing-external-software-using-node-package-manager.html#installingNodeJs"><span>Installing NodeJs</span></a>.
+     
+                    </li><li class="list__item"><a name="d436261e302"></a>
+                        At the command line prompt, type the following command:
+                        <a name="d436261e304"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+                            npm install
+                        </code></div>
+                    </li></ol>
+                <a name="d436261e309"></a><p>
+                    Learn more about the installation of dependencies in the <a name="d436261e311"></a><span class="emphasis">Install Dependencies</span> section of the <code class="code" data-lang="Java">readme.md</code> file.
+                </p>
+            </li></ol>
+    <a name="d436261e321"></a><h2>Creating an empty IntelliJ IDEA project</h2>
+                <ol class="list _decimal"><li class="list__item"><a name="d19550e1801"></a>
+            Choose <a name="d19550e1803"></a><span class="menupath">File | New | Project</span> on the main menu or click the <a name="d19550e1806"></a><span class="control">New Project</span> button on the <a name="d19550e1809"></a><span class="control">Welcome screen</span>.
+        </li><li class="list__item"><a name="d19550e1813"></a>
+            In the <a name="d19550e1815"></a><a href="project-category-and-options.html"><span>Project Category and Options</span></a> dialog, which is the first page of the <a name="d19550e1817"></a><span class="control">New Project</span> wizard,
+            choose <a name="d19550e1820"></a><span class="control">Static Web</span> in the left-hand pane.
+        </li><li class="list__item"><a name="d436261e354"></a>
+                            In the right-hand pane, choose <a name="d436261e356"></a><span class="control">Static Web</span> and click <a name="d436261e359"></a><span class="control">Next</span>.
+                        </li><li class="list__item"><a name="d436261e363"></a>
+                            On the second page of the wizard, specify the project name and the folder to create it in.
+ 
+                        </li><li class="list__item"><a name="d436261e369"></a>
+                        When you click  Finish ,
+                        IntelliJ IDEA creates and opens an <a name="d436261e377"></a><span class="emphasis">empty</span> project.
+                    </li></ol>
+            <a name="installManually"></a><h2>Configuring AngularJS coding assistance in an empty project manually</h2>
+                <ol class="list _decimal"><li class="list__item"><a name="d436261e388"></a>Download the <a name="d436261e390"></a><span class="emphasis">AngularJS</span> framework at <a name="d436261e393"></a><a href="http://angularjs.org/" data-external="true"><span>http://angularjs.org/</span></a>.</li><li class="list__item"><a name="d436261e396"></a>
+                        Open the empty project where you will use <a name="d436261e398"></a><span class="emphasis">AngularJS</span>.
+                    </li><li class="list__item"><a name="d436261e402"></a>Configure <a name="d436261e404"></a><span class="emphasis">AngularJS</span> as a IntelliJ IDEA JavaScript library, to let IntelliJ IDEA recognize <a name="d436261e407"></a><span class="emphasis">AngularJS</span>-specific structures and provide full coding assistance:
+                        <ol class="list _decimal"><li class="list__item"><a name="d436261e412"></a>
+                                <a name="d436261e414"></a><a href="accessing-settings.html"><span>Open the Settings dialog box</span></a>, and click <a name="d436261e417"></a><a href="javascript-libraries.html"><span>JavaScript Libraries</span></a>.
+                            </li><li class="list__item"><a name="d436261e421"></a>
+                                In the <a name="d436261e423"></a><span class="control">Libraries</span> area, click the <a name="d436261e426"></a><span class="control">Add</span> button.
+                            </li><li class="list__item"><a name="d436261e430"></a>
+                                In the <a name="d436261e432"></a><a href="javascript-libraries.html#dialog"><span>New Library</span></a> dialog box that opens, specify the name of the library.
+                            </li><li class="list__item"><a name="d436261e436"></a>
+                                Click the <a name="d436261e438"></a><span class="control">Add</span> button <img alt="/help/img/idea/2016.3/new.png" title="/help/img/idea/2016.3/new.png" src="/help/img/idea/2016.3/new.png" width="12" height="12" class="inline-icon-12"> next to the list of library files
+                                and choose <a name="d436261e443"></a><span class="control">Attach Files</span> or <a name="d436261e446"></a><span class="control">Attach Directory</span> on the context menu,
+                                depending of whether you need separate files or an entire folder.
+                            </li><li class="list__item"><a name="d436261e450"></a>
+                                Select the <code class="code" data-lang="Java">Angular.js</code> or <code class="code" data-lang="Java">Angular.min.js</code>, or an entire directory in the dialog box that opens.
+                                IntelliJ IDEA returns to the <a name="d436261e458"></a><span class="control">New Library</span> dialog box where the <a name="d436261e461"></a><span class="control">Name</span> read-only field
+                                shows the name of the selected files or folder.
+                            </li><li class="list__item"><a name="d436261e466"></a>
+                                In the <a name="d436261e468"></a><span class="control">Type</span> field, specify which version you have downloaded and are going to add.
+                                <ul class="list _bullet"><li class="list__item"><a name="d436261e473"></a>
+                                        If you added <code class="code" data-lang="Java">Angular.js</code>, choose <a name="d436261e478"></a><span class="control">Debug</span>. This version is helpful in the development environment, especially for debugging.
+                                    </li><li class="list__item"><a name="d436261e482"></a>
+                                        If you added the <a name="d436261e484"></a><a href="http://en.wikipedia.org/wiki/Minification_%28programming%29" data-external="true"><span>minified</span></a> <code class="code" data-lang="Java">Angular.min.js</code>, choose <a name="d436261e490"></a><span class="control">Release</span>.
+                                        This version is helpful in the production environment because the file size is significantly smaller.
+                                    </li></ul>
+                            </li></ol>
+                        Learn more at <a name="d436261e497"></a><a href="configuring-javascript-libraries.html"><span>Configuring JavaScript Libraries</span></a>.
+                    </li></ol>
+            <a name="d436261e502"></a><h2>Installing AngularJS in an empty project through NPM and Bower</h2>
+                <ol class="list _decimal"><li class="list__item"><a name="d436261e506"></a>
+                        Open the empty project where you will use <a name="d436261e508"></a><span class="emphasis">AngularJS</span>.
+                    </li><li class="list__item"><a name="d436261e512"></a>
+                        Download and install <a name="d436261e514"></a><a href="http://nodejs.org/" data-external="true"><span>Node.js</span></a>. This runtime environment is required for two reasons:
+                        <ul class="list _bullet"><li class="list__item"><a name="d436261e519"></a>
+                                The <a name="d436261e521"></a><span class="emphasis">Bower</span> package manager is started through <a name="d436261e524"></a><span class="emphasis">Node.js</span>.
+                            </li><li class="list__item"><a name="d436261e528"></a>
+                                <a name="d436261e530"></a><span class="emphasis">Node Package Manager (npm)</span>, which is a part of <a name="d436261e533"></a><span class="emphasis">Node.js</span>, is also the easiest way to download <a name="d436261e536"></a><span class="emphasis">Bower</span>.
+                            </li></ul>
+                        <a name="d436261e541"></a><p>
+                            For details on using <a name="d436261e543"></a><span class="emphasis">Node.js</span> in IntelliJ IDEA, see <a name="d436261e546"></a><a href="node-js.html"><span>Node.js</span></a>
+ 
+                        </p>
+                    </li><li class="list__item"><a name="d436261e552"></a>
+                        Install <a name="d436261e554"></a><a href="http://bower.io/" data-external="true"><span>Bower</span></a> as described in <a name="d436261e557"></a><a href="using-bower-package-manager.html#installingBower"><span>Using Bower Package Manager</span></a>.
+                    </li><li class="list__item"><a name="d436261e560"></a>
+                        If you are going to use the command line mode, make sure the following paths are added to the <a name="d436261e562"></a><a href="path-variables.html"><span>PATH variable</span></a>:
+                        <ol class="list _decimal"><li class="list__item"><a name="d436261e567"></a>
+                                The path to the parent folder of the <a name="d436261e569"></a><span class="emphasis">Node.js</span> executable file.
+                            </li><li class="list__item"><a name="d436261e573"></a>
+                                The path to the <code class="code" data-lang="Java">npm</code> folder.
+                            </li><li class="list__item"><a name="d436261e579"></a>
+                                The path to the parent folder of the <a name="d436261e581"></a><span class="emphasis">Bower</span> executable file.
+                            </li></ol>
+                        <a name="d436261e586"></a><p>
+                            This enables you to launch the tools from any folder.
+                        </p>
+                    </li><li class="list__item"><a name="d436261e593"></a>
+                        Run <a name="d436261e595"></a><span class="emphasis">Bower</span> from IntelliJ IDEA using the <a name="d436261e598"></a><span class="control">Bower</span> page of the <a name="d436261e601"></a><span class="control">Settings</span>
+                          dialog box.
+                        <ol class="list _decimal"><li class="list__item"><a name="d436261e609"></a>
+                                <a name="d436261e611"></a><a href="accessing-settings.html"><span>Open the Settings dialog box</span></a>, and click <a name="d436261e614"></a><span class="control">JavaScript</span>, then click <a name="d436261e617"></a><span class="control">Bower</span>.
+                            </li><li class="list__item"><a name="d436261e621"></a>
+                                On the <a name="d436261e623"></a><a href="bower.html"><span>Bower</span></a> page that opens, the <a name="d436261e625"></a><span class="control">Packages</span> area shows all the Bower-dependent packages
+                                that are currently installed on your computer, both at the <a name="d436261e628"></a><span class="emphasis">global</span> and at the <a name="d436261e631"></a><span class="emphasis">project</span> level.
+                                Click <img alt="/help/img/idea/2016.3/new.png" title="/help/img/idea/2016.3/new.png" src="/help/img/idea/2016.3/new.png" width="12" height="12" class="inline-icon-12">.
+                            </li><li class="list__item"><a name="d436261e637"></a>
+                                In the <a name="d436261e639"></a><span class="control">Available Packages</span> dialog box that opens, select the <code class="code" data-lang="Java">AngularJS</code> package.
+                            </li><li class="list__item"><a name="d436261e646"></a>
+                                Specify the installation mode:
+                                <ul class="list _bullet"><li class="list__item"><a name="d436261e650"></a>
+                                        To have the tool installed <a name="d436261e652"></a><span class="emphasis">globally</span> at the IntelliJ IDEA level so it can be used in any IntelliJ IDEA project,
+                                        select the <a name="d436261e655"></a><span class="control">Options</span> check box and type <code class="code" data-lang="Java">-g</code> in the text box next to it.
+                                    </li><li class="list__item"><a name="d436261e662"></a>
+                                        To have the tool installed in the current project and thus restrict its use to this project, clear the <a name="d436261e664"></a><span class="control">Options</span> check box.
+                                    </li></ul>
+                            </li><li class="list__item"><a name="d436261e670"></a>
+                                Optionally specify the product version and click <a name="d436261e672"></a><span class="control">Install Package</span> to start installation.
+                            </li></ol>
+                    </li></ol>
+            <a name="d436261e682"></a><h2>Testing AngularJS using Protractor</h2>
+         
+         
+         
+         
+         
+         
+         
+         
+
+        <a name="d436261e701"></a><p>
+            IntelliJ IDEA supports integration with the <a name="d436261e703"></a><a href="http://www.protractortest.org" data-external="true"><span>Protractor test framework</span></a>.
+            This support includes generation of the <code class="code" data-lang="Java">protractor.conf.js</code> configuration file and
+            starting of the <a name="d436261e709"></a><span class="emphasis">Selenium Server</span>.
+        </p>
+        <ol class="list _decimal"><li class="list__item"><a name="d436261e715"></a>
+                Install <a name="d436261e717"></a><span class="emphasis">Protractor</span> globally on your machine:
+                <a name="d436261e720"></a><p>
+                     
+         
+         
+            <a name="d19550e5675"></a><span class="emphasis">Global</span> installation makes a test framework available at the IntelliJ IDEA level so it can be used in any IntelliJ IDEA project.
+            Moreover, during installation the parent folder of the test framework is automatically added to the <code class="code" data-lang="Java">PATH</code> variable,
+            which enables you to launch the test framework from any folder.
+            To install the test framework <a name="d19550e5681"></a><span class="emphasis">globally</span>, do one of the following:
+     
+                </p>
+                <ul class="list _bullet"><li class="list__item"><a name="d19550e5566"></a>
+            Run the installation from the command line in the <a name="d19550e5568"></a><span class="emphasis">global</span> mode:
+            <ol class="list _decimal"><li class="list__item"><a name="d19550e5573"></a>
+                     
+         
+        Launch the embedded <a name="d19550e110"></a><span class="control">Terminal</span>
+        by hovering  your mouse pointer over <img alt="/help/img/idea/2016.3/show_tool_window_bars.png" title="/help/img/idea/2016.3/show_tool_window_bars.png" src="/help/img/idea/2016.3/show_tool_window_bars.png" width="14" height="14" class="inline-icon-14"> in the lower left corner of IntelliJ IDEA and choosing  <a name="d19550e115"></a><span class="control">Terminal</span> from the menu
+        (see <a name="d19550e118"></a><a href="working-with-embedded-local-terminal.html"><span>Working with Embedded Local Terminal</span></a> for details).
+     
+                </li><li class="list__item"><a name="d19550e5581"></a>
+                     
+        Switch to the directory where <a name="d19550e1715"></a><span class="emphasis">NPM</span> is stored or define a <code class="code" data-lang="Java">PATH</code> variable for it so it is available from any folder,
+        see <a name="d19550e1721"></a><a href="installing-and-removing-external-software-using-node-package-manager.html#installingNodeJs"><span>Installing NodeJs</span></a>.
+     
+                </li><li class="list__item"><a name="d19550e5586"></a>
+                    Type the following command at the command line prompt:
+                    <a name="d19550e5588"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+npm install -g protractor 
+                    </code></div>
+                    <a name="d19550e5591"></a><p>
+                         
+        The <code class="code" data-lang="Java">-g</code> key makes the test framework run in the <a name="d11855e178"></a><span class="emphasis">global</span> mode.
+        Because the installation is performed through <a name="d11855e181"></a><span class="emphasis">NPM</span>, the Protractor test framework is installed in the <code class="code" data-lang="Java">npm</code> folder.
+        Make sure this parent folder is added to the <code class="code" data-lang="Java">PATH</code> variable. This enables you to launch the test framework from any folder.
+     
+                    </p>
+                    <a name="d19550e5596"></a><p>
+                        For more details on the <a name="d19550e5598"></a><span class="emphasis">NPM</span> operation modes, see <a name="d19550e5601"></a><a href="https://docs.npmjs.com/" data-external="true"><span>npm documentation</span></a>.
+                        For more information about installing the Protractor test framework, see <a name="d19550e5604"></a><a href="https://npmjs.org/package/protractor" data-external="true"><span>https://npmjs.org/package/protractor</span></a>.
+                    </p>
+                </li></ol>
+        </li><li class="list__item"><a name="d19550e5610"></a>
+            Run <a name="d19550e5612"></a><span class="emphasis">NPM</span> from IntelliJ IDEA using the <a name="d19550e5615"></a><span class="control">Node.js and NPM</span> page of the <a name="d19550e5618"></a><span class="control">Settings</span> dialog box.
+            <ol class="list _decimal"><li class="list__item"><a name="d19550e5623"></a>
+                     
+         
+            Open the <a name="d831e8187"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by pressing <kbd data-default="Ctrl+Alt+S" data-default_for_gnome="Ctrl+Alt+S" data-default_for_kde="Ctrl+Alt+S" data-default_for_xwin="Ctrl+Alt+S" data-emacs="Ctrl+Alt+S" data-jbuilder="N/A" data-visual_studio="Alt+F7" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Alt+S" data-mac_os_x_10.5_="&#x2318;," data-mac_os_x="&#x2318;," data-eclipse_mac_os_x="&#x2318;," data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+S</kbd> or by choosing <a name="d831e8191"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d831e8194"></a><span class="menupath">IntelliJ IDEA | Preferences</span> for OS X,
+         
+         
+            and  
+         
+         
+         
+        click <a name="d831e8217"></a><span class="control">Node.js and NPM</span> under <a name="d831e8220"></a><span class="control">Languages&amp;Frameworks</span>.
+     
+     
+                </li><li class="list__item"><a name="d19550e5635"></a>
+                     
+         
+         
+        On the <a name="d11855e127"></a><span class="control">Node.js and NPM</span> page that opens, the <a name="d11855e130"></a><span class="control">Packages</span> area shows all the Node.js-dependent packages
+        that are currently installed on your computer, both at the <a name="d11855e133"></a><span class="emphasis">global</span> and at the <a name="d11855e137"></a><span class="emphasis">project</span> level.
+        Click <img alt="/help/img/idea/2016.3/new.png" title="/help/img/idea/2016.3/new.png" src="/help/img/idea/2016.3/new.png" width="12" height="12" class="inline-icon-12">.
+     
+                </li><li class="list__item"><a name="d19550e5645"></a>
+                    In the <a name="d19550e5647"></a><span class="control">Available Packages</span> dialog box that opens, select the required package to install.
+                </li><li class="list__item"><a name="d19550e5651"></a>
+                    Select the <a name="d19550e5653"></a><span class="control">Options</span> check box and type <code class="code" data-lang="Java">-g</code> in the text box next to it.
+                </li><li class="list__item"><a name="d19550e5660"></a>
+                    Optionally specify the product version and click <a name="d19550e5662"></a><span class="control">Install Package</span> to start installation.
+                </li></ol>
+        </li></ul>
+            </li><li class="list__item"><a name="d436261e731"></a>
+                To download the necessary binaries, switch to the <a name="d436261e733"></a><span class="control">Terminal</span> tool window and type the following command:
+                <a name="d436261e736"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="n">webdriver</span><span class="o">-</span><span class="n">manager</span> <span class="n">update</span></code></div>
+            </li><li class="list__item"><a name="d436261e740"></a>
+                Create a run configuration of the type <a name="d436261e742"></a><span class="emphasis">Protractor</span>:
+                <ol class="list _decimal"><li class="list__item"><a name="d436261e747"></a>
+                         
+        Open the <a name="d19550e6957"></a><a href="run-debug-configurations.html"><span>Run/Debug Configuration</span></a> dialog box by doing one of the
+        following:
+        <ul class="list _ul"><li class="list__item"><a name="d19550e6962"></a>On the main menu, choose <a name="d19550e6964"></a><span class="menupath">Run | Edit Configurations</span>.</li><li class="list__item"><a name="d19550e6968"></a>Open the test file in the editor, and then choose <a name="d19550e6970"></a><span class="control">Create &lt;file
+                name&gt;</span> on the context menu.</li><li class="list__item"><a name="d19550e6974"></a>Select the test file in the <a name="d19550e6976"></a><span class="control">Project</span> tool window, and then choose
+                <a name="d19550e6979"></a><span class="control">Create &lt;file name&gt;</span> on the context menu of the selection.</li></ul>
+     
+                    </li><li class="list__item"><a name="d436261e752"></a>
+                        Click the <a name="d436261e754"></a><span class="control">Add</span> button <img alt="/help/img/idea/2016.3/new.png" title="/help/img/idea/2016.3/new.png" src="/help/img/idea/2016.3/new.png" width="12" height="12" class="inline-icon-12"> on the toolbar and select the <a name="d436261e759"></a><span class="control">Protractor</span> configuration type.
+                    </li><li class="list__item"><a name="d436261e763"></a>
+                        In the dialog box that opens, specify the Node interpreter to use, the location of the  <code class="code" data-lang="Java">protractor</code> package,
+                        and the path to the <code class="code" data-lang="Java">protractor.conf.js</code> configuration file. If you followed the standard installation,
+                        IntelliJ IDEA detects all these paths and displays them in the corresponding fields. Apply the changes, if any, anf close the dialog box.
+                    </li></ol>
+            </li><li class="list__item"><a name="d436261e774"></a>
+                To launch the tests:
+                <ol class="list _decimal"><li class="list__item"><a name="d436261e778"></a>
+                 
+         
+        To launch the tests according to a run configuration, select the
+            <a name="d19550e6944"></a><span class="control">Protractor</span> run/debug configuration from the list on the main toolbar.
+             
+            Then click the <a name="d19550e6949"></a><span class="control">Run</span>&nbsp;button&nbsp;<img alt="/help/img/idea/2016.3/run.png" title="/help/img/idea/2016.3/run.png" src="/help/img/idea/2016.3/run.png" width="11" height="14" class="inline-icon-14">&nbsp;to the right of the list.
+     
+                        The <a name="d436261e787"></a><span class="emphasis">Selenium Server</span> starts automatically without any steps from your side.
+                    </li><li class="list__item"><a name="d436261e791"></a>
+                        View and analyze messages from the server in the <a name="d436261e793"></a><span class="control">&lt;current_run_configuration_name&gt;</span> tab
+                        of the <a name="d436261e796"></a><span class="control">Run</span> tool window.
+                    </li></ol>
+            </li></ol>
+    <div class="navigation-links _bottom"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="using-angular-cli.html">Using Angular CLI</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content">```
+                <div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d436261e808"></a><a href="using-angular-cli.html"><span>Using Angular CLI</span></a></li><li class="list__item"><a name="d436261e810"></a><a href="using-bower-package-manager.html"><span>Using Bower Package Manager</span></a></li><li class="list__item"><a name="d436261e812"></a><a href="live-templates.html"><span>Live Templates</span></a></li><li class="list__item"><a name="d436261e816"></a><a href="markup-languages-and-style-sheets.html"><span>Markup Languages and Style Sheets</span></a></li></ul></div></div></section><div class="last-modified" data-swiftype-index="false">Last modified: 21 March 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="/help/app/v2/analytics.js"></script><meta charset="UTF-8"><meta name="robots" content="noindex"><title>Import Issues - Help | YouTrack Standalone</title><link rel="stylesheet" href="/help/app/v2/app.css"></head><body data-id="Import-Issues"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack Standalone Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>YouTrack Standalone 2018.1 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><h1 data-toc="Import-Issues" id="Import-Issues.xml">Import Issues</h1>   <a name="PUT_/import/{project}/issues"></a>   <h2 id="82f76899">PUT /import/{project}/issues</h2>   <p id="9c94c3e2">Bulk issues import</p>   <p id="8d57b1c1">      <div class="code-block" data-lang="xml"><code class="code-block__wrapper">PUT /rest/import/{project}/issues?{assigneeGroup}<span class="err">&amp;</span>{test}</code></div>   </p>   <p id="7d18f836">         <b id="87f6d927">Parameters:</b></p><div class="table-wrapper"><table class=" wide                 " width="100%" id="48d96344"><thead><tr id="ddd0d2b5" class="ijRowHead"><th id="0e61262c"><p> Name </p></th><th id="a876a94c"><p> Type </p></th><th id="e4e75df1"><p> Description </p></th></tr></thead><tbody><tr id="7d017f1b" class="ijRowOdd"><td id="8245c2c3"><p> project </p></td><td id="4a4c1010"><p> string </p></td><td id="0868a832"><p> Imported project short name </p></td></tr><tr id="473a493a" class="ijRowEven"><td id="9d030ee5"><p> assigneeGroup </p></td><td id="16be7959"><p> string </p></td><td id="c9b7f37e"><p> Optional group to add assignees to. If this parameter is not provided default project assignee group is used </p></td></tr><tr id="2580c585" class="ijRowOdd"><td id="b80f6c87"><p> test </p></td><td id="04ec699e"><p> boolean </p></td><td id="4af6d8f6"><p> If true, issues are not saved, but request is verified. </p></td></tr></tbody></table></div>   <p id="2555c45f">         <b id="178d0ed6">Request body:</b>         <br>Predefined and custom fields are provided using the same notation:</p><div class="code-block" data-lang="xml"><code class="code-block__wrapper"><span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;Field name&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;value&gt;</span>First value<span class="nt">&lt;/value&gt;</span>
+  <span class="nt">&lt;value&gt;</span>Second value<span class="nt">&lt;/value&gt;</span>
+  <span class="nt">&lt;value&gt;</span>...<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/field&gt;</span></code></div>If field is single valued only first value element is taken. 'Field' element for optional fields could be omitted.<br>Following predefined fields are available:<div class="table-wrapper"><table class=" wide                 " width="100%" id="64749a93"><thead><tr id="3c2abcd9" class="ijRowHead"><th id="c84eb131"><p> Name </p></th><th id="2006211b"><p> Type </p></th><th id="4a3ae90d"><p> Cardinality </p></th><th id="d51451a4"><p> Required </p></th><th id="40b3f49b"><p> Description </p></th></tr></thead><tbody><tr id="286f4cbd" class="ijRowOdd"><td id="0e2c1dc7"><p> numberInProject </p></td><td id="fcba41c3"><p> long </p></td><td id="e7a04ef4"><p> single </p></td><td id="3f670c3f"><p> required </p></td><td id="7c3a1381"><p> Issue number in project. Should be unique </p></td></tr><tr id="0e3f9a9d" class="ijRowEven"><td id="a00e2914"><p> summary </p></td><td id="0e0aa264"><p> string </p></td><td id="37de56a8"><p> single </p></td><td id="65b58e75"><p> required </p></td><td id="08488603"><p> Issue summary </p></td></tr><tr id="367c2c7f" class="ijRowOdd"><td id="f7d0c444"><p> description </p></td><td id="fb4cad70"><p> string </p></td><td id="7333aa6b"><p> single </p></td><td id="dc4d3343"><p> optional </p></td><td id="eec39e4f"><p> Full issue description </p></td></tr><tr id="137c29f1" class="ijRowEven"><td id="9851a4a8"><p> created </p></td><td id="d7cadfc6"><p> UNIX Epoch timestamp </p></td><td id="1ecbefd3"><p> single </p></td><td id="20ad4689"><p> required </p></td><td id="8487a004"><p> Issue creation time </p></td></tr><tr id="612b8f6b" class="ijRowOdd"><td id="5c55980b"><p> updated </p></td><td id="82661087"><p> UNIX Epoch timestamp </p></td><td id="ce87ef3f"><p> single </p></td><td id="4f8470bd"><p> optional </p></td><td id="5339bffa"><p> Last issue update time </p></td></tr><tr id="64788c92" class="ijRowEven"><td id="8251e5b1"><p> updaterName </p></td><td id="d5cca101"><p> string </p></td><td id="d12d6142"><p> single </p></td><td id="6755d482"><p> optional </p></td><td id="2bc92425"><p> Login name of last issue updater </p></td></tr><tr id="95a7fb76" class="ijRowOdd"><td id="66c9b610"><p> resolved </p></td><td id="19bdccbd"><p> UNIX Epoch timestamp </p></td><td id="67ce4bf6"><p> single </p></td><td id="b984d44b"><p> optional </p></td><td id="293a78fb"><p> Issue resolve time </p></td></tr><tr id="eb4150a8" class="ijRowEven"><td id="fb11fdee"><p> reporterName </p></td><td id="612d56d8"><p> string </p></td><td id="624797dc"><p> single </p></td><td id="9a03cb4b"><p> required </p></td><td id="fd682baf"><p> Login name of issue reporter </p></td></tr><tr id="87af29c8" class="ijRowOdd"><td id="7ccbb8c7"><p> voterName </p></td><td id="f71fa5dd"><p> string </p></td><td id="efadfc92"><p> multi </p></td><td id="3068eebe"><p> optional </p></td><td id="1d28f969"><p> Login names of users who voted for the issue. </p></td></tr><tr id="018239f1" class="ijRowEven"><td id="90aca86f"><p> watcherName </p></td><td id="a68036c4"><p> string </p></td><td id="12a1ea87"><p> multi </p></td><td id="9e5e5fa9"><p> optional </p></td><td id="98c5e652"><p> Login names of users who enabled watching issue changes. </p></td></tr><tr id="52878be7" class="ijRowOdd"><td id="21d3da15"><p> permittedGroup </p></td><td id="46df99aa"><p> string </p></td><td id="8c02dceb"><p> single </p></td><td id="4c651389"><p> optional </p></td><td id="0cadf7ce"><p> Name of group that has an access to the issue. See <a href="GET-Groups.html"><span>GET Groups</span></a>                  </p></td></tr></tbody></table></div>   <div class="code-block" data-lang="xml"><code class="code-block__wrapper"><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="nt">&lt;xs:schema</span> <span class="na">attributeFormDefault=</span><span class="s">&quot;unqualified&quot;</span> <span class="na">elementFormDefault=</span><span class="s">&quot;qualified&quot;</span> <span class="na">xmlns:xs=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">&quot;issues&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xs:complexType&gt;</span>
+      <span class="nt">&lt;xs:sequence&gt;</span>
+        <span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">&quot;issue&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;xs:complexType&gt;</span>
+            <span class="nt">&lt;xs:sequence&gt;</span>
+              <span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">&quot;field&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;xs:complexType&gt;</span>
+                  <span class="nt">&lt;xs:sequence&gt;</span>
+                    <span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">&quot;value&quot;</span> <span class="na">type=</span><span class="s">&quot;xs:string&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span><span class="nt">/&gt;</span>
+                  <span class="nt">&lt;/xs:sequence&gt;</span>
+                  <span class="nt">&lt;xs:attribute</span> <span class="na">type=</span><span class="s">&quot;xs:string&quot;</span> <span class="na">name=</span><span class="s">&quot;name&quot;</span> <span class="na">use=</span><span class="s">&quot;required&quot;</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;/xs:complexType&gt;</span>
+              <span class="nt">&lt;/xs:element&gt;</span>
+              <span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">&quot;comment&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;xs:complexType&gt;</span>
+                  <span class="nt">&lt;xs:attribute</span> <span class="na">type=</span><span class="s">&quot;xs:string&quot;</span> <span class="na">name=</span><span class="s">&quot;author&quot;</span> <span class="na">use=</span><span class="s">&quot;optional&quot;</span><span class="nt">/&gt;</span>
+                  <span class="nt">&lt;xs:attribute</span> <span class="na">type=</span><span class="s">&quot;xs:string&quot;</span> <span class="na">name=</span><span class="s">&quot;text&quot;</span> <span class="na">use=</span><span class="s">&quot;optional&quot;</span><span class="nt">/&gt;</span>
+                  <span class="nt">&lt;xs:attribute</span> <span class="na">type=</span><span class="s">&quot;xs:string&quot;</span> <span class="na">name=</span><span class="s">&quot;created&quot;</span> <span class="na">use=</span><span class="s">&quot;optional&quot;</span><span class="nt">/&gt;</span>
+                  <span class="nt">&lt;xs:attribute</span> <span class="na">type=</span><span class="s">&quot;xs:string&quot;</span> <span class="na">name=</span><span class="s">&quot;updated&quot;</span> <span class="na">use=</span><span class="s">&quot;optional&quot;</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;/xs:complexType&gt;</span>
+              <span class="nt">&lt;/xs:element&gt;</span>
+            <span class="nt">&lt;/xs:sequence&gt;</span>
+          <span class="nt">&lt;/xs:complexType&gt;</span>
+        <span class="nt">&lt;/xs:element&gt;</span>
+      <span class="nt">&lt;/xs:sequence&gt;</span>
+    <span class="nt">&lt;/xs:complexType&gt;</span>
+  <span class="nt">&lt;/xs:element&gt;</span>
+<span class="nt">&lt;/xs:schema&gt;</span></code></div>   <p id="c2a6d1bd">         <b id="e483a461">Response body:</b>         <br>Response contains an 'item' element for every issue from the request. If issue can be imported then attribute 'imported' of the respective 'item' element is 'true'. Otherwise the 'imported' attribute is 'false' and there are 'error' subelements with additional information about nature of the import problem. <br>If request query parameter 'test' is true, then no issues are actually saved to database. With such requests one can check if import data is correct.</p>   <div class="code-block" data-lang="xml"><code class="code-block__wrapper"><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="nt">&lt;xs:schema</span> <span class="na">attributeFormDefault=</span><span class="s">&quot;unqualified&quot;</span> <span class="na">elementFormDefault=</span><span class="s">&quot;qualified&quot;</span> <span class="na">xmlns:xs=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">&quot;importReport&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xs:complexType&gt;</span>
+      <span class="nt">&lt;xs:sequence&gt;</span>
+        <span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">&quot;item&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;xs:complexType&gt;</span>
+            <span class="nt">&lt;xs:sequence&gt;</span>
+              <span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">&quot;error&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;xs:complexType&gt;</span>
+                  <span class="nt">&lt;xs:simpleContent&gt;</span>
+                    <span class="nt">&lt;xs:extension</span> <span class="na">base=</span><span class="s">&quot;xs:string&quot;</span><span class="nt">&gt;</span>
+                      <span class="nt">&lt;xs:attribute</span> <span class="na">type=</span><span class="s">&quot;xs:string&quot;</span> <span class="na">name=</span><span class="s">&quot;fieldName&quot;</span> <span class="na">use=</span><span class="s">&quot;optional&quot;</span><span class="nt">/&gt;</span>
+                      <span class="nt">&lt;xs:attribute</span> <span class="na">type=</span><span class="s">&quot;xs:string&quot;</span> <span class="na">name=</span><span class="s">&quot;value&quot;</span> <span class="na">use=</span><span class="s">&quot;optional&quot;</span><span class="nt">/&gt;</span>
+                    <span class="nt">&lt;/xs:extension&gt;</span>
+                  <span class="nt">&lt;/xs:simpleContent&gt;</span>
+                <span class="nt">&lt;/xs:complexType&gt;</span>
+              <span class="nt">&lt;/xs:element&gt;</span>
+            <span class="nt">&lt;/xs:sequence&gt;</span>
+            <span class="nt">&lt;xs:attribute</span> <span class="na">type=</span><span class="s">&quot;xs:string&quot;</span> <span class="na">name=</span><span class="s">&quot;id&quot;</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;xs:attribute</span> <span class="na">type=</span><span class="s">&quot;xs:boolean&quot;</span> <span class="na">name=</span><span class="s">&quot;imported&quot;</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;/xs:complexType&gt;</span>
+        <span class="nt">&lt;/xs:element&gt;</span>
+      <span class="nt">&lt;/xs:sequence&gt;</span>
+    <span class="nt">&lt;/xs:complexType&gt;</span>
+  <span class="nt">&lt;/xs:element&gt;</span>
+<span class="nt">&lt;/xs:schema&gt;</span></code></div>   <h3 id="bb1c05f2">Sample</h3>   <a name="Correct"></a>   <h4 id="bbfd7372">Correct</h4>   <p id="f57f252c">      <b id="b97438d3">Request:</b>   </p>   <div class="code-block" data-lang="xml"><code class="code-block__wrapper">PUT /rest/import/CMN/issues
+<span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;</span>
+<span class="nt">&lt;issues&gt;</span>
+<span class="nt">&lt;issue&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;numberInProject&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;value&gt;</span>1917<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;summary&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;value&gt;</span>Exterminate tsar<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;description&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;value&gt;</span>The Russian Revolution is the collective term for the series of revolutions in Russia in 1917, which destroyed the Tsarist autocracy and led to the creation of the Soviet Union. In the first revolution of February 1917 (March in the Gregorian calendar), the Tsar was deposed and replaced by a Provisional government. In the second revolution, during October, the Provisional Government was removed and replaced with a Bolshevik (Communist) government.<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;created&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;value&gt;</span>1149678852000<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;updated&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;value&gt;</span>1159374446000<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;updaterName&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;value&gt;</span>stalin<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;resolved&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;value&gt;</span>1260367510059<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;reporterName&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;value&gt;</span>lenin<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;victims&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>11<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;party&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>РСДРП (б) 1912 - 1917<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+
+    <span class="nt">&lt;comment</span> <span class="na">author=</span><span class="s">&quot;stalin&quot;</span> <span class="na">text=</span><span class="s">&quot;It is enough that the people know there was an election. The people who cast the votes decide nothing. The people who count the votes decide everything.&quot;</span> <span class="na">created=</span><span class="s">&quot;1267030230127&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;comment</span> <span class="na">author=</span><span class="s">&quot;khrushchev&quot;</span> <span class="na">text=</span><span class="s">&quot;Support by United States rulers is rather in the nature of the support that the rope gives to a hanged man.&quot;</span> <span class="na">created=</span><span class="s">&quot;1267030238721&quot;</span> <span class="na">updated=</span><span class="s">&quot;1267030230127&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/issue&gt;</span>
+<span class="nt">&lt;issue&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;numberInProject&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;value&gt;</span>1928<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;summary&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;value&gt;</span>Implement collectivization<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;created&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;value&gt;</span>1149678852000<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;reporterName&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;value&gt;</span>stalin<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;victims&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;value&gt;</span>1300000<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;party&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;value&gt;</span>ВКП (б) 1925 - 1952<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+<span class="nt">&lt;/issue&gt;</span>
+<span class="nt">&lt;/issues&gt;</span></code></div>   <p id="0bb1bad2">      <b id="8a2d7eab">Response:</b>   </p>   <div class="code-block" data-lang="xml"><code class="code-block__wrapper"><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;</span>
+<span class="nt">&lt;importReport&gt;</span>
+  <span class="nt">&lt;item</span> <span class="na">imported=</span><span class="s">&quot;true&quot;</span> <span class="na">id=</span><span class="s">&quot;1917&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;item</span> <span class="na">imported=</span><span class="s">&quot;true&quot;</span> <span class="na">id=</span><span class="s">&quot;1928&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/importReport&gt;</span></code></div>   <a name="Error"></a>   <h4 id="73d8d216">Error</h4>   <p id="0455d0ba">      <b id="b62db431">Request:</b>   </p>   <div class="code-block" data-lang="xml"><code class="code-block__wrapper">PUT /rest/import/CMN/issues?test=true
+<span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;</span>
+<span class="nt">&lt;issues&gt;</span>
+  <span class="nt">&lt;issue&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;numberInProject&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>1917<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;summary&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>Exterminate tsar<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;description&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>The Russian Revolution is the collective term for the series of revolutions in Russia in 1917, which
+        destroyed the Tsarist autocracy and led to the creation of the Soviet Union. In the first revolution of February
+        1917 (March in the Gregorian calendar), the Tsar was deposed and replaced by a Provisional government. In the
+        second revolution, during October, the Provisional Government was removed and replaced with a Bolshevik
+        (Communist) government.
+      <span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;created&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>1149678852000<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;updated&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>1159374446000<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;updaterName&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>stalin<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;resolved&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>1260367510059<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;reporterName&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>lenin<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;Build&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>Some Read Only<span class="nt">&lt;/value&gt;</span>
+      <span class="nt">&lt;value&gt;</span>Value<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;scf&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>1260317512059<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;cf&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>1<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;comment</span> <span class="na">author=</span><span class="s">&quot;who!&quot;</span> <span class="na">text=</span><span class="s">&quot;It is enough that the people know there was an election. The people who cast the votes decide nothing. The people who count the votes decide everything.&quot;</span> <span class="na">created=</span><span class="s">&quot;1267030230127&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;comment</span> <span class="na">author=</span><span class="s">&quot;root&quot;</span> <span class="na">text=</span><span class="s">&quot;Support by United States rulers is rather in the nature of the support that the rope gives to a hanged man.&quot;</span> <span class="na">created=</span><span class="s">&quot;1267030238721&quot;</span> <span class="na">updated=</span><span class="s">&quot;1267030230127&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/issue&gt;</span>
+  <span class="nt">&lt;issue&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;numberInProject&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>1987<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;summary&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>Perestroyka<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;description&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span># Reduce GDP
+        # Split USSR into separate states
+        # Reduce population
+      <span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;created&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>1149678852000<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;reporterName&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>gorbachev<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;party&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;value&gt;</span>КПСС 1952 - 1993<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+  <span class="nt">&lt;/issue&gt;</span>
+<span class="nt">&lt;/issues&gt;</span></code></div>   <p id="bdd56d21">      <b id="98fa5dbd">Response:</b>   </p>   <div class="code-block" data-lang="xml"><code class="code-block__wrapper"><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;</span>
+<span class="nt">&lt;importReport&gt;</span>
+  <span class="nt">&lt;item</span> <span class="na">imported=</span><span class="s">&quot;false&quot;</span> <span class="na">id=</span><span class="s">&quot;1917&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;error</span> <span class="na">fieldName=</span><span class="s">&quot;numberInProject&quot;</span> <span class="na">value=</span><span class="s">&quot;1917&quot;</span><span class="nt">&gt;</span>Value is not unique<span class="nt">&lt;/error&gt;</span>
+    <span class="nt">&lt;error</span> <span class="na">fieldName=</span><span class="s">&quot;comment.author&quot;</span> <span class="na">value=</span><span class="s">&quot;who!&quot;</span><span class="nt">&gt;</span>Value is unknown<span class="nt">&lt;/error&gt;</span>
+    <span class="nt">&lt;error</span> <span class="na">fieldName=</span><span class="s">&quot;Build&quot;</span><span class="nt">&gt;</span>Field is unknown<span class="nt">&lt;/error&gt;</span>
+    <span class="nt">&lt;error</span> <span class="na">fieldName=</span><span class="s">&quot;scf&quot;</span><span class="nt">&gt;</span>Field is unknown<span class="nt">&lt;/error&gt;</span>
+    <span class="nt">&lt;error</span> <span class="na">fieldName=</span><span class="s">&quot;cf&quot;</span><span class="nt">&gt;</span>Field is unknown<span class="nt">&lt;/error&gt;</span>
+  <span class="nt">&lt;/item&gt;</span>
+  <span class="nt">&lt;item</span> <span class="na">imported=</span><span class="s">&quot;true&quot;</span> <span class="na">id=</span><span class="s">&quot;1987&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/importReport&gt;</span></code></div><div class="last-modified" data-skip-index="skip">Last modified: 7 March 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="Import-Users.html">Import Users</a><a class="navigation-links__next" href="Import-Links.html">Import Links</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="/help/app/v2/app.js"></script></body></html>

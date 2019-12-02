@@ -1,0 +1,91 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta class="swiftype" name="product" data-type="string" content="/idea/2016.3/"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><meta charset="UTF-8"><meta name="robots" content="noindex"><title>IntelliJ IDEA 2016.3 Help :: File and Code Templates</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="concepts.templates.fileTemplates"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-swiftype-index="false"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.3 Help</h3><div class="shortcuts-switcher" data-swiftype-index="false"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Windows/Linux Default</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWin</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">Mac OS X</option><option data-group="secondary" value="eclipse_mac_os_x">Eclipse (Mac OS X)</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (Mac OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper (Mac OS X)</option><option data-group="secondary" value="emacs">Emacs (Mac OS X)</option></select></div><div class="panel-trigger" data-swiftype-index="false"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="file-template-variables.html">File Template Variables</a></div><h1>File and Code Templates</h1><a name="d852195e5"></a><p>In this part:</p><ul class="list _links"><li class="list__item">File and Code Templates<ul><li class="list__item"><a href="#d852195e10">Overview</a></li><li class="list__item"><a href="#d852195e142">Per-project vs default scheme</a></li><li class="list__item"><a href="#file_template_categories">Predefined, internal, and custom templates</a></li><li class="list__item"><a href="#d852195e204">When are file and code templates used?</a></li><li class="list__item"><a href="#d852195e245">Are the choices of templates context-sensitive?</a></li></ul></li><li class="list__item"><a href="file-template-variables.html"><span>File Template Variables</span></a></li><li class="list__item"><a href="parse-directive.html"><span>#parse Directive</span></a></li><li class="list__item"><a href="creating-and-editing-file-templates.html"><span>Creating and Editing File Templates</span></a></li></ul><a name="d852195e10"></a><h2>Overview</h2>
+        <a name="d852195e12"></a><p>File templates are specifications of the contents to be generated when creating a new file.
+            They let you create the source files that already contain some initial code.</p>
+        <a name="ft"></a><p>You can view, edit and create the templates on the
+            <a name="d852195e17"></a><a href="file-and-code-templates-2.html"><span>File and Code Templates page</span></a> of the  Settings/ Preferences
+            dialog.</p>
+         
+    <a name="d852195e31"></a><p>File and code templates are written in the
+            <a name="d852195e33"></a><a href="http://velocity.apache.org" data-external="true"><span>Velocity Template Language</span></a> (VTL). </p>
+    <a name="d852195e37"></a><p>So they may include:</p>
+    <ul class="list _ul"><li class="list__item"><a name="d852195e43"></a>Fixed text (markup, code, comments, etc.). In a file based on a template, the fixed text is used literally,
+          as-is.</li><li class="list__item"><a name="d852195e46"></a><a name="d852195e47"></a><a href="file-template-variables.html"><span>File template variables</span></a>.
+          When creating a file, the variables are replaced with their values.</li><li class="list__item"><a name="d852195e51"></a><a name="d852195e52"></a><a href="parse-directive.html"><span>#parse directives</span></a> to include other templates defined in the
+          <a name="d852195e55"></a><span class="control">Includes</span> tab on the <a name="d852195e58"></a><span class="control">File and Code Templates</span> page of the
+          <a name="d852195e61"></a><span class="control">Settings/Preferences</span> dialog box.</li><li class="list__item"><a name="d852195e65"></a>Other VTL constructs.</li></ul>
+     
+      <a name="d852195e71"></a><p>
+            Here is a typical template example. (This template is used for creating a Java class.)</p>
+      <a name="d852195e74"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="err">#</span><span class="k">if</span> <span class="o">(</span><span class="n">$</span><span class="o">{</span><span class="n">PACKAGE_NAME</span><span class="o">}</span> <span class="o">!=</span> <span class="s">&quot;&quot;</span><span class="o">)</span><span class="kn">package</span> <span class="err">${</span><span class="nn">PACKAGE_NAME</span><span class="o">};</span><span class="err">#</span><span class="n">end</span>
+<span class="err">#</span><span class="n">parse</span><span class="o">(</span><span class="s">&quot;File Header.java&quot;</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">$</span><span class="o">{</span><span class="n">NAME</span><span class="o">}</span> <span class="o">{</span>
+<span class="o">}</span></code></div>
+      <a name="d852195e77"></a><p>In this template:</p>
+      <ul class="list _ul"><li class="list__item"><a name="d852195e82"></a><code class="code" data-lang="Java">${PACKAGE_NAME}</code> and <code class="code" data-lang="Java">${NAME}</code> are template variables.</li><li class="list__item"><a name="d852195e90"></a>The <code class="code" data-lang="Java">#parse</code> directive is used to include the other template <code class="code" data-lang="Java">File Header.java</code>.</li><li class="list__item"><a name="d852195e99"></a>The first line contains an <code class="code" data-lang="Java">#if</code> VTL directive.</li></ul>
+      <a name="d852195e106"></a><p>Applying this template leads to generating a file whose contents look similar to this:</p>
+      <a name="d852195e110"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kn">package</span> <span class="nn">demo</span><span class="o">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Created by IntelliJ IDEA.</span>
+<span class="cm"> * User: John.Smith</span>
+<span class="cm"> * Date: 6/1/11</span>
+<span class="cm"> * Time: 12:54 PM</span>
+<span class="cm"> * To change this template use File | Settings | File and Code Templates.</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Demo</span> <span class="o">{</span>
+<span class="o">}</span></code></div>
+     
+     
+<a name="d852195e142"></a><h2>Per-project vs default scheme</h2>
+        <a name="d852195e144"></a><p>IntelliJ IDEA suggests using file and code templates on the <a name="d852195e146"></a><span class="emphasis">project</span> or
+            <a name="d852195e149"></a><span class="emphasis">default (global)</span> level.</p>
+        <a name="d852195e153"></a><p>If you need a sharable set of file and code templates, then these templates should be per-project;
+        otherwise the templates are global and pertain to the entire workspace. </p>
+        <a name="d852195e156"></a><p>The file and code templates are stored in the following locations:</p>
+        <ul class="list _ul"><li class="list__item"><a name="d852195e161"></a>The default (global) templates are stored in the IntelliJ IDEA home directory, in the folder
+                <code class="code" data-lang="Java">config | fileTemplates</code>.</li><li class="list__item"><a name="d852195e167"></a>The per-project file and code templates are stored in the <code class="code" data-lang="Java">.idea | fileTemplates</code> folder.
+                These templates can be shared among the team members.</li></ul>
+        <a name="d852195e174"></a><p>Refer to the section <a name="d852195e176"></a><a href="project-and-ide-settings.html"><span>Project and IDE Settings</span></a>   to learn where the settings
+            are stored, and to the <a name="d852195e180"></a><a href="file-and-code-templates-2.html"><span>File and Code Templates</span></a> dialog for the description of the
+            <a name="d852195e183"></a><span class="control">Schema</span> field.</p>
+    <a name="file_template_categories"></a><h2>Predefined, internal, and custom templates</h2>
+    <a name="d852195e191"></a><p>IntelliJ IDEA comes with a set of predefined file and code templates. You can use these templates as-is or modify
+        them as necessary. You can as well create your own templates (custom templates).</p>
+    <a name="d852195e194"></a><p>Internal file and code templates are a subset of the predefined templates. These templates differ from all the
+        other templates in that they cannot be deleted.</p>
+    <a name="d852195e197"></a><p>On the <a name="d852195e199"></a><a href="file-and-code-templates-2.html"><span>File and Code Templates page</span></a> of the Settings/Preferences dialog,
+       the names of internal templates are shown in bold. The names of the custom templates and the predefined templates
+        that you have modified are shown in blue.</p>
+<a name="d852195e204"></a><h2>When are file and code templates used?</h2>
+    <a name="d852195e206"></a><p>Whenever you create a new file, you can choose to create an empty file
+        (e.g. <a name="d852195e208"></a><span class="menupath">File | New | File</span>) or use a file template.
+        In the latter case, the initial contents of the new file will be generated according to the template
+        you have selected.
+        (Basically, all the options in the <a name="d852195e211"></a><span class="control">New</span> menu except <a name="d852195e214"></a><span class="control">File</span>
+         
+            , <a name="d852195e219"></a><span class="control">Package</span> and
+            <a name="d852195e222"></a><span class="control">Directory</span>
+         
+         correspond to using a template.)</p>
+    <figure><img alt="/help/img/idea/2016.3/menu_new.png" title="/help/img/idea/2016.3/menu_new.png" src="/help/img/idea/2016.3/menu_new.png" width="494" height="554"></figure>
+     
+     
+     
+     
+    <a name="d852195e245"></a><h2>Are the choices of templates context-sensitive?</h2>
+      <a name="d852195e247"></a><p>Generally, the set of the templates you can choose from when creating a new file depends on your
+          <a name="d852195e249"></a><a href="module.html"><span>module</span></a> nature and configuration
+            as well as the properties of your current location in the <a name="d852195e252"></a><span class="control">Project</span> tool window.
+            For example, you are not offered to use a template for an ActionScript class or interface, or an MXML
+          component if your module is not a Flash module. Similarly, you cannot choose to create a Java class,
+          interface, etc. outside of Java source or test directories (<a name="d852195e255"></a><a href="content-root.html"><span>roots</span></a>).</p>
+      <a name="d852195e259"></a><p>However, there are many templates that are available in any context.</p>
+    <div class="navigation-links _bottom"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="file-template-variables.html">File Template Variables</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content">```
+                <div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d852195e274"></a><a href="creating-template-based-files.html"><span>Creating Template-based Files</span></a></li><li class="list__item"><a name="d852195e278"></a><a href="creating-and-editing-file-templates.html"><span>Creating and Editing File Templates</span></a></li></ul></div><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d852195e285"></a><a href="file-and-code-templates-2.html"><span>File and Code Templates</span></a></li></ul></div><div class="seealso__col"><h3>Concepts:</h3><ul class="list"><li class="list__item"><a name="d852195e267"></a><a href="file-template-variables.html"><span>File Template Variables</span></a></li><li class="list__item"><a name="d852195e269"></a><a href="parse-directive.html"><span>#parse Directive</span></a></li></ul></div><div class="seealso__col"><h3>External Links:</h3><ul class="list"><li class="list__item"><a name="d852195e292"></a><a href="http://velocity.apache.org/engine/releases/velocity-1.6.4/user-guide.html" data-external="true"><span>Velocity Template Language User Guide</span></a></li></ul></div></div></section><div class="last-modified" data-swiftype-index="false">Last modified: 21 March 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

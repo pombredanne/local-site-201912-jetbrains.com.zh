@@ -1,0 +1,172 @@
+
+
+
+<!doctype html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>Create a Quick-Fix / ReSharper  DevGuide</title>
+    <link rel="stylesheet" href="/help/resharper/sdk/app/app.css">
+    <link rel="shortcut icon" href="/help/resharper/sdk/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="57x57" href="/help/resharper/sdk/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/help/resharper/sdk/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/help/resharper/sdk/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/help/resharper/sdk/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/help/resharper/sdk/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/help/resharper/sdk/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/help/resharper/sdk/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/help/resharper/sdk/apple-touch-icon-180x180.png">
+    <link rel="mask-icon" href="/help/resharper/sdk/apple-mask-icon.svg" color="black">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-square70x70logo" content="/help/resharper/sdk/mstile-70x70.png">
+    <meta name="msapplication-TileImage" content="/help/resharper/sdk/mstile-144x144.png">
+    <meta name="msapplication-square150x150logo" content="/help/resharper/sdk/mstile-150x150.png">
+    <meta name="msapplication-wide310x150logo" content="/help/resharper/sdk/mstile-310x150.png">
+    <meta name="msapplication-square310x310logo" content="/help/resharper/sdk/mstile-310x310.png">
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="Documentation for writing extensions for ReSharper" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.jetbrains.com/help/resharper/sdk//HowTo/CreateQuickFix/CreateQuickFix.html" />
+    <meta property="og:site_name" content="JetBrains ReSharper" />
+    <meta property="og:title" content="Create a Quick-Fix" />
+    <meta property="og:description" content="Documentation for writing extensions for ReSharper" />
+    <meta property="og:image" content="https://www.jetbrains.com/help/resharper/sdk/jetbrains.png" />
+    <meta property="article:modified_time" content="2017-07-12T17:29:51+00:00" />
+    <!-- <meta property="article:section" content="" /> 
+    <meta property="article:tag" content="" /> -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@JBPlatform" />
+    <meta name="twitter:title" content="Create a Quick-Fix" />
+    <meta name="twitter:description" content="Documentation for writing extensions for ReSharper" />
+    <meta name="twitter:image" content="https://www.jetbrains.com/help/resharper/sdk/jetbrains.png" />
+    <meta class="swiftype" name="product" data-type="string" content="/help/resharper/sdk/"></meta>
+<link  rel="stylesheet" href="/help/resharper/sdk/app/styles.css"></head>
+<body data-id="HowTo/CreateQuickFix/CreateQuickFix">
+<div class="wrapper">
+    <section class="panel _nav">
+        <header class="panel__header">
+            <div class="container">
+                <form class="search-box">
+                    <label for="search-box__input" class="search-box__label">
+                        <input type="text" class="search-box__input" id="search-box__input" placeholder="Search ReSharper  DevGuide">
+                    </label>
+                    <div class="search-box__clear" title="Clear"></div>
+                </form>
+            </div>
+        </header>
+        <nav class="panel__content">
+            <div class="container _nav">
+                <menu class="nav-tree"></menu>
+            </div>
+            <div class="container _footer panel__footer">
+                <p><a data-bypass="true" href="//youtrack.jetbrains.com/issues/IJSDK">Send feedback</a></p>
+                <p>&copy; 2000&ndash;2018 <a href="//www.jetbrains.com">JetBrains</a> s.r.o.<br>
+                    All rights reserved.</p>
+            </div>
+        </nav>
+    </section>
+
+    <main class="panel _main" role="main">
+        <header class="panel__header">
+            <div class="container">
+                <h3>ReSharper DevGuide</h3>
+                
+                <div class="panel-trigger"></div>
+            </div>
+        </header>
+        <section class="panel__content">
+            <div class="container">
+                <article class="article" data-shortcut-switcher="false">
+                    <div class="navigation-links _top" data-swiftype-index="false">
+                        <a class="navigation-links__prev" href="/HowTo/CreateContextAction/CreateContextAction.html">Create a Context Action</a>
+                        <a class="navigation-links__next" href="/HowTo/AnalyzeCode/AnalyzeCodeOnTheFly.html">Analyze Code on the Fly</a>
+                    </div>
+                    <a data-bypass="true" href="https://github.com/JetBrains/resharper-devguide/edit/master/HowTo/CreateQuickFix/CreateQuickFix.md" class="page-link-to-github" target="_blank" rel="noopener noreferrer" title="Edit this page on GitHub">
+                        <i class="github-icon"></i>
+                        <span class="text">Edit page</span>
+                    </a>
+
+                    <h1>Create a Quick-Fix</h1>
+                    <p><strong>What you should know beforehand:</strong></p>
+<ul>
+  <li><a href="/help/resharper/sdk/HowTo/NavigateCode/NavigateCode.html#psi-basics"><span>PSI</span></a></li>
+  <li><a href="/help/resharper/sdk/HowTo/AnalyzeCode/AnalyzeCodeOnTheFly.html"><span>Code analyzer</span></a></li>
+</ul>
+
+<p><strong>Examples (<a href="/help/resharper/sdk/HowTo/HowTo.html#sample-solution"><span>?</span></a>):</strong></p>
+<ul>
+  <li><a href="https://github.com/JetBrains/sample-resharper-plugin/blob/master/SampleReSharperPlugin/src/QuickFix/CorrectBadWordQuickFix.cs" data-external="true" target="_blank" rel="noopener noreferrer"><span>CorrectBadWordQuickFix.cs</span></a></li>
+</ul>
+
+<p>The main difference between a context action and a quick-fix is that the latter appears only in response to a highlighting. Thus, quick-fixes are used to fix a problem that was found and highlighted by a particular code analyzer.</p>
+
+<p><img src="create-quick-fix.png" alt="create-quick-fix" /></p>
+
+<p>For example, let’s create a simple quick-fix that reacts to the warning provided by the analyzer from <a href="/help/resharper/sdk/HowTo/AnalyzeCode/AnalyzeCodeOnTheFly.html"><span>Analyze Code on the Fly</span></a> and suggests to replace the “Crap” word occurrence with “BadWord”.</p>
+
+<div class="code-block" data-lang="csharp"><code class="code-block__wrapper"><span class="na">[QuickFix]</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">CorrectBadWordQuickFix</span> <span class="p">:</span> <span class="n">QuickFixBase</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="k">readonly</span> <span class="n">IVariableDeclaration</span> <span class="n">_variableDeclaration</span><span class="p">;</span>
+ 
+    <span class="k">public</span> <span class="nf">CorrectBadWordQuickFix</span><span class="p">([</span><span class="n">NotNull</span><span class="p">]</span> <span class="n">BadWordNamingWarning</span> <span class="n">warning</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">_variableDeclaration</span> <span class="p">=</span> <span class="n">warning</span><span class="p">.</span><span class="n">VariableDeclaration</span><span class="p">;</span>
+    <span class="p">}</span>
+  
+  
+    <span class="k">protected</span> <span class="k">override</span> <span class="n">Action</span><span class="p">&lt;</span><span class="n">ITextControl</span><span class="p">&gt;</span> <span class="nf">ExecutePsiTransaction</span><span class="p">(</span><span class="n">ISolution</span> <span class="n">solution</span><span class="p">,</span> <span class="n">IProgressIndicator</span> <span class="n">progress</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="n">textControl</span> <span class="p">=&gt;</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">newText</span> <span class="p">=</span> <span class="n">Regex</span><span class="p">.</span><span class="nf">Replace</span><span class="p">(</span><span class="n">_variableDeclaration</span><span class="p">.</span><span class="n">DeclaredName</span><span class="p">,</span> <span class="s">"crap"</span><span class="p">,</span> <span class="s">"BadWord"</span><span class="p">,</span> <span class="n">RegexOptions</span><span class="p">.</span><span class="n">IgnoreCase</span><span class="p">);</span>
+             
+            <span class="n">RenameRefactoringService</span><span class="p">.</span><span class="nf">Rename</span><span class="p">(</span><span class="n">solution</span><span class="p">,</span>
+                <span class="k">new</span> <span class="nf">RenameDataProvider</span><span class="p">((</span><span class="n">IDeclaredElement</span><span class="p">)</span> <span class="n">_variableDeclaration</span><span class="p">,</span> <span class="n">newText</span><span class="p">),</span> <span class="n">textControl</span><span class="p">);</span>
+        <span class="p">};</span>
+    <span class="p">}</span>
+  
+    <span class="k">public</span> <span class="k">override</span> <span class="kt">string</span> <span class="n">Text</span> <span class="p">=&gt;</span> <span class="s">"Replace the bad word"</span><span class="p">;</span>
+    
+    <span class="k">public</span> <span class="k">override</span> <span class="kt">bool</span> <span class="nf">IsAvailable</span><span class="p">(</span><span class="n">IUserDataHolder</span> <span class="n">cache</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="n">_variableDeclaration</span><span class="p">.</span><span class="nf">IsValid</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></div>
+
+<a name="notes" class="elem-anchor"></a>
+<h2>Notes<a href="#notes" class="anchor-link"><span></span></a></h2>
+<ul>
+  <li>The easiest way to create a quick-fix is to inherit from the <code class="code highlight language-text">QuickFixBase</code> class.</li>
+  <li>The quick-fix class must be marked with the <code class="code highlight language-text">QuickFix</code> attribute.</li>
+  <li>The <code class="code highlight language-text">BadWordNamingWarning</code> warning highlighting object passed to the constructor is used to obtain a particular code element that should be fixed (the code element that is highlighted by a particular highlighting).</li>
+  <li>The <code class="code highlight language-text">Text</code> property defines the text that will be shown in the actions list.</li>
+  <li><code class="code highlight language-text">IsAvailable</code> is used to check whether the quick-fix action is available for the current caret position.</li>
+  <li><code class="code highlight language-text">ExecutePsiTransaction</code> returns the action that is executed when the quick-fix is selected.</li>
+  <li>Note that we use <code class="code highlight language-text">RenameRefactoringService</code> to change variable’s name. The service performs seamless renaming of a variable everywhere in the code.</li>
+</ul>
+
+
+                    <div class="navigation-links _bottom" data-swiftype-index="false">
+                        <a class="navigation-links__prev" href="/HowTo/CreateContextAction/CreateContextAction.html">Create a Context Action</a>
+                        <a class="navigation-links__next" href="/HowTo/AnalyzeCode/AnalyzeCodeOnTheFly.html">Analyze Code on the Fly</a>
+                    </div>
+                    <div class="last-modified">
+                        Last modified: 12 July 2017
+                    </div>
+                </article>
+
+                <section class="disqus">
+                    <div id="disqus_thread"></div>
+                </section>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="/help/resharper/sdk/app/app.js" data-baseurl="/help/resharper/sdk/"></script>
+
+</body>
+</html>
+

@@ -1,0 +1,234 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta charset="UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="//resources.jetbrains.com/storage/help-app/v3/analytics.js"></script><title>Operations with Specific Agile - Help | YouTrack InCloud</title><link rel="stylesheet" href="//resources.jetbrains.com/storage/help-app/v3/app.css"></head><body data-id="operations-api-agiles" data-breadcrumbs="Resources-for-Developers.xml|Resources for Developers/youtrack-rest-api-reference.xml|REST API/rest-api-reference.xml|REST API Reference/api-resources.xml|Resources/resource-api-agiles.xml|Agiles/operations-api-agiles.xml|Operations with Specific Agile" data-main-title="Operations with Specific Agile"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack InCloud Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>YouTrack InCloud 2019.2 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="operations-api-agiles" id="operations-api-agiles.xml">Operations with Specific Agile</h1>    <p id="4fc7cd69">        This resource lets you work with agile boards in YouTrack using the REST API.    </p>    <div class="table-wrapper"><table class=" no_header  _layout-fixed" width="100%" id="d585ef46"><tbody><tr id="d8175888" class="ijRowOdd"><td id="00fff5f9"><p>                Resource            </p></td><td id="791a2dc8">                <div class="code-block" data-lang="shell">/api/agiles/{agileID}</div>            </td></tr><tr id="d321bb12" class="ijRowEven"><td id="83e2e03d"><p>                Returned entity            </p></td><td id="1ec9ac04"><p>                <a href="api-entity-Agile.html">Agile</a>. For the description of the entity attributes, see <a href="#Agile-supported-fields">Supported Fields</a> section.            </p></td></tr><tr id="31865654" class="ijRowOdd"><td id="35470c14"><p>                Supported methods            </p></td><td id="87cd3d94">                <ul class="list _ul"><li class="list__item" id="4e7d2ea3"><p>                        <code class="code">GET</code>:                        <a href="#get-Agile-method">Read a Specific Agile</a>.                    </p></li><li class="list__item" id="92ed0876"><p>                        <code class="code">POST</code>:                        <a href="#update-Agile-method">Update a Specific Agile</a>.                    </p></li><li class="list__item" id="7274370c"><p>                        <code class="code">DELETE</code>:                        <a href="#delete-Agile-method">Delete a Specific Agile</a>.                    </p></li></ul>            </td></tr></tbody></table></div>    <div class="chapter"><h2 id="Agile-supported-fields" data-toc="operations-api-agiles#Agile-supported-fields">Agile attributes</h2>        <p id="b1832a35">            Represents an agile board configuration.        </p>        <p id="f24df1ad">            This table describes attributes of the <code class="code">Agile</code> entity.        </p>        <ul class="list _ul"><li class="list__item" id="23cc082e"><p>                To receive an attribute in the response from server, specify it explicitly in the request parameter <code class="code">fields</code>.            </p></li><li class="list__item" id="a550f0c9"><p>                To update an attribute, provide it in the body of a POST request.            </p></li></ul>        <div class="table-wrapper"><table class=" wide" width="100%" id="eec1b8c0"><thead><tr id="f27f6e8d" class="ijRowHead"><th id="c8fe5231" width="20%"><p>                    Field                </p></th><th id="d8ac6bc2" width="20%"><p>                    Type                </p></th><th id="1f962120" width="60%"><p>                    Description                </p></th></tr></thead><tbody><tr id="c9ee2e1a" class="ijRowOdd"><td id="3b19d207"><p>                    name                </p></td><td id="d419894a"><p>                    String                </p></td><td id="a625a21f"><p>                    The name of the agile board.                    <code class="code">Can be null</code>.                </p></td></tr><tr id="31414a36" class="ijRowEven"><td id="208cef3e"><p>                    owner                </p></td><td id="1527c9a1">                    <a href="api-entity-User.html">User</a>                </td><td id="8173fae8"><p>                    Owner of the agile board.                    <code class="code">Can be null</code>.                </p></td></tr><tr id="4a4bc86d" class="ijRowOdd"><td id="09e61d2a"><p>                    visibleFor                </p></td><td id="38d8ae61">                    <a href="api-entity-UserGroup.html">UserGroup</a>                </td><td id="3f58925a"><p>                    The user group that can view this board.                    <code class="code">Can be null</code>.                </p></td></tr><tr id="4edae653" class="ijRowEven"><td id="989d2425"><p>                    visibleForProjectBased                </p></td><td id="51765dcb"><p>                    Boolean                </p></td><td id="8ffae76c"><p>                    When true, the board is visible to everyone who can view all projects that are associated with the board.                </p></td></tr><tr id="5b6a0951" class="ijRowOdd"><td id="4ff73be7"><p>                    updateableBy                </p></td><td id="14aae2f5">                    <a href="api-entity-UserGroup.html">UserGroup</a>                </td><td id="661e8142"><p>                    Group of users who can update board settings.                    <code class="code">Can be null</code>.                </p></td></tr><tr id="30c80ac9" class="ijRowEven"><td id="373462c7"><p>                    updateableByProjectBased                </p></td><td id="572e82f1"><p>                    Boolean                </p></td><td id="fae853b1"><p>                    When true, anyone who can update the associated projects can update the board.                </p></td></tr><tr id="f61103ee" class="ijRowOdd"><td id="6ca28737"><p>                    orphansAtTheTop                </p></td><td id="936141fa"><p>                    Boolean                </p></td><td id="ee9f199a"><p>                    When true, the orphan swimlane is placed at the top of the board. Otherwise, the orphans swimlane is located below all other swimlanes.                </p></td></tr><tr id="fa389879" class="ijRowEven"><td id="37bdd376"><p>                    hideOrphansSwimlane                </p></td><td id="2bc3f058"><p>                    Boolean                </p></td><td id="b8e7092f"><p>                    When true, the orphans swimlane is not displayed on the board.                </p></td></tr><tr id="ebfdbb64" class="ijRowOdd"><td id="cf6697fe"><p>                    estimationField                </p></td><td id="008f37c7">                    <a href="api-entity-CustomField.html">CustomField</a>                </td><td id="47152b03"><p>                    A custom field that is used as the estimation field for the board.                    <code class="code">Can be null</code>.                </p></td></tr><tr id="6f865bd5" class="ijRowEven"><td id="6794713e"><p>                    projects                </p></td><td id="d9a00915">                    <a href="api-entity-Project.html">Array of Projects</a>                </td><td id="81d3ae16"><p>                    A collection of projects associated with the board.                </p></td></tr><tr id="545adbd1" class="ijRowOdd"><td id="90a3cac3"><p>                    sprints                </p></td><td id="476d7212">                    <a href="api-entity-Sprint.html">Array of Sprints</a>                </td><td id="aec681ab"><p>                    The set of sprints that are associated with the board.                </p></td></tr><tr id="1aed7b7c" class="ijRowEven"><td id="b62f5bed"><p>                    currentSprint                </p></td><td id="8178dc2d">                    <a href="api-entity-Sprint.html">Sprint</a>                </td><td id="bd24ecc6"><p>                    A sprint that is actual for the current date.                    <code class="code">Read-only</code>.                    <code class="code">Can be null</code>.                </p></td></tr><tr id="b11b4032" class="ijRowOdd"><td id="1fc3613e"><p>                    columnSettings                </p></td><td id="69752068">                    <a href="api-entity-ColumnSettings.html">ColumnSettings</a>                </td><td id="ecb6a9fd"><p>                    Column settings of the board.                    <code class="code">Read-only</code>.                </p></td></tr><tr id="33e763e3" class="ijRowEven"><td id="2a562c87"><p>                    swimlaneSettings                </p></td><td id="70e1b875">                    <a href="api-entity-SwimlaneSettings.html">SwimlaneSettings</a>                </td><td id="18ce497a"><p>                    Settings of the board swimlanes.                    <code class="code">Can be null</code>.                </p></td></tr><tr id="9c14068b" class="ijRowOdd"><td id="3049ff73"><p>                    sprintsSettings                </p></td><td id="abd64d2d">                    <a href="api-entity-SprintsSettings.html">SprintsSettings</a>                </td><td id="445b9f00"><p>                    Settings of the board sprints.                    <code class="code">Read-only</code>.                </p></td></tr><tr id="aa5156f6" class="ijRowEven"><td id="c9badae8"><p>                    colorCoding                </p></td><td id="27f6ea84">                    <a href="api-entity-ColorCoding.html">ColorCoding</a>                </td><td id="b3f95ca6"><p>                    Color coding settings for the board.                    <code class="code">Can be null</code>.                </p></td></tr><tr id="7ab58565" class="ijRowOdd"><td id="35c53184"><p>                    status                </p></td><td id="f24b9b22">                    <a href="api-entity-AgileStatus.html">AgileStatus</a>                </td><td id="8062c7e3"><p>                    Status of the board.                    <code class="code">Read-only</code>.                </p></td></tr></tbody></table></div>    </div>    <div class="chapter"><h2 id="get-Agile-method" data-toc="operations-api-agiles#get-Agile-method">Read a Specific Agile</h2>        <p id="3e7e2667">            Get settings of the specific agile board.        </p>        <h4 id="2d1b2c34">
+            Required permissions
+        </h4>        <p id="91da62f5">            The user must have permissions to read the board.        </p>        <h4 id="f7c06f79">
+            Request syntax
+        </h4>        <div class="code-block" data-lang="shell">
+            GET /api/agiles/{agileID}?{fields}
+    </div>        <div class="table-wrapper"><table class=" no_header" width="100%" id="067d8ddb"><tbody><tr id="e2fe834b" class="ijRowOdd"><td id="8e59092c" width="20%"><p>                    {agileID}                </p></td><td id="28dbc81d" width="75%"><p>                    Database ID of the agile board.                </p></td></tr></tbody></table></div>        <h4 id="c7ae7d7b">
+            Request parameters
+        </h4>        <div class="table-wrapper"><table class=" wide" width="100%" id="bffc9e44"><thead><tr id="98bd3bcb" class="ijRowHead"><th id="d0675267" width="20%"><p>                    Parameter                </p></th><th id="0fb7b516" width="15%"><p>                    Type                </p></th><th id="1ff3bfb1" width="65%"><p>                    Description                </p></th></tr></thead><tbody><tr id="1589727b" class="ijRowOdd"><td id="34444d1b"><p>                    fields                </p></td><td id="750faaa6"><p>                    String                </p></td><td id="34628c26"><p>                    A list of Agile attributes that should be returned in the response.                    If no field is specified,only the <code class="code">entityID</code> is returned                </p></td></tr></tbody></table></div>        <div class="chapter"><h3 id="get-Agile-method-sample" data-toc="operations-api-agiles#get-Agile-method-sample">Sample</h3>            <h4 id="41a1d412">
+                Sample request URI
+            </h4>            <div class="code-block" data-lang="http">
+                https://example.myjetbrains.com/youtrack/api/agiles/108-4?fields=id,name,owner(id,name,login),projects(id,name),sprints(id,name),visibleFor(name,id),visibleForProjectBased,updateableBy(id,name),updateableByProjectBased,hideOrphansSwimlane,orphansAtTheTop,currentSprint(id,name),columnSettings(field(id,name),columns(presentation,isResolved,fieldValues(id,name)))
+            </div>            <h4 id="72e9cc03">
+                Sample response body
+            </h4>            <div class="code-block" data-lang="json">
+                {
+                  "owner": {
+                    "login": "john.doe",
+                    "name": "John Doe",
+                    "id": "1-2",
+                    "$type": "User"
+                  },
+                  "projects": [
+                    {
+                      "name": "Sample Project",
+                      "id": "0-0",
+                      "$type": "Project"
+                    }
+                  ],
+                  "columnSettings": {
+                    "columns": [
+                      {
+                        "fieldValues": [
+                          {
+                            "name": "Open",
+                            "id": "111-16",
+                            "$type": "AgileColumnFieldValue"
+                          }
+                        ],
+                        "presentation": "Open",
+                        "isResolved": false,
+                        "$type": "AgileColumn"
+                      },
+                      {
+                        "fieldValues": [
+                          {
+                            "name": "In Progress",
+                            "id": "111-17",
+                            "$type": "AgileColumnFieldValue"
+                          }
+                        ],
+                        "presentation": "In Progress",
+                        "isResolved": false,
+                        "$type": "AgileColumn"
+                      },
+                      {
+                        "fieldValues": [
+                          {
+                            "name": "Fixed",
+                            "id": "111-18",
+                            "$type": "AgileColumnFieldValue"
+                          }
+                        ],
+                        "presentation": "Fixed",
+                        "isResolved": true,
+                        "$type": "AgileColumn"
+                      },
+                      {
+                        "fieldValues": [
+                          {
+                            "name": "Verified",
+                            "id": "111-19",
+                            "$type": "AgileColumnFieldValue"
+                          }
+                        ],
+                        "presentation": "Verified",
+                        "isResolved": true,
+                        "$type": "AgileColumn"
+                      }
+                    ],
+                    "field": {
+                      "name": "State",
+                      "id": "58-3",
+                      "$type": "CustomField"
+                    },
+                    "$type": "ColumnSettings"
+                  },
+                  "orphansAtTheTop": false,
+                  "sprints": [
+                    {
+                      "name": "First sprint",
+                      "id": "109-5",
+                      "$type": "Sprint"
+                    },
+                    {
+                      "name": "Sprint 2: Add more resources",
+                      "id": "109-7",
+                      "$type": "Sprint"
+                    },
+                    {
+                      "name": "Sprint 3: Bug-fix release",
+                      "id": "109-8",
+                      "$type": "Sprint"
+                    },
+                    {
+                      "name": "Sprint 5: Public resources revision",
+                      "id": "109-10",
+                      "$type": "Sprint"
+                    },
+                    {
+                      "name": "Sprint 6: Only the name matters",
+                      "id": "109-11",
+                      "$type": "Sprint"
+                    }
+                  ],
+                  "hideOrphansSwimlane": false,
+                  "updateableByProjectBased": true,
+                  "visibleForProjectBased": true,
+                  "updateableBy": null,
+                  "visibleFor": null,
+                  "currentSprint": {
+                    "name": "Sprint 3: Bug-fix release",
+                    "id": "109-8",
+                    "$type": "Sprint"
+                  },
+                  "name": "Scrum board",
+                  "id": "108-4",
+                  "$type": "Agile"
+                }
+            </div>        </div>    </div>    <div class="chapter"><h2 id="update-Agile-method" data-toc="operations-api-agiles#update-Agile-method">Update a Specific Agile</h2>        <p id="369f6c15">            Update settings of the specific agile board.        </p>        <h4 id="4adbb558">
+            Required permissions
+        </h4>        <p id="4c9736c3">            The user must have permissions to update the board.        </p>        <h4 id="868a4719">
+            Request syntax
+        </h4>        <div class="code-block" data-lang="shell">
+            POST /api/agiles/{agileID}?{fields}
+    </div>        <div class="table-wrapper"><table class=" no_header" width="100%" id="6b5eda20"><tbody><tr id="f3c96d1e" class="ijRowOdd"><td id="70fa2595" width="20%"><p>                    {agileID}                </p></td><td id="80299ba1" width="75%"><p>                    Database ID of the agile board.                </p></td></tr></tbody></table></div>        <h4 id="5ed03256">
+            Request parameters
+        </h4>        <div class="table-wrapper"><table class=" wide" width="100%" id="580bb7cb"><thead><tr id="187b13cb" class="ijRowHead"><th id="1db09680" width="20%"><p>                    Parameter                </p></th><th id="87580eca" width="15%"><p>                    Type                </p></th><th id="34bffc70" width="65%"><p>                    Description                </p></th></tr></thead><tbody><tr id="cae443a8" class="ijRowOdd"><td id="671c7ff6"><p>                    fields                </p></td><td id="92de9af7"><p>                    String                </p></td><td id="adb4a237"><p>                    A list of Agile attributes that should be returned in the response.                    If no field is specified,only the <code class="code">entityID</code> is returned                </p></td></tr></tbody></table></div>        <div class="chapter"><h3 id="update-Agile-method-sample" data-toc="operations-api-agiles#update-Agile-method-sample">Sample</h3>            <p id="ff9f8485">                Let's set WIP limit for "In Progress" and "Fixed" columns of a board.            </p>            <h4 id="c292466e">
+                Sample request URI
+            </h4>            <div class="code-block" data-lang="http">
+                https://example.myjetbrains.com/youtrack/api/agiles/108-0?fields=id,name,columnSettings(columns(id,isResolved,presentation,wipLimit(min,max)),field(id,name))
+            </div>            <h4 id="9550a7eb">
+                Sample request body
+            </h4>            <div class="code-block" data-lang="json">
+                {"columnSettings": {
+                  "columns": [
+                    {
+                      "id": "110-0"
+                    },
+                    {
+                      "wipLimit": {"max":5},
+                      "id": "110-1"
+                    },
+                    {
+                      "wipLimit": {"max":5},
+                      "id": "110-2"
+                    },
+                    {
+                      "id": "110-3"
+                    }
+                  ]
+                }}
+            </div>            <h4 id="cb848ef0">
+                Sample response body
+            </h4>            <div class="code-block" data-lang="json">
+                {
+                  "columnSettings": {
+                    "columns": [
+                      {
+                        "wipLimit": null,
+                        "presentation": "Open",
+                        "isResolved": false,
+                        "id": "110-0",
+                        "$type": "AgileColumn"
+                      },
+                      {
+                        "wipLimit": {
+                          "min": null,
+                          "max": 5,
+                          "$type": "WIPLimit"
+                        },
+                        "presentation": "In Progress",
+                        "isResolved": false,
+                        "id": "110-1",
+                        "$type": "AgileColumn"
+                      },
+                      {
+                        "wipLimit": {
+                          "min": null,
+                          "max": 5,
+                          "$type": "WIPLimit"
+                        },
+                        "presentation": "Fixed",
+                        "isResolved": true,
+                        "id": "110-2",
+                        "$type": "AgileColumn"
+                      },
+                      {
+                        "wipLimit": null,
+                        "presentation": "Verified",
+                        "isResolved": true,
+                        "id": "110-3",
+                        "$type": "AgileColumn"
+                      }
+                    ],
+                    "field": {
+                      "name": "State",
+                      "id": "58-3",
+                      "$type": "CustomField"
+                    },
+                    "$type": "ColumnSettings"
+                  },
+                  "name": "Sandbox Scrum Board",
+                  "id": "108-0",
+                  "$type": "Agile"
+                }
+            </div>        </div>    </div>    <div class="chapter"><h2 id="delete-Agile-method" data-toc="operations-api-agiles#delete-Agile-method">Delete a Specific Agile</h2>        <p id="36446278">            Delete an agile board with the specific ID.        </p>        <h4 id="bccbcde0">
+            Request syntax
+        </h4>        <div class="code-block" data-lang="shell">
+            DELETE /api/agiles/{agileID}
+    </div>        <div class="table-wrapper"><table class=" no_header" width="100%" id="44449194"><tbody><tr id="934ce24f" class="ijRowOdd"><td id="221473bb" width="20%"><p>                    {agileID}                </p></td><td id="78d224e5" width="75%"><p>                    Database ID of the agile board.                </p></td></tr></tbody></table></div>        <h4 id="f97b908f">
+            Request parameters
+        </h4>        <div class="table-wrapper"><table class=" wide" width="100%" id="aeae64f0"><thead><tr id="d59f7ef6" class="ijRowHead"><th id="d79b11e2" width="20%"><p>                    Parameter                </p></th><th id="8894cab5" width="15%"><p>                    Type                </p></th><th id="74a50a35" width="65%"><p>                    Description                </p></th></tr></thead><tbody><tr id="373a72f6" class="ijRowOdd"><td id="088416cc"><p>                    fields                </p></td><td id="32e45fde"><p>                    String                </p></td><td id="c9470206"><p>                    A list of Agile attributes that should be returned in the response.                    If no field is specified,only the <code class="code">entityID</code> is returned                </p></td></tr></tbody></table></div>        <div class="chapter"><h3 id="delete-Agile-method-sample" data-toc="operations-api-agiles#delete-Agile-method-sample">Sample</h3>            <h4 id="ef7d8423">
+                Sample request URI
+            </h4>            <div class="code-block" data-lang="http">
+                https://example.myjetbrains.com/youtrack/api/agiles/108-23
+            </div>        </div>    </div><div class="last-modified" data-skip-index="skip">Last modified: 29 November 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="resource-api-agiles.html">Agiles</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="//resources.jetbrains.com/storage/help-app/v3/app.js"></script></body></html>

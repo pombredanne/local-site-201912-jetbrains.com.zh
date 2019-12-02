@@ -1,0 +1,295 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"></meta><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><title>IntelliJ IDEA 2016.1 Help :: Debugging JavaScript</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="topicId1000000130"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.1 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWindow</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="configuring-javascript-debugger.html">Configuring JavaScript Debugger</a><a class="navigation-links__next" href="unit-testing-javascript.html">Unit Testing JavaScript</a></div><h1>Debugging JavaScript</h1><a name="d950587e27"></a><p>
+        On this page:
+    </p><ul><li class="list__item"><a href="#d950587e32">Basic Terms</a></li><li class="list__item"><a href="#d950587e49">Starting a Debugging Session by Opening an HTML File from IntelliJ IDEA (Local Debugging)</a></li><li class="list__item"><a href="#d950587e84">Starting a Debugging Session through a User-defined Configuration (Local Debugging)</a></li><li class="list__item"><a href="#d950587e167">Local Debugging in Firefox</a></li><li class="list__item"><a href="#d950587e357">Remote Debugging</a></li><li class="list__item"><a href="#d950587e442">Mapping</a></li><li class="list__item"><a href="#d950587e474">Debugging Asynchronous Code</a></li></ul><a name="d950587e32"></a><h2>Basic Terms</h2>
+      <a name="d950587e34"></a><p>
+                When an HTML file with injected JavaScript code is opened in the browser,
+                the script execution starts and suspends on reaching the first breakpoint,
+                whereupon you can analyze the suspended program, step through it, resume execution when ready, etc.
+          This HTML file does not necessarily have to be the one that implements the starting page of the application.
+            </p>
+      <a name="d950587e37"></a><p>
+                Depending on the location of the application files, IntelliJ IDEA distinguishes between <a name="d950587e39"></a><span class="emphasis">local</span> and <a name="d950587e42"></a><span class="emphasis">remote</span> debugging modes.
+            </p>
+         
+        <ol class="list _decimal"><li class="list__item"><a name="d45527e2614"></a>
+                <a name="d45527e2616"></a><span class="emphasis">Local debugging</span>. In this mode, the application files remain where they are in the IntelliJ IDEA project on you machine.
+                IntelliJ IDEA runs them on the built-in Web server with the root URL
+                <code class="code" data-lang="Java">http://localhost:&lt;built-in server port&gt;/&lt;project root&gt;</code>.
+                The <a name="d45527e2622"></a><span class="emphasis">built-in server port</span> (1024 or higher) is specified on the <a name="d45527e2625"></a><a href="javascript.html"><span>JavaScript</span></a> page  of the <a name="d45527e2627"></a><span class="control">Settings</span>
+                  dialog box.
+                A debugging session in this mode can be initiated in two ways:
+                <ul class="list _bullet"><li class="list__item"><a name="d45527e2636"></a>
+                        Open the HTML file with the JavaScript injection to be tested and launch the temporary run/debug configuration that IntelliJ IDEA has generated automatically.
+                        This approach it helpful when you do not need to debug the entire application but just one script.
+                    </li><li class="list__item"><a name="d45527e2639"></a>
+                        Create and launch a permanent debug configuration.
+                    </li></ul>
+                For details, see <a name="d45527e2643"></a><a href="topicId975505.html"><span>Temporary and Permanent Run/Debug Configurations</span></a>.
+            </li><li class="list__item"><a name="d45527e2646"></a>
+                <a name="d45527e2648"></a><span class="emphasis">Remote debugging</span>. In this mode, the application files are on an external web server
+                and you have their copies in a IntelliJ IDEA project on your computer.
+                No matter, whether  the web server itself is running on a physically remote host or on your machine,
+                application files deployed on it are treated as <a name="d45527e2651"></a><span class="emphasis">remote</span>.
+                For details, see <a name="d45527e2654"></a><a href="web-servers-copying-files.html"><span>Web Servers: Copying Files</span></a>.  
+                <a name="d45527e2658"></a><p>
+                    You can deploy the application files to a web server and launch the application yourself or debug an already running application.
+                </p>
+                <a name="d45527e2662"></a><p>
+                     
+        When a remote HTML file with a JavaScript injection is opened,
+         
+        the debugger tells IntelliJ IDEA the name of the currently processed file
+        and the number of the line to be processed. IntelliJ IDEA opens the local copy of this file and indicates the line with the provided number.
+        This behaviour is enabled by specifying correspondence between files and folders on the server and their local copies.
+        This correspondence is called <a name="d45527e2692"></a><span class="keyword">mapping</span>, it is set in the debug configuration.
+     
+     
+                </p>
+                <a name="d45527e2667"></a><p>
+                    A <a name="d45527e2669"></a><span class="emphasis">Remote</span> debugging session can be initiated only through a <a name="d45527e2672"></a><span class="emphasis">permanent</span> debug configuration that you have to define yourself manually.
+                </p>
+            </li></ol>
+        <a name="d45527e2678"></a><p>
+             
+        IntelliJ IDEA supports JavaScript debugging in <a name="d45527e2731"></a><span class="emphasis">Chrome</span> and <a name="d45527e2734"></a><span class="emphasis">Firefox</span>.
+        In <a name="d45527e2737"></a><a href="http://www.google.com/chrome" data-external="true"><span>Google Chrome</span></a> and other browsers of the <a name="d45527e2740"></a><span class="emphasis">Chrome</span> family,
+        all the debugging modes are supported.
+        In <a name="d45527e2743"></a><a href="http://www.mozilla.com/en-US/firefox/upgrade.html" data-external="true"><span>Firefox</span></a>, remote debugging is not supported at all. For versions 33, 34, and 35,
+        local debugging through a <a name="d45527e2747"></a><span class="emphasis">Firefox Remote</span> debug configuration is supported as a temporary workaround.
+     
+        </p>
+     
+    <a name="d950587e49"></a><h2>Starting a Debugging Session by Opening an HTML File from IntelliJ IDEA (Local Debugging)</h2>
+          <ol class="list _decimal"><li class="list__item"><a name="d950587e53"></a>
+              Set the <a name="d950587e55"></a><a href="using-breakpoints.html"><span>breakpoints</span></a> in the JavaScript code, as required.
+          </li><li class="list__item"><a name="d950587e59"></a>
+              Open the <a name="d950587e61"></a><span class="control">HTML</span> file with the JavaScript injection to debug or select the HTML file in the <a name="d950587e64"></a><a href="project-tool-window.html"><span>Project view</span></a>.
+          </li><li class="list__item"><a name="d950587e68"></a>
+              On the context menu of the editor or the selection, choose <a name="d950587e70"></a><span class="control">Debug &lt;file name&gt;</span>. The automatically generated debug configuration starts a debugging session.
+              This configuration is temporary but you can save it later.
+              <a name="d950587e73"></a><p>
+                  The file opens in the default browser and the <a name="d950587e75"></a><a href="debug-tool-window.html"><span>Debug tool window</span></a> appears.
+              </p>
+          </li><li class="list__item"><a name="d45527e2698"></a>
+            If you are using Chrome or Dartium, you need a Chrome extension. If the extension is not installed and activated in your browser, the <a name="d45527e2700"></a><span class="control">Debug</span> tool window shows a message
+            with a link to the web store where the extension is available. Click the link and install the extension. For details, see <a name="d45527e2703"></a><a href="using-jetbrains-chrome-extension.html"><span>Using JetBrains Chrome Extension</span></a>.
+        </li><li class="list__item"><a name="d45527e2706"></a>
+            In the  <a name="d45527e2708"></a><span class="control">Debug</span> tool window, proceed as usual: <a name="d45527e2711"></a><a href="stepping-through-the-program.html"><span>step through the program</span></a>, <a name="d45527e2714"></a><a href="pausing-and-resuming-the-debugger-session.html"><span>stop and resume</span></a> program execution, <a name="d45527e2717"></a><a href="examining-suspended-program.html"><span>examine it when suspended</span></a>,
+            <a name="d45527e2720"></a><a href="viewing-actual-html-dom.html"><span>view actual HTML DOM</span></a>, <a name="d45527e2724"></a><a href="live-editing-of-html-css-and-javascript.html"><span>edit the code</span></a>, etc.
+        </li></ol>
+      <a name="d950587e84"></a><h2>Starting a Debugging Session through a User-defined Configuration (Local Debugging)</h2>
+          <ol class="list _decimal"><li class="list__item"><a name="d950587e88"></a>
+              Set the <a name="d950587e90"></a><a href="using-breakpoints.html"><span>breakpoints</span></a> in the JavaScript code, as required.
+          </li><li class="list__item"><a name="d950587e94"></a>
+              Create a permanent debug configuration.
+              <ol class="list _decimal"><li class="list__item"><a name="d950587e98"></a>
+                      On the main menu, choose <a name="d950587e100"></a><span class="menupath">Run | Edit Configurations</span>.
+                  </li><li class="list__item"><a name="d950587e104"></a>
+                      Click the <a name="d950587e106"></a><span class="control">Add New Configuration</span> toolbar button <img alt="add.png" width="12" height="12" title="add.png" src="/help/img/idea/2016.1/new.png" class="inline-icon-12">, and choose <a name="d950587e111"></a><span class="control">JavaScript Debug</span> on the context menu.
+                  </li><li class="list__item"><a name="d950587e115"></a>
+                      In the <a name="d950587e117"></a><a href="run-debug-configuration-javascript-debug.html"><span>Run/Debug Configuration: JavaScript Debug</span></a> dialog box that opens, specify the following:
+                      <ul class="list _bullet"><li class="list__item"><a name="d950587e121"></a>
+                              The URL address of the HTML file that implements the page to start debugging from. Use the following format:
+                              <code class="code" data-lang="Java">http://localhost:&lt;built-in server port&gt;/&lt;project root&gt;/&lt;path to the HTML file relative to the project root&gt;</code>
+                          </li><li class="list__item"><a name="d950587e127"></a>
+                              Choose the browser to debug the application in (<a name="d950587e129"></a><span class="emphasis">Firefox</span> or <a name="d950587e132"></a><span class="emphasis">Chrome</span>).
+                          </li></ul>
+                  </li><li class="list__item"><a name="d950587e138"></a>
+                      Click <a name="d950587e140"></a><span class="control">OK</span> to save the configuration settings.
+                  </li></ol>
+          </li><li class="list__item"><a name="d950587e146"></a>
+              Choose the newly created configuration in the <a name="d950587e148"></a><span class="control">Select run/debug configuration</span> drop-down list on the tool bar
+              and click the <a name="d950587e151"></a><span class="control">Debug</span> toolbar button <img alt="debug" width="14" height="14" title="debug" src="/help/img/idea/2016.1/debug.png" class="inline-icon-14">.
+              <a name="d950587e156"></a><p>
+                  The HTML file specified in the run configuration opens in the chosen browser and the <a name="d950587e158"></a><a href="debug-tool-window.html"><span>Debug tool window</span></a> appears.
+              </p>
+          </li><li class="list__item"><a name="d45527e2698"></a>
+            If you are using Chrome or Dartium, you need a Chrome extension. If the extension is not installed and activated in your browser, the <a name="d45527e2700"></a><span class="control">Debug</span> tool window shows a message
+            with a link to the web store where the extension is available. Click the link and install the extension. For details, see <a name="d45527e2703"></a><a href="using-jetbrains-chrome-extension.html"><span>Using JetBrains Chrome Extension</span></a>.
+        </li><li class="list__item"><a name="d45527e2706"></a>
+            In the  <a name="d45527e2708"></a><span class="control">Debug</span> tool window, proceed as usual: <a name="d45527e2711"></a><a href="stepping-through-the-program.html"><span>step through the program</span></a>, <a name="d45527e2714"></a><a href="pausing-and-resuming-the-debugger-session.html"><span>stop and resume</span></a> program execution, <a name="d45527e2717"></a><a href="examining-suspended-program.html"><span>examine it when suspended</span></a>,
+            <a name="d45527e2720"></a><a href="viewing-actual-html-dom.html"><span>view actual HTML DOM</span></a>, <a name="d45527e2724"></a><a href="live-editing-of-html-css-and-javascript.html"><span>edit the code</span></a>, etc.
+        </li></ol>
+      <a name="d950587e167"></a><h2>Local Debugging in Firefox</h2>
+
+            <a name="d950587e169"></a><p>
+                Due to the recent crucial changes in the Firefox architecture, neither remote debugging nor standard for IntelliJ IDEA local debugging
+                work for <a name="d950587e171"></a><span class="emphasis">Firefox</span>. This procedure is a temporary solution and is applicable to <a name="d950587e174"></a><span class="emphasis">Firefox</span> versions 33, 34, and 35.
+            </p>
+        <ol class="list _decimal"><li class="list__item"><a name="d950587e180"></a>
+            <a name="enableDebugginFirefox"></a>
+            Enable debugging in <a name="d950587e184"></a><span class="emphasis">Firefox</span>:
+            <ol class="list _decimal"><li class="list__item"><a name="d950587e189"></a>
+                    Open your <a name="d950587e191"></a><span class="emphasis">Firefox</span> browser, click <img alt="chrome_extension_control_icon" width="27" height="27" title="chrome_extension_control_icon" src="/help/img/idea/2016.1/chrome_extension_control_icon.png" class="inline-icon-27"> on the toolbar,
+                    and then click <a name="d950587e196"></a><span class="control">Developer</span> to open the Web developer tools.
+                    <figure><img alt="js_debugging_enable_debugging_in_ff.png" width="304" height="392" title="js_debugging_enable_debugging_in_ff.png" src="/help/img/idea/2016.1/js_debugging_enable_debugging_in_ff.png"></figure>
+                    From the context menu that opens, choose <a name="d950587e201"></a><span class="control">Toggle Tools</span>.
+                    <figure><img alt="js_debugging_enable_debugging_in_ff_toggle_tools.png" width="258" height="122" title="js_debugging_enable_debugging_in_ff_toggle_tools.png" src="/help/img/idea/2016.1/js_debugging_enable_debugging_in_ff_toggle_tools.png"></figure>
+                </li><li class="list__item"><a name="d950587e208"></a>
+                    In the <a name="d950587e210"></a><span class="control">Development Tools</span> pane that opens, click <a name="d950587e213"></a><span class="control">Toolbox Options</span> button <img alt="cogwheel" width="13" height="13" title="cogwheel" src="/help/img/idea/2016.1/cogwheel.png" class="inline-icon-13"> on the toolbar
+                    and select the <a name="d950587e218"></a><span class="control">Enable remote debugging</span> check box under <a name="d950587e221"></a><span class="control">Advanced Settings</span>.
+                    <figure><img alt="js_debugging_enable_debugging_in_ff_advanced_settings.png" width="427" height="267" title="js_debugging_enable_debugging_in_ff_advanced_settings.png" src="/help/img/idea/2016.1/js_debugging_enable_debugging_in_ff_advanced_settings.png"></figure>
+                </li><li class="list__item"><a name="d950587e228"></a>
+                    Click <img alt="chrome_extension_control_icon" width="27" height="27" title="chrome_extension_control_icon" src="/help/img/idea/2016.1/chrome_extension_control_icon.png" class="inline-icon-27"> again, click <a name="d950587e232"></a><span class="control">Developer</span>, and then choose <a name="d950587e235"></a><span class="control">Developer Toolbar</span>
+                    from the context menu.
+                    <figure><img alt="js_debugging_enable_debugging_in_ff_dev_toolbar.png" width="265" height="313" title="js_debugging_enable_debugging_in_ff_dev_toolbar.png" src="/help/img/idea/2016.1/js_debugging_enable_debugging_in_ff_dev_toolbar.png"></figure>
+                </li><li class="list__item"><a name="d950587e241"></a>
+                    In the console that opens at the bottom of the browser, type <code class="code" data-lang="Java">listen &lt;port number&gt;</code>.
+                    <figure><img alt="js_debugging_enable_debugging_in_ff_console_listen.png" width="103" height="21" title="js_debugging_enable_debugging_in_ff_console_listen.png" src="/help/img/idea/2016.1/js_debugging_enable_debugging_in_ff_console_listen.png"></figure>
+                    You can specify any port number,
+                    however it is recommended that you use 6000 and higher. Later you will specify this port number in the run configuration.
+                </li></ol>
+        </li><li class="list__item"><a name="d950587e251"></a>
+            Create a run/debug configuration:
+            <ol class="list _decimal"><li class="list__item"><a name="d950587e255"></a>
+                     
+            Choose <a name="d2333e7850"></a><span class="menupath">Run | Edit Configuration</span> on the main menu.
+            Alternatively, click <kbd data-default="Shift+Alt+F10" data-default_for_gnome="Shift+Alt+F10" data-default_for_kde="Shift+Alt+F10" data-default_for_xwin="Shift+Alt+F10" data-emacs="Alt+Shift+F10" data-jbuilder="Shift+Alt+F10" data-visual_studio="Alt+Shift+F10" data-netbeans_6.5="N/A" data-eclipse="Shift+Alt+F10" data-mac_os_x_10.5_="&#x2303;&#x2325;R" data-mac_os_x="&#x2325;&#x21E7;F10" data-eclipse_mac_os_x="&#x2303;&#x2325;R" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Shift+Alt+F10</kbd>  and select <a name="d2333e7855"></a><span class="control">Edit Configuration</span>
+            from the pop-up menu.
+         
+                </li><li class="list__item"><a name="d950587e260"></a>
+                     
+        In the <a name="d2333e7836"></a><span class="control">Edit Configuration</span> dialog box, that opens, click the <a name="d2333e7839"></a><span class="control">Add New Configuration</span> toolbar button <img alt="add.png" width="12" height="12" title="add.png" src="/help/img/idea/2016.1/new.png" class="inline-icon-12">,
+        and choose <a name="d2333e7844"></a><span class="control">Firefox Remote</span> on the context menu.
+     
+                    Do not feel mislead by the term <a name="d950587e267"></a><span class="emphasis">Remote</span>. In this context it reflects the technical details of the implementation.
+                </li><li class="list__item"><a name="d950587e271"></a>
+                    In the <a name="d950587e273"></a><a href="run-debug-configuration-firefox-remote.html"><span>Run/Debug Configuration: Firefox Remote</span></a> dialog box that opens, specify the host where the application is running
+                    (currently it is always <code class="code" data-lang="Java">localhost</code>) and  the port the debugger will listen to.
+                    It must be the port that you specified when enabling debugging in
+                    <a name="d950587e278"></a><span class="emphasis">Firefox</span>. The default value is 6000.
+                </li><li class="list__item"><a name="d950587e282"></a>
+                    Click <a name="d950587e284"></a><span class="control">OK</span> to save the configuration settings.
+                </li></ol>
+        </li><li class="list__item"><a name="d950587e290"></a>
+            Set the breakpoints where necessary.
+        </li><li class="list__item"><a name="d950587e293"></a>
+            Open the <a name="d950587e295"></a><span class="control">HTML</span> file with the JavaScript injection in the editor or select it in the <a name="d950587e298"></a><span class="control">Project</span> tool window,
+            choose <a name="d950587e301"></a><span class="control">Open in Browser</span> on the context menu of the selection, then choose <a name="d950587e304"></a><span class="control">Firefox</span>.
+            The browser opens showing the application after the code execution, that is, the breakpoints you set have no effect yet.
+        </li><li class="list__item"><a name="d950587e308"></a>
+            Choose the newly created configuration in the <a name="d950587e310"></a><span class="control">Select run/debug configuration</span> drop-down list on the toolbar
+            and click the <a name="d950587e313"></a><span class="control">Debug</span> toolbar button <img alt="debug" width="14" height="14" title="debug" src="/help/img/idea/2016.1/debug.png" class="inline-icon-14">. In the dialog bo that opens, click <a name="d950587e318"></a><span class="control">OK</span> to allow incoming connections.
+            From the <a name="d950587e321"></a><span class="control">Choose Page to Debug</span> pop-up list, choose the page with your application.
+        </li><li class="list__item"><a name="d950587e326"></a>
+            Refresh the page with your application in <a name="d950587e328"></a><span class="emphasis">Firefox</span>: the page shows the results of code execution up to the first breakpoint.
+        </li><li class="list__item"><a name="d950587e332"></a>
+            In the  <a name="d950587e334"></a><span class="control">Debug</span> tool window, proceed as usual: <a name="d950587e337"></a><a href="stepping-through-the-program.html"><span>step through the program</span></a>, <a name="d950587e340"></a><a href="pausing-and-resuming-the-debugger-session.html"><span>stop and resume</span></a> program execution, <a name="d950587e343"></a><a href="examining-suspended-program.html"><span>examine it when suspended</span></a>,
+            <a name="d950587e346"></a><a href="viewing-actual-html-dom.html"><span>view actual HTML DOM</span></a>, <a name="d950587e350"></a><a href="live-editing-of-html-css-and-javascript.html"><span>edit the code</span></a>, etc.
+        </li></ol>
+    <a name="d950587e357"></a><h2>Remote Debugging</h2>
+          <ol class="list _decimal"><li class="list__item"><a name="d950587e361"></a>
+              Set the <a name="d950587e363"></a><a href="using-breakpoints.html"><span>breakpoints</span></a> in the JavaScript code, as required.
+          </li><li class="list__item"><a name="d950587e367"></a>
+              Create a permanent debug configuration.
+              <ol class="list _decimal"><li class="list__item"><a name="d950587e371"></a>
+                       
+            Choose <a name="d2333e7850"></a><span class="menupath">Run | Edit Configuration</span> on the main menu.
+            Alternatively, click <kbd data-default="Shift+Alt+F10" data-default_for_gnome="Shift+Alt+F10" data-default_for_kde="Shift+Alt+F10" data-default_for_xwin="Shift+Alt+F10" data-emacs="Alt+Shift+F10" data-jbuilder="Shift+Alt+F10" data-visual_studio="Alt+Shift+F10" data-netbeans_6.5="N/A" data-eclipse="Shift+Alt+F10" data-mac_os_x_10.5_="&#x2303;&#x2325;R" data-mac_os_x="&#x2325;&#x21E7;F10" data-eclipse_mac_os_x="&#x2303;&#x2325;R" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Shift+Alt+F10</kbd>  and select <a name="d2333e7855"></a><span class="control">Edit Configuration</span>
+            from the pop-up menu.
+         
+                  </li><li class="list__item"><a name="d950587e376"></a>
+                       
+        In the <a name="d2333e7836"></a><span class="control">Edit Configuration</span> dialog box, that opens, click the <a name="d2333e7839"></a><span class="control">Add New Configuration</span> toolbar button <img alt="add.png" width="12" height="12" title="add.png" src="/help/img/idea/2016.1/new.png" class="inline-icon-12">,
+        and choose <a name="d2333e7844"></a><span class="control">JavScript Debug</span> on the context menu.
+     
+                  </li><li class="list__item"><a name="d950587e384"></a>
+                      In the <a name="d950587e386"></a><a href="run-debug-configuration-javascript-debug.html"><span>Run/Debug Configuration: JavaScript Debug</span></a> dialog box that opens, specify the following:
+                      <ul class="list _bullet"><li class="list__item"><a name="d950587e390"></a>
+                              The URL address of the HTML file that implements the page to start debugging from. This URL address should correspond with the <a name="d950587e392"></a><span class="emphasis">server access configuration</span>.
+                          </li><li class="list__item"><a name="d950587e396"></a>
+                              Choose the browser to debug the application in (<a name="d950587e398"></a><span class="emphasis">Firefox</span> or <a name="d950587e401"></a><span class="emphasis">Chrome</span>).
+                          </li><li class="list__item"><a name="d950587e405"></a>
+                              Optionally define mappings between local files and URL addresses of their copies on the server.
+                               
+                              These mappings are required only if the local folder structure under the project root differs from the folder structure on the server. If the structures are identical,
+                              IntelliJ IDEA itself "retrieves" the paths to local files by parsing the URL addresses of their copies on the server.
+                               
+                          </li></ul>
+                  </li><li class="list__item"><a name="d950587e413"></a>
+                      Click <a name="d950587e415"></a><span class="control">OK</span> to save the configuration settings.
+                  </li></ol>
+          </li><li class="list__item"><a name="d950587e421"></a>
+              Choose the newly created configuration in the <a name="d950587e423"></a><span class="control">Select run/debug configuration</span> drop-down list on the tool bar
+              and click the <a name="d950587e426"></a><span class="control">Debug</span> toolbar button <img alt="debug" width="14" height="14" title="debug" src="/help/img/idea/2016.1/debug.png" class="inline-icon-14">.
+              <a name="d950587e431"></a><p>
+                  The HTML file specified in the run configuration opens in the chosen browser and the <a name="d950587e433"></a><a href="debug-tool-window.html"><span>Debug tool window</span></a> appears.
+              </p>
+          </li><li class="list__item"><a name="d45527e2698"></a>
+            If you are using Chrome or Dartium, you need a Chrome extension. If the extension is not installed and activated in your browser, the <a name="d45527e2700"></a><span class="control">Debug</span> tool window shows a message
+            with a link to the web store where the extension is available. Click the link and install the extension. For details, see <a name="d45527e2703"></a><a href="using-jetbrains-chrome-extension.html"><span>Using JetBrains Chrome Extension</span></a>.
+        </li><li class="list__item"><a name="d45527e2706"></a>
+            In the  <a name="d45527e2708"></a><span class="control">Debug</span> tool window, proceed as usual: <a name="d45527e2711"></a><a href="stepping-through-the-program.html"><span>step through the program</span></a>, <a name="d45527e2714"></a><a href="pausing-and-resuming-the-debugger-session.html"><span>stop and resume</span></a> program execution, <a name="d45527e2717"></a><a href="examining-suspended-program.html"><span>examine it when suspended</span></a>,
+            <a name="d45527e2720"></a><a href="viewing-actual-html-dom.html"><span>view actual HTML DOM</span></a>, <a name="d45527e2724"></a><a href="live-editing-of-html-css-and-javascript.html"><span>edit the code</span></a>, etc.
+        </li></ol>
+      <a name="d950587e442"></a><h2>Mapping</h2>
+        <a name="d950587e444"></a><p>
+            If you are using a third-party Web server (not the built-in IntelliJ IDEA server) for debugging or you have defined several resource root folders
+            in addition to the project root, you need to map files, folders, or the entire project folder to the files or folders on the server.
+                 
+        When a remote HTML file with a JavaScript injection is opened,
+         
+        the debugger tells IntelliJ IDEA the name of the currently processed file
+        and the number of the line to be processed. IntelliJ IDEA opens the local copy of this file and indicates the line with the provided number.
+        This behaviour is enabled by specifying correspondence between files and folders on the server and their local copies.
+        This correspondence is called <a name="d45527e2692"></a><span class="keyword">mapping</span>, it is set in the debug configuration.
+     
+     
+        </p>
+        <a name="d950587e449"></a><p>
+            To configure mappings:
+        </p>
+        <ol class="list _decimal"><li class="list__item"><a name="d950587e454"></a>
+                 
+            Choose <a name="d2333e7850"></a><span class="menupath">Run | Edit Configuration</span> on the main menu.
+            Alternatively, click <kbd data-default="Shift+Alt+F10" data-default_for_gnome="Shift+Alt+F10" data-default_for_kde="Shift+Alt+F10" data-default_for_xwin="Shift+Alt+F10" data-emacs="Alt+Shift+F10" data-jbuilder="Shift+Alt+F10" data-visual_studio="Alt+Shift+F10" data-netbeans_6.5="N/A" data-eclipse="Shift+Alt+F10" data-mac_os_x_10.5_="&#x2303;&#x2325;R" data-mac_os_x="&#x2325;&#x21E7;F10" data-eclipse_mac_os_x="&#x2303;&#x2325;R" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Shift+Alt+F10</kbd>  and select <a name="d2333e7855"></a><span class="control">Edit Configuration</span>
+            from the pop-up menu.
+         
+            </li><li class="list__item"><a name="d950587e459"></a>
+                 
+        In the <a name="d2333e7836"></a><span class="control">Edit Configuration</span> dialog box, that opens, click the <a name="d2333e7839"></a><span class="control">Add New Configuration</span> toolbar button <img alt="add.png" width="12" height="12" title="add.png" src="/help/img/idea/2016.1/new.png" class="inline-icon-12">,
+        and choose <a name="d2333e7844"></a><span class="control">JavScript Debug</span> on the context menu.
+     
+            </li><li class="list__item"><a name="d950587e467"></a>
+                In the <a name="d950587e469"></a><a href="run-debug-configuration-javascript-debug.html"><span>Run/Debug Configuration: JavaScript Debug</span></a> dialog box that opens, map the files or folders or the entire project folder
+                to URL addresses of files and folders on the server.
+            </li></ol>
+    <a name="d950587e474"></a><h2>Debugging Asynchronous Code</h2>
+        <a name="d950587e476"></a><p>
+             
+        IntelliJ IDEA supports debugging asynchronous client-side JavaScript code, currently this functionality is available only in Chrome.
+        The asynchronous debugging mode is toggled through the <a name="d133546e1193"></a><span class="control">Async</span> check box on the tool bar of the <a name="d133546e1196"></a><span class="control">Debugger</span>  tab in the <code class="code" data-lang="Java">Debug</code> tool window.
+        The check box is displayed only during a JavaScript debugging session.
+     
+        </p>
+        <ul class="list _bullet"><li class="list__item"><a name="d950587e483"></a>
+                 
+        When this check box is selected, IntelliJ IDEA recognizes breakpoints inside asynchronous code and stops at them and lets you step into asynchronous code.
+    As soon as a breakpoint inside an asynchronous function is hit or you step into asynchronous code, a new element <code class="code" data-lang="Java">Async call from &lt;caller&gt;</code>
+        is added in the <a name="d133546e1181"></a><span class="control">Frames</span> pane of the <a name="d133546e1184"></a><span class="control">Debugger</span> tab.
+    IntelliJ IDEA displays a full call stack, including the caller and the entire way to the beginning of the asynchronous actions.
+ 
+            </li><li class="list__item"><a name="d950587e488"></a>
+                 
+        When the check box is cleared, IntelliJ IDEA does not recognize and therefore skips breakpoints in the asynchronous code and does not allow you to step into it.
+     
+            </li></ul>
+         
+        The image below shows illustrates an example of a JavaScript debugging session.
+        <figure><img alt="ws_debug_tool_window_async.png" width="645" height="468" title="ws_debug_tool_window_async.png" src="/help/img/idea/2016.1/ws_debug_tool_window_async.png"></figure>
+        <ul class="list _bullet"><li class="list__item"><a name="d133546e1209"></a>
+                With the <a name="d133546e1211"></a><span class="control">Async</span> check box selected, the debugger will stop at line3(breakpont), then at line5(breakpoint). On clicking <a name="d133546e1214"></a><span class="control">Step into</span>,
+                the debugger will stop at line5 (on <code class="code" data-lang="Java">function</code>), then will move to line6.
+            </li><li class="list__item"><a name="d133546e1221"></a>
+                With the <a name="d133546e1223"></a><span class="control">Async</span> check box cleared, the debugger will stop at line3(breakpont), then at line5(breakpoint). On clicking <a name="d133546e1226"></a><span class="control">Step into</span>,
+                the debugger will move to line9.
+            </li></ul>
+     
+    <div class="navigation-links _bottom"><a class="navigation-links__prev" href="configuring-javascript-debugger.html">Configuring JavaScript Debugger</a><a class="navigation-links__next" href="unit-testing-javascript.html">Unit Testing JavaScript</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content"><div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d950587e503"></a><a href="debugging.html"><span>Debugging</span></a></li><li class="list__item"><a name="d950587e507"></a><a href="Debugging_JavaScript_Unit_Tests.html"><span>Debugging JavaScript Unit Tests</span></a></li></ul></div><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d950587e512"></a><a href="run-debug-configuration-javascript-debug.html"><span>Run/Debug Configuration: JavaScript Debug</span></a></li></ul></div><div class="seealso__col"><h3>External Links:</h3><ul class="list"><li class="list__item"><a name="d950587e522"></a><a href="http://wiki.jetbrains.net/intellij/Debugging_JavaScript_with_IntelliJ_IDEA" data-external="true"><span>http://wiki.jetbrains.net/intellij/Debugging_JavaScript_with_IntelliJ_IDEA</span></a></li></ul></div></div></section><div class="last-modified">Last modified: 13 July 2016 </div></article><div id="disqus_thread"></div></div></section></main></div><script src="/help/app/app.js"></script></body></html>

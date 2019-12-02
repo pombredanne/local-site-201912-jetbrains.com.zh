@@ -1,0 +1,71 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"></meta><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><title>WebStorm 2016.1 Help :: Inline</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="procedures.refactoring.inlineRefactorings"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search WebStorm Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>WebStorm 2016.1 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWindow</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="extract-method.html">Extract Method</a><a class="navigation-links__next" href="extract-variable.html">Extract Variable</a></div><h1>Inline</h1><a name="d694409e25"></a><p>
+                WebStorm provides the following inline refactorings:
+            </p><ul class="list _ul"><li class="list__item"><a name="d694409e155"></a>
+                        The
+                        <a name="d694409e157"></a><a href="#wi_inline_variable"><span>Inline Variable</span></a>
+                         
+                        refactoring replaces redundant variable usage with its initializer.
+                        This refactoring is opposite to
+                        <a name="d694409e163"></a><a href="extract-variable.html"><span>Extract Variable</span></a>.
+                         
+                    </li><li class="list__item"><a name="d694409e172"></a>
+                        The
+                        <a name="d694409e174"></a><a href="#wi_inline_method"><span>Inline Function/Method</span></a>
+                        refactoring results in placing the method's or function's body into the body of
+                        its caller(s); the method or function is deleted.
+                        This refactoring is opposite
+                        <a name="d694409e177"></a><a href="extract-method.html"><span>Extract Method</span></a>.
+                    </li></ul><a name="inline_variable"></a><a name="d694409e430"></a><h2>Inline Variable</h2><ul></ul><a name="wi_inline_variable"></a><a name="d694409e470"></a><h3>JavaScript Example</h3><table class="" width="100%" id="d694409e474"><thead><tr id="d694409e476" class="ijRowHead"><a name="d694409e476"></a><th width="50%"><a name="d694409e478"></a>Before</th><th width="50%"><a name="d694409e481"></a>After</th></tr></thead><tbody><tr id="d694409e485" class="ijRowOdd"><a name="d694409e485"></a><td><a name="d694409e487"></a>
+               <a name="d694409e489"></a><div class="code-block" data-lang="Javascript"><code class="code-block__wrapper"><span class="nx">Parenizor</span><span class="p">.</span><span class="nx">method</span><span class="p">(</span><span class="s1">&#39;toString&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span>
+   <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">string</span> <span class="o">=</span> <span class="s1">&#39;(&#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">getValue</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;)&#39;</span><span class="p">;</span>
+        <span class="k">return</span> <span class="nx">string</span><span class="p">;</span>
+    <span class="p">}</span></code></div>
+            </td><td><a name="d694409e493"></a>
+               <a name="d694409e495"></a><div class="code-block" data-lang="Javascript"><code class="code-block__wrapper"><span class="nx">Parenizor</span><span class="p">.</span><span class="nx">method</span><span class="p">(</span><span class="s1">&#39;toString&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="s1">&#39;(&#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">getValue</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;)&#39;</span><span class="p">;</span>
+    <span class="p">}</span></code></div>
+            </td></tr></tbody></table><a name="wi_inline_method"></a><a name="d694409e503"></a><h2>Inline Method or Function</h2><table class="" width="100%" id="d694409e506"><thead><tr id="d694409e508" class="ijRowHead"><a name="d694409e508"></a><th width="50%"><a name="d694409e510"></a>Before</th><th width="50%"><a name="d694409e513"></a>After</th></tr></thead><tbody><tr id="d694409e517" class="ijRowOdd"><a name="d694409e517"></a><td><a name="d694409e519"></a>
+               <a name="d694409e521"></a><div class="code-block" data-lang="Javascript"><code class="code-block__wrapper"><span class="kd">function</span> <span class="nx">sum</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">multiplication</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">){</span>
+    <span class="nx">c</span> <span class="o">=</span> <span class="nx">sum</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">);</span>
+    <span class="nx">d</span> <span class="o">=</span> <span class="nx">c</span> <span class="o">*</span> <span class="nx">c</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nx">d</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">division</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">){</span>
+    <span class="nx">result</span> <span class="o">=</span> <span class="nx">sum</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="o">/</span> <span class="nx">multiplication</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">result</span><span class="p">;</span>
+<span class="p">}</span></code></div>
+            </td><td><a name="d694409e525"></a>
+               <a name="d694409e527"></a><div class="code-block" data-lang="Javascript"><code class="code-block__wrapper"><span class="kd">function</span> <span class="nx">multiplication</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">){</span>
+    <span class="nx">c</span> <span class="o">=</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">;</span>
+    <span class="nx">d</span> <span class="o">=</span> <span class="nx">c</span> <span class="o">*</span> <span class="nx">c</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nx">d</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">division</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">){</span>
+    <span class="nx">result</span> <span class="o">=</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span> <span class="o">/</span> <span class="nx">multiplication</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">result</span><span class="p">;</span>
+<span class="p">}</span></code></div>
+            </td></tr></tbody></table><a name="d694409e601"></a><a name="dynaProc0"></a><section class="procedure-steps"><h2>To perform the inline refactoring </h2><ol class=".list _decimal"><li class="list__item">Place the caret in the editor at the desired symbol to be inlined.</li><li class="list__item">Do one of the following:
+              <ul class="list _ul"><li class="list__item"><a name="d694409e610"></a>On  the main menu or  on the context menu, choose
+                      <a name="d694409e615"></a><span class="menupath">Refactor | Inline</span>.</li><li class="list__item"><a name="d694409e619"></a>Press <kbd data-default="Ctrl+Alt+N" data-default_for_gnome="Ctrl+Alt+N" data-default_for_kde="Ctrl+Alt+N" data-default_for_xwin="Ctrl+Alt+N" data-emacs="Ctrl+Alt+N" data-visual_studio="Ctrl+Alt+N" data-netbeans_6.5="N/A" data-eclipse="Shift+Alt+I" data-mac_os_x_10.5_="&#x2325;&#x2318;N" data-mac_os_x="&#x2325;&#x2318;N" data-eclipse_mac_os_x="&#x2325;&#x2318;I" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+N</kbd>.</li></ul>
+          </li><li class="list__item">
+              In the
+              <a name="d694409e643"></a><span class="control">Inline</span>
+               
+              dialog box that corresponds to the selected symbol,
+              confirm the inline refactoring.
+          </li></ol></section><div class="navigation-links _bottom"><a class="navigation-links__prev" href="extract-method.html">Extract Method</a><a class="navigation-links__next" href="extract-variable.html">Extract Variable</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content"><div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d694409e683"></a><a href="extract-method.html"><span>Extract Method</span></a></li><li class="list__item"><a name="d694409e687"></a><a href="extract-variable.html"><span>Extract Variable</span></a></li></ul></div></div></section><div class="last-modified">Last modified: 11 July 2016 </div></article><div id="disqus_thread"></div></div></section></main></div><script src="/help/app/app.js"></script></body></html>

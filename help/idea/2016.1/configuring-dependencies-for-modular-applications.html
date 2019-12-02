@@ -1,0 +1,83 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"></meta><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><title>IntelliJ IDEA 2016.1 Help :: Configuring dependencies for modular applications</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Configuring_dependencies_for_modular_applications"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.1 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWindow</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="working-with-build-configurations.html">Working with Build Configurations</a><a class="navigation-links__next" href="building-actionscript-and-flex-applications.html">Building ActionScript and Flex Applications</a></div><h1>Configuring dependencies for modular applications</h1><a name="d91770e3"></a><p>
+                There are two ways of configuring dependencies for modular applications.
+                (Modular applications are ones that include dynamically loadable modules,
+                see <a name="d91770e5"></a><a href="http://help.adobe.com/en_US/flex/using/WS2db454920e96a9e51e63e3d11c0bf69084-799a.html" data-external="true"><span>Modular applications overview</span></a>
+                in Flex documentation.)</p><a name="d91770e9"></a><p>
+                One way is to list the main classes for runtime-loaded modules (RLMs)
+                in the <a name="d91770e11"></a><a href="working-with-build-configurations.html"><span>build configuration</span></a> for the main application (a.k.a. shell).
+                This way doesn't require creating build configurations for the modules.</p><a name="d91770e15"></a><p>
+                The other way is to create build configurations for each of the RLMs and then,
+                in the build configuration for the main application, specify the dependencies on these build configurations.</p><a name="d91770e18"></a><p>
+                These two approaches along with their advantages and drawbacks are discussed below.</p><ul><li class="list__item"><a href="#d91770e24">
+            Specifying the dependencies by listing the main RLM classes</a></li><li class="list__item"><a href="#d91770e136">
+            Specifying the dependencies by listing the RLM build configurations</a></li></ul><a name="d91770e24"></a><h2>
+            Specifying the dependencies by listing the main RLM classes</h2><a name="d91770e27"></a><p>
+            If the source code of the main application and its runtime-loaded modules are in the same IntelliJ IDEA module,
+            you can just list the main RLM classes in the build configuration for the main application.
+            In addition, if you want to optimize a module against the main application
+            (this considerably reduces the size of compiled module file),
+            you can do that by turning the corresponding option on in the UI.</p><a name="d91770e30"></a><p>
+            Note that this way of specifying the dependencies is available for Web and desktop applications but
+            unavailable for mobile applications.</p><a name="d91770e33"></a><p>
+            Advantages:</p><ul class="list _ul"><li class="list__item"><a name="d91770e38"></a>
+                You don't need to create build configurations for your modules (RLMs).</li><li class="list__item"><a name="d91770e41"></a>
+                To use the <code class="code" data-lang="Java">load-externs</code> and <code class="code" data-lang="Java">link-report</code> compiler options,
+                you don't need to specify them manually,
+                a check box is provided in the UI to turn module optimization on or off.</li></ul><a name="d91770e51"></a><p>
+            Drawbacks:</p><ul class="list _ul"><li class="list__item"><a name="d91770e57"></a>
+                The same set of compiler options is used for the application and the modules.</li><li class="list__item"><a name="d91770e60"></a>
+                The source code of the main application and the modules must be in the same IntelliJ IDEA module.</li></ul><a name="d91770e64"></a><p>
+            Here are the main steps of the procedure to be used:</p><ol class="list _decimal"><li class="list__item"><a name="d91770e69"></a>
+                Open the build configuration settings for the main application.
+                For instructions, see
+                <a href="working-with-build-configurations.html#managing_build_configs">Managing build configurations and their settings</a> and
+                <a href="working-with-build-configurations.html#shortcuts_for_build_config_settings">Using shortcuts to open build configuration settings</a>.</li><li class="list__item"><a name="d91770e76"></a>
+                On the <a name="d91770e78"></a><span class="control">General</span> tab, to the right of the <a name="d91770e81"></a><span class="control">Runtime-loaded modules</span> field,
+                click <img alt="shift-enter-button" width="20" height="20" title="shift-enter-button" src="/help/img/idea/2016.1/shift-enter-button.png" class="inline-icon-20">. (Alternatively, click the field and press <kbd data-default="Shift+Enter" data-default_for_gnome="Shift+Enter" data-default_for_kde="Shift+Enter" data-default_for_xwin="Shift+Enter" data-emacs="Shift+Enter" data-jbuilder="Shift+Enter" data-visual_studio="Shift+Enter" data-netbeans_6.5="N/A" data-eclipse="Shift+Enter" data-mac_os_x_10.5_="&#x21E7;⏎" data-mac_os_x="&#x21E7;⏎" data-eclipse_mac_os_x="&#x21E7;⏎" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Shift+Enter</kbd>.)</li><li class="list__item"><a name="d91770e89"></a>
+                In the <a name="d91770e91"></a><a href="runtime-loaded-modules-dialog.html"><span>Runtime-Loaded Modules Dialog</span></a> that opens,
+                click <img alt="add" width="12" height="12" title="add" src="/help/img/idea/2016.1/new.png" class="inline-icon-12"> (<kbd data-default="Alt+Insert" data-default_for_gnome="Alt+Insert" data-default_for_kde="Alt+Insert" data-default_for_xwin="Alt+Insert" data-emacs="Alt+Insert" data-jbuilder="Alt+Insert" data-visual_studio="Alt+Insert" data-netbeans_6.5="N/A" data-eclipse="Alt+Insert" data-mac_os_x_10.5_="&#x2318;N" data-mac_os_x="&#x2303;N" data-eclipse_mac_os_x="&#x2318;N" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Insert</kbd>).</li><li class="list__item"><a name="d91770e98"></a>
+                In the <a name="d91770e100"></a><span class="control">Choose Main Class of Runtime-Loaded Module</span> dialog that opens,
+                select the main class of the corresponding RLM and click <a name="d91770e103"></a><span class="control">OK</span>.</li><li class="list__item"><a name="d91770e107"></a>
+                If you want the module SWF file size to be optimized, select the <a name="d91770e109"></a><span class="control">Optimize</span> check box.</li><li class="list__item"><a name="d91770e114"></a>
+                In a similar way, add dependencies on other RLMs.</li><li class="list__item"><a name="d91770e117"></a>
+                Click <a name="d91770e119"></a><span class="control">OK</span> in the <a name="d91770e122"></a><span class="control">Runtime-Loaded Modules</span> dialog.</li><li class="list__item"><a name="d91770e126"></a>
+                Click <a name="d91770e128"></a><span class="control">OK</span> in the <a name="d91770e131"></a><span class="control">Project Structure</span> dialog.</li></ol><a name="d91770e136"></a><h2>
+            Specifying the dependencies by listing the RLM build configurations</h2><a name="d91770e139"></a><p>
+            When using this way of specifying the dependencies, you should have build configurations for each of the RLMs.
+            Besides, to optimize the file size of the RLMs, you should specify the <code class="code" data-lang="Java">load-externs</code> and
+            <code class="code" data-lang="Java">link-report</code> compiler options manually (in the corresponding build configurations).</p><a name="d91770e148"></a><p>
+            Advantages:</p><ul class="list _ul"><li class="list__item"><a name="d91770e154"></a>
+                The main application and the modules can be compiled using different sets of compilation options.
+                (Every build configuration has its own set of compiler options.)</li><li class="list__item"><a name="d91770e157"></a>
+                The source code of the main application and the RLMs may be in the same IntelliJ IDEA module or
+                in different modules (within the same project).</li></ul><a name="d91770e161"></a><p>
+            Drawbacks:</p><ul class="list _ul"><li class="list__item"><a name="d91770e166"></a>
+                You have to create a build configuration for each of the RLMs.</li><li class="list__item"><a name="d91770e169"></a>
+                To use the <code class="code" data-lang="Java">load-externs</code> and <code class="code" data-lang="Java">link-report</code> compiler options,
+                you should specify them manually.</li></ul><a name="d91770e179"></a><p>
+            Here are the main steps of the procedure to be used:</p><ol class="list _decimal"><li class="list__item"><a name="d91770e184"></a>
+                Open the build configuration settings for the main application.
+                For instructions, see
+                <a href="working-with-build-configurations.html#managing_build_configs">Managing build configurations and their settings</a> and
+                <a href="working-with-build-configurations.html#shortcuts_for_build_config_settings">Using shortcuts to open build configuration settings</a>.</li><li class="list__item"><a name="d91770e191"></a>
+                On the <a name="d91770e193"></a><span class="control">Dependencies</span> tab, click <img alt="add" width="12" height="12" title="add" src="/help/img/idea/2016.1/new.png" class="inline-icon-12"> (<kbd data-default="Alt+Insert" data-default_for_gnome="Alt+Insert" data-default_for_kde="Alt+Insert" data-default_for_xwin="Alt+Insert" data-emacs="Alt+Insert" data-jbuilder="Alt+Insert" data-visual_studio="Alt+Insert" data-netbeans_6.5="N/A" data-eclipse="Alt+Insert" data-mac_os_x_10.5_="&#x2318;N" data-mac_os_x="&#x2303;N" data-eclipse_mac_os_x="&#x2318;N" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Insert</kbd>),
+                and select <a name="d91770e200"></a><span class="control">Build Configuration</span>.</li><li class="list__item"><a name="d91770e204"></a>
+                In the <a name="d91770e206"></a><span class="control">Add Dependency</span> dialog that opens,
+                select all the necessary build configurations for the RLMs and click <a name="d91770e209"></a><span class="control">OK</span>.</li><li class="list__item"><a name="d91770e213"></a>
+                If you need module optimization:
+                <ol class="list _decimal"><li class="list__item"><a name="d91770e217"></a>
+                        On the <a name="d91770e219"></a><span class="control">Compiler Options</span> tab, in the <a name="d91770e222"></a><span class="control">Additional compiler options</span> field,
+                        add <code class="code" data-lang="Java">-link-report=&lt;path_to_report_file&gt;</code>, for example,
+                        <code class="code" data-lang="Java">-link-report=c:/temp/link-report.xml</code>.</li><li class="list__item"><a name="d91770e232"></a>
+                        Add <code class="code" data-lang="Java">-load-externs=&lt;path_to_report_file&gt;</code>
+                        (e.g. <code class="code" data-lang="Java">-load-externs=c:/temp/link-report.xml</code>) to the <a name="d91770e240"></a><span class="control">Additional compiler options</span> field
+                        in all the corresponding RLM build configurations.</li></ol>
+      </li><li class="list__item"><a name="d91770e246"></a>
+                Click <a name="d91770e248"></a><span class="control">OK</span> in the <a name="d91770e251"></a><span class="control">Project Structure</span> dialog.</li></ol><div class="navigation-links _bottom"><a class="navigation-links__prev" href="working-with-build-configurations.html">Working with Build Configurations</a><a class="navigation-links__next" href="building-actionscript-and-flex-applications.html">Building ActionScript and Flex Applications</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content"><div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d91770e260"></a><a href="working-with-build-configurations.html"><span>Working with Build Configurations</span></a></li><li class="list__item"><a name="d91770e262"></a><a href="building-actionscript-and-flex-applications.html"><span>Building ActionScript and Flex Applications</span></a></li></ul></div><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d91770e267"></a><a href="build-configuration-page-for-a-flash-module.html"><span>Build Configuration Page for a Flash Module</span></a></li></ul></div></div></section><div class="last-modified">Last modified: 13 July 2016 </div></article><div id="disqus_thread"></div></div></section></main></div><script src="/help/app/app.js"></script></body></html>

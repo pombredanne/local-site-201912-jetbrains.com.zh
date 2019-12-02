@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[480],{479:function(n,t,o){o("ctTR"),n.exports=o("XSZ8")},Nn4T:function(n,t,o){},XSZ8:function(n,t,o){var e=o("KI45");o("Nn4T");var c=e(o("Am66")),s=e(o("5Ksz"));c.default.domReady((function(){var n='<div class="toolbox-primary-colors"><h3 class="wt-h3 wt-offset-top-24">System requirements</h3>'.concat(document.getElementById("systemRequirements").innerHTML,"</div>");$(".js-popup-object").on("click",(function(){new s.default(null,{content:n})}))}))}},[[479,0]]]);
+//# sourceMappingURL=index.entry.93de7097e88ca326b258.js.map

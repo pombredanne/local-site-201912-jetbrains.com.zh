@@ -1,0 +1,102 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta charset="UTF-8"><meta content="noindex" name="robots"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="//resources.jetbrains.com/storage/help-app/v3/analytics.js"></script><title>Code Inspection: Safe cast expression always succeeds, consider direct cast instead - Help | ReSharper</title><link rel="stylesheet" href="//resources.jetbrains.com/storage/help-app/v3/app.css"></head><body data-id="TryCastAlwaysSucceeds" data-breadcrumbs="TryCastAlwaysSucceeds.xml|Code Inspection: Safe cast expression always succeeds, consider direct cast instead" data-main-title="Code Inspection: Safe cast expression always succeeds, consider direct cast instead" data-article-props="&#xA;                {&#xA;                &#xA;            &#34;seeAlso&#34;:[&#xA;            &#xA;                {&#34;title&#34;: &#34;Concepts&#34;,&#xA;                 &#34;links&#34;: [&#xA;                &#xA;        {&#34;url&#34;:&#34;Finding_Code_Issues.html&#34;,&#34;text&#34;:&#34;Find Code Issues with Code Inspection&#34;}&#xA;    ,&#xA;        {&#34;url&#34;:&#34;Code_Analysis__Code_Inspections.html&#34;,&#34;text&#34;:&#34;Code Inspections&#34;}&#xA;    ,&#xA;        {&#34;url&#34;:&#34;Design_time_Inspection.html&#34;,&#34;text&#34;:&#34;Detect Code Issues in Design Time&#34;}&#xA;    &#xA;                    ]},&#xA;                {&#34;title&#34;: &#34;External Links&#34;,&#xA;                 &#34;links&#34;: [&#xA;                &#xA;        {&#34;url&#34;:&#34;https://blogs.msdn.microsoft.com/ericlippert/2009/10/08/whats-the-difference-between-as-and-cast-operators&#34;,&#34;text&#34;:&#34;What’s the difference between &#34;as&#34; and &#34;cast&#34; operators?&#34;}&#xA;    ,&#xA;        {&#34;url&#34;:&#34;https://stackoverflow.com/questions/132445/direct-casting-vs-as-operator&#34;,&#34;text&#34;:&#34;StackOverflow: Direct casting vs 'as' operator?&#34;}&#xA;    &#xA;                    ]}&#xA;            ]&#xA;        &#xA;                }&#xA;            " data-disqus-id="TryCastAlwaysSucceeds_10"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search ReSharper Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>ReSharper 2019.3 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="secondary" value="rs">ReSharper 2.x/IntelliJ IDEA</option><option data-group="primary" value="vs">Visual Studio</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="TryCastAlwaysSucceeds" id="TryCastAlwaysSucceeds.xml">Code Inspection: Safe cast expression always succeeds, consider direct cast instead</h1>    <a name="tip_disable"></a>        <aside data-type="tip" class="prompt" data-title="" rel="TryCastAlwaysSucceeds.xml" id="3fd734de">            <p id="609297e6">                You can                <a href="Code_Analysis__Configuring_Warnings.html#suppress">                    suppress this inspection to ignore specific issues</a>,                <a href="Code_Analysis__Configuring_Warnings.html#change_severity">                    change its severity level to make the issues less or more noticeable</a>, or                <a href="Code_Analysis__Configuring_Warnings.html#disable">disable it altogether</a>.            </p>        </aside>        <p id="5ee78d9c">        ReSharper issues this suggestion in two situations: when you convert compatible types from derived to base and        also when you convert a base type to a derived one.    </p>    <p id="f36c769b">        To safely cast a reference variable from a derived type to a base type, the        <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/as" data-external="true" target="_blank" rel="noopener noreferrer">as operator</a>        is used. The safety means that the code will not throw an exception,        but rather a variable to which you assign a value will be assigned        <code class="code">null</code>        if the cast cannot be performed. If the types are        <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/is#testing-for-type-compatibility" data-external="true" target="_blank" rel="noopener noreferrer">compatible</a>, a safe cast using        <code class="code">as</code>        would always succeed, so in this case the explicit cast would be enough.    </p>    <p id="e94b9e6b">        In the example, type compatibility is checked first (by using the        <code class="code">is</code>        operator), and the cast is performed only if the types are compatible. The presence of checking with        <code class="code">is</code>        makes using        <code class="code">as</code>        redundant.        <a href="https://docs.microsoft.com/en-us/visualstudio/code-quality/ca1800-do-not-cast-unnecessarily" data-external="true" target="_blank" rel="noopener noreferrer">Redundant casts</a>        might decrease performance. ReSharper detects a safe cast from a compatible derived type and replaces this cast        with a direct cast:    </p>    <div class="table-wrapper"><table class="  _layout-fixed" width="100%" id="6ddc9ef9"><thead><tr id="6d044985" class="ijRowHead"><th id="651f43c4"><p>Suboptimal code</p></th><th id="f8271f06"><p>After the quick-fix</p></th></tr></thead><tbody><tr id="efe44549" class="ijRowOdd"><td id="36897f7d">                <div class="code-block" data-lang="csharp">
+                    
+class SafeCastDemo
+{
+    public class Animal
+    {
+    }
+
+    private class Cat : Animal
+    {
+    }
+
+    public Animal GetCat(Animal a)
+    {
+        Cat c = new Cat();
+        if (a is Cat)
+        {
+            c = a as Cat;
+        }
+        return c;
+    }
+}
+
+
+                </div>            </td><td id="6ce58e50">                <div class="code-block" data-lang="csharp">
+                    
+class SafeCastDemo
+{
+    public class Animal
+    {
+    }
+
+    private class Cat : Animal
+    {
+    }
+
+    public Animal GetCat(Animal a)
+    {
+        Cat c = new Cat();
+        if (a is Cat)
+        {
+            c = (Cat) a;
+        }
+        return c;
+    }
+}
+
+                </div>            </td></tr></tbody></table></div>    <p id="9d3e3053">        Another situation when a safe cast always succeeds is a conversion from a base to derived type, when no explicit        cast is necessary at all (the compiler implicitly performs it). So the quick-fix that removes a safe cast        appears also when a conversion from a base to derived type takes place. Because no cast is needed for such a        conversion, the code below also invokes another quick-fix that removes the explicit cast altogether. The example        shows the result after both quick-fixes have been applied (the safe cast and then the explicit cast have been        removed).    </p>    <div class="table-wrapper"><table class="  _layout-fixed" width="100%" id="0d04f90e"><thead><tr id="9ec852a8" class="ijRowHead"><th id="83e5ea07"><p>Suboptimal code</p></th><th id="3e3e7511"><p>After the quick-fix</p></th></tr></thead><tbody><tr id="e2b7cd18" class="ijRowOdd"><td id="a05411be">                <div class="code-block" data-lang="csharp">
+                    
+class SafeCastDemo
+{
+    class Animal
+    {
+    }
+
+    class Cat : Animal
+    {
+    }
+
+    class Program
+    {
+        static void Main()
+        {
+            Cat с = new Cat();
+            Animal a = c as Animal;
+            // ...
+        }
+    }
+}
+
+
+                </div>            </td><td id="59caa807">                <div class="code-block" data-lang="csharp">
+                    
+class SafeCastDemo
+{
+    class Animal
+    {
+    }
+
+    class Cat : Animal
+    {
+    }
+
+    class Program
+    {
+        static void Main()
+        {
+            Cat с = new Cat();
+            Animal a = c;
+            // ...
+        }
+    }
+}
+
+                </div>            </td></tr></tbody></table></div>    <div class="last-modified" data-skip-index="skip">Last modified: 28 November 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="UnusedParameterInPartialMethod.html">Code Inspection: Unused parameter in partial method</a><a class="navigation-links__next" href="ReturnTypeCanBeEnumerable.Local.html">Code Inspection: Return type can be IEnumerable&lt;T&gt; (private accessibility)</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="//resources.jetbrains.com/storage/help-app/v3/app.js"></script></body></html>

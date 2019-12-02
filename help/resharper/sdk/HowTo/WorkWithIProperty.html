@@ -1,0 +1,325 @@
+
+
+
+<!doctype html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>Work with IProperty / ReSharper  DevGuide</title>
+    <link rel="stylesheet" href="/help/resharper/sdk/app/app.css">
+    <link rel="shortcut icon" href="/help/resharper/sdk/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="57x57" href="/help/resharper/sdk/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/help/resharper/sdk/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/help/resharper/sdk/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/help/resharper/sdk/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/help/resharper/sdk/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/help/resharper/sdk/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/help/resharper/sdk/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/help/resharper/sdk/apple-touch-icon-180x180.png">
+    <link rel="mask-icon" href="/help/resharper/sdk/apple-mask-icon.svg" color="black">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-square70x70logo" content="/help/resharper/sdk/mstile-70x70.png">
+    <meta name="msapplication-TileImage" content="/help/resharper/sdk/mstile-144x144.png">
+    <meta name="msapplication-square150x150logo" content="/help/resharper/sdk/mstile-150x150.png">
+    <meta name="msapplication-wide310x150logo" content="/help/resharper/sdk/mstile-310x150.png">
+    <meta name="msapplication-square310x310logo" content="/help/resharper/sdk/mstile-310x310.png">
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="Documentation for writing extensions for ReSharper" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.jetbrains.com/help/resharper/sdk//HowTo/WorkWithIProperty.html" />
+    <meta property="og:site_name" content="JetBrains ReSharper" />
+    <meta property="og:title" content="Work with IProperty" />
+    <meta property="og:description" content="Documentation for writing extensions for ReSharper" />
+    <meta property="og:image" content="https://www.jetbrains.com/help/resharper/sdk/jetbrains.png" />
+    <meta property="article:modified_time" content="2017-07-12T17:14:56+00:00" />
+    <!-- <meta property="article:section" content="" /> 
+    <meta property="article:tag" content="" /> -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@JBPlatform" />
+    <meta name="twitter:title" content="Work with IProperty" />
+    <meta name="twitter:description" content="Documentation for writing extensions for ReSharper" />
+    <meta name="twitter:image" content="https://www.jetbrains.com/help/resharper/sdk/jetbrains.png" />
+    <meta class="swiftype" name="product" data-type="string" content="/help/resharper/sdk/"></meta>
+<link  rel="stylesheet" href="/help/resharper/sdk/app/styles.css"></head>
+<body data-id="HowTo/WorkWithIProperty">
+<div class="wrapper">
+    <section class="panel _nav">
+        <header class="panel__header">
+            <div class="container">
+                <form class="search-box">
+                    <label for="search-box__input" class="search-box__label">
+                        <input type="text" class="search-box__input" id="search-box__input" placeholder="Search ReSharper  DevGuide">
+                    </label>
+                    <div class="search-box__clear" title="Clear"></div>
+                </form>
+            </div>
+        </header>
+        <nav class="panel__content">
+            <div class="container _nav">
+                <menu class="nav-tree"></menu>
+            </div>
+            <div class="container _footer panel__footer">
+                <p><a data-bypass="true" href="//youtrack.jetbrains.com/issues/IJSDK">Send feedback</a></p>
+                <p>&copy; 2000&ndash;2018 <a href="//www.jetbrains.com">JetBrains</a> s.r.o.<br>
+                    All rights reserved.</p>
+            </div>
+        </nav>
+    </section>
+
+    <main class="panel _main" role="main">
+        <header class="panel__header">
+            <div class="container">
+                <h3>ReSharper DevGuide</h3>
+                
+                <div class="panel-trigger"></div>
+            </div>
+        </header>
+        <section class="panel__content">
+            <div class="container">
+                <article class="article" data-shortcut-switcher="false">
+                    <div class="navigation-links _top" data-swiftype-index="false">
+                        <a class="navigation-links__prev" href="/HowTo/WorkWithSignals.html">Work with Signals</a>
+                        <a class="navigation-links__next" href="/HowTo/NavigateCode/NavigateCode.html">Navigate Code</a>
+                    </div>
+                    <a data-bypass="true" href="https://github.com/JetBrains/resharper-devguide/edit/master/HowTo/WorkWithIProperty.md" class="page-link-to-github" target="_blank" rel="noopener noreferrer" title="Edit this page on GitHub">
+                        <i class="github-icon"></i>
+                        <span class="text">Edit page</span>
+                    </a>
+
+                    <h1>Work with IProperty</h1>
+                    <p><strong>What you should know beforehand:</strong></p>
+<ul>
+  <li><a href="/help/resharper/sdk/HowTo/WorkWithLifetime.html"><span>Lifetime</span></a></li>
+  <li><a href="/help/resharper/sdk/HowTo/WorkWithSignals.html"><span>Signals</span></a></li>
+</ul>
+
+<p><code class="code highlight language-text">IProperty</code> is one more concept that is used quite often throughout the ReSharper API. Simply put, an <code class="code highlight language-text">IProperty</code> object is able to track the changes, validate new values being assigned, and  notify about the changes. <code class="code highlight language-text">IProperty</code> has much in common with <a href="WorkWithSignals.html"><span>signals</span></a>.</p>
+
+<a name="basic-usage" class="elem-anchor"></a>
+<h2>Basic Usage<a href="#basic-usage" class="anchor-link"><span></span></a></h2>
+<p><strong>Examples (<a href="HowTo.html#sample-solution"><span>?</span></a>):</strong></p>
+<ul>
+  <li><a href="https://github.com/JetBrains/sample-resharper-plugin/blob/master/SampleReSharperPlugin/src/IProperty/PropertyProvider.cs" data-external="true" target="_blank" rel="noopener noreferrer"><span>PropertyProvider.cs</span></a></li>
+  <li><a href="https://github.com/JetBrains/sample-resharper-plugin/blob/master/SampleReSharperPlugin/src/IProperty/PropertyTester.cs" data-external="true" target="_blank" rel="noopener noreferrer"><span>PropertyTester.cs</span></a></li>
+</ul>
+
+<p>For example, the <code class="code highlight language-text">SomeIntProperty</code> parameter of the <code class="code highlight language-text">PropertyProvider</code> class is important for the work of <code class="code highlight language-text">PropertyTester</code>. Once the parameter is updated, <code class="code highlight language-text">PropertyTester</code> is notified about the new value:</p>
+
+<div class="code-block" data-lang="text"><code class="code-block__wrapper">public class PropertyProvider
+{
+    public IProperty&lt;int&gt; SomeIntProperty;
+
+    public PropertyProvider(Lifetime lifetime)
+    {
+        SomeIntProperty = new Property&lt;int&gt;(lifetime, "PropertyProvider.SomeIntProperty");
+    }
+}
+ 
+ 
+public class PropertyTester
+{
+    private readonly PropertyProvider _propertyProvider;
+ 
+    public PropertyTester(Lifetime lifetime, PropertyProvider propertyProvider)
+    {
+        _propertyProvider = propertyProvider;
+        _propertyProvider.SomeIntProperty.BeforeChange.Advise(lifetime, args =&gt;
+        {
+            if (args.New &lt; 0)                
+                args.Cancel = true;                
+        });
+ 
+        _propertyProvider.SomeIntProperty.Change.Advise(lifetime,
+            val =&gt; MessageBox.ShowInfo($"New property value is {val}"));
+    }
+ 
+ 
+    public void ChangePropertyValue(int value)
+    {
+        _propertyProvider.SomeIntProperty.Value = value;
+    }
+}
+</code></div>
+
+<a name="notes" class="elem-anchor"></a>
+<h3>Notes<a href="#notes" class="anchor-link"><span></span></a></h3>
+<ul>
+  <li>As almost any other ReSharper API component, an <code class="code highlight language-text">IProperty</code> instance has lifetime, which means ReSharper is in charge of the object disposal.</li>
+  <li>When the lifetime is terminated, all handlers of the property events are forcibly detached in order to prevent memory leaks.</li>
+  <li><code class="code highlight language-text">BeforeChange</code> is a signal that fires before the value changes. You can cancel the change by passing <code class="code highlight language-text">Cancel = true</code> in signal arguments. The arguments also store old and new property value.</li>
+  <li><code class="code highlight language-text">Change</code> is a <a href="WorkWithSignals.html"><span>signal</span></a> that fires on value change. Use it to track the changes. In addition, there are multiple other methods that allow tracking changes, e.g.,
+    <ul>
+      <li><code class="code highlight language-text">ForEachNewValue</code> - the handler will be called each time a new value is assigned</li>
+      <li><code class="code highlight language-text">When</code> - the handler will be called when the value gets equal with a desired value</li>
+    </ul>
+  </li>
+  <li>To change the value, use the <code class="code highlight language-text">Value</code> property.</li>
+</ul>
+
+<a name="global-options" class="elem-anchor"></a>
+<h2>Global Options<a href="#global-options" class="anchor-link"><span></span></a></h2>
+<p><strong>Examples (<a href="HowTo.html#sample-solution"><span>?</span></a>):</strong></p>
+<ul>
+  <li><a href="https://github.com/JetBrains/sample-resharper-plugin/blob/master/SampleReSharperPlugin/src/Options/Ui/OptionsPageViewModel.cs" data-external="true" target="_blank" rel="noopener noreferrer"><span>OptionsPageViewModel.cs</span></a></li>
+</ul>
+
+<p>One more obvious example of how <code class="code highlight language-text">IProperty</code> can be used is global options: once a user changes an option on the <strong>Options</strong> page, the plugin gets instantly notified about the change.</p>
+
+<div class="code-block" data-lang="text"><code class="code-block__wrapper">Text = new Property&lt;string&gt;(lifetime, "OptionsExampleViewModel.Text");
+ 
+var checkMeOption =
+    settingsStore.BindToContextLive(lifetime, ContextRange.ApplicationWide)
+        .GetValueProperty(lifetime, (MySettingsKey key) =&gt; key.CheckMe);
+ 
+checkMeOption.Change.Advise_HasNew(lifetime, v =&gt;
+{
+    Text.Value = v.New ? "checked" : "not checked";
+});
+</code></div>
+
+<a name="notes-1" class="elem-anchor"></a>
+<h3>Notes<a href="#notes-1" class="anchor-link"><span></span></a></h3>
+<ul>
+  <li><code class="code highlight language-text">checkMeOption</code> is a property (<code class="code highlight language-text">IProperty</code>) that represents the <code class="code highlight language-text">CheckMe</code> setting on the <strong>Options</strong> page.</li>
+  <li>Depending on the <code class="code highlight language-text">CheckMe</code> setting state, the <code class="code highlight language-text">Text</code> property is either “checked” or “unchecked”.</li>
+  <li>The <code class="code highlight language-text">Text</code> property is updated via <code class="code highlight language-text">Advise_HasNew</code> and is used to show the <code class="code highlight language-text">CheckMe</code> setting state on a WPF control (see the next section).</li>
+</ul>
+
+<a name="wpf-data-binding" class="elem-anchor"></a>
+<h2>WPF Data Binding<a href="#wpf-data-binding" class="anchor-link"><span></span></a></h2>
+<p><strong>Examples (<a href="HowTo.html#sample-solution"><span>?</span></a>):</strong></p>
+<ul>
+  <li><a href="https://github.com/JetBrains/sample-resharper-plugin/blob/master/SampleReSharperPlugin/src/Options/Ui/OptionsPageViewModel.cs" data-external="true" target="_blank" rel="noopener noreferrer"><span>OptionsPageViewModel.cs</span></a></li>
+  <li><a href="https://github.com/JetBrains/sample-resharper-plugin/blob/master/SampleReSharperPlugin/src/Options/Ui/OptionsPageView.xaml" data-external="true" target="_blank" rel="noopener noreferrer"><span>OptionsPageView.xaml</span></a></li>
+  <li><a href="https://github.com/JetBrains/sample-resharper-plugin/blob/master/SampleReSharperPlugin/src/Options/Ui/OptionsPageView.xaml.cs" data-external="true" target="_blank" rel="noopener noreferrer"><span>OptionsPageView.xaml.cs</span></a></li>
+</ul>
+
+<p><code class="code highlight language-text">IProperty</code> implements <code class="code highlight language-text">INotifyPropertyChanged</code> out of the box, so, it is able to participate in WPF data binding. For example, we can show the current value of an <code class="code highlight language-text">IProperty</code> on a WPF control. Let’s take a look at how to do this based on the example from the previous section. Say, we want to display the value of the <code class="code highlight language-text">CheckMe</code> setting (located in <strong>ReSharper | Options…</strong>). This is how the view model looks like:</p>
+
+<div class="code-block" data-lang="text"><code class="code-block__wrapper">public class OptionsPageViewModel: AAutomation    
+{
+    public IProperty&lt;string&gt; Text { get; set; }        
+ 
+    public OptionsPageViewModel(Lifetime lifetime, ISettingsStore settingsStore)
+    {
+        Text = new Property&lt;string&gt;(lifetime, "OptionsExampleViewModel.Text");
+ 
+        var checkMeOption =
+            settingsStore.BindToContextLive(lifetime, ContextRange.ApplicationWide)
+                .GetValueProperty(lifetime, (MySettingsKey key) =&gt; key.CheckMe);
+ 
+        checkMeOption.Change.Advise_HasNew(lifetime, v =&gt;
+        {
+            Text.Value = v.New ? "checked" : "not checked";
+        });
+    }
+}
+</code></div>
+<p>The code behind the view looks like follows:</p>
+<div class="code-block" data-lang="text"><code class="code-block__wrapper">[View]
+public partial class OptionsPageView : IView&lt;OptionsPageViewModel&gt;
+{
+    public new string Name =&gt; "Options";
+ 
+    public OptionsPageView()
+    {
+        InitializeComponent();
+    }
+}
+</code></div>
+<p>The XAML for the view:</p>
+<div class="code-block" data-lang="text"><code class="code-block__wrapper">&lt;UserControl x:Class="SampleReSharperPlugin.OptionsPageView"
+            ...
+             xmlns:viewModels="clr-namespace:SampleReSharperPlugin"
+             d:DataContext="{d:DesignInstance Type={x:Type viewModels:OptionsPageViewModel}, IsDesignTimeCreatable=False}"&gt;
+ 
+    &lt;Grid&gt;
+        &lt;StackPanel&gt;
+            &lt;TextBlock HorizontalAlignment="Left" TextWrapping="Wrap"
+                       VerticalAlignment="Top" Margin="10,10,5,0"&gt;
+                The option in &lt;Bold&gt;ReShaper &gt; Options... &gt; Tools &gt; Sample R# Plugin &gt; Sample bool option&lt;/Bold&gt; is:
+                &lt;InlineUIContainer&gt;
+                    &lt;TextBlock TextWrapping="Wrap" Text="{Binding Text.Value}" FontWeight="Bold" /&gt;
+                &lt;/InlineUIContainer&gt;
+            &lt;/TextBlock&gt;
+        &lt;/StackPanel&gt;
+    &lt;/Grid&gt;
+&lt;/UserControl&gt;
+</code></div>
+
+<p>When creating a view and viewmodel, don’t forget to specify data context:</p>
+<div class="code-block" data-lang="text"><code class="code-block__wrapper">var propViewModel = new PropertyViewModel(lifetime);
+var propView = new PropertyView { DataContext = propViewModel };
+</code></div>
+
+<a name="notes-2" class="elem-anchor"></a>
+<h3>Notes<a href="#notes-2" class="anchor-link"><span></span></a></h3>
+<ul>
+  <li>ReSharper provides its own set of classes used to simplify implementing WPF MVVM pattern:
+    <ul>
+      <li><code class="code highlight language-text">AAutomation</code> provides base implementation of the <code class="code highlight language-text">INotifyPropertyChanged</code> interface and can be used for creating view models.</li>
+      <li>The view class should be marked with the <code class="code highlight language-text">View</code> attribute and implement the <code class="code highlight language-text">IView</code> interface.</li>
+    </ul>
+  </li>
+</ul>
+
+<a name="data-flow-between-properties" class="elem-anchor"></a>
+<h2>Data Flow Between Properties<a href="#data-flow-between-properties" class="anchor-link"><span></span></a></h2>
+<p><strong>Examples (<a href="HowTo.html#sample-solution"><span>?</span></a>):</strong></p>
+<ul>
+  <li><a href="https://github.com/JetBrains/sample-resharper-plugin/blob/master/SampleReSharperPlugin/src/IProperty/PropertyFlow.cs" data-external="true" target="_blank" rel="noopener noreferrer"><span>PropertyFlow.cs</span></a></li>
+</ul>
+
+<p>You can organize the data flow between two properties. The properties can be of the same type or of different types. In the latter case, you should write a type converter. For example, we have two string properties: the first one provides some string; the second one takes this string and applies to it Title Capitalization:</p>
+<div class="code-block" data-lang="text"><code class="code-block__wrapper">public class PropertyFlow
+{
+    public IProperty&lt;string&gt; SourceProperty { get; set; }
+    public IProperty&lt;string&gt; TargetProperty { get; set; }
+ 
+    public PropertyFlow(Lifetime lifetime)
+    {
+        SourceProperty = new Property&lt;string&gt;(lifetime, "sourceProperty");
+        TargetProperty = new Property&lt;string&gt;(lifetime, "targetProperty");
+ 
+        SourceProperty.FlowChangesInto(lifetime, TargetProperty, s =&gt;
+        {
+            if (string.IsNullOrEmpty(s))
+                return "";
+ 
+            var textInfo = new CultureInfo("en-US", false).TextInfo;
+            s = textInfo.ToTitleCase(s); 
+ 
+            return s;
+        });
+    }
+}
+</code></div>
+
+<a name="color-themes" class="elem-anchor"></a>
+<h2>Color Themes<a href="#color-themes" class="anchor-link"><span></span></a></h2>
+<p>The classes responsible for working with color themes extensively use <code class="code highlight language-text">IProperty</code>. 
+For more details, refer to <a href="/help/resharper/sdk/HowTo/WorkWithColorThemes.html"><span>Work with Color Themes</span></a>.</p>
+
+
+                    <div class="navigation-links _bottom" data-swiftype-index="false">
+                        <a class="navigation-links__prev" href="/HowTo/WorkWithSignals.html">Work with Signals</a>
+                        <a class="navigation-links__next" href="/HowTo/NavigateCode/NavigateCode.html">Navigate Code</a>
+                    </div>
+                    <div class="last-modified">
+                        Last modified: 12 July 2017
+                    </div>
+                </article>
+
+                <section class="disqus">
+                    <div id="disqus_thread"></div>
+                </section>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="/help/resharper/sdk/app/app.js" data-baseurl="/help/resharper/sdk/"></script>
+
+</body>
+</html>
+

@@ -1,0 +1,474 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta class="swiftype" name="product" data-type="string" content="/idea/2016.3/"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><meta charset="UTF-8"><meta name="robots" content="noindex"><title>IntelliJ IDEA 2016.3 Help :: Configuring Node.js Interpreters</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Configuring_Remote_Node_Interpreters"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-swiftype-index="false"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.3 Help</h3><div class="shortcuts-switcher" data-swiftype-index="false"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Windows/Linux Default</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWin</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">Mac OS X</option><option data-group="secondary" value="eclipse_mac_os_x">Eclipse (Mac OS X)</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (Mac OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper (Mac OS X)</option><option data-group="secondary" value="emacs">Emacs (Mac OS X)</option></select></div><div class="panel-trigger" data-swiftype-index="false"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="running-and-debugging-node-js.html">Running and Debugging Node.js</a></div><h1>Configuring Node.js Interpreters</h1><a name="d766e18"></a><p><a name="d766e19"></a><span class="emphasis">This feature is supported in the Ultimate edition only.</span></p>
+             
+                <aside class="warning ">
+                    <a name="d1646e280"></a><p><a name="d1646e281"></a><span class="emphasis">
+                        The following is only valid when Node.js Plugin is installed and enabled!
+                    </span></p>
+                </aside>
+             
+        <a name="d46226e15"></a><p>In this section:</p><ul><li class="list__item"><a href="#d46226e20">Introduction</a></li><li class="list__item"><a href="#d46226e57">Configuring a local Node.js interpreter</a></li><li class="list__item"><a href="#d46226e122">Configuring a remote Node.js interpreter on a host accessible through SSH connection</a></li><li class="list__item"><a href="#d46226e231">Configuring a remote Node.js interpreter in a Vagrant environment instance</a></li><li class="list__item"><a href="#d46226e379">Configuring a remote Node.js interpreter on a remote host accessible through SFTP</a></li><li class="list__item"><a href="#d46226e518">Configuring a remote Node.js interpreter in a Docker container</a></li><li class="list__item"><a href="#d46226e613">Configuring mappings</a></li></ul><a name="d46226e20"></a><h2>Introduction</h2>
+    <a name="d46226e22"></a><p>With IntelliJ IDEA, you can use local and remote Node.js interpreters.</p>
+    <a name="d46226e25"></a><p>
+        The term <a name="d19550e6110"></a><span class="emphasis">local Node.js interpreter</span> denotes a Node.js installation on your computer.
+        The term <a name="d19550e6113"></a><span class="emphasis">remote Node.js interpreter</span> denotes a Node.js installation on a remote host or in a virtual environment
+        set up in a <a name="d19550e6116"></a><span class="emphasis">Vagrant</span> instance.
+    </p>
+        <a name="d46226e28"></a><p>You can access a remote interpreter in four ways:</p>
+        <ul class="list _bullet"><li class="list__item"><a name="d46226e33"></a>Using SSH credentials to access the host where the Node.js interpreter is installed.</li><li class="list__item"><a name="d46226e36"></a>Through access to the corresponding <a name="d46226e38"></a><span class="emphasis">Vagrant</span> instance.</li><li class="list__item"><a name="d46226e42"></a>According to a <a name="d46226e44"></a><a href="deployment-working-with-web-servers.html"><span>Server Access Configuration</span></a>.
+                This approach is also helpful if you are going to synchronize your project sources
+                with the Web server on the target remote host.</li><li class="list__item"><a name="d46226e48"></a>
+                Through access to a <a name="d46226e50"></a><span class="emphasis">Docker Container</span> with Node.js.
+            </li></ul>
+<a name="d46226e57"></a><h2>Configuring a local Node.js interpreter</h2>
+        <ol class="list _decimal"><li class="list__item"><a name="d46226e61"></a>
+                 
+         
+            Open the <a name="d831e8187"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by pressing <kbd data-default="Ctrl+Alt+S" data-default_for_gnome="Ctrl+Alt+S" data-default_for_kde="Ctrl+Alt+S" data-default_for_xwin="Ctrl+Alt+S" data-emacs="Ctrl+Alt+S" data-jbuilder="N/A" data-visual_studio="Alt+F7" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Alt+S" data-mac_os_x_10.5_="&#x2318;," data-mac_os_x="&#x2318;," data-eclipse_mac_os_x="&#x2318;," data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+S</kbd> or by choosing <a name="d831e8191"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d831e8194"></a><span class="menupath">IntelliJ IDEA | Preferences</span> for OS X,
+         
+         
+            and  
+         
+         
+         
+        click <a name="d831e8217"></a><span class="control">Node.js and NPM</span> under <a name="d831e8220"></a><span class="control">Languages&amp;Frameworks</span>.
+     
+     
+            </li><li class="list__item"><a name="d46226e73"></a>
+                On the <a name="d46226e75"></a><span class="control">Node.js and NPM</span> page that opens, click the <img alt="/help/img/idea/2016.3/browseButton.png" title="/help/img/idea/2016.3/browseButton.png" src="/help/img/idea/2016.3/browseButton.png" width="15" height="15" class="inline-icon-15"> button
+                next to the <a name="d46226e80"></a><span class="control">Node Interpreter</span> drop-down list.
+            </li><li class="list__item"><a name="d46226e84"></a>
+                 
+         
+        In the <a name="d19550e6083"></a><a href="node-js-interpreters-dialog.html"><span>Node.js Interpreters Dialog</span></a> that opens with a list of all the currently configured interpreters,
+        click <img alt="/help/img/idea/2016.3/new.png" title="/help/img/idea/2016.3/new.png" src="/help/img/idea/2016.3/new.png" width="12" height="12" class="inline-icon-12"> in the toolbar. In the dialog box that opens, choose <a name="d19550e6087"></a><span class="control">Add Local</span> on the context menu
+     ,
+                then choose the local installation of Node.js and click <a name="d46226e91"></a><span class="control">OK</span>.
+                    You return to the <a name="d46226e94"></a><a href="node-js-interpreters-dialog.html"><span>Node.js Interpreters Dialog</span></a> where the <a name="d46226e96"></a><span class="control">Node interpreter</span> read-only field
+                    shows the path to the chosen interpreter.
+            </li><li class="list__item"><a name="d46226e100"></a>
+                In the <a name="d46226e102"></a><span class="control">Npm package</span> field,
+                 
+        specify the Node package manager (npm) associated with the selected interpreter. Choose the relevant npm
+        from the  drop-down list or click <img alt="/help/img/idea/2016.3/browseButton.png" title="/help/img/idea/2016.3/browseButton.png" src="/help/img/idea/2016.3/browseButton.png" width="15" height="15" class="inline-icon-15"> next to it
+        and in the dialog box that opens choose the location of the npm to use.
+        <a name="d19550e6095"></a><p>
+            Alternatively, you can specify the path to the <a name="d19550e6097"></a><a href="https://github.com/yarnpkg/yarn" data-external="true"><span>Yarn package manager</span></a>
+            if you want to use it instead of npm.
+        </p>
+        <a name="d19550e6101"></a><p>
+            The field is available only if the selected interpreter is of the type <a name="d19550e6103"></a><span class="emphasis">local</span>.
+        </p>
+     
+            </li></ol>
+        <a name="d46226e109"></a><p>
+            When you click <a name="d46226e111"></a><span class="control">OK</span>, you return to the <a name="d46226e114"></a><span class="control">Node.js and NPM</span> page
+            where the <a name="d46226e117"></a><span class="control">Node interpreter</span> field shows the new interpreter.
+        </p>
+    <a name="d46226e122"></a><h2>Configuring a remote Node.js interpreter on a host accessible through SSH connection</h2>
+            <a name="d46226e124"></a><p>
+                Before you start:
+            </p>
+                <ol class="list _decimal"><li class="list__item"><a name="d46226e129"></a>
+                        Configure access to an <code class="code" data-lang="Java">ssh</code> server on the target remote host and make sure this server is running.
+                    </li><li class="list__item"><a name="d46226e135"></a>
+                         
+                             
+                         
+                         
+        Make sure the <a name="d831e5658"></a><span class="emphasis">Node.js Remote Interpreter</span> repository plugin is installed and enabled.
+         
+         
+        The <a name="d831e5668"></a><span class="emphasis"></span> plugin is&nbsp;not&nbsp;bundled with IntelliJ IDEA, but it can be installed from the <a name="d831e5671"></a><span class="emphasis">JetBrains plugin repository</span>
+            as described in <a name="d831e5674"></a><a href="installing-updating-and-uninstalling-repository-plugins.html"><span>Installing, Updating and Uninstalling Repository Plugins</span></a> and <a name="d831e5676"></a><a href="enabling-and-disabling-plugins.html"><span>Enabling and Disabling Plugins</span></a>.
+     
+     
+                    </li></ol>
+
+            <a name="d46226e149"></a><p>
+                To configure a Node.js interpreter using SSH credentials:
+            </p>
+
+                <ol class="list _decimal"><li class="list__item"><a name="d46226e154"></a>
+                         
+         
+        On the main menu, choose <a name="d19550e1302"></a><span class="menupath">Run | Edit Configurations</span>.
+        In the <a name="d19550e1305"></a><span class="control">Edit Configuration</span> dialog box, that opens, click the <a name="d19550e1308"></a><span class="control">Add New Configuration</span> toolbar button <img alt="add.png" title="add.png" src="/help/img/idea/2016.3/new.png" width="12" height="12" class="inline-icon-12">,
+        and choose <a name="d19550e1314"></a><span class="control">Node.js</span> on the context menu.
+     
+                        In the <a name="d46226e161"></a><a href="run-debug-configuration-node-js.html"><span>Run/Debug Configuration: Node JS</span></a> dialog that opens, click <img alt="/help/img/idea/2016.3/browseButton.png" title="/help/img/idea/2016.3/browseButton.png" src="/help/img/idea/2016.3/browseButton.png" width="15" height="15" class="inline-icon-15">
+                        next to the <a name="d46226e165"></a><span class="control">Node interpreter</span> field.
+                    </li><li class="list__item"><a name="d46226e169"></a>
+                         
+         
+        In the <a name="d19550e6083"></a><a href="node-js-interpreters-dialog.html"><span>Node.js Interpreters Dialog</span></a> that opens with a list of all the currently configured interpreters,
+        click <img alt="/help/img/idea/2016.3/new.png" title="/help/img/idea/2016.3/new.png" src="/help/img/idea/2016.3/new.png" width="12" height="12" class="inline-icon-12"> in the toolbar. In the dialog box that opens, choose <a name="d19550e6087"></a><span class="control">Add Remote</span> on the context menu
+     .
+                    </li><li class="list__item"><a name="d46226e177"></a>
+                        In the <a name="d46226e179"></a><a href="configure-node-js-remote-interpreter-dialog.html"><span>Configure Node.js Remote Interpreter Dialog</span></a> that opens, choose the <a name="d46226e181"></a><span class="control">SSH Credentials</span> method.
+                    </li><li class="list__item"><a name="d46226e185"></a>
+                        Specify the name of the remote host and the port which the SSH server listens to. The default port number is 22.
+                    </li><li class="list__item"><a name="d46226e188"></a>
+                        Specify your credentials to access the remote host in accordance with the credentials received during the registration on the server.
+                        Type your user name and choose the authentication method:
+                        <ul class="list _bullet"><li class="list__item"><a name="d604e504"></a>
+            To access the host through a password, choose <a name="d604e506"></a><span class="control">Password</span> from the <a name="d604e509"></a><span class="control">Auth type</span> drop-down list
+            and type the password.
+        </li><li class="list__item"><a name="d604e513"></a>
+            To access the host through a pair of SSH keys, choose <a name="d604e515"></a><span class="control">Key pair</span>, then specify the path to the file where your <a name="d604e518"></a><span class="emphasis">private key</span> is stored
+            or the passphrase if you have configured it during the generation of the key pair.
+        </li></ul>
+ 
+                    </li><li class="list__item"><a name="d46226e199"></a>
+                         
+         
+         
+         
+         
+         
+        Specify the location of the <a name="d604e307"></a><span class="emphasis">Node.js</span> executable file in accordance with the configuration of the
+        selected remote development environment.
+        By default IntelliJ IDEA suggests the <code class="code" data-lang="Java">/usr/bin/node</code> folder for remote hosts and Vagrant instances
+        and <code class="code" data-lang="Java">node</code> for Docker containers.
+        To specify another folder, click the <a name="d604e316"></a><span class="control">Browse</span> button <img alt="/help/img/idea/2016.3/browseButton.png" title="/help/img/idea/2016.3/browseButton.png" src="/help/img/idea/2016.3/browseButton.png" width="15" height="15" class="inline-icon-15">
+        and choose the relevant folder in the dialog box that opens.
+        Note that the Node.js home directory must be open for edit.
+     
+                    </li><li class="list__item"><a name="d46226e215"></a>
+                         
+         
+         
+        When you click <a name="d604e328"></a><span class="control">OK</span>, IntelliJ IDEA checks whether the Node.js executable is actually stored in the specified folder.
+        <ul class="list _bullet"><li class="list__item"><a name="d604e333"></a>
+                If no Node.js executable is found, IntelliJ IDEA displays an error message asking you whether to continue searching or save the interpreter configuration anyway.
+            </li><li class="list__item"><a name="d604e336"></a>
+                If the Node.js executable is found, you return to the <a name="d604e338"></a><span class="control">Node.js Interpreters</span> where the installation folder and the detected version of the Node.js interpreter
+                are displayed.
+            </li></ul>
+     
+                         
+                    </li></ol>
+
+ 
+        <a name="d46226e231"></a><h2>Configuring a remote Node.js interpreter in a Vagrant environment instance</h2>
+            <a name="d46226e233"></a><p>Before you start:</p>
+                <ol class="list _decimal"><li class="list__item"><a name="d46226e238"></a>
+                    Make sure that <a name="d46226e240"></a><a href="http://www.vagrantup.com/" data-external="true"><span>Vagrant</span></a> and <a name="d46226e243"></a><a href="https://www.virtualbox.org/" data-external="true"><span>Oracle's VirtualBox</span></a> are downloaded, installed,
+                    and configured on your computer as described in <a name="d46226e246"></a><a href="vagrant.html"><span>Vagrant</span></a>.
+                </li><li class="list__item"><a name="d46226e249"></a>
+                     
+                         
+                     
+                     
+                        Make sure the <a name="d46226e258"></a><span class="emphasis">Vagrant</span> and <a name="d46226e261"></a><span class="emphasis">Node.js Remote Interpreter</span> plugins are installed and enabled.
+                         
+                The plugins are&nbsp;not&nbsp;bundled with IntelliJ IDEA, but they can be installed from the <a name="d831e5696"></a><span class="emphasis">JetBrains plugin repository</span>
+                as described in <a name="d831e5699"></a><a href="installing-updating-and-uninstalling-repository-plugins.html"><span>Installing, Updating and Uninstalling Repository Plugins</span></a> and <a name="d831e5701"></a><a href="enabling-and-disabling-plugins.html"><span>Enabling and Disabling Plugins</span></a>.
+                Once enabled, the plugins are available at the IDE level, that is, you can use them in all your IntelliJ IDEA projects.
+     
+                     
+                </li><li class="list__item"><a name="d46226e268"></a>
+                         
+                             
+                         
+                         
+        Make sure the <a name="d831e5658"></a><span class="emphasis">Node.js Remote Interpreter</span> repository plugin is installed and enabled.
+         
+         
+        The <a name="d831e5668"></a><span class="emphasis"></span> plugin is&nbsp;not&nbsp;bundled with IntelliJ IDEA, but it can be installed from the <a name="d831e5671"></a><span class="emphasis">JetBrains plugin repository</span>
+            as described in <a name="d831e5674"></a><a href="installing-updating-and-uninstalling-repository-plugins.html"><span>Installing, Updating and Uninstalling Repository Plugins</span></a> and <a name="d831e5676"></a><a href="enabling-and-disabling-plugins.html"><span>Enabling and Disabling Plugins</span></a>.
+     
+     
+                    </li><li class="list__item"><a name="d46226e281"></a>
+                     
+        Make sure that the parent folders of the following executable files are added to the system <a name="d604e477"></a><span class="emphasis">PATH</span> variable:
+        <ul class="list _ul"><li class="list__item"><a name="d604e482"></a>
+                <code class="code" data-lang="Java">vagrant.bat</code> or <code class="code" data-lang="Java">vagrant</code> from your Vagrant installation. This should be done automatically by the Vagrant installer.</li><li class="list__item"><a name="d604e491"></a>
+                <code class="code" data-lang="Java">VBoxManage.exe</code> or <code class="code" data-lang="Java">VBoxManage</code> from your Oracle's VirtualBox installation.</li></ul>
+     
+                </li><li class="list__item"><a name="d46226e286"></a>
+                    Configure the Node.js development environment in the <a name="d46226e288"></a><span class="emphasis">Vagrant instance</span> to be used.
+                    Learn more about using <a name="d46226e291"></a><span class="emphasis">Vagrant</span> with IntelliJ IDEA in <a name="d46226e294"></a><a href="vagrant.html"><span>Vagrant</span></a>.
+ 
+                </li></ol>
+            <a name="d46226e300"></a><p>To configure a Node.js Interpreter in a Vagrant instance</p>
+                <ol class="list _decimal"><li class="list__item"><a name="d46226e305"></a>
+                         
+         
+        On the main menu, choose <a name="d19550e1302"></a><span class="menupath">Run | Edit Configurations</span>.
+        In the <a name="d19550e1305"></a><span class="control">Edit Configuration</span> dialog box, that opens, click the <a name="d19550e1308"></a><span class="control">Add New Configuration</span> toolbar button <img alt="add.png" title="add.png" src="/help/img/idea/2016.3/new.png" width="12" height="12" class="inline-icon-12">,
+        and choose <a name="d19550e1314"></a><span class="control">Node.js</span> on the context menu.
+     
+                        In the <a name="d46226e312"></a><a href="run-debug-configuration-node-js.html"><span>Run/Debug Configuration: Node JS</span></a> dialog that opens, click <img alt="/help/img/idea/2016.3/browseButton.png" title="/help/img/idea/2016.3/browseButton.png" src="/help/img/idea/2016.3/browseButton.png" width="15" height="15" class="inline-icon-15">
+                        next to the <a name="d46226e316"></a><span class="control">Node interpreter</span> field.
+                    </li><li class="list__item"><a name="d46226e320"></a>
+                         
+         
+        In the <a name="d19550e6083"></a><a href="node-js-interpreters-dialog.html"><span>Node.js Interpreters Dialog</span></a> that opens with a list of all the currently configured interpreters,
+        click <img alt="/help/img/idea/2016.3/new.png" title="/help/img/idea/2016.3/new.png" src="/help/img/idea/2016.3/new.png" width="12" height="12" class="inline-icon-12"> in the toolbar. In the dialog box that opens, choose <a name="d19550e6087"></a><span class="control">Add Remote</span> on the context menu
+     .
+                    </li><li class="list__item"><a name="d46226e328"></a>
+                        In the <a name="d46226e330"></a><a href="configure-node-js-remote-interpreter-dialog.html"><span>Configure Node.js Remote Interpreter Dialog</span></a> that opens, choose the <a name="d46226e332"></a><span class="control">Vagrant</span> method.
+                    </li><li class="list__item"><a name="d46226e336"></a>
+                    Specify the <a name="d46226e338"></a><span class="control">Vagrant instance folder</span> which points at the environment you are going to use.
+                     
+        Technically, it is the folder
+        where the <a name="d604e525"></a><span class="emphasis">VagrantFile</span> configuration file for the desired environment is located.
+        Based on this setting, IntelliJ IDEA detects the <a name="d604e528"></a><span class="emphasis">Vagrant host</span> and shows it as a link in the <a name="d604e531"></a><span class="control">Vagrant Host URL</span> read-only field.
+     
+ 
+                </li><li class="list__item"><a name="d46226e346"></a>
+                     
+         
+         
+         
+         
+         
+        Specify the location of the <a name="d604e307"></a><span class="emphasis">Node.js</span> executable file in accordance with the configuration of the
+        selected remote development environment.
+        By default IntelliJ IDEA suggests the <code class="code" data-lang="Java">/usr/bin/node</code> folder for remote hosts and Vagrant instances
+        and <code class="code" data-lang="Java">node</code> for Docker containers.
+        To specify another folder, click the <a name="d604e316"></a><span class="control">Browse</span> button <img alt="/help/img/idea/2016.3/browseButton.png" title="/help/img/idea/2016.3/browseButton.png" src="/help/img/idea/2016.3/browseButton.png" width="15" height="15" class="inline-icon-15">
+        and choose the relevant folder in the dialog box that opens.
+        Note that the Node.js home directory must be open for edit.
+     
+                </li><li class="list__item"><a name="d46226e363"></a>
+                     
+         
+         
+        When you click <a name="d604e328"></a><span class="control">OK</span>, IntelliJ IDEA checks whether the Node.js executable is actually stored in the specified folder.
+        <ul class="list _bullet"><li class="list__item"><a name="d604e333"></a>
+                If no Node.js executable is found, IntelliJ IDEA displays an error message asking you whether to continue searching or save the interpreter configuration anyway.
+            </li><li class="list__item"><a name="d604e336"></a>
+                If the Node.js executable is found, you return to the <a name="d604e338"></a><span class="control">Node.js Interpreters</span> where the installation folder and the detected version of the Node.js interpreter
+                are displayed.
+            </li></ul>
+     
+
+                     
+                </li></ol>
+        <a name="d46226e379"></a><h2>Configuring a remote Node.js interpreter on a remote host accessible through SFTP</h2>
+            <a name="d46226e381"></a><p>Before you start:</p>
+                <ol class="list _decimal"><li class="list__item"><a name="d46226e386"></a>
+                        Make sure a <code class="code" data-lang="Java">ssh</code> server is running on the target remote host and you have configured access to it.
+                    </li><li class="list__item"><a name="d46226e408"></a>
+                         
+        Make sure the <a name="d831e5658"></a><span class="emphasis">Node.js Remote Interpreter</span> repository plugin is installed and enabled.
+         
+         
+        The <a name="d831e5668"></a><span class="emphasis"></span> plugin is&nbsp;not&nbsp;bundled with IntelliJ IDEA, but it can be installed from the <a name="d831e5671"></a><span class="emphasis">JetBrains plugin repository</span>
+            as described in <a name="d831e5674"></a><a href="installing-updating-and-uninstalling-repository-plugins.html"><span>Installing, Updating and Uninstalling Repository Plugins</span></a> and <a name="d831e5676"></a><a href="enabling-and-disabling-plugins.html"><span>Enabling and Disabling Plugins</span></a>.
+     
+     
+                    </li><li class="list__item"><a name="d46226e416"></a>
+                         
+        Make sure the <a name="d831e5594"></a><span class="emphasis">Remote Hosts Access</span> plugin is enabled.
+         
+         
+        The <a name="d831e5604"></a><span class="emphasis"></span> plugin is bundled with IntelliJ IDEA and activated by default.
+        If the plugin is not activated, enable it on the <a name="d831e5607"></a><a href="plugins-2.html"><span>Plugins</span></a> page of the <a name="d831e5609"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> as described in <a name="d831e5611"></a><a href="enabling-and-disabling-plugins.html"><span>Enabling and Disabling Plugins</span></a>.
+     
+     
+                    </li><li class="list__item"><a name="d46226e425"></a>
+                         
+        Make sure you have at least one IntelliJ IDEA-wide <a name="d604e3005"></a><span class="emphasis">server access configuration</span> of the type <a name="d604e3008"></a><span class="control">SFTP</span>
+        to establish access to the target host.
+        To make a configuration available in all IntelliJ IDEA projects, clear the <a name="d604e3011"></a><span class="control">Visible only for this project</span> check box
+        in the <a name="d604e3014"></a><a href="deployment-connection-tab.html"><span>Deployment: Connection Tab</span></a>.
+        See <a name="d604e3016"></a><a href="creating-a-remote-server-configuration.html"><span>Creating a Remote Server Configuration</span></a> for details.
+     
+                    </li></ol>
+            <a name="d46226e431"></a><p>To configure a remote Node.js interpreter based on an SFTP server access configuration</p>
+            <ol class="list _decimal"><li class="list__item"><a name="d46226e436"></a>
+                     
+         
+        On the main menu, choose <a name="d19550e1302"></a><span class="menupath">Run | Edit Configurations</span>.
+        In the <a name="d19550e1305"></a><span class="control">Edit Configuration</span> dialog box, that opens, click the <a name="d19550e1308"></a><span class="control">Add New Configuration</span> toolbar button <img alt="add.png" title="add.png" src="/help/img/idea/2016.3/new.png" width="12" height="12" class="inline-icon-12">,
+        and choose <a name="d19550e1314"></a><span class="control">Node.js</span> on the context menu.
+     
+                    In the <a name="d46226e443"></a><a href="run-debug-configuration-node-js.html"><span>Run/Debug Configuration: Node JS</span></a> dialog that opens, click <img alt="/help/img/idea/2016.3/browseButton.png" title="/help/img/idea/2016.3/browseButton.png" src="/help/img/idea/2016.3/browseButton.png" width="15" height="15" class="inline-icon-15">
+                    next to the <a name="d46226e447"></a><span class="control">Node interpreter</span> field.
+                </li><li class="list__item"><a name="d46226e451"></a>
+                     
+         
+        In the <a name="d19550e6083"></a><a href="node-js-interpreters-dialog.html"><span>Node.js Interpreters Dialog</span></a> that opens with a list of all the currently configured interpreters,
+        click <img alt="/help/img/idea/2016.3/new.png" title="/help/img/idea/2016.3/new.png" src="/help/img/idea/2016.3/new.png" width="12" height="12" class="inline-icon-12"> in the toolbar. In the dialog box that opens, choose <a name="d19550e6087"></a><span class="control">Add Remote</span> on the context menu
+     .
+                </li><li class="list__item"><a name="d46226e459"></a>
+                    In the <a name="d46226e461"></a><a href="configure-node-js-remote-interpreter-dialog.html"><span>Configure Node.js Remote Interpreter Dialog</span></a> that opens, choose the <a name="d46226e463"></a><span class="control">Deployment Configuration</span> method.
+                </li><li class="list__item"><a name="d46226e467"></a>
+                    From the <a name="d46226e469"></a><span class="control">Deployment Configuration</span> drop-down list,
+                     
+        choose the  <a name="d604e537"></a><span class="emphasis">server access configuration</span> of the type <a name="d604e540"></a><span class="control">SFTP</span>
+        according to which you want IntelliJ IDEA to connect to the target host. If the settings specified in the chosen configuration ensure successful connection,
+        IntelliJ IDEA displays the URL address of the target host as a link in the <a name="d604e543"></a><span class="control">Deployment Host URL</span> field.
+     
+                    <a name="d46226e474"></a><p>
+                         
+         
+        To use an interpreter configuration, you need <a name="d538e166"></a><span class="emphasis">path mappings</span> that
+         
+        set correspondence between the project folders, the folders on the server to copy project files to,
+        and the URL addresses to access the copied data on the server
+     .
+     
+        By default, IntelliJ IDEA retrieves path mappings from the chosen server access (deployment) configuration.
+        If the configuration does not contain path mappings, IntelliJ IDEA displays the corresponding error message.
+     
+                    </p>
+                    <a name="d46226e479"></a><p>
+                         
+        To fix the problem, open the <a name="d538e213"></a><a href="deployment.html"><span>Deployment</span></a> page under the <a name="d538e215"></a><span class="control">Build, Execution, Deployment</span> node,
+        select the relevant server access configuration, switch to the <a name="d538e218"></a><span class="control">Mappings</span> tab,
+        and map the local folders to the folders on the server as described in <a name="d538e221"></a><a href="creating-a-remote-server-configuration.html"><span>Creating a Remote Server Configuration</span></a>,
+        section <a name="d538e223"></a><span class="control">Mapping Local Folders to Folders on the Server and the URL Addresses to Access Them</span>.
+     
+                    </p>
+                </li><li class="list__item"><a name="d46226e488"></a>
+                     
+         
+         
+         
+         
+         
+        Specify the location of the <a name="d604e307"></a><span class="emphasis">Node.js</span> executable file in accordance with the configuration of the
+        selected remote development environment.
+        By default IntelliJ IDEA suggests the <code class="code" data-lang="Java">/usr/bin/node</code> folder for remote hosts and Vagrant instances
+        and <code class="code" data-lang="Java">node</code> for Docker containers.
+        To specify another folder, click the <a name="d604e316"></a><span class="control">Browse</span> button <img alt="/help/img/idea/2016.3/browseButton.png" title="/help/img/idea/2016.3/browseButton.png" src="/help/img/idea/2016.3/browseButton.png" width="15" height="15" class="inline-icon-15">
+        and choose the relevant folder in the dialog box that opens.
+        Note that the Node.js home directory must be open for edit.
+     
+                </li><li class="list__item"><a name="d46226e504"></a>
+                     
+         
+         
+        When you click <a name="d604e328"></a><span class="control">OK</span>, IntelliJ IDEA checks whether the Node.js executable is actually stored in the specified folder.
+        <ul class="list _bullet"><li class="list__item"><a name="d604e333"></a>
+                If no Node.js executable is found, IntelliJ IDEA displays an error message asking you whether to continue searching or save the interpreter configuration anyway.
+            </li><li class="list__item"><a name="d604e336"></a>
+                If the Node.js executable is found, you return to the <a name="d604e338"></a><span class="control">Node.js Interpreters</span> where the installation folder and the detected version of the Node.js interpreter
+                are displayed.
+            </li></ul>
+     
+                </li></ol>
+        <a name="d46226e518"></a><h2>Configuring a remote Node.js interpreter in a Docker container</h2>
+        <a name="d46226e520"></a><p>
+        You can quickly bootstrap your Node.js application with Docker, IntelliJ IDEA will take care of the initial configuration
+            by automatically creating a new <code class="code" data-lang="Java">Dockerfile</code>, keeping your source code up-to-date and installing <code class="code" data-lang="Java">npm</code> dependencies
+            in the container. Configuring a Node.js environment running in a Docker container as a Node.js remote interpreter lets
+            you run, debug, and profile your Node.js application from IntelliJ IDEA.
+        </p>
+        <a name="d46226e529"></a><p>
+            Before you start:
+        </p>
+        <ol class="list _decimal"><li class="list__item"><a name="d46226e548"></a>
+                    Make sure the <a name="d46226e550"></a><span class="emphasis">Node.js</span>, <a name="d46226e553"></a><span class="emphasis">Node.js Remote Interpreter</span>,
+                    and <a name="d46226e556"></a><span class="emphasis">Docker Integration</span> plugins are installed and enabled.
+                     
+                The plugins are&nbsp;not&nbsp;bundled with IntelliJ IDEA, but they can be installed from the <a name="d831e5696"></a><span class="emphasis">JetBrains plugin repository</span>
+                as described in <a name="d831e5699"></a><a href="installing-updating-and-uninstalling-repository-plugins.html"><span>Installing, Updating and Uninstalling Repository Plugins</span></a> and <a name="d831e5701"></a><a href="enabling-and-disabling-plugins.html"><span>Enabling and Disabling Plugins</span></a>.
+                Once enabled, the plugins are available at the IDE level, that is, you can use them in all your IntelliJ IDEA projects.
+     
+                </li><li class="list__item"><a name="d46226e562"></a>
+                Download, install, and configure <a name="d46226e564"></a><span class="emphasis">Docker</span> as described in <a name="d46226e567"></a><a href="docker.html"><span>Docker</span></a>.
+            </li></ol>
+        <a name="d46226e571"></a><p>
+            To configure a remote Node.js interpreter in a Docker container:
+        </p>
+        <ol class="list _decimal"><li class="list__item"><a name="d46226e576"></a>
+                 
+         
+        On the main menu, choose <a name="d19550e1302"></a><span class="menupath">Run | Edit Configurations</span>.
+        In the <a name="d19550e1305"></a><span class="control">Edit Configuration</span> dialog box, that opens, click the <a name="d19550e1308"></a><span class="control">Add New Configuration</span> toolbar button <img alt="add.png" title="add.png" src="/help/img/idea/2016.3/new.png" width="12" height="12" class="inline-icon-12">,
+        and choose <a name="d19550e1314"></a><span class="control">Node.js</span> on the context menu.
+     
+                In the <a name="d46226e583"></a><a href="run-debug-configuration-node-js.html"><span>Run/Debug Configuration: Node JS</span></a> dialog that opens, click <img alt="/help/img/idea/2016.3/browseButton.png" title="/help/img/idea/2016.3/browseButton.png" src="/help/img/idea/2016.3/browseButton.png" width="15" height="15" class="inline-icon-15">
+                next to the <a name="d46226e587"></a><span class="control">Node interpreter</span> field.
+            </li><li class="list__item"><a name="d46226e591"></a>
+                 
+         
+        In the <a name="d19550e6083"></a><a href="node-js-interpreters-dialog.html"><span>Node.js Interpreters Dialog</span></a> that opens with a list of all the currently configured interpreters,
+        click <img alt="/help/img/idea/2016.3/new.png" title="/help/img/idea/2016.3/new.png" src="/help/img/idea/2016.3/new.png" width="12" height="12" class="inline-icon-12"> in the toolbar. In the dialog box that opens, choose <a name="d19550e6087"></a><span class="control">Add Remote</span> on the context menu
+     .
+            </li><li class="list__item"><a name="d46226e599"></a>
+                In the <a name="d46226e601"></a><a href="configure-node-js-remote-interpreter-dialog.html"><span>Configure Node.js Remote Interpreter Dialog</span></a> that opens, choose the <a name="d46226e603"></a><span class="control">Docker</span> method.
+            </li><li class="list__item"><a name="d19550e6264"></a>
+            In the <a name="d19550e6266"></a><span class="control">Server</span> field,
+             
+        specify the <a name="d19550e6307"></a><span class="emphasis">Docker configuration</span> to use,
+        see <a name="d19550e6310"></a><a href="docker.html"><span>Working with Docker: Process overview</span></a>.
+        Choose a configuration from the drop-down list or click <img alt="/help/img/idea/2016.3/browseButton.png" title="/help/img/idea/2016.3/browseButton.png" src="/help/img/idea/2016.3/browseButton.png" width="15" height="15" class="inline-icon-15"> next to it
+        and create a new configuration in the <a name="d19550e6315"></a><a href="clouds.html"><span>Clouds</span></a> dialog box that opens.
+     
+        </li><li class="list__item"><a name="d19550e6272"></a>
+            In the <a name="d19550e6274"></a><span class="control">Image name</span> field,
+             
+         
+         
+        specify the base Docker image to use. Choose one of the previously downloaded or your custom images
+        from the drop-down list or type the image name manually, for example, <code class="code" data-lang="Java">node:argon</code> or <code class="code" data-lang="Java">mhart/alpine-node</code>.
+        When you later launch the run configuration,
+        Docker will search for the specified image on your machine. If the search fails, the image will be downloaded from the image repository
+        specified on the <a name="d19550e6330"></a><a href="docker-registry.html"><span>Docker Registry</span></a> page.
+     
+        </li><li class="list__item"><a name="d19550e6285"></a>
+            The <a name="d19550e6287"></a><span class="control">Node.js interpreter path</span> field shows the location of the default Node.js interpreter from the specified image.
+        </li><li class="list__item"><a name="d19550e6291"></a>
+            When you click <a name="d19550e6293"></a><span class="control">OK</span>, IntelliJ IDEA closes the <a name="d19550e6296"></a><a href="configure-node-js-remote-interpreter-dialog.html"><span>Configure Node.js Remote Interpreter Dialog</span></a>
+            and brings you to the <a name="d19550e6298"></a><a href="node-js-interpreters-dialog.html"><span>Node.js Interpreters Dialog</span></a> where the new interpreter configuration is added to the list.
+            Click <a name="d19550e6300"></a><span class="control">OK</span> to return to the run configuration.
+        </li></ol>
+    <a name="d46226e613"></a><h2>Configuring mappings</h2>
+    <a name="d46226e615"></a><p>
+        When you debug an application with a remote Node.js interpreter,
+         
+        the debugger tells IntelliJ IDEA the name of the currently processed file
+        and the number of the line to be processed. IntelliJ IDEA opens the local copy of this file and indicates the line with the provided number.
+        This behaviour is enabled by specifying correspondence between files and folders on the server and their local copies.
+        This correspondence is called <a name="d19550e4000"></a><span class="keyword">mapping</span>, it is set in the debug configuration.
+     
+    </p>
+    <a name="d46226e620"></a><p>
+         
+        If you use an interpreter accessible through SFTP connection or located on a Vagrant instance,
+        the mappings are automatically retrieved from the corresponding deployment configuration or <code class="code" data-lang="Java">Vagrantfile</code>.
+        To specify additional mappings:
+     
+    </p>
+    <ol class="list _decimal"><li class="list__item"><a name="d46226e627"></a>
+             
+         
+        On the main menu, choose <a name="d19550e1302"></a><span class="menupath">Run | Edit Configurations</span>.
+        In the <a name="d19550e1305"></a><span class="control">Edit Configuration</span> dialog box, that opens, click the <a name="d19550e1308"></a><span class="control">Add New Configuration</span> toolbar button <img alt="add.png" title="add.png" src="/help/img/idea/2016.3/new.png" width="12" height="12" class="inline-icon-12">,
+        and choose <a name="d19550e1314"></a><span class="control">Node.js</span> on the context menu.
+     
+        </li><li class="list__item"><a name="d46226e635"></a>
+            In the <a name="d46226e637"></a><a href="run-debug-configuration-node-js.html"><span>Run/Debug Configuration: Node JS</span></a> dialog that opens, choose the required remote interpreter
+            from the <a name="d46226e639"></a><span class="control">Node interpreter</span> drop-down list.
+        </li><li class="list__item"><a name="d46226e643"></a>
+            Click <img alt="/help/img/idea/2016.3/browseButton.png" title="/help/img/idea/2016.3/browseButton.png" src="/help/img/idea/2016.3/browseButton.png" width="15" height="15" class="inline-icon-15"> next to the <a name="d46226e647"></a><span class="control">Path Mappings</span> field.
+        </li><li class="list__item"><a name="d46226e651"></a>
+            The <a name="d46226e653"></a><a href="edit-project-path-mappings-dialog.html"><span>Edit Project Path Mappings Dialog</span></a> that opens, shows the path mappings retrieved from the
+            deployment configuration or <code class="code" data-lang="Java">Vagrantfile</code>. These mappings are read-only.
+            <ul class="list _bullet"><li class="list__item"><a name="d46226e660"></a>
+                     
+        To add a custom mapping, click <img alt="/help/img/idea/2016.3/new.png" title="/help/img/idea/2016.3/new.png" src="/help/img/idea/2016.3/new.png" width="12" height="12" class="inline-icon-12"> and specify the path in the project and the corresponding path on the remote runtime environment
+        in the <a name="d19550e6343"></a><span class="control">Local Path</span> and <a name="d19550e6346"></a><span class="control">Remote Path</span> fields respectively.
+        Type the paths manually or click <img alt="/help/img/idea/2016.3/browseButton.png" title="/help/img/idea/2016.3/browseButton.png" src="/help/img/idea/2016.3/browseButton.png" width="15" height="15" class="inline-icon-15"> and select the relevant files or folders in the dialog box that opens.
+     
+                </li><li class="list__item"><a name="d46226e665"></a>
+                     
+        To remove a custom mapping, select it in the list and click <img alt="/help/img/idea/2016.3/delete.png" title="/help/img/idea/2016.3/delete.png" src="/help/img/idea/2016.3/delete.png" width="12" height="12" class="inline-icon-12">.
+     
+                </li></ul>
+        </li></ol>
+<div class="navigation-links _bottom"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="running-and-debugging-node-js.html">Running and Debugging Node.js</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content">```
+                <div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d46226e679"></a><a href="node-js.html"><span>Node.js</span></a></li><li class="list__item"><a name="d46226e681"></a><a href="vagrant.html"><span>Vagrant</span></a></li></ul></div><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d46226e691"></a><a href="node-js-interpreters-dialog.html"><span>Node.js Interpreters Dialog</span></a></li><li class="list__item"><a name="d46226e693"></a><a href="configure-node-js-remote-interpreter-dialog.html"><span>Configure Node.js Remote Interpreter Dialog</span></a></li><li class="list__item"><a name="d46226e695"></a><a href="deployment.html"><span>Deployment</span></a></li></ul></div><div class="seealso__col"><h3>Language and Framework-Specific Guidelines:</h3><ul class="list"><li class="list__item"><a name="d46226e686"></a><a href="deployment-working-with-web-servers.html"><span>Deployment. Working with Web Servers</span></a></li></ul></div></div></section><div class="last-modified" data-swiftype-index="false">Last modified: 21 March 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

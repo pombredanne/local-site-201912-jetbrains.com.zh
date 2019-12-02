@@ -1,0 +1,140 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="/help/app/v2/analytics.js"></script><meta class="swiftype" name="product" data-type="string" content="/webstorm/2017.2/"><meta charset="UTF-8"><meta name="robots" content="noindex"><title>Change Signature in JavaScript - Help | WebStorm</title><link rel="stylesheet" href="/help/app/v2/app.css"></head><body data-id="Change_Signature_in_JavaScript"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper" data-swiftype-index="false"><section class="panel _nav" data-swiftype-index="false"><header class="panel__header" data-swiftype-index="false"><div class="container" data-swiftype-index="false"><form class="search-box" data-swiftype-index="false"><label for="search-box__input" class="search-box__label" data-swiftype-index="false"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search WebStorm Help"></label><div class="search-box__clear" title="Clear" data-swiftype-index="false"></div></form></div></header><nav class="panel__content" data-swiftype-index="false"><div class="container _nav" data-swiftype-index="false"><menu class="nav-tree" data-swiftype-index="false"></menu></div><div class="container _footer panel__footer" data-swiftype-index="false"><p data-swiftype-index="false"><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main" data-swiftype-index="false"><header class="panel__header" data-swiftype-index="false"><div class="container" data-swiftype-index="false"><h3>WebStorm 2017.2 Help</h3><div class="shortcuts-switcher" data-swiftype-index="false"><label for="switch-shortcuts" data-swiftype-index="false">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1" data-swiftype-index="false"><option data-group="primary" value="primary_default" selected>Windows/Linux Default</option><option data-group="primary" value="primary_default_for_gnome">GNOME</option><option data-group="primary" value="primary_default_for_kde">KDE</option><option data-group="primary" value="primary_default_for_xwin">XWin</option><option data-group="primary" value="primary_emacs">Emacs</option><option data-group="primary" value="primary_visual_studio">Visual Studio</option><option data-group="primary" value="primary_eclipse">Eclipse</option><option data-group="secondary" value="secondary_mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="secondary_mac_os_x">Mac OS X</option><option data-group="secondary" value="secondary_eclipse_mac_os_x">Eclipse (Mac OS X)</option></select></div><div class="panel-trigger" data-swiftype-index="false"></div></div></header><section class="panel__content" data-swiftype-index="false"><div class="container"><article class="article" data-shortcut-switcher="true" data-swiftype-index="true"><h1 data-toc="Change_Signature_in_JavaScript">Change Signature in JavaScript</h1><p>On this page:</p><ul data-swiftype-index="false"><li class="list__item"><a href="#d10399e7">Introduction</a></li><li class="list__item"><a href="#javascript_code_example">Examples</a></li><li class="list__item"><a href="#d10399e103">Changing function signature</a></li></ul><div class="chapter"><h2 id="d10399e7">Introduction</h2>            <p>In JavaScript, you can use the Change Signature refactoring to:</p>            <ul class="list _bullet"><li class="list__item">Change the function name.</li><li class="list__item">Add new parameters and remove the existing ones.                    Note that you can also add a parameter using a dedicated                    <a href="extract-parameter-in-javascript.html">Extract Parameter</a> refactoring.</li><li class="list__item">Reorder parameters.</li><li class="list__item">Change parameter names.</li><li class="list__item">Propagate new parameters through the method call hierarchy.</li></ul></div><div class="chapter"><h2 id="javascript_code_example">Examples</h2>        <p>            The following table shows 4 different ways of performing the same Change Signature refactoring.</p>        <p>            In all the cases, the function <code class="code" data-lang="Java">result()</code> is renamed to <code class="code" data-lang="Java">generate_result()</code> and            a new parameter <code class="code" data-lang="Java">input</code> is added to this function.</p>        <p>            The examples show how the function call, the calling function (<code class="code" data-lang="Java">show_result()</code>) and            other code fragments may be affected depending on the refactoring settings.</p>        <div class="table-wrapper"><table class="                  _layout-fixed" width="100%" id="d10399e51"><thead><tr id="d10399e52" class="ijRowHead"><th width="50%" id="d10399e53">Before</th><th width="50%" id="d10399e55">After</th></tr></thead><tbody><tr id="d10399e57" class="ijRowOdd"><td id="d10399e58">            <div class="code-block" data-lang="Javascript"><code class="code-block__wrapper"><span class="c1">// This is the function whose signature will be changed:</span>
+
+
+<span class="kd">function</span><span class="nx">$</span><span class="err">#</span><span class="mi">160</span><span class="p">;</span><span class="nx">result</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// some code here</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">show_result</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="c1">// Here is the function call:</span>
+
+    <span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;Result: &#39;</span> <span class="o">+</span> <span class="nx">result</span><span class="p">());</span>
+<span class="p">}</span>
+
+<span class="c1">// Now we&#39;ll rename the function and</span>
+<span class="c1">// add one (required) parameter.</span></code></div>                </td><td id="d10399e63">            <div class="code-block" data-lang="Javascript"><code class="code-block__wrapper"><span class="c1">// The function has been renamed to generate_result.</span>
+<span class="c1">// The new parameter input has been added.</span>
+
+<span class="kd">function</span> <span class="nx">generate_result</span><span class="p">(</span><span class="nx">input</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// some code here</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">show_result</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="c1">// The function call changed accordingly:</span>
+
+    <span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;Result: &#39;</span> <span class="o">+</span> <span class="nx">generate_result</span><span class="p">(</span><span class="mi">100</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="c1">// When performing the refactoring, 100 was specified as</span>
+<span class="c1">// the parameter value.</span></code></div>                </td></tr><tr id="d10399e68" class="ijRowEven"><td id="d10399e69">            <div class="code-block" data-lang="Javascript"><code class="code-block__wrapper"><span class="c1">// This is the function whose signature will be changed:</span>
+
+
+<span class="kd">function</span> <span class="nx">result</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="c1">// some code here</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">show_result</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="c1">// Here is the function call:</span>
+
+    <span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;Result: &#39;</span> <span class="o">+</span> <span class="nx">result</span><span class="p">());</span>
+<span class="p">}</span>
+
+<span class="c1">// Now we&#39;ll rename the function and add one parameter.</span>
+<span class="c1">// This time, we&#39;ll specify that the parameter is optional.</span></code></div>                </td><td id="d10399e74">            <div class="code-block" data-lang="Javascript"><code class="code-block__wrapper"><span class="c1">// The function has been renamed to generate_result.</span>
+<span class="c1">// The new optional parameter input has been added.</span>
+
+<span class="kd">function</span> <span class="nx">generate_result</span><span class="p">(</span><span class="nx">input</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">input</span> <span class="o">=</span> <span class="nx">input</span> <span class="o">||</span> <span class="mi">100</span><span class="p">;</span>
+    <span class="c1">// some code here</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">show_result</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="c1">// The function call changed accordingly:</span>
+
+    <span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;Result: &#39;</span> <span class="o">+</span> <span class="nx">generate_result</span><span class="p">(</span><span class="mi">100</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="c1">// When performing the refactoring, 100 was specified as</span>
+<span class="c1">// the parameter value.</span></code></div>                </td></tr><tr id="d10399e79" class="ijRowOdd"><td id="d10399e80">            <div class="code-block" data-lang="Javascript"><code class="code-block__wrapper"><span class="c1">// This is the function whose signature will be changed:</span>
+
+
+<span class="kd">function</span> <span class="nx">result</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// some code here</span>
+<span class="p">}</span>
+
+<span class="c1">// This function will also change its signature:</span>
+
+<span class="kd">function</span> <span class="nx">show_result</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="c1">// Here is the function call:</span>
+
+    <span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;Result: &#39;</span> <span class="o">+</span> <span class="nx">result</span><span class="p">());</span>
+<span class="p">}</span>
+
+<span class="c1">// Now we&#39;ll rename the function and add one required</span>
+<span class="c1">// parameter. We&#39;ll also ask WebStorm to propagate</span>
+<span class="c1">// the new parameter through the calling function show_result()</span>
+<span class="c1">// to the function call.</span></code></div>                </td><td id="d10399e85">            <div class="code-block" data-lang="Javascript"><code class="code-block__wrapper"><span class="c1">// The function has been renamed to generate_result.</span>
+<span class="c1">// The new parameter input has been added.</span>
+
+<span class="kd">function</span> <span class="nx">generate_result</span><span class="p">(</span><span class="nx">input</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// some code here</span>
+<span class="p">}</span>
+
+<span class="c1">// Note the new function parameter:</span>
+
+<span class="kd">function</span> <span class="nx">show_result</span><span class="p">(</span><span class="nx">input</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="c1">// The function call changed accordingly:</span>
+
+    <span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;Result: &#39;</span> <span class="o">+</span> <span class="nx">generate_result</span><span class="p">(</span><span class="nx">input</span><span class="p">));</span>
+<span class="p">}</span></code></div>                </td></tr><tr id="d10399e90" class="ijRowEven"><td id="d10399e91">            <div class="code-block" data-lang="Javascript"><code class="code-block__wrapper"><span class="c1">// This is the function whose signature will be changed:</span>
+<span class="kd">function</span> <span class="nx">result</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="c1">// some code here</span>
+<span class="p">}</span>
+
+<span class="c1">// This function will also change its signature:</span>
+
+<span class="kd">function</span> <span class="nx">show_result</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="c1">// Here is the function call:</span>
+
+    <span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;Result: &#39;</span> <span class="o">+</span> <span class="nx">result</span><span class="p">());</span>
+<span class="p">}</span>
+
+<span class="c1">// Now we&#39;ll rename the function and add one optional</span>
+<span class="c1">// parameter. We&#39;ll also ask WebStorm to propagate</span>
+<span class="c1">// the new parameter through the calling function show_result()</span>
+<span class="c1">// to the function call.</span></code></div>                </td><td id="d10399e96">            <div class="code-block" data-lang="Javascript"><code class="code-block__wrapper"><span class="c1">// The function has been renamed to generate_result.</span>
+<span class="c1">// The new optional parameter input has been added.</span>
+
+<span class="kd">function</span> <span class="nx">generate_result</span><span class="p">(</span><span class="nx">input</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">input</span> <span class="o">=</span> <span class="nx">input</span> <span class="o">||</span> <span class="mi">100</span><span class="p">;</span>
+    <span class="c1">// some code here</span>
+<span class="p">}</span>
+
+<span class="c1">// Note the new function parameter:</span>
+
+<span class="kd">function</span> <span class="nx">show_result</span><span class="p">(</span><span class="nx">input</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">input</span> <span class="o">=</span> <span class="nx">input</span> <span class="o">||</span> <span class="mi">100</span><span class="p">;</span>
+
+    <span class="c1">// The function call changed accordingly:</span>
+
+    <span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;Result: &#39;</span> <span class="o">+</span> <span class="nx">generate_result</span><span class="p">(</span><span class="nx">input</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="c1">// When performing the refactoring, 100 was specified as</span>
+<span class="c1">// the parameter value.</span></code></div>                </td></tr></tbody></table></div>        </div><div class="chapter"><h2 id="d10399e103">Changing function signature</h2>        <section class="procedure-steps"><h2 id="javascript_change_signature_proc">To change a function signature</h2><ol class="list _decimal"><li class="list__item">In the editor, place the cursor within the name of the function whose signature you want to change.</li><li class="list__item">Do one of the following:                <ul class="list _ul"><li class="list__item">Press <kbd data-swiftype-index="false" data-primary_default="Ctrl+F6" data-primary_default_for_gnome="Ctrl+F6" data-primary_default_for_kde="Ctrl+6" data-primary_default_for_xwin="Ctrl+F6" data-primary_emacs="Ctrl+F6" data-primary_visual_studio="Ctrl+F6" data-primary_eclipse="Shift+Alt+C" data-secondary_mac_os_x_10.5_="&#x2318;F6" data-secondary_mac_os_x="&#x2318;F6" data-secondary_eclipse_mac_os_x="&#x2325;&#x2318;C">Ctrl+F6</kbd>.</li><li class="list__item">Choose <span class="control">Refactor | Change Signature</span> in the main menu.</li><li class="list__item">Select <span class="control">Refactor | Change Signature</span> from the context menu.</li></ul>      </li><li class="list__item">In the <a href="change-signature-dialog-for-javascript.html">Change Signature dialog</a>,                make the necessary changes to the function signature and specify which other, related changes are                required.                <p>You can:</p>                <ul class="list _ul"><li class="list__item">Change the function name. To do that, edit the text in the <span class="control">Name</span> field.</li><li class="list__item">                        Manage the function parameters using the table of parameters and the buttons to the right of it:                        <ul class="list _ul"><li class="list__item">To add a new parameter, click <img alt="new" title="new" src="/help/img/idea/2017.2/new.png" width="12" height="12" class="inline-icon-12">&nbsp;(<kbd data-swiftype-index="false" data-primary_default="Alt+Insert" data-primary_default_for_gnome="Alt+Insert" data-primary_default_for_kde="Alt+Insert" data-primary_default_for_xwin="Alt+Insert" data-primary_emacs="Alt+Insert" data-primary_visual_studio="Alt+Insert" data-primary_eclipse="Alt+Insert" data-secondary_mac_os_x_10.5_="&#x2318;N" data-secondary_mac_os_x="&#x2303;N" data-secondary_eclipse_mac_os_x="&#x2318;N">Alt+Insert</kbd>)                                and specify the properties of the new parameter in the corresponding fields.                                <p>When adding parameters, you may want to                                    <a href="#propagate_params">propagate these parameters</a> to the functions                                    that call the current function.</p>                  </li><li class="list__item">To remove a parameter, click any of the cells in the corresponding row and                                click <img alt="delete" title="delete" src="/help/img/idea/2017.2/delete.png" width="12" height="12" class="inline-icon-12">&nbsp;(<kbd data-swiftype-index="false" data-primary_default="Alt+Delete" data-primary_default_for_gnome="Alt+Delete" data-primary_default_for_kde="Alt+Delete" data-primary_default_for_xwin="Alt+Delete" data-primary_emacs="N/A" data-primary_visual_studio="Alt+Delete" data-primary_eclipse="Alt+Delete" data-secondary_mac_os_x_10.5_="&#x2318;&#x2326;" data-secondary_mac_os_x="&#x2318;&#x2326;" data-secondary_eclipse_mac_os_x="N/A">Alt+Delete</kbd>).</li><li class="list__item">To reorder the parameters, use <img alt="arrowUp" title="arrowUp" src="/help/img/idea/2017.2/arrowUp.png" width="12" height="12" class="inline-icon-12">&nbsp;(<kbd data-swiftype-index="false" data-primary_default="Alt+Up" data-primary_default_for_gnome="Alt+Up" data-primary_default_for_kde="Alt+Up" data-primary_default_for_xwin="Alt+Up" data-primary_emacs="Alt+Up" data-primary_visual_studio="Alt+Up" data-primary_eclipse="Ctrl+Shift+Up" data-secondary_mac_os_x_10.5_="&#x2303;&#x2191;" data-secondary_mac_os_x="&#x2303;&#x2191;" data-secondary_eclipse_mac_os_x="&#x2303;&#x2325;&#x2191;">Alt+Up</kbd>) and                                <img alt="arrowDown" title="arrowDown" src="/help/img/idea/2017.2/arrowDown.png" width="12" height="12" class="inline-icon-12">&nbsp;(<kbd data-swiftype-index="false" data-primary_default="Alt+Down" data-primary_default_for_gnome="Alt+Down" data-primary_default_for_kde="Alt+Down" data-primary_default_for_xwin="Alt+Down" data-primary_emacs="Alt+Down" data-primary_visual_studio="Alt+Down" data-primary_eclipse="Ctrl+Shift+Down" data-secondary_mac_os_x_10.5_="&#x2303;&#x2193;" data-secondary_mac_os_x="&#x2303;&#x2193;" data-secondary_eclipse_mac_os_x="&#x2303;&#x2325;&#x2193;">Alt+Down</kbd>).                                For example, if you wanted to make a certain parameter the first in the list,                                you would click any of the cells in the row corresponding to that parameter,                                and then click <img alt="arrowUp" title="arrowUp" src="/help/img/idea/2017.2/arrowUp.png" width="12" height="12" class="inline-icon-12">&nbsp;the required number of times.</li><li class="list__item">To change the name of a parameter,                                make the necessary edits in the corresponding table cell.</li></ul>            </li><li class="list__item">Propagate new function parameters (if any) along the                            hierarchy of the functions that call the current function.                            <p>(There may be the functions that call the function whose signature you are changing.                                These functions, in their turn, may be called by other functions, and so on.                                You can propagate the changes you are making to the parameters of the current function                                through the hierarchy of the calling functions and also specify which calling functions                                should be affected and which shouldn't.)</p>                            <p>To propagate the new parameters:</p>                            <ol class="list _decimal"><li class="list__item">Click <img alt="propagateParameters" title="propagateParameters" src="/help/img/idea/2017.2/propagateParameters.png" width="13" height="17" class="inline-icon-17">.</li><li class="list__item">In the left-hand pane of the <span class="control">Select Methods to Propagate New Parameters</span> dialog,                                    expand the necessary nodes and select the check boxes next to the functions you want                                    the new parameters to be propagated to.                                        <p>To help you select the necessary functions, the code for the calling function                                            and the function being called is shown in the right-hand part of the dialog                                            (in the <span class="control">Caller Method</span> and <span class="control">Callee Method</span>                                            panes respectively).</p>                                        <p>As you switch between the functions in the left-hand pane, the code in the                                            right-hand part changes accordingly.</p>                  </li><li class="list__item">Click <span class="control">OK</span>.</li></ol>            </li></ul>      </li><li class="list__item">To perform the refactoring right away, click <span class="control">Refactor</span>.                <p>To see the expected changes and make the necessary adjustments prior to                    actually performing the refactoring, click <span class="control">Preview</span>.</p>      </li></ol></section>    </div><div class="last-modified" data-swiftype-index="false">Last modified: 29 November 2017 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-swiftype-index="false"><a class="navigation-links__prev" href="refactoring-javascript.html" data-swiftype-index="false">Refactoring JavaScript</a><a class="navigation-links__next" href="extract-parameter-in-javascript.html" data-swiftype-index="false">Extract Parameter in JavaScript</a></div><section class="seealso" data-swiftype-index="false"><div class="seealso__header" data-swiftype-index="false"><h2>See Also</h2></div><div class="seealso__content" data-swiftype-index="false"><div class="seealso__col" data-swiftype-index="false"><h3>Reference:</h3><ul class="list"><li class="list__item"><a href="change-signature-dialog-for-javascript.html"><span>Change Signature Dialog for JavaScript</span></a></li></ul></div></div></section></article><div id="disqus_thread" data-swiftype-index="false"></div></div></section></main></div><script src="/help/app/v2/app.js"></script></body></html>

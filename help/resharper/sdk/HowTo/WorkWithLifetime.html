@@ -1,0 +1,175 @@
+
+
+
+<!doctype html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>Work with Lifetime / ReSharper  DevGuide</title>
+    <link rel="stylesheet" href="/help/resharper/sdk/app/app.css">
+    <link rel="shortcut icon" href="/help/resharper/sdk/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="57x57" href="/help/resharper/sdk/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/help/resharper/sdk/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/help/resharper/sdk/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/help/resharper/sdk/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/help/resharper/sdk/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/help/resharper/sdk/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/help/resharper/sdk/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/help/resharper/sdk/apple-touch-icon-180x180.png">
+    <link rel="mask-icon" href="/help/resharper/sdk/apple-mask-icon.svg" color="black">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-square70x70logo" content="/help/resharper/sdk/mstile-70x70.png">
+    <meta name="msapplication-TileImage" content="/help/resharper/sdk/mstile-144x144.png">
+    <meta name="msapplication-square150x150logo" content="/help/resharper/sdk/mstile-150x150.png">
+    <meta name="msapplication-wide310x150logo" content="/help/resharper/sdk/mstile-310x150.png">
+    <meta name="msapplication-square310x310logo" content="/help/resharper/sdk/mstile-310x310.png">
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="Documentation for writing extensions for ReSharper" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.jetbrains.com/help/resharper/sdk//HowTo/WorkWithLifetime.html" />
+    <meta property="og:site_name" content="JetBrains ReSharper" />
+    <meta property="og:title" content="Work with Lifetime" />
+    <meta property="og:description" content="Documentation for writing extensions for ReSharper" />
+    <meta property="og:image" content="https://www.jetbrains.com/help/resharper/sdk/jetbrains.png" />
+    <meta property="article:modified_time" content="2017-07-12T17:27:26+00:00" />
+    <!-- <meta property="article:section" content="" /> 
+    <meta property="article:tag" content="" /> -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@JBPlatform" />
+    <meta name="twitter:title" content="Work with Lifetime" />
+    <meta name="twitter:description" content="Documentation for writing extensions for ReSharper" />
+    <meta name="twitter:image" content="https://www.jetbrains.com/help/resharper/sdk/jetbrains.png" />
+    <meta class="swiftype" name="product" data-type="string" content="/help/resharper/sdk/"></meta>
+<link  rel="stylesheet" href="/help/resharper/sdk/app/styles.css"></head>
+<body data-id="HowTo/WorkWithLifetime">
+<div class="wrapper">
+    <section class="panel _nav">
+        <header class="panel__header">
+            <div class="container">
+                <form class="search-box">
+                    <label for="search-box__input" class="search-box__label">
+                        <input type="text" class="search-box__input" id="search-box__input" placeholder="Search ReSharper  DevGuide">
+                    </label>
+                    <div class="search-box__clear" title="Clear"></div>
+                </form>
+            </div>
+        </header>
+        <nav class="panel__content">
+            <div class="container _nav">
+                <menu class="nav-tree"></menu>
+            </div>
+            <div class="container _footer panel__footer">
+                <p><a data-bypass="true" href="//youtrack.jetbrains.com/issues/IJSDK">Send feedback</a></p>
+                <p>&copy; 2000&ndash;2018 <a href="//www.jetbrains.com">JetBrains</a> s.r.o.<br>
+                    All rights reserved.</p>
+            </div>
+        </nav>
+    </section>
+
+    <main class="panel _main" role="main">
+        <header class="panel__header">
+            <div class="container">
+                <h3>ReSharper DevGuide</h3>
+                
+                <div class="panel-trigger"></div>
+            </div>
+        </header>
+        <section class="panel__content">
+            <div class="container">
+                <article class="article" data-shortcut-switcher="false">
+                    <div class="navigation-links _top" data-swiftype-index="false">
+                        <a class="navigation-links__prev" href="/HowTo/ObtainComponentsInRuntime.html">Obtain Components in Runtime</a>
+                        <a class="navigation-links__next" href="/HowTo/WorkWithSignals.html">Work with Signals</a>
+                    </div>
+                    <a data-bypass="true" href="https://github.com/JetBrains/resharper-devguide/edit/master/HowTo/WorkWithLifetime.md" class="page-link-to-github" target="_blank" rel="noopener noreferrer" title="Edit this page on GitHub">
+                        <i class="github-icon"></i>
+                        <span class="text">Edit page</span>
+                    </a>
+
+                    <h1>Work with Lifetime</h1>
+                    <p><strong>What you should know beforehand:</strong></p>
+<ul>
+  <li><a href="/help/resharper/sdk/HowTo/ObtainComponentsInRuntime.html"><span>Component model</span></a></li>
+</ul>
+
+<p>This section contains only brief details on what lifetime is. To learn more about lifetime, refer to the corresponding <a href="/help/resharper/sdk/Platform/Lifetime.html"><span>chapter of this guide</span></a>.</p>
+
+<p>Lifetime is one of the essential ReSharper API concepts. It’s a pattern used in ReSharper to manage object’s lifetime, e.g., dispose no longer needed objects. But why don’t we use <code class="code highlight language-text">IDisposable</code>? Long story short - <code class="code highlight language-text">IDisposable</code> is best suited for deterministic clean up, when you have relatively small amount of objects that typically live only within a method (e.g., the <code class="code highlight language-text">using</code> keyword). The fact that the resource management housekeeping code must be implemented in the calling class makes the <code class="code highlight language-text">IDisposable</code> pattern not very good scalable. The Lifetime pattern solves the problem from the other side. Instead of returning an <code class="code highlight language-text">IDisposable</code> object that knows how to perform cleanup, a method that needs to perform cleanup accepts a <code class="code highlight language-text">Lifetime</code> instance, and registers a callback that performs the cleanup. Thus, only a single instance is maintaining all of the cleanup code.</p>
+
+<p>Let’s see how it works in details.</p>
+
+<a name="obtaining-a-lifetime" class="elem-anchor"></a>
+<h2>Obtaining a Lifetime<a href="#obtaining-a-lifetime" class="anchor-link"><span></span></a></h2>
+<p>Typically, you should obtain the lifetime for your component from the ReSharper component model. As usual in the ReSharper API, you can get an instance of the <code class="code highlight language-text">Lifetime</code> type using the constructor injection.</p>
+
+<div class="code-block" data-lang="csharp"><code class="code-block__wrapper"><span class="na">[SolutionComponent]</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">MyClass</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="nf">MyClass</span><span class="p">(</span><span class="n">Lifetime</span> <span class="n">lifetime</span><span class="p">,</span> <span class="n">ISolutionStateTracker</span> <span class="n">solutionStateTracker</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">solutionStateTracker</span><span class="p">.</span><span class="n">AfterSolutionOpened</span><span class="p">.</span><span class="nf">Advise</span><span class="p">(</span><span class="n">lifetime</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span><span class="k">do</span> <span class="n">somehting</span><span class="p">...});</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></div>
+
+<p>As <code class="code highlight language-text">MyClass</code> is a solution component, the lifetime will be terminated once the solution is closed in Visual Studio. You can use the lifetime instance to propagate this lifetime to other components. Note that many ReSharper API methods accept <code class="code highlight language-text">Lifetime</code> as an argument. Even if you have an option not to provide it, you should always prefer a method overload that accepts the lifetime.</p>
+
+<p>How this works? In the example above, we subscribe on the <code class="code highlight language-text">AfterSolutionOpened</code> signal using <code class="code highlight language-text">Advise</code>. The lifetime instance passed to the <code class="code highlight language-text">Advise</code> method means that this subscription will live until lifetime is terminated (this will happen when the solution is closed). All routines related to unsubscription will be handled by the signal itself. So, typically, you will be passing a <code class="code highlight language-text">Lifetime</code> instance to methods rather than writing your own cleanup code.</p>
+
+<a name="running-your-own-cleanup-code" class="elem-anchor"></a>
+<h2>Running Your Own Cleanup Code<a href="#running-your-own-cleanup-code" class="anchor-link"><span></span></a></h2>
+<p>Nevertheless, you always have an opportunity to run your own cleanup code. To do this, you should register the cleanup callback using the <code class="code highlight language-text">AddAction</code> method of the <code class="code highlight language-text">Lifetime</code> type.</p>
+
+<div class="code-block" data-lang="csharp"><code class="code-block__wrapper"><span class="n">lifetime</span><span class="p">.</span><span class="nf">AddAction</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="n">myObject</span> <span class="p">=</span> <span class="k">null</span><span class="p">);</span>
+</code></div>
+
+<p>Or, you can even use the <code class="code highlight language-text">AddBracket</code> method that accepts two callbacks - one is run immediately and one after the lifetime is terminated. For example, adding and removing a UI element in a tool window can be bound to a particular lifetime:</p>
+
+<div class="code-block" data-lang="csharp"><code class="code-block__wrapper"><span class="n">lifetime</span><span class="p">.</span><span class="nf">AddBracket</span><span class="p">(</span>
+    <span class="p">()</span> <span class="p">=&gt;</span> <span class="n">_containerControl</span><span class="p">.</span><span class="n">Controls</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">_viewControl</span><span class="p">),</span>
+    <span class="p">()</span> <span class="p">=&gt;</span> <span class="n">_containerControl</span><span class="p">.</span><span class="n">Controls</span><span class="p">.</span><span class="nf">Remove</span><span class="p">(</span><span class="n">_viewControl</span><span class="p">));</span>
+</code></div>
+
+<a name="custom-lifetime" class="elem-anchor"></a>
+<h2>Custom Lifetime<a href="#custom-lifetime" class="anchor-link"><span></span></a></h2>
+<p>Normally, you should let the component model to create a lifetime for your component. But, sometimes, it may be necessary to create your own short-lived lifetime. In this case, to define the lifetime, you should use the <code class="code highlight language-text">Lifetimes.Define</code> method:</p>
+
+<div class="code-block" data-lang="csharp"><code class="code-block__wrapper"><span class="kt">var</span> <span class="n">myShortLifetimeDefinition</span> <span class="p">=</span> <span class="n">Lifetimes</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="n">lifetime</span><span class="p">);</span>
+<span class="kt">var</span> <span class="n">myShortLifetime</span> <span class="p">=</span> <span class="n">myShortLifetimeDefinition</span><span class="p">.</span><span class="n">Lifetime</span><span class="p">;</span>
+</code></div>
+
+<p>To terminate your lifetime:</p>
+
+<div class="code-block" data-lang="csharp"><code class="code-block__wrapper"><span class="n">myShortLifetimeDefinition</span><span class="p">.</span><span class="nf">Terminate</span><span class="p">();</span>
+</code></div>
+
+<a name="notes" class="elem-anchor"></a>
+<h3>Notes<a href="#notes" class="anchor-link"><span></span></a></h3>
+<ul>
+  <li><code class="code highlight language-text">lifetime</code> is the parent lifetime. Once it is terminated, <code class="code highlight language-text">myShortLifetime</code> is also terminated.</li>
+  <li><code class="code highlight language-text">Lifetimes.Define</code> creates an instance of the <code class="code highlight language-text">LifetimeDefinition</code> class which in turn allows you to manage the lifetime, e.g. terminate it.</li>
+</ul>
+
+
+                    <div class="navigation-links _bottom" data-swiftype-index="false">
+                        <a class="navigation-links__prev" href="/HowTo/ObtainComponentsInRuntime.html">Obtain Components in Runtime</a>
+                        <a class="navigation-links__next" href="/HowTo/WorkWithSignals.html">Work with Signals</a>
+                    </div>
+                    <div class="last-modified">
+                        Last modified: 12 July 2017
+                    </div>
+                </article>
+
+                <section class="disqus">
+                    <div id="disqus_thread"></div>
+                </section>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="/help/resharper/sdk/app/app.js" data-baseurl="/help/resharper/sdk/"></script>
+
+</body>
+</html>
+

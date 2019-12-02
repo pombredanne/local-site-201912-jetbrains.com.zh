@@ -1,0 +1,103 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta class="swiftype" name="product" data-type="string" content="/idea/2016.3/"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><meta charset="UTF-8"><meta name="robots" content="noindex"><title>IntelliJ IDEA 2016.3 Help :: Adding Support for Frameworks and Technologies</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="procedures.workingwithmodules.facet"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-swiftype-index="false"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.3 Help</h3><div class="shortcuts-switcher" data-swiftype-index="false"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Windows/Linux Default</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWin</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">Mac OS X</option><option data-group="secondary" value="eclipse_mac_os_x">Eclipse (Mac OS X)</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (Mac OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper (Mac OS X)</option><option data-group="secondary" value="emacs">Emacs (Mac OS X)</option></select></div><div class="panel-trigger" data-swiftype-index="false"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="file-and-code-templates.html">File and Code Templates</a></div><h1>Adding Support for Frameworks and Technologies</h1><ul><li class="list__item"><a href="#d2214e5">Overview</a></li><li class="list__item"><a href="#facets">Facets</a></li><li class="list__item"><a href="#add_support">Adding support for a framework</a></li><li class="list__item"><a href="#d2214e132">Specifying framework settings</a></li><li class="list__item"><a href="#auto_detection">Adding support for auto-detected frameworks</a></li><li class="list__item"><a href="#exclude_frameworks_from_detection">Excluding frameworks from auto-detection</a></li></ul><a name="d2214e5"></a><h2>Overview</h2>
+        <a name="d2214e7"></a><p>
+            You can extend capabilities of a <a name="d2214e9"></a><a href="module.html"><span>module</span></a>
+            by adding support for various development frameworks, technologies and languages.
+            (Hereafter, the word frameworks is used to refer also to the technologies and languages.)
+            As a result, depending on the framework, IntelliJ IDEA may:</p>
+        <ul class="list _ul"><li class="list__item"><a name="d2214e15"></a>
+                Download the framework implementation files, arrange those files in a <a name="d2214e17"></a><a href="library.html"><span>library</span></a>, and
+                add that library to the <a name="d2214e20"></a><a href="dependencies.html"><span>dependencies</span></a> of the module.</li><li class="list__item"><a name="d2214e24"></a>
+                Create a sample class or application as well as
+                framework configuration and application deployment descriptor files.</li><li class="list__item"><a name="d2214e27"></a>
+                Add framework-specific coding assistance features to the editor.</li><li class="list__item"><a name="d2214e30"></a>
+                Create a <a name="d2214e32"></a><a href="#facets"><span>facet</span></a> for specifying how the framework is used in the module.</li><li class="list__item"><a name="d2214e36"></a>
+                Create a <a name="d2214e38"></a><a href="run-debug-configuration.html"><span>run/debug configuration</span></a> for your application.</li><li class="list__item"><a name="d2214e43"></a>
+                Create an <a name="d2214e45"></a><a href="working-with-artifacts.html#artifact_def"><span>artifact</span></a> configuration,
+                e.g. for packaging or deploying your app.</li><li class="list__item"><a name="d2214e49"></a>
+                Provide a framework-specific <a name="d2214e51"></a><a href="tool-windows.html"><span>tool window</span></a>.</li></ul><a name="facets"></a><h2>Facets</h2>
+        <a name="d2214e57"></a><p>
+            Some frameworks need to be configured.
+            For such frameworks, IntelliJ IDEA provide facets.</p>
+        <a name="d2214e60"></a><p>
+            A facet is part of the UI that lets you specify framework-specific settings for a module.</p>
+        <a name="d2214e63"></a><p>
+            Usually, facets have the same names as the corresponding frameworks.
+            For example, a facet for the Spring framework would be called a Spring facet.</p>
+         
+    <a name="add_support"></a><h2>Adding support for a framework</h2>
+        <a name="d2214e71"></a><p>You can add support for a framework:</p>
+        <ul class="list _ul"><li class="list__item"><a name="d2214e76"></a>
+                When creating a project or module
+                (<a name="d2214e78"></a><span class="menupath">File | New | Project</span> or <a name="d2214e81"></a><span class="menupath">File | New | Module</span>).
+                On the first page of the <a name="d2214e84"></a><span class="control">New Project</span> or the <a name="d2214e87"></a><span class="control">New Module</span> wizard,
+                the frameworks are shown as options under <a name="d2214e90"></a><a href="additional-libraries-and-frameworks.html"><span>Additional Libraries and Frameworks</span></a>.</li><li class="list__item"><a name="d2214e94"></a>
+                For an existing module:
+                <ul class="list _ul"><li class="list__item"><a name="d2214e98"></a>
+                        In the <a name="d2214e100"></a><span class="control">Project</span> tool window
+                        (<a name="d2214e103"></a><span class="menupath">View | Tool Windows | Project</span>):
+                        right-click the module folder and select <a name="d2214e106"></a><span class="control">Add Framework Support</span>.
+                        Then select the framework(s) in the <a name="d2214e109"></a><a href="add-frameworks-support-dialog.html"><span>Add Frameworks Support dialog</span></a>.
+                    </li><li class="list__item"><a name="d2214e113"></a>
+                        In the <a name="d2214e115"></a><span class="control">Project Structure</span> dialog
+                        (<a name="d2214e118"></a><span class="menupath">File | Project Structure</span>):
+                        select <a name="d2214e121"></a><span class="control">Modules</span> or <a name="d2214e124"></a><span class="control">Facets</span> and click <img alt="/help/img/idea/2016.3/new.png" title="/help/img/idea/2016.3/new.png" src="/help/img/idea/2016.3/new.png" width="12" height="12" class="inline-icon-12">.</li></ul>
+            </li></ul><a name="d2214e132"></a><h2>Specifying framework settings</h2>
+        <a name="d2214e134"></a><p>
+            To specify the settings for an enabled configurable framework
+            (one that has a <a name="d2214e136"></a><a href="#facets"><span>facet</span></a>),
+            open the <a name="d2214e139"></a><span class="control">Project Structure</span> dialog,
+            select <a name="d2214e142"></a><span class="control">Modules</span> or <a name="d2214e145"></a><span class="control">Facets</span>, and then select the framework (the facet).</p>
+        <ul class="list _ul"><li class="list__item"><a name="d2214e151"></a>
+                <a name="d2214e153"></a><span class="control">Modules.</span> In this section, facets are shown as module elements.</li><li class="list__item"><a name="d2214e157"></a>
+                <a name="d2214e159"></a><span class="control">Facets.</span>
+                In this section,
+                facets that pertain to the same framework appear as elements of that framework.
+ 
+                <a name="d2214e164"></a><p>
+                    For certain facet types (frameworks) there may be default settings and also
+                    the settings that can be applied to all facets of a type at once.
+                    To check if there are such settings for a framework,
+                    select the framework (i.e. the facet group name).</p>
+                <a name="d2214e167"></a><p>
+                    In this section you can also configure framework auto-detection
+                    (see <a href="#exclude_frameworks_from_detection">Excluding frameworks from auto-detection</a>).</p>
+            </li></ul>
+        <figure><img alt="/help/img/idea/2016.3/ProjectStructureModulesVsFacets.png" title="/help/img/idea/2016.3/ProjectStructureModulesVsFacets.png" src="/help/img/idea/2016.3/ProjectStructureModulesVsFacets.png" width="646" height="302"></figure>
+
+    <a name="auto_detection"></a><h2>Adding support for auto-detected frameworks</h2>
+        <a name="d2214e180"></a><p>
+            IntelliJ IDEA can guess that you are using a framework.
+            If it finds a file or a directory typical of a certain framework
+            (the corresponding checks are performed when you reopen your project),
+            you get a notification looking similar to this:</p>
+        <figure><img alt="/help/img/idea/2016.3/detectedFacets.png" title="/help/img/idea/2016.3/detectedFacets.png" src="/help/img/idea/2016.3/detectedFacets.png" width="330" height="66"></figure>
+        <a name="d2214e185"></a><p>
+            By clicking <a name="d2214e187"></a><span class="control">Configure</span>, you can start adding support for the detected framework(s).</p>
+        <a name="d2214e191"></a><p>
+            This task can also be initiated from within
+            the <a name="d2214e193"></a><span class="control">Event Log</span> tool window (<a name="d2214e196"></a><span class="menupath">View | Tool Windows | Event Log</span>),
+            which will contain a similar notification message.</p>
+        <figure><img alt="/help/img/idea/2016.3/EventLogFrameworksDetected.png" title="/help/img/idea/2016.3/EventLogFrameworksDetected.png" src="/help/img/idea/2016.3/EventLogFrameworksDetected.png" width="545" height="82"></figure>
+        <a name="d2214e203"></a><p>
+            Once you have enabled an auto-detected framework,
+            look at the framework settings (if available) and make the necessary adjustments.</p>
+
+    <a name="exclude_frameworks_from_detection"></a><h2>Excluding frameworks from auto-detection</h2>
+        <a name="d2214e209"></a><p>
+            By default, auto-detection is enabled for all the supported frameworks.
+            If necessary,
+            you can disable framework auto-detection completely or
+            exclude individual frameworks from auto-detection.
+            The exclusion can be project-wide or limited to a certain directory.</p>
+        <a name="d2214e212"></a><p>
+            To access the framework detection settings,
+            open the <a name="d2214e214"></a><span class="control">Project Structure</span> dialog, select <a name="d2214e217"></a><span class="control">Facets</span>, and then
+            select <a name="d2214e220"></a><span class="control">Detection</span>.</p><div class="navigation-links _bottom"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="file-and-code-templates.html">File and Code Templates</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content">```
+                <div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d2214e234"></a><a href="language-and-framework-specific-guidelines.html"><span>Language and Framework - Specific Guidelines</span></a></li></ul></div><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d2214e228"></a><a href="facets.html"><span>Project Structure / Facets</span></a></li></ul></div></div></section><div class="last-modified" data-swiftype-index="false">Last modified: 21 March 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

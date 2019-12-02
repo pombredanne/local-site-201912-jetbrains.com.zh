@@ -1,0 +1,148 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta charset="UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="//resources.jetbrains.com/storage/help-app/v3/analytics.js"></script><title>Custom Fields in REST API - Help | YouTrack InCloud</title><link rel="stylesheet" href="//resources.jetbrains.com/storage/help-app/v3/app.css"></head><body data-id="api-howto-about-custom-fields" data-breadcrumbs="Resources-for-Developers.xml|Resources for Developers/youtrack-rest-api-reference.xml|REST API/api-getting-started.xml|Get Started with REST API/api-concept-custom-fields.xml|Custom Fields in REST API" data-main-title="Custom Fields in REST API"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack InCloud Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>YouTrack InCloud 2019.2 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="api-howto-about-custom-fields" id="api-concept-custom-fields.xml">Custom Fields in REST API</h1>    <p id="476d6a02">This page describes the hierarchy of custom fields in YouTrack and how the CustomField, ProjectCustomField, and        IssueCustomField entities differ from each other.    </p>    <div class="chapter"><h2 id="custom-field" data-toc="api-howto-about-custom-fields#custom-field">CustomField</h2>        <p id="17902dcf">            <code class="code">CustomField</code>            is an entity that defines a common custom field which contains basic attributes like "name", "fieldType" and            other described on the            <a href="api-json-schema.html">JSON Schema</a>            page. Notice that "instances" property contains setting of this field in different projects.        </p>        <p id="a87571d2">The following sample shows how to get custom fields. By default, YouTrack returns only <code class="code">$type</code> and <code class="code">id</code>            attributes of the requested entities. To get more information about custom fields, we explicitly provide            a list of returned entity attributes in the <code class="code">fields</code> parameter of the request.            Notice that <code class="code">$type</code> attribute will be in response regardless of whether you specify it explicitly or not.        </p>        <h4 id="a95255eb">Sample request</h4>        <div class="code-block" data-lang="http">
+            curl -X GET \
+            'https://example.myjetbrains.com/youtrack/api/admin/customFieldSettings/customFields?fields=id,name,aliases,instances(id,project(id,name))' \
+            -H 'Accept: application/json' \
+            -H 'Authorization: Bearer perm:am9obi5kb2U=.UG9zdG1hbiBKb2huIERvZQ==.jJe0eYhhkV271j1lCpfknNYOEakNk7' \
+            -H 'Cache-Control: no-cache' \
+            -H 'Content-Type: application/json'
+        </div>        <h4 id="84735d9e">Sample response body</h4>        <div class="code-block" data-lang="json">
+            [
+                ...
+                {
+                    "id":"58-1",
+                    "name":"Priority",
+                    "$type":"CustomField",
+                    "aliases":null,
+                    "instances":[
+                        {
+                            "id":"92-1",
+                            "$type":"EnumProjectCustomField",
+                            "project":{
+                                "id":"0-0",
+                                "name":"Sample Project"
+                            }
+                        },
+                        ...
+                    ]
+                },
+                ...
+                {
+                    "id":"58-4",
+                    "name":"Assignee",
+                    "$type":"CustomField",
+                    "aliases":"for, assigned to",
+                    "instances":[
+                        {
+                            "id":"94-0",
+                            "$type":"UserProjectCustomField",
+                            "project":{
+                                "id":"0-0",
+                                "name":"Sample Project"
+                            }
+                        },
+                        ...
+                    ]
+                },
+                ...
+            ]
+        </div>    </div>    <div class="chapter"><h2 id="project-custom-field" data-toc="api-howto-about-custom-fields#project-custom-field">ProjectCustomField</h2>        <p id="5a77f748">            <code class="code">ProjectCustomField</code>            entity contains settings of a <code class="code">CustomField</code> ("field" attribute) in a particular project            ("project"), such as the set of possible values ("bundle"), whether the field can be empty or not            ("canBeEmpty") and so on. For the complete list of attributes, see the            <a href="api-json-schema.html">JSON Schema</a>            page.        </p>        <h4 id="d7b73181">Sample request</h4>        <div class="code-block" data-lang="http">
+            curl -X GET \
+            'https://example.myjetbrains.com/youtrack/api/admin/projects/0-0/customFields?fields=id,canBeEmpty,emptyFieldText,project(id,name),field(id,name)' \
+            -H 'Accept: application/json' \
+            -H 'Authorization: Bearer perm:am9obi5kb2U=.UG9zdG1hbiBKb2huIERvZQ==.jJe0eYhhkV271j1lCpfknNYOEakNk7' \
+            -H 'Cache-Control: no-cache' \
+            -H 'Content-Type: application/json'
+        </div>        <h4 id="7c6e4341">Sample response body</h4>        <div class="code-block" data-lang="json">
+            [
+                ...
+                {
+                    "id":"92-1",
+                    "$type":"EnumProjectCustomField",
+                    "canBeEmpty":false,
+                    "emptyFieldText":"No Priority",
+                    "field":{
+                        "id":"58-1",
+                        "name":"Priority",
+                        "$type":"CustomField"
+                    },
+                    "project":{
+                        "id":"0-0",
+                        "name":"Sample Project"
+                    }
+                },
+                ...
+                {
+                    "id":"94-0",
+                    "$type":"UserProjectCustomField",
+                    "canBeEmpty":true,
+                    "emptyFieldText":"Unassigned",
+                    "field":{
+                        "id":"58-4",
+                        "name":"Assignee",
+                        "$type":"CustomField"
+                    },
+                    "project":{
+                        "id":"0-0",
+                        "name":"Sample Project"
+                    }
+                },
+                ...
+            ]
+    </div>    </div>    <div class="chapter"><h2 id="issue-custom-field" data-toc="api-howto-about-custom-fields#issue-custom-field">IssueCustomField</h2>        <p id="d52f85de">            The <code class="code">IssueCustomField</code>            entity contains a value ("value" attribute) of a <code class="code">ProjectCustomField</code> ("projectCustomField") for            particular issue. The value can be a simple one (string, integer,..), a link to an existing entity (link to            particular user for Assignee field), or a collection of values (Affected versions field).        </p>        <h4 id="4a5efd89">Sample request:</h4>        <div class="code-block" data-lang="http">
+            curl -X GET \
+            'https://example.myjetbrains.com/youtrack/api/issues/2-7/customFields?fields=id,value(id,name,login,fullName),projectCustomField(id,field(id,name))' \
+            -H 'Accept: application/json' \
+            -H 'Authorization: Bearer perm:am9obi5kb2U=.UG9zdG1hbiBKb2huIERvZQ==.jJe0eYhhkV271j1lCpfknNYOEakNk7' \
+            -H 'Cache-Control: no-cache' \
+            -H 'Content-Type: application/json'
+        </div>        <h4 id="837c01a3">Sample response body:</h4>        <div class="code-block" data-lang="json">
+            [
+                {
+                    "id":"92-1",
+                    "$type":"SingleEnumIssueCustomField",
+                    "projectCustomField":{
+                        "id":"92-1",
+                        "$type":"EnumProjectCustomField",
+                        "field":{
+                            "id":"58-1",
+                            "name":"Priority",
+                            "$type":"CustomField"
+                        }
+                    },
+                    "value":{
+                        "id":"67-2",
+                        "name":"Major",
+                        "$type":"EnumBundleElement"
+                    }
+                },
+                ...
+                {
+                    "id":"94-0",
+                    "$type":"SingleUserIssueCustomField",
+                    "projectCustomField":{
+                        "id":"94-0",
+                        "$type":"UserProjectCustomField",
+                        "field":{
+                            "id":"58-4",
+                            "name":"Assignee",
+                            "$type":"CustomField"
+                        }
+                    },
+                    "value":{
+                        "id":"1-3",
+                        "login":"jane.doe",
+                        "fullName":"Jane Doe",
+                        "name":"Jane Doe",
+                        "$type":"User"
+                    }
+                },
+                ...
+            ]
+    </div>    </div>    <div class="chapter"><h2 id="type-issue-custom-fields" data-toc="api-howto-about-custom-fields#type-issue-custom-fields">$type Mapping for Custom Fields</h2>        <p id="9e2e93bf">The following table shows the mapping between supported issue custom fields and their corresponding $type values.            You must provide the $type value in the POST request when you need to set or update a custom field in an issue.</p>        <div class="table-wrapper"><table class=" wide" width="100%" id="5e2ec4f0"><thead><tr id="16ec8e6e" class="ijRowHead"><th id="1700ad44"><p>Custom Field Type</p></th><th id="2a623399"><p>IssueCustomField <code class="code">$type</code></p></th><th id="271e9ae0"><p>ProjectCustomField <code class="code">$type</code></p></th></tr></thead><tbody><tr id="36f447d4" class="ijRowOdd"><td id="bfe5a7d9"><code class="code">enum[1]</code></td><td id="5eb6e20d"><code class="code">SingleEnumIssueCustomField</code></td><td id="80fcb747"><code class="code">EnumProjectCustomField</code></td></tr><tr id="33d13775" class="ijRowEven"><td id="01f4fdf8"><code class="code">enum[*]</code></td><td id="087cc869"><code class="code">MultiEnumIssueCustomField</code></td><td id="059c4d98"><code class="code">EnumProjectCustomField</code></td></tr><tr id="2b6c9887" class="ijRowOdd"><td id="78523362"><code class="code">build[1]</code></td><td id="ffe9d37f"><code class="code">SingleBuildIssueCustomField</code></td><td id="d21052a8"><code class="code">BuildProjectCustomField</code></td></tr><tr id="e92bed56" class="ijRowEven"><td id="c48a3b11"><code class="code">build[*]</code></td><td id="2e98b702"><code class="code">MultiBuildIssueCustomField</code></td><td id="7d0c99a6"><code class="code">BuildProjectCustomField</code></td></tr><tr id="065a4894" class="ijRowOdd"><td id="99816df2"><code class="code">state[1]</code></td><td id="bebaffa8"><code class="code">StateIssueCustomField</code></td><td id="b763ee89"><code class="code">StateProjectCustomField</code></td></tr><tr id="93e9550e" class="ijRowEven"><td id="776f9986"><code class="code">version[1]</code></td><td id="e08db567"><code class="code">SingleVersionIssueCustomField</code></td><td id="ad915edb"><code class="code">VersionProjectCustomField</code></td></tr><tr id="ce1f693b" class="ijRowOdd"><td id="f2d57ba5"><code class="code">version[*]</code></td><td id="ebeb18df"><code class="code">MultiVersionIssueCustomField</code></td><td id="9972f3e8"><code class="code">VersionProjectCustomField</code></td></tr><tr id="6896d86e" class="ijRowEven"><td id="6166cc64"><code class="code">ownedField[1]</code></td><td id="390b0426"><code class="code">SingleOwnedIssueCustomField</code></td><td id="fb5293f5"><code class="code">OwnedProjectCustomField</code></td></tr><tr id="a9e2f9b9" class="ijRowOdd"><td id="3e64fd53"><code class="code">ownedField[*]</code></td><td id="59f44668"><code class="code">MultiOwnedIssueCustomField</code></td><td id="046c59de"><code class="code">OwnedProjectCustomField</code></td></tr><tr id="3e00b979" class="ijRowEven"><td id="6f3a8a34"><code class="code">user[1]</code></td><td id="34cd1257"><code class="code">SingleUserIssueCustomField</code></td><td id="cf3c36da"><code class="code">UserProjectCustomField</code></td></tr><tr id="c97cb00e" class="ijRowOdd"><td id="7c83085a"><code class="code">user[*]</code></td><td id="bad1c280"><code class="code">MultiUserIssueCustomField</code></td><td id="3d31d5b7"><code class="code">UserProjectCustomField</code></td></tr><tr id="1587f0b1" class="ijRowEven"><td id="b7da8086"><code class="code">group[1]</code></td><td id="47d10be4"><code class="code">SingleGroupIssueCustomField</code></td><td id="cfe725fb"><code class="code">GroupProjectCustomField</code></td></tr><tr id="02932718" class="ijRowOdd"><td id="d6639f36"><code class="code">group[*]</code></td><td id="ca5e8b45"><code class="code">MultiGroupIssueCustomField</code></td><td id="8a049d00"><code class="code">GroupProjectCustomField</code></td></tr><tr id="53146556" class="ijRowEven"><td id="2c2f0043"><code class="code">int</code></td><td id="ddd68844"><code class="code">SimpleIssueCustomField</code></td><td id="45f4de06"><code class="code">SimpleProjectCustomField</code></td></tr><tr id="928c6181" class="ijRowOdd"><td id="b39ff11e"><code class="code">float</code></td><td id="575c6abf"><code class="code">SimpleIssueCustomField</code></td><td id="5e27ed20"><code class="code">SimpleProjectCustomField</code></td></tr><tr id="37630bad" class="ijRowEven"><td id="ef926a78"><code class="code">date</code></td><td id="7dbcd96a"><code class="code">DateIssueCustomField</code></td><td id="63f13bae"><code class="code">SimpleProjectCustomField</code></td></tr><tr id="d29e0205" class="ijRowOdd"><td id="483d5beb"><code class="code">date and time</code></td><td id="036e9068"><code class="code">SimpleIssueCustomField</code></td><td id="ed987695"><code class="code">SimpleProjectCustomField</code></td></tr><tr id="ba2e1411" class="ijRowEven"><td id="12bc3fcd"><code class="code">period</code></td><td id="55961ecc"><code class="code">PeriodIssueCustomField</code></td><td id="2e84886e"><code class="code">PeriodProjectCustomField</code></td></tr><tr id="fef41797" class="ijRowOdd"><td id="fb1398e4"><code class="code">string</code></td><td id="a07e7221"><code class="code">SimpleIssueCustomField</code></td><td id="b361b6f4"><code class="code">SimpleProjectCustomField</code></td></tr><tr id="63b8738e" class="ijRowEven"><td id="acce7236"><code class="code">text</code></td><td id="454e5b85"><code class="code">TextIssueCustomField</code></td><td id="b8733bc9"><code class="code">TextProjectCustomField</code></td></tr></tbody></table></div>    </div><div class="last-modified" data-skip-index="skip">Last modified: 29 November 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="api-fields-syntax.html">Fields Syntax</a><a class="navigation-links__next" href="api-concept-pagination.html">Pagination</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="//resources.jetbrains.com/storage/help-app/v3/app.js"></script></body></html>

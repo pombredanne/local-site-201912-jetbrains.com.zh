@@ -1,0 +1,57 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"></meta><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><title>IntelliJ IDEA 2016.1 Help :: Import Eclipse Workspace</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="topicId506804"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.1 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWindow</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="how-it-works.html">How It Works</a><a class="navigation-links__next" href="settings.html">Settings</a></div><h1>Import Eclipse Workspace</h1><a name="d1673834e7"></a><p>
+            Eclipse RCP and Eclipse Plugin projects are based on OSGi. At the core of an Eclipse application there is an OSGi runtime called Equinox.
+        Osmorc's Equinox framework integrator provides support for working on applications using Equinox.
+        At the time of this writing it is not possible to run and debug OSGi applications with Osmorc,
+        but that is a planned feature for the near future.
+        Currently Osmorc also doesn't contain any support for Eclipse specific features like extensions.
+        </p><a name="d1673834e10"></a><p>
+            Currently it is possible to import an Eclipse workspace into IntelliJ IDEA
+            and use Osmorc to resolve dependencies between the different OSGi bundles of that workspace.
+            The outcome is that the created IntelliJ IDEA project can be compiled in IntelliJ IDEA without any errors with the possibility to edit
+            the classes, manifest files, and other artifacts of the bundles.
+        </p><a name="d1673834e13"></a><p>
+            From this topic you will learn how to  import an Eclipse workspace into IntelliJ IDEA.
+        </p><aside class="tip sideblock">
+            <a name="d1673834e19"></a><p>
+                Please, use the <a name="d1673834e21"></a><a href="http://www.jetbrains.com/idea/documentation/usingIDEAforEclipse.html" data-external="true"><span>guide</span></a>
+            describing how to migrate Eclipse RCP applications to IntelliJ IDEA.
+            This is a workaround that enables the developer of an Eclipse RCP application to work on that application with a pure IntelliJ IDEA
+            without Osmorc.
+            Projects changed as described in that guide won't be compatible with Osmorc.
+            Osmorc adds OSGi support to IntelliJ IDEA making a great part of the workaround obsolete.
+            </p>
+        </aside><a name="d1673834e26"></a><a name="dynaProc0"></a><section class="procedure-steps"><h2>To import an Eclipse workspace into IntelliJ IDEA</h2><ol class=".list _decimal"><li class="list__item">
+            Start importing an Eclipse workspace into IntelliJ IDEA as described in <a name="d1673834e30"></a><a href="topicId335.html"><span>Importing Eclipse Project to IntelliJ IDEA</span></a>.
+        </li><li class="list__item">
+            Clear the <a name="d1673834e35"></a><span class="control">Link created IntelliJ IDEA modules to Eclipse project files</span> check box.
+            Osmorc changes the dependencies between the modules created from the Eclipse projects
+            in order to make them match the bundle dependencies expressed in the manifest files.
+            Linking IntelliJ IDEA modules with Eclipse project files would result in unnecessary dependencies being introduced into the project files.
+        </li><li class="list__item">
+            Remove the dependency to the global library ECLIPSE on any of the created modules, if one was added. 
+        </li></ol></section><a name="d1673834e43"></a><p>
+        Osmorc only works on modules with its <a name="d1673834e45"></a><a href="facet.html"><span>facet</span></a>. Therefore after creating a project and modules for an Eclipse project,
+        IntelliJ IDEA  should detect the modules as being candidates for an Osmorc facet and display a message for each detection.
+    </p><a name="d1673834e49"></a><a name="dynaProc1"></a><section class="procedure-steps"><h2>To add the Osmorc facet to all modules</h2><ol class=".list _decimal"><li class="list__item">
+            Confirm adding Osmorc facet to each module.
+        </li><li class="list__item">
+            To make sure that each module has an Osmorc facet, <a name="d1673834e56"></a><a href="accessing-project-structure.html"><span>open the project structure</span></a>,
+            select the <a name="d1673834e59"></a><span class="control">Modules</span> node, and check that each module in the tree to the right has
+            an <a name="d1673834e62"></a><span class="control">Osmorc</span> sub-node.
+        </li><li class="list__item">
+            If you inadvertently deny the addition of the Osmorc facet, remove it or if it just does appear as a sub-node of the module node,
+            <a name="d1673834e68"></a><a href="adding-and-removing-facets.html"><span>add the Osmorc facet manually</span></a>. 
+        </li></ol></section><a name="d1673834e73"></a><p>
+        Now you have imported your Eclipse workspace into IntelliJ IDEA and you can start working on it in IntelliJ IDEA.
+        One thing you haven't done yet, is transfer your target platform into IntelliJ IDEA.
+        In Osmorc, the target platform is called a framework instance and you can define it in Osmorc's settings.
+        Please read the <a name="d1673834e75"></a><a href="settings.html"><span>Settings</span></a> section to learn how to define different framework instances
+        and how to choose one for a project.
+    </p><div class="navigation-links _bottom"><a class="navigation-links__prev" href="how-it-works.html">How It Works</a><a class="navigation-links__next" href="settings.html">Settings</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content"><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d1673834e82"></a><a href="osgi-facet-page.html"><span>OSGi Facet Page</span></a></li><li class="list__item"><a name="d1673834e86"></a><a href="osgi-2.html"><span>OSGi</span></a></li></ul></div></div></section><div class="last-modified">Last modified: 13 July 2016 </div></article><div id="disqus_thread"></div></div></section></main></div><script src="/help/app/app.js"></script></body></html>

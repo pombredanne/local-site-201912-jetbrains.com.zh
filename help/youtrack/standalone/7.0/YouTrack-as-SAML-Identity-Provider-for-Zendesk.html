@@ -1,0 +1,63 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="robots" content="noindex"><title>YouTrack Standalone 7.0 Help :: YouTrack as SAML Identity Provider for Zendesk</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="YouTrack-as-SAML-Identity-Provider-for-Zendesk"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack Standalone Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>YouTrack Standalone 7.0 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="Set-Up-SSL-Keys-for-SAML-2.0.html">Set Up SSL Keys for SAML 2.0</a><a class="navigation-links__next" href="YouTrack-as-SAML-Identity-Provider-for-Google.html">YouTrack as SAML Identity Provider for Google Apps for Work</a></div><h1>YouTrack as SAML Identity Provider for Zendesk</h1><a name="d238104e3"></a><p>When you configure your YouTrack server as the Identity Provider for your Zendesk instance, your users can log into
+        Zendesk with their credentials in YouTrack or any other authentication module.</p><a name="d238104e6"></a><p>This configuration also enables single-sign-on. When a user logs into one of the services that is connected to YouTrack,
+        they are logged into all connected services.
+    </p><a name="d238104e9"></a><h2>Prerequisites</h2>
+
+        <ul class="list _bullet"><li class="list__item"><a name="d238104e13"></a>You must have administrative privileges in both Zendesk and YouTrack.</li><li class="list__item"><a name="d238104e16"></a>An email address of the YouTrack administrator account that you use to configure SAML&nbsp;2.0 for
+                Zendesk must differ from the email of the Zendesk instance owner. Otherwise, you might end-up in the redirecting loop when you
+                test the SAML configuration.</li><li class="list__item"><a name="d238104e19"></a>YouTrack administrator account must have a verified email address.</li></ul>
+
+    <a name="connectingZendeskViaSAML"></a><a name="dynaProc0"></a><section class="procedure-steps"><h2>Configuring your Zendesk Instance</h2><ol class=".list _decimal"><li class="list__item">
+            In your Zendesk instance, open the <a name="d238104e28"></a><span class="menupath">Settings &gt; Security</span> page.
+        </li><li class="list__item">Select the <a name="d238104e34"></a><span class="control">End-Users</span> tab.
+            <a name="d238104e37"></a><p>We describe how to set up YouTrack to authenticate end-users with SAML. However, you can set up YouTrack to
+                authenticate Zendesk Agents, as well. To do so, select the <a name="d238104e39"></a><span class="control">Agents</span> tab and provide the same parameters as described
+                in the next step.
+            </p>
+        </li><li class="list__item">Enable
+            <a name="d238104e46"></a><b id="d238104e46">Single-sign-on</b>
+            option, select SAML, and configure the parameters:
+            <table class="" width="100%" id="d238104e49"><thead><tr id="d238104e51" class="ijRowHead"><a name="d238104e51"></a><th width="20%"><a name="d238104e53"></a>Parameter</th><th><a name="d238104e56"></a>Description</th></tr></thead><tbody><tr id="d238104e60" class="ijRowOdd"><a name="d238104e60"></a><td><a name="d238104e62"></a>SAML SSO URL</td><td><a name="d238104e65"></a>Paste the content of the
+                        <a name="d238104e67"></a><span class="control">Sign In URL</span>
+                        field on
+                        <a name="d238104e70"></a><span class="menupath">More Settings &gt; SAML2.0 &gt; Settings</span>
+                        page of the YouTrack server.
+                    </td></tr><tr id="d238104e75" class="ijRowEven"><a name="d238104e75"></a><td><a name="d238104e77"></a>Certificate fingerprint</td><td><a name="d238104e80"></a>Paste the SHA-256 fingerprint of the certificate packed into the SSL key store set for SAML in
+                        YouTrack. Copy from the
+                        <a name="d238104e82"></a><span class="control">Fingerprints</span>
+                        field on the
+                        <a name="d238104e85"></a><span class="menupath">More Settings &gt; SAML2.0 &gt; Settings</span>
+                        page.
+                    </td></tr><tr id="d238104e90" class="ijRowOdd"><a name="d238104e90"></a><td><a name="d238104e92"></a>Remote logout URL</td><td><a name="d238104e95"></a>Paste the content of the
+                        <a name="d238104e97"></a><span class="control">Sign Out URL</span>
+                        field on
+                        <a name="d238104e100"></a><span class="menupath">More Settings &gt; SAML2.0 &gt; Settings</span>
+                        page of the YouTrack server.
+                    </td></tr><tr id="d238104e105" class="ijRowEven"><a name="d238104e105"></a><td><a name="d238104e107"></a>IP ranges</td><td><a name="d238104e110"></a>Requests from these IP addresses will always be routed through YouTrack for authentication. By
+                        default, we recommend that you use the
+                        <code class="code" data-lang="Java">*.*.*.*</code> pattern to authenticate all end-users via YouTrack.
+                    </td></tr></tbody></table>
+        </li><li class="list__item">In YouTrack, select <a name="d238104e121"></a><span class="menupath">SAML 2.0</span> from the <a name="d238104e124"></a><span class="control">Access Management</span> section of the <a name="d238104e127"></a><span class="control">Administration</span> menu.</li><li class="list__item">Select the <a name="d238104e133"></a><span class="control">Registered Service Providers</span> tab.
+        </li><li class="list__item">
+            Click the <a name="d238104e140"></a><span class="control">Register service provider</span> button.
+        </li><li class="list__item">In the dialog, enter the parameters of your Zendesk instance:
+            <table class="" width="100%" id="d238104e146"><thead><tr id="d238104e148" class="ijRowHead"><a name="d238104e148"></a><th width="20%"><a name="d238104e150"></a>Parameter</th><th><a name="d238104e153"></a>Description</th></tr></thead><tbody><tr id="d238104e157" class="ijRowOdd"><a name="d238104e157"></a><td><a name="d238104e159"></a>Name</td><td><a name="d238104e162"></a>Enter a name to be displayed for the Zendesk instance in YouTrack.</td></tr><tr id="d238104e166" class="ijRowEven"><a name="d238104e166"></a><td><a name="d238104e168"></a>Issuer</td><td><a name="d238104e171"></a>Use the name of your Zendesk instance in the format <code class="code" data-lang="Java">&lt;accountname&gt;.zendesk.com</code>.
+                    </td></tr><tr id="d238104e178" class="ijRowOdd"><a name="d238104e178"></a><td><a name="d238104e180"></a>Description</td><td><a name="d238104e183"></a>Optionally, enter a description of the Zendesk instance.</td></tr><tr id="d238104e187" class="ijRowEven"><a name="d238104e187"></a><td><a name="d238104e189"></a>Consumer URL</td><td><a name="d238104e192"></a>Paste the Access Consumer Service (ACS) URL of your Zendesk instance.
+                        The general format for the ACS URL in Zendesk is
+                        <code class="code" data-lang="Java">https://&lt;accountname&gt;.zendesk.com/access/saml</code>
+                        (case sensitive).
+                        <aside class="note ">
+                            <a name="d238104e199"></a><p>You can find the actual ACS URL of your particular instance in the description of the
+                                <a name="d238104e201"></a><b id="d238104e201">SAML SSO URL</b>
+                                field when you enable SAML in Zendesk.
+                            </p>
+                        </aside>
+                    </td></tr><tr id="d238104e209" class="ijRowOdd"><a name="d238104e209"></a><td><a name="d238104e211"></a>YouTrack should send <code class="code" data-lang="Java">LogoutResponse</code></td><td><a name="d238104e216"></a>Make sure that the option is disabled.</td></tr></tbody></table>
+        </li></ol></section><div class="last-modified">Last modified: 2 February 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

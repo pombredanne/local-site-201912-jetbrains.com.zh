@@ -1,0 +1,42 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="//resources.jetbrains.com/storage/help-app/v3/analytics.js"></script><meta charset="UTF-8"><title>Importing a Hub certificate to Upsource - Help | Upsource</title><link rel="stylesheet" href="//resources.jetbrains.com/storage/help-app/v3/app.css"></head><body data-id="Importing_a_Hub_certificate_to_Upsource"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search Upsource Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>Upsource 2019.1 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="Importing_a_Hub_certificate_to_Upsource" id="Importing_a_Hub_certificate_to_Upsource.xml">Importing a Hub certificate to Upsource</h1>    <p id="e5e3f35c">If your Hub instance is available through HTTPS via a self-signed certificate or a certificate signed by a private CA, you won't be able to connect to Hub because such certificates are not trusted. </p>    <p id="12028e71">Follow this instruction to import a Hub certificate to Upsource and configure the Upsource services running in the cluster to accept it.</p>    <div class="chapter"><h2 id="cf356e87">Prepare keystore.jks containing Hub certificate</h2>        <section class="procedure-steps"><ol class="list _decimal"><li class="list__item" id="2ff54522">                <p id="2937e392">Download your host's certificate from the browser (the instruction is for Google Chrome):</p>                <ul class="list _alpha-lower"><li class="list__item" id="4d16cd35"><p>Open the Hub home page (for instance https://myhub.com)</p></li><li class="list__item" id="acde1bb9"><p>Click the lock icon in the address bar to display information about the host.</p></li><li class="list__item" id="b44308b4"><p>Go to the <span class="control">Connections</span> tab and click <span class="control">Certificate information</span>. A dialog with information about the host's certificate will be displayed.</p></li><li class="list__item" id="8315955f"><p>Go to the <span class="control">Details</span> tab and click the <span class="control">Export...</span> button at the bottom.</p></li><li class="list__item" id="00384092"><p>Save the certificate in the "Base64-encoded ASCII, single certificate" format (let's call it <i id="dd92039a">myhub.com.cer</i></p></li></ul>            </li><li class="list__item" id="a20a24e8">                <p id="9c4fd07b">Create a new keystore and import the certificate into it. Give it a new password (it must be at least 6 characters) and confirm that you trust the certificate. </p>                <div class="code-block" data-lang="bash">
+                    keytool -import -trustcacerts -file myhub.com.cer -alias myhub.com -keystore keystore.jks
+                    Enter keystore password: &lt;keystore password&gt;
+                    Re-enter new password: &lt;keystore password&gt;
+                    ...
+                    &lt;Certificate info shown here&gt;
+                    ...
+                    Trust this certificate? [no]: yes
+                    Certificate was added to keystore
+    </div>            </li></ol></section>    </div>    <div class="chapter"><h2 id="9a9e2dc6">Go through the following steps for each swarm node</h2>        <section class="procedure-steps"><ol class="list _decimal"><li class="list__item" id="da831651">                <p id="223afd4f">Copy the file <i id="2dc7df2d">keystore.jks</i> to every swarm node (let's assume the file is stored on a target node at: <i id="881e1546">/opt/hub/cert/keystore.jks</i>)</p>            </li><li class="list__item" id="b09344d9">                <p id="fc82e7f4">Run the following command: <code class="code">chown -R 13001:13001 /opt/hub/cert</code></p>            </li></ol></section>    </div>    <div class="chapter"><h2 id="05c819d0">Set volumes for all the services (except haproxy):</h2>        <p id="36522951">The following volumes are predefined in the <i id="30928ca8">docker-compose.yml</i> file. You just need to uncomment them, so that the resulting text would look like this: </p>        <div class="code-block" data-lang="bash">
+            analyzer:
+                volumes:
+                - /opt/hub/cert:/opt/upsource-analyzer/conf/cert
+            ...
+            frontend:
+                volumes:
+                - /opt/hub/cert:/opt/upsource-frontend/conf/cert
+            ...
+            psi-broker:
+                volumes:
+                - /opt/hub/cert:/opt/upsource-psi-broker/conf/cert
+            ...
+            opscenter:
+                volumes:
+                - /opt/hub/cert:/opt/upsource-opscenter/conf/cert
+            ...
+            file-clustering:
+            volumes:
+            - /opt/hub/cert:/opt/upsource-file-clustering/conf/cert
+    </div>        <p id="31e0db03">The following volume is predefined in the <i id="fcdebc37">docker-compose-cluster-init.yml</i> file:</p>        <div class="code-block" data-lang="bash">
+            cluster-init:
+                volumes:
+                - /opt/hub/cert:/opt/upsource-cluster-init/conf/cert
+            ...
+    </div>        <p id="df382aaf">An uncommented volume defines the directory on a swarm node the actual <i id="083a2b10">keystore.jks</i> file will be stored in.            If you'd like to store it in a swarm node directory other than the default one (/opt/hub/cert), you will have to replace the default value <i id="d86fecf2">/opt/hub/cert</i> in the uncommented volume definition with the actual directory containing <i id="cc48a553">keystore.jks</i>.</p>    </div>    <div class="chapter"><h2 id="d0821647">Set parameters</h2>        <p id="89b11f71">Set parameters HUB_KEYSTORE_PATH and HUB_KEYSTORE_PASSWORD in <i id="9f396971">upsource.env</i>:</p>        <p id="07a9fa6b"><code class="code">HUB_KEYSTORE_PATH=cert/keystore.jks</code></p>        <p id="0289e534"><code class="code">HUB_KEYSTORE_PASSWORD=&lt;master password from provided keystore should be set here&gt;</code></p>    </div><div class="last-modified" data-skip-index="skip">Last modified: 9 August 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="setting-up-upsource-cluster.html">Setting up Upsource cluster</a><a class="navigation-links__next" href="scaling-upsource-services-in-the-cluster.html">Scaling Upsource services in the cluster</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="//resources.jetbrains.com/storage/help-app/v3/app.js"></script></body></html>

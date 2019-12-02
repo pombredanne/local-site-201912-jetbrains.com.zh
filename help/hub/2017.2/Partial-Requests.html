@@ -1,0 +1,61 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><meta class="swiftype" name="product" data-type="string" content="/hub/2017.2/"><meta charset="UTF-8"><meta name="robots" content="noindex"><title>Partial Requests - Help | Hub</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Partial-Requests"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper" data-swiftype-index="false"><section class="panel _nav" data-swiftype-index="false"><header class="panel__header" data-swiftype-index="false"><div class="container" data-swiftype-index="false"><form class="search-box" data-swiftype-index="false"><label for="search-box__input" class="search-box__label" data-swiftype-index="false"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search Hub Help"></label><div class="search-box__clear" title="Clear" data-swiftype-index="false"></div></form></div></header><nav class="panel__content" data-swiftype-index="false"><div class="container _nav" data-swiftype-index="false"><menu class="nav-tree" data-swiftype-index="false"></menu></div><div class="container _footer panel__footer" data-swiftype-index="false"><p data-swiftype-index="false"><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main" data-swiftype-index="false"><header class="panel__header" data-swiftype-index="false"><div class="container" data-swiftype-index="false"><h3>Hub 2017.2 Help</h3><div class="shortcuts-switcher" data-swiftype-index="false"><label for="switch-shortcuts" data-swiftype-index="false">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1" data-swiftype-index="false"></select></div><div class="panel-trigger" data-swiftype-index="false"></div></div></header><section class="panel__content" data-swiftype-index="false"><div class="container"><article class="article" data-shortcut-switcher="false" data-swiftype-index="true"><div class="navigation-links _top" data-swiftype-index="false"><a class="navigation-links__prev" href="OAuth-2.0-Errors.html" data-swiftype-index="false">OAuth 2.0 Errors</a><a class="navigation-links__next" href="Fields-Syntax.html" data-swiftype-index="false">Fields Syntax</a></div><h1>Partial Requests</h1><a name="d82130e3"></a><p>When you make a request to Hub RESTful API, potentially you may pull the full graph of all Hub objects.       Normally, this is not what is required. By default, Hub API returns only simple fields (for example, strings,       numbers, booleans) of the requested object plus object fields represented by their IDs, URLs, etc. </p><a name="d82130e6"></a><p>For example:</p><a name="d82130e9"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="n">GET</span> <span class="n">http</span><span class="o">:</span><span class="c1">//munit-044:8080/accounts/rest/users/794faf72-ba29-447e-8984-3442207cbebb</span>
+    <span class="o">{</span>
+        <span class="s">&quot;id&quot;</span><span class="o">:</span> <span class="s">&quot;794faf72-ba29-447e-8984-3442207cbebb&quot;</span><span class="o">,</span>
+        <span class="s">&quot;url&quot;</span><span class="o">:</span> <span class="s">&quot;http://munit-044.labs.intellij.net:8080/accounts/rest/users/794faf72-ba29-447e-8984-3442207cbebb&quot;</span><span class="o">,</span>
+        <span class="s">&quot;name&quot;</span><span class="o">:</span> <span class="s">&quot;admin&quot;</span><span class="o">,</span>
+        <span class="s">&quot;banned&quot;</span><span class="o">:</span> <span class="kc">false</span><span class="o">,</span>
+        <span class="s">&quot;avatar&quot;</span><span class="o">:</span> <span class="o">{</span>
+            <span class="s">&quot;pictureUrl&quot;</span><span class="o">:</span> <span class="s">&quot;http://www.gravatar.com/avatar/cc90309659114c3979c9b469f44252e7.jpg&amp;?d=monsterid&amp;s=60&quot;</span>
+        <span class="o">},</span>
+        <span class="s">&quot;roles&quot;</span><span class="o">:</span> <span class="o">[{</span>
+            <span class="s">&quot;id&quot;</span><span class="o">:</span> <span class="s">&quot;12f8c35a-ef03-4304-869d-690315c690e8&quot;</span><span class="o">,</span>
+            <span class="s">&quot;role&quot;</span><span class="o">:</span> <span class="o">{</span>
+                <span class="s">&quot;id&quot;</span><span class="o">:</span> <span class="s">&quot;2d2ae9db-365f-486e-bac8-021af86f1444&quot;</span><span class="o">,</span>
+                <span class="s">&quot;url&quot;</span><span class="o">:</span> <span class="s">&quot;http://munit-044.labs.intellij.net:8080/accounts/rest/roles/2d2ae9db-365f-486e-bac8-021af86f1444&quot;</span><span class="o">,</span>
+                <span class="s">&quot;name&quot;</span><span class="o">:</span> <span class="s">&quot;System Admin&quot;</span>
+            <span class="o">},</span>
+            <span class="s">&quot;project&quot;</span><span class="o">:</span> <span class="o">{</span>
+                <span class="s">&quot;id&quot;</span><span class="o">:</span> <span class="s">&quot;0&quot;</span><span class="o">,</span>
+                <span class="s">&quot;url&quot;</span><span class="o">:</span> <span class="s">&quot;http://munit-044.labs.intellij.net:8080/accounts/rest/projects/0&quot;</span>
+            <span class="o">}</span>
+        <span class="o">}],</span>
+        <span class="s">&quot;contacts&quot;</span><span class="o">:</span> <span class="o">[{</span>
+            <span class="s">&quot;type&quot;</span><span class="o">:</span> <span class="s">&quot;emailJSON&quot;</span><span class="o">,</span>
+            <span class="s">&quot;verified&quot;</span><span class="o">:</span> <span class="kc">false</span><span class="o">,</span>
+            <span class="s">&quot;email&quot;</span><span class="o">:</span> <span class="s">&quot;admin@jetbrains.com&quot;</span>
+        <span class="o">}],</span>
+        <span class="s">&quot;groups&quot;</span><span class="o">:</span> <span class="o">[{</span>
+            <span class="s">&quot;id&quot;</span><span class="o">:</span> <span class="s">&quot;f4495122-993f-4005-b6be-7823f3bcac2d&quot;</span><span class="o">,</span>
+            <span class="s">&quot;url&quot;</span><span class="o">:</span> <span class="s">&quot;http://munit-044.labs.intellij.net:8080/accounts/rest/usergroups/f4495122-993f-4005-b6be-7823f3bcac2d&quot;</span>
+        <span class="o">}],</span>
+        <span class="s">&quot;details&quot;</span><span class="o">:</span> <span class="o">[{</span>
+            <span class="s">&quot;type&quot;</span><span class="o">:</span> <span class="s">&quot;emailuserdetailsJSON&quot;</span><span class="o">,</span>
+            <span class="s">&quot;id&quot;</span><span class="o">:</span> <span class="s">&quot;06cfc5b5-4cce-4aa7-8652-fb9ac1c920ff&quot;</span>
+        <span class="o">}]</span>
+    <span class="o">}</span></code></div><a name="d82130e12"></a><p>To customize the sub-tree that you want to get in the response, use <a name="d82130e14"></a><i id="d82130e14">         <a name="d82130e16"></a><a href="https://developers.google.com/gdata/docs/2.0/basics?csw=1" data-external="true"><span>Google API-like</span></a> partial requests</i>.</p><a name="d82130e21"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="n">GET</span> <span class="n">http</span><span class="o">:</span><span class="c1">//munit-044:8080/accounts/rest/users/794faf72-ba29-447e-8984-3442207cbebb?fields=name,groups/name,contacts(verified,email,jabber)</span>
+    <span class="o">{</span>
+        <span class="s">&quot;name&quot;</span><span class="o">:</span> <span class="s">&quot;admin&quot;</span><span class="o">,</span>
+        <span class="s">&quot;contacts&quot;</span><span class="o">:</span> <span class="o">[{</span>
+            <span class="s">&quot;type&quot;</span><span class="o">:</span> <span class="s">&quot;emailJSON&quot;</span><span class="o">,</span>
+            <span class="s">&quot;verified&quot;</span><span class="o">:</span> <span class="kc">false</span><span class="o">,</span>
+            <span class="s">&quot;email&quot;</span><span class="o">:</span> <span class="s">&quot;admin@jetbrains.com&quot;</span>
+        <span class="o">}],</span>
+        <span class="s">&quot;groups&quot;</span><span class="o">:</span> <span class="o">[{</span>
+            <span class="s">&quot;name&quot;</span><span class="o">:</span> <span class="s">&quot;New Users&quot;</span>
+        <span class="o">}]</span>
+    <span class="o">}</span></code></div><a name="d82130e25"></a><p>Hub client library allows building of partial requests programmatically in the type-safe manner.</p><a name="d82130e28"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="n">UserJSON</span> <span class="n">user</span> <span class="o">=</span> <span class="n">accountsClient</span><span class="o">.</span><span class="na">getUserClient</span><span class="o">().</span><span class="na">getUser</span><span class="o">(</span><span class="n">userId</span><span class="o">,</span>
+      <span class="n">Partial</span><span class="o">.</span><span class="na">user</span><span class="o">(</span>
+        <span class="n">Partial</span><span class="o">.</span><span class="na">User</span><span class="o">.</span><span class="na">NAME</span><span class="o">,</span>
+        <span class="n">Partial</span><span class="o">.</span><span class="na">User</span><span class="o">.</span><span class="na">GROUPS</span><span class="o">(</span>
+          <span class="n">Partial</span><span class="o">.</span><span class="na">UserGroup</span><span class="o">.</span><span class="na">ID</span><span class="o">,</span>
+          <span class="n">Partial</span><span class="o">.</span><span class="na">UserGroup</span><span class="o">.</span><span class="na">NAME</span><span class="o">),</span>
+        <span class="n">Partial</span><span class="o">.</span><span class="na">User</span><span class="o">.</span><span class="na">CONTACTS</span><span class="o">(</span>
+          <span class="n">Partial</span><span class="o">.</span><span class="na">Contact</span><span class="o">.</span><span class="na">VERIFIED</span><span class="o">,</span>
+          <span class="n">Partial</span><span class="o">.</span><span class="na">Email</span><span class="o">.</span><span class="na">EMAIL</span><span class="o">)));</span></code></div><div class="last-modified" data-swiftype-index="false">Last modified: 19 July 2017 </div></article><div id="disqus_thread" data-swiftype-index="false"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

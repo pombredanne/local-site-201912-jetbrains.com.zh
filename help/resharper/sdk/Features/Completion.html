@@ -1,0 +1,283 @@
+
+
+
+<!doctype html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>Code Completion / ReSharper  DevGuide</title>
+    <link rel="stylesheet" href="/help/resharper/sdk/app/app.css">
+    <link rel="shortcut icon" href="/help/resharper/sdk/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="57x57" href="/help/resharper/sdk/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/help/resharper/sdk/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/help/resharper/sdk/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/help/resharper/sdk/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/help/resharper/sdk/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/help/resharper/sdk/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/help/resharper/sdk/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/help/resharper/sdk/apple-touch-icon-180x180.png">
+    <link rel="mask-icon" href="/help/resharper/sdk/apple-mask-icon.svg" color="black">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-square70x70logo" content="/help/resharper/sdk/mstile-70x70.png">
+    <meta name="msapplication-TileImage" content="/help/resharper/sdk/mstile-144x144.png">
+    <meta name="msapplication-square150x150logo" content="/help/resharper/sdk/mstile-150x150.png">
+    <meta name="msapplication-wide310x150logo" content="/help/resharper/sdk/mstile-310x150.png">
+    <meta name="msapplication-square310x310logo" content="/help/resharper/sdk/mstile-310x310.png">
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="Documentation for writing extensions for ReSharper" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.jetbrains.com/help/resharper/sdk//Features/Completion.html" />
+    <meta property="og:site_name" content="JetBrains ReSharper" />
+    <meta property="og:title" content="Code Completion" />
+    <meta property="og:description" content="Documentation for writing extensions for ReSharper" />
+    <meta property="og:image" content="https://www.jetbrains.com/help/resharper/sdk/jetbrains.png" />
+    <meta property="article:modified_time" content="2017-07-10T19:28:42+00:00" />
+    <!-- <meta property="article:section" content="" /> 
+    <meta property="article:tag" content="" /> -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@JBPlatform" />
+    <meta name="twitter:title" content="Code Completion" />
+    <meta name="twitter:description" content="Documentation for writing extensions for ReSharper" />
+    <meta name="twitter:image" content="https://www.jetbrains.com/help/resharper/sdk/jetbrains.png" />
+    <meta class="swiftype" name="product" data-type="string" content="/help/resharper/sdk/"></meta>
+<link  rel="stylesheet" href="/help/resharper/sdk/app/styles.css"></head>
+<body data-id="Features/Completion">
+<div class="wrapper">
+    <section class="panel _nav">
+        <header class="panel__header">
+            <div class="container">
+                <form class="search-box">
+                    <label for="search-box__input" class="search-box__label">
+                        <input type="text" class="search-box__input" id="search-box__input" placeholder="Search ReSharper  DevGuide">
+                    </label>
+                    <div class="search-box__clear" title="Clear"></div>
+                </form>
+            </div>
+        </header>
+        <nav class="panel__content">
+            <div class="container _nav">
+                <menu class="nav-tree"></menu>
+            </div>
+            <div class="container _footer panel__footer">
+                <p><a data-bypass="true" href="//youtrack.jetbrains.com/issues/IJSDK">Send feedback</a></p>
+                <p>&copy; 2000&ndash;2018 <a href="//www.jetbrains.com">JetBrains</a> s.r.o.<br>
+                    All rights reserved.</p>
+            </div>
+        </nav>
+    </section>
+
+    <main class="panel _main" role="main">
+        <header class="panel__header">
+            <div class="container">
+                <h3>ReSharper DevGuide</h3>
+                
+                <div class="panel-trigger"></div>
+            </div>
+        </header>
+        <section class="panel__content">
+            <div class="container">
+                <article class="article" data-shortcut-switcher="false">
+                    <div class="navigation-links _top" data-swiftype-index="false">
+                        <a class="navigation-links__prev" href="/Features/Actions.html">Actions and Menu Items</a>
+                        <a class="navigation-links__next" href="/Features/Refactoring.html">Refactoring</a>
+                    </div>
+                    <a data-bypass="true" href="https://github.com/JetBrains/resharper-devguide/edit/master/Features/Completion.md" class="page-link-to-github" target="_blank" rel="noopener noreferrer" title="Edit this page on GitHub">
+                        <i class="github-icon"></i>
+                        <span class="text">Edit page</span>
+                    </a>
+
+                    <h1>Code Completion</h1>
+                    <p>Just like Visual Studio, ReSharper implements its own form of <em>code completion</em> (which Visual Studio calls IntelliSense) that is used to provide various helpers when typing code. Unlike Visual Studio, however, ReSharper implements three different varieties of code completion that plugin developers need to be aware of. These are:</p>
+
+<ul>
+  <li><strong>Symbol completion</strong>, which is the closest analogy to IntelliSense in terms of operation. This is essentially the mechanism that completes the names of symbol identifiers as they are being typed into the editor. Symbol completion is typically invoked with the <code class="code highlight language-text">Ctrl+Space</code> shortcut.</li>
+  <li><strong>Smart completion</strong> is a code completion mechanism which attempts to narrow down the list of suggested items given the particular context. For example, when calling a method that takes a <code class="code highlight language-text">string</code>, pressing <code class="code highlight language-text">Ctrl+Alt+Space</code> while entering the parameter to the method will present the list of all <code class="code highlight language-text">string</code> typed identifiers available at the current scope.</li>
+  <li><strong>Import symbol completion</strong> is a means of completion that is used to complete identifier names even if such identifiers have not been imported with a <code class="code highlight language-text">using</code> statement. Import symbol completion is invoked with <code class="code highlight language-text">Shift+Alt+Space</code> and lets the user quickly add both the identifier name and a <code class="code highlight language-text">using</code> statement.</li>
+</ul>
+
+<p>Let’s begin our overview of these mechanisms by looking at the root interface of code completion, <code class="code highlight language-text">ICodeCompletionItemsProvider</code>.</p>
+
+<a name="icodecompletionitemsprovider" class="elem-anchor"></a>
+<h2>ICodeCompletionItemsProvider<a href="#icodecompletionitemsprovider" class="anchor-link"><span></span></a></h2>
+
+<p>The <code class="code highlight language-text">ICodeCompletionItemsProvider</code> is an interface for any type that wants to provide code completion information to ReSharper. We won’t discuss its methods, since you’ll most likely be inheriting from a derived abstract class, but what’s important to note here is that all of its methods take as a parameter an <code class="code highlight language-text">ISpecificCodeCompletionContext</code> that is used to make decisions on what completion items are available.</p>
+
+<a name="itemsproviderofspecificcontext" class="elem-anchor"></a>
+<h2>ItemsProviderOfSpecificContext<a href="#itemsproviderofspecificcontext" class="anchor-link"><span></span></a></h2>
+
+<p>Rather than implementing <code class="code highlight language-text">ICodeCompletionItemsProvide</code> directly, it makes more sense to inherit from the <code class="code highlight language-text">ItemsProviderOfSpecificContext&lt;TContext&gt;</code> class. This class is the one that gets inherited by various ReSharper mechanisms. The two most common interface methods that providers override are:</p>
+
+<ul>
+  <li><code class="code highlight language-text">IsAvailable()</code> - this method determines whether the lookup items (i.e., items inserted into the completion list) are in fact added.</li>
+  <li><code class="code highlight language-text">AddLookupItems()</code> is the method that actually adds the items.</li>
+</ul>
+
+<p>Let’s look at these in more detail. First, it’s important to note that the <code class="code highlight language-text">TContext</code> generic parameter that you specify will be the first parameter in both of the above methods. This generic parameter typically relates to the language you’re supporting, so that for example, if you want to support code completion in C#, you would inherit from <code class="code highlight language-text">ItemsProviderOfSpecificContext&lt;CSharpCodeCompletionContext&gt;</code>.</p>
+
+<p>Once you know what context you have, you can begin to use it in the aforementioned methods. For example, when checking if the completion items are available, you can perform a check similar to the following:</p>
+
+<div class="code-block" data-lang="csharp"><code class="code-block__wrapper"><span class="k">protected</span> <span class="k">override</span> <span class="kt">bool</span> <span class="nf">IsAvailable</span><span class="p">(</span><span class="n">CSharpCodeCompletionContext</span> <span class="n">context</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">context</span><span class="p">.</span><span class="n">BasicContext</span><span class="p">.</span><span class="n">CodeCompletionType</span> <span class="p">!=</span> <span class="n">CodeCompletionType</span><span class="p">.</span><span class="n">SmartCompletion</span><span class="p">)</span>
+    <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+
+  <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+<span class="p">}</span>
+</code></div>
+
+<p>The above check ensures that the items are only available if the type of completion is Smart.</p>
+
+<p>The second method, <code class="code highlight language-text">AddLookupItems()</code>, takes two parameters: the smart completion context and a <code class="code highlight language-text">GroupedItemsCollector</code>. The second parameter is of particular importance since it is through this parameter that completion items are provided.</p>
+
+<p>To allow adding of items, <code class="code highlight language-text">GroupedItemsCollector</code> provides a set of methods such as <code class="code highlight language-text">AddToTop()</code> and <code class="code highlight language-text">AddAtDefaultPlace()</code>. All of these methods take an <code class="code highlight language-text">ILookupItem</code> as a parameter. This interface is by itself fairly complicated, but luckily a number of lookup item factories are available in order to facilitate the process in common scenarios. For example, the <code class="code highlight language-text">CSharpCodeCompletionContext</code> class has  a property called <code class="code highlight language-text">LookupItemsFactory</code> which yields an instance of a <code class="code highlight language-text">CSharpLookupItemFactory</code>. You can use this factory to create different lookup items. Putting it all together, here is an example of how you can add a lookup item to a collector:</p>
+
+<div class="code-block" data-lang="csharp"><code class="code-block__wrapper"><span class="k">protected</span> <span class="k">override</span> <span class="kt">bool</span> <span class="nf">AddLookupItems</span><span class="p">(</span><span class="n">CSharpCodeCompletionContext</span> <span class="n">context</span><span class="p">,</span> <span class="n">GroupedItemsCollector</span> <span class="n">collector</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">collector</span><span class="p">.</span><span class="nf">AddAtDefaultPlace</span><span class="p">(</span><span class="n">context</span><span class="p">.</span><span class="n">LookupItemsFactory</span><span class="p">.</span><span class="nf">CreateTextLookupItem</span><span class="p">(</span><span class="s">"true"</span><span class="p">,</span> <span class="s">"bool"</span><span class="p">,</span> <span class="k">true</span><span class="p">));</span>
+<span class="p">}</span>
+</code></div>
+
+<p>The <code class="code highlight language-text">CreateTextLookupItem()</code> method used above simply creates and initializes a <code class="code highlight language-text">TextLookupItem</code> containing specific text.</p>
+
+<a name="csharpitemsproviderbase" class="elem-anchor"></a>
+<h2>CSharpItemsProviderBase<a href="#csharpitemsproviderbase" class="anchor-link"><span></span></a></h2>
+
+<p>If we go off looking down the hierarchy of the <code class="code highlight language-text">ItemsProviderOfSpecificContext</code>, we’ll eventually find language-specific classes such as <code class="code highlight language-text">CSharpItemsProviderBase</code>. This class, which also takes a context generic parameter, is the kind of class that one would actually use to build extensions to code completion.</p>
+
+<p>Here’s a very simple example: let’s suppose that we want to add the string <em>hello</em> as a code completion item to any C# file regardless of the position of the caret. In other words, the option <em>hello</em> will be available practically everywhere. To implement this, we first make a class that inherits from <code class="code highlight language-text">CSharpItemsProviderBase</code>, i.e.,</p>
+
+<div class="code-block" data-lang="csharp"><code class="code-block__wrapper"><span class="na">[Language(typeof(CSharpLanguage))]</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">MyCodeCompletion</span> <span class="p">:</span> <span class="n">CSharpItemsProviderBase</span><span class="p">&lt;</span><span class="n">CSharpCodeCompletionContext</span><span class="p">&gt;</span>
+<span class="p">{</span>
+<span class="p">}</span>
+</code></div>
+
+<p>Then, we override the <code class="code highlight language-text">IsAvailable()</code> method to only allow our code completion item to appear in automatic completion (and not in smart or type symbol completion):</p>
+
+<div class="code-block" data-lang="csharp"><code class="code-block__wrapper"><span class="k">protected</span> <span class="k">override</span> <span class="kt">bool</span> <span class="nf">IsAvailable</span><span class="p">(</span><span class="n">CSharpCodeCompletionContext</span> <span class="n">context</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">return</span> <span class="n">context</span><span class="p">.</span><span class="n">BasicContext</span><span class="p">.</span><span class="n">CodeCompletionType</span> <span class="p">==</span> <span class="n">CodeCompletionType</span><span class="p">.</span><span class="n">AutomaticCompletion</span><span class="p">;</span>
+<span class="p">}</span>
+</code></div>
+
+<p>Finally, we override the <code class="code highlight language-text">AddLookupItems()</code> method and add the simplest possible statement to include the string “hello” in the code completion popup list:</p>
+
+<div class="code-block" data-lang="csharp"><code class="code-block__wrapper"><span class="k">protected</span> <span class="k">override</span> <span class="kt">bool</span> <span class="nf">AddLookupItems</span><span class="p">(</span><span class="n">CSharpCodeCompletionContext</span> <span class="n">context</span><span class="p">,</span> <span class="n">GroupedItemsCollector</span> <span class="n">collector</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">collector</span><span class="p">.</span><span class="nf">AddAtDefaultPlace</span><span class="p">(</span><span class="n">context</span><span class="p">.</span><span class="n">LookupItemsFactory</span><span class="p">.</span><span class="nf">CreateTextLookupItem</span><span class="p">(</span><span class="s">"hello"</span><span class="p">));</span>
+  <span class="k">return</span> <span class="k">base</span><span class="p">.</span><span class="nf">AddLookupItems</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">collector</span><span class="p">);</span>
+<span class="p">}</span>
+</code></div>
+
+<p>And that’s it - you have a code completion provider that adds an extra element when working in C# context.</p>
+
+<a name="generative-completion" class="elem-anchor"></a>
+<h2>Generative Completion<a href="#generative-completion" class="anchor-link"><span></span></a></h2>
+
+<p>One form of code completion that made its appearance in ReSharper 8 is called <em>Generative Completion</em>. The idea of generative copmletion is to use code completion for code generation as a quicker, more direct alternative to, day, the <em>Generate</em> menu.</p>
+
+<p>One very visible example of generative completion is the <code class="code highlight language-text">ctorp</code>, <code class="code highlight language-text">ctorf</code> and <code class="code highlight language-text">ctorfp</code> templates available in C# classes. This completion mechanism is capable of inserting constructors that initialize either all fields of a class, all properties, or both.</p>
+
+<p>The class responsible for providing these items to the code completion mechanisms is called <code class="code highlight language-text">ConstructorRule</code>. Let’s take a look at how it works. This class has two features:</p>
+
+<ul>
+  <li>It is decorated with <code class="code highlight language-text">[Language(typeof(CSharpLanguage))]</code>, indicating that it’s applicable to C# code.</li>
+  <li>It inherits from <code class="code highlight language-text">ItemsProviderOfSpecificContext&lt;CSharpCodeCompletionContext&gt;</code>.</li>
+</ul>
+
+<a name="pre-requisites" class="elem-anchor"></a>
+<h2>Pre-requisites<a href="#pre-requisites" class="anchor-link"><span></span></a></h2>
+
+<p>After inheriting from the aforementioned provider, we can override members to customize what, if anything, gets added to the list of completion items. Before we do that, we can also customize other aspects. For example, we can select which types of completion that we support. For example, the check on the <code class="code highlight language-text">ctor</code> items is similar to the following:</p>
+
+<div class="code-block" data-lang="csharp"><code class="code-block__wrapper"><span class="k">protected</span> <span class="k">override</span> <span class="kt">bool</span> <span class="nf">IsAvailable</span><span class="p">(</span><span class="n">CSharpCodeCompletionContext</span> <span class="n">context</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="kt">var</span> <span class="n">type</span> <span class="p">=</span> <span class="n">context</span><span class="p">.</span><span class="n">BasicContext</span><span class="p">.</span><span class="n">CodeCompletionType</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">type</span> <span class="p">==</span> <span class="n">CodeCompletionType</span><span class="p">.</span><span class="n">AutomaticCompletion</span> <span class="p">||</span>
+      <span class="n">type</span> <span class="p">==</span> <span class="n">CodeCompletionType</span><span class="p">.</span><span class="n">BasicCompletion</span><span class="p">)</span> <span class="k">return</span> <span class="p">!</span><span class="n">context</span><span class="p">.</span><span class="n">IsQualified</span><span class="p">;</span>
+  <span class="k">else</span> <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+<span class="p">}</span>
+</code></div>
+
+<p>The above means that that completion will only work in automatic or basic completion, and that it won’t work if the context is qualified (i.e., <code class="code highlight language-text">foo.ctorp</code> won’t complete).</p>
+
+<a name="checking-the-location" class="elem-anchor"></a>
+<h2>Checking the location<a href="#checking-the-location" class="anchor-link"><span></span></a></h2>
+
+<p>Before adding a completion item, you want to check that you’re in the right location in code. This is likely done in the overridden <code class="code highlight language-text">AddLookupItems</code> method, with the only difference that, unlike in e.g., context actions, you don’t get a context that lets you directly figure out the code element you’re in. Instead, you have to do something like this:</p>
+
+<div class="code-block" data-lang="csharp"><code class="code-block__wrapper"><span class="k">protected</span> <span class="k">override</span> <span class="kt">bool</span> <span class="nf">AddLookupItems</span><span class="p">(</span><span class="n">CSharpCodeCompletionContext</span> <span class="n">context</span><span class="p">,</span> <span class="n">GroupedItemsCollector</span> <span class="n">collector</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">ITreeNode</span> <span class="n">node</span> <span class="p">=</span> <span class="n">TextControlToPsi</span><span class="p">.</span><span class="n">GetElement</span><span class="p">&lt;</span><span class="n">ITreeNode</span><span class="p">&gt;(</span><span class="n">context</span><span class="p">.</span><span class="n">BasicContext</span><span class="p">.</span><span class="n">Solution</span><span class="p">,</span> <span class="n">context</span><span class="p">.</span><span class="n">BasicContext</span><span class="p">.</span><span class="n">TextControl</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">node</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
+    <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+<span class="p">}</span>
+</code></div>
+
+<p>From an <code class="code highlight language-text">ITreeNode</code> you can move up the ranks until something like an <code class="code highlight language-text">IClassBody</code>. Sooner or later, you’ll get to the point where, given applicability, you want to add your completion items. In the case of <code class="code highlight language-text">ctor</code> code completion items, the code looks something like this:</p>
+
+<div class="code-block" data-lang="csharp"><code class="code-block__wrapper"><span class="kt">var</span> <span class="n">item</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">GenerateConstructorLookupItem</span><span class="p">(</span><span class="s">"ctorf"</span><span class="p">,</span> <span class="n">fields</span><span class="p">.</span><span class="n">OfType</span><span class="p">&lt;</span><span class="n">IXmlDocIdOwner</span><span class="p">&gt;(),</span> <span class="n">psiIconManager</span><span class="p">);</span>
+<span class="n">item</span><span class="p">.</span><span class="nf">InitializeRanges</span><span class="p">(</span><span class="n">context</span><span class="p">.</span><span class="n">CompletionRanges</span><span class="p">,</span> <span class="n">context</span><span class="p">.</span><span class="n">BasicContext</span><span class="p">);</span>
+<span class="n">collector</span><span class="p">.</span><span class="nf">AddAtDefaultPlace</span><span class="p">(</span><span class="n">item</span><span class="p">);</span>
+</code></div>
+
+<p>In the above, <code class="code highlight language-text">psiIconManager</code> is a solution component that can be acquired from the solution. At any rate, all that happens is you add the items you want to appear to the <code class="code highlight language-text">collector</code>, so that they are subsequently displayed.</p>
+
+<a name="lookup-item" class="elem-anchor"></a>
+<h2>Lookup Item<a href="#lookup-item" class="anchor-link"><span></span></a></h2>
+
+<p>The lookup item for generative completion is quite simply a class that inherits <code class="code highlight language-text">TextLookupItem</code>, and there is nothing special apart from it aside from the fact that it generates a rather large amount of text. One thing to point out is that generative completion items are typically shown with emphasis:</p>
+
+<div class="code-block" data-lang="csharp"><code class="code-block__wrapper"><span class="k">protected</span> <span class="k">override</span> <span class="n">RichText</span> <span class="nf">GetDisplayName</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">RichText</span> <span class="n">displayName</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">RichText</span><span class="p">(</span><span class="n">myName</span><span class="p">);</span>
+  <span class="n">LookupUtil</span><span class="p">.</span><span class="nf">AddEmphasize</span><span class="p">(</span><span class="n">displayName</span><span class="p">,</span> <span class="k">new</span> <span class="nf">TextRange</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="n">displayName</span><span class="p">.</span><span class="n">Length</span><span class="p">));</span>
+  <span class="k">return</span> <span class="n">displayName</span><span class="p">;</span>
+<span class="p">}</span>
+</code></div>
+
+<p>All the interesting things happen inside the <code class="code highlight language-text">Accept()</code> method override. First of all, the identifier under the caret gets wiped out:</p>
+
+<div class="code-block" data-lang="csharp"><code class="code-block__wrapper"><span class="n">IIdentifier</span> <span class="n">identifierNode</span> <span class="p">=</span> <span class="n">TextControlToPsi</span><span class="p">.</span><span class="n">GetElement</span><span class="p">&lt;</span><span class="n">IIdentifier</span><span class="p">&gt;(</span><span class="n">solution</span><span class="p">,</span> <span class="n">textControl</span><span class="p">);</span>
+<span class="n">IPsiServices</span> <span class="n">psiServices</span> <span class="p">=</span> <span class="n">solution</span><span class="p">.</span><span class="nf">GetPsiServices</span><span class="p">();</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">identifierNode</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">cookie</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">PsiTransactionCookie</span><span class="p">(</span><span class="n">psiServices</span><span class="p">,</span> <span class="n">DefaultAction</span><span class="p">.</span><span class="n">Rollback</span><span class="p">,</span> <span class="s">"RemoveIdentifier"</span><span class="p">))</span>
+  <span class="k">using</span> <span class="p">(</span><span class="k">new</span> <span class="nf">DisableCodeFormatter</span><span class="p">())</span>
+  <span class="p">{</span>
+    <span class="k">using</span> <span class="p">(</span><span class="n">WriteLockCookie</span><span class="p">.</span><span class="nf">Create</span><span class="p">())</span>
+      <span class="n">ModificationUtil</span><span class="p">.</span><span class="nf">DeleteChild</span><span class="p">(</span><span class="n">identifierNode</span><span class="p">);</span>
+    <span class="n">cookie</span><span class="p">.</span><span class="nf">Commit</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="n">psiServices</span><span class="p">.</span><span class="n">Files</span><span class="p">.</span><span class="nf">CommitAllDocuments</span><span class="p">();</span>
+</code></div>
+
+<p>Once this is done, you have a variety of choices. If you’re replicating a <em>Generate</em> item, simply initialize an <code class="code highlight language-text">IGeneratorWorkflow</code> (remember it’s <code class="code highlight language-text">IDisposable</code>), provide the input elements and call <code class="code highlight language-text">GenerateAndFinish()</code> to inject the code.</p>
+
+<p>If, on the other hand, you just want to inject arbitrary code at a particular location, that’s not a problem either. For example, instead of doing <code class="code highlight language-text">ModificationUtil.DeleteChild()</code>, you can create an entirely new construct that you want to inject (using, e.g., <code class="code highlight language-text">CSharpElementFactory</code> and the like) and then simply call <code class="code highlight language-text">ModificationUtil.ReplaceChild()</code> instead.</p>
+
+
+
+                    <div class="navigation-links _bottom" data-swiftype-index="false">
+                        <a class="navigation-links__prev" href="/Features/Actions.html">Actions and Menu Items</a>
+                        <a class="navigation-links__next" href="/Features/Refactoring.html">Refactoring</a>
+                    </div>
+                    <div class="last-modified">
+                        Last modified: 10 July 2017
+                    </div>
+                </article>
+
+                <section class="disqus">
+                    <div id="disqus_thread"></div>
+                </section>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="/help/resharper/sdk/app/app.js" data-baseurl="/help/resharper/sdk/"></script>
+
+</body>
+</html>
+

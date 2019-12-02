@@ -1,0 +1,58 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta charset="UTF-8"><meta content="noindex" name="robots"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="//resources.jetbrains.com/storage/help-app/v3/analytics.js"></script><title>Quickly create a type - Help | ReSharper</title><link rel="stylesheet" href="//resources.jetbrains.com/storage/help-app/v3/app.css"></head><body data-id="Quickly_create_a_type" data-breadcrumbs="Getting_Started.xml|Getting Started and Tutorials/Cookbook.xml|ReSharper Cookbook/Quickly_create_a_type.xml|Quickly create a type" data-main-title="Quickly create a type" data-article-props="&#xA;                {&#xA;                &#xA;            &#34;seeAlso&#34;:[&#xA;            &#xA;                {&#34;title&#34;: &#34;Procedures&#34;,&#xA;                 &#34;links&#34;: [&#xA;                &#xA;        {&#34;url&#34;:&#34;Generating_Type_Members.html&#34;,&#34;text&#34;:&#34;Generate Type Members&#34;}&#xA;    ,&#xA;        {&#34;url&#34;:&#34;Code_Generation__Type_Constructors.html&#34;,&#34;text&#34;:&#34;Generate Type Constructors&#34;}&#xA;    ,&#xA;        {&#34;url&#34;:&#34;Code_Generation__Equality_Members.html&#34;,&#34;text&#34;:&#34;Generate Equality Members&#34;}&#xA;    ,&#xA;        {&#34;url&#34;:&#34;Code_Generation__Formatting_Members.html&#34;,&#34;text&#34;:&#34;Generate Formatting Members&#34;}&#xA;    &#xA;                    ]},&#xA;                {&#34;title&#34;: &#34;External Links&#34;,&#xA;                 &#34;links&#34;: [&#xA;                &#xA;        {&#34;url&#34;:&#34;http://stackoverflow.com/questions/371328/why-is-it-important-to-override-gethashcode-when-equals-method-is-overridden&#34;,&#34;text&#34;:&#34;StackOverflow: Why is it important to override GetHashCode when Equals method is overridden?&#34;}&#xA;    &#xA;                    ]}&#xA;            ]&#xA;        &#xA;                }&#xA;            " data-disqus-id="Quickly_create_a_type_10"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search ReSharper Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>ReSharper 2019.3 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="secondary" value="rs">ReSharper 2.x/IntelliJ IDEA</option><option data-group="primary" value="vs">Visual Studio</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="active"><h1 data-toc="Quickly_create_a_type" id="Quickly_create_a_type.xml">Quickly create a type</h1>    <p id="c5951815">        In this tutorial, we create a type with a standard set of methods.    </p>    <p id="1b331c24">        Creating types or entities in C# can be quite difficult. After all, how many of us remember by hand the correct        implementation of        <code class="code">Equals()</code>? Luckily, ReSharper is there to help. Let’s take a look.    </p>    <p id="ec9110c3">        First, let’s define the simplest possible entity class called        <code class="code">Person</code>, which will store a person’s name and age:    </p><div class="code-block" data-lang="csharp">
+public class Person
+{
+  public string Name { get; set; }
+  public int Age { get; set; }
+}
+</div>    <div class="chapter"><h2 id="1-generate-constructor" data-toc="Quickly_create_a_type#1-generate-constructor">1. Generate constructor</h2>        <p id="4336237f">            As it stands, initialization of this class is painful because it has no constructor.            Let’s make one by using the            <a href="Generating_Type_Members.html">Generate Code</a> command <kbd data-rs="Alt+Insert" data-vs="Alt+Insert">Alt+Insert</kbd>.            First, let’s fire it up over the class and choose            <span class="control">Constructor</span>:        </p>        <figure><img alt="ReSharper: Generate constructor" title="ReSharper: Generate constructor" src="/help/img/dotnet/2019.3/cookbook_create_type.png" id="4ea4540e" width="277" height="286"></figure>        <p id="d18bed45">            Now, we are presented with the dialog asking us which properties to initialize. Let’s pick all of them.        </p>        <figure><img alt="ReSharper: Generate constructor" title="ReSharper: Generate constructor" src="/help/img/dotnet/2019.3/cookbook_create_type1.png" id="9a6ffd64" width="466" height="400"></figure>        <p id="22424269">            And after pressing            <span class="control">Finish</span>, our class ends up with a generated constructor:        </p>    <div class="code-block" data-lang="csharp">
+public Person(string name, int age)
+{
+  Name = name;
+  Age = age;
+}
+    </div>    </div>    <div class="chapter"><h2 id="2-generate-equality-members" data-toc="Quickly_create_a_type#2-generate-equality-members">2. Generate equality members</h2>        <p id="cf18c119">            Say we want to keep            <code class="code">Person</code>            instances in a            <code class="code">HashSet&lt;Person&gt;</code> collection. To do this, we need to implement            <code class="code">Equals()</code>            and            <code class="code">GetHashCode()</code>. Once again, ReSharper helps us with            this – we invoke the            <span class="control">Generate</span> command once again, and choose            <span class="control">Equality members</span>. The following dialog shows up:        </p>        <figure><img alt="ReSharper: Generating equality members" title="ReSharper: Generating equality members" src="/help/img/dotnet/2019.3/cookbook_create_type2.png" id="32b946d1" width="501" height="400"></figure>        <p id="2d0da119">            Choosing the option to generate both the equality operators (<code class="code">==</code>            and            <code class="code">!=</code>) as well as an implementation of            <code class="code">IEquatable&lt;T&gt;</code>, ReSharper generates the following code:        </p>        <div class="code-block" data-lang="csharp">
+public bool Equals(Person other)
+{
+  if (ReferenceEquals(null, other)) return false;
+  if (ReferenceEquals(this, other)) return true;
+  return string.Equals(Name, other.Name) &amp;&amp; Age == other.Age;
+}
+
+public override bool Equals(object obj)
+{
+  if (ReferenceEquals(null, obj)) return false;
+  if (ReferenceEquals(this, obj)) return true;
+  if (obj.GetType() != this.GetType()) return false;
+  return Equals((Person) obj);
+}
+
+public override int GetHashCode()
+{
+  unchecked
+  {
+    return ((Name != null ? Name.GetHashCode() : 0)*397) ^ Age;
+  }
+}
+
+public static bool operator ==(Person left, Person right)
+{
+  return Equals(left, right);
+}
+
+public static bool operator !=(Person left, Person right)
+{
+  return !Equals(left, right);
+}
+</div>    </div>    <div class="chapter"><h2 id="3-generate-formatting-members" data-toc="Quickly_create_a_type#3-generate-formatting-members">3. Generate formatting members</h2>        <p id="f924a3b1">            Now, we would also like to get an implementation of the            <code class="code">ToString()</code>            method for some logging and debugging.            Once again, the            <span class="control">Generate</span> menu is here. We choose            <span class="control">Formatting members</span>            from the menu, pick the properties we want to appear in            <code class="code">ToString()</code>, and voila - ReSharper generates the following implementation:        </p><div class="code-block" data-lang="csharp">
+public override string ToString()
+{
+  return string.Format("Name: {0}, Age: {1}", Name, Age)
+}
+</div>    </div>    <div class="last-modified" data-skip-index="skip">Last modified: 28 November 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="Move_classes_into_separate_files_in_one_go.html">Move classes into separate files in one go</a><a class="navigation-links__next" href="Quickly_internationalize_a_NET_application.html">Quickly internationalize a .NET application</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="//resources.jetbrains.com/storage/help-app/v3/app.js"></script></body></html>

@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+                                            
+        <!-- Error reporting -->
+<script>(function(){
+  window.reportError = function(msg, file, line, col, err, isUnhandledRejection){};
+  var prevOnError = window.onerror;
+  var onError = function(msg, file, line, col, err) {
+    reportError(msg, file, line, col, err, false);
+    prevOnError && prevOnError.apply(window, arguments);
+    return false;
+  };
+  window.onerror = onError;
+  // Setup reporting for unhandled Promise rejection errors
+  window.addEventListener("unhandledrejection", function(e) {
+    if (!e.reason) return;
+    var l = getSrcLocation(e.reason);
+    reportError(e.reason.message, l.file, l.line, l.col, e.reason, true);
+  });
+  // Setup reporting for console.error and console.warn calls
+  patchConsole('error');
+  patchConsole('warn');
+  // Utility functions
+  function patchConsole(fnName) {
+    var fn = console[fnName];
+    console[fnName] = function() {
+      fn.apply(console, arguments);
+      var l; try {
+        throw new Error('_');
+      } catch (err) {
+        l = getSrcLocation(err, 1);
+      }
+      var msg = 'console.' + fnName + ': ' + Array.prototype.join.call(arguments, ' ');
+      reportError(msg, l.file, l.line, l.col, undefined, false);
+    };
+  }
+  function getSrcLocation(err, sd) {
+    var s = err && err.stack;
+    var l = s && s.split("\n")[1 + (sd|0)];
+    var r = l && (/^\s*at [^(]*\((.*?):(\d+)(:\d+)?\)$/.exec(l) || /^\s*at (.*?):(\d+)(:\d+)?$/.exec(l));
+    return r ? {file: r[1], line: r[2], col: r[3]} : {};
+  }
+})();</script>
+<!-- Error reporting -->        <!-- Google Tag Manager -->
+<script>(function() {
+  // Initialize Tag Manager queue
+  window.dataLayer = window.dataLayer || [];
+  window.gtmLoaded = false;
+  // Setup reporting for errors that occurred before Tag Manager initialized
+  var prevReportError = window.reportError;
+  var reportError = function(msg, file, line, col, err, isUnhandledRejection) {
+    if (!window.gtmLoaded || isUnhandledRejection) {
+      // Reproduce the behavior of the Tag Manager error handler
+      window.dataLayer.push(makeEvt(msg, file, line));
+    }
+    prevReportError && prevReportError.apply(window, arguments);
+  };
+  window.reportError = reportError;
+  // Utility functions
+  function makeEvt(msg, file, line) {
+    return {
+      event: "gtm.pageError", "gtm.errorMessage": msg,
+      "gtm.errorUrl": file, "gtm.errorLineNumber": line
+    };
+  }
+})();</script>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;j.addEventListener(
+    'load', function(){window.gtmLoaded=true});f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5P98');</script>
+<!-- End Google Tag Manager -->        <!-- Sentry -->
+<script>
+    (function() {
+        window.sentryLoaded = false;
+        window.errorsForSentry = [];
+        var prevReportError = window.reportError;
+        var reportError = function(
+            msg,
+            file,
+            line,
+            col,
+            err,
+            isUnhandledRejection
+        ) {
+            if (!window.sentryLoaded) {
+                window.errorsForSentry.push(err);
+            }
+            prevReportError && prevReportError.apply(window, arguments);
+        };
+        window.reportError = reportError;
+    })();
+</script>
+<script>
+    window.sentryLoad = function() {
+        window.sentryLoaded = true;
+        Sentry.init({
+            dsn: 'https://1adb2a61713144eda0786e5af50ddc51@sentry.io/1423069',
+            release:
+                "jetbrainscom@a6ccaa6ddb",
+            beforeSend: function(event) {
+                Object.keys(event).forEach(function(key) {
+                    var value = event[key];
+                    if (isEmail(value)) {
+                        delete event[key];
+                    }
+                });
+                return event;
+            }
+        });
+        Sentry.configureScope(function(scope) {
+            scope.setTag('page_locale', 'en-us');
+            scope.setTag('browser.locale', getPageLocale());
+
+            scope.setTag('http.urlFull', location.href);
+            var protocol = location.protocol || '';
+            //omit `:` from location.protocol string
+            var protocolString = protocol.substring(0, protocol.length - 1);
+
+            scope.setTag('http.protocol', protocolString);
+
+            scope.setTag('http.hostname', location.hostname);
+
+            var search = location.search || '';
+            //omit ? from location.search string
+            var searchString = search.substr(1);
+            if (searchString !== '') {
+                scope.setTag('http.query', searchString || '1');
+            }
+            var hash = location.hash || '';
+            //omit # from location.hash string
+            var hashString = hash.substr(1);
+            if (hashString !== '') {
+                scope.setTag('http.fragment', hashString);
+            }
+        });
+        window.errorsForSentry.forEach(Sentry.captureException);
+
+        function getPageLocale() {
+            return (
+                (navigator.languages && navigator.languages[0]) ||
+                navigator.language
+            );
+        }
+        function isEmail(value) {
+            var emailRegex = /[\+\-\_\.a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+\.[a-zA-Z0-9]+/g;
+            return emailRegex.test(value);
+        }
+    };
+</script>
+<script src="https://browser.sentry-cdn.com/5.7.1/bundle.min.js" crossorigin="anonymous" onload="sentryLoad()" async></script>
+<!-- End Sentry -->    
+                <title>Purchase Terms - JetBrains</title>
+    
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, maximum-scale=1">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#000000">
+<meta name="apple-mobile-web-app-title" content="JetBrains">
+<meta name="application-name" content="JetBrains">
+<meta name="msapplication-TileColor" content="#000000">
+<meta name="theme-color" content="#000000">    <link rel="canonical" href="https://www.jetbrains.com/store/terms/" />    <!-- .61-->
+                
+        
+                    <meta name="description" content="JetBrains is a cutting-edge software vendor specializing in the creation of intelligent development tools, including IntelliJ IDEA – the leading Java IDE, and the Kotlin programming language."/>
+            <meta name="keywords" content="JetBrains, IntelliJ, IntelliJ IDEA, java, Java IDE, C#, .NET, refactoring, productivity, Visual Studio plugins, developer productivity tools."/>
+            
+        <link rel="alternate" hreflang="x-default" href="https://www.jetbrains.com/store/terms/" />
+
+                        <link rel="alternate" hreflang="en" href="https://www.jetbrains.com/store/terms/" />
+                                                                                                                        
+    
+    
+        
+    
+    
+    <script>
+        var current_lang = 'en-us';
+                                    var i18n_info = {"current_lang": "en-us", "languages": [{"canonical": "en", "code": "en-us", "label": "English", "page_translated": true, "url": "/store/terms/"}, {"canonical": "de", "code": "de-de", "label": "Deutsch", "page_translated": false, "url": "/de-de/store/terms/"}, {"canonical": "es", "code": "es-es", "label": "Espa\u00f1ol", "page_translated": false, "url": "/es-es/store/terms/"}, {"canonical": "fr", "code": "fr-fr", "label": "Fran\u00e7ais", "page_translated": false, "url": "/fr-fr/store/terms/"}, {"canonical": "ja", "code": "ja-jp", "label": "\u65e5\u672c\u8a9e", "page_translated": false, "url": "/ja-jp/store/terms/"}, {"canonical": "ko", "code": "ko-kr", "label": "\ud55c\uad6d\uc5b4", "page_translated": false, "url": "/ko-kr/store/terms/"}, {"canonical": "ru", "code": "ru-ru", "label": "\u0420\u0443\u0441\u0441\u043a\u0438\u0439", "page_translated": false, "url": "/ru-ru/store/terms/"}, {"canonical": "zh-CN", "code": "zh-cn", "label": "\u7b80\u4f53\u4e2d\u6587", "page_translated": false, "url": "/zh-cn/store/terms/"}, {"canonical": "pt-BR", "code": "pt-br", "label": "Portugu\u00eas do Brasil", "page_translated": false, "url": "/pt-br/store/terms/"}, {"canonical": "x-klingon", "code": "tl-aa", "label": "tlhIngan Hol", "page_translated": false, "url": "/tl-aa/store/terms/"}]};
+                            var navigationMenu = {"primary": {"id": "main_v2", "items": [{"id": "tools", "title": "Tools", "descriptionTitle": "Toolbox App", "descriptionLogoId": "toolbox", "descriptionLink": "Learn more", "descriptionUrl": "/toolbox-app/", "description": "Manage your tools the easy way", "src": "/img/banners-menu-main/toolbox-vertical.png", "horisontalSrc": "/img/banners-menu-main/toolbox-horisontal.png", "bgColor": "#3E0598", "isVisible": true, "hasCategories": true, "items": [{"title": "IDEs", "items": [{"isActive": false, "id": "appcode", "title": "AppCode", "url": "/objc/", "logoLeftActionId": "appcode", "items": [], "cleaned_url": "/objc/"}, {"isActive": false, "id": "clion", "title": "CLion", "url": "/clion/", "logoLeftActionId": "clion", "items": [], "cleaned_url": "/clion/"}, {"isActive": false, "id": "datalore", "title": "Datalore", "url": "https://datalore.io/", "isExternalLink": true, "logoLeftActionId": "datalore", "items": [], "cleaned_url": "https://datalore.io/"}, {"isActive": false, "id": "datagrip", "title": "DataGrip", "url": "/datagrip/", "logoLeftActionId": "datagrip", "items": [], "cleaned_url": "/datagrip/"}, {"isActive": false, "id": "goland", "title": "GoLand", "url": "/go/", "logoLeftActionId": "goland", "items": [], "cleaned_url": "/go/"}, {"isActive": false, "id": "idea", "title": "IntelliJ IDEA", "url": "/idea/", "logoLeftActionId": "intellij-idea", "items": [], "cleaned_url": "/idea/"}, {"isActive": false, "id": "phpstorm", "title": "PhpStorm", "url": "/phpstorm/", "logoLeftActionId": "phpstorm", "items": [], "cleaned_url": "/phpstorm/"}, {"isActive": false, "id": "pycharm", "title": "PyCharm", "url": "/pycharm/", "logoLeftActionId": "pycharm", "items": [], "cleaned_url": "/pycharm/"}, {"isActive": false, "id": "rider", "title": "Rider", "url": "/rider/", "logoLeftActionId": "rider", "items": [], "cleaned_url": "/rider/"}, {"isActive": false, "id": "rubymine", "title": "RubyMine", "url": "/ruby/", "logoLeftActionId": "rubymine", "items": [], "cleaned_url": "/ruby/"}, {"isActive": false, "id": "webstorm", "title": "WebStorm", "url": "/webstorm/", "logoLeftActionId": "webstorm", "items": [], "cleaned_url": "/webstorm/"}, {"isActive": false, "id": "toolbox", "type": "special", "title": "Toolbox App", "url": "/toolbox-app/", "logoLeftId": "toolbox", "description": "A control panel for your tools and projects", "items": [], "cleaned_url": "/toolbox-app/"}]}, {"title": ".NET & VISUAL STUDIO", "items": [{"isActive": false, "id": "resharper", "title": "ReSharper", "url": "/resharper/", "logoLeftActionId": "resharper", "items": [], "cleaned_url": "/resharper/"}, {"isActive": false, "id": "rider", "title": "Rider", "url": "/rider/", "logoLeftActionId": "rider", "items": [], "cleaned_url": "/rider/"}, {"isActive": false, "id": "resharper-cpp", "title": "ReSharper C++", "url": "/resharper-cpp/", "logoLeftActionId": "resharper-cpp", "items": [], "cleaned_url": "/resharper-cpp/"}, {"isActive": false, "id": "dotcover", "title": "dotCover", "url": "/dotcover/", "logoLeftActionId": "dotcover", "items": [], "cleaned_url": "/dotcover/"}, {"isActive": false, "id": "dotmemory", "title": "dotMemory", "url": "/dotmemory/", "logoLeftActionId": "dotmemory", "items": [], "cleaned_url": "/dotmemory/"}, {"isActive": false, "id": "dotpeek", "title": "dotPeek", "url": "/decompiler/", "logoLeftActionId": "dotpeek", "items": [], "cleaned_url": "/decompiler/"}, {"isActive": false, "id": "dottrace", "title": "dotTrace", "url": "/profiler/", "logoLeftActionId": "dottrace", "items": [], "cleaned_url": "/profiler/"}]}, {"title": "TEAM TOOLS", "items": [{"isActive": false, "id": "teamcity", "title": "TeamCity", "url": "/teamcity/", "logoLeftActionId": "teamcity", "items": [], "cleaned_url": "/teamcity/"}, {"isActive": false, "id": "upsource", "title": "Upsource", "url": "/upsource/", "logoLeftActionId": "upsource", "items": [], "cleaned_url": "/upsource/"}, {"isActive": false, "id": "youtrack", "title": "YouTrack", "url": "/youtrack/", "logoLeftActionId": "youtrack", "items": [], "cleaned_url": "/youtrack/"}, {"isActive": false, "id": "hub", "title": "Hub", "url": "/hub/", "logoLeftActionId": "hub", "items": [], "cleaned_url": "/hub/"}]}, {"title": "PLUGIN MARKETPLACE", "items": [{"isActive": false, "id": "bigdata", "title": "Big Data Tools", "url": "https://plugins.jetbrains.com/plugin/12494-big-data-tools", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/plugin/12494-big-data-tools"}, {"isActive": false, "id": "rustsupport", "title": "Rust", "url": "https://plugins.jetbrains.com/plugin/8182-rust", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/plugin/8182-rust"}, {"isActive": false, "id": "scalaplugin", "title": "Scala", "url": "https://plugins.jetbrains.com/plugin/1347-scala", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/plugin/1347-scala"}, {"isActive": false, "id": "idethemes", "title": "IDE Themes", "url": "https://plugins.jetbrains.com/search?tags=Theme", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/search?tags=Theme"}, {"isActive": false, "id": "plugins", "title": "All Plugins", "url": "https://plugins.jetbrains.com/", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/"}]}, {"title": "EDUCATION", "items": [{"isActive": false, "id": "pycharm-edu", "title": "PyCharm Edu", "url": "/education/", "urlHash": "#lang=python&role=learner", "logoLeftActionId": "pycharm-edu", "items": [], "cleaned_url": "/education/"}, {"isActive": false, "id": "idea-edu", "title": "IntelliJ IDEA Edu", "url": "/education/", "urlHash": "#lang=java&role=learner", "logoLeftActionId": "intellij-idea", "items": [], "cleaned_url": "/education/"}, {"isActive": false, "id": "jb-academy", "title": "JB Academy", "url": "/academy/", "items": [], "cleaned_url": "/academy/"}]}]}, {"id": "languages", "title": "Languages", "descriptionTitle": "Kotlin/Everywhere", "descriptionLogoId": "header-kotlin-everywhere", "descriptionLink": "Join in!", "descriptionUrl": "//everywhere.kotlinlang.org", "description": "A worldwide event series for learning the best Kotlin practices on all platforms", "descriptionBig": true, "src": "/img/banners-menu-main/kotlin-vertical.png", "horisontalSrc": "/img/banners-menu-main/kotlin-horisontal.png", "bgColor": "#D6721C", "isExternalLink": true, "isVisible": true, "hasCategories": false, "items": [{"isActive": false, "id": "kotlin", "title": "Kotlin", "url": "https://kotlinlang.org/", "isExternalLink": true, "logoLeftId": "header-kotlin-grayscale", "logoLeftActionId": "kotlin", "logoLeftSize": "50", "description": "Programming language \n for JVM & Android", "items": [], "cleaned_url": "https://kotlinlang.org/"}, {"isActive": false, "id": "mps", "title": "MPS", "url": "/mps/", "logoLeftId": "header-mps-grayscalse", "logoLeftActionId": "mps", "logoLeftSize": "50", "description": "Create your own domain-specific language", "items": [], "cleaned_url": "/mps/"}]}, {"id": "solutions", "title": "Solutions", "descriptionTitle": "JetBrains Academy", "descriptionLogoId": "academy-logo", "descriptionLink": "Join in!", "descriptionUrl": "/academy", "description": "An educational platform for future professionals", "src": "/img/banners-menu-main/academy-vertical.png", "horisontalSrc": "/img/banners-menu-main/academy-horisontal.png", "bgColor": "#53288E", "hasCategories": false, "isVisible": true, "items": [{"isActive": false, "title": "C++ Tools", "url": "/cpp/", "logoLeftId": "header-cpp-grayscale", "logoLeftActionId": "header-cpp", "description": "Tools for C/C++ development \nfor any platform", "items": [], "cleaned_url": "/cpp/"}, {"isActive": false, "title": "For Business", "url": "/store/business/", "logoLeftId": "header-for-business-grayscale", "logoLeftActionId": "header-for-business", "description": "Wide range of tools. \nAll major technologies covered", "items": [], "cleaned_url": "/store/business/"}, {"isActive": false, "title": "Game Development", "url": "/gamedev/", "logoLeftId": "header-gamedev-grayscale", "logoLeftActionId": "header-gamedev", "description": "Tools for game development \nfor any platform", "items": [], "cleaned_url": "/gamedev/"}, {"isActive": false, "title": "DevOps", "url": "/devops/", "logoLeftId": "header-devops-grayscale", "logoLeftActionId": "header-devops", "description": "Tools and integrations \nfor any infrastructure", "items": [], "cleaned_url": "/devops/"}, {"isActive": false, "title": "Education", "url": "/education/", "logoLeftId": "header-education-grayscale", "logoLeftActionId": "header-education", "description": "Products to learn and teach programming", "items": [], "cleaned_url": "/education/"}]}, {"id": "support", "title": "Support", "description": "Pricing and licensing for businesses and individuals", "descriptionTitle": "JetBrains Store", "descriptionLogoId": "header-store", "descriptionUrl": "/store/?fromMenu#edition=commercial", "descriptionLink": "visit store", "isVisible": true, "hasCategories": true, "items": [{"title": "CUSTOMERS", "items": [{"isActive": false, "title": "Sales Support", "url": "/support/sales/", "description": "Orders, payments", "items": [], "cleaned_url": "/support/sales/"}, {"isActive": false, "title": "Product Support", "url": "/support/", "description": "Tech support, documentation", "items": [], "cleaned_url": "/support/"}]}, {"title": "COMMUNITY PROGRAMS", "items": [{"isActive": false, "title": "Education", "url": "/community/education/", "description": "Students, classrooms, training", "items": [], "cleaned_url": "/community/education/"}, {"isActive": false, "title": "Open Source", "url": "/community/opensource/", "description": "Projects support", "items": [], "cleaned_url": "/community/opensource/"}, {"isActive": false, "title": "Sponsorship", "url": "/community/support/", "description": "User groups, events, technology experts", "items": [], "cleaned_url": "/community/support/"}]}]}, {"id": "company", "title": "Company", "isVisible": true, "hasCategories": true, "items": [{"title": "INITIATIVES", "items": [{"isActive": false, "title": "Open Source", "url": "/opensource/", "description": "Projects, contributions", "items": [], "cleaned_url": "/opensource/"}, {"isActive": false, "title": "Research", "url": "/research/", "description": "Market, Scientific", "items": [], "cleaned_url": "/research/"}]}, {"title": "COMPANY", "items": [{"isActive": false, "title": "About", "url": "/company/", "description": "People, customers, awards", "items": [], "cleaned_url": "/company/"}, {"isActive": false, "title": "Brand Assets", "url": "/company/brand/", "description": "Guidelines, logos", "items": [], "cleaned_url": "/company/brand/"}, {"isActive": false, "title": "Careers", "url": "/careers/apply/", "description": "Jobs, internships", "items": [], "cleaned_url": "/careers/apply/"}, {"isActive": false, "title": "Events", "url": "/company/events/", "description": "Conferences, meetups", "items": [], "cleaned_url": "/company/events/"}, {"isActive": false, "title": "Contacts", "url": "/company/contacts/", "description": "Partners, resellers, Kotlin training", "items": [], "cleaned_url": "/company/contacts/"}]}, {"title": "RESOURCES", "items": [{"isActive": false, "title": "Newsletters", "url": "/resources/newsletters/", "items": [], "cleaned_url": "/resources/newsletters/"}, {"isActive": false, "title": "Webinars", "url": "/resources/webinars/", "items": [], "cleaned_url": "/resources/webinars/"}, {"isActive": false, "title": "Early Access", "url": "/resources/eap/", "items": [], "cleaned_url": "/resources/eap/"}, {"isActive": false, "title": "Blog", "url": "//blog.jetbrains.com/", "isExternalLink": true, "items": [], "cleaned_url": "//blog.jetbrains.com/"}]}]}, {"isActive": false, "id": "store", "url": "/store/?fromNavMenu", "title": "Store", "isVisible": true, "hasCategories": false, "items": [], "cleaned_url": "/store/?fromNavMenu"}]}, "secondary": {"isActive": true, "id": "sales-support", "url": "/support/sales/", "title": "Sales Support", "items": [{"isActive": false, "title": "Contact Sales", "url": "/support/sales/", "items": [], "cleaned_url": "/support/sales/"}, {"isActive": true, "title": "Purchase Terms", "url": "/store/terms/", "items": [{"isActive": true, "title": "Available Subscription Options", "url": "/store/terms/index.html", "items": [], "cleaned_url": "/store/terms/"}, {"isActive": false, "title": "Available Subscription Options", "url": "/store/terms/comparison.html", "items": [], "cleaned_url": "/store/terms/comparison.html"}], "cleaned_url": "/store/terms/"}, {"isActive": false, "title": "FAQ", "url": "//sales.jetbrains.com", "items": [], "cleaned_url": "//sales.jetbrains.com"}], "cleaned_url": "/support/sales/"}};
+        
+        var is_layout_adaptive = false;
+        
+        var disable_language_picker = false;
+        
+        var english_only_url_prefixes = [];
+            </script>
+    
+            <script></script>
+    
+        
+    
+            <link href="/_assets/common.d44d81f300d3bff87efe.css" rel="stylesheet" type="text/css">
+<link href="/_assets/default-page.fabf52db4bf34ea78af0.css" rel="stylesheet" type="text/css">
+        <script src="/_assets/common.34604685b633d15ae3ed.js" type="text/javascript"></script>
+<script src="/_assets/default-page.2e180fc15a6b94fe7fa3.js" type="text/javascript"></script>
+    
+            <!-- Social Media tag Starts -->
+    <!-- Open Graph data -->
+            <meta property="og:title" content="Purchase Terms - JetBrains"/>
+    
+                    <meta property="og:description" content="JetBrains is a cutting-edge software vendor specializing in the creation of intelligent development tools, including IntelliJ IDEA – the leading Java IDE, and the Kotlin programming language."/>
+    <meta property="og:image" content="http://resources.jetbrains.com/storage/products/jetbrains/img/meta/jetbrains_1280x800.png"/>
+
+    <meta property="og:site_name" content="JetBrains"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="https://www.jetbrains.com/store/terms/"/>
+    <!-- Social Media tag Ends -->
+</head>
+
+<body class="nojs body-adaptive ">
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<script>
+/*! modernizr 3.2.0 (Custom Build) | MIT *
+ * http://modernizr.com/download/?-flexbox-flexboxtweener !*/
+!function(e,n,t){function r(e,n){return typeof e===n}function o(){var e,n,t,o,i,s,l;for(var f in v)if(v.hasOwnProperty(f)){if(e=[],n=v[f],n.name&&(e.push(n.name.toLowerCase()),n.options&&n.options.aliases&&n.options.aliases.length))for(t=0;t<n.options.aliases.length;t++)e.push(n.options.aliases[t].toLowerCase());for(o=r(n.fn,"function")?n.fn():n.fn,i=0;i<e.length;i++)s=e[i],l=s.split("."),1===l.length?Modernizr[l[0]]=o:(!Modernizr[l[0]]||Modernizr[l[0]]instanceof Boolean||(Modernizr[l[0]]=new Boolean(Modernizr[l[0]])),Modernizr[l[0]][l[1]]=o),C.push((o?"":"no-")+l.join("-"))}}function i(e,n){return!!~(""+e).indexOf(n)}function s(e){return e.replace(/([a-z])-([a-z])/g,function(e,n,t){return n+t.toUpperCase()}).replace(/^-/,"")}function l(e,n){return function(){return e.apply(n,arguments)}}function f(e,n,t){var o;for(var i in e)if(e[i]in n)return t===!1?e[i]:(o=n[e[i]],r(o,"function")?l(o,t||n):o);return!1}function a(e){return e.replace(/([A-Z])/g,function(e,n){return"-"+n.toLowerCase()}).replace(/^ms-/,"-ms-")}function u(){return"function"!=typeof n.createElement?n.createElement(arguments[0]):b?n.createElementNS.call(n,"http://www.w3.org/2000/svg",arguments[0]):n.createElement.apply(n,arguments)}function d(){var e=n.body;return e||(e=u(b?"svg":"body"),e.fake=!0),e}function p(e,t,r,o){var i,s,l,f,a="modernizr",p=u("div"),c=d();if(parseInt(r,10))for(;r--;)l=u("div"),l.id=o?o[r]:a+(r+1),p.appendChild(l);return i=u("style"),i.type="text/css",i.id="s"+a,(c.fake?c:p).appendChild(i),c.appendChild(p),i.styleSheet?i.styleSheet.cssText=e:i.appendChild(n.createTextNode(e)),p.id=a,c.fake&&(c.style.background="",c.style.overflow="hidden",f=_.style.overflow,_.style.overflow="hidden",_.appendChild(c)),s=t(p,e),c.fake?(c.parentNode.removeChild(c),_.style.overflow=f,_.offsetHeight):p.parentNode.removeChild(p),!!s}function c(n,r){var o=n.length;if("CSS"in e&&"supports"in e.CSS){for(;o--;)if(e.CSS.supports(a(n[o]),r))return!0;return!1}if("CSSSupportsRule"in e){for(var i=[];o--;)i.push("("+a(n[o])+":"+r+")");return i=i.join(" or "),p("@supports ("+i+") { #modernizr { position: absolute; } }",function(e){return"absolute"==getComputedStyle(e,null).position})}return t}function m(e,n,o,l){function f(){d&&(delete E.style,delete E.modElem)}if(l=r(l,"undefined")?!1:l,!r(o,"undefined")){var a=c(e,o);if(!r(a,"undefined"))return a}for(var d,p,m,h,y,v=["modernizr","tspan"];!E.style;)d=!0,E.modElem=u(v.shift()),E.style=E.modElem.style;for(m=e.length,p=0;m>p;p++)if(h=e[p],y=E.style[h],i(h,"-")&&(h=s(h)),E.style[h]!==t){if(l||r(o,"undefined"))return f(),"pfx"==n?h:!0;try{E.style[h]=o}catch(g){}if(E.style[h]!=y)return f(),"pfx"==n?h:!0}return f(),!1}function h(e,n,t,o,i){var s=e.charAt(0).toUpperCase()+e.slice(1),l=(e+" "+x.join(s+" ")+s).split(" ");return r(n,"string")||r(n,"undefined")?m(l,n,o,i):(l=(e+" "+S.join(s+" ")+s).split(" "),f(l,n,t))}function y(e,n,r){return h(e,t,t,n,r)}var v=[],g={_version:"3.2.0",_config:{classPrefix:"",enableClasses:!0,enableJSClass:!0,usePrefixes:!0},_q:[],on:function(e,n){var t=this;setTimeout(function(){n(t[e])},0)},addTest:function(e,n,t){v.push({name:e,fn:n,options:t})},addAsyncTest:function(e){v.push({name:null,fn:e})}},Modernizr=function(){};Modernizr.prototype=g,Modernizr=new Modernizr;var C=[],w="Moz O ms Webkit",x=g._config.usePrefixes?w.split(" "):[];g._cssomPrefixes=x;var S=g._config.usePrefixes?w.toLowerCase().split(" "):[];g._domPrefixes=S;var _=n.documentElement,b="svg"===_.nodeName.toLowerCase(),z={elem:u("modernizr")};Modernizr._q.push(function(){delete z.elem});var E={style:z.elem.style};Modernizr._q.unshift(function(){delete E.style}),g.testAllProps=h,g.testAllProps=y,Modernizr.addTest("flexbox",y("flexBasis","1px",!0)),Modernizr.addTest("flexboxtweener",y("flexAlign","end",!0)),o(),delete g.addTest,delete g.addAsyncTest;for(var P=0;P<Modernizr._q.length;P++)Modernizr._q[P]();e.Modernizr=Modernizr}(window,document);
+
+if (!Modernizr.flexbox && !Modernizr.flexboxtweener) {
+
+  var $body = $('body');
+
+  var nodesClasses = {
+    wrapper: 'not-supported-browser',
+    container: 'not-supported-browser__container',
+
+    title: 'not-supported-browser__title',
+    content: 'not-supported-browser__content',
+    logo: 'not-supported-browser__logo'
+  };
+
+  var nodes = {
+    wrapper: $('<div class="' + nodesClasses.wrapper + '"></div>'),
+    title: $('<div class="' + nodesClasses.title + '">Sorry, your browser is not fully supported</div>'),
+    content: $('<div class="' + nodesClasses.content + '">There may be some issues with pages layout in your current browser.<br/>Please use an alternate browser until we resolve the issues.<br/>Thank you.</div>'),
+    container: $('<div class="' + nodesClasses.container + '"></div>'),
+    logo: $('<div class="' + nodesClasses.logo + '"><svg class="sprite-img _jetbrains" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#jetbrains"></use></svg></div>')
+  };
+
+  $body.addClass('overflow-hidden');
+
+
+  nodes.content
+    .prepend(nodes.title)
+    .prepend(nodes.logo);
+
+  nodes.container
+    .append(nodes.content);
+
+  nodes.wrapper
+    .append(nodes.container)
+    .appendTo($body);
+}
+</script>
+<div class="page">
+                <div class="page__header">
+                <header class="menu-main header"  id="js-menu-main">
+    <div class="wt-container">
+        <div class="wt-row wt-row_nowrap wt-row_size_s wt-row_align-items_center">
+            <div class="wt-col-auto-fill">
+                <a href="/" class="menu-main__logo-link"><svg class="_jetbrains-simple sprite-img menu-main__logo" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#jetbrains-simple"></use></svg></a>
+            </div>
+            <div class="wt-col-inline wt-display-md-none menu-main-skeleton-text-1" style="min-width: 69px"></div>
+            <div class="wt-col-inline wt-display-md-none menu-main-skeleton-text-1" style="min-width: 81px"></div>
+            <div class="wt-col-inline wt-display-md-none menu-main-skeleton-text-1" style="min-width: 46px"></div>
+            <div class="wt-col-inline menu-main-skeleton-button"></div>
+            <div class="wt-col-inline menu-main-skeleton-button"></div>
+        </div>
+    </div>
+</header>
+
+
+
+  <div class="menu-second" id="js-menu-second">
+    <div class="wt-container">
+        <div id="js-menu-second-mobile-wrapper" class="wt-display-none">
+            <div id="js-menu-second-mobile" >
+                <div class="menu-second-mobile wt-row wt-row_size_m wt-row_align-items_center wt-row_justify_between">
+                    <div class="wt-col-inline menu-second-skeleton-text-2" style="max-width: 120px"></div>
+                    <div class="wt-col-inline menu-second-skeleton-button" style="max-width: 80px"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="js-menu-second-desktop" class="menu-second-desktop
+                       wt-row wt-row_size_0 wt-row_align-items_center">
+            <div class="wt-col-auto-fill">
+                <a class="menu-second-title-box"
+                   href="/support/sales/">
+                    
+                    <span class="menu-second-title-box__title wt-h3">Sales Support</span>
+                </a>
+            </div>
+
+                            
+                                                        <a href="/support/sales/"
+                       class="wt-col-inline wt-text-2 wt-text-2_hardness_average menu-second__link
+                                                                ">
+                        Contact Sales
+                                            </a>
+                                            
+                                                        <a href="/store/terms/"
+                       class="wt-col-inline wt-text-2 wt-text-2_hardness_average menu-second__link
+                                                                wt-text-2_hardness_primary">
+                        Purchase Terms
+                                            </a>
+                                            
+                                                        <a href="//sales.jetbrains.com"
+                       class="wt-col-inline wt-text-2 wt-text-2_hardness_average menu-second__link
+                                                                ">
+                        FAQ
+                                            </a>
+                            
+                        
+                    </div>
+
+    </div>
+</div>
+
+            </div>
+    
+    <div class="page__content ">
+        <section class="wt-section">
+<div class="wt-container">
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-8 wt-col-lg-9 wt-col-sm-12 wt-article">
+<!-- 19.0 --> <!-- 2019-09-30 -->
+<div class="licenseContent">
+<h1 id="terms-and-conditions-of-purchase">Terms and Conditions of Purchase</h1>
+<p>Version 19, effective as of September 30, 2019</p>
+<h2 id="general"><strong>GENERAL</strong></h2>
+<p>In these Terms and Conditions of Purchase (&quot;Purchase Terms&quot;):</p>
+<ol>
+<li>&quot;Customer&quot; means an individual or a legal entity purchasing Product directly from JetBrains.</li>
+<li>&quot;JetBrains&quot; means:
+                        <ul>
+<li>A. if Customer is located outside North and South America, the Russian Federation (as specified below), Switzerland (as specified below) and South Africa, JetBrains s.r.o. with its registered office at Na hřebenech II 1718/10, Prague, 14000, Czech Republic, registered with Commercial Register kept by the Municipal Court of Prague, Section C, file 86211, ID.Nr.: 265 02 275, or</li>
+<li>B. if Customer is located in North or South America, JetBrains Americas, Inc., a Delaware corporation with its registered office at 10 Lake Center Drive, Suite 203, Marlton, NJ 08053, USA.</li>
+<li><p>C. if Customer is located in</p>
+<ul>
+<li>a) Switzerland and has a valid local VAT ID number, or</li>
+<li>b) South Africa</li>
+<li>c) Russian Federation</li>
+</ul>
+<p>JetBrains Distributions s.r.o., with its registered office at Na hřebenech II 1718/10, Prague, 14000, Czech Republic, registered with Commercial Register kept by the Municipal Court of Prague, Section C, file 295970, ID.Nr.: 071 74 811</p></li>
+</ul></li>
+<li>&quot;Product&quot; means any software program or service made available by JetBrains, unless otherwise expressly stated in these Purchase Terms. The use of Product by Customer is governed by the applicable Terms of Use.</li>
+<li>&quot;Plugin&quot; means any plugin, extension, or other software designed to work with Product.</li>
+<li>&quot;JetBrains Plugin&quot; means a Plugin created by JetBrains.</li>
+<li>&quot;JetBrains Marketplace&quot; means any platform at which JetBrains markets Plugins, including the website https://plugins.jetbrains.com or any other website or other platform, whether named JetBrains Marketplace, JetBrains Repository, or otherwise.</li>
+<li>&quot;JetBrains Website&quot; or &quot;Site&quot; means any website that is the property of JetBrains s.r.o. (&quot;JetBrains&quot;, &quot;we&quot;), including but not limited to everything hosted under the domains listed at <a class="uri" href="https://www.jetbrains.com/legal/websites/">https://www.jetbrains.com/legal/websites/</a>.</li>
+<li>&quot;Terms of Use&quot; mean the terms and conditions of end-user license agreement, subscription terms, terms of service, or other standard customer agreements set forth by JetBrains s.r.o. and applicable to Product or Plugin in addition to these Purchase Terms.</li>
+<li>&quot;Privacy Policy&quot; means the JetBrains Privacy Policy available at <a class="uri" href="https://www.jetbrains.com/company/privacy.html">https://www.jetbrains.com/company/privacy.html</a>, which may be updated from time to time.</li>
+<li>&quot;Personal data&quot; means any information relating to an identified or identifiable natural person.</li>
+</ol>
+<p>Customer accepts these Purchase Terms by placing an order for Product or Plugin with JetBrains.</p>
+<p>For orders placed online on JetBrains Website, the entity with which Customer is contracting is shown on the Order Checkout page above the &quot;Place Order&quot; button. For orders placed by fax or email, the entity with which Customer is contracting is shown on invoice issued to Customer by JetBrains.</p>
+<p>Orders placed by Customer with a reseller of JetBrains are subject to terms and conditions of purchase set forth by that reseller.</p>
+<h2 id="order-placement-and-acceptance"><strong>ORDER PLACEMENT AND ACCEPTANCE</strong></h2>
+<p>Customer may place an order with JetBrains:</p>
+<ol>
+<li>online on the JetBrains Website;</li>
+<li>by fax or email using the appropriate contact of JetBrains.</li>
+</ol>
+<p>Order details shall be in English. Customer can modify order details before acceptance of Customer order by JetBrains by submitting a written notice to JetBrains. English is the preferred language for order-related enquiries.</p>
+<p>Any order is not binding upon JetBrains until accepted by JetBrains. Non-acceptance of an order may be the result of one of the following:</p>
+<ol>
+<li>failed payment;</li>
+<li>growing backlog or negative payment history;</li>
+<li>incomplete or incorrect order details, such as missing email address for delivery, missing Customer billing address, or a pricing or product description error, among others;</li>
+<li>ineligibility according to the order criteria (e.g. entitlement to upgrade or to certain Product or Plugin purchase options restricted to particular users or purpose of use); or</li>
+<li>for any reason at the sole discretion of JetBrains.</li>
+</ol>
+<h2 id="prices-and-payment-terms"><strong>PRICES AND PAYMENT TERMS</strong></h2>
+<p>JetBrains sets prices and accept payments for Products in one of the following currencies depending on Customer's country: USD, EUR, GBP, or CZK. Prices in any currency are subject to change by JetBrains.</p>
+<p>A Plugin may be offered to Customer either free of charge (&quot;Free Plugin&quot;), or for a fee paid to JetBrains (&quot;Paid Plugin&quot;) as stated in the Plugin description available at the JetBrains Website, or for a fee paid directly to the third-party developer (&quot;Developer-Paid Plugin&quot;). The following rules of this section, Prices and Payment Terms, apply only to Products and Paid Plugins. The rules for Developer-Paid Plugins may be covered by additional terms agreed between the Developer and Customer. Prices for Paid Plugins are set in one of the following currencies depending on Customer's country: USD, EUR, GBP, or CZK. Prices in any currency are subject to change by the Developer or JetBrains.</p>
+<p>JetBrains accepts major debit and credit cards (collectively, &quot;payment cards&quot;) for online orders via third-party payment gateway providers, including, but not limited to, Adyen and PayPal. JetBrains is not responsible for any payment failure resulting from inaccurate payment card details provided by Customer when placing an online order, any restrictions applicable to payment card by Customer's bank, or payment gateway failure.</p>
+<p>By purchasing Product or a Plugin requiring regular payments on a monthly, quarterly, or annual basis (&quot;Recurring Payments&quot;), Customer authorizes JetBrains to charge Customer's payment card automatically at the interval and in the amount selected by Customer based on the available options during the purchase process. Customer agrees that the payment card specified by Customer for Recurring Payments is, and will continue to be, an account that Customer owns or is otherwise legally authorized to use, and that Customer will maintain sufficient availability under Customer's credit card limit, or sufficient funds in the account linked to Customer's debit card, as applicable, to pay Recurring Payments. Customer can cancel Recurring Payments at any time via Customer's account at https://account.jetbrains.com prior to the next Recurring Payment due date. If Customer cancels Recurring Payments after this time, the cancellation will not take effect until the following Recurring Payment due date, and no refund or partial refund will be issued to Customer by JetBrains.</p>
+<p>JetBrains only accepts purchase orders from existing corporate Customers that have no outstanding payments past due. Purchase orders can only be paid by wire transfer on net 30 days terms, unless otherwise specified on invoice issued to Customer by JetBrains. Purchase orders from newly registered corporate Customers and offline orders from individual Customers are subject to advance payment by wire transfer.</p>
+<h2 id="product-delivery"><strong>PRODUCT DELIVERY</strong></h2>
+<p>JetBrains ships no physical Products or Plugins. Any details necessary to enable Customer to download and/or use the purchased Product or Plugin will be delivered by JetBrains to Customer via email to an email address provided by Customer (and in case of Plugins also made available to Customer via JetBrains Website). Customer is responsible for providing JetBrains with a valid email address for delivery purposes.</p>
+<p>JetBrains will use its commercially reasonable best efforts to deliver Product or a Plugin purchased by Customer within 2 business days of the order acceptance. JetBrains shall not be liable for any failure to deliver Product or Plugin within this timeframe.</p>
+<p>Products or Plugins shall be deemed delivered to Customer on the date when JetBrains sends Product or a Plugin email to the email address provided by Customer. JetBrains shall not be liable for any failure to deliver Product or a Plugin to Customer due to non-delivery of an email message concerning Product or a Plugin.</p>
+<h2 id="taxes-and-deductions"><strong>TAXES AND DEDUCTIONS</strong></h2>
+<p>Product and Plugin prices do not include any national, state or local sales tax, use tax, value added tax (VAT), goods and sales tax (GST) or other tax (&quot;Local Tax&quot;).</p>
+<p>If purchase is subject to any Local Tax, it can be added to the invoice. In such case, JetBrains reserves the right to use global service provider TAXAMO CHECKOUT LIMITED Ltd. as its commissionaire to invoice Customer. Notwithstanding the foregoing, JetBrains remains Customer's counterparty and no other provisions of these Purchase Terms shall be affected.</p>
+<p>If there is a possibility to issue the invoice without Local Tax, Customer is obliged to provide JetBrains with a valid Local Tax number (e.g. VAT ID) or valid exemption documentation.</p>
+<p>Customer bears the sole responsibility for any withholding tax liabilities, and no deductions shall be made by Customer from the amount payable to JetBrains or Taxamo Checkout Limited Ltd. under any invoice.</p>
+<p>Any correction to an invoice due to tax reasons (in particular based on the provision of Customer's Local Tax number) shall be requested by Customer by the 7th day of the month following the month when the affected invoice was issued, at the latest. JetBrains reserves the right to reject any such request if received after this date.</p>
+<h2 id="temporary-suspension-for-non-payment"><strong>TEMPORARY SUSPENSION FOR NON-PAYMENT</strong></h2>
+<p>If Customer fails to pay any amount on time under these Purchase Terms and the applicable Terms of Use, JetBrains reserves the right to, at its sole discretion, suspend the Customer's access to JetBrains' Products until such time as it is satisfied that all payments have been made or terminate the Terms of Use, in the manner specific in the applicable Terms of Use.</p>
+<p>If JetBrains suspends Customer's access to JetBrains' Products for any failure to, or delay in, payment of any amount, Customer must pay the entire outstanding amount in order to restore its access to JetBrains' Products. During any period of suspension, Customer hereby agrees that JetBrains is entitled to charge Customer for the entire period during which Customer has access to JetBrains Products.</p>
+<h2 id="withdrawal-and-refund"><strong>WITHDRAWAL AND REFUND</strong></h2>
+<p>Any refund request following the Product or Plugin purchase date will be subject to prior authorization by JetBrains, and acceptance of such request shall be at the sole discretion of JetBrains, unless otherwise provided by applicable law.</p>
+<h2 id="export-control"><strong>EXPORT CONTROL</strong></h2>
+<p>Customer shall comply with all applicable laws and regulations with regards to: economic sanctions; export controls; import regulations; and trade embargoes (collectively &quot;Export Control Laws&quot;), including those of the European Union and United States (specifically the Export Administration Act of 1979 and the Export Administration Regulations (&quot;EAR&quot;)). Customer acknowledges that it is not an entity targeted by Export Control Laws nor is it otherwise owned or controlled by or acting on behalf of any person targeted by Export Control Laws. Further, Customer agrees to ensure that neither JetBrains Products and/or Plugins, nor any related technical information, are:</p>
+<ol>
+<li>Downloaded, transferred, exported, or re-exported directly or indirectly in violation of Export Control Laws; or</li>
+<li>Used for any purpose prohibited by Export Control Laws, including but not limited to nuclear, chemical, or biological weapons proliferation.</li>
+</ol>
+<p>In accordance with the EAR, JetBrains Products and/or JetBrains Plugins typically:</p>
+<ol>
+<li>Fall under the Export Control Classification Number (ECCN) EAR99;</li>
+<li>May be exported under the EAR to entities with No License Required (&quot;NLR&quot;), except for entities within restricted and/or embargoed destinations, identified as prohibited end-user(s) and/or participate in prohibited end-use and/or proliferation activities. Restricted countries currently include, but are not necessarily limited to, Cuba, North Korea, Sudan, and Syria.</li>
+</ol>
+<p>Information provided under Section Export Control is only intended for general information purposes and should not be construed as legal advice concerning the export control laws and regulations of any country. For details on export restrictions applicable to Products and/or Plugins, Customer should refer to the laws and regulations of the relevant jurisdiction.</p>
+<h2 id="miscellaneous"><strong>MISCELLANEOUS</strong></h2>
+<p>No terms and conditions other than the terms and conditions contained herein shall be binding upon JetBrains, unless accepted by JetBrains in writing and signed by the duly authorized representative of JetBrains. If Customer's terms and conditions of purchase are different from or in addition to these Purchase Terms, these Purchase Terms shall prevail and Customer's terms are hereby rejected, unless otherwise agreed in writing with JetBrains.</p>
+<p>These Purchase Terms are subject to change at any time by JetBrains by posting the updated Purchase Terms on the JetBrains website at www.jetbrains.com.</p>
+<p>Customer declares having had sufficient opportunity to review these Purchase Terms, understood the content of all of their clauses, negotiated their terms and sought independent professional legal advice in that respect, before accepting these Purchase Terms. Consequently, any statutory &quot;form contracts&quot; (&quot;adhesion contracts&quot;) regulations shall not be applicable to these Purchase Terms.</p>
+<p>If Customer is located outside North and South America, these Purchase Terms shall be governed by the laws of Czech Republic, without reference to conflict of laws principles, and the parties agree that any litigation relating to these Purchase Terms may only be brought in, and shall be subject to the jurisdiction of, any Court of Czech Republic.</p>
+<p>If Customer is located in North or South America, then the following applies: these Purchase Terms shall be governed by and construed under the laws of the State of New Jersey, without reference to conflict of laws principles of that state or any nation state. The parties agree that any litigation relating to these Purchase Terms shall be settled by the court of competent jurisdiction in the State of New Jersey. The United Nations Convention on Contracts for the International Sale of Goods shall not apply to these Purchase Terms.</p>
+<p>If the Customer is located in the Russian Federation, Product means only YouTrack and Datalore and no other JetBrains products whatsoever. Provision of JetBrains products other than YouTrack and Datalore to Customers located in the Russian Federation is not governed by these Purchase Terms.</p>
+<h2 id="personal-data"><strong>PERSONAL DATA</strong></h2>
+<p>In connection with purchase of Products and Plugins by Customer, JetBrains and associated companies of JetBrains will process Customer's Personal Data, in particular, Customer's contact and identification details and information about Customer's subscription and payments, for the following purposes:</p>
+<ol>
+<li>To provide Customer with software services or information;</li>
+<li>To protect JetBrains from piracy and unlawful use of JetBrains software or services;</li>
+<li>To improve JetBrains offerings based on usage;</li>
+<li>For internal evidence of JetBrains and to protect the rights and interests of JetBrains and other users;</li>
+<li>To promote and market JetBrains software and services; and</li>
+<li>To fulfil legal duties stipulated by accounting, taxation, and other laws.</li>
+</ol>
+<p>Customer may object to processing of Customer's Personal Data for the purposes 2 to 5 at any time. More detailed information about personal data processing for the above-mentioned purposes and about Customer's rights can be found in the Privacy Policy.</p>
+<p>For the above purposes, JetBrains may process information including but not limited to Customer's name, email address, username, physical address, telephone number, payment data, company name, and tax identification number where applicable. To receive the software, support, and services, Customer explicitly fills in their Personal Data, whether Customer purchases a JetBrains Downloadable Software Product, a Plugin, or JetBrains Software as a Service.</p>
+<p>JetBrains products and services often give Customer the option to provide feedback, such as suggestions, compliments, or problems encountered. JetBrains invites Customer to provide such feedback as well as to post comments on JetBrains website, blogs, and discussion forums.</p>
+<p>Transfer of Personal Data to third parties. JetBrains is responsible for the handling of Customer's Personal Data by such third party. The transfer is made to assist it in providing its services to Customer or in its operations; to do so JetBrains, may send them Customer's Personal Data. Personal Data collected from Customer is transferred to:</p>
+<ol>
+<li>A <a href="https://www.jetbrains.com/legal/privacy/third-parties.html">third-party</a> payment provider to process payment transactions.</li>
+<li>A <a href="https://www.jetbrains.com/legal/privacy/third-parties.html">third-party</a> cloud accounting service.</li>
+<li>Resellers who are handling purchases of JetBrains products in a certain region. Information about the reseller obtaining Customer's Personal Data is indicated to Customer before the transfer is made.</li>
+<li>Other representatives of the same Customer.</li>
+<li>A third-party Plugin vendor.</li>
+</ol>
+<p>JetBrains may communicate with Customers by sending them emails aiming to help avoid interruption of a service. Such examples include but not limited to:</p>
+<ol>
+<li>payment reminders,</li>
+<li>debt reminders,</li>
+<li>license expiration reminders,</li>
+<li>license delivery and confirmation emails,</li>
+<li>credit card expiration reminders about cards saved for automatic payments for licenses,</li>
+<li>purchase follow-ups requesting information about Customer's company for enhancement of customer service,</li>
+<li>license assignment emails,</li>
+<li>administrator invitation emails, and</li>
+<li>purchase administration requests.</li>
+</ol>
+<p>For any questions regarding these Purchase Terms, please contact us at <a href="mailto:legal@jetbrains.com">legal@jetbrains.com</a>.</p>
+</div>
+</div>
+<div class="wt-col-3 wt-col-sm-12 wt-offset-left-1 wt-offset-left-lg-0 wt-offset-top-96">
+<div class="license-agreement-sidebar">
+<h4 class="wt-h4">Download:</h4>
+<ul class="wt-text-2">
+<li class="wt-offset-top-12"><a class="wt-link" href="purchase_terms.docx">Microsoft Word</a> <span class="wt-text-3">(.docx)</span></li>
+<li class="wt-offset-top-12"><a class="wt-link" href="purchase_terms.pdf">PDF Document</a> <span class="wt-text-3">(.pdf)</span></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section>    </div>
+
+            
+<div class="page__footer">
+    <footer class="footer" id="footer">
+        <div class="wt-container">
+            <div class="footer__main wt-row wt-row_size_m wt-row-sm_direction_column-reverse">
+                <div class="footer__logo wt-col-inline wt-display-md-none">
+                    <div class="jetbrains-logo _size-3 _full-block">
+                        <svg class="sprite-img jetbrains">
+                            <use xlink:href="#jetbrains" />
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="wt-col-auto-fill wt-col-sm-12">
+                    <div class="wt-row wt-row_size_xs wt-row-sm_size_m wt-offset-top-12">
+                        <div class="wt-col-inline footer-skeleton-button"></div>
+                        <div class="wt-col-inline footer-skeleton-button"></div>
+                        <div class="wt-col-inline footer-skeleton-button"></div>
+                        <div class="wt-col-inline footer-skeleton-button"></div>
+                    </div>
+
+                    <div class="footer-skeleton-text-2 wt-offset-top-24" style="max-width: 45%"></div>
+                    <div class="footer-skeleton-text-2 wt-offset-top-12" style="max-width: 70%"></div>
+                </div>
+
+                <div class="wt-col-inline wt-col-sm-12 wt-col_align-self_end wt-col-sm_align-self_start">
+                    <div class="wt-row wt-row_size_m wt-row_justify_end wt-row-sm_justify_start">
+                        <div class="wt-col-inline footer-skeleton-button" style="min-width: 180px"></div>
+                        <div class="wt-col-inline footer-skeleton-button" style="min-width: 80px"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+    </div>
+
+<script>
+(function () {
+  function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+      results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+  }
+
+  function updateQueryStringParameter(uri, key, value) {
+    var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+    var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+    if (uri.match(re)) {
+      return uri.replace(re, '$1' + key + "=" + value + '$2');
+    }
+    else {
+      return uri + separator + key + "=" + value;
+    }
+  }
+
+  var downloadLink = document.getElementById("download-link");
+  if (downloadLink != null) {
+    var platform = getParameterByName('platform');
+    platform = platform != null ? platform : "windows";
+    var href = downloadLink.getAttribute("href");
+    var code = getParameterByName("code");
+
+    if(code != null) {
+      href = updateQueryStringParameter(href, "code", code)
+    }
+    href = updateQueryStringParameter(href, "platform", platform);
+    downloadLink.setAttribute("href", href);
+  }
+})();
+</script><script>
+(function() {
+  var STORAGE_KEY_NAME = 'firefoxDisappearedSVGWorkaround';
+  var STORAGE_KEY_VALUE = '1';
+
+  var isFirefox = /firefox/i.test(navigator.userAgent);
+  if (!isFirefox || isFirefox && sessionStorage.getItem(STORAGE_KEY_NAME) === STORAGE_KEY_VALUE) {
+    return;
+  }
+
+  var arrayFrom = function (arrayLike) {
+    return Array.prototype.slice.call(arrayLike, 0);
+  };
+
+  function workaround() {
+    var uses = document.querySelectorAll('.page svg use');
+    var badNodesCount = 0;
+
+    arrayFrom(uses).forEach(function (node) {
+      var rect = node.getBoundingClientRect();
+      if (rect.width === 0 && rect.height === 0)
+        badNodesCount++;
+    });
+
+    if (badNodesCount === uses.length) {
+      sessionStorage.setItem(STORAGE_KEY_NAME, STORAGE_KEY_VALUE);
+      if (typeof dataLayer !== 'undefined')
+        dataLayer.push({'firefoxDisappearedSVGWorkaround': STORAGE_KEY_VALUE});
+
+      window.location.replace(window.location.href);
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', workaround);
+
+})();
+</script>      <link href="/_assets/banner-rotator.entry.07ac548a2a68a7922693.css" rel="stylesheet" type="text/css">
+      <script src="/_assets/banner-rotator.entry.b9ea3aaba598786010f0.js" type="text/javascript"></script>
+      
+      
+  <script>
+(function () {
+
+  'use strict';
+
+  function ImagesSrcReplacer () {
+
+    var attribute = 'data-src';
+    var matches = document.querySelectorAll('img[' + attribute + ']');
+
+    for (var i = 0, n = matches.length; i < n; i++) {
+
+      var attrValue = matches[i].getAttribute(attribute);
+
+      if (_isHighDensity ()) {
+
+        var name = attrValue.substring(0, attrValue.lastIndexOf('.'));
+        var extention = attrValue.substring(attrValue.lastIndexOf('.'), attrValue.length);
+
+        matches[i].setAttribute('src', name + '@2x' + extention);
+
+      } else {
+        matches[i].setAttribute('src', attrValue)
+      }
+    }
+
+    /**
+     * Detect high density
+     * @returns {*|boolean}
+     */
+    function _isHighDensity () {
+      return (
+      (window.matchMedia &&
+      (window.matchMedia('only screen and (min-resolution: 124dpi), only screen and (min-resolution: 1.3dppx), only screen and (min-resolution: 48.8dpcm)').matches ||
+       window.matchMedia('only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (-o-min-device-pixel-ratio: 2.6/2), only screen and (min--moz-device-pixel-ratio: 1.3), only screen and (min-device-pixel-ratio: 1.3)').matches)) ||
+      (window.devicePixelRatio &&
+       window.devicePixelRatio > 1.3));
+    }
+  }
+
+  return new ImagesSrcReplacer()
+
+}(document, window));
+</script></body>
+</html>

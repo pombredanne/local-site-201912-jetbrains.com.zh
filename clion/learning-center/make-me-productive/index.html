@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+                                            
+        <!-- Error reporting -->
+<script>(function(){
+  window.reportError = function(msg, file, line, col, err, isUnhandledRejection){};
+  var prevOnError = window.onerror;
+  var onError = function(msg, file, line, col, err) {
+    reportError(msg, file, line, col, err, false);
+    prevOnError && prevOnError.apply(window, arguments);
+    return false;
+  };
+  window.onerror = onError;
+  // Setup reporting for unhandled Promise rejection errors
+  window.addEventListener("unhandledrejection", function(e) {
+    if (!e.reason) return;
+    var l = getSrcLocation(e.reason);
+    reportError(e.reason.message, l.file, l.line, l.col, e.reason, true);
+  });
+  // Setup reporting for console.error and console.warn calls
+  patchConsole('error');
+  patchConsole('warn');
+  // Utility functions
+  function patchConsole(fnName) {
+    var fn = console[fnName];
+    console[fnName] = function() {
+      fn.apply(console, arguments);
+      var l; try {
+        throw new Error('_');
+      } catch (err) {
+        l = getSrcLocation(err, 1);
+      }
+      var msg = 'console.' + fnName + ': ' + Array.prototype.join.call(arguments, ' ');
+      reportError(msg, l.file, l.line, l.col, undefined, false);
+    };
+  }
+  function getSrcLocation(err, sd) {
+    var s = err && err.stack;
+    var l = s && s.split("\n")[1 + (sd|0)];
+    var r = l && (/^\s*at [^(]*\((.*?):(\d+)(:\d+)?\)$/.exec(l) || /^\s*at (.*?):(\d+)(:\d+)?$/.exec(l));
+    return r ? {file: r[1], line: r[2], col: r[3]} : {};
+  }
+})();</script>
+<!-- Error reporting -->        <!-- Google Tag Manager -->
+<script>(function() {
+  // Initialize Tag Manager queue
+  window.dataLayer = window.dataLayer || [];
+  window.gtmLoaded = false;
+  // Setup reporting for errors that occurred before Tag Manager initialized
+  var prevReportError = window.reportError;
+  var reportError = function(msg, file, line, col, err, isUnhandledRejection) {
+    if (!window.gtmLoaded || isUnhandledRejection) {
+      // Reproduce the behavior of the Tag Manager error handler
+      window.dataLayer.push(makeEvt(msg, file, line));
+    }
+    prevReportError && prevReportError.apply(window, arguments);
+  };
+  window.reportError = reportError;
+  // Utility functions
+  function makeEvt(msg, file, line) {
+    return {
+      event: "gtm.pageError", "gtm.errorMessage": msg,
+      "gtm.errorUrl": file, "gtm.errorLineNumber": line
+    };
+  }
+})();</script>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;j.addEventListener(
+    'load', function(){window.gtmLoaded=true});f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5P98');</script>
+<!-- End Google Tag Manager -->        <!-- Sentry -->
+<script>
+    (function() {
+        window.sentryLoaded = false;
+        window.errorsForSentry = [];
+        var prevReportError = window.reportError;
+        var reportError = function(
+            msg,
+            file,
+            line,
+            col,
+            err,
+            isUnhandledRejection
+        ) {
+            if (!window.sentryLoaded) {
+                window.errorsForSentry.push(err);
+            }
+            prevReportError && prevReportError.apply(window, arguments);
+        };
+        window.reportError = reportError;
+    })();
+</script>
+<script>
+    window.sentryLoad = function() {
+        window.sentryLoaded = true;
+        Sentry.init({
+            dsn: 'https://1adb2a61713144eda0786e5af50ddc51@sentry.io/1423069',
+            release:
+                "jetbrainscom@a6ccaa6ddb",
+            beforeSend: function(event) {
+                Object.keys(event).forEach(function(key) {
+                    var value = event[key];
+                    if (isEmail(value)) {
+                        delete event[key];
+                    }
+                });
+                return event;
+            }
+        });
+        Sentry.configureScope(function(scope) {
+            scope.setTag('page_locale', 'en-us');
+            scope.setTag('browser.locale', getPageLocale());
+
+            scope.setTag('http.urlFull', location.href);
+            var protocol = location.protocol || '';
+            //omit `:` from location.protocol string
+            var protocolString = protocol.substring(0, protocol.length - 1);
+
+            scope.setTag('http.protocol', protocolString);
+
+            scope.setTag('http.hostname', location.hostname);
+
+            var search = location.search || '';
+            //omit ? from location.search string
+            var searchString = search.substr(1);
+            if (searchString !== '') {
+                scope.setTag('http.query', searchString || '1');
+            }
+            var hash = location.hash || '';
+            //omit # from location.hash string
+            var hashString = hash.substr(1);
+            if (hashString !== '') {
+                scope.setTag('http.fragment', hashString);
+            }
+        });
+        window.errorsForSentry.forEach(Sentry.captureException);
+
+        function getPageLocale() {
+            return (
+                (navigator.languages && navigator.languages[0]) ||
+                navigator.language
+            );
+        }
+        function isEmail(value) {
+            var emailRegex = /[\+\-\_\.a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+\.[a-zA-Z0-9]+/g;
+            return emailRegex.test(value);
+        }
+    };
+</script>
+<script src="https://browser.sentry-cdn.com/5.7.1/bundle.min.js" crossorigin="anonymous" onload="sentryLoad()" async></script>
+<!-- End Sentry -->    
+                <title>Can you make me productive with a C++ IDE? by Anastasia Kazakova</title>
+    
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, maximum-scale=1">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#000000">
+<meta name="apple-mobile-web-app-title" content="JetBrains">
+<meta name="application-name" content="JetBrains">
+<meta name="msapplication-TileColor" content="#000000">
+<meta name="theme-color" content="#000000">    <link rel="canonical" href="https://www.jetbrains.com/clion/learning-center/make-me-productive/" />    <!-- .61-->
+                            <meta name="description" content="Intelligent cross-platform C/C++ IDE for every C and C++ developer on Linux, macOS and Windows"/>
+        
+                    <meta name="keywords" content="С/С++ IDE, С/С++ editor, С/С++ code editor, С/С++ windows, С/С++ linux, С/С++ mac, C/C++ cross-platform, C++ refactorings, C++ code analysis"/>
+        
+            
+        <link rel="alternate" hreflang="x-default" href="https://www.jetbrains.com/clion/learning-center/make-me-productive/" />
+
+                        <link rel="alternate" hreflang="en" href="https://www.jetbrains.com/clion/learning-center/make-me-productive/" />
+                                                                                                                        
+    
+    
+        
+    
+    
+    <script>
+        var current_lang = 'en-us';
+                                    var i18n_info = {"current_lang": "en-us", "languages": [{"canonical": "en", "code": "en-us", "label": "English", "page_translated": true, "url": "/clion/learning-center/make-me-productive/"}, {"canonical": "de", "code": "de-de", "label": "Deutsch", "page_translated": false, "url": "/de-de/clion/learning-center/make-me-productive/"}, {"canonical": "es", "code": "es-es", "label": "Espa\u00f1ol", "page_translated": false, "url": "/es-es/clion/learning-center/make-me-productive/"}, {"canonical": "fr", "code": "fr-fr", "label": "Fran\u00e7ais", "page_translated": false, "url": "/fr-fr/clion/learning-center/make-me-productive/"}, {"canonical": "ja", "code": "ja-jp", "label": "\u65e5\u672c\u8a9e", "page_translated": false, "url": "/ja-jp/clion/learning-center/make-me-productive/"}, {"canonical": "ko", "code": "ko-kr", "label": "\ud55c\uad6d\uc5b4", "page_translated": false, "url": "/ko-kr/clion/learning-center/make-me-productive/"}, {"canonical": "ru", "code": "ru-ru", "label": "\u0420\u0443\u0441\u0441\u043a\u0438\u0439", "page_translated": false, "url": "/ru-ru/clion/learning-center/make-me-productive/"}, {"canonical": "zh-CN", "code": "zh-cn", "label": "\u7b80\u4f53\u4e2d\u6587", "page_translated": false, "url": "/zh-cn/clion/learning-center/make-me-productive/"}, {"canonical": "pt-BR", "code": "pt-br", "label": "Portugu\u00eas do Brasil", "page_translated": false, "url": "/pt-br/clion/learning-center/make-me-productive/"}, {"canonical": "x-klingon", "code": "tl-aa", "label": "tlhIngan Hol", "page_translated": false, "url": "/tl-aa/clion/learning-center/make-me-productive/"}]};
+                            var navigationMenu = {"primary": {"id": "main_v2", "items": [{"id": "tools", "title": "Tools", "descriptionTitle": "Toolbox App", "descriptionLogoId": "toolbox", "descriptionLink": "Learn more", "descriptionUrl": "/toolbox-app/", "description": "Manage your tools the easy way", "src": "/img/banners-menu-main/toolbox-vertical.png", "horisontalSrc": "/img/banners-menu-main/toolbox-horisontal.png", "bgColor": "#3E0598", "isVisible": true, "hasCategories": true, "items": [{"title": "IDEs", "items": [{"isActive": false, "id": "appcode", "title": "AppCode", "url": "/objc/", "logoLeftActionId": "appcode", "items": [], "cleaned_url": "/objc/"}, {"isActive": false, "id": "clion", "title": "CLion", "url": "/clion/", "logoLeftActionId": "clion", "items": [], "cleaned_url": "/clion/"}, {"isActive": false, "id": "datalore", "title": "Datalore", "url": "https://datalore.io/", "isExternalLink": true, "logoLeftActionId": "datalore", "items": [], "cleaned_url": "https://datalore.io/"}, {"isActive": false, "id": "datagrip", "title": "DataGrip", "url": "/datagrip/", "logoLeftActionId": "datagrip", "items": [], "cleaned_url": "/datagrip/"}, {"isActive": false, "id": "goland", "title": "GoLand", "url": "/go/", "logoLeftActionId": "goland", "items": [], "cleaned_url": "/go/"}, {"isActive": false, "id": "idea", "title": "IntelliJ IDEA", "url": "/idea/", "logoLeftActionId": "intellij-idea", "items": [], "cleaned_url": "/idea/"}, {"isActive": false, "id": "phpstorm", "title": "PhpStorm", "url": "/phpstorm/", "logoLeftActionId": "phpstorm", "items": [], "cleaned_url": "/phpstorm/"}, {"isActive": false, "id": "pycharm", "title": "PyCharm", "url": "/pycharm/", "logoLeftActionId": "pycharm", "items": [], "cleaned_url": "/pycharm/"}, {"isActive": false, "id": "rider", "title": "Rider", "url": "/rider/", "logoLeftActionId": "rider", "items": [], "cleaned_url": "/rider/"}, {"isActive": false, "id": "rubymine", "title": "RubyMine", "url": "/ruby/", "logoLeftActionId": "rubymine", "items": [], "cleaned_url": "/ruby/"}, {"isActive": false, "id": "webstorm", "title": "WebStorm", "url": "/webstorm/", "logoLeftActionId": "webstorm", "items": [], "cleaned_url": "/webstorm/"}, {"isActive": false, "id": "toolbox", "type": "special", "title": "Toolbox App", "url": "/toolbox-app/", "logoLeftId": "toolbox", "description": "A control panel for your tools and projects", "items": [], "cleaned_url": "/toolbox-app/"}]}, {"title": ".NET & VISUAL STUDIO", "items": [{"isActive": false, "id": "resharper", "title": "ReSharper", "url": "/resharper/", "logoLeftActionId": "resharper", "items": [], "cleaned_url": "/resharper/"}, {"isActive": false, "id": "rider", "title": "Rider", "url": "/rider/", "logoLeftActionId": "rider", "items": [], "cleaned_url": "/rider/"}, {"isActive": false, "id": "resharper-cpp", "title": "ReSharper C++", "url": "/resharper-cpp/", "logoLeftActionId": "resharper-cpp", "items": [], "cleaned_url": "/resharper-cpp/"}, {"isActive": false, "id": "dotcover", "title": "dotCover", "url": "/dotcover/", "logoLeftActionId": "dotcover", "items": [], "cleaned_url": "/dotcover/"}, {"isActive": false, "id": "dotmemory", "title": "dotMemory", "url": "/dotmemory/", "logoLeftActionId": "dotmemory", "items": [], "cleaned_url": "/dotmemory/"}, {"isActive": false, "id": "dotpeek", "title": "dotPeek", "url": "/decompiler/", "logoLeftActionId": "dotpeek", "items": [], "cleaned_url": "/decompiler/"}, {"isActive": false, "id": "dottrace", "title": "dotTrace", "url": "/profiler/", "logoLeftActionId": "dottrace", "items": [], "cleaned_url": "/profiler/"}]}, {"title": "TEAM TOOLS", "items": [{"isActive": false, "id": "teamcity", "title": "TeamCity", "url": "/teamcity/", "logoLeftActionId": "teamcity", "items": [], "cleaned_url": "/teamcity/"}, {"isActive": false, "id": "upsource", "title": "Upsource", "url": "/upsource/", "logoLeftActionId": "upsource", "items": [], "cleaned_url": "/upsource/"}, {"isActive": false, "id": "youtrack", "title": "YouTrack", "url": "/youtrack/", "logoLeftActionId": "youtrack", "items": [], "cleaned_url": "/youtrack/"}, {"isActive": false, "id": "hub", "title": "Hub", "url": "/hub/", "logoLeftActionId": "hub", "items": [], "cleaned_url": "/hub/"}]}, {"title": "PLUGIN MARKETPLACE", "items": [{"isActive": false, "id": "bigdata", "title": "Big Data Tools", "url": "https://plugins.jetbrains.com/plugin/12494-big-data-tools", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/plugin/12494-big-data-tools"}, {"isActive": false, "id": "rustsupport", "title": "Rust", "url": "https://plugins.jetbrains.com/plugin/8182-rust", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/plugin/8182-rust"}, {"isActive": false, "id": "scalaplugin", "title": "Scala", "url": "https://plugins.jetbrains.com/plugin/1347-scala", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/plugin/1347-scala"}, {"isActive": false, "id": "idethemes", "title": "IDE Themes", "url": "https://plugins.jetbrains.com/search?tags=Theme", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/search?tags=Theme"}, {"isActive": false, "id": "plugins", "title": "All Plugins", "url": "https://plugins.jetbrains.com/", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/"}]}, {"title": "EDUCATION", "items": [{"isActive": false, "id": "pycharm-edu", "title": "PyCharm Edu", "url": "/education/", "urlHash": "#lang=python&role=learner", "logoLeftActionId": "pycharm-edu", "items": [], "cleaned_url": "/education/"}, {"isActive": false, "id": "idea-edu", "title": "IntelliJ IDEA Edu", "url": "/education/", "urlHash": "#lang=java&role=learner", "logoLeftActionId": "intellij-idea", "items": [], "cleaned_url": "/education/"}, {"isActive": false, "id": "jb-academy", "title": "JB Academy", "url": "/academy/", "items": [], "cleaned_url": "/academy/"}]}]}, {"id": "languages", "title": "Languages", "descriptionTitle": "Kotlin/Everywhere", "descriptionLogoId": "header-kotlin-everywhere", "descriptionLink": "Join in!", "descriptionUrl": "//everywhere.kotlinlang.org", "description": "A worldwide event series for learning the best Kotlin practices on all platforms", "descriptionBig": true, "src": "/img/banners-menu-main/kotlin-vertical.png", "horisontalSrc": "/img/banners-menu-main/kotlin-horisontal.png", "bgColor": "#D6721C", "isExternalLink": true, "isVisible": true, "hasCategories": false, "items": [{"isActive": false, "id": "kotlin", "title": "Kotlin", "url": "https://kotlinlang.org/", "isExternalLink": true, "logoLeftId": "header-kotlin-grayscale", "logoLeftActionId": "kotlin", "logoLeftSize": "50", "description": "Programming language \n for JVM & Android", "items": [], "cleaned_url": "https://kotlinlang.org/"}, {"isActive": false, "id": "mps", "title": "MPS", "url": "/mps/", "logoLeftId": "header-mps-grayscalse", "logoLeftActionId": "mps", "logoLeftSize": "50", "description": "Create your own domain-specific language", "items": [], "cleaned_url": "/mps/"}]}, {"id": "solutions", "title": "Solutions", "descriptionTitle": "JetBrains Academy", "descriptionLogoId": "academy-logo", "descriptionLink": "Join in!", "descriptionUrl": "/academy", "description": "An educational platform for future professionals", "src": "/img/banners-menu-main/academy-vertical.png", "horisontalSrc": "/img/banners-menu-main/academy-horisontal.png", "bgColor": "#53288E", "hasCategories": false, "isVisible": true, "items": [{"isActive": false, "title": "C++ Tools", "url": "/cpp/", "logoLeftId": "header-cpp-grayscale", "logoLeftActionId": "header-cpp", "description": "Tools for C/C++ development \nfor any platform", "items": [], "cleaned_url": "/cpp/"}, {"isActive": false, "title": "For Business", "url": "/store/business/", "logoLeftId": "header-for-business-grayscale", "logoLeftActionId": "header-for-business", "description": "Wide range of tools. \nAll major technologies covered", "items": [], "cleaned_url": "/store/business/"}, {"isActive": false, "title": "Game Development", "url": "/gamedev/", "logoLeftId": "header-gamedev-grayscale", "logoLeftActionId": "header-gamedev", "description": "Tools for game development \nfor any platform", "items": [], "cleaned_url": "/gamedev/"}, {"isActive": false, "title": "DevOps", "url": "/devops/", "logoLeftId": "header-devops-grayscale", "logoLeftActionId": "header-devops", "description": "Tools and integrations \nfor any infrastructure", "items": [], "cleaned_url": "/devops/"}, {"isActive": false, "title": "Education", "url": "/education/", "logoLeftId": "header-education-grayscale", "logoLeftActionId": "header-education", "description": "Products to learn and teach programming", "items": [], "cleaned_url": "/education/"}]}, {"id": "support", "title": "Support", "description": "Pricing and licensing for businesses and individuals", "descriptionTitle": "JetBrains Store", "descriptionLogoId": "header-store", "descriptionUrl": "/store/?fromMenu#edition=commercial", "descriptionLink": "visit store", "isVisible": true, "hasCategories": true, "items": [{"title": "CUSTOMERS", "items": [{"isActive": false, "title": "Sales Support", "url": "/support/sales/", "description": "Orders, payments", "items": [], "cleaned_url": "/support/sales/"}, {"isActive": false, "title": "Product Support", "url": "/support/", "description": "Tech support, documentation", "items": [], "cleaned_url": "/support/"}]}, {"title": "COMMUNITY PROGRAMS", "items": [{"isActive": false, "title": "Education", "url": "/community/education/", "description": "Students, classrooms, training", "items": [], "cleaned_url": "/community/education/"}, {"isActive": false, "title": "Open Source", "url": "/community/opensource/", "description": "Projects support", "items": [], "cleaned_url": "/community/opensource/"}, {"isActive": false, "title": "Sponsorship", "url": "/community/support/", "description": "User groups, events, technology experts", "items": [], "cleaned_url": "/community/support/"}]}]}, {"id": "company", "title": "Company", "isVisible": true, "hasCategories": true, "items": [{"title": "INITIATIVES", "items": [{"isActive": false, "title": "Open Source", "url": "/opensource/", "description": "Projects, contributions", "items": [], "cleaned_url": "/opensource/"}, {"isActive": false, "title": "Research", "url": "/research/", "description": "Market, Scientific", "items": [], "cleaned_url": "/research/"}]}, {"title": "COMPANY", "items": [{"isActive": false, "title": "About", "url": "/company/", "description": "People, customers, awards", "items": [], "cleaned_url": "/company/"}, {"isActive": false, "title": "Brand Assets", "url": "/company/brand/", "description": "Guidelines, logos", "items": [], "cleaned_url": "/company/brand/"}, {"isActive": false, "title": "Careers", "url": "/careers/apply/", "description": "Jobs, internships", "items": [], "cleaned_url": "/careers/apply/"}, {"isActive": false, "title": "Events", "url": "/company/events/", "description": "Conferences, meetups", "items": [], "cleaned_url": "/company/events/"}, {"isActive": false, "title": "Contacts", "url": "/company/contacts/", "description": "Partners, resellers, Kotlin training", "items": [], "cleaned_url": "/company/contacts/"}]}, {"title": "RESOURCES", "items": [{"isActive": false, "title": "Newsletters", "url": "/resources/newsletters/", "items": [], "cleaned_url": "/resources/newsletters/"}, {"isActive": false, "title": "Webinars", "url": "/resources/webinars/", "items": [], "cleaned_url": "/resources/webinars/"}, {"isActive": false, "title": "Early Access", "url": "/resources/eap/", "items": [], "cleaned_url": "/resources/eap/"}, {"isActive": false, "title": "Blog", "url": "//blog.jetbrains.com/", "isExternalLink": true, "items": [], "cleaned_url": "//blog.jetbrains.com/"}]}]}, {"isActive": false, "id": "store", "url": "/store/?fromNavMenu", "title": "Store", "isVisible": true, "hasCategories": false, "items": [], "cleaned_url": "/store/?fromNavMenu"}]}, "secondary": {"isActive": true, "id": "product_clion", "logoId": "clion", "url": "/clion/", "title": "CLion", "items": [{"isActive": false, "title": "What's New", "url": "/clion/whatsnew/", "items": [], "cleaned_url": "/clion/whatsnew/"}, {"isActive": false, "title": "Features", "url": "/clion/features/", "items": [{"isActive": false, "title": "Easy start", "url": "/clion/features/start-your-project.html", "items": [], "cleaned_url": "/clion/features/start-your-project.html"}, {"isActive": false, "title": "Smart editor", "url": "/clion/features/smart-editor.html", "items": [], "cleaned_url": "/clion/features/smart-editor.html"}, {"isActive": false, "title": "Search and navigation", "url": "/clion/features/navigation-and-usages-searches.html", "items": [], "cleaned_url": "/clion/features/navigation-and-usages-searches.html"}, {"isActive": false, "title": "Code generation and refactorings", "url": "/clion/features/code-generation-and-refactorings.html", "items": [], "cleaned_url": "/clion/features/code-generation-and-refactorings.html"}, {"isActive": false, "title": "Code analysis", "url": "/clion/features/code-analysis.html", "items": [], "cleaned_url": "/clion/features/code-analysis.html"}, {"isActive": false, "title": "Editor customization", "url": "/clion/features/editor-customization.html", "items": [], "cleaned_url": "/clion/features/editor-customization.html"}, {"isActive": false, "title": "Run and debug", "url": "/clion/features/run-and-debug.html", "items": [], "cleaned_url": "/clion/features/run-and-debug.html"}, {"isActive": false, "title": "Embedded Development", "url": "/clion/features/embedded-dev.html", "items": [], "cleaned_url": "/clion/features/embedded-dev.html"}, {"isActive": false, "title": "Dynamic analysis", "url": "/clion/features/dynamic-analysis.html", "items": [], "cleaned_url": "/clion/features/dynamic-analysis.html"}, {"isActive": false, "title": "CMake support", "url": "/clion/features/cmake-support.html", "items": [], "cleaned_url": "/clion/features/cmake-support.html"}, {"isActive": false, "title": "Unit testing", "url": "/clion/features/unit-testing.html", "items": [], "cleaned_url": "/clion/features/unit-testing.html"}, {"isActive": false, "title": "Documentation", "url": "/clion/features/code-documentation.html", "items": [], "cleaned_url": "/clion/features/code-documentation.html"}, {"isActive": false, "title": "VCS integration and local history", "url": "/clion/features/vcs-and-local-history.html", "items": [], "cleaned_url": "/clion/features/vcs-and-local-history.html"}, {"isActive": false, "title": "Terminal, Vim mode and others", "url": "/clion/features/terminal.html", "items": [], "cleaned_url": "/clion/features/terminal.html"}, {"isActive": false, "title": "Supported languages", "url": "/clion/features/supported-languages.html", "items": [], "cleaned_url": "/clion/features/supported-languages.html"}], "cleaned_url": "/clion/features/"}, {"isActive": false, "title": "Learning Center", "url": "/clion/learning-center/", "items": [], "cleaned_url": "/clion/learning-center/"}, {"isActive": false, "title": "Buy", "url": "/clion/buy/", "items": [], "cleaned_url": "/clion/buy/"}, {"isActive": false, "title": "Download", "url": "/clion/download/", "type": "button", "items": [], "cleaned_url": "/clion/download/"}], "cleaned_url": "/clion/"}};
+        
+        var is_layout_adaptive = false;
+                    is_layout_adaptive = true;
+        
+        var disable_language_picker = false;
+        
+        var english_only_url_prefixes = [];
+            </script>
+    
+            <script></script>
+    
+        
+    
+            <link href="/_assets/common.d44d81f300d3bff87efe.css" rel="stylesheet" type="text/css">
+<link href="/_assets/default-page.fabf52db4bf34ea78af0.css" rel="stylesheet" type="text/css">
+<link href="/_assets/clion/learning-center/make-me-productive/index.entry.b3dd9163b7695ac00197.css" rel="stylesheet" type="text/css">
+        <script src="/_assets/common.34604685b633d15ae3ed.js" type="text/javascript"></script>
+<script src="/_assets/default-page.2e180fc15a6b94fe7fa3.js" type="text/javascript"></script>
+<script src="/_assets/clion/learning-center/make-me-productive/index.entry.18fa2a5c295fa63872a2.js" type="text/javascript"></script>
+    
+            <!-- Social Media tag Starts -->
+    <!-- Open Graph data -->
+            <meta property="og:title" content="Can you make me productive with a C++ IDE? by Anastasia Kazakova"/>
+    
+                    <meta property="og:description" content="Intelligent cross-platform C/C++ IDE for every C and C++ developer on Linux, macOS and Windows"/>
+    <meta property="og:image" content="http://resources.jetbrains.com/storage/products/clion/img/meta/clion_1280x800.png"/>
+
+    <meta property="og:site_name" content="JetBrains"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="https://www.jetbrains.com/clion/learning-center/make-me-productive/"/>
+    <!-- Social Media tag Ends -->
+</head>
+
+<body class="nojs  body-adaptive">
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<script>
+/*! modernizr 3.2.0 (Custom Build) | MIT *
+ * http://modernizr.com/download/?-flexbox-flexboxtweener !*/
+!function(e,n,t){function r(e,n){return typeof e===n}function o(){var e,n,t,o,i,s,l;for(var f in v)if(v.hasOwnProperty(f)){if(e=[],n=v[f],n.name&&(e.push(n.name.toLowerCase()),n.options&&n.options.aliases&&n.options.aliases.length))for(t=0;t<n.options.aliases.length;t++)e.push(n.options.aliases[t].toLowerCase());for(o=r(n.fn,"function")?n.fn():n.fn,i=0;i<e.length;i++)s=e[i],l=s.split("."),1===l.length?Modernizr[l[0]]=o:(!Modernizr[l[0]]||Modernizr[l[0]]instanceof Boolean||(Modernizr[l[0]]=new Boolean(Modernizr[l[0]])),Modernizr[l[0]][l[1]]=o),C.push((o?"":"no-")+l.join("-"))}}function i(e,n){return!!~(""+e).indexOf(n)}function s(e){return e.replace(/([a-z])-([a-z])/g,function(e,n,t){return n+t.toUpperCase()}).replace(/^-/,"")}function l(e,n){return function(){return e.apply(n,arguments)}}function f(e,n,t){var o;for(var i in e)if(e[i]in n)return t===!1?e[i]:(o=n[e[i]],r(o,"function")?l(o,t||n):o);return!1}function a(e){return e.replace(/([A-Z])/g,function(e,n){return"-"+n.toLowerCase()}).replace(/^ms-/,"-ms-")}function u(){return"function"!=typeof n.createElement?n.createElement(arguments[0]):b?n.createElementNS.call(n,"http://www.w3.org/2000/svg",arguments[0]):n.createElement.apply(n,arguments)}function d(){var e=n.body;return e||(e=u(b?"svg":"body"),e.fake=!0),e}function p(e,t,r,o){var i,s,l,f,a="modernizr",p=u("div"),c=d();if(parseInt(r,10))for(;r--;)l=u("div"),l.id=o?o[r]:a+(r+1),p.appendChild(l);return i=u("style"),i.type="text/css",i.id="s"+a,(c.fake?c:p).appendChild(i),c.appendChild(p),i.styleSheet?i.styleSheet.cssText=e:i.appendChild(n.createTextNode(e)),p.id=a,c.fake&&(c.style.background="",c.style.overflow="hidden",f=_.style.overflow,_.style.overflow="hidden",_.appendChild(c)),s=t(p,e),c.fake?(c.parentNode.removeChild(c),_.style.overflow=f,_.offsetHeight):p.parentNode.removeChild(p),!!s}function c(n,r){var o=n.length;if("CSS"in e&&"supports"in e.CSS){for(;o--;)if(e.CSS.supports(a(n[o]),r))return!0;return!1}if("CSSSupportsRule"in e){for(var i=[];o--;)i.push("("+a(n[o])+":"+r+")");return i=i.join(" or "),p("@supports ("+i+") { #modernizr { position: absolute; } }",function(e){return"absolute"==getComputedStyle(e,null).position})}return t}function m(e,n,o,l){function f(){d&&(delete E.style,delete E.modElem)}if(l=r(l,"undefined")?!1:l,!r(o,"undefined")){var a=c(e,o);if(!r(a,"undefined"))return a}for(var d,p,m,h,y,v=["modernizr","tspan"];!E.style;)d=!0,E.modElem=u(v.shift()),E.style=E.modElem.style;for(m=e.length,p=0;m>p;p++)if(h=e[p],y=E.style[h],i(h,"-")&&(h=s(h)),E.style[h]!==t){if(l||r(o,"undefined"))return f(),"pfx"==n?h:!0;try{E.style[h]=o}catch(g){}if(E.style[h]!=y)return f(),"pfx"==n?h:!0}return f(),!1}function h(e,n,t,o,i){var s=e.charAt(0).toUpperCase()+e.slice(1),l=(e+" "+x.join(s+" ")+s).split(" ");return r(n,"string")||r(n,"undefined")?m(l,n,o,i):(l=(e+" "+S.join(s+" ")+s).split(" "),f(l,n,t))}function y(e,n,r){return h(e,t,t,n,r)}var v=[],g={_version:"3.2.0",_config:{classPrefix:"",enableClasses:!0,enableJSClass:!0,usePrefixes:!0},_q:[],on:function(e,n){var t=this;setTimeout(function(){n(t[e])},0)},addTest:function(e,n,t){v.push({name:e,fn:n,options:t})},addAsyncTest:function(e){v.push({name:null,fn:e})}},Modernizr=function(){};Modernizr.prototype=g,Modernizr=new Modernizr;var C=[],w="Moz O ms Webkit",x=g._config.usePrefixes?w.split(" "):[];g._cssomPrefixes=x;var S=g._config.usePrefixes?w.toLowerCase().split(" "):[];g._domPrefixes=S;var _=n.documentElement,b="svg"===_.nodeName.toLowerCase(),z={elem:u("modernizr")};Modernizr._q.push(function(){delete z.elem});var E={style:z.elem.style};Modernizr._q.unshift(function(){delete E.style}),g.testAllProps=h,g.testAllProps=y,Modernizr.addTest("flexbox",y("flexBasis","1px",!0)),Modernizr.addTest("flexboxtweener",y("flexAlign","end",!0)),o(),delete g.addTest,delete g.addAsyncTest;for(var P=0;P<Modernizr._q.length;P++)Modernizr._q[P]();e.Modernizr=Modernizr}(window,document);
+
+if (!Modernizr.flexbox && !Modernizr.flexboxtweener) {
+
+  var $body = $('body');
+
+  var nodesClasses = {
+    wrapper: 'not-supported-browser',
+    container: 'not-supported-browser__container',
+
+    title: 'not-supported-browser__title',
+    content: 'not-supported-browser__content',
+    logo: 'not-supported-browser__logo'
+  };
+
+  var nodes = {
+    wrapper: $('<div class="' + nodesClasses.wrapper + '"></div>'),
+    title: $('<div class="' + nodesClasses.title + '">Sorry, your browser is not fully supported</div>'),
+    content: $('<div class="' + nodesClasses.content + '">There may be some issues with pages layout in your current browser.<br/>Please use an alternate browser until we resolve the issues.<br/>Thank you.</div>'),
+    container: $('<div class="' + nodesClasses.container + '"></div>'),
+    logo: $('<div class="' + nodesClasses.logo + '"><svg class="sprite-img _jetbrains" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#jetbrains"></use></svg></div>')
+  };
+
+  $body.addClass('overflow-hidden');
+
+
+  nodes.content
+    .prepend(nodes.title)
+    .prepend(nodes.logo);
+
+  nodes.container
+    .append(nodes.content);
+
+  nodes.wrapper
+    .append(nodes.container)
+    .appendTo($body);
+}
+</script>
+<div class="page">
+                <div class="page__header">
+                <header class="menu-main header"  id="js-menu-main">
+    <div class="wt-container">
+        <div class="wt-row wt-row_nowrap wt-row_size_s wt-row_align-items_center">
+            <div class="wt-col-auto-fill">
+                <a href="/" class="menu-main__logo-link"><svg class="_jetbrains-simple sprite-img menu-main__logo" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#jetbrains-simple"></use></svg></a>
+            </div>
+            <div class="wt-col-inline wt-display-md-none menu-main-skeleton-text-1" style="min-width: 69px"></div>
+            <div class="wt-col-inline wt-display-md-none menu-main-skeleton-text-1" style="min-width: 81px"></div>
+            <div class="wt-col-inline wt-display-md-none menu-main-skeleton-text-1" style="min-width: 46px"></div>
+            <div class="wt-col-inline menu-main-skeleton-button"></div>
+            <div class="wt-col-inline menu-main-skeleton-button"></div>
+        </div>
+    </div>
+</header>
+
+
+
+  <div class="menu-second" id="js-menu-second">
+    <div class="wt-container">
+        <div id="js-menu-second-mobile-wrapper" class="wt-display-none">
+            <div id="js-menu-second-mobile" >
+                <div class="menu-second-mobile wt-row wt-row_size_m wt-row_align-items_center wt-row_justify_between">
+                    <div class="wt-col-inline menu-second-skeleton-text-2" style="max-width: 120px"></div>
+                    <div class="wt-col-inline menu-second-skeleton-button" style="max-width: 80px"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="js-menu-second-desktop" class="menu-second-desktop
+                       wt-row wt-row_size_0 wt-row_align-items_center">
+            <div class="wt-col-auto-fill">
+                <a class="menu-second-title-box"
+                   href="/clion/">
+                                            <span class="menu-second-title-box__logo jetbrains-logo">
+                            <svg class="_clion sprite-img" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#clion"></use></svg>
+                        </span>
+                    
+                    <span class="menu-second-title-box__title wt-h3">CLion</span>
+                </a>
+            </div>
+
+                            
+                                                        <a href="/clion/whatsnew/"
+                       class="wt-col-inline wt-text-2 wt-text-2_hardness_average menu-second__link
+                                                                ">
+                        What&#39;s New
+                                            </a>
+                                            
+                                                        <a href="/clion/features/"
+                       class="wt-col-inline wt-text-2 wt-text-2_hardness_average menu-second__link
+                                                                ">
+                        Features
+                                            </a>
+                                            
+                                                        <a href="/clion/learning-center/"
+                       class="wt-col-inline wt-text-2 wt-text-2_hardness_average menu-second__link
+                                                                ">
+                        Learning Center
+                                            </a>
+                                            
+                                                        <a href="/clion/buy/"
+                       class="wt-col-inline wt-text-2 wt-text-2_hardness_average menu-second__link
+                                                                ">
+                        Buy
+                                            </a>
+                                            
+                            
+                                                    
+                            <a href="/clion/download/"
+                   class="wt-col-inline menu-second__download-button wt-button wt-button_size_s wt-button_mode_primary">
+                    Download
+                </a>
+                    </div>
+
+    </div>
+</div>
+
+            </div>
+    
+    <div class="page__content ">
+        <section class="wt-section">
+<div class="wt-container">
+<div class="wt-row wt-row_size_m wt-offset-top-96">
+<div class="wt-col-10 wt-offset-left-1 wt-col-lg-12 wt-offset-left-lg-0 wt-text-1 wt-text-1_flow">
+<div class="youtube-video" id="youtube-player-react-root"></div>
+<h3 class="wt-h3 wt-h3_flow">Abstract:</h3>
+<p class="wt-text-1 wt-text-1_flow">
+                        Can you make me productive with a C++ IDE?<br>
+                        Anastasia Kazakova, Product Marketing Manager for CLion
+                    </p>
+<p>CLion from JetBrains is a powerful integrated development environment built to help productivity across all aspects of C++ code. In this talk, the different aspects of how users can maximize their productivity and the features built into CLion are examined in a live demo scenario. Examples of code generation which can generate constructors, getters and setters, equality operators, relational operators, stream output operators, and override functions are explained with real-world scenarios which generate half of your daily quota for lines of code in minutes.</p>
+<p>Anastasia explains the process of productive documentation writing using CLion’s built-in Doxygen style which makes it simple to maintain code and actually see and generate documentation. The quick documentation function is much more than this, with features such as macro replacement which can be run over huge code hierarchies: a feature the Boost.Hana author, Louis Dionne, has since learned about after having previously debugging this macro by hand, by copying the output of the preprocessor and looking at it.</p>
+<p>Code analysis and debugging is also a very important, time-consuming aspect of working with C++ code. CLion’s capabilities are covered with examples of the static analysis options, data flow analysis, and the remote debugging tools. Integration with Clang, CMake, Valgrind, and the new compilation database are available and their uses are detailed. Not to mention profiling your code with Dtrace for Mac users and Perf for Linux, which you can do with the IDE and then follow problems, go straight to your code and fix them.</p>
+<p>Unit tests are also covered and there is integration with Google Test, Boost.Test, and Catch to help you effectively test your code. There are features included such as “rerun all the tests that actually failed” where you can rerun all the tests that failed without having to select them manually, which can save a lot of time.</p>
+<p>This live demo goes through the features which will have the quickest impact on your making productive changes to the way you can code with live examples of how they work in practice and their effects on the code.</p>
+<h3 class="wt-h3 wt-h3_flow">Transcript:</h3>
+<p>
+                        Speaker <br>
+                        Make me productive with C++ IDE. Now, I have my guess as to what the answer's going to be, but let's wait and see. Anastasia.
+                    </p>
+<p>
+                        Anastasia K <br>
+                        Yeah, thank you. There will be a live demo, so I do encourage everyone to come closer. You will be able to see better if you come closer. We have some spare tables here at the front. It is a live demo, what could possibly go wrong? Nearly everything. So it should be good to close our event with.
+                    </p>
+<p>I hope you had a nice dinner, got to grab a glass of wine, or a beer, or something. So you should be in a good mood now to look at your C++ IDE. So let's start. A C++ IDE is not a very easy thing to create, as you probably got from my talk at the very beginning of this event. There has been lots of effort put into CLion. There is a fun story about CLion, believe it or not, for a very long time we didn't actually believe we could make a C++ IDE at JetBrains. Then a funny thing happened, we started AppCode. A show of hands, who knows what AppCode is? So this is an IDE for iOS and Mac development. We started supporting their Objective C and their Objective C++, and suddenly, we found ourselves in a situation where we did a C++ parser. We were a little bit surprised. We actually read a nice blog post, which was saying, "It seems you're doing a C++ parser, so we guess you are going to start doing a C++ IDE soon."</p>
+<p>That happened in about 2012. Then, four years ago, we actually released CLion, our cross-platform C and C++ IDE. Also, in the same year, we released ReSharper C++, an extension for Visual Studio for C++, but that's another story. I will be demoing CLion here.</p>
+<p>The main idea behind CLion is to help you to be more productive with C++ code. And that's all we try to implement. Let's start with a very simple example. What I love about CLion and about the enhanced productivity it provides me, is when I see an IDE in front of me, I'm usually thinking, "Come on, can you generate code for me? Can I sit here and you will write code for me?” It is not that simple, but it is still possible.</p>
+<p>So let's generate some things. I have a few things available here in the menu. Let's start with the constructor. OK. I will select all the fields. It will generate in place so that you don't have to switch between different files to see the result. So here is my constructor. Let me close this one so you can see it better. I can generate getters and setters. I will also do this in place. And I can generate an equality operator. Why not?</p>
+<p>There are a few options here. I will turn them on. It will search to see if maybe I have some existing operators for this class. So it searches to see if I have used it in some other place before. If I have, it will just add the missing operators for me. OK, I can be even lazier. A relational operator – we also search for existing ones to check if it actually needs to add one or if it should generate one from scratch. Can we do more? Stream output operator – I hate writing it manually, I think everyone hates it, especially if you have a long class. We can probably stop here.</p>
+<p>Let's look at what we are left with. I have been lazy enough. All these things were generated automatically by my IDE for me. That is what I call proper productive laziness. When you just take a tool and it generates everything for you. OK, let's make life a little more complicated. Let's inherit from some class I have here. So I have this mammal class and it has a few virtual methods in it. What can we do here? We can override functions. So select them all and generate this stuff. So here is my makeSound override and useSelfEnergy override. OK, makeSound. I'm not sure that I'm writing any reasonable code here, but just to show you an example, let's do some sound variable. And see it actually fills in my class.</p>
+<p>Let's do some creepy expression – I'm not sure what I'm writing here makes any sense, but just to show you. What I can do now is generate more code. I can surround this with whatever I want here. For example, I will surround it with an if-else clause. Sorry, put a line there and surround it quickly. And now, I can put some conditions here. I don't know if the weight is more than 100, for example. What I can do in the other clause is call some function.</p>
+<p>Do you know what the problem is? I don't have this function. And that is one of the great things about JetBrains IDEs: when you don't have something, no worries. Just press Alt + Enter and it will create it for you. It is that easy. So just start using something and then ask the IDE, “OK, I forgot to actually put a declaration on the definition list. Help me to define this.” And again, actually, to do this you can see I just typed a few lines of code, pressed a few shortcuts, and I got this huge amount of code.</p>
+<p>If you ever measure the results of your day by the lines of code you write, do you know what the optimal number of lines of code that you can develop or generate is per day? Some statistics say it’s around 70. So by doing this, half of them are already done. I am nearly ready to go home.</p>
+<p>OK, let's do some creepy stuff here. I have a few other functions inherited from my mammal class. I'm actually not that good at biology and have no idea if the hierarchy's correct from a biological point of view, but let's try something interesting.</p>
+<p>I have this makeSound function. Let's change the signature for this function, so I will say, "Come on, you have a huge hierarchy using this function. Would you like me to update the whole hierarchy?" I go, "Yeah, why not? Let's do that." I update, I add some parameter here, some ID probably. Let's refactor that. Now, what we can see here is my makeSound in the human class. Here's my makeSound in livestock, here is my makeSound in bird, and, of course, my makeSound in the parent mammal class.</p>
+<p>So when I agreed to update the whole hierarchy, what did CLion do for me? It actually propagated my change to the top of the tree and then back down through all the branches. So if you want to refactor something which is deep in your hierarchy, some leaf, it would be really nice and really productive if you don't have to update the whole tree by hand. It is really nice if an IDE can go through this tree on its own. And that's what we do.</p>
+<p>OK, we are done with this nice human sample. Let's see what else we have here. What is the most important part of our code? OK, so there are different opinions. It is documentation because without the documentation no one will be able to maintain your code further, especially when you leave for vacation or leave a company.</p>
+<p>There are different ways to document the code. But the documentation in CLion is much more powerful than just providing documentation for, say, function signatures. It actually tries to be smart. You may probably remember some samples from my first talk? So, because we build the whole Abstract Syntax Tree for the code, we can actually tell a lot of things about C++ code. Let's start with a simple one: I have the documentation command – that is Doxygen style, one of the most popular frameworks. It is a popular tool to document your code, in a popular format. So I have my Doxygen comment here as a brief description, and some parameter description. If I call the quick documentation popup, I have all this information rendered in a single window. We do not call Doxygen in the background, don't worry. We rendered this on our own, putting everything in place correctly. You can navigate these classes and links and we can go through it and see through the whole hierarchy in the quick documentation popup.</p>
+<p>Do you like writing documentation by hand? I don't either, I prefer to generate it like this. So three slashes, press Enter, and now this top is generated. And the best thing is, I have my function signature here with some documentation, so I have some parameters. I will add a description for my parameter. Then I put a definition somewhere, for example, if it's in a different file. I decided to rename the parameter; I said, "OK, it will be called myValue." The best thing is the documentation is updated automatically. So even after a year of changes, the documentation will be up to date. So I won't end up in some documentation naming parameters that are no longer in my code, for maybe more than a year.</p>
+<p>OK, so you can actually see and generate documentation, but as I said, the quick documentation function is much more than this. And here is the interesting thing. I actually showed it in my first talk: macro replacement. Here it is. So the final replacement for my macro is shown here. I told you about the boost macro here, you remember that? Let's take some boost macro here. And here it is. It's actually much longer. Have you ever been interested in what's there behind the boost macro? Here it is. So you can actually see the final replacement.</p>
+<p>I know one person in the C++ community who is really excited about this. Do you know what he is doing? Boost.Hana. Have you ever heard about this? Boost.Hana is a huge, heavy meta-programming library. The author, Louis Dionne, was actually debugging this macro by hand, just copying the output of the preprocessor and looking at it until he learned about our feature. He was so excited he forgot to ask me about all the other features. He just said, "Yeah, finally." Because Boost.Hana macros are actually even longer than the one boost macro I just showed to you. And there are maybe 20 or 30 levels deeply nested inside.</p>
+<p>So okay, you can see the macro replacement. And as I promised, you can see the type inferred. So if I call here the quick documentation—let’s make it smaller—you'll see the int value. You can guess if I’d call it for op1, what would I get? Long, naturally. And here, the double.</p>
+<p>So you see, we do infer these types on the fly, because we actually build the whole Abstract Syntax Tree. We have two parsers in CLion and we build the whole Abstract Syntax Tree, so we know exactly which type we have for this variable. We know exactly what I actually call it and what is behind this macro. This actually includes all the information we take from the compilation flags and the environment variables. So we take all this into consideration when resolving the code.</p>
+<p>Just to demonstrate the compilation flags to you, I have this nice sample. I have this code and there is a preprocessor branch, and it depends on this special flag. What is this special flag? I have two CMake list files. One defines the configuration and has this special flag on it and it’s one. The other is defined in the special flag and it's zero. What I have here is a resolved context with a flag that comes to me and takes me to these highlighted branches. Let me change it, so there is no flag.</p>
+<p>The proper branch will be immediately highlighted. So that means that the configuration we're using to resolve this actually reflects this configuration with all the proper flags. So if, for example, you're doing some cross-platform development, cross-compilation, and you are targeting several platforms, naturally, you would expect the code to resolve to the proper platform to be able to fix it. So what do you do? You put this into separate configurations, then you just switch these configurations in resolve, and you've got a proper branch highlighted for you. And it's very easy to read for this code and to understand what actually happens for this particular target, for this particular configuration.</p>
+<p>I come from the embedded world. I was really lacking features like this when I was a developer.</p>
+<p>That is about it for the documentation. Let's do some interesting stuff with code analysis. At JetBrains, we love static analysis. We have people who have studied static analysis at university and who have even done their Ph.D. on static analysis. They're really cool with that. They can actually implement lots of interesting stuff.</p>
+<p>Doing code analysis in C++ was really fun. We did a lot of things. So, first of all, we made our own analyzer, which can show you some different things, such as for the definition of the name, for example, or, a function that hides in a virtual function. Or, for example, if you're still a fan of the old-style printf, if you missed the format specifiers and in the actual string they don't match the types, we'll tell you, “Come on, it doesn't match. You will probably get some unpredictable results. Check that.”</p>
+<p>Of course, there is also using an assignment in a condition. I think every C++ and C programmer has made this by mistake at least once in their life. Myself, I have done it more than once. So we highlight these things, saying it is probably not what you actually meant here. And a very nice thing for escaping from the local scope – a very popular error in the C++ world. So when you have a local variable and they're like, "OK, it will return this for you using the address." And it's no longer valid, so that's a runtime error. You can check that, as well.</p>
+<p>We work, as I said, with two language engines. So we have our own language engine, and we introduced a second one a year ago which works in Pearl and it's based on Clang. It's our own branch of the Clang LLVM repository that includes a bunch of different fixes on top of Clang.</p>
+<p>What we do here is, first of all, our engine actually provides an error, such as “no matching function”. So the overload resolution failed here. But then we ask Clang for the particular reason for that, and it provides “substitution failed because no type named inner type,” and you know what I can do? I can navigate to it. So I can actually look at what is actually causing the failure or where this inner type requirement is found. Same here, it says “no member named method,” and I can navigate to this place and see where I've actually been. So here this is in just one file, but you can guess it could be in different files and you'll still navigate to the proper place.</p>
+<p>So, as I said in my first talk, if you don't debug the overload resolution that failed, you can still actually get some additional information from your tooling. Here is a pretty exciting sample I really like. We have C-style casts, which you can actually configure in CLion and say, "OK, come on. I am old school. I am legacy. I will use C-style casts.'' But again, I also say, “I will be more modern. I will use C++-style cast.'' What's the problem with them? It is that there is more than one. So you actually have to select which cast to use if it's a C++ cast. We actually made this task a little bit easier. So when the tab doesn't match, if you press Alt + Enter and ask to cast: here is the static_cast; dynamic_cast; reinterpret_cast; and const_cast. What we are trying to do is understand from the context which particular cast you actually need and try to add it for you. Naturally, you can't always do it, but we do our best. But in about 80% of the cases, we match the cast properly. You might be quite happy with that.</p>
+<p>When we started doing code analysis, we found out that we have a person in the team who actually did their Ph.D. on data flow analysis. We couldn't escape that. We asked them to implement data flow analysis for C++. That's something that the compiler can do for you. And it's the thing that helps you with the runtime issues. You know what? Because it analyzes how the data flows through your code and suggests particular foreign logic issues. So for example, here it tells me the condition is always true. You can guess that there is a previous if/else clause where I'm either assigning red or it is already yellow. There is no need to check that in this case. So that's true already.</p>
+<p>OK, another example of this kind is, here I see unreachable code. Why? Because it is the case with the color yellow. And then the previous switch case, I am actually assigning red, blue, or green. The compiler can't get it because it doesn't take the data in the same way it flows through your code. It doesn't need it, actually, it's fine, it's what you expect from the compiler. Who would expect it to actually analyze your data? Probably not your security department. So, we do that. On the one hand, I really love these checks. On the other hand, there are some checks I usually recommend to turn off when there is some slowness, because, as you can expect, data flow analysis is not that fast. It analyzes the whole data.</p>
+<p>So yeah, it's cool that you can actually run it on a CI server. When we install CLion, we can run all this code analysis just on the CI server. For example, we can run the data flow. When we did a few code analysis checks, we found that there is a nice Clang Tidy analyzer, which is done by the LLVM community and is part of the LLVM infrastructure. Let's see if we have some nice example here. Yeah, so what we did was we bundled Clang Tidy into CLion. So when you get some checks from Clang Tidy, they are marked as a Clang Tidy check. And you can get them the same way as you get CLion's own code analysis checks. And there are quick-fixes from Clang Tidy.</p>
+<p>Here is the modernize group, so I can, for example, convert lambda to std::bind, or here it suggests using a range-based for. I can do that, as well. Pass by value and use std::move, why not? To be honest, we have only 60 or 70 of our own checks. With Clang Tidy from LLVM 8.0, the recent release which we bundle, there are 330 checks. Not all of them are reasonable, so we try to limit the default configuration a little bit. So we don't turn them on by default because there are dozens of checks. Some are created by Google, some are created by other companies. They may have some particular checks they need that you probably don't. You can tune the configuration in the code inspections. You can actually select which profile for a Clang Tidy you would like to get. You can check them here in the list or you can just provide a Clang Tidy file and your project will read the configuration from it.</p>
+<p>Do you know what the best thing about Clang Tidy is? It's an open-source linter which you can extend easily. Yes, you can have a specific check for a team. No IDE will implement it for you because it's very specific to your project. But you want your team to get it in the IDE and to force them to fix it.</p>
+<p>What you can do is you can implement and check it on top of Clang Tidy. That's very easy. There are dozens of samples across the Internet with huge documentation. So you just get this Abstract Syntax Tree by build by Clang and do a check. And then you can actually specify the Clang Tidy executable in CLion and use a custom Clang Tidy executable. That means you will get all your checks the same way in the IDE as you do currently. So that's a good thing. It is always good to know that you can actually extend the thing. And of course, when we learned that we could extend Clang Tidy, we actually decided, why not implement a couple of our own checks just to see how it works. And we did that.</p>
+<p>We started by taking one very interesting check that we call argument selection defects. The interesting part is that there is a huge scientific paper behind this check. So what does it do? I have a function called get_User here, which gets the company ID and the user ID. And I made a mistake – the order of the parameters is wrong here. So I passed user ID and then company ID. But they are the same type, so the compiler will just miss it. It's fine to compile this code. And I might miss that as well.</p>
+<p>There is a paper written by Google people who actually implemented some heuristic algorithm for detecting that the order is wrong based on the name of the arguments and the parameters. So if you are good at naming your parameters, if the names are reasonable, and if you don't name your parameters crazily, then it should guess nicely if you miss the order. So definitely we've turned it off for all the short names, like X, Y, Z, and we turned it off for all the functions like swap. Because naturally, doing a swap means you are swapping the arguments – that's fine. So this paper actually takes all these things into account and they implemented it. And, of course, you can call a quick-fix and it will switch it in all these usages where the order is missing. So we did a few checks like that.</p>
+<p>There is another check that I can probably show you here. Do you know why it is suggesting to rename? I will tell you. It is because I have a naming conversion configured for my project. So if we go to the code style settings, you'll find this nice UI—we are making it even bigger and more flexible in the next version; we'll get more options here. The idea is that it's much easier to read the code if the naming convention is proper. So if the whole team is following the same naming convention, then a new person entering the team can easily guess by the code if it's a function, or a class, or a private method, or maybe a public function, if it's a macro, if it's an enum, so whatever. So reading the code when you have a name in the convention is easier, so we support it.</p>
+<p>You can see the list of entity kinds here on the left. You can configure a custom prefix, custom suffix, and you can select the proper style. And you can actually apply it from a known convention that we have predefined for you here. Google and LLVM all have some predefined naming conventions. This check, actually, tells me that the name is not correct. It doesn't follow the conventions. So then naturally, we can do a quick-fix with renaming and we will update all the usages. It's a good thing to force your team to use. And naturally, you can configure it and share the settings in the version controls so that the whole team is on the same configuration.</p>
+<p>OK, that is enough of code analysis. Let's do something more exciting. What could be more exciting than refactoring in C++? I have a function here, callPerson. What I will do, I will change the signature. And changing the signature, I will do another parameter at the same time. You can see the completion here. I will call it a bad name – don't use this name in the convention – I am calling the parameter p1 for the demo. So you see I have the usage of the callPerson function, and I will substitute it with the default value – just to keep my code compilable. You now can find usages of this function and actually change the value you actually need in all these places. But at least by default you have some nice value. And if I do the Change Signature again and swap the order, if I still have the wrong order, it might be not good because I have now ‘p’ there. Probably something will go wrong. Let's hope for the best.</p>
+<p>We have swapped them. Cool. I'm safe. That's why I like the automatic refactorings with the IDE – because they keep me safe.</p>
+<p>Let's now extract something. Let's close this to show you more. I have this function extractSample, and it's called here. I have a few things to extract. I will first of all extract this value. You can see we have lots of extracts here – whatever you want to extract from your C++ code. I'll extract a parameter. It is nice that it asks me first, “I see 10 occurrences of this value. Do you want me to extract all of them”? Of course I do. I think not just occasionally. Let's do that. I will call it ‘D’ for something. I can declare a constant if I want. Here, I have my parameter. Let's come back to usage. Here is my value. Cool.</p>
+<p>Let's extract something else. Let's extract this expression – the whole expression – to a variable. Extract variable. Again, there’s more than one occurrence. OK, let's check them all. You see them highlighted. You see that the expression was actually more complicated. It managed to extract part of it, okay. So I will extract these occurrences. They will be substituted and everything is fine. So I can extract typedef, I can extract define, I can extract functions. So all these things are possible.</p>
+<p>And one last thing about the refactoring – have you ever dealt with pulling members up and down through the hierarchy? I will show you because not everybody may have seen this before. There is Pull Members Up, or Down. And when you call it, that's fantastic. Now, it not only asks me where to pull my method for this hierarchy, but it also highlights some things from my class in red, telling me, “it is probably used by the method you are going to pull up. You will need that.” So you will know to select them and to pull them up and down your hierarchy.</p>
+<p>OK, refactoring was nice. Resolve context, we also got it. Let's do a nice debugging demo. I guess regular debugging would be no fun. We'll do some cool debugging demo. For this, I will need my Linux machine. It's a virtual Linux machine running here in parallel on my Mac.</p>
+<p>What I want to do, there is a nice and magic word, remote debug, which actually helps us to debug and develop when we're not on the target machine. Because in most cases we're not. We're using the machine that our company gave us, or the machine we prefer, or just the machine which is convenient because we, for example, have everything installed on it. But we are developing for another platform, embedded platform, or just some other architecture, or another target platform, or maybe it's just not possible to debug on your local machine for some reason.</p>
+<p>So we have two types of remote configurations: first, there is the case when you just want to debug on the remote machine. So you're working locally, your code is local, so all the things here, but then you have some different architecture you want to debug. Well, we suggest you use the GDB server remote debug configuration. It's very straightforward, very simple. If you go to edit configurations, it's called “GDB remote debug.” So what did I actually provide here? The name, that's simple enough, GDB. So you can switch it, but, by default, we bundle the GDB build for multiple architectures already. So we don't just bundle the GDB for the particular architecture for this binary for my Mac. I have this binary for CLion when it was installed, but it has the GDB build for multiple architectures already. You still can switch it if you have some very specific platform for which you actually got your GDB compiled from GDB tools, but in most cases, you will be fine with the bundled version.</p>
+<p>So I provided the connection I will be using, the address, and the port. Symbol file, what's that? For debugging, you need some debug symbols. Where do you get them? The easiest way is just to take the binary, which you will be running and debugging there. If it's built with debug flags, it has the debug symbols. OK, so I will just copy this binary to my local machine and provide it here for the symbol file.</p>
+<p>And the last thing is path mappings. For CLion to understand the breakpoints I will be setting in my editor and to show me all the things in my code, it actually needs to understand how my local paths are mapped to the paths on the remote machine where I build the binary. If I build it locally for that architecture, that's fine. It's the same paths and you don't need the path mappings. But if, for example, it was built on some CI server with a different architecture, the paths to the sources are probably different. And the debug symbols will be used in this direct path to the sources. So we have to know the mapping.</p>
+<p>So okay, we have successfully provided all these things. Now, all we have to do is to go to my virtual machine and start the GDB server. So it just starts the GDB server for localhost, which is my Linux port 8080 and my binary. And it's now listening in on the port. I will now go to the remote app and call the debug. The debugger in CLion is connected to my remote machine, to my Linux. And now it actually stopped on a breakpoint. What can I do now? I can do some stepping. So here is my editor on my Mac. I do some stepping.</p>
+<p>Do you know what this is? We call it the Inline Variables view, and it is my favorite feature in the debugger. When you debug, you can see the actual values of different variables right in the editor. So you don't need to switch or hover over something to see them. And the good thing is that if I select the variable here – I’ll change the value to 300 – you'll see that it is colored in orange which shows me that it has updated it. And I can see the updated value. And I can go forward and step through the things that can evaluate expressions here, run to cursor, do all kinds of stepping, and actually debug your application. And this whole application, if I stop it here, probably we'll see, there is a game running here on my Linux. I was debugging that game. OK, so I'll stop it here.</p>
+<p>Sometimes a remote debugger is not enough to deal with things. Sometimes I need something more complicated, the whole cycle of remote development. This means I have my local machine, but I have to compile, run, and debug my code on another remote machine, like Docker, or maybe some other architecture. You can do that. How it works In CLion is we actually build the configuration when we take the local sources and synchronize them to the remote machine using CLion. And then we synchronize such paths back at the header. I will show you why in a couple of minutes. We'll do this last synchronization.</p>
+<p>So first: what do you have to configure? Nice question. So all you need is a toolchain, specifically a remote toolchain. It'll go to the same Linux host. I have provided some credentials to this machine here. And it now tries to connect to my remote machine and asks if I actually have all the tools I need, like the make, the C and C++ compiler. OK, it detected all the tools – I have them.</p>
+<p>We implemented the remote GDB debug in a general way. It works for any project model supported. You probably know we're a little bit more than CMake right now. We have Gradle for C++ and compilation database. Remote GDB debug works for all three. Full remote mode now works only for CMake, so that's why I need to provide a CMake profile. So I'll do that, that's just a remote profile used in my remote toolchain. That's it. Cool. What we can do now is run it. Let's switch the configuration to show you in detail. So first of all, my debug configuration is a local configuration. So that the application simply prints this name. So let's run it.</p>
+<p>Since I'm running it locally, it says my computer’s OS is Darwin. OK, let's now switch to the remote toolchain. Now, let's run. Oh, cool. I got Linux. That's actually the name of my remote machine. So what actually happened in the background, it actually connected to my remote machine, compiled the code there, ran it, and provided the output here. You can debug the same way, in a remote way. The thing that I like is, again, about the preprocessor branches. You see that here Linux is actually highlighted because I'm using the remote configuration. If we switch to the local configuration, naturally, the Mac branch will be highlighted. That's what I expect from my tool, to highlight the proper branch for me. If I'm working with a remote machine, the Linux branch will be highlighted for me. So that's the remote debug and the remote development mode.</p>
+<p>Now, just a few words about integration. IDE, do you know what it stands for? Integrated Development Environment. That means that it is the whole environment, it is not just about the code. So what do we have? It is a regular IntelliJ-based IDE, so you can guess we have all the old version control support and all this stuff. That is not that exciting. Let's do some exciting stuff, like who actually uses Valgrind? Anyone? Cool. Yeah, you're my favorites. I like this tool very much. So we actually integrated the Valgrind memory check.</p>
+<p>So that's nice for catching memory leaks in your program. So what you can do is, you can run the application with Valgrind memory check. I'm not going to run it on remote as I don't have it there. I’ll run it locally. It actually gets you to this nice output here. This Valgrind tab and what you can see here is just the whole stack trace of all the leaks. I actually recommend that you run the integrated tools from the IDE, and not separately. If I ran my application in Valgrind separately from the terminal, I would miss is the actual navigation to my code and my editor because here I actually have the code. I can jump to the source code in the editor so I can go and fix the problem immediately just from this trace.</p>
+<p>That is it for Valgrind. But there is another tool in the community which is very popular for checking all possible kinds of addresses and other things – that’s sanitizers. Sanitizers are a bit different from Valgrind. Valgrind is just a tool, you run your application onto Valgrind. With sanitizers, you have to recompile your code, so the functionality is implemented in a different way.</p>
+<p>If we detect the -fsanitize flag in your compile options, then we know that you're probably using some sanitizers. Cool. If you simply run your application, there will be a tab with sanitizer output. And just the same, you can go for the stack trace and you can navigate to the source code. And the good thing about the sanitizers is that there are so many of them: address sanitizers, memory sanitizer, leak sanitizer, thread sanitizer, and undefined behavior sanitizer. There are some drawbacks, for example, it's only supported for some Clang versions and some newer GCC versions starting from version 5. Both Valgrind and sanitizers do not work in Windows – these tools do not like the Windows platform. Sorry, Windows users. But still, it's good to check them out and you can provide some settings here.</p>
+<p>What else is left from the dynamic analysis? Valgrind, sanitizers, what else? Anyone? Profiler.</p>
+<p>So if you need to profile your code, and if you're lucky enough not to be on Windows, sorry, we don't have profiler for Windows currently. We have it on Linux and Mac. On Linux, we're using perf on Mac we're using DTrace. And so I can profile my application here. It will start the profiler. It tells me that the profile it attached and waiting for my application. Now, I can open the profiler, I can look at the flame chart for all the threads or some particular thread. I can go to a call tree, I can go to the methods list, and again, I can jump to the source. So if you have the profiler output, it's actually linked to the source code. So just profile your code. Follow the problem and then go to your code and fix it. It is that easy.</p>
+<p>Static analysis, dynamic analysis... What else are we missing to write perfect C++ code? I asked in the very beginning, but there were just not that many hands from people who were doing unit tests. Unit tests, naturally. CLion has integration with Google Test, boost.Test, and Catch. I love Catch not because Phil Nash, who is the author, is our developer advocate, but because it's a nice framework. It is header-only, so, despite Google Tests, which you actually have to link with the whole library, you can actually just include the catch header file and you are done.</p>
+<p>So I have some tests here. When you see these nice gutter icons, they're actually showing me the state of the test from my previous run. So some tests actually succeeded, some tests failed, but also this is the run icon. So I can just go, "OK, run the test for me," and I will get this nice unit test window with the test runner output. I can investigate the tests, I can export the results, I can compare with what I previously got here. I can do all these kinds of things. Boost.Test is the same, so just the unit test, which can run.</p>
+<p>If you ask me which is my favorite feature for the unit test integration, I will tell you just one. It's called “rerun all the tests that actually failed.” And a very direct case where this is very useful: imagine you have 200 unit tests, half of them failed. You have to fix them because before that, your team lead said, "No, don't commit this code, all the tests are failing." You have to fix them, so what do you do? You're constantly rerunning the test that failed to try to fix the current one until it goes to zero, and then you just check the whole bunch from scratch just to be sure that you haven't broken anything again. So that's a very nice workflow. So just rerunning the tests and just saying, "OK, I can just rerun all the tests that failed. I don't need to select them manually”, that's quite helpful. That’s unit tests.</p>
+<p>That is probably mostly it for the exciting parts. Just one last quick word about CMake. As I said, we are not only about CMake these days. We have support for a compilation database in Gradle C++, but CMake is still is a first-class citizen for CLion. So we treat it as a language. So if you start typing in CMake files, you will see the code completion. And all these file names are the actual links to the file. So I can actually go to them using the usual “Go to declaration” shortcut.</p>
+<p>And there are Live Templates, so if you've heard about Live Templates in the IntelliJ Platform, this is just the template you can configure, put some code that you use most often, and then call it with a short combination of letters. You can provide Live Templates for CMake as well. We have some for Google Tests and Boost.Test.</p>
+<p>So you can do all these things. Install CMake and it will be supported and will appear here in the build tool window. So that's why I call CMake support a first-class citizen. But again, it's not just about CMake nowadays. There is the compilation database, which I treat as a nice workaround for makefiles. If you use makefiles and we still don't support them, you can use compilation database. We have a whole tutorial in our help about how to do that. So go and try it.</p>
+<p>So that's mostly it. I hope you enjoyed the demo and it wakes you up a little bit.</p>
+<p>Yeah, and I think they will have a nice raffle and some closing words. I think you were waiting for that, yeah?</p>
+</div>
+</div>
+</div>
+</section>    </div>
+
+            
+<div class="page__footer">
+    <footer class="footer" id="footer">
+        <div class="wt-container">
+            <div class="footer__main wt-row wt-row_size_m wt-row-sm_direction_column-reverse">
+                <div class="footer__logo wt-col-inline wt-display-md-none">
+                    <div class="jetbrains-logo _size-3 _full-block">
+                        <svg class="sprite-img jetbrains">
+                            <use xlink:href="#jetbrains" />
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="wt-col-auto-fill wt-col-sm-12">
+                    <div class="wt-row wt-row_size_xs wt-row-sm_size_m wt-offset-top-12">
+                        <div class="wt-col-inline footer-skeleton-button"></div>
+                        <div class="wt-col-inline footer-skeleton-button"></div>
+                        <div class="wt-col-inline footer-skeleton-button"></div>
+                        <div class="wt-col-inline footer-skeleton-button"></div>
+                    </div>
+
+                    <div class="footer-skeleton-text-2 wt-offset-top-24" style="max-width: 45%"></div>
+                    <div class="footer-skeleton-text-2 wt-offset-top-12" style="max-width: 70%"></div>
+                </div>
+
+                <div class="wt-col-inline wt-col-sm-12 wt-col_align-self_end wt-col-sm_align-self_start">
+                    <div class="wt-row wt-row_size_m wt-row_justify_end wt-row-sm_justify_start">
+                        <div class="wt-col-inline footer-skeleton-button" style="min-width: 180px"></div>
+                        <div class="wt-col-inline footer-skeleton-button" style="min-width: 80px"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+    </div>
+
+<script>
+(function () {
+  function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+      results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+  }
+
+  function updateQueryStringParameter(uri, key, value) {
+    var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+    var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+    if (uri.match(re)) {
+      return uri.replace(re, '$1' + key + "=" + value + '$2');
+    }
+    else {
+      return uri + separator + key + "=" + value;
+    }
+  }
+
+  var downloadLink = document.getElementById("download-link");
+  if (downloadLink != null) {
+    var platform = getParameterByName('platform');
+    platform = platform != null ? platform : "windows";
+    var href = downloadLink.getAttribute("href");
+    var code = getParameterByName("code");
+
+    if(code != null) {
+      href = updateQueryStringParameter(href, "code", code)
+    }
+    href = updateQueryStringParameter(href, "platform", platform);
+    downloadLink.setAttribute("href", href);
+  }
+})();
+</script><script>
+(function() {
+  var STORAGE_KEY_NAME = 'firefoxDisappearedSVGWorkaround';
+  var STORAGE_KEY_VALUE = '1';
+
+  var isFirefox = /firefox/i.test(navigator.userAgent);
+  if (!isFirefox || isFirefox && sessionStorage.getItem(STORAGE_KEY_NAME) === STORAGE_KEY_VALUE) {
+    return;
+  }
+
+  var arrayFrom = function (arrayLike) {
+    return Array.prototype.slice.call(arrayLike, 0);
+  };
+
+  function workaround() {
+    var uses = document.querySelectorAll('.page svg use');
+    var badNodesCount = 0;
+
+    arrayFrom(uses).forEach(function (node) {
+      var rect = node.getBoundingClientRect();
+      if (rect.width === 0 && rect.height === 0)
+        badNodesCount++;
+    });
+
+    if (badNodesCount === uses.length) {
+      sessionStorage.setItem(STORAGE_KEY_NAME, STORAGE_KEY_VALUE);
+      if (typeof dataLayer !== 'undefined')
+        dataLayer.push({'firefoxDisappearedSVGWorkaround': STORAGE_KEY_VALUE});
+
+      window.location.replace(window.location.href);
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', workaround);
+
+})();
+</script>      <link href="/_assets/banner-rotator.entry.07ac548a2a68a7922693.css" rel="stylesheet" type="text/css">
+      <script src="/_assets/banner-rotator.entry.b9ea3aaba598786010f0.js" type="text/javascript"></script>
+      
+      
+  <script>
+(function () {
+
+  'use strict';
+
+  function ImagesSrcReplacer () {
+
+    var attribute = 'data-src';
+    var matches = document.querySelectorAll('img[' + attribute + ']');
+
+    for (var i = 0, n = matches.length; i < n; i++) {
+
+      var attrValue = matches[i].getAttribute(attribute);
+
+      if (_isHighDensity ()) {
+
+        var name = attrValue.substring(0, attrValue.lastIndexOf('.'));
+        var extention = attrValue.substring(attrValue.lastIndexOf('.'), attrValue.length);
+
+        matches[i].setAttribute('src', name + '@2x' + extention);
+
+      } else {
+        matches[i].setAttribute('src', attrValue)
+      }
+    }
+
+    /**
+     * Detect high density
+     * @returns {*|boolean}
+     */
+    function _isHighDensity () {
+      return (
+      (window.matchMedia &&
+      (window.matchMedia('only screen and (min-resolution: 124dpi), only screen and (min-resolution: 1.3dppx), only screen and (min-resolution: 48.8dpcm)').matches ||
+       window.matchMedia('only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (-o-min-device-pixel-ratio: 2.6/2), only screen and (min--moz-device-pixel-ratio: 1.3), only screen and (min-device-pixel-ratio: 1.3)').matches)) ||
+      (window.devicePixelRatio &&
+       window.devicePixelRatio > 1.3));
+    }
+  }
+
+  return new ImagesSrcReplacer()
+
+}(document, window));
+</script></body>
+</html>

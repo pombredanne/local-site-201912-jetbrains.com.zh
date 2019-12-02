@@ -1,0 +1,91 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"></meta><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><title>IntelliJ IDEA 2016.1 Help :: Using the Push ITDs In Refactoring</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Using_the_Push_ITDs_In_refactoring"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.1 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWindow</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="creating-aspects.html">Creating Aspects</a><a class="navigation-links__next" href="using-the-aspectj-compiler-ajc.html">Using the AspectJ Compiler (ajc)</a></div><h1>Using the Push ITDs In Refactoring</h1><a name="d835395e3"></a><p>
+                For aspects, IntelliJ IDEA supports most of the basic refactorings such as <a name="d835395e5"></a><a href="move-refactorings.html"><span>Move</span></a> and 
+                <a name="d835395e8"></a><a href="rename-refactorings.html"><span>Rename</span></a>.
+                In addition to that, you can also perform the Push ITDs In refactoring for 
+                <a name="d835395e11"></a><a href="http://www.eclipse.org/aspectj/doc/released/progguide/language-interType.html" data-external="true"><span>inter-type declarations</span></a>.</p><a name="d835395e15"></a><p>
+                The Push ITDs In refactoring lets you move the definitions of fields and methods from aspects
+                to corresponding classes.
+                (The <a name="d835395e17"></a><span class="emphasis">ITDs</span> in the refactoring name stands for <a name="d835395e20"></a><span class="emphasis">Inter-Type Declarations</span>.)</p><a name="d835395e24"></a><p>
+                The refactoring may be performed for an individual field or method, for an aspect as a whole,
+                or for all aspects in a package.</p><a name="d835395e27"></a><p>
+                If when performing the refactoring certain aspects become "empty"
+                (this may be the case when the corresponding aspects contain nothing but inter-type declarations),
+                you can select to automatically delete all such aspects.</p><ul><li class="list__item"><a href="#d835395e33">Examples</a></li><li class="list__item"><a href="#d835395e194">Performing the Push ITDs In refactoring</a></li></ul><a name="d835395e33"></a><h2>Examples</h2>
+        <a name="d835395e35"></a><p>
+            The following table shows examples of the Push ITDs In refactoring.</p>
+        <a name="d835395e38"></a><p>
+            In the first example, the declaration of the field <code class="code" data-lang="Java">closed</code> is moved from
+            the aspect <code class="code" data-lang="Java">MyAspect</code> to the class <code class="code" data-lang="Java">Account</code>.</p>
+        <a name="d835395e50"></a><p>
+            In the second example, the method <code class="code" data-lang="Java">close()</code> is also moved from <code class="code" data-lang="Java">MyAspect</code>
+            to <code class="code" data-lang="Java">Account</code>.</p>
+        <a name="d835395e62"></a><p>
+            Note that both these declarations (that is, the declarations of <code class="code" data-lang="Java">closed</code> and <code class="code" data-lang="Java">close()</code>)
+            may be moved to the class <code class="code" data-lang="Java">Account</code> at once if the refactoring is performed for
+            the aspect <code class="code" data-lang="Java">MyAspect</code> as a whole.</p>
+        <table class="" width="100%" id="d835395e77"><thead><tr id="d835395e79" class="ijRowHead"><a name="d835395e79"></a><th width="50%"><a name="d835395e81"></a>Before</th><th><a name="d835395e84"></a>After</th></tr></thead><tbody><tr id="d835395e88" class="ijRowOdd"><a name="d835395e88"></a><td><a name="d835395e90"></a>
+                    <a name="d835395e92"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="n">aspect</span><span class="n">myAspect</span> <span class="o">{</span><span class="kt">boolean</span> <span class="n">Account</span><span class="o">.</span><span class="na">closed</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span><span class="kt">void</span><span class="n">Account</span><span class="o">.</span><span class="na">close</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">closed</span> <span class="o">=</span><span class="kc">true</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="c1">// some code here</span>
+<span class="o">}</span><span class="kd">class</span><span class="n">Account</span> <span class="o">{</span>
+<span class="c1">// some code here</span>
+
+<span class="o">}</span></code></div>
+                </td><td><a name="d835395e111"></a>
+                    <a name="d835395e113"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="n">aspect</span><span class="n">myAspect</span> <span class="o">{</span><span class="kt">void</span><span class="n">Account</span><span class="o">.</span><span class="na">close</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">closed</span> <span class="o">=</span><span class="kc">true</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="c1">// some code here</span>
+<span class="o">}</span><span class="kd">class</span><span class="n">Account</span> <span class="o">{</span>
+    <span class="c1">// some code here</span><span class="kt">boolean</span> <span class="n">closed</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span><span class="o">}</span></code></div>
+                </td></tr><tr id="d835395e133" class="ijRowEven"><a name="d835395e133"></a><td><a name="d835395e135"></a>
+                    <a name="d835395e137"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="n">aspect</span><span class="n">MyAspect</span> <span class="o">{</span><span class="kt">void</span> <span class="n">Account</span><span class="o">.</span><span class="na">close</span><span class="o">()</span> <span class="o">{</span><span class="n">closed</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span><span class="o">}</span><span class="c1">// some code here</span>
+<span class="o">}</span><span class="kd">class</span><span class="n">Account</span> <span class="o">{</span>
+    <span class="c1">// some code here</span><span class="kt">boolean</span><span class="n">closed</span> <span class="o">=</span><span class="kc">false</span><span class="o">;</span>
+
+
+
+<span class="o">}</span></code></div>
+                </td><td><a name="d835395e163"></a>
+                    <a name="d835395e165"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="n">aspect</span><span class="n">MyAspect</span> <span class="o">{</span>
+
+
+
+    <span class="c1">// some code here</span>
+<span class="o">}</span><span class="kd">class</span><span class="n">Account</span> <span class="o">{</span>
+    <span class="c1">// some code here</span><span class="kt">boolean</span><span class="n">closed</span> <span class="o">=</span><span class="kc">false</span><span class="o">;</span><span class="kt">void</span> <span class="nf">close</span><span class="o">()</span> <span class="o">{</span><span class="n">closed</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span><span class="o">}</span><span class="o">}</span></code></div>
+                </td></tr></tbody></table>
+    <a name="d835395e194"></a><h2>Performing the Push ITDs In refactoring</h2>
+        <ol class="list _decimal"><li class="list__item"><a name="d835395e198"></a>
+                Depending on the intended scope of the refactoring:
+                <ul class="list _ul"><li class="list__item"><a name="d835395e202"></a>
+                        To perform the refactoring for an individual field or method,
+                        open the aspect of interest in the editor and
+                        place the cursor within the declaration of the field or method.</li><li class="list__item"><a name="d835395e205"></a>
+                        To perform the refactoring for an aspect as a whole,
+                        select the aspect of interest in the <a name="d835395e207"></a><span class="control">Project</span> tool window.
+                        Alternatively, open the aspect in the editor and
+                        place the cursor somewhere outside of individual inter-type declarations
+                        (e.g. within the declaration of the aspect).</li><li class="list__item"><a name="d835395e211"></a>
+                        To perform the refactoring for all aspects in a package,
+                        select the package in the <a name="d835395e213"></a><span class="control">Project</span> tool window.</li></ul></li><li class="list__item"><a name="d835395e217"></a>
+                Select <a name="d835395e219"></a><span class="control">Refactor | Push ITDs In</span> in the main or the context menu.</li><li class="list__item"><a name="d835395e223"></a>
+                In the <a name="d835395e225"></a><span class="control">Push Inter-Type Declarations In</span> dialog that opens:
+                <ol class="list _decimal"><li class="list__item"><a name="d835395e230"></a>
+                        Select or clear the <a name="d835395e232"></a><span class="control">Delete empty aspects</span> check box.</li><li class="list__item"><a name="d835395e236"></a>
+                        Click <a name="d835395e238"></a><span class="control">Refactor</span> to perform the refactoring right away,
+                        or <a name="d835395e241"></a><span class="control">Preview</span> to be able to study the expected changes prior to
+                        actually performing the refactoring.</li></ol></li><li class="list__item"><a name="d835395e245"></a>
+                If at the previous step you clicked <a name="d835395e247"></a><span class="control">Preview</span>,
+                the <a name="d835395e250"></a><a href="find-tool-window.html"><span>Find tool window</span></a> opens showing the inter-type declarations
+                that are going to be affected.
+                If happy with the expected result, click <a name="d835395e253"></a><span class="control">Do Refactor</span>.</li></ol>
+    <div class="navigation-links _bottom"><a class="navigation-links__prev" href="creating-aspects.html">Creating Aspects</a><a class="navigation-links__next" href="using-the-aspectj-compiler-ajc.html">Using the AspectJ Compiler (ajc)</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content"><div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d835395e262"></a><a href="creating-aspects.html"><span>Creating Aspects</span></a></li><li class="list__item"><a name="d835395e264"></a><a href="using-the-aspectj-compiler-ajc.html"><span>Using the AspectJ Compiler (ajc)</span></a></li><li class="list__item"><a name="d835395e266"></a><a href="refactoring-source-code.html"><span>Refactoring Source Code</span></a></li></ul></div></div></section><div class="last-modified">Last modified: 13 July 2016 </div></article><div id="disqus_thread"></div></div></section></main></div><script src="/help/app/app.js"></script></body></html>

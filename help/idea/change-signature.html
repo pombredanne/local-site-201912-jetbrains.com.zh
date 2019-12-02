@@ -1,0 +1,201 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta charset="UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="//resources.jetbrains.com/storage/help-app/v3/analytics.js"></script><title>Change signature - Help | IntelliJ IDEA</title><link rel="stylesheet" href="//resources.jetbrains.com/storage/help-app/v3/app.css"></head><body data-id="procedures.refactoring.changeMethodSignature" data-breadcrumbs="Working_with_source_code.xml|Working with source code/Refactoring_Source_Code.xml|Refactoring code/Change_Signature.xml|Change signature" data-main-title="Change signature" data-article-props="&#xA;                {&#xA;                &#xA;            &#34;seeAlso&#34;:[&#xA;            &#xA;                {&#34;title&#34;: &#34;Web Resources&#34;,&#xA;                 &#34;links&#34;: [&#xA;                &#xA;        {&#34;url&#34;:&#34;http://www.jetbrains.net/devnet/community/idea/kb&#34;,&#34;text&#34;:&#34;Developer Community&#34;}&#xA;    &#xA;                    ]}&#xA;            ]&#xA;        &#xA;                }&#xA;            "><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>IntelliJ IDEA 2019.3 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="primary_default_for_windows" selected>Default for Windows</option><option data-group="primary" value="primary_eclipse">Eclipse</option><option data-group="primary" value="primary_emacs">Emacs</option><option data-group="primary" value="primary_netbeans">NetBeans</option><option data-group="primary" value="primary_sublime_text">Sublime Text</option><option data-group="primary" value="primary_visual_studio">Visual Studio</option><option data-group="secondary" value="secondary_macos">macOS</option><option data-group="secondary" value="secondary_eclipse">Eclipse</option><option data-group="secondary" value="secondary_eclipse_macos">Eclipse (macOS)</option><option data-group="secondary" value="secondary_emacs">Emacs</option><option data-group="secondary" value="secondary_intellij_idea_classic">IntelliJ IDEA Classic</option><option data-group="secondary" value="secondary_netbeans">NetBeans</option><option data-group="secondary" value="secondary_sublime_text">Sublime Text</option><option data-group="secondary" value="secondary_sublime_text_macos">Sublime Text (macOS)</option><option data-group="secondary" value="secondary_visual_studio">Visual Studio</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="active"><h1 data-toc="procedures.refactoring.changeMethodSignature" id="Change_Signature.xml">Change signature</h1>                                                    <a name="change_signature_introduction"></a>                                    <p id="change_method_signature_availability">The <span class="control">Change Signature</span> refactoring combines several        different modifications that        can be        applied to a method signature or a class signature.</p><aside data-type="note" class="prompt" data-title="" rel="change_method_signature_availability" id="3f04d3be">        <p id="0875b19e">You can access this refactoring from a            <a href="class-diagram.html">UML Class diagram</a>.        </p>    </aside>        <p id="ed1b324b">For a <span class="emphasis">class</span>, this refactoring can turn a class into a generic and manipulate its type            parameters.            It automatically corrects all calls, implementations and overridings of the class.        </p>    <p id="322b0232">For a <span class="emphasis">method</span>, this refactoring can change the method name, add, remove, reorder, and        rename parameters and exceptions,        and propagate new parameters and exceptions through the hierarchy of calls.</p>    <section class="procedure-steps"><ol class="list _decimal"><li class="list__item" id="4a462853"><p>Select method or a class for which you want to change signature.</p></li><li class="list__item" id="e73c4c0b"><p>From the context menu, select <span data-skip-index="skip" class="menupath">Refactor | Change Signature</span> (<kbd data-primary_default_for_windows="Ctrl+F6" data-primary_eclipse="Shift+Alt+C" data-primary_emacs="Ctrl+F6" data-primary_netbeans="Ctrl+F6" data-primary_sublime_text="N/A" data-primary_visual_studio="Ctrl+F6" data-secondary_macos="⌘F6" data-secondary_eclipse="⌥⇧C" data-secondary_eclipse_macos="⌥⌘C" data-secondary_emacs="⌃F6" data-secondary_intellij_idea_classic="⌘F6" data-secondary_netbeans="⌃F6" data-secondary_sublime_text="N/A" data-secondary_sublime_text_macos="N/A" data-secondary_visual_studio="⌃F6">Ctrl+F6</kbd>).        </p></li><li class="list__item" id="2b8d9d55"><p>In the dialog that opens depending on what you're changing signature for, specify the appropriate            options and click <span class="control">Refactor</span>. If you want to see a preview of your potential changes,             click <span class="control">Preview</span>.        </p></li></ol></section><div class="chapter"><h2 id="change_class_signature_refactoring" data-toc="procedures.refactoring.changeMethodSignature#change_class_signature_refactoring">Change Class Signature example</h2>    <p id="change_signature_kotlin"> Let's add type parameters <code class="code">Param1, Param2</code>        to a class <code class="code">MyClass</code>.</p><aside data-type="note" class="prompt" data-title="" rel="change_signature_kotlin" id="db128d6d">        <p id="435ca06a">For            <a href="https://kotlinlang.org/docs/reference/" data-external="true" target="_blank" rel="noopener noreferrer">Kotlin</a>, this refactoring works the same as for Java. You can press <kbd data-primary_default_for_windows="Ctrl+Shift+Alt+K" data-primary_eclipse="Ctrl+Shift+Alt+K" data-primary_emacs="Ctrl+Shift+Alt+K" data-primary_netbeans="Ctrl+Shift+Alt+K" data-primary_sublime_text="Ctrl+Shift+Alt+K" data-primary_visual_studio="Ctrl+Shift+Alt+K" data-secondary_macos="⌥⇧⌘K" data-secondary_eclipse="⌃⌥⇧K" data-secondary_eclipse_macos="⌥⇧⌘K" data-secondary_emacs="⌃⌥⇧K" data-secondary_intellij_idea_classic="⌥⇧⌘K" data-secondary_netbeans="⌃⌥⇧K" data-secondary_sublime_text="⌃⌥⇧K" data-secondary_sublime_text_macos="⌥⇧⌘K" data-secondary_visual_studio="⌃⌥⇧K">Ctrl+Shift+Alt+K</kbd> to convert your Java code to Kotlin.        </p>    </aside>        <p id="c2b37337">String and Integer are default values that were specified in the <span class="control">Change Class Signature</span>            dialog for <code class="code">Param1</code> and <code class="code">Param2</code> respectively.</p>    <p id="b94e0bcd">You can also add a bounded value for a parameter to put some restrictions on what gets passed to the type        parameter. For example, add <code class="code">Param3</code> with default value <code class="code">List</code> and        bounded value <code class="code">Collection</code>    </p>    <figure><img alt="Change a class signature" title="Change a class signature" src="/help/img/idea/2019.3/change_class_signature.png" id="45478e60" width="394" height="264"></figure>    <div class="table-wrapper"><table class="  _layout-fixed" width="100%" id="8285d66c"><thead><tr id="3cc642f0" class="ijRowHead"><th id="66ba0de0" width="50%"><p>Before</p></th><th id="783ed347" width="50%"><p>After</p></th></tr></thead><tbody><tr id="type_parameters" class="ijRowOdd"><td id="33c84596">                <div class="code-block" data-lang="java">
+
+                    public class MyClass {
+
+                        public class MyOtherClass {
+                            MyClass myClass;
+
+                            void myMethod(MyClass myClass) {
+
+                            }
+                        }
+                    }
+                </div>            </td><td id="096bbd34">                <div class="code-block" data-lang="java">
+
+                    public class MyClass&lt;Param1, Param2, Param3 extends Collection&gt; {
+
+                        public class MyOtherClass {
+
+                            MyClass&lt;String, Integer&gt; myClass;
+
+                            void myMethod(MyClass&lt;String, Integer, List&gt; myClass) {
+                            }
+
+                        }
+                    }
+                </div>            </td></tr></tbody></table></div>    </div>    <div class="chapter"><h2 id="change_method_signature_refactoring" data-toc="procedures.refactoring.changeMethodSignature#change_method_signature_refactoring">Change Method Signature example</h2>        <p id="f6a9df5f">You can add parameters to a method and specify different options in the            <span class="control">Change Method Signature</span> dialog to have different results.        </p>        <p id="67d23bf6">You can also add exceptions to a method and they will be propagated in a call hierarchy.</p><aside data-type="note" class="prompt" data-title="" rel="67d23bf6" id="a0e59198"><p id="2bb1b264">    If the method contract is specified by the <code class="code">@Contract</code> annotation, the    <span class="emphasis">Change Method Signature</span>    refactoring also tries to convert such methods. Yet, in some cases the refactoring might fail and your would    need to adjust contract manually.</p></aside><figure><img alt="Change a method signature" title="Change a method signature" src="/help/img/idea/2019.3/change_method_signature.png" id="5b1ae923" width="578" height="570"></figure>        <a name="change_method_signature_example"></a>        <div class="chapter"><div class="collapse"><div class="collapse__title"><h3 id="adding_parameters">Add parameters</h3></div><div class="collapse__content">            <p id="b84e535a">Let's add a parameter with a name <code class="code">price</code>,                type <code class="code">double</code>, and a default value <code class="code">0.0</code>.            </p>            <p id="d14b0953">IntelliJ IDEA adds parameters to the method, updates method calls and                specifies the default parameter value.            </p>            <div class="table-wrapper"><table class="  _layout-fixed" width="100%" id="44f74eb4"><thead><tr id="ca60cc86" class="ijRowHead"><th id="1a23c9b1" width="50%"><p>Before</p></th><th id="ea798a4d" width="50%"><p>After</p></th></tr></thead><tbody><tr id="eeeeec73" class="ijRowOdd"><td id="19ee5059">                        <div class="code-block" data-lang="java">
+
+                            public class MyClass {
+
+                                public void myMethod(int value) {
+
+                                }
+
+                                public class MyOtherClass {
+                                    public void myMethodCall(MyClass myClass) {
+                                        double d = 0.5;
+
+                                        myClass.myMethod(1);
+                                    }
+                                }
+                            }
+                        </div>                    </td><td id="25fa185c">                        <div class="code-block" data-lang="java">
+                            public class MyClass {
+
+                                public void myMethod(int i, double price) {
+
+                                }
+
+                                public class MyOtherClass {
+                                    public void myMethodCall(MyClass myClass) {
+                                        double d = 0.5;
+
+                                        myClass.myMethod(1, 0.0);
+                                    }
+                                }
+                            }
+
+
+                        </div>                    </td></tr></tbody></table></div>        </div></div></div>        <div class="chapter"><div class="collapse"><div class="collapse__title"><h3 id="use_variable">Use any variable</h3></div><div class="collapse__content">            <p id="2ca9cb87">Let's update all the method calls and look for a variable                of the appropriate type near the method call and pass it                to the method. To achieve that check the                <span class="control">Use Any Var</span>                option.            </p>            <p id="d69ac478">As a result, IntelliJ IDEA finds the variable                <b id="54345f31" origin="intellij-platform">d</b>                which has the same type as the new parameter and uses it                in the method call.            </p>            <div class="table-wrapper"><table class="  _layout-fixed" width="100%" id="861f825b"><thead><tr id="8120f152" class="ijRowHead"><th id="45a14ae2" width="50%"><p>Before</p></th><th id="194b3905" width="50%"><p>After</p></th></tr></thead><tbody><tr id="a29fd3b3" class="ijRowOdd"><td id="24c0a775">                        <div class="code-block" data-lang="java">
+                            public class MyClass {
+
+                                public void myMethod(int value) {
+
+                                }
+
+                                public class MyOtherClass {
+                                    public void myMethodCall(MyClass myClass) {
+                                        double d = 0.5;
+                                        myClass.myMethod(1);
+                                    }
+                                }
+                            }
+                        </div>                    </td><td id="5d239ad2">                        <div class="code-block" data-lang="java">
+                            public class MyClass {
+
+                                public void myMethod(int i, double price) {
+
+                                }
+
+                                public class MyOtherClass {
+                                    public void myMethodCall(MyClass myClass) {
+                                        double d = 0.5;
+                                        myClass.myMethod(1, d);
+                                    }
+                                }
+                            }
+                        </div>                    </td></tr></tbody></table></div>        </div></div></div>        <div class="chapter"><div class="collapse"><div class="collapse__title"><h3 id="overload_method">Overloading method</h3></div><div class="collapse__content">            <p id="d0d90abd">Let's ask IntelliJ IDEA to keep the method calls unchanged but                create a new overloading method which will call the method                with the new signature.                To achieve that use the                <span class="control">Delegate via overloading method</span>                option.            </p>            <p id="53b5be83">Note that the new overloading method has the old signature.                However, it calls the method with the new signature.                <code class="code">0.0</code>                was specified as the default parameter value                when performing the refactoring.            </p>            <div class="table-wrapper"><table class="  _layout-fixed" width="100%" id="c7ef27b4"><thead><tr id="416e4335" class="ijRowHead"><th id="1b149183" width="50%"><p>Before</p></th><th id="c3d16f95" width="50%"><p>After</p></th></tr></thead><tbody><tr id="0d4d1310" class="ijRowOdd"><td id="32623256">                        <div class="code-block" data-lang="java">
+                            public class MyClass {
+                                public void myMethod(int value) {
+
+                                }
+
+                                public class MyOtherClass {
+                                    public void myMethodCall(MyClass myClass) {
+                                        double d = 0.5;
+                                        myClass.myMethod(1);
+                                    }
+                                }
+                            }
+                        </div>                    </td><td id="039ae811">                        <div class="code-block" data-lang="java">
+                            public class MyClass {
+                                public void myMethod(int i) {
+                                    myMethod(i, 0.0);
+                                }
+
+                                public void myMethod(int i, double price) {
+
+                                }
+
+                                public class MyOtherClass {
+                                    public void myMethodCall(MyClass myClass) {
+                                        double d = 0.5;
+                                        myClass.myMethod(1);
+                                    }
+                                }
+                            }
+                        </div>                    </td></tr></tbody></table></div>        </div></div></div>        <div class="chapter"><div class="collapse"><div class="collapse__title"><h3 id="propagate_parameters">Propagate parameters</h3></div><div class="collapse__content">            <p id="ce4d4dc6">Let's propagate                <img alt="propagateParameters" title="propagateParameters" src="/help/img/idea/2019.3/propagateParameters.png" id="59d75997" width="13" height="17" class="inline-icon-13">                <kbd data-bypass="true" class="keystroke"><span class="keystroke__value">Alt+G</span></kbd>                the new                parameter to the method call through the calling method                <code class="code">myMethodCall()</code>.            </p>            <p id="179d79dc">As a result, the new parameter                <code class="code">price</code>                propagates to the method call through the calling method                and changes the method call accordingly.            </p>            <div class="table-wrapper"><table class="  _layout-fixed" width="100%" id="57cacb92"><thead><tr id="4823d63d" class="ijRowHead"><th id="8526f94b" width="50%"><p>Before</p></th><th id="50bbf3df" width="50%"><p>After</p></th></tr></thead><tbody><tr id="c47ed737" class="ijRowOdd"><td id="eb4a6321">                        <div class="code-block" data-lang="java">
+                            public class MyClass {
+                                public void myMethod(int value) {
+
+                                }
+
+                                public class MyOtherClass {
+                                    public void myMethodCall(MyClass myClass) {
+                                        double d = 0.5;
+                                        myClass.myMethod(1);
+                                    }
+                                }
+                            }
+                        </div>                    </td><td id="830045ca">                        <div class="code-block" data-lang="java">
+                            public class MyClass {
+                                public void myMethod(int i, double price) {
+
+                                }
+
+
+                                public class MyOtherClass {
+                                    public void myMethodCall(MyClass myClass, double price) {
+                                        double d = 0.5;
+                                        myClass.myMethod(1, price);
+                                    }
+                                }
+                            }
+                        </div>                    </td></tr></tbody></table></div>        </div></div></div>        <div class="chapter"><div class="collapse"><div class="collapse__title"><h3 id="dd90dac9">Propagate exceptions</h3></div><div class="collapse__content">            <p id="5c872461">Let's add a method <code class="code">read</code> that throws an exception                <code class="code">IOException</code>                to a class <code class="code">MyClass</code>.            </p>            <p id="befd6467">Then let's create a new class <code class="code">ExtendsMyClass</code> that will extend                <code class="code">MyClass</code>                and override the original <code class="code">read</code> method.            </p>            <p id="2c73efeb">Now if we go back to <code class="code">MyClass</code> and decide to add another exception, for example,                <code class="code">TimeOutException</code>                through this refactoring, the method <code class="code">read</code> will                be updated the sub class as well.            </p>            <div class="table-wrapper"><table class="  _layout-fixed" width="100%" id="1c306bff"><thead><tr id="694d111a" class="ijRowHead"><th id="0ec8a6ef" width="50%"><p>Before</p></th><th id="a81120bf" width="50%"><p>After</p></th></tr></thead><tbody><tr id="ff60755d" class="ijRowOdd"><td id="508819d3">                        <div class="code-block" data-lang="java">
+                            public class MyClass {
+                                public void read() throws IOException {
+                                }
+
+                                public void myMethod(int value) {
+
+                                }
+
+                                public class MyOtherClass {
+                                    public void myMethodCall(MyClass myClass) {
+                                        double d = 0.5;
+                                        myClass.myMethod(1);
+                                    }
+                                }
+                            }
+//Let's create a new class "ExtendsMyClass".
+
+                            public class ExtendsMyClass extends MyClass {
+                                @Override
+                                public void read() throws IOException {
+                                    super.read();
+                                }
+                            }
+
+                        </div>                    </td><td id="c83fc1e8">                        <div class="code-block" data-lang="java">
+                            public class MyClass {
+                                public void read() throws IOException, TimeOutException {
+                                }
+
+                                public void myMethod(int value) {
+                                }
+
+                                public class MyOtherClass {
+                                    public void myMethodCall(MyClass myClass) {
+                                        double d = 0.5;
+                                        myClass.myMethod(1);
+                                    }
+                                }
+                            }
+
+//As you see, "TimeOutException" was added.
+
+                            public class ExtendsMyClass extends MyClass {
+                                @Override
+                                public void read() throws IOException, TimeOutException {
+                                    super.read();
+                                }
+                            }
+
+                        </div>                    </td></tr></tbody></table></div>        </div></div></div>                </div><aside data-type="note" class="prompt" data-title="" rel="change_method_signature_refactoring" id="97f46c99">    <p id="b0b18013">The        <span class="emphasis">Change Method Signature</span>        refactoring is applicable to a constructor.        In this case, however, the name and the return type cannot be changed.    </p></aside><aside data-type="tip" class="prompt" data-title="" rel="change_method_signature_refactoring" id="631b8226">            <p id="9124c1a1">To see the <span class="emphasis">Change Method Signature</span> refactoring examples for languages other                than Java, refer to the following topics:</p>            <p id="7288dec1"><a href="refactoring-php.html#php_change_signature">Change Signature for PHP</a></p>            <p id="140339fd"><a href="specific-typescript-refactorings.html#typescript_change_signature_proc">Change                Signature for TypScript</a></p>            <p id="6cac408a"><a href="specific-javascript-refactorings.html#javascript_change_signature_code_example">Change                Signature for JavaScript</a></p>        </aside>                                            <div class="last-modified" data-skip-index="skip">Last modified: 29 November 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="refactoring-source-code.html">Refactoring code</a><a class="navigation-links__next" href="convert-anonymous-to-inner.html">Convert Anonymous to Inner</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="//resources.jetbrains.com/storage/help-app/v3/app.js"></script></body></html>

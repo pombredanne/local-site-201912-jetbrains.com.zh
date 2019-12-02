@@ -1,0 +1,90 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="/help/app/v2/analytics.js"></script><meta charset="UTF-8"><meta name="robots" content="noindex"><title>Subtasks - Help | YouTrack Standalone</title><link rel="stylesheet" href="/help/app/v2/app.css"></head><body data-id="Workflow-Subtasks"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack Standalone Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>YouTrack Standalone 2019.1 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="Workflow-Subtasks" id="Workflow-Subtasks.xml">Subtasks</h1>  <p id="45172682">This workflow automatically sets the state of a parent task when the state changes in issues that are linked as    subtasks.  </p>  <div class="table-wrapper"><table class="left_header                 " width="100%" id="9b13263a"><tbody><tr id="7585e793" class="ijRowOdd"><th id="7ba22e74" width="20%"><p>Name</p></th><td id="b0a92d02"><p>@jetbrains/youtrack-workflow-subtasks</p></td></tr><tr id="f2875003" class="ijRowEven"><th id="938ba922"><p>Auto-attached</p></th><td id="d788377c"><p>yes</p></td></tr><tr id="0de5cd9a" class="ijRowOdd"><th id="a6ba699d"><p>Modules</p></th><td id="c47c2c35"><p>        <a href="#open-parent">Open parent task when subtask changes to an unresolved state</a>        (on-change rule)        <br>        <a href="#fix-parent">Fix parent task when all subtasks are resolved</a>        (on-change rule)      </p></td></tr></tbody></table></div>  <div class="chapter"><h2 id="d3a923bf">Use Case</h2>    <p id="dd1a5423">You want to automatically update the state of a parent task when changes are applied to subtasks.</p>    <ul class="list _ul"><li class="list__item" id="3d91f094"><p>When any subtask is set to an unresolved state, the state of the parent task changes to <span class="control">        Open</span>.      </p></li><li class="list__item" id="b151a5a7"><p>When all subtasks are set to a resolved state, the state of the parent task changes to <span class="control">        Fixed</span>.      </p></li></ul>  </div>  <div class="chapter"><h2 id="f2183efd">Modules</h2>    <p id="269a4f65">This workflow includes two modules.</p>    <div class="chapter"><h3 id="open-parent">Open parent task when subtask changes to an unresolved state</h3>      <p id="92584245">When the state of an issue is set to an unresolved state, this rule checks whether the issue is linked as a        subtask of a parent task.        If the parent task belongs to an active project and has a resolved state, the state of the parent task is        changed to <span class="control">Open</span>.      </p>      <div class="code-block" data-lang="javascript">var entities = require('@jetbrains/youtrack-scripting-api/entities');
+var workflow = require('@jetbrains/youtrack-scripting-api/workflow');
+
+exports.rule = entities.Issue.onChange({
+  title: workflow.i18n('Open parent task when subtask changes to an unresolved state'),
+  guard: function(ctx) {
+    return ctx.issue.isReported &amp;&amp; ctx.issue.becomesUnresolved;
+  },
+  action: function (ctx) {
+    var processParent = function(issue) {
+      if (issue.links['subtask of'].isEmpty()) {
+        return;
+      }
+      var parent = issue.links['subtask of'].first();
+      if (parent &amp;&amp; parent.project &amp;&amp; !parent.project.isArchived &amp;&amp; parent.isReported &amp;&amp; parent.isResolved) {
+        var field = parent.project.findFieldByName(ctx.State.name);
+        if (field) {
+          var value = field.findValueByName(ctx.State.Open.name);
+          if (value) {
+            parent.State = value;
+            workflow.message(workflow.i18n('Automatically reopen {0}', parent.id));
+            return parent;
+          }
+        }
+      }
+    };
+
+    var issue = ctx.issue;
+    while (issue) {
+      issue = processParent(issue);
+    }
+  },
+  requirements: {
+    State: {
+      type: entities.State.fieldType,
+      Open: {}
+    }
+  }
+});</div>    </div>    <div class="chapter"><h3 id="fix-parent">Fix parent task when all subtasks are resolved</h3>      <p id="eadcd909">When the state of an issue is set to a resolved state, this rule checks whether the issue is linked as a        subtask of a parent task.        If the parent task is unresolved, the rule checks the current state for all other issues that are linked to the        parent task as subtasks.        If all other subtasks are resolved, the state of the parent task is set to <span class="control">Fixed</span>.      </p>      <p id="13c055e5">The rule then checks the parent task to see if it is linked as a subtask to a parent task and performs the same        operation.      </p>      <div class="code-block" data-lang="javascript">var entities = require('@jetbrains/youtrack-scripting-api/entities');
+var workflow = require('@jetbrains/youtrack-scripting-api/workflow');
+
+exports.rule = entities.Issue.onChange({
+  title: workflow.i18n('Fix parent when all subtasks are resolved'),
+  guard: function(ctx) {
+    return ctx.issue.isReported &amp;&amp; ctx.issue.becomesResolved;
+  },
+  action: function(ctx) {
+    var processParent = function(issue) {
+      if (issue.links['subtask of'].isEmpty()) {
+        return;
+      }
+      var parent = issue.links['subtask of'].first();
+      if (parent &amp;&amp; parent.project &amp;&amp; !parent.project.isArchived &amp;&amp;
+        parent.isReported &amp;&amp; !parent.isResolved) {
+        var unresolvedSubtask = parent.links['parent for'].find(function(subtask) {
+          return subtask.isReported &amp;&amp; !subtask.fields.State.isResolved;
+        });
+        if (!unresolvedSubtask) {
+          var field = parent.project.findFieldByName(ctx.State.name);
+          if (field) {
+            var value = field.findValueByName(ctx.State.Fixed.name);
+            if (value) {
+              parent.State = value;
+              workflow.message(workflow.i18n('Automatically set {0} as Done', parent.id));
+              return parent;
+            }
+          }
+        }
+      }
+    };
+
+    var issue = ctx.issue;
+    while (issue) {
+      issue = processParent(issue);
+    }
+  },
+  requirements: {
+    State: {
+      type: entities.State.fieldType,
+      Fixed: {}
+    }
+  }
+});</div>    </div>  </div><div class="last-modified" data-skip-index="skip">Last modified: 8 July 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="Workflow-Subtask-Inherit-Subsystem.html">Subtask Inherit Subsystem</a><a class="navigation-links__next" href="Workflow-Task-Assignee.html">Task Assignee</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="/help/app/v2/app.js"></script></body></html>

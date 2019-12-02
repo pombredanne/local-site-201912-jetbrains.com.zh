@@ -1,0 +1,93 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"></meta><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><title>WebStorm 2016.1 Help :: Handling Issues</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="procedures.vcWithIDEA.commonVcsOps.issues"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search WebStorm Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>WebStorm 2016.1 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWindow</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="running-webstorm-as-a-diff-or-merge-command-line-tool.html">Running WebStorm as a Diff or Merge Command Line Tool</a><a class="navigation-links__next" href="managing-changelists.html">Managing Changelists</a></div><h1>Handling Issues</h1><a name="d738200e5"></a><p>
+				With WebStorm, you can connect your check-in comments with the bug tracker or any issues data base
+                and navigate from committed changes to the issues related to these changes.
+            </p><a name="d738200e8"></a><p>
+                To enable this navigation, you need to specify a so called <a name="d738200e10"></a><span class="emphasis">issue navigation pattern</span>, which means:
+                <ol class="list _decimal"><li class="list__item"><a name="d738200e15"></a>
+                        Figure out an <a name="d738200e17"></a><span class="emphasis">issue ID pattern</span>, that is, a format according to which you will reference issues in commit messages,
+                        and define this issue pattern using a regular expression.
+                    </li><li class="list__item"><a name="d738200e21"></a>
+                        Define the link to the referenced issue by combining the URL address of your tracking system and a regular expression to identify the issue ID.
+                    </li></ol>
+                In other words, an <a name="d738200e25"></a><span class="emphasis">issue navigation pattern</span> maps an <a name="d738200e28"></a><span class="emphasis">issue ID pattern</span> in commit messages and
+                URL addresses of referenced issues. As soon as WebStorm encounters a match to the issue ID pattern in a commit message, the match is displayed as a link
+                in the <a name="d738200e31"></a><span class="emphasis">Changes</span>  and <a name="d738200e35"></a><span class="emphasis">Version Control</span> tool windows. If you mention several issues, all of them will show up as links.
+                Clicking such link opens the matching issue in the browser according to the defined link.
+            </p><a name="d738200e39"></a><p>On this page:</p><ul><li class="list__item"><a href="#d738200e45">Example</a></li><li class="list__item"><a href="#d738200e126">Enabling navigation from commit messages to issues related to them</a></li><li class="list__item"><a href="#d738200e219">Navigating from a commit message to the related issues</a></li></ul><a name="d738200e45"></a><h2>Example</h2><table class="no_header" width="100%" id="d738200e50"><tbody><tr id="d738200e52" class="ijRowOdd"><a name="d738200e52"></a><td width="15%"><a name="d738200e54"></a>Issue ID pattern</td><td width="85%"><a name="d738200e57"></a>
+                    The regular expression that defines the format in which issues are referenced in commit messages.
+                    <a name="d738200e59"></a><p>
+                        <a name="d738200e61"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+[A-Z]+\-\d+
+                        </code></div>
+                        This regular expressions matches all character strings that consist of two substrings separated by an n-dash character:
+                        <ol class="list _decimal"><li class="list__item"><a name="d738200e66"></a>Substring 1: An unlimited number of upper case alphabetic characters.</li><li class="list__item"><a name="d738200e69"></a>Substring 2: An unlimited number of digital characters.</li></ol>
+                    </p>
+                </td></tr><tr id="d738200e76" class="ijRowEven"><a name="d738200e76"></a><td><a name="d738200e78"></a>
+                    Issue link pattern
+                </td><td><a name="d738200e81"></a>
+                    A combination of the URL address of your issue tracking system and a regular expression that identifies issues in it.
+                    <a name="d738200e83"></a><p>
+                        <a name="d738200e85"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+http://mytracker/issue/$0
+                        </code></div>
+                        Here <code class="code" data-lang="Java">$0</code> indicates a back reference to the entire match. This means that as soon as WebStorm detects a match in a commit message,
+                        it is added to the URL address of the tracker as is.
+                    </p>
+                </td></tr><tr id="d738200e94" class="ijRowOdd"><a name="d738200e94"></a><td><a name="d738200e96"></a>
+                    Matching issue ID
+                </td><td><a name="d738200e99"></a>
+                    WebStorm detects the following reference to an issue in the commit message of interest:
+                    <a name="d738200e101"></a><p>
+                    <a name="d738200e103"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+MYPROJECT-110
+                    </code></div>
+                    </p>
+                </td></tr><tr id="d738200e109" class="ijRowEven"><a name="d738200e109"></a><td><a name="d738200e111"></a>
+                    Composed issue link
+                </td><td><a name="d738200e114"></a>
+                    In accordance with the above issue navigation pattern, the detected matching reference is added to the URL of the tracker as is, so the link to the referenced issue is composed as follows:
+                    <a name="d738200e116"></a><p>
+                    <a name="d738200e118"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+http://mytracker/issue/MYPROJECT-110
+                    </code></div>
+                    </p>
+                </td></tr></tbody></table><a name="d738200e126"></a><a name="dynaProc0"></a><section class="procedure-steps"><h2>To enable navigating from commit messages to issues related to them</h2><ol class=".list _decimal"><li class="list__item">
+                <a name="d738200e130"></a><a href="accessing-settings.html"><span>Open the Settings dialog box</span></a>, and click <a name="d738200e133"></a><span class="control">Issue Navigation</span> under the <a name="d738200e136"></a><span class="control">Version Control</span> node.
+            </li><li class="list__item">
+                In the <a name="d738200e142"></a><a href="issue-navigation.html"><span>Issue Navigation</span></a> dialog box that opens, configure a list of <a name="d738200e144"></a><span class="emphasis">issue navigation patterns</span> by setting correspondence
+                between issue patterns in commit messages and URL addresses of referenced issues.
+                <ul class="list _bullet"><li class="list__item"><a name="d738200e149"></a>
+                        If you are using <a name="d738200e151"></a><a href="http://www.atlassian.com/software/jira/overview" data-external="true"><span>JIRA</span></a>
+                        or <a name="d738200e154"></a><a href="http://www.jetbrains.com/youtrack/" data-external="true"><span>our bug tracking system YouTrack</span></a>,
+                        click the <a name="d738200e157"></a><span class="control">Add JIRA pattern</span>&nbsp;<img alt="add-pattern-jira" width="21" height="21" title="add-pattern-jira" src="/help/img/idea/2016.1/add-pattern-jira.png" class="inline-icon-21"> or <a name="d738200e162"></a><span class="control">Add YouTrack Pattern</span>&nbsp;<img alt="add-pattern-youtrack" width="22" height="20" title="add-pattern-youtrack" src="/help/img/idea/2016.1/add-pattern-youtrack.png" class="inline-icon-20"> respectively,
+                        and type the URL to the installation of bug tracking system in question.<br>
+                        WebStorm adds the regular expression that defines such pattern automatically.
+                    </li><li class="list__item"><a name="d738200e171"></a>
+                        For other issue tracking systems, click the <a name="d738200e173"></a><span class="control">Add</span> button <img alt="add" width="12" height="12" title="add" src="/help/img/idea/2016.1/new.png" class="inline-icon-12">  to create a new entry
+                        or select an existing entry and click the <a name="d738200e178"></a><span class="control">Edit</span> button.
+                        In the <a name="d738200e181"></a><span class="control">Add Issue Navigation Link</span> dialog box that opens, specify the following:
+                        <ol class="list _decimal"><li class="list__item"><a name="d738200e186"></a>
+                                The <a name="d738200e188"></a><a href="regular-expression-syntax-reference.html"><span>regular expression</span></a> that defines the <a name="d738200e191"></a><span class="emphasis">issue pattern</span> in a commit message.
+                            </li><li class="list__item"><a name="d738200e195"></a>
+                                The <a name="d738200e197"></a><span class="emphasis">replacement expression</span> that defines the URL to access the corresponding referenced issue.
+                            </li></ol>
+                    </li><li class="list__item"><a name="d738200e203"></a>
+                        To remove an <a name="d738200e205"></a><span class="emphasis">issue navigation pattern</span>, select it in the list and click <a name="d738200e208"></a><span class="control">Remove</span>&nbsp;<img alt="delete" width="12" height="12" title="delete" src="/help/img/idea/2016.1/delete.png" class="inline-icon-12">.
+                    </li></ul>
+            </li></ol></section><a name="d738200e219"></a><a name="dynaProc1"></a><section class="procedure-steps"><h2>To navigate from a commit message to the related issues</h2><ol class=".list _decimal"><li class="list__item">
+                Open one of the following views:
+                <ul class="list _ul"><li class="list__item"><a name="d738200e225"></a>
+                        <a name="d738200e227"></a><span class="control">Local Changes</span>, <a name="d738200e230"></a><span class="control">Incoming</span>, or <a name="d738200e233"></a><span class="control">Log</span> tab of
+                        the <a name="d738200e236"></a><span class="control">Version Control</span> tool window.
+                    </li><li class="list__item"><a name="d738200e240"></a>
+                        <a name="d738200e242"></a><span class="control">History</span> tab of the <a name="d738200e245"></a><span class="control">Version Control</span> tool window.
+                    </li><li class="list__item"><a name="d738200e249"></a>
+               <a name="d738200e251"></a><a href="changes-browser.html"><span>Changes Browser</span></a>.</li></ul>
+            </li><li class="list__item">Find the commit of interest and click the hyperlink to the related issue.</li></ol></section><div class="navigation-links _bottom"><a class="navigation-links__prev" href="running-webstorm-as-a-diff-or-merge-command-line-tool.html">Running WebStorm as a Diff or Merge Command Line Tool</a><a class="navigation-links__next" href="managing-changelists.html">Managing Changelists</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content"><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d738200e264"></a><a href="issue-navigation.html"><span>Issue Navigation</span></a></li><li class="list__item"><a name="d738200e268"></a><a href="version-control-reference.html"><span>Version Control Reference</span></a></li><li class="list__item"><a name="d738200e272"></a><a href="version-control.html"><span>Version Control</span></a></li><li class="list__item"><a name="d738200e277"></a><a href="version-control-tool-window.html"><span>Version Control Tool Window</span></a></li><li class="list__item"><a name="d738200e281"></a><a href="regular-expression-syntax-reference.html"><span>Regular Expression Syntax Reference</span></a></li></ul></div></div></section><div class="last-modified">Last modified: 11 July 2016 </div></article><div id="disqus_thread"></div></div></section></main></div><script src="/help/app/app.js"></script></body></html>

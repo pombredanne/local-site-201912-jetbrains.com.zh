@@ -1,0 +1,1545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+                                            
+        <!-- Error reporting -->
+<script>(function(){
+  window.reportError = function(msg, file, line, col, err, isUnhandledRejection){};
+  var prevOnError = window.onerror;
+  var onError = function(msg, file, line, col, err) {
+    reportError(msg, file, line, col, err, false);
+    prevOnError && prevOnError.apply(window, arguments);
+    return false;
+  };
+  window.onerror = onError;
+  // Setup reporting for unhandled Promise rejection errors
+  window.addEventListener("unhandledrejection", function(e) {
+    if (!e.reason) return;
+    var l = getSrcLocation(e.reason);
+    reportError(e.reason.message, l.file, l.line, l.col, e.reason, true);
+  });
+  // Setup reporting for console.error and console.warn calls
+  patchConsole('error');
+  patchConsole('warn');
+  // Utility functions
+  function patchConsole(fnName) {
+    var fn = console[fnName];
+    console[fnName] = function() {
+      fn.apply(console, arguments);
+      var l; try {
+        throw new Error('_');
+      } catch (err) {
+        l = getSrcLocation(err, 1);
+      }
+      var msg = 'console.' + fnName + ': ' + Array.prototype.join.call(arguments, ' ');
+      reportError(msg, l.file, l.line, l.col, undefined, false);
+    };
+  }
+  function getSrcLocation(err, sd) {
+    var s = err && err.stack;
+    var l = s && s.split("\n")[1 + (sd|0)];
+    var r = l && (/^\s*at [^(]*\((.*?):(\d+)(:\d+)?\)$/.exec(l) || /^\s*at (.*?):(\d+)(:\d+)?$/.exec(l));
+    return r ? {file: r[1], line: r[2], col: r[3]} : {};
+  }
+})();</script>
+<!-- Error reporting -->        <!-- Google Tag Manager -->
+<script>(function() {
+  // Initialize Tag Manager queue
+  window.dataLayer = window.dataLayer || [];
+  window.gtmLoaded = false;
+  // Setup reporting for errors that occurred before Tag Manager initialized
+  var prevReportError = window.reportError;
+  var reportError = function(msg, file, line, col, err, isUnhandledRejection) {
+    if (!window.gtmLoaded || isUnhandledRejection) {
+      // Reproduce the behavior of the Tag Manager error handler
+      window.dataLayer.push(makeEvt(msg, file, line));
+    }
+    prevReportError && prevReportError.apply(window, arguments);
+  };
+  window.reportError = reportError;
+  // Utility functions
+  function makeEvt(msg, file, line) {
+    return {
+      event: "gtm.pageError", "gtm.errorMessage": msg,
+      "gtm.errorUrl": file, "gtm.errorLineNumber": line
+    };
+  }
+})();</script>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;j.addEventListener(
+    'load', function(){window.gtmLoaded=true});f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5P98');</script>
+<!-- End Google Tag Manager -->        <!-- Sentry -->
+<script>
+    (function() {
+        window.sentryLoaded = false;
+        window.errorsForSentry = [];
+        var prevReportError = window.reportError;
+        var reportError = function(
+            msg,
+            file,
+            line,
+            col,
+            err,
+            isUnhandledRejection
+        ) {
+            if (!window.sentryLoaded) {
+                window.errorsForSentry.push(err);
+            }
+            prevReportError && prevReportError.apply(window, arguments);
+        };
+        window.reportError = reportError;
+    })();
+</script>
+<script>
+    window.sentryLoad = function() {
+        window.sentryLoaded = true;
+        Sentry.init({
+            dsn: 'https://1adb2a61713144eda0786e5af50ddc51@sentry.io/1423069',
+            release:
+                "jetbrainscom@a6ccaa6ddb",
+            beforeSend: function(event) {
+                Object.keys(event).forEach(function(key) {
+                    var value = event[key];
+                    if (isEmail(value)) {
+                        delete event[key];
+                    }
+                });
+                return event;
+            }
+        });
+        Sentry.configureScope(function(scope) {
+            scope.setTag('page_locale', 'en-us');
+            scope.setTag('browser.locale', getPageLocale());
+
+            scope.setTag('http.urlFull', location.href);
+            var protocol = location.protocol || '';
+            //omit `:` from location.protocol string
+            var protocolString = protocol.substring(0, protocol.length - 1);
+
+            scope.setTag('http.protocol', protocolString);
+
+            scope.setTag('http.hostname', location.hostname);
+
+            var search = location.search || '';
+            //omit ? from location.search string
+            var searchString = search.substr(1);
+            if (searchString !== '') {
+                scope.setTag('http.query', searchString || '1');
+            }
+            var hash = location.hash || '';
+            //omit # from location.hash string
+            var hashString = hash.substr(1);
+            if (hashString !== '') {
+                scope.setTag('http.fragment', hashString);
+            }
+        });
+        window.errorsForSentry.forEach(Sentry.captureException);
+
+        function getPageLocale() {
+            return (
+                (navigator.languages && navigator.languages[0]) ||
+                navigator.language
+            );
+        }
+        function isEmail(value) {
+            var emailRegex = /[\+\-\_\.a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+\.[a-zA-Z0-9]+/g;
+            return emailRegex.test(value);
+        }
+    };
+</script>
+<script src="https://browser.sentry-cdn.com/5.7.1/bundle.min.js" crossorigin="anonymous" onload="sentryLoad()" async></script>
+<!-- End Sentry -->    
+                <title>What’s New in WebStorm 2019.3</title>
+    
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, maximum-scale=1">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#000000">
+<meta name="apple-mobile-web-app-title" content="JetBrains">
+<meta name="application-name" content="JetBrains">
+<meta name="msapplication-TileColor" content="#000000">
+<meta name="theme-color" content="#000000">    <link rel="canonical" href="https://www.jetbrains.com/webstorm/whatsnew/" />    <!-- .61-->
+        <meta class="local" content="Explore the new features in WebStorm 2019.3: faster startup, major enhancements in Vue.js support, even smarter code completion for JavaScript, and a lot of lingering bugs fixed." name="description"><meta class="local" content="https://resources.jetbrains.com/storage/products/webstorm/img/meta/WS_2019_3.png" name="image"><meta class="local" content="summary_large_image" name="twitter:card"><meta class="local" content="@WebStormIDE" name="twitter:site"><meta class="local" content="What’s New in WebStorm 2019.3" name="twitter:title"><meta class="local" content="Explore the new features in WebStorm 2019.3: faster startup, major enhancements in Vue.js support, even smarter code completion for JavaScript, and a lot of lingering bugs fixed." name="twitter:description"><meta class="local" content="@WebStormIDE" name="twitter:creator"><meta class="local" content="https://resources.jetbrains.com/storage/products/webstorm/img/meta/WS_2019_3.png" name="twitter:image:src"><meta class="local" content="Platforms:" name="twitter:label1"><meta class="local" content="Windows, macOS, Linux" name="twitter:data1"><meta class="local" content="What’s New in WebStorm 2019.3" itemprop="name"><meta class="local" content="Explore the new features in WebStorm 2019.3: faster startup, major enhancements in Vue.js support, even smarter code completion for JavaScript, and a lot of lingering bugs fixed." itemprop="description"><meta class="local" content="https://resources.jetbrains.com/storage/products/webstorm/img/meta/WS_2019_3.png" itemprop="image">
+        <link rel="alternate" hreflang="x-default" href="https://www.jetbrains.com/webstorm/whatsnew/" />
+
+                        <link rel="alternate" hreflang="en" href="https://www.jetbrains.com/webstorm/whatsnew/" />
+                                <link rel="alternate" hreflang="de" href="https://www.jetbrains.com/de-de/webstorm/whatsnew/" />
+                                <link rel="alternate" hreflang="es" href="https://www.jetbrains.com/es-es/webstorm/whatsnew/" />
+                                <link rel="alternate" hreflang="fr" href="https://www.jetbrains.com/fr-fr/webstorm/whatsnew/" />
+                                <link rel="alternate" hreflang="ja" href="https://www.jetbrains.com/ja-jp/webstorm/whatsnew/" />
+                                <link rel="alternate" hreflang="ko" href="https://www.jetbrains.com/ko-kr/webstorm/whatsnew/" />
+                                <link rel="alternate" hreflang="ru" href="https://www.jetbrains.com/ru-ru/webstorm/whatsnew/" />
+                                <link rel="alternate" hreflang="zh-CN" href="https://www.jetbrains.com/zh-cn/webstorm/whatsnew/" />
+                                            <link rel="alternate" hreflang="x-klingon" href="https://www.jetbrains.com/tl-aa/webstorm/whatsnew/" />
+            
+    
+    
+        
+    
+    
+    <script>
+        var current_lang = 'en-us';
+                                    var i18n_info = {"current_lang": "en-us", "languages": [{"canonical": "en", "code": "en-us", "label": "English", "page_translated": true, "url": "/webstorm/whatsnew/"}, {"canonical": "de", "code": "de-de", "label": "Deutsch", "page_translated": true, "url": "/de-de/webstorm/whatsnew/"}, {"canonical": "es", "code": "es-es", "label": "Espa\u00f1ol", "page_translated": true, "url": "/es-es/webstorm/whatsnew/"}, {"canonical": "fr", "code": "fr-fr", "label": "Fran\u00e7ais", "page_translated": true, "url": "/fr-fr/webstorm/whatsnew/"}, {"canonical": "ja", "code": "ja-jp", "label": "\u65e5\u672c\u8a9e", "page_translated": true, "url": "/ja-jp/webstorm/whatsnew/"}, {"canonical": "ko", "code": "ko-kr", "label": "\ud55c\uad6d\uc5b4", "page_translated": true, "url": "/ko-kr/webstorm/whatsnew/"}, {"canonical": "ru", "code": "ru-ru", "label": "\u0420\u0443\u0441\u0441\u043a\u0438\u0439", "page_translated": true, "url": "/ru-ru/webstorm/whatsnew/"}, {"canonical": "zh-CN", "code": "zh-cn", "label": "\u7b80\u4f53\u4e2d\u6587", "page_translated": true, "url": "/zh-cn/webstorm/whatsnew/"}, {"canonical": "pt-BR", "code": "pt-br", "label": "Portugu\u00eas do Brasil", "page_translated": false, "url": "/pt-br/webstorm/whatsnew/"}, {"canonical": "x-klingon", "code": "tl-aa", "label": "tlhIngan Hol", "page_translated": true, "url": "/tl-aa/webstorm/whatsnew/"}]};
+                            var navigationMenu = {"primary": {"id": "main_v2", "items": [{"id": "tools", "title": "Tools", "descriptionTitle": "Toolbox App", "descriptionLogoId": "toolbox", "descriptionLink": "Learn more", "descriptionUrl": "/toolbox-app/", "description": "Manage your tools the easy way", "src": "/img/banners-menu-main/toolbox-vertical.png", "horisontalSrc": "/img/banners-menu-main/toolbox-horisontal.png", "bgColor": "#3E0598", "isVisible": true, "hasCategories": true, "items": [{"title": "IDEs", "items": [{"isActive": false, "id": "appcode", "title": "AppCode", "url": "/objc/", "logoLeftActionId": "appcode", "items": [], "cleaned_url": "/objc/"}, {"isActive": false, "id": "clion", "title": "CLion", "url": "/clion/", "logoLeftActionId": "clion", "items": [], "cleaned_url": "/clion/"}, {"isActive": false, "id": "datalore", "title": "Datalore", "url": "https://datalore.io/", "isExternalLink": true, "logoLeftActionId": "datalore", "items": [], "cleaned_url": "https://datalore.io/"}, {"isActive": false, "id": "datagrip", "title": "DataGrip", "url": "/datagrip/", "logoLeftActionId": "datagrip", "items": [], "cleaned_url": "/datagrip/"}, {"isActive": false, "id": "goland", "title": "GoLand", "url": "/go/", "logoLeftActionId": "goland", "items": [], "cleaned_url": "/go/"}, {"isActive": false, "id": "idea", "title": "IntelliJ IDEA", "url": "/idea/", "logoLeftActionId": "intellij-idea", "items": [], "cleaned_url": "/idea/"}, {"isActive": false, "id": "phpstorm", "title": "PhpStorm", "url": "/phpstorm/", "logoLeftActionId": "phpstorm", "items": [], "cleaned_url": "/phpstorm/"}, {"isActive": false, "id": "pycharm", "title": "PyCharm", "url": "/pycharm/", "logoLeftActionId": "pycharm", "items": [], "cleaned_url": "/pycharm/"}, {"isActive": false, "id": "rider", "title": "Rider", "url": "/rider/", "logoLeftActionId": "rider", "items": [], "cleaned_url": "/rider/"}, {"isActive": false, "id": "rubymine", "title": "RubyMine", "url": "/ruby/", "logoLeftActionId": "rubymine", "items": [], "cleaned_url": "/ruby/"}, {"isActive": false, "id": "webstorm", "title": "WebStorm", "url": "/webstorm/", "logoLeftActionId": "webstorm", "items": [], "cleaned_url": "/webstorm/"}, {"isActive": false, "id": "toolbox", "type": "special", "title": "Toolbox App", "url": "/toolbox-app/", "logoLeftId": "toolbox", "description": "A control panel for your tools and projects", "items": [], "cleaned_url": "/toolbox-app/"}]}, {"title": ".NET & VISUAL STUDIO", "items": [{"isActive": false, "id": "resharper", "title": "ReSharper", "url": "/resharper/", "logoLeftActionId": "resharper", "items": [], "cleaned_url": "/resharper/"}, {"isActive": false, "id": "rider", "title": "Rider", "url": "/rider/", "logoLeftActionId": "rider", "items": [], "cleaned_url": "/rider/"}, {"isActive": false, "id": "resharper-cpp", "title": "ReSharper C++", "url": "/resharper-cpp/", "logoLeftActionId": "resharper-cpp", "items": [], "cleaned_url": "/resharper-cpp/"}, {"isActive": false, "id": "dotcover", "title": "dotCover", "url": "/dotcover/", "logoLeftActionId": "dotcover", "items": [], "cleaned_url": "/dotcover/"}, {"isActive": false, "id": "dotmemory", "title": "dotMemory", "url": "/dotmemory/", "logoLeftActionId": "dotmemory", "items": [], "cleaned_url": "/dotmemory/"}, {"isActive": false, "id": "dotpeek", "title": "dotPeek", "url": "/decompiler/", "logoLeftActionId": "dotpeek", "items": [], "cleaned_url": "/decompiler/"}, {"isActive": false, "id": "dottrace", "title": "dotTrace", "url": "/profiler/", "logoLeftActionId": "dottrace", "items": [], "cleaned_url": "/profiler/"}]}, {"title": "TEAM TOOLS", "items": [{"isActive": false, "id": "teamcity", "title": "TeamCity", "url": "/teamcity/", "logoLeftActionId": "teamcity", "items": [], "cleaned_url": "/teamcity/"}, {"isActive": false, "id": "upsource", "title": "Upsource", "url": "/upsource/", "logoLeftActionId": "upsource", "items": [], "cleaned_url": "/upsource/"}, {"isActive": false, "id": "youtrack", "title": "YouTrack", "url": "/youtrack/", "logoLeftActionId": "youtrack", "items": [], "cleaned_url": "/youtrack/"}, {"isActive": false, "id": "hub", "title": "Hub", "url": "/hub/", "logoLeftActionId": "hub", "items": [], "cleaned_url": "/hub/"}]}, {"title": "PLUGIN MARKETPLACE", "items": [{"isActive": false, "id": "bigdata", "title": "Big Data Tools", "url": "https://plugins.jetbrains.com/plugin/12494-big-data-tools", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/plugin/12494-big-data-tools"}, {"isActive": false, "id": "rustsupport", "title": "Rust", "url": "https://plugins.jetbrains.com/plugin/8182-rust", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/plugin/8182-rust"}, {"isActive": false, "id": "scalaplugin", "title": "Scala", "url": "https://plugins.jetbrains.com/plugin/1347-scala", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/plugin/1347-scala"}, {"isActive": false, "id": "idethemes", "title": "IDE Themes", "url": "https://plugins.jetbrains.com/search?tags=Theme", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/search?tags=Theme"}, {"isActive": false, "id": "plugins", "title": "All Plugins", "url": "https://plugins.jetbrains.com/", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/"}]}, {"title": "EDUCATION", "items": [{"isActive": false, "id": "pycharm-edu", "title": "PyCharm Edu", "url": "/education/", "urlHash": "#lang=python&role=learner", "logoLeftActionId": "pycharm-edu", "items": [], "cleaned_url": "/education/"}, {"isActive": false, "id": "idea-edu", "title": "IntelliJ IDEA Edu", "url": "/education/", "urlHash": "#lang=java&role=learner", "logoLeftActionId": "intellij-idea", "items": [], "cleaned_url": "/education/"}, {"isActive": false, "id": "jb-academy", "title": "JB Academy", "url": "/academy/", "items": [], "cleaned_url": "/academy/"}]}]}, {"id": "languages", "title": "Languages", "descriptionTitle": "Kotlin/Everywhere", "descriptionLogoId": "header-kotlin-everywhere", "descriptionLink": "Join in!", "descriptionUrl": "//everywhere.kotlinlang.org", "description": "A worldwide event series for learning the best Kotlin practices on all platforms", "descriptionBig": true, "src": "/img/banners-menu-main/kotlin-vertical.png", "horisontalSrc": "/img/banners-menu-main/kotlin-horisontal.png", "bgColor": "#D6721C", "isExternalLink": true, "isVisible": true, "hasCategories": false, "items": [{"isActive": false, "id": "kotlin", "title": "Kotlin", "url": "https://kotlinlang.org/", "isExternalLink": true, "logoLeftId": "header-kotlin-grayscale", "logoLeftActionId": "kotlin", "logoLeftSize": "50", "description": "Programming language \n for JVM & Android", "items": [], "cleaned_url": "https://kotlinlang.org/"}, {"isActive": false, "id": "mps", "title": "MPS", "url": "/mps/", "logoLeftId": "header-mps-grayscalse", "logoLeftActionId": "mps", "logoLeftSize": "50", "description": "Create your own domain-specific language", "items": [], "cleaned_url": "/mps/"}]}, {"id": "solutions", "title": "Solutions", "descriptionTitle": "JetBrains Academy", "descriptionLogoId": "academy-logo", "descriptionLink": "Join in!", "descriptionUrl": "/academy", "description": "An educational platform for future professionals", "src": "/img/banners-menu-main/academy-vertical.png", "horisontalSrc": "/img/banners-menu-main/academy-horisontal.png", "bgColor": "#53288E", "hasCategories": false, "isVisible": true, "items": [{"isActive": false, "title": "C++ Tools", "url": "/cpp/", "logoLeftId": "header-cpp-grayscale", "logoLeftActionId": "header-cpp", "description": "Tools for C/C++ development \nfor any platform", "items": [], "cleaned_url": "/cpp/"}, {"isActive": false, "title": "For Business", "url": "/store/business/", "logoLeftId": "header-for-business-grayscale", "logoLeftActionId": "header-for-business", "description": "Wide range of tools. \nAll major technologies covered", "items": [], "cleaned_url": "/store/business/"}, {"isActive": false, "title": "Game Development", "url": "/gamedev/", "logoLeftId": "header-gamedev-grayscale", "logoLeftActionId": "header-gamedev", "description": "Tools for game development \nfor any platform", "items": [], "cleaned_url": "/gamedev/"}, {"isActive": false, "title": "DevOps", "url": "/devops/", "logoLeftId": "header-devops-grayscale", "logoLeftActionId": "header-devops", "description": "Tools and integrations \nfor any infrastructure", "items": [], "cleaned_url": "/devops/"}, {"isActive": false, "title": "Education", "url": "/education/", "logoLeftId": "header-education-grayscale", "logoLeftActionId": "header-education", "description": "Products to learn and teach programming", "items": [], "cleaned_url": "/education/"}]}, {"id": "support", "title": "Support", "description": "Pricing and licensing for businesses and individuals", "descriptionTitle": "JetBrains Store", "descriptionLogoId": "header-store", "descriptionUrl": "/store/?fromMenu#edition=commercial", "descriptionLink": "visit store", "isVisible": true, "hasCategories": true, "items": [{"title": "CUSTOMERS", "items": [{"isActive": false, "title": "Sales Support", "url": "/support/sales/", "description": "Orders, payments", "items": [], "cleaned_url": "/support/sales/"}, {"isActive": false, "title": "Product Support", "url": "/support/", "description": "Tech support, documentation", "items": [], "cleaned_url": "/support/"}]}, {"title": "COMMUNITY PROGRAMS", "items": [{"isActive": false, "title": "Education", "url": "/community/education/", "description": "Students, classrooms, training", "items": [], "cleaned_url": "/community/education/"}, {"isActive": false, "title": "Open Source", "url": "/community/opensource/", "description": "Projects support", "items": [], "cleaned_url": "/community/opensource/"}, {"isActive": false, "title": "Sponsorship", "url": "/community/support/", "description": "User groups, events, technology experts", "items": [], "cleaned_url": "/community/support/"}]}]}, {"id": "company", "title": "Company", "isVisible": true, "hasCategories": true, "items": [{"title": "INITIATIVES", "items": [{"isActive": false, "title": "Open Source", "url": "/opensource/", "description": "Projects, contributions", "items": [], "cleaned_url": "/opensource/"}, {"isActive": false, "title": "Research", "url": "/research/", "description": "Market, Scientific", "items": [], "cleaned_url": "/research/"}]}, {"title": "COMPANY", "items": [{"isActive": false, "title": "About", "url": "/company/", "description": "People, customers, awards", "items": [], "cleaned_url": "/company/"}, {"isActive": false, "title": "Brand Assets", "url": "/company/brand/", "description": "Guidelines, logos", "items": [], "cleaned_url": "/company/brand/"}, {"isActive": false, "title": "Careers", "url": "/careers/apply/", "description": "Jobs, internships", "items": [], "cleaned_url": "/careers/apply/"}, {"isActive": false, "title": "Events", "url": "/company/events/", "description": "Conferences, meetups", "items": [], "cleaned_url": "/company/events/"}, {"isActive": false, "title": "Contacts", "url": "/company/contacts/", "description": "Partners, resellers, Kotlin training", "items": [], "cleaned_url": "/company/contacts/"}]}, {"title": "RESOURCES", "items": [{"isActive": false, "title": "Newsletters", "url": "/resources/newsletters/", "items": [], "cleaned_url": "/resources/newsletters/"}, {"isActive": false, "title": "Webinars", "url": "/resources/webinars/", "items": [], "cleaned_url": "/resources/webinars/"}, {"isActive": false, "title": "Early Access", "url": "/resources/eap/", "items": [], "cleaned_url": "/resources/eap/"}, {"isActive": false, "title": "Blog", "url": "//blog.jetbrains.com/", "isExternalLink": true, "items": [], "cleaned_url": "//blog.jetbrains.com/"}]}]}, {"isActive": false, "id": "store", "url": "/store/?fromNavMenu", "title": "Store", "isVisible": true, "hasCategories": false, "items": [], "cleaned_url": "/store/?fromNavMenu"}]}, "secondary": {"isActive": true, "id": "product_webstorm", "logoId": "webstorm", "url": "/webstorm/", "title": "WebStorm", "items": [{"isActive": true, "title": "What's New", "url": "/webstorm/whatsnew/", "items": [], "cleaned_url": "/webstorm/whatsnew/"}, {"isActive": false, "title": "Features", "url": "/webstorm/features/", "items": [{"isActive": false, "title": "Intelligent coding assistance", "url": "/webstorm/features/coding-assistance.html", "items": [], "cleaned_url": "/webstorm/features/coding-assistance.html"}, {"isActive": false, "title": "Debugging, tracing and testing", "url": "/webstorm/features/debugging-and-testing.html", "items": [], "cleaned_url": "/webstorm/features/debugging-and-testing.html"}, {"isActive": false, "title": "Seamless tool integration", "url": "/webstorm/features/tool-integration.html", "items": [], "cleaned_url": "/webstorm/features/tool-integration.html"}, {"isActive": false, "title": "IDE features", "url": "/webstorm/features/ide-features.html", "items": [], "cleaned_url": "/webstorm/features/ide-features.html"}], "cleaned_url": "/webstorm/features/"}, {"isActive": false, "title": "Blog & Social", "url": "/webstorm/social/", "items": [], "cleaned_url": "/webstorm/social/"}, {"isActive": false, "title": "Buy", "url": "/webstorm/buy/", "items": [], "cleaned_url": "/webstorm/buy/"}, {"isActive": false, "title": "Download", "url": "/webstorm/download/", "type": "button", "items": [], "cleaned_url": "/webstorm/download/"}], "cleaned_url": "/webstorm/"}};
+        
+        var is_layout_adaptive = false;
+        
+        var disable_language_picker = false;
+        
+        var english_only_url_prefixes = [];
+            </script>
+    
+            <script></script>
+    
+        
+    
+            <link href="/_assets/common.d44d81f300d3bff87efe.css" rel="stylesheet" type="text/css">
+<link href="/_assets/default-page.fabf52db4bf34ea78af0.css" rel="stylesheet" type="text/css">
+<link href="/_assets/webstorm/whatsnew/index.entry.403f4d301333fd31d4db.css" rel="stylesheet" type="text/css">
+        <script src="/_assets/common.34604685b633d15ae3ed.js" type="text/javascript"></script>
+<script src="/_assets/default-page.2e180fc15a6b94fe7fa3.js" type="text/javascript"></script>
+<script src="/_assets/webstorm/whatsnew/index.entry.70accaf9340c7a9d16da.js" type="text/javascript"></script>
+    
+            <!-- Social Media tag Starts -->
+    <!-- Open Graph data -->
+            <meta property="og:title" content="What’s New in WebStorm 2019.3"/>
+    
+                    <meta property="og:description" content="Explore the new features in WebStorm 2019.3: faster startup, major enhancements in Vue.js support, even smarter code completion for JavaScript, and a lot of lingering bugs fixed."/>
+    <meta property="og:image" content="https://resources.jetbrains.com/storage/products/webstorm/img/meta/WS_2019_3.png"/>
+
+    <meta property="og:site_name" content="JetBrains"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="https://www.jetbrains.com/webstorm/whatsnew/"/>
+    <!-- Social Media tag Ends -->
+</head>
+
+<body class="nojs  ">
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<script>
+/*! modernizr 3.2.0 (Custom Build) | MIT *
+ * http://modernizr.com/download/?-flexbox-flexboxtweener !*/
+!function(e,n,t){function r(e,n){return typeof e===n}function o(){var e,n,t,o,i,s,l;for(var f in v)if(v.hasOwnProperty(f)){if(e=[],n=v[f],n.name&&(e.push(n.name.toLowerCase()),n.options&&n.options.aliases&&n.options.aliases.length))for(t=0;t<n.options.aliases.length;t++)e.push(n.options.aliases[t].toLowerCase());for(o=r(n.fn,"function")?n.fn():n.fn,i=0;i<e.length;i++)s=e[i],l=s.split("."),1===l.length?Modernizr[l[0]]=o:(!Modernizr[l[0]]||Modernizr[l[0]]instanceof Boolean||(Modernizr[l[0]]=new Boolean(Modernizr[l[0]])),Modernizr[l[0]][l[1]]=o),C.push((o?"":"no-")+l.join("-"))}}function i(e,n){return!!~(""+e).indexOf(n)}function s(e){return e.replace(/([a-z])-([a-z])/g,function(e,n,t){return n+t.toUpperCase()}).replace(/^-/,"")}function l(e,n){return function(){return e.apply(n,arguments)}}function f(e,n,t){var o;for(var i in e)if(e[i]in n)return t===!1?e[i]:(o=n[e[i]],r(o,"function")?l(o,t||n):o);return!1}function a(e){return e.replace(/([A-Z])/g,function(e,n){return"-"+n.toLowerCase()}).replace(/^ms-/,"-ms-")}function u(){return"function"!=typeof n.createElement?n.createElement(arguments[0]):b?n.createElementNS.call(n,"http://www.w3.org/2000/svg",arguments[0]):n.createElement.apply(n,arguments)}function d(){var e=n.body;return e||(e=u(b?"svg":"body"),e.fake=!0),e}function p(e,t,r,o){var i,s,l,f,a="modernizr",p=u("div"),c=d();if(parseInt(r,10))for(;r--;)l=u("div"),l.id=o?o[r]:a+(r+1),p.appendChild(l);return i=u("style"),i.type="text/css",i.id="s"+a,(c.fake?c:p).appendChild(i),c.appendChild(p),i.styleSheet?i.styleSheet.cssText=e:i.appendChild(n.createTextNode(e)),p.id=a,c.fake&&(c.style.background="",c.style.overflow="hidden",f=_.style.overflow,_.style.overflow="hidden",_.appendChild(c)),s=t(p,e),c.fake?(c.parentNode.removeChild(c),_.style.overflow=f,_.offsetHeight):p.parentNode.removeChild(p),!!s}function c(n,r){var o=n.length;if("CSS"in e&&"supports"in e.CSS){for(;o--;)if(e.CSS.supports(a(n[o]),r))return!0;return!1}if("CSSSupportsRule"in e){for(var i=[];o--;)i.push("("+a(n[o])+":"+r+")");return i=i.join(" or "),p("@supports ("+i+") { #modernizr { position: absolute; } }",function(e){return"absolute"==getComputedStyle(e,null).position})}return t}function m(e,n,o,l){function f(){d&&(delete E.style,delete E.modElem)}if(l=r(l,"undefined")?!1:l,!r(o,"undefined")){var a=c(e,o);if(!r(a,"undefined"))return a}for(var d,p,m,h,y,v=["modernizr","tspan"];!E.style;)d=!0,E.modElem=u(v.shift()),E.style=E.modElem.style;for(m=e.length,p=0;m>p;p++)if(h=e[p],y=E.style[h],i(h,"-")&&(h=s(h)),E.style[h]!==t){if(l||r(o,"undefined"))return f(),"pfx"==n?h:!0;try{E.style[h]=o}catch(g){}if(E.style[h]!=y)return f(),"pfx"==n?h:!0}return f(),!1}function h(e,n,t,o,i){var s=e.charAt(0).toUpperCase()+e.slice(1),l=(e+" "+x.join(s+" ")+s).split(" ");return r(n,"string")||r(n,"undefined")?m(l,n,o,i):(l=(e+" "+S.join(s+" ")+s).split(" "),f(l,n,t))}function y(e,n,r){return h(e,t,t,n,r)}var v=[],g={_version:"3.2.0",_config:{classPrefix:"",enableClasses:!0,enableJSClass:!0,usePrefixes:!0},_q:[],on:function(e,n){var t=this;setTimeout(function(){n(t[e])},0)},addTest:function(e,n,t){v.push({name:e,fn:n,options:t})},addAsyncTest:function(e){v.push({name:null,fn:e})}},Modernizr=function(){};Modernizr.prototype=g,Modernizr=new Modernizr;var C=[],w="Moz O ms Webkit",x=g._config.usePrefixes?w.split(" "):[];g._cssomPrefixes=x;var S=g._config.usePrefixes?w.toLowerCase().split(" "):[];g._domPrefixes=S;var _=n.documentElement,b="svg"===_.nodeName.toLowerCase(),z={elem:u("modernizr")};Modernizr._q.push(function(){delete z.elem});var E={style:z.elem.style};Modernizr._q.unshift(function(){delete E.style}),g.testAllProps=h,g.testAllProps=y,Modernizr.addTest("flexbox",y("flexBasis","1px",!0)),Modernizr.addTest("flexboxtweener",y("flexAlign","end",!0)),o(),delete g.addTest,delete g.addAsyncTest;for(var P=0;P<Modernizr._q.length;P++)Modernizr._q[P]();e.Modernizr=Modernizr}(window,document);
+
+if (!Modernizr.flexbox && !Modernizr.flexboxtweener) {
+
+  var $body = $('body');
+
+  var nodesClasses = {
+    wrapper: 'not-supported-browser',
+    container: 'not-supported-browser__container',
+
+    title: 'not-supported-browser__title',
+    content: 'not-supported-browser__content',
+    logo: 'not-supported-browser__logo'
+  };
+
+  var nodes = {
+    wrapper: $('<div class="' + nodesClasses.wrapper + '"></div>'),
+    title: $('<div class="' + nodesClasses.title + '">Sorry, your browser is not fully supported</div>'),
+    content: $('<div class="' + nodesClasses.content + '">There may be some issues with pages layout in your current browser.<br/>Please use an alternate browser until we resolve the issues.<br/>Thank you.</div>'),
+    container: $('<div class="' + nodesClasses.container + '"></div>'),
+    logo: $('<div class="' + nodesClasses.logo + '"><svg class="sprite-img _jetbrains" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#jetbrains"></use></svg></div>')
+  };
+
+  $body.addClass('overflow-hidden');
+
+
+  nodes.content
+    .prepend(nodes.title)
+    .prepend(nodes.logo);
+
+  nodes.container
+    .append(nodes.content);
+
+  nodes.wrapper
+    .append(nodes.container)
+    .appendTo($body);
+}
+</script>
+<div class="page">
+                <div class="page__header">
+                <header class="menu-main header"  id="js-menu-main">
+    <div class="wt-container">
+        <div class="wt-row wt-row_nowrap wt-row_size_s wt-row_align-items_center">
+            <div class="wt-col-auto-fill">
+                <a href="/" class="menu-main__logo-link"><svg class="_jetbrains-simple sprite-img menu-main__logo" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#jetbrains-simple"></use></svg></a>
+            </div>
+            <div class="wt-col-inline wt-display-md-none menu-main-skeleton-text-1" style="min-width: 69px"></div>
+            <div class="wt-col-inline wt-display-md-none menu-main-skeleton-text-1" style="min-width: 81px"></div>
+            <div class="wt-col-inline wt-display-md-none menu-main-skeleton-text-1" style="min-width: 46px"></div>
+            <div class="wt-col-inline menu-main-skeleton-button"></div>
+            <div class="wt-col-inline menu-main-skeleton-button"></div>
+        </div>
+    </div>
+</header>
+
+
+
+  <div class="menu-second" id="js-menu-second">
+    <div class="wt-container">
+        <div id="js-menu-second-mobile-wrapper" class="wt-display-none">
+            <div id="js-menu-second-mobile" >
+                <div class="menu-second-mobile wt-row wt-row_size_m wt-row_align-items_center wt-row_justify_between">
+                    <div class="wt-col-inline menu-second-skeleton-text-2" style="max-width: 120px"></div>
+                    <div class="wt-col-inline menu-second-skeleton-button" style="max-width: 80px"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="js-menu-second-desktop" class="menu-second-desktop
+                       wt-row wt-row_size_0 wt-row_align-items_center">
+            <div class="wt-col-auto-fill">
+                <a class="menu-second-title-box"
+                   href="/webstorm/">
+                                            <span class="menu-second-title-box__logo jetbrains-logo">
+                            <svg class="_webstorm sprite-img" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#webstorm"></use></svg>
+                        </span>
+                    
+                    <span class="menu-second-title-box__title wt-h3">WebStorm</span>
+                </a>
+            </div>
+
+                            
+                                                        <a href="/webstorm/whatsnew/"
+                       class="wt-col-inline wt-text-2 wt-text-2_hardness_average menu-second__link
+                                                                wt-text-2_hardness_primary">
+                        What&#39;s New
+                                            </a>
+                                            
+                                                        <a href="/webstorm/features/"
+                       class="wt-col-inline wt-text-2 wt-text-2_hardness_average menu-second__link
+                                                                ">
+                        Features
+                                            </a>
+                                            
+                                                        <a href="/webstorm/social/"
+                       class="wt-col-inline wt-text-2 wt-text-2_hardness_average menu-second__link
+                                                                ">
+                        Blog &amp; Social
+                                            </a>
+                                            
+                                                        <a href="/webstorm/buy/"
+                       class="wt-col-inline wt-text-2 wt-text-2_hardness_average menu-second__link
+                                                                ">
+                        Buy
+                                            </a>
+                                            
+                            
+                                                    
+                            <a href="/webstorm/download/"
+                   class="wt-col-inline menu-second__download-button wt-button wt-button_size_s wt-button_mode_primary">
+                    Download
+                </a>
+                    </div>
+
+    </div>
+</div>
+
+            </div>
+    
+    <div class="page__content ">
+        <header class="whatsnew-header">
+<div class="whatsnew-header__top wt-container article-content">
+<div class="wt-row wt-row_size_m wt-row_justify_center text-center">
+<div class="wt-col-8 wt-col-lg-12">
+<h1 class="no-margin-top _big">What’s new in WebStorm</h1>
+<p class="sub-title">WebStorm 2019.3 comes with 20% faster startup, major enhancements in
+                        Vue.js support, even smarter code completion for JavaScript and TypeScript, and a lot of lingering bugs
+                        fixed.</p>
+<div class="button-group">
+<div class="button-with-note">
+<div class="button-dropdown js-button-dropdown">
+<a class="button button-dropdown__link" href="/webstorm/download/download-thanks.html">Download</a>
+<button class="button button-dropdown__action js-button-dropdown-action">.exe</button>
+<ul class="dropdown-link-list js-button-dropdown-content">
+<li><a class="dropdown-link-list__link" data-windows=".exe" href="/webstorm/download/download-thanks.html?platform=windows">Windows (.exe)</a>
+</li>
+<li><a class="dropdown-link-list__link" data-mac=".dmg" href="/webstorm/download/download-thanks.html?platform=mac">macOS (.dmg)</a></li>
+<li><a class="dropdown-link-list__link" data-linux=".tar.gz" href="/webstorm/download/download-thanks.html?platform=linux">Linux (.tar.gz)</a>
+</li>
+</ul>
+</div>
+<div class="button-with-note__note">Free 30-day trial</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!--<editor-fold desc="WebStorm 2019.3">-->
+<div class="section-content _bg-medium version-features js-version-2019-3">
+<div class="toc _bg-medium" id="toc-2019-3"></div>
+<div class="wt-container article-content">
+<!--<editor-fold desc="Faster startup">-->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<h2>Performance</h2>
+</div>
+<div class="wt-col-8">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<picture>
+<source media="(max-width: 1276px)" srcset="/webstorm/whatsnew/img/2019.3/webstorm-startup-chart-616@2x.png">
+<source media="(min-width: 1276px)" srcset="/webstorm/whatsnew/img/2019.3/webstorm-startup-chart-816@2x.png">
+<img alt="Faster startup" src="/webstorm/whatsnew/img/2019.3/webstorm-startup-chart-816@2x.png" srcset="/webstorm/whatsnew/img/2019.3/webstorm-startup-chart-616@2x.png 1276w">
+</picture>
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<div class="features-block">
+<h3 class="features-block__title to_toc_menu" data-title="Performance" title="Performance">Faster startup</h3>
+<p>So far, one of the most common performance problems faced by WebStorm users has been the
+                            sluggish startup of the IDE. In the last two release cycles, we have devoted a lot of effort
+                            to <strong>reducing the time</strong> that users have had to <strong>wait for the welcome screen to show</strong> and <strong>for the
+                            IDE to open projects</strong> that are already indexed. As a result, you can now expect WebStorm to
+                            handle this<strong> <a href="https://blog.jetbrains.com/webstorm/2019/11/webstorm-2019-3/#performance">20%
+                                faster</a> than previous versions</strong>.</p>
+</div>
+</div>
+</div>
+<!--</editor-fold>-->
+<!--<editor-fold desc="More advanced code completion for Vue.js">-->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<h2>Frameworks & Tools</h2>
+</div>
+<div class="wt-col-8">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<picture>
+<source media="(max-width: 1276px)" srcset="/webstorm/whatsnew/img/2019.3/vue-completion-for-separate-files-616@2x.png">
+<source media="(min-width: 1276px)" srcset="/webstorm/whatsnew/img/2019.3/vue-completion-for-separate-files-816@2x.png">
+<img alt="Vue completion for separate files" src="/webstorm/whatsnew/img/2019.3/vue-completion-for-separate-files-816@2x.png" srcset="/webstorm/whatsnew/img/2019.3/vue-completion-for-separate-files-616@2x.png 1276w">
+</picture>
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<div class="features-block">
+<h3 class="features-block__title to_toc_menu" data-title="Frameworks and Tools" title="Frameworks & Tools">More advanced code completion for Vue.js</h3>
+<p>To help you <strong>increase the speed of your coding</strong>, WebStorm can now autocomplete slot names for
+                            you. This works for the slot names <strong>defined</strong> in the <strong>project components</strong> and component libraries
+                            such as <strong>Vuetify</strong>, <strong>Quasar</strong>, and <strong>BootstrapVue</strong>.
+                        </p>
+<p>Plus, WebStorm now understands the link between <strong>parts of the component located in separate
+                            files</strong> and delivers <strong>accurate completion suggestions</strong> for props, data, and methods not defined
+                            in a single <em>.vue</em> file.
+                        </p>
+</div>
+</div>
+</div>
+<!--</editor-fold>-->
+<!--<editor-fold desc="Quick documentation in Vue.js projects">-->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-8">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<picture>
+<source media="(max-width: 1276px)" srcset="/webstorm/whatsnew/img/2019.3/vue-quick-documentation-616@2x.png">
+<source media="(min-width: 1276px)" srcset="/webstorm/whatsnew/img/2019.3/vue-quick-documentation-816@2x.png">
+<img alt="Quick documentation in Vue.js projects" src="/webstorm/whatsnew/img/2019.3/vue-quick-documentation-816@2x.png" srcset="/webstorm/whatsnew/img/2019.3/vue-quick-documentation-616@2x.png 1276w">
+</picture>
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<div class="features-block">
+<h3 class="features-block__title">Quick documentation in Vue.js projects</h3>
+<p>With WebStorm 2019.3, you can now <strong>check out documentation for components</strong> and <strong>directives</strong>
+                            defined in <strong>Vue.js</strong> and some <strong>popular component libraries</strong>. For this, simply press <em>F1</em> on the
+                            name of a component or directive in your code.
+                        </p>
+</div>
+</div>
+</div>
+<!--</editor-fold>-->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-4">
+<h3 class="features-block__title">Support for the latest versions of popular technologies</h3>
+<p>WebStorm 2019.3 comes with support for <strong>schematics with Angular 9</strong> and the <strong>Plug’n’Play
+                        feature from Yarn 2</strong>. Plus, it can help you work with <strong>key TypeScript 3.7 features</strong>: <em>optional
+                        chaining</em>, <em>nullish coalescing</em>, and <em>assertion signatures</em>. </p>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Better support for props in React components</h3>
+<p>For components <strong>without propTypes</strong>, WebStorm will <strong>no longer report an unresolved property for
+                        <code>props.something</code></strong> in the component definition if it sees that <strong>props</strong> are passed <strong>in the component
+                        usage</strong>.</p>
+</div>
+</div>
+<!--<editor-fold desc="Template language injections">-->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<h2>JavaScript & TypeScript</h2>
+</div>
+<div class="wt-col-8">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<picture>
+<source media="(max-width: 1276px)" srcset="/webstorm/whatsnew/img/2019.3/template-language-injections-616@2x.png">
+<source media="(min-width: 1276px)" srcset="/webstorm/whatsnew/img/2019.3/template-language-injections-816@2x.png">
+<img alt="Template language injections" src="/webstorm/whatsnew/img/2019.3/template-language-injections-816@2x.png" srcset="/webstorm/whatsnew/img/2019.3/template-language-injections-616@2x.png 1276w">
+</picture>
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<div class="features-block">
+<h3 class="features-block__title to_toc_menu" data-title="JavaScript and TypeScript" title="JavaScript & TypeScript">Template language injections</h3>
+<p>Need to <strong>work with a code fragment in a language different from the main language</strong> of the file?
+                            You can now inject such code fragments into your files, including <strong>Pug</strong>, <strong>Handlebars</strong>, and <strong>EJS</strong>,
+                            by pressing <em>Alt-Enter</em>.
+                        </p>
+</div>
+</div>
+</div>
+<!--</editor-fold>-->
+<!--<editor-fold desc="Name suggestions for new symbols">-->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-8">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<picture>
+<source media="(max-width: 1276px)" srcset="/webstorm/whatsnew/img/2019.3/name-suggestions-for-new-symbols-616@2x.png">
+<source media="(min-width: 1276px)" srcset="/webstorm/whatsnew/img/2019.3/name-suggestions-for-new-symbols-816@2x.png">
+<img alt="Name suggestions for new symbols" src="/webstorm/whatsnew/img/2019.3/name-suggestions-for-new-symbols-816@2x.png" srcset="/webstorm/whatsnew/img/2019.3/name-suggestions-for-new-symbols-616@2x.png 1276w">
+</picture>
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<div class="features-block">
+<h3 class="features-block__title">Name suggestions for new symbols</h3>
+<p>As you <strong>add new variable and parameter names</strong> in JavaScript or TypeScript files, you’ll now <strong>get
+                            name suggestions</strong> based on the names of <strong>classes</strong>, <strong>interfaces</strong>, and <strong>type aliases</strong> defined in the
+                            project, standard libraries, and dependencies you’re using.
+                        </p>
+<p>For new variables, functions, classes, and interfaces, you’ll also get <strong>suggestions for names
+                            that were already used in the same scope</strong> but haven’t yet been defined and are marked as
+                            unresolved.
+                        </p>
+</div>
+</div>
+</div>
+<!--</editor-fold>-->
+<!--<editor-fold desc="Completion for CSS libraries on CDN">-->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<h2>HTML & Style Sheets</h2>
+</div>
+<div class="wt-col-8">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<picture>
+<source media="(max-width: 1276px)" srcset="/webstorm/whatsnew/img/2019.3/completion-for-css-libraries-from-cdn-616@2x.png">
+<source media="(min-width: 1276px)" srcset="/webstorm/whatsnew/img/2019.3/completion-for-css-libraries-from-cdn-816@2x.png">
+<img alt="Completion for CSS libraries on CDN" src="/webstorm/whatsnew/img/2019.3/completion-for-css-libraries-from-cdn-816@2x.png" srcset="/webstorm/whatsnew/img/2019.3/completion-for-css-libraries-from-cdn-616@2x.png 1276w">
+</picture>
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<div class="features-block">
+<h3 class="features-block__title to_toc_menu" data-title="HTML and Style Sheets" title="HTML & Style Sheets">Completion for CSS libraries on CDN</h3>
+<p>If you’re using <strong>Bootstrap</strong> or <strong>another CSS library</strong> in your project and you have it <strong>linked from
+                            a CDN</strong> in your HTML file, you can now get <strong>completion for the class names</strong> from that library,
+                            <strong>without adding its sources</strong> to the project. To enable this, simply press <em>Alt-Enter</em> on the
+                            link in the HTML file and select <em>Download library</em>.
+                        </p>
+</div>
+</div>
+</div>
+<!--</editor-fold>-->
+<!--<editor-fold desc="Reworked UI for cloning projects">-->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<h2>Version Control</h2>
+</div>
+<div class="wt-col-8">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<picture>
+<source media="(max-width: 1276px)" srcset="/webstorm/whatsnew/img/2019.3/reworked-ui-for-cloning-projects-616@2x.png">
+<source media="(min-width: 1276px)" srcset="/webstorm/whatsnew/img/2019.3/reworked-ui-for-cloning-projects-816@2x.png">
+<img alt="Reworked UI for cloning projects" src="/webstorm/whatsnew/img/2019.3/reworked-ui-for-cloning-projects-816@2x.png" srcset="/webstorm/whatsnew/img/2019.3/reworked-ui-for-cloning-projects-616@2x.png 1276w">
+</picture>
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<div class="features-block">
+<h3 class="features-block__title to_toc_menu" data-title="Version Control" title="Version Control">Reworked UI for cloning projects</h3>
+<p>When you clone a project from a version control system, you’ll now see an updated <em>Get from
+                            Version Control</em> dialog shown on the welcome screen and the VCS menu.
+                        </p>
+<p>
+                            With this redesign, we
+                            mainly wanted to improve the experience of getting projects from GitHub: you can now
+                            <strong>log in
+                                to</strong> your <strong>GitHub account</strong> right <strong>from the updated
+                            dialog</strong>. Once you’ve logged in, you can <strong>explore</strong>
+                            the list of <strong>repositories</strong> in your account and the organizations you belong
+                            to and <strong>clone
+                            projects</strong> to WebStorm <strong>right from there</strong>.
+                        </p>
+</div>
+</div>
+</div>
+<!--</editor-fold>-->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-4">
+<h3 class="features-block__title">Pushing changes from any branch</h3>
+<p>Need to push changes from one branch while working with the other? With the latest update, you <strong>no
+                        longer need to switch to the branch you want to push changes from</strong> – simply select it from the
+                        <em>Branches</em> popup and hit <em>Push</em>.</p>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">A more streamlined commit process</h3>
+<p>Now you can <strong>make commits right from the <em>Version Control</em> tool window</strong> – a separate dialog won’t
+                        block the rest of the IDE. For this, tick <em>Commit from the Local Changes without showing a dialog</em>
+                        in <em>Preferences/Settings | Version Control | Commit Dialog</em>.</p>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">New actions for checking out branches</h3>
+<p>To resolve a number of usability issues, we <strong>replaced</strong> a single <em>Checkout as...</em> action with two new
+                        ones: a unified <em>Checkout</em> <strong>action for remote branches</strong> and the <em>New Branch from Selected...</em> <strong>action
+                            for both remote and local branches</strong>.
+                </p></div>
+</div>
+<!--<editor-fold desc="New action for running tools and configurations">-->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<h2>IDE</h2>
+</div>
+<div class="wt-col-8">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<picture>
+<source media="(max-width: 1276px)" srcset="/webstorm/whatsnew/img/2019.3/run-anything-action-616@2x.png">
+<source media="(min-width: 1276px)" srcset="/webstorm/whatsnew/img/2019.3/run-anything-action-816@2x.png">
+<img alt="Run anything action" src="/webstorm/whatsnew/img/2019.3/run-anything-action-816@2x.png" srcset="/webstorm/whatsnew/img/2019.3/run-anything-action-616@2x.png 1276w">
+</picture>
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<div class="features-block">
+<h3 class="features-block__title to_toc_menu" data-title="IDE" title="IDE">New action for running tools and configurations</h3>
+<p>Need to <strong>launch</strong> tools like <strong>npm</strong> and <strong>Yarn</strong>, <strong>open recent projects</strong>, or <strong>start a run/debug
+                            configuration</strong>? You can now do it all <strong>from one place</strong> using the <em>Run Anything</em> action
+                            (<em>Ctrl-Ctrl</em>).
+                        </p>
+</div>
+</div>
+</div>
+<!--</editor-fold>-->
+<!--<editor-fold desc="Searching in the selection only">-->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-8">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<picture>
+<source media="(max-width: 1276px)" srcset="/webstorm/whatsnew/img/2019.3/search-in-selection-only-616@2x.png">
+<source media="(min-width: 1276px)" srcset="/webstorm/whatsnew/img/2019.3/search-in-selection-only-816@2x.png">
+<img alt="Searching in the selection only" src="/webstorm/whatsnew/img/2019.3/search-in-selection-only-816@2x.png" srcset="/webstorm/whatsnew/img/2019.3/search-in-selection-only-616@2x.png 1276w">
+</picture>
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<div class="features-block">
+<h3 class="features-block__title">Searching in the selection only</h3>
+<p>With the new <em>In Selection</em> filter (<em>Cmd/Ctrl-F</em> twice), you can <strong>find</strong> specific pieces of
+                            <strong>information faster</strong> by <strong>narrowing down</strong> your <strong>searches to</strong> the selected <strong>parts of code</strong> in a file.
+                        </p>
+</div>
+</div>
+</div>
+<!--</editor-fold>-->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-4">
+<h3 class="features-block__title">Unbundling Dart support</h3>
+<p>Starting with WebStorm 2019.3, the <strong>Dart plugin will no longer be bundled</strong>. This was done to
+                        <strong>shorten the release cycles</strong> for it – bundled plugins can only be updated together with an update
+                        of the entire IDE. So, if you use Dart, you’ll now need to install the same Dart plugin from
+                        <em>Preferences/Settings | Plugins</em>.</p>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Enabling global file watchers by default</h3>
+<p>If you’re using a <strong>third-party tool like Prettier</strong> for a project and have it <strong>configured via a file
+                        watcher</strong>, it’s likely you may want this <strong>configuration</strong> to be automatically <strong>applied to all the new
+                        projects</strong> you create. Now you can achieve this by <strong>enabling global file watchers
+                        by default</strong>.</p>
+</div>
+</div>
+<div class="more-about">
+<div class="button-expander _is-closed">
+                    Learn about WebStorm 2019.2
+                    <span class="button-expander__icon"></span>
+</div>
+</div>
+</div>
+</div>
+<!--</editor-fold>-->
+<!--<editor-fold desc="WebStorm 2019.2">-->
+<div class="section-content _bg-medium version-features js-version-2019-2 _is-closed">
+<div class="toc _bg-medium" id="toc-2019-2"></div>
+<div class="wt-container article-content">
+<!--<editor-fold desc="New UI of completion popup">-->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<h2>JavaScript & TypeScript</h2>
+</div>
+<div class="wt-col-8">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<picture>
+<source media="(max-width: 1276px)" srcset="/webstorm/whatsnew/img/2019.2/presentation-of-completion-624@2x.png">
+<source media="(min-width: 1276px)" srcset="/webstorm/whatsnew/img/2019.2/presentation-of-completion-810@2x.png">
+<img alt="New UI of completion popup" src="/webstorm/whatsnew/img/2019.2/presentation-of-completion-810@2x.png" srcset="/webstorm/whatsnew/img/2019.2/presentation-of-completion-624@2x.png 1276w">
+</picture>
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<div class="features-block">
+<h3 class="features-block__title">New UI of completion popup</h3>
+<p>The completion popup got a new, more polished look.</p>
+<p>The presentation of completion suggestions in JavaScript and TypeScript became clearer and
+                            more consistent. It’s now <strong>easier to spot where the symbol is defined</strong> and
+                            whether it’s part of a standard language API. There’s also a new icon for symbols with
+                            multiple definitions.
+                        </p>
+</div>
+</div>
+</div>
+<!--</editor-fold>-->
+<!--<editor-fold desc="Smart new intentions">-->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-8">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<picture>
+<source media="(max-width: 1276px)" srcset="/webstorm/whatsnew/img/2019.2/intentions-for-destructuring-624@2x.png">
+<source media="(min-width: 1276px)" srcset="/webstorm/whatsnew/img/2019.2/intentions-for-destructuring-810@2x.png">
+<img alt="Smart new intentions" src="/webstorm/whatsnew/img/2019.2/intentions-for-destructuring-810@2x.png" srcset="/webstorm/whatsnew/img/2019.2/intentions-for-destructuring-624@2x.png 1276w">
+</picture>
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<div class="features-block">
+<h3 class="features-block__title to_toc_menu" data-title="New JavaScript intentions" title="New JavaScript intentions">Smart new intentions</h3>
+<p>With the new <em>Propagate to destructuring</em> intention (<em>Alt-Enter</em>), you can <strong>replace an extra variable</strong> if it’s possible
+                            <strong>with another destructuring</strong>.
+                            To remove a destructuring completely, use the intention action called <em>Replace destructuring with property or index access</em>.</p>
+<p>The IDE will now warn you if a <strong>boolean expression</strong> in a condition has some <strong>unnecessary parts</strong> and will suggest simplifying it.</p>
+</div>
+</div>
+</div>
+<!--</editor-fold>-->
+<!--<editor-fold desc="Improved Rename refactoring">-->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-8">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<picture>
+<source media="(max-width: 1276px)" srcset="/webstorm/whatsnew/img/2019.2/dynamic-usages-624@2x.png">
+<source media="(min-width: 1276px)" srcset="/webstorm/whatsnew/img/2019.2/dynamic-usages-810@2x.png">
+<img alt="Improved Rename refactoring" src="/webstorm/whatsnew/img/2019.2/dynamic-usages-810@2x.png" srcset="/webstorm/whatsnew/img/2019.2/dynamic-usages-624@2x.png 1276w">
+</picture>
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<div class="features-block">
+<h3 class="features-block__title" data-title="Improved Rename refactoring" title="Improved Rename refactoring">Improved Rename refactoring</h3>
+<p>When you rename a symbol in a JavaScript or TypeScript file, the IDE now <strong>groups together
+                            dynamic usages</strong> and, by default, excludes them from the refactoring.
+                            This makes the refactoring <strong>more accurate</strong> and gives you <strong>more control</strong> over what exactly should be renamed in the <em>Refactoring Preview</em> tool window.
+                        </p>
+</div>
+</div>
+</div>
+<!--</editor-fold>-->
+<!--<editor-fold desc="Better support for Vue.js">-->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<h2>Vue.js</h2>
+</div>
+<div class="wt-col-8">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<picture>
+<source media="(max-width: 1276px)" srcset="/webstorm/whatsnew/img/2019.2/vuetify-props-624@2x.png">
+<source media="(min-width: 1276px)" srcset="/webstorm/whatsnew/img/2019.2/vuetify-props-810@2x.png">
+<img alt="Better support for Vue.js" src="/webstorm/whatsnew/img/2019.2/vuetify-props-810@2x.png" srcset="/webstorm/whatsnew/img/2019.2/vuetify-props-624@2x.png 1276w">
+</picture>
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<div class="features-block">
+<h3 class="features-block__title to_toc_menu" data-title="Vue component libraries" title="Vue component libraries">Better support for Vue.js component libraries</h3>
+<p>Using Vuetify, BootstrapVue, or Quasar in your Vue.js application? <strong>Code completion for components and their props</strong> from these and some other Vue component libraries is now <strong>more precise</strong>.
+                            This was made possible by a <a href="https://blog.jetbrains.com/webstorm/2019/07/webstorm-2019-2-eap-6/#vue">new approach</a> we’ve adopted to work with these libraries in the IDE.
+                        </p>
+</div>
+</div>
+</div>
+<!--</editor-fold>-->
+<!--<editor-fold desc="Syntax highlighting for 20+ languages">-->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<h2>Code Editing</h2>
+</div>
+<div class="wt-col-8">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<picture>
+<source media="(max-width: 1276px)" srcset="/webstorm/whatsnew/img/2019.2/syntax-highlighting-624@2x.png">
+<source media="(min-width: 1276px)" srcset="/webstorm/whatsnew/img/2019.2/syntax-highlighting-810@2x.png">
+<img alt="Syntax highlighting for 20+ languages" src="/webstorm/whatsnew/img/2019.2/syntax-highlighting-810@2x.png" srcset="/webstorm/whatsnew/img/2019.2/syntax-highlighting-624@2x.png 1276w">
+</picture>
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<div class="features-block">
+<h3 class="features-block__title to_toc_menu" data-title="Highlighting for 20+ languages" title="Highlighting for 20+ languages">Syntax highlighting for 20+ languages</h3>
+<p>Need to occasionally look through some <strong>PHP</strong> or <strong>Python</strong> files in WebStorm?
+                            <strong>Syntax highlighting</strong> is now available for these and many other languages – with <strong>no additional configuration required</strong>, thanks to the collection of TextMate grammar files that ships with the IDE.
+                        </p>
+</div>
+</div>
+</div>
+<!--</editor-fold>-->
+<!--<editor-fold desc="Completion for mistyped keywords and names">-->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-8">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<picture>
+<source media="(max-width: 1276px)" srcset="/webstorm/whatsnew/img/2019.2/completion-for-mistyped-words-624@2x.png">
+<source media="(min-width: 1276px)" srcset="/webstorm/whatsnew/img/2019.2/completion-for-mistyped-words-810@2x.png">
+<img alt="Completion for mistyped keywords and names" src="/webstorm/whatsnew/img/2019.2/completion-for-mistyped-words-624@2x.png" srcset="/webstorm/whatsnew/img/2019.2/completion-for-mistyped-words-810@2x.png 1276w">
+</picture>
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<div class="features-block">
+<h3 class="features-block__title">Completion for mistyped keywords and names</h3>
+<p>Ever typed <code>funtcion</code> or <code>fnction</code> instead of <code>function</code> by mistake?
+                            Now, <strong>code completion</strong> can understand this kind of errors and will still <strong>suggest the most relevant option</strong> for you.
+                            This works in all supported languages and for all symbols – keywords, classes, functions, components, and so on.
+                        </p>
+</div>
+</div>
+</div>
+<!--</editor-fold>-->
+<!--<editor-fold desc="Support for shell scripts">-->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-8">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<picture>
+<source media="(max-width: 1276px)" srcset="/webstorm/whatsnew/img/2019.2/shell-scripts-624@2x.png">
+<source media="(min-width: 1276px)" srcset="/webstorm/whatsnew/img/2019.2/shell-scripts-810@2x.png">
+<img alt="Support for shell scripts" src="/webstorm/whatsnew/img/2019.2/shell-scripts-624@2x.png" srcset="/webstorm/whatsnew/img/2019.2/shell-scripts-810@2x.png 1276w">
+</picture>
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<div class="features-block">
+<h3 class="features-block__title to_toc_menu" data-title="Support for shell scripts" title="Support for shell scripts">Support for shell scripts</h3>
+<p>WebStorm can now help you work with shell scripts.
+                            <strong>Code completion</strong> works in <code>.sh</code>  and <code>.bash</code> files, a new <strong>run configuration</strong> is available, and the IDE integrates with <a href="https://www.shellcheck.net/">ShellCheck</a> for linting and <a href="https://github.com/mvdan/sh">shfmt</a> for formatting the code.
+                        </p>
+</div>
+</div>
+</div>
+<!--</editor-fold>-->
+<!--<editor-fold desc="Searching for duplicate code">-->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-8">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<picture>
+<source media="(max-width: 1276px)" srcset="/webstorm/whatsnew/img/2019.2/duplicate-code-624@2x.png">
+<source media="(min-width: 1276px)" srcset="/webstorm/whatsnew/img/2019.2/duplicate-code-810@2x.png">
+<img alt="Searching for duplicate code" src="/webstorm/whatsnew/img/2019.2/duplicate-code-624@2x.png" srcset="/webstorm/whatsnew/img/2019.2/duplicate-code-810@2x.png 1276w">
+</picture>
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<div class="features-block">
+<h3 class="features-block__title" data-title="Duplicate code" title="Duplicate code">Searching for duplicate code</h3>
+<p>With the new <em>Duplicate code fragment</em> inspection, you can now find code duplicates in your project.
+                            It checks your code <strong>on the fly</strong> and immediately <strong>highlights potential duplicates</strong> in the editor.
+                            It works for JavaScript, TypeScript, CSS, Sass, SCSS, and Less.
+                        </p>
+</div>
+</div>
+</div>
+<!--</editor-fold>-->
+<!--<editor-fold desc="Code style for a folder with EditorConfig">-->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<h2>IDE</h2>
+</div>
+<div class="wt-col-8">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<picture>
+<source media="(max-width: 1276px)" srcset="/webstorm/whatsnew/img/2019.2/ij-specific-editorconfig-properties-624@2x.png">
+<source media="(min-width: 1276px)" srcset="/webstorm/whatsnew/img/2019.2/ij-specific-editorconfig-properties-810@2x.png">
+<img alt="Code style for a folder with EditorConfig" src="/webstorm/whatsnew/img/2019.2/ij-specific-editorconfig-properties-810@2x.png" srcset="/webstorm/whatsnew/img/2019.2/ij-specific-editorconfig-properties-624@2x.png 1276w">
+</picture>
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<div class="features-block">
+<h3 class="features-block__title to_toc_menu" data-title="Code style with EditorConfig" title="Code style with EditorConfig">Code style for a folder with EditorConfig</h3>
+<p>You can now <strong>maintain different code styles</strong> in different parts of your projects by adding multiple <code>.editorconfig</code> files.
+                            In addition to the standard <a href="https://editorconfig.org/">EditorConfig</a> options, which have been supported for a long time, you can now use <strong>IDE-specific properties</strong> that cover all available IDE code style options.
+                        </p>
+</div>
+</div>
+</div>
+<!--</editor-fold>-->
+<!--<editor-fold desc="Open multiple projects in one window">-->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-8">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<picture>
+<source media="(max-width: 1276px)" srcset="/webstorm/whatsnew/img/2019.2/multiple-projects-624@2x.png">
+<source media="(min-width: 1276px)" srcset="/webstorm/whatsnew/img/2019.2/multiple-projects-810@2x.png">
+<img alt="Open multiple projects in one window" src="/webstorm/whatsnew/img/2019.2/multiple-projects-624@2x.png" srcset="/webstorm/whatsnew/img/2019.2/multiple-projects-810@2x.png 1276w">
+</picture>
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<div class="features-block">
+<h3 class="features-block__title" data-title="Multiple project in one window" title="Multiple project in one window">Open multiple projects in one window</h3>
+<p>When you have a project opened in WebStorm and want to open another one, you can now <strong>attach</strong> this second <strong>project to the opened one</strong>,
+                            so that you can see both of them in the same IDE window. If you want to close the attached project, right-click its root in the Project view and select <em>Remove from Project View</em>.
+                        </p>
+</div>
+</div>
+</div>
+<!--</editor-fold>-->
+<!--<editor-fold desc="Updated plugin configuration">-->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-8">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<picture>
+<source media="(max-width: 1276px)" srcset="/webstorm/whatsnew/img/2019.2/plugin-configuration-624@2x.png">
+<source media="(min-width: 1276px)" srcset="/webstorm/whatsnew/img/2019.2/plugin-configuration-810@2x.png">
+<img alt="Updated plugin configuration" src="/webstorm/whatsnew/img/2019.2/plugin-configuration-810@2x.png" srcset="/webstorm/whatsnew/img/2019.2/plugin-configuration-624@2x.png 1276w">
+</picture>
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<div class="features-block">
+<h3 class="features-block__title">Updated plugin configuration</h3>
+<p>With the updated <em>Plugin</em> page in the IDE preferences, it is now <strong>easier to find the plugin you need</strong> – the plugin description is now shown
+                            right next to the list of available plugins. We’ve removed the <em>Updates</em> tab
+                            but added a new <em>Update</em> button next to the plugin in the <em>Installed</em> section.</p>
+<p>To disable or re-enable all the downloaded plugins, click the gear icon and choose the appropriate option.</p>
+</div>
+</div>
+</div>
+<!--</editor-fold>-->
+<!--<editor-fold desc="Completion in .gitignore">-->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<h2>Version Control</h2>
+</div>
+<div class="wt-col-8">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<picture>
+<source media="(max-width: 1276px)" srcset="/webstorm/whatsnew/img/2019.2/gitignore-624@2x.png">
+<source media="(min-width: 1276px)" srcset="/webstorm/whatsnew/img/2019.2/gitignore-810@2x.png">
+<img alt="Completion in .gitignore" src="/webstorm/whatsnew/img/2019.2/gitignore-810@2x.png" srcset="/webstorm/whatsnew/img/2019.2/gitignore-624@2x.png 1276w">
+</picture>
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<div class="features-block">
+<h3 class="features-block__title to_toc_menu" data-title="Completion in .gitignore" title="Completion in .gitignore">Completion in .gitignore</h3>
+<p>In <code>.gitignore</code> files, the IDE offers code completion suggestions for file and folder names.
+                            <em>Cmd/Ctrl-click</em> on the name to jump to this file or folder in the Project view.
+                            You can now quickly add a file to <code>.gitignore</code> from the Local Changes tab – right-click it in the Unversioned files group and select <em>Add to .gitignore</em>.
+
+                        </p>
+</div>
+</div>
+</div>
+<!--</editor-fold>-->
+<div class="more-about">
+<div class="button-expander _is-closed">
+                    Learn about WebStorm 2019.1
+                    <span class="button-expander__icon"></span>
+</div>
+</div>
+</div>
+</div>
+<!--</editor-fold>-->
+<!--<editor-fold desc="WebStorm 2019.1">-->
+<div class="section-content _bg-medium version-features js-version-2019-1 _is-closed">
+<div class="toc _bg-medium" id="toc-2019-1"></div>
+<div class="wt-container article-content">
+<!--<editor-fold desc="Using JavaScript destructuring">-->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<h2>JavaScript & TypeScript</h2>
+</div>
+<div class="wt-col-8">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<picture>
+<source media="(max-width: 1276px)" srcset="/webstorm/whatsnew/img/2019.1/replace-with-destructuring-616@2x.png">
+<source media="(min-width: 1276px)" srcset="/webstorm/whatsnew/img/2019.1/replace-with-destructuring-816@2x.png">
+<img alt="Using JavaScript destructuring" src="/webstorm/whatsnew/img/2019.1/replace-with-destructuring-816@2x.png" srcset="/webstorm/whatsnew/img/2019.1/replace-with-destructuring-616@2x.png 1276w">
+</picture>
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<div class="features-block">
+<h3 class="features-block__title to_toc_menu" title="JavaScript and TypeScript">Using JavaScript destructuring</h3>
+<p>With destructuring, you can unpack values from arrays and objects into variables using a very
+                            concise syntax. WebStorm’s new refactorings and intentions (<em>Alt-Enter</em>) can help you
+                            easily <strong>introduce destructuring</strong> to your JavaScript or TypeScript code.
+                        </p>
+</div>
+</div>
+</div>
+<!--</editor-fold>-->
+<!--<editor-fold desc="Convert function with Promise to async/await">-->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-8">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<picture class="js-gif">
+<source data-gif-src="/webstorm/whatsnew/img/2019.1/convert-to-async-function-616@2x.gif" media="(max-width: 1276px)" srcset="/webstorm/whatsnew/img/2019.1/convert-to-async-function-616@2x.png">
+<source data-gif-src="/webstorm/whatsnew/img/2019.1/convert-to-async-function-816@2x.gif" media="(min-width: 1276px)" srcset="/webstorm/whatsnew/img/2019.1/convert-to-async-function-816@2x.png">
+<img alt="Convert function with Promise to async/await" data-gif-src="/webstorm/whatsnew/img/2019.1/convert-to-async-function-816@2x.gif" src="/webstorm/whatsnew/img/2019.1/convert-to-async-function-816@2x.gif">
+</picture>
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<div class="features-block">
+<h3 class="features-block__title">Convert function with Promise to async/await</h3>
+<p>You can automatically change a function that returns a Promise with <code>.then()</code> and
+                            <code>.catch()</code> calls to an <strong>async function</strong> that uses the async/await syntax. Simply
+                            press <em>Alt-Enter</em> on the name of the function and select <em>Convert to async function</em>.
+                            This is possible not only in TypeScript files, but also in JavaScript and Flow.
+                        </p>
+</div>
+</div>
+</div>
+<!--</editor-fold>-->
+<!--<editor-fold desc="New inspections for Angular apps">-->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<h2>Frameworks</h2>
+</div>
+<div class="wt-col-8">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<picture class="js-gif">
+<source data-gif-src="/webstorm/whatsnew/img/2019.1/angular-add-to-module-616@2x.gif" media="(max-width: 1276px)" srcset="/webstorm/whatsnew/img/2019.1/angular-add-to-module-616@2x.png">
+<source data-gif-src="/webstorm/whatsnew/img/2019.1/angular-add-to-module-816@2x.gif" media="(min-width: 1276px)" srcset="/webstorm/whatsnew/img/2019.1/angular-add-to-module-816@2x.png">
+<img alt="Convert function with Promise to async/await" data-gif-src="/webstorm/whatsnew/img/2019.1/angular-add-to-module-816@2x.gif" src="/webstorm/whatsnew/img/2019.1/angular-add-to-module-816@2x.gif">
+</picture>
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<div class="features-block">
+<h3 class="features-block__title to_toc_menu" title="Angular">New inspections for Angular apps</h3>
+<p>For Angular applications, WebStorm adds 17 new inspections that will help you <strong>detect
+                            Angular-specific errors</strong> in your app as you type, and will suggest quick-fixes.
+                            These inspections work both in the TypeScript and template files and check the use of
+                            bindings, directives, components, and many other things.
+                        </p>
+</div>
+</div>
+</div>
+<!--</editor-fold>-->
+<!--<editor-fold desc="Easier navigation in Angular projects">-->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-8">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<picture>
+<source data-lazy-srcset="/webstorm/whatsnew/img/2019.1/related-symbol-for-angular-apps-616@2x.png" media="(max-width: 1276px)">
+<source data-lazy-srcset="/webstorm/whatsnew/img/2019.1/related-symbol-for-angular-apps-816@2x.png" media="(min-width: 1276px)">
+<img alt="Easier navigation in Angular projects" class="lazyload" data-lazy-src="/webstorm/whatsnew/img/2019.1/related-symbol-for-angular-apps-816@2x.png" data-lazy-srcset="/webstorm/whatsnew/img/2019.1/related-symbol-for-angular-apps-616@2x.png 1276w">
+</picture>
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<div class="features-block">
+<h3 class="features-block__title">Easier navigation in Angular projects</h3>
+<p>In Angular apps, you can now use the <em>Related Symbol…</em> popup (<em>Ctrl-Cmd-Up</em> /
+                            <em>Ctrl+Alt+Home)</em> to quickly <strong>jump between the different component
+                                files</strong> such as TypeScript, template, style, and test files. In the TypeScript
+                            file, the popup will also list all the symbols that were imported into this file.
+                        </p>
+</div>
+</div>
+</div>
+<!--</editor-fold>-->
+<!--<editor-fold desc="Improved support for TypeScript in Vue apps">-->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-8">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<picture>
+<source data-lazy-srcset="/webstorm/whatsnew/img/2019.1/typescript-in-vue-616@2x.png" media="(max-width: 1276px)">
+<source data-lazy-srcset="/webstorm/whatsnew/img/2019.1/typescript-in-vue-816@2x.png" media="(min-width: 1276px)">
+<img alt="Improved support for TypeScript in Vue apps" class="lazyload" data-lazy-src="/webstorm/whatsnew/img/2019.1/typescript-in-vue-816@2x.png" data-lazy-srcset="/webstorm/whatsnew/img/2019.1/typescript-in-vue-616@2x.png 1276w">
+</picture>
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<div class="features-block">
+<h3 class="features-block__title to_toc_menu" title="React and Vue.js">Improved support for TypeScript in Vue apps</h3>
+<p>WebStorm now uses the TypeScript language service together with its own TypeScript support
+                            for any TypeScript code in <em>.vue</em> files. This means that you’ll now get more <strong>accurate
+                                type checking</strong> and <strong>type info</strong>, you will be able to use the
+                            quick-fixes provided by the service,
+                            and see all the TypeScript errors in the current file in the TypeScript tool window.
+                        </p>
+</div>
+</div>
+</div>
+<!--</editor-fold>-->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-4">
+<h3 class="features-block__title">Extract Method for React hooks</h3>
+<p>The <em>Extract Method</em> refactoring now works with local functions and uses destructuring for
+                        the return values, making it perfect for <strong>extracting custom React hooks</strong>.</p>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Improved completion for props</h3>
+<p>WebStorm now provides better code completion for <strong>React props</strong> merged using with
+                        the spread operator.</p>
+</div>
+</div>
+<!--<editor-fold desc="Updated docs and browser compatibility">-->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<h2>HTML and Style Sheets</h2>
+</div>
+<div class="wt-col-8">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<picture>
+<source data-lazy-srcset="/webstorm/whatsnew/img/2019.1/updated-css-docs-616@2x.png" media="(max-width: 1276px)">
+<source data-lazy-srcset="/webstorm/whatsnew/img/2019.1/updated-css-docs-816@2x.png" media="(min-width: 1276px)">
+<img alt="Updated docs and browser compatibility" class="lazyload" data-lazy-src="/webstorm/whatsnew/img/2019.1/updated-css-docs-616@2x.png" data-lazy-srcset="/webstorm/whatsnew/img/2019.1/updated-css-docs-816@2x.png 1276w">
+</picture>
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<div class="features-block">
+<h3 class="features-block__title to_toc_menu" title="HTML and CSS">Updated documentation</h3>
+<p>The documentation (<em>F1</em>) for CSS properties and HTML tags and attributes now shows <strong>up-to-date
+                            descriptions</strong> and information about the <strong>browser support from MDN</strong> as
+                            well as links to the full MDN articles.</p>
+</div>
+</div>
+</div>
+<!--</editor-fold>-->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-4">
+<h3 class="features-block__title">Browser compatibility check for CSS</h3>
+<p>To check that all the CSS properties you use are supported in the target browser version, you can enable a new
+                        <strong><em>Browser compatibility</em></strong> inspection in preferences.</p>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Camel case support for CSS Modules</h3>
+<p>If you use <strong>CSS Modules</strong> in your project, code completion for classes in the
+                        JavaScript file will now suggest camel-cased versions of class names with dashes.</p>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Extract CSS variable</h3>
+<p>With the new <em>Extract CSS variable</em> refactoring, you can replace all the usages of a value in a current
+                        <em>.css</em> file with a variable by using the <code>var(--var-name)</code> syntax.
+                    </p>
+</div>
+</div>
+<!--<editor-fold desc="Highlighting for failed line in test">-->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<h2>Testing</h2>
+</div>
+<div class="wt-col-8">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<picture>
+<source data-lazy-srcset="/webstorm/whatsnew/img/2019.1/highlight-error-in-test-616@2x.png" media="(max-width: 1276px)">
+<source data-lazy-srcset="/webstorm/whatsnew/img/2019.1/highlight-error-in-test-816@2x.png" media="(min-width: 1276px)">
+<img alt="Highlighting for failed line in test" class="lazyload" data-lazy-src="/webstorm/whatsnew/img/2019.1/highlight-error-in-test-616@2x.png" data-lazy-srcset="/webstorm/whatsnew/img/2019.1/highlight-error-in-test-816@2x.png 1276w">
+</picture>
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<div class="features-block">
+<h3 class="features-block__title">Highlighting for failed line in test</h3>
+<p>When you run tests with <strong>Jest</strong>, <strong>Karma</strong>, <strong>Mocha</strong>,
+                            or <strong>Protractor</strong> and some tests fail, you can now see right in the editor where
+                            the problem happened. The IDE will use the information from the stack trace and highlight
+                            the failed code. On hover, you’ll see the error message from the test runner and you can
+                            immediately start debugging the test.</p>
+</div>
+</div>
+</div>
+<!--</editor-fold>-->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-4">
+<h3 class="features-block__title">Testing with Cucumber and TypeScript</h3>
+<p>Using Cucumber and TypeScript? You can now <strong>jump</strong> from the steps in the <em>.feature</em> file
+                        <strong>to their definitions</strong> in the
+                        <em>.ts</em> file, and generate missing definitions using a quick-fix (<em>Alt-Enter</em>).
+                    </p>
+</div>
+</div>
+<!--<editor-fold desc="New debugger console">-->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<h2>Tools</h2>
+</div>
+<div class="wt-col-8">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<picture>
+<source data-lazy-srcset="/webstorm/whatsnew/img/2019.1/debug-console-616@2x.png" media="(max-width: 1276px)">
+<source data-lazy-srcset="/webstorm/whatsnew/img/2019.1/debug-console-816@2x.png" media="(min-width: 1276px)">
+<img alt="New debugger console" class="lazyload" data-lazy-src="/webstorm/whatsnew/img/2019.1/debug-console-616@2x.png" data-lazy-srcset="/webstorm/whatsnew/img/2019.1/debug-console-816@2x.png 1276w">
+</picture>
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<div class="features-block">
+<h3 class="features-block__title to_toc_menu" title="Debug console">New debugger console</h3>
+<p>Meet the new, <strong>improved interactive debugger console</strong> in the JavaScript and
+                            Node.js debug tool windows! It now displays objects using a tree view, and it supports
+                            styling of log messages with CSS and grouping them using <code>console.group()</code> and
+                            <code>console.groupEnd()</code>. You can also filter out
+                            any type of log messages.
+                        </p>
+</div>
+</div>
+</div>
+<!--</editor-fold>-->
+<!--<editor-fold desc="Completion for npm scripts">-->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-8">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<picture>
+<source data-lazy-srcset="/webstorm/whatsnew/img/2019.1/code-completion-for-npm-scripts-616@2x.png" media="(max-width: 1276px)">
+<source data-lazy-srcset="/webstorm/whatsnew/img/2019.1/code-completion-for-npm-scripts-816@2x.png" media="(min-width: 1276px)">
+<img alt="Completion for npm scripts" class="lazyload" data-lazy-src="/webstorm/whatsnew/img/2019.1/code-completion-for-npm-scripts-616@2x.png" data-lazy-srcset="/webstorm/whatsnew/img/2019.1/code-completion-for-npm-scripts-816@2x.png 1276w">
+</picture>
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<div class="features-block">
+<h3 class="features-block__title to_toc_menu" title="npm scripts">Completion for npm scripts</h3>
+<p>When adding new scripts to the <em>package.json</em> file, WebStorm now provides <strong>suggestions
+                            for available commands</strong> provided by the installed packages. After typing
+                            <code>node</code>, the IDE will suggest folder and file names. And after typing <code>npm
+                                run</code>, you’ll see a list of tasks defined in the current file.
+                        </p>
+</div>
+</div>
+</div>
+<!--</editor-fold>-->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-4">
+<h3 class="features-block__title">Improved support for linters</h3>
+<p>WebStorm can now run multiple processes for <strong>ESLint</strong> and <strong>TSLint</strong>
+                        in one project to make sure that they work correctly in
+                        <strong>monorepo-projects</strong> and in projects with several linter configurations.
+                    </p>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Support for Docker Compose</h3>
+<p>If you use Docker for testing your Node.js application, you can now use the configuration
+                        described in the Docker Compose file to easily <strong>run and debug the app</strong> from the IDE.
+                    </p>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Version range tooltip for dependencies</h3>
+<p>In package.json, press <em>Cmd/Ctrl</em> and hover over the version on a dependency to see what
+                        range of versions can be installed when running
+                        <code>npm install</code> or <code>yarn install</code>.</p>
+</div>
+</div>
+<!--<editor-fold desc="New UI themes">-->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-12">
+<h2>IDE</h2>
+</div>
+<div class="wt-col-8">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<picture>
+<source data-lazy-srcset="/webstorm/whatsnew/img/2019.1/dark-purple-ui-theme-616@2x.png" media="(max-width: 1276px)">
+<source data-lazy-srcset="/webstorm/whatsnew/img/2019.1/dark-purple-ui-theme-816@2x.png" media="(min-width: 1276px)">
+<img alt="New UI themes" class="lazyload" data-lazy-src="/webstorm/whatsnew/img/2019.1/dark-purple-ui-theme-616@2x.png" data-lazy-srcset="/webstorm/whatsnew/img/2019.1/dark-purple-ui-theme-816@2x.png 1276w">
+</picture>
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<div class="features-block">
+<h3 class="features-block__title to_toc_menu" title="New UI themes">New UI themes</h3>
+<p>You can now use the new colorful UI themes in WebStorm that are available as plugins. Choose
+                            between the
+                            <a href="https://plugins.jetbrains.com/plugin/12100-dark-purple-theme">Dark Purple</a>, <a href="https://plugins.jetbrains.com/plugin/12103-gray-theme">Gray</a>, and
+                            <a href="https://plugins.jetbrains.com/plugin/12102-cyan-light-theme">Cyan Light</a> themes,
+                            or
+                            <a href="http://www.jetbrains.org/intellij/sdk/docs/reference_guide/ui_themes/themes_intro.html">create
+                                your own</a>.
+                        </p>
+</div>
+</div>
+</div>
+<!--</editor-fold>-->
+<!--<editor-fold desc="Recent locations popup">-->
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-8">
+<div class="features-block">
+<div class="features-block__image _two-block-in-row">
+<picture>
+<source data-lazy-srcset="/webstorm/whatsnew/img/2019.1/recent-locations-616@2x.png" media="(max-width: 1276px)">
+<source data-lazy-srcset="/webstorm/whatsnew/img/2019.1/recent-locations-816@2x.png" media="(min-width: 1276px)">
+<img alt="Recent locations popup" class="lazyload" data-lazy-src="/webstorm/whatsnew/img/2019.1/recent-locations-616@2x.png" data-lazy-srcset="/webstorm/whatsnew/img/2019.1/recent-locations-816@2x.png 1276w">
+</picture>
+</div>
+</div>
+</div>
+<div class="wt-col-4">
+<div class="features-block">
+<h3 class="features-block__title to_toc_menu" title="Recent locations">Recent locations popup</h3>
+<p>The <em>Recent Locations</em> popup (<em>Cmd-Shift-E</em> / <em>Ctrl+Shift+E</em>) is a new
+                            way to
+                            <strong>navigate around the project</strong>. It shows a list of all the files and lines of
+                            code in them that you have recently opened in the editor. You can start typing to filter the
+                            results and jump to the code you need.
+                        </p>
+</div>
+</div>
+</div>
+<!--</editor-fold>-->
+<div class="wt-row wt-row_size_m margin-bottom-vertical-unit">
+<div class="wt-col-4">
+<h3 class="features-block__title">Save project as a template</h3>
+<p>With the new action <em>Save as a Template</em> in the <em>Tools</em> menu, you can now use a
+                        project as a base for creating new projects on the IDE Welcome Screen.</p>
+</div>
+<div class="wt-col-4">
+<h3 class="features-block__title">Soft-wraps for selected file types</h3>
+<p>You can now enable soft-wraps in the editor for specific file types. To do that, open <em>Preferences/Settings
+                        | Editor | General</em> and specify the file types in the <em>Soft-wrap files</em> field.</p>
+</div>
+</div>
+</div>
+</div>
+<!--</editor-fold>-->    </div>
+
+            
+<div class="page__footer">
+    <footer class="footer" id="footer">
+        <div class="wt-container">
+            <div class="footer__main wt-row wt-row_size_m wt-row-sm_direction_column-reverse">
+                <div class="footer__logo wt-col-inline wt-display-md-none">
+                    <div class="jetbrains-logo _size-3 _full-block">
+                        <svg class="sprite-img jetbrains">
+                            <use xlink:href="#jetbrains" />
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="wt-col-auto-fill wt-col-sm-12">
+                    <div class="wt-row wt-row_size_xs wt-row-sm_size_m wt-offset-top-12">
+                        <div class="wt-col-inline footer-skeleton-button"></div>
+                        <div class="wt-col-inline footer-skeleton-button"></div>
+                        <div class="wt-col-inline footer-skeleton-button"></div>
+                        <div class="wt-col-inline footer-skeleton-button"></div>
+                    </div>
+
+                    <div class="footer-skeleton-text-2 wt-offset-top-24" style="max-width: 45%"></div>
+                    <div class="footer-skeleton-text-2 wt-offset-top-12" style="max-width: 70%"></div>
+                </div>
+
+                <div class="wt-col-inline wt-col-sm-12 wt-col_align-self_end wt-col-sm_align-self_start">
+                    <div class="wt-row wt-row_size_m wt-row_justify_end wt-row-sm_justify_start">
+                        <div class="wt-col-inline footer-skeleton-button" style="min-width: 180px"></div>
+                        <div class="wt-col-inline footer-skeleton-button" style="min-width: 80px"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+    </div>
+
+<script>
+(function () {
+  function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+      results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+  }
+
+  function updateQueryStringParameter(uri, key, value) {
+    var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+    var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+    if (uri.match(re)) {
+      return uri.replace(re, '$1' + key + "=" + value + '$2');
+    }
+    else {
+      return uri + separator + key + "=" + value;
+    }
+  }
+
+  var downloadLink = document.getElementById("download-link");
+  if (downloadLink != null) {
+    var platform = getParameterByName('platform');
+    platform = platform != null ? platform : "windows";
+    var href = downloadLink.getAttribute("href");
+    var code = getParameterByName("code");
+
+    if(code != null) {
+      href = updateQueryStringParameter(href, "code", code)
+    }
+    href = updateQueryStringParameter(href, "platform", platform);
+    downloadLink.setAttribute("href", href);
+  }
+})();
+</script><script>
+(function() {
+  var STORAGE_KEY_NAME = 'firefoxDisappearedSVGWorkaround';
+  var STORAGE_KEY_VALUE = '1';
+
+  var isFirefox = /firefox/i.test(navigator.userAgent);
+  if (!isFirefox || isFirefox && sessionStorage.getItem(STORAGE_KEY_NAME) === STORAGE_KEY_VALUE) {
+    return;
+  }
+
+  var arrayFrom = function (arrayLike) {
+    return Array.prototype.slice.call(arrayLike, 0);
+  };
+
+  function workaround() {
+    var uses = document.querySelectorAll('.page svg use');
+    var badNodesCount = 0;
+
+    arrayFrom(uses).forEach(function (node) {
+      var rect = node.getBoundingClientRect();
+      if (rect.width === 0 && rect.height === 0)
+        badNodesCount++;
+    });
+
+    if (badNodesCount === uses.length) {
+      sessionStorage.setItem(STORAGE_KEY_NAME, STORAGE_KEY_VALUE);
+      if (typeof dataLayer !== 'undefined')
+        dataLayer.push({'firefoxDisappearedSVGWorkaround': STORAGE_KEY_VALUE});
+
+      window.location.replace(window.location.href);
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', workaround);
+
+})();
+</script>      <link href="/_assets/banner-rotator.entry.07ac548a2a68a7922693.css" rel="stylesheet" type="text/css">
+      <script src="/_assets/banner-rotator.entry.b9ea3aaba598786010f0.js" type="text/javascript"></script>
+      
+      
+  <script>
+(function () {
+
+  'use strict';
+
+  function ImagesSrcReplacer () {
+
+    var attribute = 'data-src';
+    var matches = document.querySelectorAll('img[' + attribute + ']');
+
+    for (var i = 0, n = matches.length; i < n; i++) {
+
+      var attrValue = matches[i].getAttribute(attribute);
+
+      if (_isHighDensity ()) {
+
+        var name = attrValue.substring(0, attrValue.lastIndexOf('.'));
+        var extention = attrValue.substring(attrValue.lastIndexOf('.'), attrValue.length);
+
+        matches[i].setAttribute('src', name + '@2x' + extention);
+
+      } else {
+        matches[i].setAttribute('src', attrValue)
+      }
+    }
+
+    /**
+     * Detect high density
+     * @returns {*|boolean}
+     */
+    function _isHighDensity () {
+      return (
+      (window.matchMedia &&
+      (window.matchMedia('only screen and (min-resolution: 124dpi), only screen and (min-resolution: 1.3dppx), only screen and (min-resolution: 48.8dpcm)').matches ||
+       window.matchMedia('only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (-o-min-device-pixel-ratio: 2.6/2), only screen and (min--moz-device-pixel-ratio: 1.3), only screen and (min-device-pixel-ratio: 1.3)').matches)) ||
+      (window.devicePixelRatio &&
+       window.devicePixelRatio > 1.3));
+    }
+  }
+
+  return new ImagesSrcReplacer()
+
+}(document, window));
+</script></body>
+</html>

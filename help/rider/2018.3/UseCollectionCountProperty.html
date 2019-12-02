@@ -1,0 +1,40 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="/help/app/v2/analytics.js"></script><meta charset="UTF-8"><title>Code Inspection: Use collection’s count property - Help | JetBrains Rider</title><link rel="stylesheet" href="/help/app/v2/app.css"></head><body data-id="UseCollectionCountProperty" data-disqus-id="UseCollectionCountProperty_rdr"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search JetBrains Rider Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>JetBrains Rider 2018.3 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="visual_studio" selected>Visual Studio</option><option data-group="primary" value="resharper">ReSharper</option><option data-group="primary" value="_default">Default (IntelliJ IDEA)</option><option data-group="secondary" value="visual_studio_osx">Visual Studio (macOS)</option><option data-group="secondary" value="resharper_osx">ReSharper (macOS)</option><option data-group="secondary" value="mac_os_x_10.5_">Mac OS X 10.5+ (IntelliJ IDEA)</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="UseCollectionCountProperty" id="UseCollectionCountProperty.xml">Code Inspection: Use collection’s count property</h1>    <p id="83fa25f6">        If a collection has a        <code class="code">Count</code>        property (or a        <code class="code">Length</code>        property), JetBrains Rider suggests using the property instead of the        <code class="code">Count()</code>        method. The property works faster (to see why, read the StackOverflow answers linked in the        <span class="control">See Also</span> below).        Such a replacement is only possible        for collections that implement        <code class="code">ICollection&lt;T&gt;</code>        or its derived interfaces.    </p>    <p id="26c9f354">        For arrays, JetBrains Rider suggests replacing        <code class="code">Count()</code> with        <code class="code">Length</code>:    </p>            <aside class="tip sideblock" data-title="" rel="26c9f354" id="c8b80ec4">            <p id="9e39c541">                You can configure this inspection:            </p>            <ul class="list _ul"><li class="list__item" id="9c507c6d"><a href="Code_Analysis__Configuring_Warnings.html#disable">disable it to ignore all related issues</a></li><li class="list__item" id="314156a5"><a href="Code_Analysis__Configuring_Warnings.html#suppress">suppress it in any place in the code to ignore specific issues</a></li><li class="list__item" id="3a459d50"><p><a href="Code_Analysis__Configuring_Warnings.html#change_severity">change its severity level                    to make the detected issues less or more noticeable</a>                </p></li></ul>        </aside>        <div class="table-wrapper"><table class="                 " width="100%" id="20edc58f"><thead><tr id="bf17543a" class="ijRowHead"><th id="405e4a72"><p>Suboptimal code</p></th><th id="960a6bc6"><p>After the quick-fix</p></th></tr></thead><tbody><tr id="7eab2445" class="ijRowOdd"><td id="d6b50982"><p>        <div class="code-block" data-lang="C#">
+          
+public int BooksCount(string[] books)
+{
+    return books.Count();
+}
+
+
+        </div>      </p></td><td id="d7050fe3"><p>        <div class="code-block" data-lang="C#">
+          
+public int BooksCount(string[] books)
+{
+    return books.Length;
+}
+
+
+        </div>      </p></td></tr></tbody></table></div>    <p id="c196e675">        For other collection types, JetBrains Rider suggests replacing        <code class="code">Count()</code> with        <code class="code">Count</code>:    </p>    <div class="table-wrapper"><table class="                 " width="100%" id="eff1c1fe"><thead><tr id="b30e5379" class="ijRowHead"><th id="72a6abf8"><p>Suboptimal code</p></th><th id="149b660c"><p>After the quick-fix</p></th></tr></thead><tbody><tr id="2362db32" class="ijRowOdd"><td id="27e36ac4"><p>        <div class="code-block" data-lang="C#">
+          
+public int ToysCount(IList&lt;string&gt; toys)
+{
+    return toys.Count();
+}
+
+
+        </div>      </p></td><td id="7805b024"><p>        <div class="code-block" data-lang="C#">
+          
+public int ToysCount(IList&lt;string&gt; toys)
+{
+    return toys.Count;
+}
+
+
+        </div>      </p></td></tr></tbody></table></div>    <div class="last-modified" data-skip-index="skip">Last modified: 25 April 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="EmptyDestructor.html">Code Inspection: EmptyDestructor</a><a class="navigation-links__next" href="UseObjectOrCollectionInitializer.html">Code Inspection: Use object or collection initializer when possible</a></div><section class="seealso" data-skip-index="skip"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content"><div class="seealso__col" data-skip-index="skip"><h3>Concepts:</h3><ul class="list"><li class="list__item"><a href="Finding_Code_Issues.html"><span>Finding Code Issues with Code Inspection</span></a></li><li class="list__item"><a href="Code_Analysis__Code_Inspections.html"><span>Code Inspections</span></a></li><li class="list__item"><a href="Design_time_Inspection.html"><span>Detecting Code Issues in Design Time</span></a></li></ul></div><div class="seealso__col" data-skip-index="skip"><h3>External Links:</h3><ul class="list"><li class="list__item"><a href="https://stackoverflow.com/questions/4098186/lists-count-vs-count" data-external="true" target="_blank" rel="noopener noreferrer"><span>StackOverflow: Count vs Count()</span></a></li><li class="list__item"><a href="https://stackoverflow.com/questions/6646449/net-array-difference-between-length-count-and-rank" data-external="true" target="_blank" rel="noopener noreferrer"><span>StackOverflow: .net array - difference between “Length”, “Count()” and “Rank”</span></a></li><li class="list__item"><a href="https://stackoverflow.com/questions/2521592/difference-between-ienumerable-count-and-length" data-external="true" target="_blank" rel="noopener noreferrer"><span>StackOverflow: Difference between IEnumerable Count() and Length</span></a></li></ul></div></div></section></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="/help/app/v2/app.js"></script></body></html>

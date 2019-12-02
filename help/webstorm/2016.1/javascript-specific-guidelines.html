@@ -1,0 +1,155 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"></meta><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta content="&#xA;        How to develop applications in JavaScript in WebStorm: configuring the JavaScript libraries, creating the JSDoc comments, JavaScript specific refactorings.&#xA;    " name="description"><meta charset="UTF-8"><title>
+        Learn the javaScript essentials in WebStorm.
+    </title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="topicId1000000103"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search WebStorm Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>WebStorm 2016.1 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWindow</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="language-and-framework-specific-guidelines.html">Language and Framework - Specific Guidelines</a><a class="navigation-links__next" href="configuring-javascript-libraries.html">Configuring JavaScript Libraries</a></div><h1>JavaScript-Specific Guidelines</h1><a name="d290427e11"></a><p>WebStorm enables creating rich Internet applications and Web applications by providing elaborate support
+                of <a name="d290427e13"></a><a href="http://developer.mozilla.org/en/JavaScript" data-external="true"><span>JavaScript</span></a> and tight integration with <a name="d290427e16"></a><a href="http://www.dmoz.org/Computers/Programming/Languages/JavaScript/AJAX/" data-external="true"><span>AJAX</span></a>
+                and other adjacent frameworks and technologies.</p><a name="d290427e20"></a><p>In this section:</p><ul class="list _links"><li class="list__item">JavaScript-Specific Guidelines<ul><li class="list__item"><a href="#d25054e5">Prerequisites</a></li><li class="list__item"><a href="#d290427e34">JavaScript support</a></li><li class="list__item"><a href="#d290427e416">Developing an application that contains JavaScript</a></li></ul></li><li class="list__item"><a href="configuring-javascript-libraries.html"><span>Configuring JavaScript Libraries</span></a></li><li class="list__item"><a href="creating-jsdoc-comments.html"><span>Creating  JSDoc Comments</span></a></li><li class="list__item"><a href="viewing-javascript-reference.html"><span>Viewing JavaScript Reference</span></a></li><li class="list__item"><a href="javascript-specific-refactorings.html"><span>JavaScript-Specific Refactorings</span></a></li><li class="list__item"><a href="unit-testing-javascript.html"><span>Unit Testing JavaScript</span></a></li><li class="list__item"><a href="running-and-debugging-javascript.html"><span>Running and Debugging JavaScript</span></a></li><li class="list__item"><a href="minifying-javascript.html"><span>Minifying JavaScript</span></a></li><li class="list__item"><a href="using-angularjs.html"><span>Using AngularJS</span></a></li><li class="list__item"><a href="using-ext-js-framework.html"><span>Using Ext JS Framework</span></a></li><li class="list__item"><a href="using-the-flow-type-checker.html"><span>Using the Flow Type Checker</span></a></li><li class="list__item"><a href="using-grunt-task-runner.html"><span>Using Grunt Task Runner</span></a></li><li class="list__item"><a href="using-gulp-task-runner.html"><span>Using Gulp Task Runner</span></a></li><li class="list__item"><a href="using-javascript-code-quality-tools.html"><span>Using JavaScript Code Quality Tools</span></a></li><li class="list__item"><a href="using-meteor.html"><span>Using Meteor</span></a></li><li class="list__item"><a href="using-phonegap-cordova.html"><span>Using PhoneGap/Cordova</span></a></li></ul><a name="d25054e5"></a><h2>Prerequisites</h2>
+
+ 
+         
+        <a name="d25054e66"></a><p>Before you start working with JavaScript, make sure that <a name="d25054e68"></a><span class="control">JavaScript Support</span> plugin is enabled.
+        The plugin is bundled with WebStorm and activated by default. If it is not, enable the plugin as described in the section <a name="d25054e71"></a><a href="enabling-and-disabling-plugins.html"><span>Enabling and Disabling Plugins</span></a>.</p>
+
+     
+    <a name="d290427e34"></a><h2>JavaScript support</h2><a name="d290427e37"></a><p>JavaScript files are marked with <img alt="viewAsJSON" width="13" height="15" title="viewAsJSON" src="/help/img/idea/2016.1/viewAsJSON.png" class="inline-icon-15"> icon.</p><a name="d290427e43"></a><p>JavaScript support in WebStorm includes:</p><ul class="list _ul"><li class="list__item"><a name="d290427e48"></a>
+                Switching between JavaScript language versions to choose the one that suits the targeted browser:
+                 
+                    <ul class="list _bullet"><li class="list__item"><a name="d55573e89"></a>
+                     <a name="d55573e91"></a><a href="https://developer.mozilla.org/en/New_in_JavaScript_1.5" data-external="true"><span>JavaScript 1.5</span></a>
+                  </li><li class="list__item"><a name="d55573e95"></a>
+                     <a name="d55573e97"></a><a href="https://developer.mozilla.org/en/JavaScript/New_in_JavaScript/1.6" data-external="true"><span>JavaScript 1.6</span></a>
+                  </li><li class="list__item"><a name="d55573e101"></a>
+                     <a name="d55573e103"></a><a href="https://developer.mozilla.org/en/JavaScript/New_in_JavaScript/1.7" data-external="true"><span>JavaScript 1.7</span></a>
+                  </li><li class="list__item"><a name="d55573e107"></a>
+                     <a name="d55573e109"></a><a href="https://developer.mozilla.org/en/JavaScript/New_in_JavaScript/1.8" data-external="true"><span>JavaScript 1.8</span></a>
+                  </li><li class="list__item"><a name="d55573e113"></a>
+                     <a name="d55573e115"></a><a href="https://developer.mozilla.org/en/JavaScript/New_in_JavaScript/1.8.5" data-external="true"><span>JavaScript 1.8.5</span></a>
+                  </li><li class="list__item"><a name="d55573e120"></a>
+                     <a name="d55573e122"></a><a href="http://www.ecma-international.org/publications/standards/Ecma-262.htm" data-external="true"><span>ECMAScript 5.1</span></a>
+                  </li><li class="list__item"><a name="d55573e126"></a>
+                     <a name="d55573e128"></a><a href="http://wiki.ecmascript.org/doku.php?id=harmony:harmony" data-external="true"><span>ECMAScript 6</span></a>
+                  </li><li class="list__item"><a name="d55573e132"></a>
+                            <a name="d55573e134"></a><a href="http://facebook.github.io/jsx/" data-external="true"><span>JSX Harmony</span></a>
+                        </li><li class="list__item"><a name="d55573e138"></a>
+                            <a name="d55573e140"></a><a href="http://flowtype.org/" data-external="true"><span>Flow</span></a>
+                        </li></ul>
+                     
+            </li><li class="list__item"><a name="d290427e53"></a>
+                <a name="coding_assistance"></a>
+                Full coding assistance:
+                <ul class="list _ul"><li class="list__item"><a name="d290427e59"></a>
+                        Smart, DOM-based, browser-type aware JavaScript <a name="d290427e61"></a><a href="auto-completing-code.html"><span>code completion</span></a> for:
+                        <ul class="list _ul"><li class="list__item"><a name="d290427e66"></a>Keywords, labels, variables, parameters and functions.</li><li class="list__item"><a name="d290427e69"></a>User defined and built-in JavaScript functions.</li><li class="list__item"><a name="d290427e72"></a>JavaScript namespaces.</li></ul>
+                    </li><li class="list__item"><a name="d290427e77"></a>Error and syntax highlighting.</li><li class="list__item"><a name="d290427e80"></a>Code <a name="d290427e82"></a><a href="code-style.html"><span>formatting</span></a> and <a name="d290427e85"></a><a href="code-folding.html"><span>folding</span></a>.</li><li class="list__item"><a name="d290427e89"></a>Numerous code <a name="d290427e91"></a><a href="running-inspections.html"><span>inspections</span></a> and <a name="d290427e94"></a><a href="resolving-problems.html"><span>quick-fixes</span></a>, including the <a name="d290427e97"></a><span class="control">Switch to JavaScript &lt;version&gt;</span> quick-fix.</li><li class="list__item"><a name="d290427e101"></a>Support of the <a name="d290427e103"></a><a href="https://developer.mozilla.org/en/JavaScript/Strict_mode#Strict_mode_for_scripts" data-external="true"><span>strict mode</span></a> standard.</li><li class="list__item"><a name="d290427e108"></a>Support for <a name="d290427e110"></a><a href="http://www.ecmascript.org/" data-external="true"><span>ECMAScript</span></a>.</li><li class="list__item"><a name="d290427e114"></a>Initial support of <a name="d290427e116"></a><a href="http://wiki.ecmascript.org/doku.php?id=harmony:harmony" data-external="true"><span>ECMAScript Harmony</span></a>.</li></ul>
+            </li><li class="list__item"><a name="d290427e122"></a>
+                <a name="d290427e124"></a><a href="generating-code.html"><span>Code Generation</span></a>
+                <ul class="list _bullet"><li class="list__item"><a name="d290427e129"></a>Generating code stubs based on <a name="d290427e131"></a><a href="live-templates.html"><span>file templates</span></a> during file creation.</li><li class="list__item"><a name="d290427e135"></a>Inserting, expanding, and generating JavaScript code blocks using <a name="d290427e137"></a><a href="live-templates.html"><span>live templates</span></a>.</li><li class="list__item"><a name="d290427e141"></a>Creating various applications elements via JavaScript and AJAX <a name="d290427e143"></a><a href="applying-intention-actions.html"><span>intention actions</span></a>.</li><li class="list__item"><a name="d290427e147"></a>Possibility to create <a name="d290427e149"></a><a href="commenting-and-uncommenting-blocks-of-code.html"><span>line and block comments</span></a>
+                        (<kbd data-default="Ctrl+Slash" data-default_for_gnome="Ctrl+Slash" data-default_for_kde="Ctrl+Slash" data-default_for_xwin="Ctrl+Slash" data-emacs="Alt+Semicolon" data-visual_studio="Ctrl+Slash" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Slash" data-mac_os_x_10.5_="&#x2318;/" data-mac_os_x="&#x2318;/" data-eclipse_mac_os_x="&#x2318;/" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Slash</kbd>/<kbd data-default="Ctrl+Shift+Slash" data-default_for_gnome="Ctrl+Shift+Slash" data-default_for_kde="Ctrl+Shift+Slash" data-default_for_xwin="Ctrl+Shift+Slash" data-emacs="Ctrl+Shift+Slash" data-visual_studio="Ctrl+Shift+Slash" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Shift+Slash" data-mac_os_x_10.5_="&#x2325;&#x2318;/" data-mac_os_x="&#x2303;&#x21E7;/" data-eclipse_mac_os_x="&#x2303;&#x21E7;/" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Shift+Slash</kbd>).</li><li class="list__item"><a name="d290427e157"></a>
+               <a name="d290427e159"></a><a href="unwrapping-and-removing-statements.html"><span>Unwrapping and removing statements</span></a>.</li></ul>
+            </li><li class="list__item"><a name="d290427e177"></a>
+                <a name="d290427e179"></a><a href="building-hierarchies.html"><span>Building type hierarchies</span></a> and <a name="d290427e182"></a><a href="viewing-hierarchies.html"><span>viewing type hierarchies</span></a> .
+            </li><li class="list__item"><a name="d290427e187"></a>
+                Refactoring
+                <a name="d290427e189"></a><p>
+                    WebStorm provides both common refactoring types available for all the supported languages
+                    and JavaScript-specific refactoring.
+                </p>
+                <ul class="list _ul"><li class="list__item"><a name="d290427e194"></a>
+               <a name="d290427e196"></a><a href="refactoring-source-code.html"><span>Common refactorings</span></a>:
+                        <ul class="list _ul"><li class="list__item"><a name="d290427e201"></a>
+                     <a name="d290427e203"></a><a href="rename-refactorings.html"><span>Rename</span></a> a file, function, variable, parameter, or label
+                                (both directly and via references).</li><li class="list__item"><a name="d290427e207"></a>
+                     <a name="d290427e209"></a><a href="move-refactorings.html"><span>Move/Copy</span></a> a file.</li><li class="list__item"><a name="d290427e213"></a>
+                     <a name="d290427e215"></a><a href="safe-delete.html"><span>Safe Delete</span></a> a file.</li><li class="list__item"><a name="d290427e224"></a>
+                     <a name="d290427e226"></a><a href="extract-method.html"><span>Extract</span></a> function.</li></ul>
+                    </li><li class="list__item"><a name="d290427e232"></a>
+                        <a name="d290427e234"></a><a href="extract-parameter-in-javascript.html"><span>JavaScript-Specific Extract Parameter Refactoring</span></a>
+                    </li></ul>
+            </li><li class="list__item"><a name="d290427e240"></a>
+                <a name="navigation"></a>
+                Numerous ways to <a name="d290427e244"></a><a href="navigating-through-the-source-code.html"><span>navigate</span></a> through the source code, among them:
+                <ul class="list _ul"><li class="list__item"><a name="d290427e249"></a>
+               <a name="d290427e251"></a><a href="navigating-with-structure-views.html"><span>Navigating with Structure Views</span></a>.</li><li class="list__item"><a name="d290427e256"></a>Show/Goto Implementation (<kbd data-default="Ctrl+Alt+B" data-default_for_gnome="Ctrl+Alt+B" data-default_for_kde="Ctrl+Alt+B" data-default_for_xwin="Ctrl+Alt+B" data-emacs="N/A" data-visual_studio="Ctrl+Alt+B" data-netbeans_6.5="N/A" data-eclipse="Ctrl+T" data-mac_os_x_10.5_="&#x2325;&#x2318;B" data-mac_os_x="&#x2325;&#x2318;B" data-eclipse_mac_os_x="N/A" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+B</kbd>) from overridden method / subclassed class.</li></ul>
+            </li><li class="list__item"><a name="d290427e263"></a>Advanced facilities for <a name="d290427e265"></a><a href="searching-through-the-source-code.html"><span>searching through the source code</span></a>.</li><li class="list__item"><a name="d290427e269"></a>Support of the <a name="d290427e271"></a><a href="http://jsdoc.sourceforge.net/" data-external="true"><span>JSDoc</span></a> format
+                and <a name="d290427e274"></a><a href="creating-jsdoc-comments.html"><span>generating documentation comments</span></a>.</li><li class="list__item"><a name="d290427e278"></a>
+                <a name="d290427e280"></a><a href="viewing-reference-information.html"><span>Viewing reference</span></a> information:
+                <ul class="list _ul"><li class="list__item"><a name="d290427e285"></a>Definitions, inline documentation, parameter hints.</li><li class="list__item"><a name="d290427e288"></a>
+               <a name="d290427e290"></a><a href="viewing-inline-documentation-2.html"><span>JSDoc comments</span></a>.</li><li class="list__item"><a name="d290427e294"></a>Lookup in <a name="d290427e296"></a><a href="documentation-look-up-in-external-javascript-libraries.html"><span>external JavaScript libraries</span></a>.</li></ul>
+            </li><li class="list__item"><a name="d290427e302"></a>
+                <a name="d290427e304"></a><p>
+                      <a name="d290427e306"></a><a href="running-and-debugging.html"><span>Running and debugging.</span></a>
+                </p>
+                 
+                <ul class="list _bullet"><li class="list__item"><a name="d290427e315"></a>
+                        Launching applications directly from WebStorm by opening the starting application HTML page in the <a name="d290427e317"></a><a href="configuring-browsers.html#product_default_browser"><span>default WebStorm browser</span></a>.
+                    </li><li class="list__item"><a name="d290427e321"></a>
+                        A dedicated <a name="d290427e323"></a><a href="creating-and-editing-run-debug-configurations.html"><span>debug</span></a> configuration for launching debugging sessions directly from WebStorm.
+                    </li><li class="list__item"><a name="d290427e327"></a>
+                        A JavaScript-aware <a name="d290427e329"></a><a href="debugging.html"><span>debugger</span></a> that lets you
+                        execute applications step by step, evaluate expressions, examine related information and find runtime bugs.
+                    </li><li class="list__item"><a name="d290427e333"></a>
+                        Support for <a name="d290427e335"></a><a href="using-breakpoints.html"><span>JavaScript breakpoints</span></a>.
+                    </li></ul>
+            </li><li class="list__item"><a name="d290427e342"></a>
+                Tight integration with related frameworks and technologies:
+                <a name="d290427e344"></a><a href="http://www.dmoz.org/Computers/Programming/Languages/JavaScript/AJAX/" data-external="true"><span>AJAX</span></a>,
+                <a name="d290427e347"></a><a href="http://docs.jquery.com/Main_Page" data-external="true"><span>JQuery</span></a>, <a name="d290427e350"></a><a href="http://developer.yahoo.com/yui/" data-external="true"><span>YUI</span></a>,
+                <a name="d290427e353"></a><a href="http://dojotoolkit.org/" data-external="true"><span>DoJo</span></a>, <a name="d290427e356"></a><a href="http://www.prototypejs.org/" data-external="true"><span>Prototype</span></a>,
+                <a name="d290427e360"></a><a href="http://www.mootools.net/" data-external="true"><span>MooTools</span></a>, <a name="d290427e363"></a><a href="http://qooxdoo.org/" data-external="true"><span>Qooxdoo</span></a>, and <a name="d290427e366"></a><a href="http://www.bindows.net/" data-external="true"><span>Bindows</span></a>:
+                <ul class="list _bullet"><li class="list__item"><a name="d290427e371"></a>Code completion for every framework.</li><li class="list__item"><a name="d290427e374"></a>
+               <a name="d290427e376"></a><a href="http://dojotoolkit.org/" data-external="true"><span>DoJo</span></a> style type annotations to provide more accurate completion and parameter type information.</li><li class="list__item"><a name="d290427e380"></a>
+               <a name="d290427e382"></a><a href="viewing-inline-documentation.html"><span>Quick Documentation lookup</span></a> for DoJo style commands.</li></ul>
+            </li><li class="list__item"><a name="d290427e388"></a>Support for the <a name="d290427e390"></a><a href="http://www.json.org/" data-external="true"><span>JSON</span></a> (JavaScript Object Notation) format:
+                <ul class="list _bullet"><li class="list__item"><a name="d290427e395"></a>A JSON file <a name="d290427e397"></a><a href="file-and-code-templates.html"><span>type template</span></a> mapped to <code class="code" data-lang="Java">json</code> file extension.</li><li class="list__item"><a name="d290427e404"></a>JSON code <a name="d290427e406"></a><a href="code-style.html"><span>formatting</span></a> and <a name="d290427e409"></a><a href="code-folding.html"><span>folding</span></a>.</li></ul>
+            </li></ul><a name="d290427e416"></a><a name="dynaProc0"></a><section class="procedure-steps"><h2>To develop an application that contains JavaScript</h2><p>
+            <a name="d290427e420"></a><p>Developing an application that contains JavaScript, generally, includes performing the following steps:</p>
+      </p><ol class=".list _decimal"><li class="list__item">
+            Make sure the JavaScript Support plugin is enabled. The plugin is bundled with WebStorm and activated by default.
+            If it is not, <a name="d290427e426"></a><a href="enabling-and-disabling-plugins.html#enable_disable_plugin"><span>enable the plugin</span></a>.
+            Make sure the JavaScript Support plugin is enabled. The plugin is bundled with WebStorm and activated by default.
+            If it is not, <a name="d290427e429"></a><a href="enabling-and-disabling-plugins.html"><span>enable the plugin</span></a>.
+             
+        Make sure the <a name="d7162e5450"></a><span class="emphasis">JavaScript Support</span> plugin is enabled.
+         
+        The plugin is bundled with WebStorm and activated by default.
+        If the plugin is not activated, enable it on the <a name="d7162e5458"></a><a href="plugins-2.html"><span>Plugins</span></a> page of the <a name="d7162e5460"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> as described in <a name="d7162e5462"></a><a href="enabling-and-disabling-plugins.html"><span>Enabling and Disabling Plugins</span></a>.
+     
+     
+        </li><li class="list__item">
+            <a name="d290427e440"></a><a href="creating-and-managing-projects.html"><span>Create a project</span></a> to implement your application.
+             
+        </li><li class="list__item">
+            On the <a name="d290427e455"></a><a href="javascript.html"><span>JavaScript</span></a> page of the <a name="d290427e457"></a><a href="settings-preferences-dialog.html"><span>Settings</span></a> dialog box, choose the JavaScript language version that suits the targeted browser.
+        </li><li class="list__item">
+            <a name="d290427e463"></a><a href="configuring-javascript-libraries.html"><span>Download, install, and configure JavaScript frameworks and libraries</span></a>.
+        </li><li class="list__item">
+            <a name="d290427e470"></a><a href="populating-projects.html"><span>Populate the project</span></a>. Use the following WebStorm facilities, where applicable:
+            <ul class="list _ul"><li class="list__item"><a name="d290427e475"></a>
+               <a name="d290427e477"></a><a href="#coding_assistance"><span>Coding assistance</span></a>.</li><li class="list__item"><a name="d290427e481"></a>
+               <a name="d290427e483"></a><a href="generating-code.html"><span>Code Generation</span></a>.</li><li class="list__item"><a name="d290427e487"></a>Various types of <a name="d290427e489"></a><a href="#navigation"><span>navigation</span></a> and <a name="d290427e492"></a><a href="searching-through-the-source-code.html"><span>search</span></a> through the source code.</li><li class="list__item"><a name="d290427e496"></a>
+               <a name="d290427e498"></a><a href="viewing-reference-information.html"><span>Viewing reference</span></a> and <a name="d290427e501"></a><a href="creating-jsdoc-comments.html"><span>generating documentation comments</span></a>.</li><li class="list__item"><a name="d290427e505"></a>
+               <a name="d290427e507"></a><a href="documentation-look-up-in-external-javascript-libraries.html"><span>Look-up in external libraries</span></a>.</li></ul>
+        </li><li class="list__item">
+            Improve the quality and maintainability of your code using various types of <a name="d290427e515"></a><a href="refactoring-source-code.html"><span>refactoring</span></a>,
+            both common and JavaScript-specific.
+        </li><li class="list__item">
+            Run your application by <a name="d290427e523"></a><a href="previewing-pages-with-web-contents-in-a-browser.html"><span>opening its starting HTML page in the WebStorm default browser</span></a>.
+        </li><li class="list__item">
+            <a name="d290427e529"></a><a href="debugging.html"><span>Debug</span></a> your application.
+            <a name="d290427e532"></a><p>
+                The JavaScript debugging functionality is incorporated in WebStorm, so just <a name="d290427e534"></a><a href="configuring-javascript-debugger.html"><span>configure the debugger</span></a>,
+                whereupon you can start the <a name="d290427e537"></a><a href="debugging-javascript.html"><span>debugging session</span></a> and <a name="d290427e540"></a><a href="debugging.html"><span>proceed as usual</span></a>: set the breakpoints, step through them,
+                stop and resume the program, and examine it when suspended.
+            </p>
+
+                <a name="d290427e544"></a><p>
+                    Debugging for JavaScript applications is supported only
+                    in the <a name="d290427e546"></a><a href="http://www.mozilla.com/en-US/firefox/upgrade.html" data-external="true"><span>Firefox</span></a> and <a name="d290427e549"></a><a href="http://www.google.com/chrome/" data-external="true"><span>Google Chrome</span></a> browsers.
+                </p>
+        </li></ol></section><div class="navigation-links _bottom"><a class="navigation-links__prev" href="language-and-framework-specific-guidelines.html">Language and Framework - Specific Guidelines</a><a class="navigation-links__next" href="configuring-javascript-libraries.html">Configuring JavaScript Libraries</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content"><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d290427e568"></a><a href="javascript-libraries.html"><span>JavaScript. Libraries</span></a></li></ul></div><div class="seealso__col"><h3>Concepts:</h3><ul class="list"><li class="list__item"><a name="d290427e561"></a><a href="supported-languages.html"><span>Supported Languages</span></a></li></ul></div><div class="seealso__col"><h3>Language and Framework-Specific Guidelines:</h3><ul class="list"><li class="list__item"><a name="d290427e573"></a><a href="node-js.html"><span>Node.js</span></a></li></ul></div></div></section><div class="last-modified">Last modified: 11 July 2016 </div></article><div id="disqus_thread"></div></div></section></main></div><script src="/help/app/app.js"></script></body></html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta charset="UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="//resources.jetbrains.com/storage/help-app/v3/analytics.js"></script><title>State-machine Rules - Help | YouTrack InCloud</title><link rel="stylesheet" href="//resources.jetbrains.com/storage/help-app/v3/app.css"></head><body data-id="state-machine-per-issue-type" data-breadcrumbs="Administration.xml|Administration/Workflow-Guide.xml|Workflows/Workflow-Rules.xml|Workflow Rule Types/state-machine-per-issue-type.xml|State-machine Rules" data-main-title="State-machine Rules"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack InCloud Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>YouTrack InCloud 2019.2 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="state-machine-per-issue-type" id="state-machine-per-issue-type.xml">State-machine Rules</h1>    <p id="84e8663b">A <span class="control">state-machine</span> rule regulates the transitions from one value to another for a custom field.      YouTrack provides templates for two types of state-machine rules.</p>    <ul class="list _ul"><li class="list__item" id="f0ae9993"><p id="0791fc27">A basic <span class="control">state-machine</span> rule that regulates the transitions from one value to another for a custom field.            To learn more about this type of state-machine, see <a href="#sample-state-machine-rule">Basic State-machines</a>.</p></li><li class="list__item" id="5ce3acad"><p>A <span class="control">state-machine</span> rule that imposes separate sets of state transitions based on the current value in a specified field.            To learn how to script this type of state-machine, see <a href="#state-machine-per-issue-type">State-machine Rules State-machines per Issue Type</a>.</p></li></ul>  <p id="0f034244">Both of these state-machine types are built using a similar collection of parameters.</p>  <p id="0d451a16">You can apply a state-machine rule to any custom field.    However, the most common use case for a state-machine rule is to regulate transitions between values for the <span class="control">State</span> field or another custom field that stores a <code class="code">state</code> type.</p>  <p id="106aae0e">When a state-machine rule is applied to a project, the options that are shown in the drop-down list for the field are restricted to the transitions that are defined in the state-machine rule for the current state.    Custom fields that are regulated by a state-machine rule are marked with a <span class="control">Workflow-driven field</span> icon.    The action that is defined for each value in the state-machine rule is displayed in the drop-down list. The actual values are shown to the right.    The following image illustrates how the list of allowed transitions for the <span class="control">State</span> field changes based on the current value.</p>  <aside data-type="warning" class="prompt" data-title="" rel="106aae0e" id="62c72492">    <p id="d1727a07">The allowed transitions for each value are displayed even when you have defined a guard that potentially blocks the selection of the value.      If the guard condition is not met, the selection is ignored.</p>    <p id="59866d60">If you add guards to your transitions, be sure to use the <code class="code">workflow.message</code> method to explain the restriction that is applied by the workflow.</p>  </aside>  <figure><a class="lightbox" href="/help/img/youtrack/2019.2/statemachine-field-values.zoomed.png"><img alt="Statemachine field values" title="Statemachine field values" src="/help/img/youtrack/2019.2/statemachine-field-values.png" id="70c893d0" width="600" height="219"></a></figure>        <div class="chapter"><h2 id="sample-state-machine-rule" data-toc="state-machine-per-issue-type#sample-state-machine-rule">Basic State-machines</h2>          <p id="c936a772">A basic state-machine regulates the transitions from one value to another for a custom field for all issues in any project that uses the workflow.            For each transition, you can add one or more actions.            Additional properties for each transition determine how these actions are applied.</p>          <ul class="list _ul"><li class="list__item" id="42a33a5f"><p>Transitions that use <code class="code">onEnter</code> and <code class="code">onExit</code> properties perform an action when the value for the field is set.              These actions are executed by the user who changes the value of the field.</p></li><li class="list__item" id="ea476d8b"><p>Transitions that use the <code class="code">after</code> property perform an action after the specified time frame.              These actions are executed by the workflow user account.</p></li></ul>            <p id="52660008">This example that follows shows a simplified state-machine rule.                This rule defines the transitions that are allowed for the <span class="control">State</span> field.</p>            <p id="7d5ac647">The following transitions are defined in this rule:</p>            <ul class="list _ul"><li class="list__item" id="88dd3d5e"><p>From the initial <span class="control">Open</span> state, the value can change to <span class="control">In Progress</span>.                    An additional transition with the name <code class="code">reminder</code> includes an <code class="code">after</code> property that reminds the project owner if an issue remains in the <span class="control">Open</span> state for more than two days.</p></li><li class="list__item" id="4efdf132"><p>When the issue transitions from <span class="control">Open</span> to <span class="control">In Progress</span>,                the <code class="code">onEnter</code> property for the <code class="code">In progress</code> state automatically assigns the issue to the user who changes the value of the <span class="control">State</span> field.</p></li><li class="list__item" id="dc704303"><p>From <span class="control">In progress</span>, the value can change to <span class="control">Fixed</span> or <span class="control">Open</span>.              When an issue transitions from <span class="control">In Progress</span> back to <span class="control">Open</span> an automation for this transition asks the user to unassign the issue,              otherwise the transition is blocked.</p></li><li class="list__item" id="01dd5d10"><p>The final state is <span class="control">Fixed</span>. There are no additional transitions that are defined for this value.                    Once this value is set, it cannot be changed.</p></li></ul>          <p id="5f7472fc">The following diagram shows an abstract representation of this rule.</p>          <figure><img alt="A diagram that illustrates the supported transitions between values for the State field." title="A diagram that illustrates the supported transitions between values for the State field." src="/help/img/youtrack/2019.2/basic-state-machine.png" id="9e4bab63" width="1009" height="214"></figure>          <p id="64d00b68">The workflow rule that supports this state-machine is written as follows:</p>                        <div class="code-block" data-lang="javascript">var entities = require('@jetbrains/youtrack-scripting-api/entities');
+var workflow = require('@jetbrains/youtrack-scripting-api/workflow');
+
+exports.TWO_DAYS = 2 * 24 * 60 * 60 * 1000;
+exports.rule = entities.Issue.stateMachine({
+  title: 'Basic state-machine',
+  fieldName: 'State',
+  states: {
+    Open: {
+      initial: true,
+      transitions: {
+        start: {
+          targetState: 'In progress'
+        },
+        reminder: {
+          targetState: 'Open',
+          after: exports.TWO_DAYS,
+          action: function(ctx) {
+            var issue = ctx.issue;
+            issue.project.leader.notify('Reminder', 'Check out an issue ' + issue.id);
+          }
+        }
+      }
+    },
+    'In progress': {
+      onEnter: function(ctx) {
+        ctx.issue.fields.Assignee = ctx.currentUser;
+      },
+      onExit: function(ctx) {
+      },
+      transitions: {
+        fix: {
+          targetState: 'Fixed'
+        },
+        reopen: {
+          guard: function(ctx) {
+            if (ctx.issue.fields.Assignee) {
+              workflow.message('You cannot reopen an issue unless you unassign it first');
+              return false;
+            }
+            return true;
+          },
+          targetState: 'Open'
+        }
+      }
+    },
+    Fixed: {
+      transitions: {}
+    }
+  },
+  requirements: {
+    Assignee: {
+      type: entities.User.fieldType
+    }
+  }
+});</div>            <p id="296f1042">The components that define this state-machine rule are as follows:</p>            <ul class="list _ul"><li class="list__item" id="479a631f"><p>The <code class="code">require</code> statements reference the <code class="code">entities</code> module and the <code class="code">workflow</code> module in the workflow API.</p></li><li class="list__item" id="0aca2659"><p>The <code class="code">exports.TWO_DAYS</code> property sets a local variable that is used to send the reminder for issues that have the <span class="control">Open</span> status.                    This variable is assigned a value that equals 2 days in milliseconds.</p></li><li class="list__item" id="4bcad3f2"><p>The <code class="code">exports.rule</code> property uses the <code class="code">Issue.stateMachine</code> method to export the script that follows the declaration as a state-machine rule.</p></li><li class="list__item" id="b30317db"><p id="66f6e85a">The body of the rule itself contains definitions for the following properties:</p>                    <div class="table-wrapper"><table width="100%" id="65090cea"><thead><tr id="8a72a5a3" class="ijRowHead"><th id="a1c75860" width="20%"><p>Property</p></th><th id="5640044d"><p>Description</p></th></tr></thead><tbody><tr id="34915008" class="ijRowOdd"><td id="151d6f61"><p>title</p></td><td id="e7c20ebd"><p>An optional human-readable title.</p></td></tr><tr id="a051c806" class="ijRowEven"><td id="106b560b"><p>fieldName</p></td><td id="5323f94c"><p>The name of the custom field that is managed by the state-machine.</p></td></tr><tr id="c90a9a47" class="ijRowOdd"><td id="7e53fc05"><p>states</p></td><td id="6def2183"><p>The list of field values and definitions for the transitions between them.                                Values that contain spaces and special characters are set in single quotes.</p></td></tr><tr id="118b0796" class="ijRowEven"><td id="9df70fac"><p>requirements</p></td><td id="408c630a"><p id="8e434616">The list of entities that are required for the rule to execute without errors.                              This property ensures that rules can be attached to projects safely.</p>                                <p id="deb3d505">In this example, we only require that there is an <span class="control">Assignee</span> field that stores a <code class="code">user</code> type in the projects to which the rule is attached.                                If this field is absent, an error is shown in the <span class="control">Workflows</span> list.                                  The rule cannot be enabled until the required field is attached.</p>                                <p id="05c4e8c7">For a state-machine rule, you do not need to add the field that is managed by the state-machine to the requirements.                                  This field and its values are derived from the <code class="code">states</code> property.</p></td></tr></tbody></table></div></li><li class="list__item" id="aa754611"><p id="b06542ab">Each of the values that are defined in the <code class="code">states</code> property contain definitions for the following additional properties:</p>                    <div class="table-wrapper"><table width="100%" id="aba2728c"><thead><tr id="5eec5be1" class="ijRowHead"><th id="a7b7b856" width="20%"><p>Property</p></th><th id="a1a4d23b"><p>Description</p></th></tr></thead><tbody><tr id="a692f717" class="ijRowOdd"><td id="143ffb28"><p>initial</p></td><td id="03461979"><p>A Boolean property that determines which of the values in the list is set when an issue is created.                                Exactly one value must set this property to <code class="code">true</code>.                                For other values that are not set as the initial value, this property is optional and can be omitted.</p></td></tr><tr id="5d7ff446" class="ijRowEven"><td id="48d1b596"><p>onEnter</p></td><td id="6eb89ae3"><p>An optional function declaration that is called when the corresponding value is assigned to an issue.                                These functions behave similar to actions in other types of rules.</p></td></tr><tr id="7224972e" class="ijRowOdd"><td id="68a6487b"><p>onExit</p></td><td id="a516c806"><p>An optional function declaration that is called when the field value is changed from the current value to another value.                                These functions behave similar to actions in other types of rules.</p></td></tr><tr id="377b8fbd" class="ijRowEven"><td id="3faa94ef"><p>transitions</p></td><td id="3ba82653"><p id="3945e725">The list of possible target values that can be set for each value in the list.</p>                                <p id="5b319c67">In this example, we only require that there is an <span class="control">Assignee</span> field that stores a <code class="code">user</code> type in the projects to which the rule is attached.                                If this field is absent, an error is shown in the <span class="control">Workflows</span> list.                                  The rule cannot be enabled until the required field is attached.</p>                                <p id="2824ca8b">For a state-machine rule, you do not need to list the values that are used by fields that are managed by the state-machine in the requirements.                                  This field and its values are derived from the <code class="code">states</code> property.</p></td></tr></tbody></table></div>                </li><li class="list__item" id="0dd77bf4"><p id="56beb879">Each of the values that are defined in the <code class="code">transitions</code> property contain a <code class="code">name</code> property.                    The name is used to set this value in a command and is also shown in the list of values for a custom field.                    Each transition name contains definitions for the following additional properties:</p>                    <div class="table-wrapper"><table width="100%" id="da95ddb3"><thead><tr id="ba64c14c" class="ijRowHead"><th id="af5dc310" width="20%"><p>Property</p></th><th id="ac13265f"><p>Description</p></th></tr></thead><tbody><tr id="231d8d6b" class="ijRowOdd"><td id="2611c1f3"><p>targetState</p></td><td id="0bad6d61"><p>The actual name of the value that is set when the command specified in the <code class="code">name</code> property is applied.</p></td></tr><tr id="edcb5444" class="ijRowEven"><td id="9305b86c"><p>after</p></td><td id="98c085c1"><p>An optional property that sets an interval for performing an action.                                The action itself is specified in the <code class="code">action</code> property.</p></td></tr><tr id="8dfb614f" class="ijRowOdd"><td id="0594ae96"><p>action</p></td><td id="7fd949dd"><p>An optional property for any transition that behaves similar to actions in other types of rules..</p></td></tr><tr id="aad25fb0" class="ijRowEven"><td id="e9d2c94f"><p>guard</p></td><td id="e4df725a"><p id="3c82c9b0">An optional condition that determines when the transition is allowed.                              If the guard condition is not met, the value for the custom field cannot change to the value that is defined for this transition.</p>                                <p id="0070a69c">In this example, for an issue to transition from <span class="control">In progress</span> back to an <span class="control">Open</span> state, the issue must be unassigned.                                  The guard contains a function that uses the <code class="code">message</code> method from the <code class="code">workflow</code> module to provide feedback to the user who attempts to reopen an issue without unassigning it first.</p></td></tr></tbody></table></div>                </li></ul>        </div>  <div class="chapter"><h2 id="state-machine-per-issue-type" data-toc="state-machine-per-issue-type#state-machine-per-issue-type">State-machines per Issue Type</h2>    <p id="a121f850">A state-machine per issue type adds an additional dimension to a basic state-machine.    Instead of regulating a single set of transitions for values in a custom field, the rule provides separate state-machines for each of the possible values in a separate field.</p>    <p id="79e31275">Just like you can apply a state-machine rule to any custom field, not just the default <span class="control">State</span> field,      you can make type-specific transitions depend upon the value in any enumerated field, not just the default <span class="control">Type</span> field.      The most common use case is to regulate transitions between values for the <span class="control">State</span> field based on the current value for the issue <span class="control">Type</span>.</p>    <p id="cc2d7629">A state-machine per issue type is written similarly to a basic state-machine, with the following changes:</p>    <ul class="list _ul"><li class="list__item" id="57a4da50"><p>The <code class="code">fieldName</code> property is replaced with an alias, <code class="code">stateFieldName</code> in the template for a new state-machine rule.      The value for this property determines which field is managed by the state-machine rule.</p></li><li class="list__item" id="8de8fe0f"><p>A separate property for the <code class="code">typeFieldName</code> lets you specify the field that dictates which state-machine applies to the state field.      The presence of this property is the main difference between a basic state-machine (which doesn't use it) and a state-machine per issue type.</p></li><li class="list__item" id="1f71f1a8"><p>The <code class="code">states</code> property is replaced with an alias, <code class="code">defaultMachine</code>.      This property describes the default set of transitions for values in the managed field.        This state-machine applies to issues that are not assigned a value for which an alternative state-machine has been defined.</p></li><li class="list__item" id="b22ce8af"><p>The <code class="code">alternativeMachines</code> property stores a collection of state-machine transitions for designated values in the custom field that is set for the <code class="code">typeFieldName</code> property.</p></li></ul>    <p id="09701a6d">When you specify a value for the <code class="code">typeFieldName</code>, configure the <code class="code">defaultMachine</code>, and define at least one state-machine for a value in the <code class="code">alternativeMachines</code> section of the rule,      you end up with a state-machine per issue type.    The field that you specify for the <code class="code">typeFieldName</code> property functions as a switch between the default state-machine and the collection of alternative state-machines.</p>    <p id="b4dac1c4">The following example shows how to build a state-machine per issue type.    Each of the tabs below describes the state-machine that corresponds to one of the possible values for the <span class="control">Type</span> field.</p>    <div class="tabs" id="7c2d42bb"><div class="tabs__content" data-title="Task" id="23d0ae45">        <figure><img alt="A diagram that shows the default transitions for the State field in a state-machine per issue type." title="A diagram that shows the default transitions for the State field in a state-machine per issue type." src="/help/img/youtrack/2019.2/basic-state-machine.png" id="aff62b5f" width="1009" height="214"></figure>        <p id="896fe932">First, we take the logic that is applied in the basic state-machine rule above and apply it as a default to any type of issue in a project.          As a result, the values for the <span class="control">State</span> field in issues that are assigned the <span class="control">Task</span> type are regulated according to the model shown above.          This state-machine also applies to issues that are assigned any type that isn't assigned an alternative state-machine.</p>      </div><div class="tabs__content" data-title="Bug" id="e7ead598">        <figure><img alt="A diagram that shows the transitions for the State field in issues that are assigned the Bug type." title="A diagram that shows the transitions for the State field in issues that are assigned the Bug type." src="/help/img/youtrack/2019.2/state-machine-for-bug-type.png" id="249cf54f" width="1139" height="319"></figure>        <p id="0067596d">Next, we'll add an alternative state-machine just for issues that are assigned the <span class="control">Bug</span> type.</p>        <ul class="list _ul"><li class="list__item" id="8dec6ae0"><p>For this issue type, we make it possible to assign the value <span class="control">Can't Reproduce</span> to the <span class="control">State</span> field.</p></li><li class="list__item" id="f8cb7340"><p>We'll make it a little more flexible than the default state-machine, allowing a transition from <span class="control">Fixed</span> back to <span class="control">Open</span>.            This means that we can reopen issues when a regression occurs instead of having to report the same problem more than once.</p></li><li class="list__item" id="cdfdad84"><p>We'll also make it possible to transition from <span class="control">Can't Reproduce</span> back to <span class="control">Open</span>.</p></li></ul>        <p id="7003b812">We add some automation to specific states and transitions.</p>        <ul class="list _ul"><li class="list__item" id="e7c53bc7"><p>When an issue moves from <span class="control">Open</span> to <span class="control">In Progress</span>, the issue is assigned to the user who changes the issue state.            This is the same definition for the <code class="code">onEnter</code> property that is used for the <code class="code">In progress</code> state in the basic state-machine.</p></li><li class="list__item" id="33202740"><p>For the transition from <span class="control">In Progress</span> to <span class="control">Can't Reproduce</span> we add an <code class="code">action</code>.            This displays an alert that asks the user to describe what steps they took to try to reproduce the bug.</p></li><li class="list__item" id="108fe22a"><p>From <span class="control">Fixed</span> the issue can only transition back to the <span class="control">Open</span> state.            As a result, we can add an automation for the <code class="code">onExit</code> property to the definition for the <code class="code">Fixed</code> field.            This automation sends a notification to the assignee to inform them that the issue was reopened.</p></li></ul>      </div><div class="tabs__content" data-title="Feature" id="f872e742">        <figure><img alt="A diagram that shows the transitions for the State field in issues that are classified as feature requests" title="A diagram that shows the transitions for the State field in issues that are classified as feature requests" src="/help/img/youtrack/2019.2/state-machine-for-features.png" id="54525070" width="1094" height="346"></figure>        <p id="5541d69a">We'll add one more alternative state-machine and apply this to issues that are assigned the <span class="control">Feature</span> type.</p>        <ul class="list _ul"><li class="list__item" id="8d39cb29"><p>For these types of issues, we add the possibility to move an issue directly from an <span class="control">Open</span> state to <span class="control">Rejected</span>.            If anybody suggests a feature that the team decides doesn't fit with their vision of the product, they can throw it out.</p></li><li class="list__item" id="a97c42d8"><p>Just to be open to the possibility for a change in direction, we'll allow issues to transition from <span class="control">Rejected</span> back to <span class="control">Open</span>.</p></li><li class="list__item" id="5606cca3"><p>All of the other transitions are similar to the state-machine for bugs.</p></li></ul>        <p id="c53c43a3">To keep it simple, we haven't added any automations to this state-machine.          That doesn't mean that there aren't any opportunities to automate or enhance the process for this issue type.          Possible enhancements include:</p>        <ul class="list _ul"><li class="list__item" id="4c80ea69"><p>Using an <code class="code">after</code> event to the set of transitions for the <span class="control">Open</span> state to tag issues that remain in this state for over six months.            You can then review all of the tagged issues in your next backlog grooming session.</p></li><li class="list__item" id="61029826"><p>Adding an <code class="code">onEnter</code> event to the <span class="control">In Progress</span> state, prompting the user to assign the feature to a specific milestone or pipeline in the roadmap.</p></li><li class="list__item" id="5b13821d"><p>Adding an <code class="code">action</code> event to the transition from <span class="control">Rejected</span> to <span class="control">Open</span>, prompting the user to justify why they would reopen the feature request for future consideration.</p></li></ul>      </div></div>    <aside data-type="note" class="prompt" data-title="Transitions Between State-machines" rel="7c2d42bb" id="7101ae81">    <p id="950e2f41">For a state-machine per issue type, the field that is referenced in the <code class="code">typeFieldName</code> property works as a switch.    Changing the value of this field determines which state-machine is applied to the current issue.</p>      <p id="71c4a057">When an issue is currently assigned a value in the managed field that is not supported by the state-machine for a target issue type,      the value for the managed field is reset to the initial value that is configured for the new state-machine.</p>      <p id="436f2088">Following our example here, let's say that you have an issue that is currently classified as a feature request that was rejected by the development team.        You later learn that the problem is in fact a bug and should be fixed.        By changing the value of the <span class="control">Type</span> field from <span class="control">Feature</span> to <span class="control">Bug</span>,        the value for the <span class="control">State</span> field automatically changes from <span class="control">Rejected</span> to <span class="control">Open</span>.        This is because the state-machine that is associated with the <span class="control">Bug</span> type doesn't support transitions to the <span class="control">Rejected</span> state.</p>    </aside>    <p id="70f56ba0">We can take the sample code for the basic state-machine rule and quickly convert it into a state-machine per issue type with just a few changes.</p>    <ul class="list _ul"><li class="list__item" id="915b393b"><p>While it's not required, we have replaced the name of the <code class="code">fieldName</code> property with its alias, <code class="code">stateFieldName</code>.      As with the sample for the basic state-machine, we're managing transitions between values for a field called <code class="code">State</code>.      We don't change the value for this property.</p></li><li class="list__item" id="9c94035d"><p>We've added the property <code class="code">typeFieldName</code> and specified <code class="code">'Type'</code> as its value.      This means that the <span class="control">Type</span> field can now be used as a switch to determine whether to apply the default state-machine or an alternative state-machine that is assigned to one of the possible values for this field.</p></li><li class="list__item" id="573c0e0a"><p>We've applied another change just for cosmetic purposes, replacing the name of the <code class="code">states</code> property with its alias, <code class="code">defaultMachine</code>.      We don't change the value for this property.      Instead, we reuse the basic state-machine rule, which will apply to any issue that isn't assigned one of the types that are defined in the <code class="code">alternativeMachines</code> section of the rule.</p></li><li class="list__item" id="e80857ce"><p>We've added a new section for <code class="code">alternativeMachines</code>.      Here, we specify state-machines for issues that are assigned the values <span class="control">Bug</span> and <span class="control">Feature</span> in the <span class="control">Type</span> custom field.</p></li></ul>    <p id="52417d3e">Here's the modified state-machine rule:</p>    <div class="code-block" data-lang="javascript">var entities = require('@jetbrains/youtrack-scripting-api/entities');
+var workflow = require('@jetbrains/youtrack-scripting-api/workflow');
+
+exports.TWO_DAYS = 2 * 24 * 60 * 60 * 1000;
+exports.ONE_WEEK_IN_MS = 7 * 24 * 60 * 60 * 1000;
+exports.rule = entities.Issue.stateMachine({
+  title: 'State-machine per Issue Type',
+  stateFieldName: 'State',
+  typeFieldName: 'Type',
+  defaultMachine: {
+    Open: {
+      initial: true,
+      transitions: {
+        start: {
+          targetState: 'In progress'
+        },
+
+        reminder: {
+          targetState: 'Open',
+          after: exports.TWO_DAYS,
+          action: function(ctx) {
+            var issue = ctx.issue;
+            issue.project.leader.notify('Reminder', 'Check out an issue ' + issue.id);
+          }
+        }
+      }
+    },
+    'In progress': {
+      onEnter: function(ctx) {
+        ctx.issue.fields.Assignee = ctx.currentUser;
+      },
+      onExit: function(ctx) {
+      },
+      transitions: {
+        fix: {
+          targetState: 'Fixed'
+        },
+        reopen: {
+          guard: function(ctx) {
+            if (ctx.issue.fields.Assignee) {
+              workflow.message('You cannot reopen an issue unless you unassign it first');
+              return false;
+            }
+            return true;
+          },
+          targetState: 'Open'
+        }
+      }
+    },
+    Fixed: {
+      transitions: {}
+    }
+  },
+  alternativeMachines: {
+    Bug: {
+      Open: {
+        initial: true,
+        transitions: {
+          'in progress': {
+            targetState: 'In Progress',
+            action: function(ctx) {
+              if (!ctx.issue.fields.Assignee) {
+                ctx.issue.fields.Assignee = ctx.currentUser;
+              }
+            }
+          },
+          'can\'t reproduce': {
+            targetState: 'Can\'t Reproduce'
+          }
+        }
+      },
+      'In Progress': {
+        transitions: {
+          'reopen': {
+            targetState: 'Open'
+          },
+          'fix': {
+            targetState: 'Fixed'
+          },
+          'can\'t reproduce': {
+            targetState: 'Can\'t Reproduce'
+          },
+          'remind': {
+            after: exports.ONE_WEEK_IN_MS,
+            targetState: 'In Progress',
+            action: function(ctx) {
+              if (ctx.issue.fields.Assignee) {
+                var subj = '[YouTrack] Issue is in progress';
+                var body = 'Issue ' + ctx.issue.id + ' is in progress for a week.';
+                ctx.issue.fields.Assignee.notify(subj, body);
+              }
+            }
+          }
+        }
+      },
+      Fixed: {
+        transitions: {
+          'reopen': {
+            targetState: 'Open'
+          }
+        },
+        onExit: function(ctx) {
+          if (ctx.issue.fields.Assignee) {
+            var subj = '[YouTrack] Issue is reopened';
+            var body = 'Issue ' + ctx.issue.id + ' requires your attention.';
+            ctx.issue.fields.Assignee.notify(subj, body);
+          }
+        }
+      },
+      'Can\'t Reproduce': {
+        onEnter: function( /*ctx*/ ) {
+          workflow.message('Please leave a comment explaining what you tried to do.');
+        },
+        transitions: {
+          'reopen': {
+            targetState: 'Open'
+          }
+        }
+      }
+    },
+    Feature: {
+      Open: {
+        initial: true,
+        transitions: {
+          'in progress': {
+            targetState: 'In Progress',
+          },
+          reject: {
+            targetState: 'Rejected'
+          }
+        }
+      },
+      'In Progress': {
+        transitions: {
+          reopen: {
+            targetState: 'Open'
+          },
+          fix: {
+            targetState: 'Fixed'
+          }
+        }
+      },
+      Fixed: {
+        transitions: {
+          reopen: {
+            targetState: 'Open'
+          }
+        }
+      },
+      Rejected: {
+        transitions: {
+          reopen: {
+            targetState: 'Open'
+          }
+        }
+      }
+    }
+  },
+  requirements: {
+    Assignee: {
+      type: entities.User.fieldType
+    }
+  }
+});</div>    <p id="a9ec2b43">The components that define this state-machine rule are as follows:</p>    <ul class="list _ul"><li class="list__item" id="c92bb0fe"><p>The <code class="code">require</code> statements reference the <code class="code">entities</code> and <code class="code">workflow</code> modules in the workflow API.</p></li><li class="list__item" id="8baa356e"><p>The <code class="code">exports.TWO_DAYS</code> property sets a local variable that is used to send the reminder for issues that have the <span class="control">Open</span> status.        This variable is assigned a value that equals 2 days in milliseconds.</p></li><li class="list__item" id="d53e8d56"><p>The <code class="code">exports.ONE_WEEK_IN_MS</code> property sets a local variable that is used to send the reminder for bugs that have been <span class="control">In Progress</span> for more than one week.      This variable is assigned a value that equals one week in milliseconds.</p></li><li class="list__item" id="3dd4f500"><p>The <code class="code">exports.rule</code> property uses the <code class="code">Issue.stateMachine</code> method to export the script that follows the declaration as a state-machine rule.</p></li><li class="list__item" id="17f1fdf0"><p id="1c912544">The body of the rule itself contains definitions for the following properties:</p>        <div class="table-wrapper"><table width="100%" id="0d2c9806"><thead><tr id="ed641cbc" class="ijRowHead"><th id="86e0b875" width="20%"><p>Property</p></th><th id="1449fbdb"><p>Description</p></th></tr></thead><tbody><tr id="1891c52b" class="ijRowOdd"><td id="8d86d24b"><p>title</p></td><td id="fd5a3f16"><p>An optional human-readable title.</p></td></tr><tr id="01b4045e" class="ijRowEven"><td id="605c2058"><p>stateFieldName</p></td><td id="9d9ffc9f"><p>The name of the custom field that is managed by the state-machine.</p></td></tr><tr id="5b437e06" class="ijRowOdd"><td id="a4fde0bf"><p>typeFieldName</p></td><td id="c05f2310"><p>The name of the custom field that regulates which state-machine is applied to the managed field.</p></td></tr><tr id="9da4cbbe" class="ijRowEven"><td id="8eee16cb"><p>defaultMachine</p></td><td id="0fb8b9a8"><p id="e25dad72">The list of field values and definitions for the transitions between them for the default state-machine.              The default state-machine applies to any issue that isn't assigned one of the types that are defined in the <code class="code">alternativeMachines</code> section of the rule.</p>              <p id="328c9be9">Values that contain spaces and special characters are set in single quotes.</p></td></tr><tr id="618e830d" class="ijRowOdd"><td id="dce06db1"><p>alternativeMachines</p></td><td id="3353ec4a"><p>Stores a collection of state-machine transitions for designated values in the custom field that is set for the <code class="code">typeFieldName</code> property.</p></td></tr><tr id="8b3cf7a1" class="ijRowEven"><td id="0ad55edd"><p>requirements</p></td><td id="e991093e"><p id="7df7b9d1">The list of entities that are required for the rule to execute without errors.              This property ensures that rules can be attached to projects safely.</p>              <p id="f7c2a2f1">In this example, we only require that there is an <span class="control">Assignee</span> field that stores a <code class="code">user</code> type in the projects to which the rule is attached.              If this field is absent, an error is shown in the <span class="control">Workflows</span> list.                The rule cannot be enabled until the required field is attached.</p>              <p id="cdef1c02">For state-machines by issue type, you don't need to add any of the fields that are managed by the state-machine to the requirements.                This field and its values are derived from the <code class="code">defaultMachine</code> property and the collection of fields that are defined for each value in the <code class="code">alternativeMachines</code> section of the rule.              The field that is set for the <code class="code">typeFieldName</code> property is also implicitly added to the requirements for the workflow rule.</p></td></tr></tbody></table></div></li><li class="list__item" id="bb90ff6c"><p id="2220b67f">Each of the values that are defined in the <code class="code">defaultMachine</code> property and each of the fields that are defined for each value in the <code class="code">alternativeMachines</code> section of the rule contain definitions for the following additional properties:</p>        <div class="table-wrapper"><table width="100%" id="7d5360a0"><thead><tr id="cf79ae82" class="ijRowHead"><th id="5ad1a664" width="20%"><p>Property</p></th><th id="04e82336"><p>Description</p></th></tr></thead><tbody><tr id="af99cac6" class="ijRowOdd"><td id="7911138c"><p>initial</p></td><td id="a98fab9c"><p>A Boolean property that determines which of the values in the list is set when an issue is created.              Exactly one value must set this property to <code class="code">true</code>.              For other values that are not set as the initial value, this property is optional and can be omitted.</p></td></tr><tr id="fc4a5e44" class="ijRowEven"><td id="c20a6441"><p>onEnter</p></td><td id="d904aa97"><p>An optional function declaration that is called when the corresponding value is assigned to an issue.              These functions behave similar to actions in other types of rules.</p></td></tr><tr id="5bbba2c7" class="ijRowOdd"><td id="357c4fc7"><p>onExit</p></td><td id="72d1f487"><p>An optional function declaration that is called when the field value is changed from the current value to another value.              These functions behave similar to actions in other types of rules.</p></td></tr><tr id="f2f5c161" class="ijRowEven"><td id="abb84513"><p>transitions</p></td><td id="e64b9274"><p id="560bec90">The list of possible target values that can be set for each value in the list.</p>              <p id="feac7349">In this example, we only require that there is an <span class="control">Assignee</span> field that stores a <code class="code">user</code> type in the projects to which the rule is attached.              If this field is absent, an error is shown in the <span class="control">Workflows</span> list.                The rule cannot be enabled until the required field is attached.</p>              <p id="058bc553">For a state-machine rule, you do not need to list the values that are used by fields that are managed by the state-machine in the requirements.                This field and its values are derived from the <code class="code">states</code> property.</p></td></tr></tbody></table></div>      </li><li class="list__item" id="89fc2a64"><p id="ec596602">Each of the values that are defined in the <code class="code">transitions</code> property contain a <code class="code">name</code> property.        The name is used to set this value in a command and is also shown in the list of values for a custom field.        Each transition name contains definitions for the following additional properties:</p>        <div class="table-wrapper"><table width="100%" id="83dfcfb9"><thead><tr id="1be18d91" class="ijRowHead"><th id="44fc92d8" width="20%"><p>Property</p></th><th id="046aeaea"><p>Description</p></th></tr></thead><tbody><tr id="84467e7d" class="ijRowOdd"><td id="988843c0"><p>targetState</p></td><td id="04123461"><p>The actual name of the value that is set when the command specified in the <code class="code">name</code> property is applied.</p></td></tr><tr id="e6037988" class="ijRowEven"><td id="24627307"><p>after</p></td><td id="1fb3cd51"><p>An optional property that sets an interval for performing an action.              The action itself is specified in the <code class="code">action</code> property.</p></td></tr><tr id="89a8d32f" class="ijRowOdd"><td id="b0adb22a"><p>action</p></td><td id="36ba0719"><p>An optional property for any transition that behaves similar to actions in other types of rules..</p></td></tr><tr id="3d6d1c70" class="ijRowEven"><td id="ba01d819"><p>guard</p></td><td id="c9d05ada"><p id="9b112800">An optional condition that determines when the transition is allowed.              If the guard condition is not met, the value for the custom field cannot change to the value that is defined for this transition.</p>              <p id="57a8a7bd">In this example, for an issue to transition from <span class="control">In progress</span> back to an <span class="control">Open</span> state, the issue must be unassigned.                The guard contains a function that uses the <code class="code">message</code> method from the <code class="code">workflow</code> module to provide feedback to the user who attempts to reopen an issue without unassigning it first.</p></td></tr></tbody></table></div>      </li><li class="list__item" id="93c7383a"><p>The <code class="code">alternativeMachines</code> property stores a set of values from the field that is referenced in the <code class="code">typeFieldName</code> property.        Each of the values that are assigned dedicated state-machines are simply referenced by name.</p></li></ul>  </div><div class="last-modified" data-skip-index="skip">Last modified: 29 November 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="on-schedule-rules.html">On-schedule Rules</a><a class="navigation-links__next" href="action-rules.html">Action Rules</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="//resources.jetbrains.com/storage/help-app/v3/app.js"></script></body></html>

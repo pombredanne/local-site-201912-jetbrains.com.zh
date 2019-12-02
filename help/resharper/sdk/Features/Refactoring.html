@@ -1,0 +1,185 @@
+
+
+
+<!doctype html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>Refactoring / ReSharper  DevGuide</title>
+    <link rel="stylesheet" href="/help/resharper/sdk/app/app.css">
+    <link rel="shortcut icon" href="/help/resharper/sdk/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="57x57" href="/help/resharper/sdk/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/help/resharper/sdk/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/help/resharper/sdk/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/help/resharper/sdk/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/help/resharper/sdk/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/help/resharper/sdk/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/help/resharper/sdk/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/help/resharper/sdk/apple-touch-icon-180x180.png">
+    <link rel="mask-icon" href="/help/resharper/sdk/apple-mask-icon.svg" color="black">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-square70x70logo" content="/help/resharper/sdk/mstile-70x70.png">
+    <meta name="msapplication-TileImage" content="/help/resharper/sdk/mstile-144x144.png">
+    <meta name="msapplication-square150x150logo" content="/help/resharper/sdk/mstile-150x150.png">
+    <meta name="msapplication-wide310x150logo" content="/help/resharper/sdk/mstile-310x150.png">
+    <meta name="msapplication-square310x310logo" content="/help/resharper/sdk/mstile-310x310.png">
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="Documentation for writing extensions for ReSharper" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.jetbrains.com/help/resharper/sdk//Features/Refactoring.html" />
+    <meta property="og:site_name" content="JetBrains ReSharper" />
+    <meta property="og:title" content="Refactoring" />
+    <meta property="og:description" content="Documentation for writing extensions for ReSharper" />
+    <meta property="og:image" content="https://www.jetbrains.com/help/resharper/sdk/jetbrains.png" />
+    <meta property="article:modified_time" content="2017-07-10T19:28:42+00:00" />
+    <!-- <meta property="article:section" content="" /> 
+    <meta property="article:tag" content="" /> -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@JBPlatform" />
+    <meta name="twitter:title" content="Refactoring" />
+    <meta name="twitter:description" content="Documentation for writing extensions for ReSharper" />
+    <meta name="twitter:image" content="https://www.jetbrains.com/help/resharper/sdk/jetbrains.png" />
+    <meta class="swiftype" name="product" data-type="string" content="/help/resharper/sdk/"></meta>
+<link  rel="stylesheet" href="/help/resharper/sdk/app/styles.css"></head>
+<body data-id="Features/Refactoring">
+<div class="wrapper">
+    <section class="panel _nav">
+        <header class="panel__header">
+            <div class="container">
+                <form class="search-box">
+                    <label for="search-box__input" class="search-box__label">
+                        <input type="text" class="search-box__input" id="search-box__input" placeholder="Search ReSharper  DevGuide">
+                    </label>
+                    <div class="search-box__clear" title="Clear"></div>
+                </form>
+            </div>
+        </header>
+        <nav class="panel__content">
+            <div class="container _nav">
+                <menu class="nav-tree"></menu>
+            </div>
+            <div class="container _footer panel__footer">
+                <p><a data-bypass="true" href="//youtrack.jetbrains.com/issues/IJSDK">Send feedback</a></p>
+                <p>&copy; 2000&ndash;2018 <a href="//www.jetbrains.com">JetBrains</a> s.r.o.<br>
+                    All rights reserved.</p>
+            </div>
+        </nav>
+    </section>
+
+    <main class="panel _main" role="main">
+        <header class="panel__header">
+            <div class="container">
+                <h3>ReSharper DevGuide</h3>
+                
+                <div class="panel-trigger"></div>
+            </div>
+        </header>
+        <section class="panel__content">
+            <div class="container">
+                <article class="article" data-shortcut-switcher="false">
+                    <div class="navigation-links _top" data-swiftype-index="false">
+                        <a class="navigation-links__prev" href="/Features/Completion.html">Code Completion</a>
+                        <a class="navigation-links__next" href="/Features/GenerateMenu.html">Generate Menu</a>
+                    </div>
+                    <a data-bypass="true" href="https://github.com/JetBrains/resharper-devguide/edit/master/Features/Refactoring.md" class="page-link-to-github" target="_blank" rel="noopener noreferrer" title="Edit this page on GitHub">
+                        <i class="github-icon"></i>
+                        <span class="text">Edit page</span>
+                    </a>
+
+                    <h1>Refactoring</h1>
+                    <p>Refactorings are one of the most powerful features of ReSharper, but also the most complicated. A refactoring can be triggered from a variety of events (e.g., from a simple edit or deliberate invocation) and can result in all sorts of operations, some involving just local code, others involving the project (e.g., renaming a file) or changing multiple files in many projects.</p>
+
+<p>At the most simple level, a refactoring consists of three things:</p>
+
+<ul>
+  <li>The workflow</li>
+  <li>The workflow provider</li>
+  <li>The refactoring itself</li>
+</ul>
+
+<p>Let’s take a look at the way these components are defined.</p>
+
+<a name="workflow" class="elem-anchor"></a>
+<h2>Workflow<a href="#workflow" class="anchor-link"><span></span></a></h2>
+
+<p>The workflow, as its name suggests, is a class which orchestrates the workflow during which the user may (or may not) perform the refactoring. Most refactorings are <em>driven</em>, meaning that the user has to go through menus which present, e.g., conflicts that this refactoring would create.</p>
+
+<p>In the simplest terms, a refactoring is a class which inherits from <code class="code highlight language-text">DrivenRefactoringWorflow</code>. This class has quite a few members, most of which perform fairly obvious function.</p>
+
+<p>Execution of the workflow happens in the <code class="code highlight language-text">PreExecute</code>, <code class="code highlight language-text">Execute</code> and <code class="code highlight language-text">PostExecute</code> methods. All of these, as well as other methods such as <code class="code highlight language-text">IsAvailable</code>, return a <code class="code highlight language-text">bool</code> value indicating whether this step is a success. If any of these returns <code class="code highlight language-text">false</code>, the whole transaction is rolled back and no refactorings take place.</p>
+
+<a name="workflow-provider" class="elem-anchor"></a>
+<h2>Workflow provider<a href="#workflow-provider" class="anchor-link"><span></span></a></h2>
+
+<p>The workflow provider is a class which provides workflows for ReSharper to consume. It is a class that</p>
+
+<ul>
+  <li>Implements the <code class="code highlight language-text">IRefactorignWorkflowProvider</code> interface</li>
+  <li>Is decorated with <code class="code highlight language-text">[RefactoringWorkflowProvider]</code> attribute</li>
+</ul>
+
+<p>The class has a single method - <code class="code highlight language-text">CreateWorkflow()</code> that returns an <code class="code highlight language-text">IEnumerable</code> of one or more workflows that you may wish to provide. Here is a typical example:</p>
+
+<div class="code-block" data-lang="csharp"><code class="code-block__wrapper"><span class="na">[RefactoringWorkflowProvider]</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">MakeSingletonProvider</span> <span class="p">:</span> <span class="n">IRefactoringWorkflowProvider</span>
+<span class="p">{</span>
+  <span class="k">public</span> <span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">IRefactoringWorkflow</span><span class="p">&gt;</span> <span class="nf">CreateWorkflow</span><span class="p">(</span><span class="n">IDataContext</span> <span class="n">dataContext</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="kt">var</span> <span class="n">solution</span> <span class="p">=</span> <span class="n">dataContext</span><span class="p">.</span><span class="nf">GetData</span><span class="p">(</span><span class="n">JetBrains</span><span class="p">.</span><span class="n">ProjectModel</span><span class="p">.</span><span class="n">DataContext</span><span class="p">.</span><span class="n">DataConstants</span><span class="p">.</span><span class="n">SOLUTION</span><span class="p">);</span>
+    <span class="k">yield</span> <span class="k">return</span> <span class="k">new</span> <span class="nf">MakeSingletonWorkflow</span><span class="p">(</span><span class="n">solution</span><span class="p">,</span> <span class="s">"MakeSingleton"</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></div>
+
+<p>The constructor parameter passed into the workflow is an action ID, which is also useful if you want to expose the refactoring as an ordinary action.</p>
+
+<a name="the-refactoring" class="elem-anchor"></a>
+<h2>The refactoring<a href="#the-refactoring" class="anchor-link"><span></span></a></h2>
+
+<p>One of the methods we forgot to mention in the workflow is the <code class="code highlight language-text">CreateRefactoring()</code> method. This method is used to put together the refactoring worflow and the refactoring <em>driver</em> - i.e., the element which drives the refactoring to completion.</p>
+
+<p>Thus, the refactoring itself is typically a class (let’s call it <code class="code highlight language-text">C</code>) inheriting from <code class="code highlight language-text">DrivenRefactoring&lt;Workflow, Refactoring&gt;</code>, where <code class="code highlight language-text">Workflow</code> corresponds to the refactoring workflow, and <code class="code highlight language-text">Refactoring</code> corresponds to a type of <code class="code highlight language-text">RefactoringExecBase&lt;Workflow, C&gt;</code>.</p>
+
+<div class="code-block" data-lang="csharp"><code class="code-block__wrapper"><span class="k">public</span> <span class="k">class</span> <span class="nc">MakeSingletonRefactoring</span>
+  <span class="p">:</span> <span class="n">DrivenRefactoring</span><span class="p">&lt;</span><span class="n">MakeSingletonWorkflow</span><span class="p">,</span>
+    <span class="n">RefactoringExecBase</span><span class="p">&lt;</span><span class="n">MakeSingletonWorkflow</span><span class="p">,</span>
+    <span class="n">MakeSingletonRefactoring</span><span class="p">&gt;&gt;</span>
+<span class="p">{</span>
+  <span class="k">public</span> <span class="nf">MakeSingletonRefactoring</span><span class="p">(</span><span class="n">MakeSingletonWorkflow</span> <span class="n">workflow</span><span class="p">,</span> <span class="n">ISolution</span> <span class="n">solution</span><span class="p">,</span> <span class="n">IRefactoringDriver</span> <span class="n">driver</span><span class="p">)</span>
+    <span class="p">:</span> <span class="k">base</span><span class="p">(</span><span class="n">workflow</span><span class="p">,</span> <span class="n">solution</span><span class="p">,</span> <span class="n">driver</span><span class="p">)</span>
+  <span class="p">{</span>
+  <span class="p">}</span>
+
+  <span class="k">public</span> <span class="k">override</span> <span class="kt">bool</span> <span class="nf">Execute</span><span class="p">(</span><span class="n">IProgressIndicator</span> <span class="n">pi</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></div>
+
+<p>The refactoring itself has the capability of dealing with cases where a particular refactoring is not supported on a ReSharper-supported language. For example, a particular C# refactoring might not be supported in VB, so usages after the change will not be updated. The number of such refactorings in ReSharper itself is really small, but it is likely you might need this functionality if your refactoring is, e.g., C#-only.</p>
+
+
+
+                    <div class="navigation-links _bottom" data-swiftype-index="false">
+                        <a class="navigation-links__prev" href="/Features/Completion.html">Code Completion</a>
+                        <a class="navigation-links__next" href="/Features/GenerateMenu.html">Generate Menu</a>
+                    </div>
+                    <div class="last-modified">
+                        Last modified: 10 July 2017
+                    </div>
+                </article>
+
+                <section class="disqus">
+                    <div id="disqus_thread"></div>
+                </section>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="/help/resharper/sdk/app/app.js" data-baseurl="/help/resharper/sdk/"></script>
+
+</body>
+</html>
+

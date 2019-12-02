@@ -1,0 +1,102 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"></meta><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><title>IntelliJ IDEA 2016.1 Help :: Managing File Sets</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="spring.managing.file.sets"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.1 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWindow</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="managing-spring-configuration-files.html">Managing Spring Configuration Files</a><a class="navigation-links__next" href="using-spring-bean-patterns.html">Using Spring Bean Patterns</a></div><h1>Managing File Sets</h1><a name="d953306e5"></a><p>
+                Spring configuration file sets, or just <a name="d953306e7"></a><span class="emphasis">file sets,</span> for short, are a way of grouping
+                Spring configuration files in IntelliJ IDEA.
+                They are intended for making your work with <a name="d953306e10"></a><span class="emphasis">mutually related</span> configuration files more effective.</p><a name="d953306e14"></a><p>
+                IntelliJ IDEA lets you create file sets that contain XML configuration files or
+                <code class="code" data-lang="Java">@Configuration</code>-annotated Java classes.</p><ul><li class="list__item"><a href="#d953306e25">About file sets</a></li><li class="list__item"><a href="#d953306e101">
+            Parent-child relationships between file sets</a></li><li class="list__item"><a href="#create_file_set">Creating a file set</a></li><li class="list__item"><a href="#edit">Editing a file set</a></li><li class="list__item"><a href="#d953306e290">Removing a file set</a></li></ul><a name="about"></a><a name="d953306e25"></a><h2>About file sets</h2><a name="d953306e28"></a><p>
+            By combining Spring configuration files in a file set you tell IntelliJ IDEA that these files are mutually related.
+            In this way you form a common editing context for these configuration files and get all the associated coding assistance.</p><a name="d953306e31"></a><p>
+            To illustrate, let us consider an imaginary XML configuration file <code class="code" data-lang="Java">config-one.xml</code> containing two bean definitions:</p><a name="d953306e37"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="o">...</span>
+    <span class="o">&lt;</span><span class="n">bean</span> <span class="n">id</span><span class="o">=</span><span class="s">&quot;beanOne&quot;</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;BeanOne&quot;</span><span class="o">&gt;</span>
+        <span class="o">...</span>
+    <span class="o">&lt;/</span><span class="n">bean</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">bean</span> <span class="n">id</span><span class="o">=</span><span class="s">&quot;beanTwo&quot;</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;BeanTwo&quot;</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">constructor</span><span class="o">-</span><span class="n">arg</span> <span class="n">ref</span><span class="o">=</span><span class="s">&quot;beanOne&quot;</span><span class="o">/&gt;</span>
+        <span class="o">...</span>
+    <span class="o">&lt;/</span><span class="n">bean</span><span class="o">&gt;</span>
+<span class="o">...</span></code></div><a name="d953306e40"></a><p>
+            As you can see, the second bean (<code class="code" data-lang="Java">beanTwo</code>) references the first one (<code class="code" data-lang="Java">beanOne</code>).
+            Obviously, there is no problem with this reference while both bean definitions are in the same file.</p><a name="d953306e49"></a><p>
+            Now let us assume that you want to move the definition of <code class="code" data-lang="Java">beanTwo</code> to a separate configuration file,
+            say, <code class="code" data-lang="Java">config-two.xml</code>. In this case, you should somehow indicate that <code class="code" data-lang="Java">ref="beanOne"</code>
+            in <code class="code" data-lang="Java">config-two.xml</code> is a reference to <code class="code" data-lang="Java">beanOne</code> defined in <code class="code" data-lang="Java">config-one.xml</code>.
+            In IntelliJ IDEA, you can do that by combining <code class="code" data-lang="Java">config-one.xml</code> and <code class="code" data-lang="Java">config-two.xml</code> in a file set.</p><a name="d953306e78"></a><p>
+            In a similar way, you can form file sets that contain <code class="code" data-lang="Java">@Configuration</code>-annotated Java classes.</p><a name="d953306e84"></a><p>
+            You can create as many file sets as you need; any configuration file may be included in more than one file set.
+            The configuration files that are external to your project can also be included in your file sets.</p><a name="d953306e87"></a><p>
+            On the other hand, you don’t have to create file sets if you don’t need them.</p><a name="d953306e90"></a><p>
+            In certain cases, IntelliJ IDEA can create file sets automatically. This is the case for Spring Web applications
+            when the corresponding configuration files are specified in <code class="code" data-lang="Java">web.xml</code> or have recognizable file names
+            (for example, <code class="code" data-lang="Java">&lt;servlet-name&gt;-servlet.xml</code>).</p><a name="parent-child"></a><a name="d953306e101"></a><h2>
+            Parent-child relationships between file sets</h2><a name="d953306e105"></a><p>
+            For each file set that you create, you can specify a parent file set.
+            This lets you build file set hierarchies and, thus, control bean visibility at the stage of developing your application.</p><a name="d953306e108"></a><p>
+            This IntelliJ IDEA feature fully mirrors the concept of hierarchical application contexts existing in the Spring framework
+            where it’s possible to use common beans from parent contexts, and inherit and overload the beans in child contexts.</p><a name="d953306e111"></a><p>
+            The beans defined in a parent file set (or, to be more exact, in one of the configuration files belonging to a parent file set)
+            are all visible in its child file sets (and all the descendent file sets).
+            The beans defined in a child file set, however, are not visible in its parent file set.</p><a name="d953306e114"></a><p>
+            Going back to the example we have discussed <a name="d953306e116"></a><a href="#about"><span>earlier</span></a>, you could place <code class="code" data-lang="Java">config-two.xml</code> in a file set
+            which is a child of a file set containing <code class="code" data-lang="Java">config-one.xml</code>.
+            In such a case, the reference <code class="code" data-lang="Java">ref="beanOne"</code> would still be valid
+            (as a reference to a bean defined in a parent file set). On the other hand, the beans in <code class="code" data-lang="Java">config-one.xml</code>
+            could not reference the beans defined in <code class="code" data-lang="Java">config-two.xml</code>.</p><a name="d953306e136"></a><p>
+            In the user interface of IntelliJ IDEA, parent file sets have a blue arrow next to them (<img alt="parent_fileset_marker" width="14" height="14" title="parent_fileset_marker" src="/help/img/idea/2016.1/parent_fileset_marker.png" class="inline-icon-14">).</p><figure><img alt="parent_fileset_example" width="572" height="167" title="parent_fileset_example" src="/help/img/idea/2016.1/parent_fileset_example.png"></figure><a name="create"></a><a name="create_file_set"></a><a name="dynaProc0"></a><section class="procedure-steps"><h2>To create a file set</h2><ol class=".list _decimal"><li class="list__item">
+                <a name="d953306e158"></a><a href="changing-facet-settings.html"><span>Open the Spring facet settings</span></a>.</li><li class="list__item">
+                On the <a name="d953306e164"></a><a href="spring-facet-page.html"><span>Spring Facet page</span></a>,
+                click <img alt="add" width="12" height="12" title="add" src="/help/img/idea/2016.1/new.png" class="inline-icon-12">&nbsp;(<kbd data-default="Alt+Insert" data-default_for_gnome="Alt+Insert" data-default_for_kde="Alt+Insert" data-default_for_xwin="Alt+Insert" data-emacs="Alt+Insert" data-jbuilder="Alt+Insert" data-visual_studio="Alt+Insert" data-netbeans_6.5="N/A" data-eclipse="Alt+Insert" data-mac_os_x_10.5_="&#x2318;N" data-mac_os_x="&#x2303;N" data-eclipse_mac_os_x="&#x2318;N" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Insert</kbd>) and select one of the following options:
+                <ul class="list _ul"><li class="list__item"><a name="d953306e173"></a>
+                        <a name="d953306e175"></a><span class="control">XML.</span>
+                        Select this option to create a file set containing XML configuration files.</li><li class="list__item"><a name="d953306e179"></a>
+                        <a name="d953306e181"></a><span class="control">Annotation Config.</span>
+                        Select this option to create a file set containing <code class="code" data-lang="Java">@Configuration</code>-annotated
+                        Java classes.</li></ul>
+      </li><li class="list__item">
+                <a name="edit-dialog"></a>
+                In the <a name="d953306e194"></a><a href="edit-application-context-dialog.html"><span>Edit Application Context dialog</span></a>:
+                <ol class="list _decimal"><li class="list__item"><a name="d953306e199"></a>
+                        Specify the name of the file set in the <a name="d953306e201"></a><span class="control">Name</span> field.</li><li class="list__item"><a name="d953306e205"></a>
+                        If necessary, select a <a name="d953306e207"></a><a href="#parent-child"><span>parent file set</span></a> from
+                        the <a name="d953306e210"></a><span class="control">Parent fileset</span> list.</li><li class="list__item"><a name="d953306e214"></a>
+                        Select the configuration files to be included in the file set
+                        by selecting the corresponding check boxes.</li><li class="list__item"><a name="d953306e217"></a>
+                        If you want to add a configuration file external to your module or project,
+                        click <a name="d953306e219"></a><span class="control">Locate File</span> and
+                        select the necessary configuration file in the
+                        <a name="d953306e222"></a><a href="select-path-dialog.html"><span>Select Path dialog</span></a>.</li><li class="list__item"><a name="d953306e226"></a>
+                        Click <a name="d953306e228"></a><span class="control">OK</span>.</li></ol>
+      </li><li class="list__item">
+                Click <a name="d953306e236"></a><span class="control">OK</span> in the <a name="d953306e239"></a><span class="control">Project Structure</span> dialog.</li></ol><p class="procIntro">
+                <a name="d953306e150"></a><p>
+                    You can initiate creation of a file set in the editor, if an XML configuration file which is not included
+                    in any of the file sets is currently open
+                    (see
+                    <a href="managing-spring-configuration-files.html#add_to_file_set">
+            
+
+        </a>).</p>
+
+
+            </p></section><a name="edit"></a><a name="dynaProc1"></a><section class="procedure-steps"><h2>To edit a file set</h2><ol class=".list _decimal"><li class="list__item">
+                <a name="d953306e248"></a><a href="changing-facet-settings.html"><span>Open the Spring facet settings</span></a>.</li><li class="list__item">
+                If you just want to remove unnecessary configuration files from a file set, select the corresponding configuration files,
+                click <img alt="delete" width="12" height="12" title="delete" src="/help/img/idea/2016.1/delete.png" class="inline-icon-12">&nbsp;(<kbd data-default="Alt+Delete" data-default_for_gnome="Alt+Delete" data-default_for_kde="Alt+Delete" data-default_for_xwin="Alt+Delete" data-emacs="N/A" data-jbuilder="Alt+Delete" data-visual_studio="Alt+Delete" data-netbeans_6.5="N/A" data-eclipse="Alt+Delete" data-mac_os_x_10.5_="&#x2318;&#x2326;" data-mac_os_x="&#x2318;&#x2326;" data-eclipse_mac_os_x="N/A" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Delete</kbd>), and then click <a name="d953306e258"></a><span class="control">OK</span>.
+                Note that this does not delete the configuration files physically but just removes them from the corresponding file set.
+                <a name="d953306e261"></a><p>
+                    Otherwise, select the necessary file set and
+                    click <img alt="edit1" width="12" height="12" title="edit1" src="/help/img/idea/2016.1/editFlexLibraryNew.png" class="inline-icon-12">&nbsp;(<kbd data-default="Enter" data-default_for_gnome="Enter" data-default_for_kde="Enter" data-default_for_xwin="Enter" data-emacs="Enter" data-jbuilder="Enter" data-visual_studio="Enter" data-netbeans_6.5="N/A" data-eclipse="Enter" data-mac_os_x_10.5_="⏎" data-mac_os_x="⏎" data-eclipse_mac_os_x="⏎" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Enter</kbd>).</p>
+      </li><li class="list__item">
+                <a name="d953306e271"></a><a href="#edit-dialog"><span>Make the necessary changes</span></a> in the <a name="d953306e274"></a><a href="edit-application-context-dialog.html"><span>Edit Application Context dialog</span></a>.</li><li class="list__item">
+                Click <a name="d953306e280"></a><span class="control">OK</span> in the <a name="d953306e283"></a><span class="control">Project Structure</span> dialog.</li></ol></section><a name="remove"></a><a name="d953306e290"></a><a name="dynaProc2"></a><section class="procedure-steps"><h2>To remove a file set</h2><ol class=".list _decimal"><li class="list__item">
+                <a name="d953306e294"></a><a href="changing-facet-settings.html"><span>Open the Spring facet settings</span></a>.</li><li class="list__item">
+                Select the file set to be removed, click <img alt="delete" width="12" height="12" title="delete" src="/help/img/idea/2016.1/delete.png" class="inline-icon-12">&nbsp;(<kbd data-default="Alt+Delete" data-default_for_gnome="Alt+Delete" data-default_for_kde="Alt+Delete" data-default_for_xwin="Alt+Delete" data-emacs="N/A" data-jbuilder="Alt+Delete" data-visual_studio="Alt+Delete" data-netbeans_6.5="N/A" data-eclipse="Alt+Delete" data-mac_os_x_10.5_="&#x2318;&#x2326;" data-mac_os_x="&#x2318;&#x2326;" data-eclipse_mac_os_x="N/A" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Delete</kbd>),
+                and then click <a name="d953306e304"></a><span class="control">OK</span>.
+                Note that this operation does not delete the corresponding configuration files.</li></ol></section><div class="navigation-links _bottom"><a class="navigation-links__prev" href="managing-spring-configuration-files.html">Managing Spring Configuration Files</a><a class="navigation-links__next" href="using-spring-bean-patterns.html">Using Spring Bean Patterns</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content"><div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d953306e324"></a><a href="changing-facet-settings.html"><span>Changing Facet Settings</span></a></li></ul></div><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d953306e331"></a><a href="spring-facet-page.html"><span>Spring Facet Page</span></a></li><li class="list__item"><a name="d953306e335"></a><a href="edit-application-context-dialog.html"><span>Edit Application Context Dialog</span></a></li><li class="list__item"><a name="d953306e337"></a><a href="spring-dependencies-diagram.html"><span>Spring Dependencies Diagram</span></a></li></ul></div><div class="seealso__col"><h3>Language and Framework-Specific Guidelines:</h3><ul class="list"><li class="list__item"><a name="d953306e313"></a><a href="spring.html"><span>Spring</span></a></li><li class="list__item"><a name="d953306e317"></a><a href="managing-spring-configuration-files.html"><span>Managing Spring Configuration Files</span></a></li></ul></div><div class="seealso__col"><h3>External Links:</h3><ul class="list"><li class="list__item"><a name="d953306e344"></a><a href="http://blogs.jetbrains.com/idea/2012/02/annotationconfigapplicationcontext-support-in-intellij-idea-111/" data-external="true"><span>AnnotationConfigApplicationContext support in IntelliJ IDEA 11.1</span></a></li></ul></div></div></section><div class="last-modified">Last modified: 13 July 2016 </div></article><div id="disqus_thread"></div></div></section></main></div><script src="/help/app/app.js"></script></body></html>

@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[316],{315:function(e,o,n){n("ctTR"),e.exports=n("Qb4D")},Qb4D:function(e,o,n){var a=n("KI45"),i=n("XHbo"),s=a(n("kIaO"));(0,i.initBuyPage)("buy-cards",{enableBannersRedirects:!0,pageProps:{productEditionsData:[{code:"PC",name:"PyCharm",description:s.default._({id:"Python IDE for professional developers"})}]}})}},[[315,0]]]);
+//# sourceMappingURL=new-buy.entry.107c69df72318c92a769.js.map

@@ -1,0 +1,43 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"></meta><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><title>Hub 2.0 Help :: Query Syntax</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Query-Syntax"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search Hub Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>Hub 2.0 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="Sort-Syntax.html">Sort Syntax</a><a class="navigation-links__next" href="HUB-REST-API.html">Hub REST API</a></div><h1>Query Syntax</h1><a name="overview"></a><h2>Overview</h2>
+      <a name="d71002e5"></a><p>This document provides a BNF description for Hub query grammar.</p>
+   <a name="Grammar"></a><h2>Grammar</h2>
+      <a name="d71002e11"></a><div class="code-block" data-lang="XML"><code class="code-block__wrapper"><span class="nt">&lt;Query&gt;</span> ::= <span class="nt">&lt;OrExpression&gt;</span> EOF
+         <span class="nt">&lt;OrExpression&gt;</span> ::= <span class="nt">&lt;AndExpression&gt;</span> &quot;or&quot; <span class="nt">&lt;AndExpression&gt;</span>
+         <span class="nt">&lt;AndExpression&gt;</span> ::= <span class="nt">&lt;SignExpression&gt;</span> &quot;and&quot; <span class="nt">&lt;SignExpression&gt;</span>
+         <span class="nt">&lt;SignExpression&gt;</span> ::= (&quot;not&quot;)? <span class="nt">&lt;Item&gt;</span>
+         <span class="nt">&lt;Item&gt;</span> ::= <span class="nt">&lt;Field&gt;</span>| <span class="nt">&lt;Tuple&gt;</span>| <span class="nt">&lt;Paren&gt;</span>| <span class="nt">&lt;Phrase&gt;</span>| <span class="nt">&lt;Text&gt;</span>
+         <span class="nt">&lt;Field&gt;</span> ::= <span class="nt">&lt;FieldName&gt;</span> &quot;:&quot; <span class="nt">&lt;FieldValue&gt;</span>
+         <span class="nt">&lt;Tuple&gt;</span> ::= <span class="nt">&lt;TupleName&gt;</span> &quot;(&quot; <span class="nt">&lt;Field&gt;</span> <span class="nt">&lt;Field&gt;</span>* &quot;)&quot;
+         <span class="nt">&lt;Paren&gt;</span> ::= &quot;(&quot; <span class="nt">&lt;OrExpression&gt;</span>| EOF &quot;)&quot;</code></div>
+
+      <a name="d71002e14"></a><p>Grammar is case-insensitive.</p>
+
+      <ul class="list _ul"><li class="list__item"><a name="d71002e19"></a>
+            <code class="code" data-lang="Java">&lt;Text&gt;</code> &mdash; arbitrary text.</li><li class="list__item"><a name="d71002e25"></a>
+            <code class="code" data-lang="Java">&lt;Phrase&gt;</code> &mdash; exactly text to match.</li><li class="list__item"><a name="d71002e31"></a>
+            <code class="code" data-lang="Java">&lt;FieldName&gt;</code> &mdash; field name (id, name, etc.). It covers all available JSON field names + some additional like "is", "in", "has", etc.</li><li class="list__item"><a name="d71002e37"></a>
+            <code class="code" data-lang="Java">&lt;FieldValue&gt;</code> &mdash; attribute value (admin, global, {my global permission}, etc.) for not single worded values value should be surrounded with "{" "}"</li><li class="list__item"><a name="d71002e43"></a>
+            <code class="code" data-lang="Java">&lt;Tuple&gt;</code> &mdash; conditional match by fields (access(project: "myProject", with: "myRole"))</li></ul>
+   <a name="Samples"></a><h2>Samples</h2>
+
+      <table class="" width="100%" id="d71002e53"><thead><tr id="d71002e55" class="ijRowHead"><a name="d71002e55"></a><th><a name="d71002e57"></a> Query </th><th><a name="d71002e60"></a> Description </th></tr></thead><tbody><tr id="d71002e64" class="ijRowOdd"><a name="d71002e64"></a><td><a name="d71002e66"></a>
+               <font style="color:&#xA;                        #00008B&#xA;                        ;&#xA;                    "><a name="d71002e69"></a><b id="d71002e69">name:</b></font>
+               <font style="color:&#xA;                        #8B008B&#xA;                        ;&#xA;                    "><a name="d71002e73"></a><b id="d71002e73">admin</b></font>
+            </td><td><a name="d71002e77"></a> Finds all users with the <code class="code" data-lang="Java">visibleName</code> "admin". </td></tr><tr id="d71002e84" class="ijRowEven"><a name="d71002e84"></a><td><a name="d71002e86"></a>
+               <font style="color:&#xA;                        #00008B&#xA;                        ;&#xA;                    "><a name="d71002e89"></a><b id="d71002e89">is:</b></font>
+               <font style="color:&#xA;                        #8B008B&#xA;                        ;&#xA;                    "><a name="d71002e93"></a><b id="d71002e93">banned</b></font>
+            </td><td><a name="d71002e97"></a> Finds all banned users. </td></tr><tr id="d71002e101" class="ijRowOdd"><a name="d71002e101"></a><td><a name="d71002e103"></a>
+               <font style="color:&#xA;                        #00008B&#xA;                        ;&#xA;                    "><a name="d71002e106"></a><b id="d71002e106">access(project:</b></font>
+               <font style="color:&#xA;                        #8B008B&#xA;                        ;&#xA;                    ">MyProject</font>
+               <font style="color:&#xA;                        #00008B&#xA;                        ;&#xA;                    "><a name="d71002e113"></a><b id="d71002e113">, with:</b></font>
+               <font style="color:&#xA;                        #8B008B&#xA;                        ;&#xA;                    ">read-issue-permission</font>
+               <font style="color:&#xA;                        #00008B&#xA;                        ;&#xA;                    "><a name="d71002e120"></a><b id="d71002e120">)</b></font>
+            </td><td><a name="d71002e124"></a> Finds all users with access to the project "MyProject" and permission "read-issue-permission".  </td></tr></tbody></table>
+   <div class="last-modified">Last modified: 19 September 2016 </div></article><div id="disqus_thread"></div></div></section></main></div><script src="/help/app/app.js"></script></body></html>

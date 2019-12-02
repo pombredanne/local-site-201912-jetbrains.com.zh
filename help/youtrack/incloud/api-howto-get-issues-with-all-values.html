@@ -1,0 +1,175 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta charset="UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="//resources.jetbrains.com/storage/help-app/v3/analytics.js"></script><title>Get Issues List with All Values - Help | YouTrack InCloud</title><link rel="stylesheet" href="//resources.jetbrains.com/storage/help-app/v3/app.css"></head><body data-id="api-howto-get-issues-with-all-values" data-breadcrumbs="Resources-for-Developers.xml|Resources for Developers/youtrack-rest-api-reference.xml|REST API/api-use-cases.xml|REST API Use Cases/api-howto-get-issues-with-all-values.xml|Get Issues List with All Values" data-main-title="Get Issues List with All Values"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack InCloud Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>YouTrack InCloud 2019.2 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="api-howto-get-issues-with-all-values" id="api-howto-get-issues-with-all-values.xml">Get Issues List with All Values</h1>    <h4 id="version-2019">Use Case:</h4>    <p id="70bef084">Use the REST API to get a list of issues with all their custom fields.</p>    <a name="version-note"></a>        <aside data-type="note" class="prompt" data-title="" rel="api-howto-get-issues-with-all-values.xml" id="7805db2d"><p>Please notice that this example is valid for YouTrack 2019.1 and later versions. In the previous versions, though            the principle is the same, query parameters and entity attributes may differ. Also, a number of features, like            addressing an entity by its name, were introduced in 2019.1 and are not supported in the previous versions.        </p></aside>        <div class="chapter"><h2 id="summary" data-toc="api-howto-get-issues-with-all-values#summary">Summary</h2>        <p id="9dd6c1b4">To get a list of issues with all their custom fields:</p>        <ol class="list _decimal"><li class="list__item" id="42746418"><p>Use Get Issues List request:                <div class="code-block" data-lang="http">
+                    GET /api/issues?[fields]
+                </div>            </p></li><li class="list__item" id="93bbb7f5"><p>                In the <code class="code">fields</code> request parameter specify issue attributes you want to get in response including                necessary attributes of its <code class="code">customFields</code>.            </p></li></ol>    </div>    <div class="chapter"><h2 id="step-by-step" data-toc="api-howto-get-issues-with-all-values#step-by-step">Step-by-Step</h2>        <p id="185c668d">We will start with a piece-by-piece description of the request to get a specific issue with its custom fields.            Then, we extrapolate the principe to the issues list.        </p>        <div class="chapter"><h3 id="get-issue-id-fields">Get an Issue with Its Custom Fields</h3>            <section class="procedure-steps"><ol class="list _decimal"><li class="list__item" id="660ad4b6">                    <p id="a01d6177">To get an issue with values of all its custom fields, send a <code class="code">GET</code> request to the                        target issue. You can use either issue <code class="code">idReadable</code> (for example, <code class="code">SP-8</code>)                        or issues's entity <code class="code">id</code> (for example, <code class="code">2-7</code>) to reference issue.                    </p>                    <div class="code-block" data-lang="http">
+                        GET /api/issues/{issueID}?[fields]
+                    </div>                    <p id="6733b749">                        <a href="operations-api-issues.html">Read more about operations with an issue</a>                    </p>                </li><li class="list__item" id="eeba4d61">                    <p id="5b5dd946">The <code class="code">fields</code> request parameter is the comma-separated list of the returned entity (in                        this case - Issue) attributes to return in the server response.                    </p>                    <p id="e22f6a67">You can request any set of supported attributes of the returned entity. For an issue, see <a href="api-entity-Issue.html">the list of supported attributes</a>.                    </p>                    <p id="724e17c2">In this how-to, we request the following data:</p>                    <div class="code-block" data-lang="http">
+                        ?fields=$type,id,summary,customFields($type,id,projectCustomField($type,id,field($type,id,name)),value($type,avatarUrl,buildLink,color(id),fullName,id,isResolved,localizedName,login,minutes,name,presentation,text))'
+                    </div>                    <ul class="list _ul"><li class="list__item" id="91c7bf3e"><p>                            <code class="code">$type</code>                            - the entity type. YouTrack returns the <code class="code">$type</code> for all entities in the response                            regardless of whether you specify it in request explicitly or not.                        </p></li><li class="list__item" id="25490d63"><p>                            <code class="code">id</code>                            - a unique ID of the returned entity in the database.                        </p></li><li class="list__item" id="8c898eb8"><p>                            <code class="code">summary</code>                            - issue summary.                        </p></li><li class="list__item" id="989a62e8"><p>                            <code class="code">customFields</code>                            - an attribute of the returned <code class="code">Issue</code> entity that contains a collection of the                            issue custom fields. This is the target of our how-to.                        </p></li></ul>                </li><li class="list__item" id="7ca665b7">                    <p id="f39ec0cb">Notice the attributes we get for custom fields:</p>                    <div class="code-block" data-lang="http">
+                        ?customFields($type,id,projectCustomField($type,id,field($type,id,name)),value($type,avatarUrl,buildLink,color(id),fullName,id,isResolved,localizedName,login,minutes,name,presentation,text))'
+                    </div>                    <ul class="list _ul"><li class="list__item" id="93124224"><p>                            <code class="code">projectCustomField</code>                            - each <code class="code">IssueCustomField</code> contains settings of a <code class="code">ProjectCustomField</code>                            in a particular issue.                        </p></li><li class="list__item" id="7ba4625c"><p>                            <code class="code">field</code>                            - respectively, each <code class="code">ProjectCustomField</code> contains settings of a <code class="code">CustomField</code> in a particular project.                        </p></li><li class="list__item" id="09a15031"><p>                            <code class="code">value</code>                            - whereas <code class="code">CustomField</code> is the most common entity, <code class="code">IssueCustomField</code>                            is the most special and includes field value in a particular issue. Value can be just a                            simple one (string, integer,..), link to some entity (link to                            particular user for Assignee field) or a collection of values (Affected versions field).                            So, we get <code class="code">value</code> attributes for all its types.                        </p></li></ul>                    <p id="a1781b27">                        <a href="api-concept-custom-fields.html">                            Read more about custom fields hierarchy</a>.                    </p>                </li></ol></section>            <p id="7fcc0ee7">The final request is the following:</p>            <div class="code-block" data-lang="http">
+                curl -X GET \
+                'https://example.myjetbrains.com/youtrack/api/issues/SP-8?fields=$type,id,summary,customFields($type,id,projectCustomField($type,id,field($type,id,name)),value($type,avatarUrl,buildLink,color(id),fullName,id,isResolved,localizedName,login,minutes,name,presentation,text))' \
+                -H 'Accept: application/json' \
+                -H 'Authorization: Bearer perm:amFuZS5kb2U=.UkVTVCBBUEk=.wcKuAok8cHmAtzjA6xlc4BrB4hleaX' \
+                -H 'Cache-Control: no-cache' \
+                -H 'Content-Type: application/json'
+            </div>            <p id="35e18bf5">The server response is the following:</p>            <div class="code-block" data-lang="json">
+                {
+                    "id":"2-7",
+                    "summary":"Issue from REST #1",
+                    "$type":"Issue",
+                    "customFields":[
+                        {
+                            "id":"92-1",
+                            "$type":"SingleEnumIssueCustomField",
+                            "projectCustomField":{
+                                "id":"92-1",
+                                "$type":"EnumProjectCustomField",
+                                "field":{
+                                    "id":"58-1",
+                                    "$type":"CustomField",
+                                    "name":"Priority"
+                                },
+                            },
+                            "value":{
+                                "id":"67-3",
+                                "$type":"EnumBundleElement",
+                                "name":"Normal",
+                                "localizedName":null,
+                                "color":{
+                                    "id":"17",
+                                    "$type":"FieldStyle"
+                                }
+                            }
+                        },
+                        {
+                            "id":"92-3",
+                            "$type":"StateIssueCustomField",
+                            "projectCustomField":{
+                                "id":"92-3",
+                                "$type":"StateProjectCustomField",
+                                "field":{
+                                    "id":"58-3",
+                                    "$type":"CustomField",
+                                    "name":"State"
+                                }
+                            },
+                            "value":{
+                                "id":"69-7",
+                                "$type":"StateBundleElement",
+                                "name":"Fixed",
+                                "isResolved":true,
+                                "localizedName":null,
+                                "color":{
+                                    "id":"0",
+                                    "$type":"FieldStyle"
+                                }
+                            }
+                        },
+                        {
+                            "id":"94-0",
+                            "$type":"SingleUserIssueCustomField",
+                            "projectCustomField":{
+                                "id":"94-0",
+                                "$type":"UserProjectCustomField",
+                                "field":{
+                                    "id":"58-4",
+                                    "$type":"CustomField",
+                                    "name":"Assignee"
+                                }
+                            },
+                            "value":{
+                                "id":"1-2",
+                                "$type":"User",
+                                "name":"John Doe",
+                                "fullName":"John Doe",
+                                "login":"john.doe",
+                                "avatarUrl": "/hub/api/rest/avatar/cd939d5e-4c15-4080-98cd-0cde0cb3c19f?s=48"
+                            }
+                        },
+                        {
+                            "id":"92-0",
+                            "$type":"SingleOwnedIssueCustomField",
+                            "projectCustomField":{
+                                "id":"92-0",
+                                "$type":"OwnedProjectCustomField",
+                                "field":{
+                                    "id":"58-0",
+                                    "$type":"CustomField",
+                                    "name":"Subsystem"
+                                }
+                            },
+                            "value":{
+                                "id":"134-0",
+                                "$type":"OwnedBundleElement",
+                                "name":"Documentation",
+                                "color":{
+                                    "id":"12",
+                                    "$type":"FieldStyle"
+                                }
+                            }
+                        },
+                        {
+                            "id":"92-4",
+                            "$type":"MultiVersionIssueCustomField",
+                            "projectCustomField":{
+                                "id":"92-4",
+                                "$type":"VersionProjectCustomField",
+                                "field":{
+                                    "id":"58-5",
+                                    "$type":"CustomField",
+                                    "name":"Fix versions"
+                                }
+                            },
+                            "value":[
+                                {
+                                    "id":"133-19",
+                                    "$type":"VersionBundleElement",
+                                    "name":"2019.1",
+                                    "color":{
+                                        "id":"3",
+                                        "$type":"FieldStyle"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "id":"92-6",
+                            "$type":"SingleBuildIssueCustomField",
+                            "projectCustomField":{
+                                "id":"92-6",
+                                "$type":"BuildProjectCustomField",
+                                "field":{
+                                    "id":"58-7",
+                                    "$type":"CustomField",
+                                    "name":"Fixed in build"
+                                }
+                            },
+                            "value":{
+                                "id":"135-0",
+                                "$type":"BuildBundleElement",
+                                "name":"48733",
+                                "buildLink":null,
+                                "color":{
+                                    "id":"0",
+                                    "$type":"FieldStyle"
+                                }
+                            },
+                        }
+                    ]
+                }
+            </div>        </div>        <div class="chapter"><h3 id="get-issues-fields">Get Issues List with Custom Fields</h3>            <p id="232c0f59">To get this data for each issue, simply remove the <code class="code">{issueID}</code> from the endpoint URL.                For example:            </p>            <div class="code-block" data-lang="http">
+                curl -X GET \
+                'https://example.myjetbrains.com/youtrack/api/issues?fields=id,summary,customFields(id,projectCustomField(field(name)),value(name))' \
+                -H 'Accept: application/json' \
+                -H 'Authorization: Bearer perm:amFuZS5kb2U=.UkVTVCBBUEk=.wcKuAok8cHmAtzjA6xlc4BrB4hleaX' \
+                -H 'Cache-Control: no-cache' \
+                -H 'Content-Type: application/json'
+            </div>        </div>    </div>    <div class="last-modified" data-skip-index="skip">Last modified: 29 November 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="api-howto-create-issue-with-fields.html">Create an Issue and Set Custom Fields</a><a class="navigation-links__next" href="api-howto-get-value-for-specific-cf.html">Get Value for an Issue Custom Field</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="//resources.jetbrains.com/storage/help-app/v3/app.js"></script></body></html>

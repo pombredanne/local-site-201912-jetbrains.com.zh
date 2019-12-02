@@ -1,0 +1,209 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"></meta><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><title>WebStorm 2016.1 Help :: Extract Variable</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="procedures.refactoring.introduceVariable"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search WebStorm Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>WebStorm 2016.1 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWindow</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="inline.html">Inline</a><a class="navigation-links__next" href="extract-variable-for-sass.html">Extract Variable for Sass</a></div><h1>Extract Variable</h1><ul><li class="list__item"><a href="#d695132e25">Basics</a></li><li class="list__item"><a href="#d695132e280">Extracting variable in-place</a></li><li class="list__item"><a href="#d695132e384">Extracting variable with a dialog</a></li></ul><a name="d695132e25"></a><h2>Basics</h2>
+        <a name="d695132e27"></a><p>The
+            <a name="d695132e29"></a><span class="keyword">Extract Variable</span>
+            refactoring puts the result of the selected expression into a variable.
+            It declares a new variable and uses the expression as an initializer.
+             
+             The original expression is replaced with the new variable (<a name="d695132e34"></a><a href="#code_examples"><span>see the examples below</span></a>).
+             
+             
+        </p>
+         
+         
+         
+        <a name="d7162e4755"></a><p>To perform this refactoring, you can use:</p>
+        <ul class="list _ul"><li class="list__item"><a name="d7162e4760"></a>
+                <a name="d7162e4762"></a><a href="#inplace_refactoring"><span>In-place refactoring</span></a>.
+                In this case you specify the new name right in the editor.</li><li class="list__item"><a name="d7162e4766"></a>
+                <a name="d7162e4768"></a><a href="#extract_variable_dialog"><span>Refactoring dialog</span></a>, where you specify all the required information.
+                To make such a dialog accessible, you have to clear the check box
+                <a name="d7162e4771"></a><a href="general.html#in_place_refactorings"><span>Enable in-place mode</span></a> in the editor settings.</li></ul>
+
+     
+        <a name="d695132e54"></a><p>You can select the expression to be replaced with a variable yourself.
+            You can as well use
+            <a name="d695132e56"></a><a href="selecting-text-in-the-editor.html#smart_expression_selection"><span>smart expression selection</span></a>.
+            In this case WebStorm will help you select the desired expression.
+        </p>
+        <a name="d695132e61"></a><p>
+            This refactoring is also available for
+            <a name="d695132e63"></a><a href="extract-variable-in-javascript.html"><span>JavaScript</span></a>
+             and
+                <a name="d695132e68"></a><a href="extract-variable-for-sass.html"><span>Sass</span></a>
+             .
+        </p>
+    <a name="code_examples"></a><a name="d695132e280"></a><h2>Extracting variable in-place</h2>
+
+        <a name="inplace_refactoring"></a>
+        <a name="d695132e284"></a><a name="dynaProc0"></a><section class="procedure-steps"><h2>To extract a variable using in-place refactoring, follow these steps</h2><ol class=".list _decimal"><li class="list__item">
+                 
+                    In the editor, select the expression to be replaced with a variable. You can do that yourself or
+                    use the
+                    <a name="d59342e399"></a><span class="emphasis">smart expression selection</span>
+                    feature to let WebStorm help you. So, do one of the following:
+                 
+                <ul class="list _ul"><li class="list__item"><a name="d695132e292"></a>
+                         
+                            Highlight the expression. Then choose <a name="d59342e409"></a><span class="menupath">Refactor | Extract | Variable</span>
+                              on the main menu or  on the context menu.
+                            <a name="d59342e415"></a><p>Alternatively, press<kbd data-default="Ctrl+Alt+V" data-default_for_gnome="Ctrl+Alt+V" data-default_for_kde="Shift+Alt+V" data-default_for_xwin="Ctrl+Alt+V" data-emacs="Ctrl+Alt+V" data-visual_studio="Ctrl+Alt+V" data-netbeans_6.5="N/A" data-eclipse="Shift+Alt+L" data-mac_os_x_10.5_="&#x2325;&#x2318;V" data-mac_os_x="&#x2325;&#x2318;V" data-eclipse_mac_os_x="&#x2325;&#x2318;L" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+V</kbd>.</p>
+                         
+                         
+                    </li><li class="list__item"><a name="d695132e299"></a>
+                         
+                            Place the cursor before or within the expression.
+                         
+                         Choose
+                            <a name="d59342e431"></a><span class="menupath">Refactor | Extract Variable</span>
+                              on the main menu or  on the context menu.
+                            or press<kbd data-default="Ctrl+Alt+V" data-default_for_gnome="Ctrl+Alt+V" data-default_for_kde="Shift+Alt+V" data-default_for_xwin="Ctrl+Alt+V" data-emacs="Ctrl+Alt+V" data-visual_studio="Ctrl+Alt+V" data-netbeans_6.5="N/A" data-eclipse="Shift+Alt+L" data-mac_os_x_10.5_="&#x2325;&#x2318;V" data-mac_os_x="&#x2325;&#x2318;V" data-eclipse_mac_os_x="&#x2325;&#x2318;L" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+V</kbd>.
+                         
+                         
+                        <a name="d695132e307"></a><p>
+                             
+                                In the
+                                <a name="d59342e446"></a><span class="control">Expressions</span>
+                                pop-up menu, select the expression.
+                                To do that, click the required expression. Alternatively, use the Up and Down arrow keys
+                                to navigate to the expression of interest, and then press <kbd data-default="Enter" data-default_for_gnome="Enter" data-default_for_kde="Enter" data-default_for_xwin="Enter" data-emacs="Enter" data-visual_studio="Enter" data-netbeans_6.5="N/A" data-eclipse="Enter" data-mac_os_x_10.5_="⏎" data-mac_os_x="⏎" data-eclipse_mac_os_x="⏎" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Enter</kbd> to select it.
+                             
+                        </p>
+                         
+                         
+                         
+                         
+                         
+                            <aside class="note ">
+                                <a name="d59342e460"></a><p>The
+                                    <a name="d59342e462"></a><span class="control">Expressions</span>
+                                    pop-up menu contains all the expressions
+                                    appropriate for the current cursor position in the editor.
+                                </p>
+                                <a name="d59342e466"></a><p>When you navigate through the suggested expressions in the pop-up, the code
+                                    highlighting in the editor changes accordingly.
+                                </p>
+                            </aside>
+                         
+                    </li></ul>
+            </li><li class="list__item">
+                If more than one occurrence of the selected expression is found, select
+                <a name="d695132e328"></a><span class="control">Replace this occurrence only</span>
+                or
+                <a name="d695132e331"></a><span class="control">Replace all occurrences</span>
+                in the
+                <a name="d695132e334"></a><span class="control">Multiple occurrences found</span>
+                pop-up menu.
+                To select the required option, just click it. Alternatively, use the
+                Up and Down arrow keys to navigate to the option of interest, and press
+                <kbd data-default="Enter" data-default_for_gnome="Enter" data-default_for_kde="Enter" data-default_for_xwin="Enter" data-emacs="Enter" data-visual_studio="Enter" data-netbeans_6.5="N/A" data-eclipse="Enter" data-mac_os_x_10.5_="⏎" data-mac_os_x="⏎" data-eclipse_mac_os_x="⏎" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Enter</kbd>
+                to select it.
+                 
+                 
+                 
+            </li><li class="list__item">
+                Specify the name of the variable. Do one of the following:
+                <ul class="list _ul"><li class="list__item"><a name="d695132e351"></a>Select one of the suggested names from the pop-up list. To do that, double-click the suitable
+                        name.
+                        Alternatively, use the Up and Down arrow keys to navigate to the name of interest, and
+                        <kbd data-default="Enter" data-default_for_gnome="Enter" data-default_for_kde="Enter" data-default_for_xwin="Enter" data-emacs="Enter" data-visual_studio="Enter" data-netbeans_6.5="N/A" data-eclipse="Enter" data-mac_os_x_10.5_="⏎" data-mac_os_x="⏎" data-eclipse_mac_os_x="⏎" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Enter</kbd>
+                        to select it.
+                         
+                         
+                    </li><li class="list__item"><a name="d695132e360"></a>Edit the name by typing. The name is shown in the box with red borders and changes as you type.
+                        When finished, press<kbd data-default="Enter" data-default_for_gnome="Enter" data-default_for_kde="Enter" data-default_for_xwin="Enter" data-emacs="Enter" data-visual_studio="Enter" data-netbeans_6.5="N/A" data-eclipse="Enter" data-mac_os_x_10.5_="⏎" data-mac_os_x="⏎" data-eclipse_mac_os_x="⏎" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Enter</kbd>.
+                         
+                         
+                    </li></ul>
+            </li></ol></section>
+    <a name="d695132e384"></a><h2>Extracting variable with a dialog</h2>
+        <a name="extract_variable_dialog"></a>
+        <a name="d695132e388"></a><a name="dynaProc1"></a><section class="procedure-steps"><h2>To extract a variable using the dialog box</h2><p>
+                 
+        <a name="d7162e4795"></a><p>If the <a name="d7162e4797"></a><span class="control">Enable in place refactorings</span> check box is cleared in the Editor settings,
+            the <a name="d7162e4800"></a><span class="control">Extract Variable</span> refactoring is performed by means of the <a name="d7162e4803"></a><span></span> dialog box.</p>
+        <figure><img alt="enableInplaceRefactoringCleared" width="551" height="290" title="enableInplaceRefactoringCleared" src="/help/img/idea/2016.1/enableInplaceRefactoringCleared.png"></figure>
+
+     
+            </p><ol class=".list _decimal"><li class="list__item">
+                 
+                    In the editor, select the expression to be replaced with a variable. You can do that yourself or
+                    use the
+                    <a name="d695132e399"></a><span class="emphasis">smart expression selection</span>
+                    feature to let WebStorm help you. So, do one of the following:
+                 
+                <ul class="list _ul"><li class="list__item"><a name="d695132e405"></a>
+                         
+                            Highlight the expression. Then choose <a name="d695132e409"></a><span class="menupath">Refactor | Extract | Variable</span>
+                              on the main menu or  on the context menu.
+                            <a name="d695132e415"></a><p>Alternatively, press<kbd data-default="Ctrl+Alt+V" data-default_for_gnome="Ctrl+Alt+V" data-default_for_kde="Shift+Alt+V" data-default_for_xwin="Ctrl+Alt+V" data-emacs="Ctrl+Alt+V" data-visual_studio="Ctrl+Alt+V" data-netbeans_6.5="N/A" data-eclipse="Shift+Alt+L" data-mac_os_x_10.5_="&#x2325;&#x2318;V" data-mac_os_x="&#x2325;&#x2318;V" data-eclipse_mac_os_x="&#x2325;&#x2318;L" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+V</kbd>.</p>
+                         
+                         
+                    </li><li class="list__item"><a name="d695132e424"></a>
+                         
+                            Place the cursor before or within the expression.
+                         
+                         Choose
+                            <a name="d695132e431"></a><span class="menupath">Refactor | Extract Variable</span>
+                              on the main menu or  on the context menu.
+                            or press<kbd data-default="Ctrl+Alt+V" data-default_for_gnome="Ctrl+Alt+V" data-default_for_kde="Shift+Alt+V" data-default_for_xwin="Ctrl+Alt+V" data-emacs="Ctrl+Alt+V" data-visual_studio="Ctrl+Alt+V" data-netbeans_6.5="N/A" data-eclipse="Shift+Alt+L" data-mac_os_x_10.5_="&#x2325;&#x2318;V" data-mac_os_x="&#x2325;&#x2318;V" data-eclipse_mac_os_x="&#x2325;&#x2318;L" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+V</kbd>.
+                         
+                         
+                        <a name="d695132e442"></a><p>
+                             
+                                In the
+                                <a name="d695132e446"></a><span class="control">Expressions</span>
+                                pop-up menu, select the expression.
+                                To do that, click the required expression. Alternatively, use the Up and Down arrow keys
+                                to navigate to the expression of interest, and then press <kbd data-default="Enter" data-default_for_gnome="Enter" data-default_for_kde="Enter" data-default_for_xwin="Enter" data-emacs="Enter" data-visual_studio="Enter" data-netbeans_6.5="N/A" data-eclipse="Enter" data-mac_os_x_10.5_="⏎" data-mac_os_x="⏎" data-eclipse_mac_os_x="⏎" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Enter</kbd> to select it.
+                             
+                        </p>
+                         
+                         
+                            <aside class="note ">
+                                <a name="d695132e460"></a><p>The
+                                    <a name="d695132e462"></a><span class="control">Expressions</span>
+                                    pop-up menu contains all the expressions
+                                    appropriate for the current cursor position in the editor.
+                                </p>
+                                <a name="d695132e466"></a><p>When you navigate through the suggested expressions in the pop-up, the code
+                                    highlighting in the editor changes accordingly.
+                                </p>
+                            </aside>
+                         
+                    </li></ul>
+            </li><li class="list__item">In the
+                <a name="d695132e476"></a><a href="extract-variable-dialog.html"><span>Extract Variable Dialog</span></a>
+                dialog:
+                <ol class="list _decimal"><li class="list__item"><a name="d695132e482"></a>Specify the variable name next to<a name="d695132e484"></a><span class="control">Name</span>. You can select one of the
+                            suggested names from the list
+                            or type the name in the
+                            <a name="d695132e487"></a><span class="control">Name</span>
+                            box.
+                        </li><li class="list__item"><a name="d695132e491"></a>If more than one occurrence of the selected expression is found, you can select to replace
+                            all the found occurrences
+                            by selecting the corresponding check box. If you want to replace only the current
+                            occurrence,
+                            clear the
+                            <a name="d695132e493"></a><span class="control">Replace all occurrences</span>
+                            check box.
+                        </li><li class="list__item"><a name="d695132e514"></a>For ActionScript, you can choose to introduce a constant rather than a variable.
+                            To do that, select the
+                            <a name="d695132e516"></a><span class="control">Make constant</span>
+                            check box.
+                             
+                        </li><li class="list__item"><a name="d695132e526"></a>Click<a name="d695132e528"></a><span class="control">OK</span>.
+                             
+                        </li></ol>
+            </li></ol></section>
+         
+            <a name="d695132e540"></a><p>Refer to the following sections for the other language- and framework-specific refactorings:</p>
+            <ul class="list _ul"><li class="list__item"><a name="d695132e545"></a>For the JavaScript procedure, refer to the section <a name="d695132e547"></a><a href="extract-variable-in-javascript.html"><span>Extract Variable in JavaScript</span></a>.</li><li class="list__item"><a name="d695132e550"></a>For the Sass procedure, refer to the section <a name="d695132e552"></a><a href="extract-variable-for-sass.html"><span>Extract Variable for Sass</span></a>.</li></ul>
+         
+    <div class="navigation-links _bottom"><a class="navigation-links__prev" href="inline.html">Inline</a><a class="navigation-links__next" href="extract-variable-for-sass.html">Extract Variable for Sass</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content"><div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d695132e590"></a><a href="refactoring-source-code.html"><span>Refactoring Source Code</span></a></li></ul></div><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d695132e597"></a><a href="extract-variable-dialog.html"><span>Extract Variable Dialog</span></a></li></ul></div></div></section><div class="last-modified">Last modified: 11 July 2016 </div></article><div id="disqus_thread"></div></div></section></main></div><script src="/help/app/app.js"></script></body></html>

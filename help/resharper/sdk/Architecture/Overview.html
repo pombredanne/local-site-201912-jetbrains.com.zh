@@ -1,0 +1,202 @@
+
+
+
+<!doctype html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>Architectural Overview / ReSharper  DevGuide</title>
+    <link rel="stylesheet" href="/help/resharper/sdk/app/app.css">
+    <link rel="shortcut icon" href="/help/resharper/sdk/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="57x57" href="/help/resharper/sdk/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/help/resharper/sdk/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/help/resharper/sdk/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/help/resharper/sdk/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/help/resharper/sdk/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/help/resharper/sdk/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/help/resharper/sdk/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/help/resharper/sdk/apple-touch-icon-180x180.png">
+    <link rel="mask-icon" href="/help/resharper/sdk/apple-mask-icon.svg" color="black">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-square70x70logo" content="/help/resharper/sdk/mstile-70x70.png">
+    <meta name="msapplication-TileImage" content="/help/resharper/sdk/mstile-144x144.png">
+    <meta name="msapplication-square150x150logo" content="/help/resharper/sdk/mstile-150x150.png">
+    <meta name="msapplication-wide310x150logo" content="/help/resharper/sdk/mstile-310x150.png">
+    <meta name="msapplication-square310x310logo" content="/help/resharper/sdk/mstile-310x310.png">
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="Documentation for writing extensions for ReSharper" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.jetbrains.com/help/resharper/sdk//Architecture/Overview.html" />
+    <meta property="og:site_name" content="JetBrains ReSharper" />
+    <meta property="og:title" content="Architectural Overview" />
+    <meta property="og:description" content="Documentation for writing extensions for ReSharper" />
+    <meta property="og:image" content="https://www.jetbrains.com/help/resharper/sdk/jetbrains.png" />
+    <meta property="article:modified_time" content="2017-07-10T19:28:42+00:00" />
+    <!-- <meta property="article:section" content="" /> 
+    <meta property="article:tag" content="" /> -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@JBPlatform" />
+    <meta name="twitter:title" content="Architectural Overview" />
+    <meta name="twitter:description" content="Documentation for writing extensions for ReSharper" />
+    <meta name="twitter:image" content="https://www.jetbrains.com/help/resharper/sdk/jetbrains.png" />
+    <meta class="swiftype" name="product" data-type="string" content="/help/resharper/sdk/"></meta>
+<link  rel="stylesheet" href="/help/resharper/sdk/app/styles.css"></head>
+<body data-id="Architecture/Overview">
+<div class="wrapper">
+    <section class="panel _nav">
+        <header class="panel__header">
+            <div class="container">
+                <form class="search-box">
+                    <label for="search-box__input" class="search-box__label">
+                        <input type="text" class="search-box__input" id="search-box__input" placeholder="Search ReSharper  DevGuide">
+                    </label>
+                    <div class="search-box__clear" title="Clear"></div>
+                </form>
+            </div>
+        </header>
+        <nav class="panel__content">
+            <div class="container _nav">
+                <menu class="nav-tree"></menu>
+            </div>
+            <div class="container _footer panel__footer">
+                <p><a data-bypass="true" href="//youtrack.jetbrains.com/issues/IJSDK">Send feedback</a></p>
+                <p>&copy; 2000&ndash;2018 <a href="//www.jetbrains.com">JetBrains</a> s.r.o.<br>
+                    All rights reserved.</p>
+            </div>
+        </nav>
+    </section>
+
+    <main class="panel _main" role="main">
+        <header class="panel__header">
+            <div class="container">
+                <h3>ReSharper DevGuide</h3>
+                
+                <div class="panel-trigger"></div>
+            </div>
+        </header>
+        <section class="panel__content">
+            <div class="container">
+                <article class="article" data-shortcut-switcher="false">
+                    <div class="navigation-links _top" data-swiftype-index="false">
+                        <a class="navigation-links__prev" href="/Extensions/Troubleshooting.html">Troubleshooting a Plugin Install</a>
+                        <a class="navigation-links__next" href="/Architecture/PSI.html">PSI</a>
+                    </div>
+                    <a data-bypass="true" href="https://github.com/JetBrains/resharper-devguide/edit/master/Architecture/Overview.md" class="page-link-to-github" target="_blank" rel="noopener noreferrer" title="Edit this page on GitHub">
+                        <i class="github-icon"></i>
+                        <span class="text">Edit page</span>
+                    </a>
+
+                    <h1>Architectural Overview</h1>
+                    <p>In any given ReSharper plugin, you are likely to be interacting with many different subsystems of the ReSharper product. In this part of the guide, we are going to take a look at a bird’s eye view of ReSharper.</p>
+
+<p>At the top level, we can isolate the following aspects of ReSharper:</p>
+
+<ul id="markdown-toc">
+  <li><a href="#platform" id="markdown-toc-platform"><span>Platform</span></a></li>
+  <li><a href="#psi" id="markdown-toc-psi"><span>PSI</span></a>    <ul>
+      <li><a href="#psi-services" id="markdown-toc-psi-services"><span>PSI Services</span></a></li>
+    </ul>
+  </li>
+  <li><a href="#features" id="markdown-toc-features"><span>Features</span></a></li>
+  <li><a href="#feature-services" id="markdown-toc-feature-services"><span>Feature Services</span></a>    <ul>
+      <li><a href="#daemon" id="markdown-toc-daemon"><span>Daemon</span></a></li>
+      <li><a href="#intentions" id="markdown-toc-intentions"><span>Intentions</span></a></li>
+      <li><a href="#live-templates" id="markdown-toc-live-templates"><span>Live Templates</span></a></li>
+      <li><a href="#refactorings" id="markdown-toc-refactorings"><span>Refactorings</span></a></li>
+    </ul>
+  </li>
+</ul>
+
+<a name="platform" class="elem-anchor"></a>
+<h2>Platform<a href="#platform" class="anchor-link"><span></span></a></h2>
+
+<p>The Platform part of ReSharper typically relates to features which interact directly with Visual Studio. As a result, plugin developers are unlikely to work with Platform components directly. However, it’s important to have a general idea of some of the platform components in order to be able to understand and investigate, if necessary, the ways in which interactions happen. Here are a few Platform elements that are worth knowing about:</p>
+
+<ul>
+  <li><em>ActionManagement</em> - this assembly concerns itself with managing actions, i.e., executable pieces of code that appear in Visual Studio’s Command system. See <a href="/help/resharper/sdk/Features/Actions.html"><span>Actions and Menu Items</span></a> for more information on creating actions.</li>
+  <li><em>Annotations</em> - relates to the Annotations subsystem. The idea of annotations is being able to use attributes to give ReSharper hints as to how the code behaves. Frequently encountered attributes such as <code class="code highlight language-text">[NotNull]</code> are examples of annotations.</li>
+  <li><em>ComponentModel</em> - relates to ReSharper’s component model. Understanding of the component model is critical to be able to use various ReSharper’s subsystems. See <a href="/help/resharper/sdk/Platform/ComponentModel.html"><span>Component Model</span></a> for more details.</li>
+  <li><em>DocumentManager</em> and <em>DocumentModel</em> - contains mechanisms for managing documents. Encapsulates important concepts (e.g., <code class="code highlight language-text">RangeMarker</code>) used for correctly modifying documents.</li>
+  <li><em>ProjectModel</em> - used for interacting with Visual Studio’s project model.</li>
+  <li><em>TextControl</em> - used for interacting with Visual Studio’s text editor control.</li>
+  <li><em>Util</em> - contains a large number of important ReSharper utility entities, including specialized collections, DataFlow classes (Lifetime) and many others.</li>
+</ul>
+
+<p>Please note that Platform elements typically live in namespaces unrelated to ReSharper itself. The reason for this is that the Platform components are used not only in ReSharper, but also in other products such as dotTrace, dotCover and dotPeek.</p>
+
+<a name="psi" class="elem-anchor"></a>
+<h2>PSI<a href="#psi" class="anchor-link"><span></span></a></h2>
+
+<p>The PSI or the Program Structure Interface, is the part of ReSharper responsible for lexing and parsing the languages that ReSharper supports. It is also responsible for resolving types and such practicalities as, e.g., overload resolution, type inference, etc.</p>
+
+<p>The PSI exists in several assemblies: the general Psi assembly, language-specific assemblies (e.g., Psi.CSharp), platform-specific assemblies (e.g., Psi.Web) as well as specialized multi-language assemblies such as Psi.Html.JavaScript. The latter assemblies are used specifically for situations where files containing several languages are parsed. Such files (e.g., <code class="code highlight language-text">.cshtml</code> files of Razor view) are typically found in web development projects.</p>
+
+<p>Central to the PSI is the notion of a Language Service, a component which actually adds ReSharper support for a particular language. The ReSharper PSI assemblies actually contain language services for all languages that ReSharper supports as well as the infrastructure which allows plugin developers to develop new languages.</p>
+
+<a name="psi-services" class="elem-anchor"></a>
+<h3>PSI Services<a href="#psi-services" class="anchor-link"><span></span></a></h3>
+
+<p>Psi Services contain various services built on top of the information provided by PSI itself. An example of such a service would be support for Structural Search. You are unlikely to ever have to use these assemblies directly.</p>
+
+<a name="features" class="elem-anchor"></a>
+<h2>Features<a href="#features" class="anchor-link"><span></span></a></h2>
+
+<p>In ReSharper’s terminology, a ‘feature’ is an aspect of functionality that is provided by ReSharper at the outer, user-visible level. This includes things like code completion, navigation, code cleanup, and many more.</p>
+
+<p>Please note that in developing your own features, you are more likely to be interacting with feature services than with actual features, although feature assemblies are good for learning how to implement certain things.</p>
+
+<a name="feature-services" class="elem-anchor"></a>
+<h2>Feature Services<a href="#feature-services" class="anchor-link"><span></span></a></h2>
+
+<p>As the name suggests, ReSharper’s Feature Services contain a large number of services that support ReSharper’s features. For example, the component that provides the Code Inspection Wiki data at start-up time is a feature service. Another example would be the various data provider and builder classes that are used in bulb items that ReSharper presents. Support for the <a href="/help/resharper/sdk/Features/GenerateMenu.html"><span>Generate Menu</span></a> and many other features is also contained here.</p>
+
+<p>Please note that feature services do not contain features themselves. Quite often they contain components which are used by more than one feature.</p>
+
+<a name="daemon" class="elem-anchor"></a>
+<h3>Daemon<a href="#daemon" class="anchor-link"><span></span></a></h3>
+
+<p>The Daemon assemblies are the background-running tasks that analyze source and binary code, react to changes in the solution or the environment, and allow the possibility of highlighting code based on said analyses.</p>
+
+<p>If you require any sort of background analysis on existing code, it’s likely you need a daemon. To learn how to write one, see <a href="/help/resharper/sdk/Features/Analysis/Daemons.html"><span>Daemons and Daemon Stages</span></a>.</p>
+
+<a name="intentions" class="elem-anchor"></a>
+<h3>Intentions<a href="#intentions" class="anchor-link"><span></span></a></h3>
+
+<p>Intentions are concerned primarily with <a href="/help/resharper/sdk/Features/Actions.html"><span>Quick-Fixes and Context Actions</span></a> - those bulb-bearing popup menus that show up in code either in relation to daemon highlightings or depending on the current context (i.e., the location of the caret).</p>
+
+<p>All the important base classes for quick-fixes and context actions live here. In addition, these assemblies actually contain the quick-fixes and context actions that are shipped with ReSharper.</p>
+
+<a name="live-templates" class="elem-anchor"></a>
+<h3>Live Templates<a href="#live-templates" class="anchor-link"><span></span></a></h3>
+
+<p>This is where support for Live Templates, ReSharper’s snippet-based code generation mechanism, is contained. It is probably of little interest to plugin developers save for those wishing to write <a href="/help/resharper/sdk/Features/LiveTemplates.html"><span>Live Template Macros</span></a>.</p>
+
+<a name="refactorings" class="elem-anchor"></a>
+<h3>Refactorings<a href="#refactorings" class="anchor-link"><span></span></a></h3>
+
+<p>ReSharper’s support for <a href="/help/resharper/sdk/Features/Refactoring.html"><span>Refactoring</span></a> is contained here. These assemblies contain the necessary base classes in order to create and execute your own refactoring workflows.</p>
+
+
+
+                    <div class="navigation-links _bottom" data-swiftype-index="false">
+                        <a class="navigation-links__prev" href="/Extensions/Troubleshooting.html">Troubleshooting a Plugin Install</a>
+                        <a class="navigation-links__next" href="/Architecture/PSI.html">PSI</a>
+                    </div>
+                    <div class="last-modified">
+                        Last modified: 10 July 2017
+                    </div>
+                </article>
+
+                <section class="disqus">
+                    <div id="disqus_thread"></div>
+                </section>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="/help/resharper/sdk/app/app.js" data-baseurl="/help/resharper/sdk/"></script>
+
+</body>
+</html>
+

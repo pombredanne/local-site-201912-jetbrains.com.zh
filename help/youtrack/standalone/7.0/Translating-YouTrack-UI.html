@@ -1,0 +1,213 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="robots" content="noindex"><title>YouTrack Standalone 7.0 Help :: Localization Tutorial</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Translating-YouTrack-UI"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack Standalone Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>YouTrack Standalone 7.0 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="Language-Support.html">Language Support</a><a class="navigation-links__next" href="Custom-YouTrack-Localization-Repository.html">Custom Localization Repository</a></div><h1>Localization Tutorial</h1><aside class="tip sideblock">
+        <a name="d175033e5"></a><p>Custom Localization Repository</p>
+        <a name="d175033e8"></a><p>Before you continue, take a look at our <a name="d175033e10"></a><a href="https://github.com/JetBrains/youtrack-l10n" data-external="true"><span>YouTrack Custom Localization Repository</span></a>.
+            Somebody may have already localized YouTrack into your language.
+            We created this repository to collect custom translations of the YouTrack interface that have been created by our users and share them with the community.<br>
+            For more information, see <a name="d175033e15"></a><a href="Custom-YouTrack-Localization-Repository.html"><span>Custom Localization Repository</span></a>.</p>
+    </aside><a name="d175033e19"></a><p>YouTrack provides localization support for English, German, French, Russian, and Spanish.
+        While this is a good start, there are a lot of other languages out there.</p><a name="d175033e22"></a><p>To give you the chance to work with YouTrack in your language of choice, we have implemented support for custom translations of the YouTrack user interface. <br>
+        This tutorial shows you how to localize your tracker.</p><a name="d175033e27"></a><h2>Overview</h2>
+        <a name="Localization_Procedure_Overview"></a>
+
+        <a name="d175033e31"></a><p>The YouTrack user interface has static and dynamic text strings. By dynamic strings, we mean issue field names, values, tags, and saved search names.
+            You can use any language you want when you create fields and enter values - YouTrack does not apply any restrictions to the input for dynamic strings.
+            Of course, dynamic strings only make up a small part of the interface. You'll want to localize the static strings as well.</p>
+        <a name="d175033e34"></a><p>The process for localizing YouTrack in your language consists of the following steps:</p>
+        <ol class="list _decimal"><li class="list__item"><a name="d175033e39"></a><a href="#Download_Source_Files">Download the Translation Source Files</a> &mdash; download the source files from our localization repository.</li><li class="list__item"><a name="d175033e43"></a><a href="#Translate_PO_Files">Translate Gettext Files</a>
+            &mdash; translate the components of the user interface that are written as gettext and saved in portable object (.po) files.</li><li class="list__item"><a name="d175033e47"></a><a href="#Translate_Property_files">Translate Property Files</a> &mdash;
+                translate the components of the user interface that are stored in property files.</li><li class="list__item"><a name="d175033e51"></a><a href="#Set_First_Day">Set the First Day of the Week</a> &mdash; if the first day of the week in your locale is a Monday, change the setting for the first day of the week.</li><li class="list__item"><a name="d175033e55"></a><a href="#Translate_Notifications">Translate Notification Templates</a> &mdash; translate the text used in notifications.</li><li class="list__item"><a name="d175033e60"></a><a href="#Copy_Files_to_YouTrack">Copy Translated Files to Your YouTrack Server</a> &mdash; copy the translated files to a new directory on your YouTrack server.</li><li class="list__item"><a name="d175033e64"></a><a href="#Add_Custom_Locale">Add the Custom Locale to YouTrack</a> &mdash; add your custom localization to the list of supported languages for your YouTrack server.</li><li class="list__item"><a name="d175033e68"></a><a href="#Enable_RTL">Enable Right-to-Left Language Support</a> &mdash; if your custom localization reads from right to left, enable RTL language support.</li><li class="list__item"><a name="d175033e72"></a><a href="#Start_YouTrack">Start YouTrack with Custom Localization</a> &mdash; set the start parameters for your YouTrack instance to point to the directory with your translated content.</li></ol>
+
+    <a name="Download_Source_Files"></a><h2>Download the Translation Source Files</h2>
+        <a name="d175033e80"></a><p>Download the English-language source files from our <a name="d175033e82"></a><a href="https://github.com/JetBrains/youtrack-l10n/releases/download/v7.0.0/messages.zip" data-external="true"><span>localization repository in GitHub</span></a>.
+        The <code class="code" data-lang="Java">messages.zip</code> archive contains all of the files that you need to localize YouTrack in your language.</p>
+         
+        <a name="d175033e91"></a><p>Extract the files from the archive to a folder in your local directory.</p>
+    <a name="Translate_PO_Files"></a><h2>Translate Gettext Files</h2>
+        <a name="d175033e98"></a><p>The first set of files you want to localize are written as gettext and saved in a portable object (.po) format for translation files.
+        The <code class="code" data-lang="Java">messages.zip</code> archive contains the following portable object files:</p>
+        <table class="" width="100%" id="d175033e104"><thead><tr id="d175033e106" class="ijRowHead"><a name="d175033e106"></a><th width="20%"><a name="d175033e108"></a>File</th><th><a name="d175033e111"></a>Description</th></tr></thead><tbody><tr id="d175033e115" class="ijRowOdd"><a name="d175033e115"></a><td><a name="d175033e117"></a><code class="code" data-lang="Java">hub-auth.po</code></td><td><a name="d175033e121"></a>Contains text strings that are displayed for various authorization messages.</td></tr><tr id="d175033e125" class="ijRowEven"><a name="d175033e125"></a><td><a name="d175033e127"></a><code class="code" data-lang="Java">hub-core.po</code></td><td><a name="d175033e131"></a>Contains text strings that are shown on the administration pages in YouTrack.</td></tr><tr id="d175033e135" class="ijRowOdd"><a name="d175033e135"></a><td><a name="d175033e137"></a><code class="code" data-lang="Java">youtrack-reports.po</code></td><td><a name="d175033e141"></a>Contains text strings that are shown in the <a name="d175033e143"></a><span class="control">Reports</span> section of YouTrack.</td></tr></tbody></table>
+        <a name="d175033e149"></a><a name="dynaProc0"></a><section class="procedure-steps"><h2>To translate portable object files:</h2><ol class=".list _decimal"><li class="list__item">Upload and translate these files in any software that lets you read and edit gettext translation files.
+            <aside class="note sideblock"><a name="d175033e154"></a><p>Important!</p>
+            <a name="d175033e157"></a><p>Always specify the target language in the translation file.
+                Otherwise, YouTrack does not recognize that the files have been translated and displays the original strings in English.</p></aside></li><li class="list__item">When finished, convert the translated content of each portable object file to JSON.
+            Any file you upload here is converted to JSON and downloaded to your local directory.<br>
+                <iframe src="https://jetbrains.github.io/web-po2json/" width="400" height="80" scrolling="false"></iframe>
+            </li></ol></section>
+
+
+    <a name="Translate_Property_files"></a><h2>Translate Property Files</h2>
+        <a name="Translating_Property_Files"></a>
+
+        <a name="d175033e173"></a><p>There are three properties files in the <code class="code" data-lang="Java">messages.zip</code> archive.
+            These files contain text strings that are shown on various parts of the YouTrack user interface:</p>
+        <table class="" width="100%" id="d175033e179"><thead><tr id="d175033e181" class="ijRowHead"><a name="d175033e181"></a><th width="20%"><a name="d175033e183"></a>File</th><th><a name="d175033e186"></a>Description</th></tr></thead><tbody><tr id="d175033e190" class="ijRowOdd"><a name="d175033e190"></a><td><a name="d175033e192"></a><code class="code" data-lang="XML">PredefinedFields_en.properties</code></td><td><a name="d175033e196"></a>This file contains text strings that are used for for pre-defined issue fields and commands. For example, "Star" and "Vote".
+                    These strings require that you pay attention to flags and provide multiple variations depending on the usage of the label.</td></tr><tr id="d175033e200" class="ijRowEven"><a name="d175033e200"></a><td><a name="d175033e202"></a><code class="code" data-lang="XML">dynamic_en.properties</code></td><td><a name="d175033e206"></a>This file contains the the text strings that are not reloaded when pressing the reload button or restarting the YouTrack instance.
+                    They should be changed only when explicitly switching to another language. In such case, after YouTrack restart, they will be used when changing language.</td></tr><tr id="d175033e210" class="ijRowOdd"><a name="d175033e210"></a><td><a name="d175033e212"></a><code class="code" data-lang="XML">all_en.properties</code></td><td><a name="d175033e216"></a>This file contains all other messages. Reload messages works.</td></tr></tbody></table>
+        <a name="d175033e221"></a><p>All translated property files must use UTF-8 character encoding.</p>
+        <a name="d175033e224"></a><p></p>
+        <a name="d175033e228"></a><h3>Property File Format</h3>
+            <a name="Format_of_Property_Files"></a>
+
+            <a name="d175033e232"></a><p>As is the case with most property files, a property is defined by a property ID and the actual value (string) that is used for this identifier.
+                Lines that begin with a number sign (<code class="code" data-lang="Java">#</code>) are comments. Commented lines are ignored during processing.</p>
+            <a name="d175033e238"></a><p>Each property is described in the following format: <code class="code" data-lang="XML">key=value</code></p>
+
+            <ul class="list _ul"><li class="list__item"><a name="d175033e245"></a>The <code class="code" data-lang="XML">key</code> is the unique identifier of a property.</li><li class="list__item"><a name="d175033e251"></a>The <code class="code" data-lang="XML">value</code> is the string of text that should be localized.</li></ul>
+            <a name="d175033e258"></a><p>A string can contain substrings like <code class="code" data-lang="Java">{0}</code> or <code class="code" data-lang="Java">{1}</code>. These substrings represent macros that are replaced with a value when running the application.
+                For example:<br>
+                <a name="d175033e268"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="n">Agile</span><span class="o">.</span><span class="na">Clone_bundle_</span><span class="o">{</span><span class="mi">0</span><span class="o">}</span><span class="n">_for_project_</span><span class="o">{</span><span class="mi">1</span><span class="o">}=</span><span class="n">Clone</span> <span class="n">bundle</span> <span class="o">{</span><span class="mi">0</span><span class="o">}</span> <span class="k">for</span> <span class="n">project</span> <span class="o">{</span><span class="mi">1</span><span class="o">}</span></code></div></p>
+
+            <a name="d175033e272"></a><p>In this example, the <code class="code" data-lang="Java">{0}</code> macro is replaced with the name of a bundle, and the <code class="code" data-lang="Java">{1}</code> macro is replaced with the name of a project.</p>
+            <a name="d175033e281"></a><p>When you localize a string that contains references to macros, the localized string should contain the same references that are found in the original string.</p>
+         
+        <a name="d175033e285"></a><h3>Translating Plural Forms</h3>
+            <a name="Translating_Plural_Forms"></a>
+
+            <a name="d175033e289"></a><p>One of the biggest difficulties in localization is translating and adapting plural forms of each word.
+                In English, there are two forms &mdash; singular and plural. Other languages have more plural forms depending on count, and some languages even have no plural forms.</p>
+                <a name="d175033e292"></a><p>For example, we have two strings for different forms in English:
+                <ul class="list _ul"><li class="list__item"><a name="d175033e296"></a><code class="code" data-lang="xml">DidYouMean._It_matches_{0}_issues=It matches {0} issues.</code></li><li class="list__item"><a name="d175033e300"></a><code class="code" data-lang="Java">DidYouMean._It_matches_{0}_issues[one]=It matches one issue.</code></li></ul></p>
+
+            <a name="d175033e305"></a><p>In YouTrack localization, the localization rules for plural forms are based on the Google Web Toolkit (GWT)
+                <a name="d175033e307"></a><a href="https://developers.google.com/web-toolkit/doc/latest/DevGuideI18nPluralForms" data-external="true"><span>implementation for internationalization of plural forms</span></a>.
+                This toolkit provides a set of identifiers that distinguish various plural forms. Each language has an <code class="code" data-lang="xml">other</code> identifier for pural word forms.</p>
+            <a name="d175033e314"></a><p>For the languages that we support in YouTrack, we use the following identifiers:</p>
+            <table class=" wide" width="100%" id="d175033e318"><thead><tr id="d175033e320" class="ijRowHead"><a name="d175033e320"></a><th><a name="d175033e322"></a>Language</th><th><a name="d175033e325"></a>Identifier</th><th><a name="d175033e328"></a>Usage</th></tr></thead><tbody><tr id="d175033e332" class="ijRowOdd"><a name="d175033e332"></a><td rowspan="2"><a name="d175033e334"></a>English, German</td><td><a name="d175033e337"></a><code class="code" data-lang="xml">one</code></td><td><a name="d175033e341"></a>Singular forms (1)</td></tr><tr id="d175033e345" class="ijRowEven"><a name="d175033e345"></a><td><a name="d175033e347"></a><code class="code" data-lang="xml">other</code></td><td><a name="d175033e351"></a>All other cases</td></tr><tr id="d175033e355" class="ijRowOdd"><a name="d175033e355"></a><td rowspan="2"><a name="d175033e357"></a>French</td><td><a name="d175033e360"></a><code class="code" data-lang="xml">one</code></td><td><a name="d175033e364"></a>Singular forms (0 and 1)</td></tr><tr id="d175033e368" class="ijRowEven"><a name="d175033e368"></a><td><a name="d175033e370"></a><code class="code" data-lang="xml">other</code></td><td><a name="d175033e374"></a>All other cases</td></tr><tr id="d175033e379" class="ijRowOdd"><a name="d175033e379"></a><td rowspan="3"><a name="d175033e381"></a>Russian</td><td><a name="d175033e384"></a><code class="code" data-lang="xml">one</code></td><td><a name="d175033e388"></a>Numbers that end with with 1 except 11 and other numbers that end in 11.</td></tr><tr id="d175033e392" class="ijRowEven"><a name="d175033e392"></a><td><a name="d175033e394"></a><code class="code" data-lang="xml">few</code></td><td><a name="d175033e398"></a>Numbers that end with 2, 3, and 4 excpet 12-14 and numbers that end with 12, 13, and 14.</td></tr><tr id="d175033e402" class="ijRowOdd"><a name="d175033e402"></a><td><a name="d175033e404"></a><code class="code" data-lang="xml">other</code></td><td><a name="d175033e408"></a>All other cases</td></tr></tbody></table>
+            <a name="d175033e413"></a><p>For any language, you can have a translation with 'main' ID (without additional singular or plural specific identifier provided in brackets),
+                and add another translated string after the main one with the additional identifier, if there is a case where translation depends on a number not placed in the string. For example:</p>
+            <a name="d175033e416"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">Template.Issues={0}
+Template.Issues[other]=Issues
+Template.Issues[one]=Issue</code></div>
+            <a name="d175033e419"></a><p></p>
+         
+        <a name="d175033e423"></a><h3>Translating Predefined Field Properties</h3>
+            <a name="Translating_Predefined_Fields_Properties"></a>
+
+            <a name="d175033e427"></a><p>The <code class="code" data-lang="xml">PredefinedFields_en.properties</code> file contains text strings that are used for pre-defined issue fields and commands.
+                For example, the labels for "Star", "Vote", and "Watcher". These strings can have multiple variations based on their usage.
+                That is, text presentation of these attributes on the user interface depends on the current context the attribute is mentioned in.
+                For each case, the attribute is presented in specific form, which is denoted by a flag.<br>
+                For example, one issue attribute "tag" is shown as 'tag' in most cases (issue attributes, commands, and search request keyword),
+                but also can be displayed as "tagged as:" when used as a keyword in a search request.</p>
+            <a name="d175033e435"></a><p>Each attribute can have several forms.
+                For each attribute, forms are presented in the <code class="code" data-lang="xml">&lt;attribute text string&gt;:form flag(s)</code> format, separated with a vertical bar (<code class="code" data-lang="Java">|</code>).</p>
+            <a name="d175033e444"></a><p>The form flag is represented by a single latin letter. This letter must not be translated! Each <code class="code" data-lang="xml">&lt;attribute text string&gt;</code> should be translated.
+                If needed, you can remove or add forms, separated by the vertical bar.
+                If a flag follows at least one form in the original English string, then at least one form with this flag must be present in the localized version, and vice versa.
+                The localization cannot contain additional flags that are not used in the source language.</p>
+            <a name="d175033e450"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">predefined_field.tag=tag\:pcfv|tagged as\:f
+predefined_field.star=star\:sphc|watcher\:c
+predefined_field.updated=updated\:spf
+predefined_field.updated_by=updated by\:f|updated\:f|updater\:spf
+predefined_field.commented_at=commented\:pf
+predefined_field.commented_by=commenter\:fp|commented by\:f|commented\:f
+predefined_field.created=created\:spf
+predefined_field.resolved=resolved date\:spf
+predefined_field.project=project\:spfc|in\:f|move to\:c
+predefined_field.by=by\:f|reported by\:f|reporter\:spfv|created by\:f|from\:f|created\:f
+predefined_field.issue=issue id\:spf
+predefined_field.links=links\:spfh
+predefined_field.saved_query=saved search\:pf
+predefined_field.context_folder=__$context$__\:f|context\:p
+predefined_field.voted_by=voted by\:f|voter\:fp
+predefined_field.votes=votes\:shp
+predefined_field.sort_by=sort by\:pf|order by\:f
+predefined_field.has=has\:pf
+predefined_field.summary=summary\:spf
+predefined_field.description=description\:phf
+predefined_field.comments=comments\:pvfh
+predefined_field.work=work\:pc
+predefined_field.code=code\:pf
+predefined_field.custom=custom\:p
+predefined_field.visible_to=visible to\:pcfh
+predefined_field.attachments=attachments\:phf</code></div>
+            <a name="d175033e454"></a><p>The meaning of each flag is described in the following table:</p>
+            <table class=" wide" width="100%" id="d175033e457"><thead><tr id="d175033e459" class="ijRowHead"><a name="d175033e459"></a><th><a name="d175033e461"></a>Flag</th><th><a name="d175033e464"></a>Meaning</th><th><a name="d175033e467"></a>Description</th></tr></thead><tbody><tr id="d175033e471" class="ijRowOdd"><a name="d175033e471"></a><td><a name="d175033e473"></a><code class="code" data-lang="XML">p</code></td><td><a name="d175033e477"></a>Presentation</td><td><a name="d175033e480"></a>This is the primary name of the field.</td></tr><tr id="d175033e484" class="ijRowEven"><a name="d175033e484"></a><td><a name="d175033e486"></a><code class="code" data-lang="XML">s</code></td><td><a name="d175033e490"></a>Sort</td><td><a name="d175033e493"></a>This is the form of the word that is used when the user wants to sort search results by this field. This form is appended after <code class="code" data-lang="XML">sort by:</code>
+                        ("sort by: votes", "sort by: resolved date"). "Sort by" itself is a field of the same type, with the "predefined_field.sort_by" ID.</td></tr><tr id="d175033e500" class="ijRowOdd"><a name="d175033e500"></a><td><a name="d175033e502"></a><code class="code" data-lang="XML">f</code></td><td><a name="d175033e506"></a>Filter</td><td><a name="d175033e509"></a>This is the form of the word that is used when the field is used as a search criteria.
+                        For example: <code class="code" data-lang="XML">tag: some_tag</code> or <code class="code" data-lang="XML">tagged as: another_tag</code>,
+                        <code class="code" data-lang="XML">summary: some text to search in summary</code>, <code class="code" data-lang="XML">resolved date: 2013-04</code>.</td></tr><tr id="d175033e525" class="ijRowEven"><a name="d175033e525"></a><td><a name="d175033e527"></a><code class="code" data-lang="XML">h</code></td><td><a name="d175033e531"></a>Has</td><td><a name="d175033e534"></a>This is the form of the word that is used when searching for issues that have some attribute.
+                        For example, "has: star", "has: comments". "Has" itself is also a predefined field with id "predefined_field.has".</td></tr><tr id="d175033e539" class="ijRowOdd"><a name="d175033e539"></a><td><a name="d175033e541"></a><code class="code" data-lang="XML">c</code></td><td><a name="d175033e545"></a>Command</td><td><a name="d175033e548"></a>This is the form of the word that is used when setting the field using command line. Commands look like: "tag: some_tag", "project: JT"</td></tr><tr id="d175033e552" class="ijRowEven"><a name="d175033e552"></a><td><a name="d175033e554"></a><code class="code" data-lang="XML">v</code></td><td><a name="d175033e558"></a>Visibility</td><td><a name="d175033e561"></a>This is the form of the word that is displayed near the checkbox that controls whether this field is shown on issue list.</td></tr></tbody></table>
+
+         
+        <a name="d175033e567"></a><p>When you save your translated properties, change the language part of the filename to match the <a name="d175033e569"></a><a href="https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes" data-external="true"><span>ISO 639-1</span></a> language code for your localization.
+        For example, if you localize YouTrack into Korean, the properties files are named as follows:</p>
+        <ul class="list _ul"><li class="list__item"><a name="d175033e575"></a><code class="code" data-lang="Java">all_ko</code></li><li class="list__item"><a name="d175033e579"></a><code class="code" data-lang="Java">dynamic_ko</code></li><li class="list__item"><a name="d175033e583"></a><code class="code" data-lang="Java">PredefinedFields_ko</code></li></ul>
+
+    <a name="Set_First_Day"></a><h2>Set the First Day of the Week</h2>
+        <a name="Setting_the_First_Day_of_Week"></a>
+
+        <a name="d175033e593"></a><p>Monday is the first day of the week according to the international standard ISO 8601, but in the US, Canada, and Japan it's counted as the second day of the week.</p>
+        <a name="d175033e596"></a><p>This setting is controlled by the <code class="code" data-lang="xml">JQueryCalendarLocalization.js.first_day</code> property.
+            The default value for this setting is <code class="code" data-lang="xml">0</code>, meaning that weeks start with Sunday.
+            The source language in the <code class="code" data-lang="Java">messages.zip</code> archive is English (US). This property is not set in the source property file.</p>
+        <a name="d175033e608"></a><p>To set Monday as the first day of the week for your locale, add this property to the <code class="code" data-lang="xml">all_&lt;country code&gt;.properties</code> and set the value to <code class="code" data-lang="xml">1</code>.
+        For example:</p>
+        <a name="d175033e617"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="n">JQueryCalendarLocalization</span><span class="o">.</span><span class="na">js</span><span class="o">.</span><span class="na">first_day</span><span class="o">=</span><span class="mi">1</span></code></div>
+
+    <a name="d175033e621"></a><p></p><a name="Translate_Notifications"></a><h2>Translate Notification Templates</h2>
+        <a name="Translating_Notification_Templates"></a>
+
+        <a name="d175033e628"></a><p>Notification templates use FreeMarker template (FTL) files as the basic blocks that form templates.
+            You can view the list of available FTL files on the <a name="d175033e630"></a><span class="menupath">Administration &gt; Notification Templates</span> page.</p>
+        <a name="d175033e634"></a><p>
+            <a name="d175033e636"></a><p>As you probably know, you can not only view the list of notification templates but also edit them right there, in the interface.
+                You can rightfully ask if you can translate the notification templates in place, why do you need to translate these templates in external files and add them to your localization package?
+                The answer is easy. If you revert your changes and restore the default version, you get the default English text.</p>
+        </p>
+        <a name="d175033e640"></a><p>To localize these files, translate the content just as you would translate a regular HTML file &mdash; translate all of the meaningful texts except the tags.
+            Also, you should translate the attributes of the tags that are used in the user interface, for example, the content of the <code class="code" data-lang="xml">title</code> attribute.</p>
+        <a name="d175033e646"></a><p></p>
+    <a name="Copy_Files_to_YouTrack"></a><h2>Copy Translated Files to Your YouTrack Server</h2>
+        <a name="d175033e652"></a><p>When you have finished translating all of the source files, copy the files to your YouTrack server.</p>
+        <a name="d175033e655"></a><a name="dynaProc1"></a><section class="procedure-steps"><h2>To copy your files to the server:</h2><ol class=".list _decimal"><li class="list__item">Locate the folder that stores localization files on your server.
+                Search for the following directory:<br>
+                <a name="d175033e661"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="n">YouTrack</span><span class="err">\</span><span class="n">webapps</span><span class="err">\</span><span class="n">ROOT</span><span class="err">\</span><span class="n">WEB</span><span class="o">-</span><span class="n">INF</span><span class="err">\</span><span class="n">classes</span><span class="err">\</span><span class="n">translations</span></code></div>
+            </li><li class="list__item">Add a folder to the <code class="code" data-lang="Java">translations</code> directory to store your custom localization files.
+            Name the folder with the <a name="d175033e670"></a><a href="https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes" data-external="true"><span>ISO 639-1</span></a> language code and
+            <a name="d175033e673"></a><a href="https://en.wikipedia.org/wiki/ISO_3166-1" data-external="true"><span>ISO 3166-1</span></a> country code for your locale.<br>
+            For example, if you localize YouTrack for South Korea, the directory is named as follows:<br>
+            <a name="d175033e681"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="n">ko_KR</span></code></div></li><li class="list__item">Copy all of your translation files to the new directory.
+            The directory should include all of the following files:
+            <table class="" width="100%" id="d175033e686"><thead><tr id="d175033e688" class="ijRowHead"><a name="d175033e688"></a><th width="15%"><a name="d175033e690"></a>Type</th><th><a name="d175033e693"></a>Filename</th></tr></thead><tbody><tr id="d175033e697" class="ijRowOdd"><a name="d175033e697"></a><td rowspan="3"><a name="d175033e699"></a>PO Translation</td><td><a name="d175033e702"></a><code class="code" data-lang="Java">hub-auth</code></td></tr><tr id="d175033e707" class="ijRowEven"><a name="d175033e707"></a><td><a name="d175033e709"></a><code class="code" data-lang="Java">hub-core</code></td></tr><tr id="d175033e714" class="ijRowOdd"><a name="d175033e714"></a><td><a name="d175033e716"></a><code class="code" data-lang="Java">youtrack-reports</code></td></tr><tr id="d175033e721" class="ijRowEven"><a name="d175033e721"></a><td rowspan="3"><a name="d175033e723"></a>JSON</td><td><a name="d175033e726"></a><code class="code" data-lang="Java">hub-auth.json</code></td></tr><tr id="d175033e732" class="ijRowOdd"><a name="d175033e732"></a><td><a name="d175033e734"></a><code class="code" data-lang="Java">hub-core.json</code></td></tr><tr id="d175033e739" class="ijRowEven"><a name="d175033e739"></a><td><a name="d175033e741"></a><code class="code" data-lang="Java">youtrack-reports.json</code></td></tr><tr id="d175033e746" class="ijRowOdd"><a name="d175033e746"></a><td rowspan="3"><a name="d175033e748"></a>Properties</td><td><a name="d175033e751"></a><code class="code" data-lang="Java">all_&lt;language code&gt;</code></td></tr><tr id="d175033e756" class="ijRowEven"><a name="d175033e756"></a><td><a name="d175033e758"></a><code class="code" data-lang="Java">dynamic_&lt;language code&gt;</code></td></tr><tr id="d175033e763" class="ijRowOdd"><a name="d175033e763"></a><td><a name="d175033e765"></a><code class="code" data-lang="Java">PredefinedFields_&lt;language code&gt;</code></td></tr></tbody></table></li><li class="list__item">Copy the <code class="code" data-lang="Java">notification_templates</code> directory that contains your localized notification templates to the directory for your localization.</li></ol></section>
+    <a name="Add_Custom_Locale"></a><h2>Add the Custom Locale to YouTrack</h2>
+        <a name="d175033e782"></a><p>When you have copied all of the files to your YouTrack server, add your custom locale to the list of supported locales in YouTrack.
+         Add your locale to the <code class="code" data-lang="xml">supportedLocales.xml</code> file that is stored in the <code class="code" data-lang="Java">translations</code> directory the following format:</p>
+        <a name="d175033e791"></a><div class="code-block" data-lang="XML"><code class="code-block__wrapper"><span class="nt">&lt;localeEntry&gt;</span>
+    <span class="nt">&lt;name&gt;&lt;Your</span> <span class="err">language</span> <span class="err">name</span><span class="nt">&gt;&lt;/name&gt;</span>
+    <span class="nt">&lt;locale&gt;&lt;language</span> <span class="err">code_country</span> <span class="err">code</span><span class="nt">&gt;&lt;/locale&gt;</span>
+<span class="nt">&lt;/localeEntry&gt;</span></code></div>
+        <a name="d175033e794"></a><p>For example:</p>
+        <a name="d175033e797"></a><div class="code-block" data-lang="XML"><code class="code-block__wrapper"><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="nt">&lt;locales&gt;</span>
+    <span class="nt">&lt;localeEntry&gt;</span>
+        <span class="nt">&lt;name&gt;</span>Русский<span class="nt">&lt;/name&gt;</span>
+        <span class="nt">&lt;locale&gt;</span>ru_RU<span class="nt">&lt;/locale&gt;</span>
+    <span class="nt">&lt;/localeEntry&gt;</span>
+    <span class="nt">&lt;localeEntry&gt;</span>
+        <span class="nt">&lt;name&gt;</span>조선어<span class="nt">&lt;/name&gt;</span>
+        <span class="nt">&lt;locale&gt;</span>ko_KR<span class="nt">&lt;/locale&gt;</span>
+    <span class="nt">&lt;/localeEntry&gt;</span>
+<span class="nt">&lt;/locales&gt;</span></code></div>
+        <a name="Enable_RTL"></a><h2>Enable Right-to-Left Language Support</h2>
+        <a name="d175033e803"></a><p>If your custom localization reads from right to left, you need to enable RTL language support for your YouTrack server.
+            For more information, see <a name="d175033e805"></a><a href="Right-to-Left-Languages-Support.html"><span>Right-to-Left Language Support</span></a>.</p>
+        <a name="d175033e808"></a><a name="dynaProc2"></a><section class="procedure-steps"><h2>To enable RTL language support:</h2><ol class=".list _decimal"><li class="list__item">Open the <a name="d175033e812"></a><span class="menupath">Administration &gt; Global Settings</span> page.</li><li class="list__item">In the <a name="d175033e818"></a><span class="control">System Language</span> section, select the <a name="d175033e821"></a><span class="control">RTL Support</span> option.</li><li class="list__item">Click the <a name="d175033e827"></a><span class="control">Save</span> button at the bottom of the page.</li></ol></section>
+
+    <a name="Start_YouTrack"></a><h2>Start YouTrack with Custom Localization</h2>
+        <a name="Running_YouTrack_with_the_Custom_Localization"></a>
+
+        <a name="d175033e837"></a><p>When you have translated and uploaded your custom localization to the server, you can start YouTrack and use the newly translated user interface.</p>
+        <a name="d175033e840"></a><a name="dynaProc3"></a><section class="procedure-steps"><h2>To start YouTrack with the new localization:</h2><ol class=".list _decimal"><li class="list__item">Check that your custom-translated files are stored in the correct directory with the <code class="code" data-lang="XML">&lt;language code_country code&gt;</code> name.</li><li class="list__item">Run YouTrack with the Java machine parameter <code class="code" data-lang="XML">jetbrains.mps.webr.i18n.custom-translations</code>, which points to the folder that contains the custom localization.<br>
+                For example, if you run YouTrack as JAR file from the command line, the command should look something like this:
+                <code class="code" data-lang="XML">java -Djetbrains.mps.webr.i18n.custom-translations=/home/vadim/youtrack-i18n -jar youtrack.jar 8080</code>
+            </li></ol></section>
+        <a name="d175033e860"></a><p>If you run YouTrack as service on either Windows, a *nix operating system, or as a WAR in your custom servlet container,
+            you must specify the <code class="code" data-lang="XML">jetbrains.mps.webr.i18n.custom-translations</code> parameter in your Java machine properties.</p>
+    <div class="last-modified">Last modified: 2 February 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

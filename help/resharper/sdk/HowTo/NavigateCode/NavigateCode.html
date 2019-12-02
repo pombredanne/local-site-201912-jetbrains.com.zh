@@ -1,0 +1,201 @@
+
+
+
+<!doctype html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>Navigate Code / ReSharper  DevGuide</title>
+    <link rel="stylesheet" href="/help/resharper/sdk/app/app.css">
+    <link rel="shortcut icon" href="/help/resharper/sdk/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="57x57" href="/help/resharper/sdk/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/help/resharper/sdk/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/help/resharper/sdk/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/help/resharper/sdk/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/help/resharper/sdk/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/help/resharper/sdk/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/help/resharper/sdk/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/help/resharper/sdk/apple-touch-icon-180x180.png">
+    <link rel="mask-icon" href="/help/resharper/sdk/apple-mask-icon.svg" color="black">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-square70x70logo" content="/help/resharper/sdk/mstile-70x70.png">
+    <meta name="msapplication-TileImage" content="/help/resharper/sdk/mstile-144x144.png">
+    <meta name="msapplication-square150x150logo" content="/help/resharper/sdk/mstile-150x150.png">
+    <meta name="msapplication-wide310x150logo" content="/help/resharper/sdk/mstile-310x150.png">
+    <meta name="msapplication-square310x310logo" content="/help/resharper/sdk/mstile-310x310.png">
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="Documentation for writing extensions for ReSharper" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.jetbrains.com/help/resharper/sdk//HowTo/NavigateCode/NavigateCode.html" />
+    <meta property="og:site_name" content="JetBrains ReSharper" />
+    <meta property="og:title" content="Navigate Code" />
+    <meta property="og:description" content="Documentation for writing extensions for ReSharper" />
+    <meta property="og:image" content="https://www.jetbrains.com/help/resharper/sdk/jetbrains.png" />
+    <meta property="article:modified_time" content="2017-07-12T17:27:26+00:00" />
+    <!-- <meta property="article:section" content="" /> 
+    <meta property="article:tag" content="" /> -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@JBPlatform" />
+    <meta name="twitter:title" content="Navigate Code" />
+    <meta name="twitter:description" content="Documentation for writing extensions for ReSharper" />
+    <meta name="twitter:image" content="https://www.jetbrains.com/help/resharper/sdk/jetbrains.png" />
+    <meta class="swiftype" name="product" data-type="string" content="/help/resharper/sdk/"></meta>
+<link  rel="stylesheet" href="/help/resharper/sdk/app/styles.css"></head>
+<body data-id="HowTo/NavigateCode/NavigateCode">
+<div class="wrapper">
+    <section class="panel _nav">
+        <header class="panel__header">
+            <div class="container">
+                <form class="search-box">
+                    <label for="search-box__input" class="search-box__label">
+                        <input type="text" class="search-box__input" id="search-box__input" placeholder="Search ReSharper  DevGuide">
+                    </label>
+                    <div class="search-box__clear" title="Clear"></div>
+                </form>
+            </div>
+        </header>
+        <nav class="panel__content">
+            <div class="container _nav">
+                <menu class="nav-tree"></menu>
+            </div>
+            <div class="container _footer panel__footer">
+                <p><a data-bypass="true" href="//youtrack.jetbrains.com/issues/IJSDK">Send feedback</a></p>
+                <p>&copy; 2000&ndash;2018 <a href="//www.jetbrains.com">JetBrains</a> s.r.o.<br>
+                    All rights reserved.</p>
+            </div>
+        </nav>
+    </section>
+
+    <main class="panel _main" role="main">
+        <header class="panel__header">
+            <div class="container">
+                <h3>ReSharper DevGuide</h3>
+                
+                <div class="panel-trigger"></div>
+            </div>
+        </header>
+        <section class="panel__content">
+            <div class="container">
+                <article class="article" data-shortcut-switcher="false">
+                    <div class="navigation-links _top" data-swiftype-index="false">
+                        <a class="navigation-links__prev" href="/HowTo/WorkWithIProperty.html">Work with IProperty</a>
+                        <a class="navigation-links__next" href="/HowTo/CreateMenuItemsUsingActions.html">Create Menu Items Using Actions</a>
+                    </div>
+                    <a data-bypass="true" href="https://github.com/JetBrains/resharper-devguide/edit/master/HowTo/NavigateCode/NavigateCode.md" class="page-link-to-github" target="_blank" rel="noopener noreferrer" title="Edit this page on GitHub">
+                        <i class="github-icon"></i>
+                        <span class="text">Edit page</span>
+                    </a>
+
+                    <h1>Navigate Code</h1>
+                    <p>ReSharper provides two types of navigation:</p>
+<ul>
+  <li><strong>Context-dependent</strong>: navigation target is somehow related to the element under the caret (<strong>Navigate to Declaration</strong>, etc).
+See:
+    <ul>
+      <li><a href="AddYourNavigationActionToNavigateToMenu.html"><span>Add a Navigation Action to the ‘Navigate to’ Menu</span></a></li>
+    </ul>
+  </li>
+  <li><strong>Global</strong>: any navigation target (<strong>Go to Everything</strong>, etc).</li>
+</ul>
+
+<p>The navigation task can be divided into two steps:</p>
+<ul>
+  <li>Find the navigation target (a particular code element). For example, in case of context navigation, you should first obtain the tree node under the current caret position and then find the related code element - your navigation target (e.g., declaration, particular usage, etc).
+See:
+    <ul>
+      <li><a href="GetTreeNodeUnderCaret.html"><span>Get a Tree Node Under Caret</span></a></li>
+      <li><a href="GetTreeNodeByFullName.html"><span>Get a Tree Node by Full CLR Name</span></a></li>
+      <li><a href="GetTreeNodeByReference.html"><span>Get a Tree Node by Reference</span></a></li>
+      <li><a href="UseManualNavigation.html"><span>Use Manual Navigation</span></a></li>
+    </ul>
+  </li>
+  <li>Move the caret to the target code element.
+See:
+    <ul>
+      <li><a href="NavigateToParticularTreeNode.html"><span>Navigate to a Particular Tree Node</span></a></li>
+    </ul>
+  </li>
+</ul>
+
+<p>Before you’ll take a look at SDK examples on how to perform navigation, <strong>we strongly recommend</strong> that you acquaint with ReSharper’s project model and PSI fundamentals below in this section. Also it’s worth to take a look at the example in <a href="GetTreeNodeByFullName.html"><span>Get a Tree Node by Full CLR Name</span></a> (this code actively operates with project model and PSI entities).</p>
+
+<a name="project-model-basics" class="elem-anchor"></a>
+<h2>Project Model Basics<a href="#project-model-basics" class="anchor-link"><span></span></a></h2>
+<p>Project model is the API that allows working with entities that constitute a solution in Visual Studio: a solution itself, projects, folders, and files.</p>
+
+<p>The main project model elements are:</p>
+<ul>
+  <li><code class="code highlight language-text">ISolution</code>: solution representation created when a solution is loaded in Visual Studio. This is the root element of the project model that normally corresponds to the solution node in Visual Studio’s <strong>Solution Explorer</strong>. <code class="code highlight language-text">ISolution</code> provides many useful interface for working with other elements of the project model and even go down to PSI (e.g., see <code class="code highlight language-text">ISolution.GetPsiServices()</code>).</li>
+  <li><code class="code highlight language-text">IProject</code>: project and solution folder representation that provides interfaces for getting project files, project folders, and some specific staff, like, e.g., module-to-project references. <code class="code highlight language-text">IProject</code> also has methods that allow you to go down to the PSI level, e.g., <code class="code highlight language-text">GetPsiModules()</code> or <code class="code highlight language-text">GetPsiSourceFileInProject()</code>. 
+  There are several kinds of projects (<code class="code highlight language-text">IProject.Kind</code> property): solution folder, website, regular project, misc files project.</li>
+  <li><code class="code highlight language-text">IProjectFolder</code>: project folder representation.</li>
+  <li><code class="code highlight language-text">IProjectFile</code>: representation of a file in a project. Provides various interfaces for working with other dependent project model elements, .e.g., <code class="code highlight language-text">GetDependentFiles()</code> to get dependent project files.</li>
+</ul>
+
+<p>Other important elements:</p>
+<ul>
+  <li><code class="code highlight language-text">IPsiModule</code>: a compilation unit. Normally, for a C# class library, <code class="code highlight language-text">IPsiModule</code> correponds to a compiled <em>.dll</em> file (so, it’s a rough equivalent of <code class="code highlight language-text">IProject</code>).</li>
+  <li><code class="code highlight language-text">IPsiSourceFile</code>: an abstraction that represents a file with source code that must be compiled, i.e, included in a compilation unit (<code class="code highlight language-text">IPsiModule</code>). In a simple case, it’s an equivalent of <code class="code highlight language-text">IProjectFile</code>. <code class="code highlight language-text">IPsiSourceFile</code> allows you to get <a href="#psi-basics"><span>IFile</span></a> that represents the PSI syntax tree of the file. So, it’s somewhat your bridge down to the PSI level.</li>
+</ul>
+
+<p>Why does ReSharper need these two entities if it already has <code class="code highlight language-text">IProject</code> and <code class="code highlight language-text">IProjectFile</code>? The problem is that one single project may be compiled into multiple modules as well as single <code class="code highlight language-text">IProjectFile</code> may be represented with multiple source files. For better understanding consider the example below. Say, we have a simple web project called <code class="code highlight language-text">WebApp</code>:</p>
+
+<p><img src="project-model-example.png" alt="project-model-example" /></p>
+
+<p>Here the single project is compiled into three modules. Each <em>.cs</em> file has two <code class="code highlight language-text">IPsiSourceFile</code>(s) associated with it.</p>
+
+<p>Therefore, if you are 100% sure that your project file is represented with just one source file, you can obtain an instance of <code class="code highlight language-text">IPsiSourceFile</code> by calling the <code class="code highlight language-text">IProjectFile.ToSourceFile()</code> method. It will return <code class="code highlight language-text">FirstOrDefault()</code> element from the PSI source files collection. Otherwise, get all <code class="code highlight language-text">IPsiSourceFile</code>(s) by calling <code class="code highlight language-text">ToSourceFiles()</code>.</p>
+
+<p>To obtain modules from <code class="code highlight language-text">IProject</code>, use the <code class="code highlight language-text">IProject.GetAllModules()</code> method.</p>
+
+<a name="psi-basics" class="elem-anchor"></a>
+<h2>PSI Basics<a href="#psi-basics" class="anchor-link"><span></span></a></h2>
+<p>PSI (program structure interface) is the API for working with code syntax tree (a tree representation of the source code). 
+The main PSI elements are:</p>
+<ul>
+  <li><code class="code highlight language-text">IFile</code>: an abstraction used to build the PSI syntax tree from <a href="#project-model-basics"><span>IPsiSourceFile</span></a>. One source file may contain many <code class="code highlight language-text">IFile</code>(s): one primary, many secondaries (build upon primary using the same PSI nodes), and injected PSIs (e.g., when there is a language injection, like a C# file containing a variable with JS code). To obtain <code class="code highlight language-text">IFile</code> from a source file, use the <code class="code highlight language-text">IPsiSourceFile.GetPsiFile()</code> method.</li>
+  <li><code class="code highlight language-text">ITreeNode</code>: the most basic element of the syntax tree. Any element of the tree is a tree node (implements the <code class="code highlight language-text">ITreeNode</code> interface). E.g., even a closing semicolon or a space between two words are tree nodes.</li>
+  <li><code class="code highlight language-text">IReference</code>: abstraction that attaches semantic model to tree nodes. E.g., the expression <code class="code highlight language-text">i = 1</code> has a reference for <code class="code highlight language-text">i</code> (a tree node that implements <code class="code highlight language-text">IReferenceExpression</code>) which resolves to <code class="code highlight language-text">IDeclaredElement</code> (see below), i.e., some property, field, or a local variable. You can use this reference in refactorings or context actions, to navigate to the referenced code element, and so on. Some nodes also have specific named references (depending on the node type). 
+The ITreeNode interface provides the GetAllReferences method that returns all node references.</li>
+  <li>
+    <p><code class="code highlight language-text">IDeclaredElement</code>: element of the semantic model. It is a meaningful code element that can be referenced by other code elements: a class declaration, a property, etc.
+Note that there’s a difference between <code class="code highlight language-text">IDeclaration</code> and <code class="code highlight language-text">IDeclaredElement</code>. <code class="code highlight language-text">IDeclaredElement</code> is an entity you can refer to, while <code class="code highlight language-text">IDeclaration</code> is just a place in code where the declaration happens. For example, you have a partial class <code class="code highlight language-text">Foo</code> that is implemented in two different parts:</p>
+
+<div class="code-block" data-lang="csharp"><code class="code-block__wrapper"><span class="k">public</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">Foo</span> <span class="p">{</span> <span class="cm">/* ... */</span> <span class="p">}</span>
+<span class="k">public</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">Foo</span> <span class="p">{</span> <span class="cm">/* ... */</span> <span class="p">}</span>
+</code></div>
+
+    <p>Both top tree nodes of these declarations implement <code class="code highlight language-text">IDeclaration -&gt; IClassDeclaration</code>. But there’s only one <code class="code highlight language-text">IDeclaredElement</code> the declarations refer to via the <code class="code highlight language-text">DeclaredElement</code> property - the class <code class="code highlight language-text">Foo</code> declared in the global namespace.</p>
+  </li>
+  <li>Other PSI types: there are a lot of specific helper types for particular elements of the syntax tree. E.g., <code class="code highlight language-text">IVariableDeclaration</code> and <code class="code highlight language-text">ILocalVariableDeclaration</code> (for variable declarations), <code class="code highlight language-text">IExpressionStatement</code> (for representing statements), and many more. Moreover, there are a lot of types that are specific to a particular language and, therefore, provide specific methods relevant only in the context of this language. E.g., <code class="code highlight language-text">ICSharpDeclaration</code> or <code class="code highlight language-text">IJavaScriptDynamicProperty</code>.</li>
+</ul>
+
+<p>For better understanding, consider the example:</p>
+
+<p><img src="psi-example.png" alt="psi-example" /></p>
+
+<p>Note that even though this is not shown on the picture, the equals sign, semicolons, and even whitespaces are also special tree nodes of the syntax tree.</p>
+
+
+                    <div class="navigation-links _bottom" data-swiftype-index="false">
+                        <a class="navigation-links__prev" href="/HowTo/WorkWithIProperty.html">Work with IProperty</a>
+                        <a class="navigation-links__next" href="/HowTo/CreateMenuItemsUsingActions.html">Create Menu Items Using Actions</a>
+                    </div>
+                    <div class="last-modified">
+                        Last modified: 12 July 2017
+                    </div>
+                </article>
+
+                <section class="disqus">
+                    <div id="disqus_thread"></div>
+                </section>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="/help/resharper/sdk/app/app.js" data-baseurl="/help/resharper/sdk/"></script>
+
+</body>
+</html>
+

@@ -1,0 +1,216 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta charset="UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="//resources.jetbrains.com/storage/help-app/v3/analytics.js"></script><title>PyCharm Refactoring Tutorial - Help | PyCharm</title><link rel="stylesheet" href="//resources.jetbrains.com/storage/help-app/v3/app.css"></head><body data-id="_product_Refactoring_Tutorial" data-article-props="&#xA;                {&#xA;                &#xA;            &#34;seeAlso&#34;:[&#xA;            &#xA;                {&#34;title&#34;: &#34;Procedures&#34;,&#xA;                 &#34;links&#34;: [&#xA;                &#xA;        {&#34;url&#34;:&#34;refactoring-source-code.html&#34;,&#34;text&#34;:&#34;Refactoring code&#34;}&#xA;                    ]},&#xA;                {&#34;title&#34;: &#34;Web Resources&#34;,&#xA;                 &#34;links&#34;: [&#xA;                &#xA;        {&#34;url&#34;:&#34;http://devnet.jetbrains.com/community/python?view=documents&#xA;            &#34;,&#34;text&#34;:&#34;Developer Community&#34;}&#xA;                    ]}&#xA;            ]&#xA;        &#xA;                }&#xA;            "><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search PyCharm Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>PyCharm 2019.2 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="primary_default_for_windows" selected>Default for Windows</option><option data-group="primary" value="primary_intellij_idea_classic_macos">IntelliJ IDEA Classic (macOS)</option><option data-group="primary" value="primary_default_for_gnome">Default for GNOME</option><option data-group="primary" value="primary_default_for_kde">Default for KDE</option><option data-group="primary" value="primary_sublime_text">Sublime Text</option><option data-group="primary" value="primary_eclipse">Eclipse</option><option data-group="primary" value="primary_emacs">Emacs</option><option data-group="primary" value="primary_default_for_xwin_windows">Default for XWin (Windows)</option><option data-group="secondary" value="secondary_default_for_macos">Default for macOS</option><option data-group="secondary" value="secondary_default_for_gnome">Default for GNOME</option><option data-group="secondary" value="secondary_default_for_kde">Default for KDE</option><option data-group="secondary" value="secondary_eclipse">Eclipse</option><option data-group="secondary" value="secondary_default_for_xwin_macos">Default for XWin (macOS)</option><option data-group="secondary" value="secondary_sublime_text_macos">Sublime Text (macOS)</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="active"><h1 data-toc="_product_Refactoring_Tutorial" id="_product_Refactoring_Tutorial.xml">PyCharm Refactoring Tutorial</h1>        <div class="chapter"><h2 id="3ff5bb59" data-toc="_product_Refactoring_Tutorial#3ff5bb59">What this tutorial is about</h2>        <p id="346956b2">This tutorial shows some refactorings available in PyCharm, using the example of a simple class that        makes use of the rational numbers.</p></div>    <div class="chapter"><h2 id="e09cf46a" data-toc="_product_Refactoring_Tutorial#e09cf46a">Prerequisites</h2>        <p id="476a7227">Make sure that the following prerequisites are met:</p>        <ul class="list _ul"><li class="list__item" id="4fab4e0c"><p>You are working with PyCharm version 2016.2 or later.</p></li><li class="list__item" id="89047432"><p>A project is already created. </p></li></ul>    </div>    <div class="chapter"><h2 id="bb1584f8" data-toc="_product_Refactoring_Tutorial#bb1584f8">Preparing an example</h2>        <p id="88308ed7">Create a Python file <span class="filepath">rational.py</span> in your project and add the following code: </p>        <div class="code-block" data-lang="python">
+from collections import namedtuple
+
+
+class Rational(namedtuple('Rational', ['num', 'denom'])):
+
+    def __new__(cls, num, denom):
+        if denom == 0:
+            raise ValueError('Denominator cannot be null')
+        if denom &lt; 0:
+            num, denom = -num, -denom
+        return super().__new__(cls, num, denom)
+
+    def __str__(self):
+        return '{}/{}'.format(self.num, self.denom)
+        </div>    <div class="chapter"><h3 id="6564ff54" data-toc="_product_Refactoring_Tutorial#6564ff54">Simplifying rational number </h3>        <p id="0b0a067a">Let's simplify a rational number by dividing numerator and denominator by the greatest common divisor:</p>        <div class="code-block" data-lang="python">
+from collections import namedtuple
+
+class Rational(namedtuple('Rational', ['num', 'denom'])):
+    def __new__(cls, num, denom):
+        if denom == 0:
+            raise ValueError('Denominator cannot be null')
+        if denom &lt; 0:
+            num, denom = -num, -denom
+
+        x = abs(num)
+        y = abs(denom)
+        while x:
+            x, y = y % x, x
+        factor = y
+
+        return super().__new__(cls, num // factor, denom // factor)
+
+    def __str__(self):
+        return '{}/{}'.format(self.num, self.denom)
+        </div>    </div>    </div>    <div class="chapter"><h2 id="3bad7739" data-toc="_product_Refactoring_Tutorial#3bad7739">Extracting a method</h2>        <p id="c80a651c">Now, let's extract the search for a greatest common divisor to a separate method. To do that, select the            statements</p>        <div class="code-block" data-lang="python">
+x = abs(num)
+y = abs(denom)
+while x:
+    x, y = y % x, x
+factor = y
+        </div>        <p id="9088510d">and press <kbd data-primary_default_for_windows="Ctrl+Alt+M" data-primary_intellij_idea_classic_macos="Alt+⌘+M" data-primary_default_for_gnome="Ctrl+Alt+M" data-primary_default_for_kde="Ctrl+Alt+M" data-primary_sublime_text="Ctrl+Alt+M" data-primary_eclipse="Shift+Alt+M" data-primary_emacs="Ctrl+Alt+M" data-primary_default_for_xwin_windows="N/A" data-secondary_default_for_macos="⌥⌘M" data-secondary_default_for_gnome="⌃⌥M" data-secondary_default_for_kde="⌃⌥M" data-secondary_eclipse="⌥⇧M" data-secondary_default_for_xwin_macos="N/A" data-secondary_sublime_text_macos="⌥⌘M">Ctrl+Alt+M</kbd>. In the <a href="reference-extract-method-dialog.html">dialog box</a>            that opens type the method name <code class="code">gcd</code> and then click <span class="control">OK</span>:</p>        <div class="code-block" data-lang="python">
+@staticmethod
+def gcd(denom, num):
+    x = abs(num)
+    y = abs(denom)
+    while x:
+        x, y = y % x, x
+    factor = y
+    return factor
+        </div>    </div>    <div class="chapter"><h2 id="35206e1d" data-toc="_product_Refactoring_Tutorial#35206e1d">Inlining a local variable and changing method signature</h2>        <p id="355423e0">Let's get rid of the variable <code class="code">factor</code>, by using <a href="inline.html">Inline variable</a>            refactoring. To do that, place the caret at the variable and press <kbd data-primary_default_for_windows="Ctrl+Alt+N" data-primary_intellij_idea_classic_macos="Alt+⌘+N" data-primary_default_for_gnome="Ctrl+Alt+N" data-primary_default_for_kde="Ctrl+Alt+N" data-primary_sublime_text="Ctrl+Alt+N" data-primary_eclipse="Shift+Alt+I" data-primary_emacs="Ctrl+Alt+N" data-primary_default_for_xwin_windows="N/A" data-secondary_default_for_macos="⌥⌘N" data-secondary_default_for_gnome="⌃⌥N" data-secondary_default_for_kde="⌃⌥N" data-secondary_eclipse="⌥⇧I" data-secondary_default_for_xwin_macos="N/A" data-secondary_sublime_text_macos="⌥⌘N">Ctrl+Alt+N</kbd>.            All the detected <code class="code">factor</code> variables are inlined.</p>        <p id="70a771b0">Next, change the parameter names using <a href="change-signature.html">Change signature</a>. To do that, place                the caret at the method declaration line and press <kbd data-primary_default_for_windows="Ctrl+F6" data-primary_intellij_idea_classic_macos="⌘+F6" data-primary_default_for_gnome="Ctrl+F6" data-primary_default_for_kde="Ctrl+6" data-primary_sublime_text="N/A" data-primary_eclipse="Shift+Alt+C" data-primary_emacs="Ctrl+F6" data-primary_default_for_xwin_windows="N/A" data-secondary_default_for_macos="⌘F6" data-secondary_default_for_gnome="⌃F6" data-secondary_default_for_kde="⌃6" data-secondary_eclipse="⌥⇧C" data-secondary_default_for_xwin_macos="N/A" data-secondary_sublime_text_macos="N/A">Ctrl+F6</kbd>. In the                <a href="change-signature-dialog.html">dialog</a> that opens, rename the parameters <code class="code">denom</code> and                <code class="code">num</code> to <code class="code">x</code> and <code class="code">y</code> respectively, and click <img class="inline-icon-16" src="/help/img/idea/2019.2/icons.nodes.upLevel.svg@2x.png" width="16" alt="icons nodes upLevel svg"> to                change the order of parameters.        </p>        <p id="fd37c302">You end up with the following code:</p>        <div class="code-block" data-lang="python">
+@staticmethod
+def gcd(x, y):
+    x = abs(x)
+    y = abs(y)
+    while x:
+        x, y = y % x, x
+    return y
+        </div>    </div>    <div class="chapter"><h2 id="875a924a" data-toc="_product_Refactoring_Tutorial#875a924a">Using quick fix</h2>        <p id="337af0de">Now, let's convert the existing static method to a function. To do that, press            <kbd data-primary_default_for_windows="Alt+Enter" data-primary_intellij_idea_classic_macos="Alt+Enter" data-primary_default_for_gnome="Alt+Enter" data-primary_default_for_kde="Alt+Enter" data-primary_sublime_text="Alt+Enter" data-primary_eclipse="Alt+Enter" data-primary_emacs="Alt+Enter" data-primary_default_for_xwin_windows="N/A" data-secondary_default_for_macos="⌥⏎" data-secondary_default_for_gnome="⌥⏎" data-secondary_default_for_kde="⌥⏎" data-secondary_eclipse="⌥⏎" data-secondary_default_for_xwin_macos="N/A" data-secondary_sublime_text_macos="⌥⏎">Alt+Enter</kbd>, from the suggestion list choose            <span class="control">Convert static method to function</span> and press <kbd data-primary_default_for_windows="Enter" data-primary_intellij_idea_classic_macos="Enter" data-primary_default_for_gnome="Enter" data-primary_default_for_kde="Enter" data-primary_sublime_text="Enter" data-primary_eclipse="Enter" data-primary_emacs="Enter" data-primary_default_for_xwin_windows="N/A" data-secondary_default_for_macos="⏎" data-secondary_default_for_gnome="⏎" data-secondary_default_for_kde="⏎" data-secondary_eclipse="⏎" data-secondary_default_for_xwin_macos="N/A" data-secondary_sublime_text_macos="⏎">Enter</kbd>: </p>        <div class="code-block" data-lang="python">
+ from collections import namedtuple
+
+
+ class Rational(namedtuple('Rational', ['num', 'denom'])):
+    def __new__(cls, num, denom):
+        if denom == 0:
+            raise ValueError('Denominator cannot be null')
+        if denom &lt; 0:
+            num, denom = -num, -denom
+
+        factor = gcd(num, denom)
+
+        return super().__new__(cls, num // factor, denom // factor)
+
+    def __str__(self):
+        return '{}/{}'.format(self.num, self.denom)
+
+
+ def gcd(x, y):
+    x = abs(x)
+    y = abs(y)
+    while x:
+        x, y = y % x, x
+    return y
+        </div>    </div>    <div class="chapter"><h2 id="cbd5ec10" data-toc="_product_Refactoring_Tutorial#cbd5ec10">Moving the function to another file</h2>        <p id="603f93e8">Now, we'll move the function to a separate file and add an import statement. To do that, place the caret at            the function <code class="code">gcd</code> declaration and press <kbd data-primary_default_for_windows="F6" data-primary_intellij_idea_classic_macos="F6" data-primary_default_for_gnome="F6" data-primary_default_for_kde="F6" data-primary_sublime_text="N/A" data-primary_eclipse="Shift+Alt+V" data-primary_emacs="F6" data-primary_default_for_xwin_windows="N/A" data-secondary_default_for_macos="F6" data-secondary_default_for_gnome="F6" data-secondary_default_for_kde="F6" data-secondary_eclipse="⌥⇧V" data-secondary_default_for_xwin_macos="N/A" data-secondary_sublime_text_macos="N/A">F6</kbd>. In the            <a href="move-module-members-dialog.html">dialog</a> that opens specify the fully qualified path of the            destination file <span class="filepath">util.py</span>. This file does not exist, but it is created automatically: </p>        <div class="code-block" data-lang="python">
+def gcd(x, y):
+    x = abs(x)
+    y = abs(y)
+    while x:
+        x, y = y % x, x
+    return y
+        </div>        <p id="0ea53b76">The import statement is also added automatically. Thus the file <span class="filepath">rational.py</span> looks as            follows:</p>        <div class="code-block" data-lang="python">
+from collections import namedtuple
+
+from util import gcd
+
+
+class Rational(namedtuple('Rational', ['num', 'denom'])):
+    def __new__(cls, num, denom):
+        if denom == 0:
+            raise ValueError('Denominator cannot be null')
+        if denom &lt; 0:
+            num, denom = -num, -denom
+
+        factor = gcd(num, denom)
+
+        return super().__new__(cls, num // factor, denom // factor)
+
+    def __str__(self):
+        return '{}/{}'.format(self.num, self.denom)
+        </div>    </div>    <div class="chapter"><h2 id="716b694f" data-toc="_product_Refactoring_Tutorial#716b694f">Further changes of the class Rational</h2>        <div class="chapter"><h3 id="ab7bcf6a" data-toc="_product_Refactoring_Tutorial#ab7bcf6a">Adding magic methods</h3>        <p id="f8ab0213">Next, let us add declarations of the magic methods for the addition/subtraction operations on the objects            of the class <code class="code">Rational</code>:</p>        <div class="code-block" data-lang="python">
+from collections import namedtuple
+
+from util import gcd
+
+
+class Rational(namedtuple('Rational', ['num', 'denom'])):
+    def __new__(cls, num, denom):
+        if denom == 0:
+            raise ValueError('Denominator cannot be null')
+        factor = gcd(num, denom)
+        if denom &lt; 0:
+            num, denom = -num, -denom
+        return super().__new__(cls, num // factor, denom // factor)
+
+    def __str__(self):
+        return '{}/{}'.format(self.num, self.denom)
+
+    def __add__(self, other):
+        if isinstance(other, int):
+            other = Rational(other, 1)
+
+        if isinstance(other, Rational):
+            new_num = self.num * other.denom + other.num * self.denom
+            new_denom = self.denom * other.denom
+            return Rational(new_num, new_denom)
+
+        return NotImplemented
+
+    def __neg__(self):
+        return Rational(-self.num, self.denom)
+
+    def __radd__(self, other):
+        return self + other
+
+    def __sub__(self, other):
+        return self + (-other)
+
+    def __rsub__(self, other):
+        return -self + other
+        </div>    </div>        <div class="chapter"><h3 id="776ceea6" data-toc="_product_Refactoring_Tutorial#776ceea6">Extracting method and using a quick fix</h3>            <p id="857b2d8f">Next, we'll extract an expression <code class="code">Rational(other, 1)</code> into a separate method. To do that,                place the caret at the aforementioned expression, press <kbd data-primary_default_for_windows="Ctrl+Alt+M" data-primary_intellij_idea_classic_macos="Alt+⌘+M" data-primary_default_for_gnome="Ctrl+Alt+M" data-primary_default_for_kde="Ctrl+Alt+M" data-primary_sublime_text="Ctrl+Alt+M" data-primary_eclipse="Shift+Alt+M" data-primary_emacs="Ctrl+Alt+M" data-primary_default_for_xwin_windows="N/A" data-secondary_default_for_macos="⌥⌘M" data-secondary_default_for_gnome="⌃⌥M" data-secondary_default_for_kde="⌃⌥M" data-secondary_eclipse="⌥⇧M" data-secondary_default_for_xwin_macos="N/A" data-secondary_sublime_text_macos="⌥⌘M">Ctrl+Alt+M</kbd> and in the                <a href="reference-extract-method-dialog.html">dialog box</a> that opens, type the new method name                <code class="code">from_int</code>.</p>            <p id="410f5963">Finally, place the caret at the method <code class="code">from_int</code> declaration, press                <kbd data-primary_default_for_windows="Alt+Enter" data-primary_intellij_idea_classic_macos="Alt+Enter" data-primary_default_for_gnome="Alt+Enter" data-primary_default_for_kde="Alt+Enter" data-primary_sublime_text="Alt+Enter" data-primary_eclipse="Alt+Enter" data-primary_emacs="Alt+Enter" data-primary_default_for_xwin_windows="N/A" data-secondary_default_for_macos="⌥⏎" data-secondary_default_for_gnome="⌥⏎" data-secondary_default_for_kde="⌥⏎" data-secondary_eclipse="⌥⏎" data-secondary_default_for_xwin_macos="N/A" data-secondary_sublime_text_macos="⌥⏎">Alt+Enter</kbd>, select <span class="control">Make method static</span> from            the suggestion list, and then press <kbd data-primary_default_for_windows="Enter" data-primary_intellij_idea_classic_macos="Enter" data-primary_default_for_gnome="Enter" data-primary_default_for_kde="Enter" data-primary_sublime_text="Enter" data-primary_eclipse="Enter" data-primary_emacs="Enter" data-primary_default_for_xwin_windows="N/A" data-secondary_default_for_macos="⏎" data-secondary_default_for_gnome="⏎" data-secondary_default_for_kde="⏎" data-secondary_eclipse="⏎" data-secondary_default_for_xwin_macos="N/A" data-secondary_sublime_text_macos="⏎">Enter</kbd>: </p>            <div class="code-block" data-lang="python">
+@staticmethod
+def from_int(other):
+    return Rational(other, 1)
+            </div>            <p id="f259e00a">Finally, let's change the name of the parameter <code class="code">other</code> to <code class="code">number</code>. To do that,            place the caret on the parameter and press <kbd data-primary_default_for_windows="Shift+F6" data-primary_intellij_idea_classic_macos="Shift+F6" data-primary_default_for_gnome="Shift+F6" data-primary_default_for_kde="Shift+F6" data-primary_sublime_text="Shift+F6" data-primary_eclipse="Shift+Alt+R" data-primary_emacs="Shift+F6" data-primary_default_for_xwin_windows="N/A" data-secondary_default_for_macos="⇧F6" data-secondary_default_for_gnome="⇧F6" data-secondary_default_for_kde="⇧F6" data-secondary_eclipse="⌥⇧R" data-secondary_default_for_xwin_macos="N/A" data-secondary_sublime_text_macos="⇧F6">Shift+F6</kbd>.</p>        </div>    </div>    <div class="chapter"><h2 id="c921e7fe" data-toc="_product_Refactoring_Tutorial#c921e7fe">Extracting a superclass</h2>        <p id="7870d09e">Next, we'll move the implementations of the methods <code class="code">__radd__</code>, <code class="code">__sub__</code> and            <code class="code">__rsub__</code> into a superclass. Also, we'll make the methods <code class="code">__neg__</code> and            <code class="code">__add__</code> abstract.</p>        <p id="3871feb6">This is how it's done... Place the caret at the class <code class="code">Rational</code> declaration, on the context            menu point to <span data-skip-index="skip" class="menupath">Refactor | Extract</span> and choose <span data-skip-index="skip" class="menupath">Superclass...</span>. Next,        in the <a href="topicid999917.html">dialog box</a> that opens, specify the name of the superclass (here it's            <code class="code">AdditiveMixin</code>) and select the methods to be added to the superclass. For the methods            <code class="code">__neg__</code> and <code class="code">__add__</code>, select the checkboxes in the column            <span class="control">Make abstract</span>.</p>        <p id="59f21e5c">End up with the following code:</p>        <div class="code-block" data-lang="python">
+ from abc import abstractmethod, ABCMeta
+ from collections import namedtuple
+
+ from util import gcd
+
+
+ class AdditiveMixin(metaclass=ABCMeta):
+    @abstractmethod
+    def __add__(self, other):
+        pass
+
+    @abstractmethod
+    def __neg__(self):
+        pass
+
+    def __radd__(self, other):
+        return self + other
+
+    def __sub__(self, other):
+        return self + (-other)
+
+    def __rsub__(self, other):
+        return -self + other
+
+
+ class Rational(namedtuple('Rational', ['num', 'denom']), AdditiveMixin):
+    def __new__(cls, num, denom):
+        if denom == 0:
+            raise ValueError('Denominator cannot be null')
+        factor = gcd(num, denom)
+        if denom &lt; 0:
+            num, denom = -num, -denom
+        return super().__new__(cls, num // factor, denom // factor)
+
+    def __str__(self):
+        return '{}/{}'.format(self.num, self.denom)
+
+    def __add__(self, other):
+        if isinstance(other, int):
+            other = self.from_int(other)
+
+        if isinstance(other, Rational):
+            new_num = self.num * other.denom + other.num * self.denom
+            new_denom = self.denom * other.denom
+            return Rational(new_num, new_denom)
+
+        return NotImplemented
+
+    def from_int(self, number):
+        return Rational(number, 1)
+
+    def __neg__(self):
+        return Rational(-self.num, self.denom)
+
+        </div>    </div>    <div class="last-modified" data-skip-index="skip">Last modified: 6 November 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="safe-delete.html">Safe delete</a><a class="navigation-links__next" href="viewing-reference-information.html">Code reference information</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="//resources.jetbrains.com/storage/help-app/v3/app.js"></script></body></html>

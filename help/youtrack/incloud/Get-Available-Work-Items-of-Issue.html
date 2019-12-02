@@ -1,0 +1,59 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta charset="UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="//resources.jetbrains.com/storage/help-app/v3/analytics.js"></script><title>Get Available Work Items of Issue - Help | YouTrack InCloud</title><link rel="stylesheet" href="//resources.jetbrains.com/storage/help-app/v3/app.css"></head><body data-id="Get-Available-Work-Items-of-Issue" data-breadcrumbs="Resources-for-Developers.xml|Resources for Developers/deprecated-rest-api-reference.xml|Old REST API/Time-Tracking-REST-API.xml|Time Tracking REST API/Time-Tracking-User-Methods.xml|Time Tracking User Methods/Get-Available-Work-Items-of-Issue.xml|Get Available Work Items of Issue" data-main-title="Get Available Work Items of Issue"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack InCloud Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>YouTrack InCloud 2019.2 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="Get-Available-Work-Items-of-Issue" id="Get-Available-Work-Items-of-Issue.xml">Get Available Work Items of Issue</h1>    <h2 id="6d7ac484">GET /rest/issue/{issue}/timetracking/workitem/</h2>    <p id="9358b651">Get the list of available work items for a particular issue.</p>    <div class="code-block" data-lang="none">GET /rest/issue/{issue}/timetracking/workitem/</div>    <p id="2cc13d21">        <b id="4e4d79d0">Parameters:</b>    </p>    <div class="table-wrapper"><table class=" wide" width="100%" id="57630199"><thead><tr id="710d2c8b" class="ijRowHead"><th id="56a42be3"><p>Name</p></th><th id="1ddfcba3"><p>Type</p></th><th id="cf6521c1"><p>Description</p></th></tr></thead><tbody><tr id="5ca9ab13" class="ijRowOdd"><td id="e5fe93ca"><p>issue</p></td><td id="2d18becf"><p>issue id</p></td><td id="1438e2e7"><p>Issue ID of an issue for which you'd like to get a list of all available work items.</p></td></tr></tbody></table></div>    <p id="8f498212">        <b id="7b43939e">Response parameters:</b>    </p>    <p id="c48bd8ef">For each work item in response code, you will get the following parameters:</p>    <div class="table-wrapper"><table class=" wide" width="100%" id="a0da4497"><thead><tr id="f3f92db0" class="ijRowHead"><th id="044aa31e"><p>Parameter</p></th><th id="79b0ed69"><p>Type</p></th><th id="5fa824aa"><p>Description</p></th></tr></thead><tbody><tr id="4600faf9" class="ijRowOdd"><td id="3e177f01"><p>&lt;id&gt;</p></td><td id="125d09e1"><p>string</p></td><td id="761c2504"><p>Unique ID of a work item. This ID should be used in request methods to edit or delete a work item.</p></td></tr><tr id="d9ddacdb" class="ijRowEven"><td id="d1b3842e"><p>&lt;date&gt;</p></td><td id="34366a29"><p>ms</p></td><td id="07040827"><p>Date of the work item (the number of milliseconds since January 1, 1970, 00:00:00 GMT represented by                this date). When a work item is created, the time part of the work item date is replaced with the                timestamp for midnight in the time zone of the current user.            </p></td></tr><tr id="c0648b56" class="ijRowOdd"><td id="17f2ce7c"><p>&lt;duration&gt;</p></td><td id="40a51c10"><p>minutes</p></td><td id="ac9761ea"><p>Duration of the work item in minutes.</p></td></tr><tr id="8450919d" class="ijRowEven"><td id="db93da76"><p>&lt;description&gt;</p></td><td id="490a9fbd"><p>string</p></td><td id="f11e2202"><p>Description of the work item.</p></td></tr><tr id="402d9157" class="ijRowOdd"><td id="875ea4d5"><p>&lt;author&gt;</p></td><td id="3f907a01"><p>string</p></td><td id="3bfffdd4"><p>User login name of the author of the work item. In addition, we provide the <span class="emphasis">URL</span> to                user's profile.            </p></td></tr></tbody></table></div>    <p id="27011d1a">Also, for each work item we provide unique URL to access this work item (as <code class="code">'URL'</code> attribute        for the &lt;workItem&gt; parameter). See the section below for samples.    </p>    <h2 id="2864a99a">Samples</h2>    <h3 id="a0dfffda">Sample 1</h3>    <p id="5f3534ec">        <b id="0e64c5a3">Request</b>    </p>    <div class="code-block" data-lang="none">
+        GET https://example.com/youtrack/rest/issue/HBR-63/timetracking/workitem
+        Cookie: $Version=0; JSESSIONID=i3p6eke3gf1o1s3zqdlz31ozf; $Path=/;
+        jetbrains.charisma.main.security.PRINCIPAL=NDgxMzQ5NGQxMzdlMTYzMWJiYTMwMWQ1YWNhYjZlN2JiN2FhNzRjZTExODVkNDU2NTY1ZWY1MWQ3Mzc2NzdiMjpyb290;
+        $Path=/
+    </div>    <p id="b6b26c0d">        <b id="ef4a3d77">Response</b>    </p>    <div class="code-block" data-lang="none">
+        HTTP/1.1 200 OK
+        Vary: Accept-Encoding
+        Content-Type: application/xml; charset=UTF-8
+        Cache-Control: no-cache, no-store, no-transform, must-revalidate
+        Content-Length: 727
+
+        &lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+        &lt;workItems&gt;
+        &lt;workItem url="https://example.com/youtrack/rest/issue/HBR-63/timetracking/workitem/101-1"&gt;
+        &lt;id&gt;101-1&lt;/id&gt;
+        &lt;date&gt;1480204800000&lt;/date&gt;
+        &lt;duration&gt;240&lt;/duration&gt;
+        &lt;description&gt;first work item&lt;/description&gt;
+        &lt;author login="root" url="https://example.com/youtrack/rest/admin/user/root"/&gt;
+        &lt;/workItem&gt;
+        &lt;workItem url="https://example.com/youtrack/rest/issue/HBR-63/timetracking/workitem/101-2"&gt;
+        &lt;id&gt;101-2&lt;/id&gt;
+        &lt;date&gt;1467936000000&lt;/date&gt;
+        &lt;duration&gt;480&lt;/duration&gt;
+        &lt;description&gt;second work item&lt;/description&gt;
+        &lt;author login="root" url="https://example.com/youtrack/rest/admin/user/root"/&gt;
+        &lt;/workItem&gt;
+        &lt;/workItems&gt;
+    </div>    <a name="Sample_2"></a>    <h3 id="6afc0d40">Sample 2</h3>    <p id="4cb6364c">        <b id="e4aa0765">Request</b>    </p>    <div class="code-block" data-lang="none">
+        GET https://example.com/youtrack/rest/issue/HBR-63/timetracking/workitem
+        Cookie: $Version=0; JSESSIONID=i3p6eke3gf1o1s3zqdlz31ozf; $Path=/;
+        jetbrains.charisma.main.security.PRINCIPAL=NDgxMzQ5NGQxMzdlMTYzMWJiYTMwMWQ1YWNhYjZlN2JiN2FhNzRjZTExODVkNDU2NTY1ZWY1MWQ3Mzc2NzdiMjpyb290;
+        $Path=/
+    </div>    <p id="d737dd0f">        <b id="7ec276a9">Response</b>    </p>    <div class="code-block" data-lang="none">
+        HTTP/1.1 200 OK
+        Vary: Accept-Encoding
+        Content-Type: application/xml; charset=UTF-8
+        Cache-Control: no-cache, no-store, no-transform, must-revalidate
+        Content-Length: 409
+
+        &lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+        &lt;workItems&gt;
+        &lt;workItem url="https://example.com/youtrack/rest/issue/HBR-63/timetracking/workitem/101-1"&gt;
+        &lt;id&gt;101-1&lt;/id&gt;
+        &lt;date&gt;1511046000000&lt;/date&gt;
+        &lt;duration&gt;230&lt;/duration&gt;
+        &lt;description&gt;first work item edited&lt;/description&gt;
+        &lt;author login="root" url="https://example.com/youtrack/rest/admin/user/root"/&gt;
+        &lt;/workItem&gt;
+        &lt;/workItems&gt;
+    </div><div class="last-modified" data-skip-index="skip">Last modified: 29 November 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="Create-New-Work-Item.html">Create New Work Item</a><a class="navigation-links__next" href="Import-Workitems.html">Import Workitems</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="//resources.jetbrains.com/storage/help-app/v3/app.js"></script></body></html>

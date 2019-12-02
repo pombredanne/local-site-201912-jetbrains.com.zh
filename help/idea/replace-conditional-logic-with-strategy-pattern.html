@@ -1,0 +1,266 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta charset="UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="//resources.jetbrains.com/storage/help-app/v3/analytics.js"></script><title>Replace Conditional Logic with Strategy Pattern - Help | IntelliJ IDEA</title><link rel="stylesheet" href="//resources.jetbrains.com/storage/help-app/v3/app.css"></head><body data-id="Tutorial._Replace_conditional_logic_with_strategy_pattern" data-breadcrumbs="Tutorials/Replace_Conditional_Logic_with_Strategy_Pattern.xml|Replace Conditional Logic with Strategy Pattern" data-main-title="Replace Conditional Logic with Strategy Pattern"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>IntelliJ IDEA 2019.3 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="primary_default_for_windows" selected>Default for Windows</option><option data-group="primary" value="primary_eclipse">Eclipse</option><option data-group="primary" value="primary_emacs">Emacs</option><option data-group="primary" value="primary_netbeans">NetBeans</option><option data-group="primary" value="primary_sublime_text">Sublime Text</option><option data-group="primary" value="primary_visual_studio">Visual Studio</option><option data-group="secondary" value="secondary_macos">macOS</option><option data-group="secondary" value="secondary_eclipse">Eclipse</option><option data-group="secondary" value="secondary_eclipse_macos">Eclipse (macOS)</option><option data-group="secondary" value="secondary_emacs">Emacs</option><option data-group="secondary" value="secondary_intellij_idea_classic">IntelliJ IDEA Classic</option><option data-group="secondary" value="secondary_netbeans">NetBeans</option><option data-group="secondary" value="secondary_sublime_text">Sublime Text</option><option data-group="secondary" value="secondary_sublime_text_macos">Sublime Text (macOS)</option><option data-group="secondary" value="secondary_visual_studio">Visual Studio</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="active"><h1 data-toc="Tutorial._Replace_conditional_logic_with_strategy_pattern" id="Replace_Conditional_Logic_with_Strategy_Pattern.xml">Replace Conditional Logic with Strategy Pattern</h1>    <p id="fa87c5ab">When you have a method with lots of conditional logic (i.e., if statements), you're asking for trouble.        Conditional logic is notoriously difficult to manage, and may cause you to create an entire state machine inside        a single method.</p>    <ul class="list" data-skip-index="skip"><li class="list__item"><a href="#ea1bc116">Analyzing the sample application</a></li><li class="list__item"><a href="#39d986d8">Creating and running test</a></li><li class="list__item"><a href="#256c732c">Extracting methods</a></li><li class="list__item"><a href="#ac62f437">Using Extract Delegate refactoring</a></li><li class="list__item"><a href="#6e3a9cf0">Fine tuning</a></li><li class="list__item"><a href="#13660634">Implementing the abstract class</a></li><li class="list__item"><a href="#e6ecd790">Happy end</a></li></ul><div class="chapter"><h2 id="ea1bc116">Analyzing the sample application</h2> <p id="2576fa18">Here's a short example. Let's say, there is a method that calculates insurance costs based on a person's income:</p><div class="code-block" data-lang="java">
+package ifs;
+
+public class IfElseDemo {
+
+    public double calculateInsurance(double income) {
+        if (income &lt;= 10000) {
+            return income*0.365;
+        } else if (income &lt;= 30000) {
+            return (income-10000)*0.2+35600;
+        } else if (income &lt;= 60000) {
+            return (income-30000)*0.1+76500;
+        } else {
+            return (income-60000)*0.02+105600;
+        }
+
+    }
+}
+
+</div> <p id="d2a1bee2">Let's analyze this example. Here we see the four "income bands widths", separated into four calculation strategies.        In general, they conform to the following formula:</p><div class="code-block" data-lang="java">
+(income - adjustment) * weight + constant
+</div><p id="ccaf816d">Our goal is to provide separate classes to calculate each strategy, and transform the original class to make it more transparent.</p></div><div class="chapter"><h2 id="39d986d8">Creating and running test</h2>    <p id="59c77844">First of all, let's make sure that the class works. To do that, create a test class, using the        <a href="http://junit.org/" data-external="true" target="_blank" rel="noopener noreferrer">JUnit4</a> testing framework. </p>    <p id="9f034fa9">Place the caret at the class name, and then press <kbd data-primary_default_for_windows="Alt+Enter" data-primary_eclipse="Alt+Enter" data-primary_emacs="Alt+Enter" data-primary_netbeans="Alt+Enter" data-primary_sublime_text="Alt+Enter" data-primary_visual_studio="Alt+Enter" data-secondary_macos="⌥⏎" data-secondary_eclipse="⌥⏎" data-secondary_eclipse_macos="⌘1" data-secondary_emacs="⌥⏎" data-secondary_intellij_idea_classic="⌥⏎" data-secondary_netbeans="⌥⏎" data-secondary_sublime_text="⌥⏎" data-secondary_sublime_text_macos="⌥⏎" data-secondary_visual_studio="⌥⏎">Alt+Enter</kbd> (or click        <img class="inline-icon-16" src="/help/img/idea/2019.3/icons.actions.intentionBulb@2x.png" width="16" alt="icons actions intentionBulb">). From the list of suggested intention actions, choose        <span class="control">Create Test</span>:</p>    <figure><img alt="ifelse tutorial create test" title="ifelse tutorial create test" src="/help/img/idea/2019.3/ifelse_tutorial_create_test.png" id="c746ac5c" width="365" height="230"></figure>    <p id="0f73e341">In the <a href="create-test.html">Create Test</a> dialog, choose JUnit4 from the        <span class="control">Testing library</span> drop-down list, click <span class="control">Fix</span>, if you do not have JUnit        library, and then click <span class="control">OK</span>:</p>    <figure><img alt="ifelse tutorial create test dialog" title="ifelse tutorial create test dialog" src="/help/img/idea/2019.3/ifelse_tutorial_create_test_dialog.png" id="81f3ef19" width="444" height="547"></figure>    <p id="95d6a4ca">The stub test class is created. However, you have to provide some meaningful code, using the provided quick fix        <img class="inline-icon-16" src="/help/img/idea/2019.3/icons.actions.quickfixBulb@2x.png" width="16" alt="icons actions quickfixBulb"> to create import statement:</p>    <div class="code-block" data-lang="java">
+import org.junit.Test;
+
+import static org.junit.Assert.*;
+
+
+public class IfElseDemoTest {
+    @Test
+    public void low() {
+    assertEquals(1825, insuranceFor(5000), 0.01);
+    }
+
+    @Test
+    public void medium() {
+    assertEquals(38600, insuranceFor(25000), 0.01);
+    }
+
+    @Test
+    public void high() {
+    assertEquals(78500, insuranceFor(50000), 0.01);
+    }
+
+    @Test
+    public void veryHigh() {
+    assertEquals(106400, insuranceFor(100_000), 0.01);
+    }
+
+    private double insuranceFor(double income) {
+    return new IfElseDemo().calculateInsurance(income);
+    }
+}
+
+    </div>    <p id="8ded6a21">Now let's run this test by clicking the run button <img class="inline-icon-13" src="/help/img/idea/2019.3/icons.toolwindows.toolWindowRun@2x.png" width="13" alt="icons toolwindows toolWindowRun"> in the left gutter, or by pressing    <kbd data-primary_default_for_windows="Ctrl+Shift+F10" data-primary_eclipse="Ctrl+Shift+F10" data-primary_emacs="Ctrl+Shift+F10" data-primary_netbeans="Shift+Alt+F6" data-primary_sublime_text="Ctrl+Shift+F10" data-primary_visual_studio="Ctrl+F9" data-secondary_macos="⌃⇧R" data-secondary_eclipse="⌃⇧F10" data-secondary_eclipse_macos="⌃⇧R" data-secondary_emacs="⌃⇧F10" data-secondary_intellij_idea_classic="⌃⇧F10" data-secondary_netbeans="⌥⇧F6" data-secondary_sublime_text="⌃⇧F10" data-secondary_sublime_text_macos="N/A" data-secondary_visual_studio="⌃F9">Ctrl+Shift+F10</kbd>: </p>    <figure><img alt="ifelse tutorial run test" title="ifelse tutorial run test" src="/help/img/idea/2019.3/ifelse_tutorial_run_test.png" id="2ec39691" width="302" height="124"></figure>    <p id="2e28257a">All 4 tests pass:</p>    <figure><img alt="ifelse tutorial run test pass" title="ifelse tutorial run test pass" src="/help/img/idea/2019.3/ifelse_tutorial_run_test_pass.png" id="2cd3327b" width="618" height="178"></figure></div>    <div class="chapter"><h2 id="256c732c">Extracting methods</h2>        <p id="882d1e10">Next, bring forward the original class, place the caret at the expression </p>        <div class="code-block" data-lang="java">
+(income-60000)*0.02+105600
+        </div>        <p id="a9ea0cf0">and invoke <a href="extract-method-dialog.html">Extract Method Dialog</a> dialog <kbd data-primary_default_for_windows="Ctrl+Alt+M" data-primary_eclipse="Shift+Alt+M" data-primary_emacs="Ctrl+Alt+M" data-primary_netbeans="Shift+Alt+M" data-primary_sublime_text="Ctrl+Alt+M" data-primary_visual_studio="Ctrl+Alt+M" data-secondary_macos="⌥⌘M" data-secondary_eclipse="⌥⇧M" data-secondary_eclipse_macos="⌥⌘M" data-secondary_emacs="⌃⌥M" data-secondary_intellij_idea_classic="⌥⌘M" data-secondary_netbeans="⌥⇧M" data-secondary_sublime_text="⌃⌥M" data-secondary_sublime_text_macos="⌥⌘M" data-secondary_visual_studio="⌃⌥M">Ctrl+Alt+M</kbd>: </p>        <figure><img alt="ifelse tutorial extract method1" title="ifelse tutorial extract method1" src="/help/img/idea/2019.3/ifelse_tutorial_extract_method1.png" id="92a66d4d" width="461" height="421"></figure>        <p id="35abf9d3">You get the following code:</p>        <div class="code-block" data-lang="java">
+ package ifs;
+
+
+ class IfElseDemo {
+
+    public double calculateInsurance(double income) {
+        if (income &lt;= 10000) {
+            return income*0.365;
+        } else if (income &lt;= 30000) {
+            return (income-10000)*0.2+35600;
+        } else if (income &lt;= 60000) {
+            return (income-30000)*0.1+76500;
+        } else {
+            return calculateInsuranceVeryHigh(income);
+    }
+ }
+        public double calculateInsuranceVeryHigh(double income) {
+            return (income-60000)*0.02+105600;
+        }
+ }
+        </div><p id="1512a862">Next, use the same Extract Method refactoring for for 60000, 0.02 and 105600 fragments, and create the methods    <code class="code">getAdjustment</code>, <code class="code">getWeight</code> and    <code class="code">getConstant</code>: </p><div class="code-block" data-lang="java">
+    package ifs;
+
+
+    class IfElseDemo {
+
+        public double calculateInsurance(double income) {
+            if (income &lt;= 10000) {
+                return income*0.365;
+            } else if (income &lt;= 30000) {
+                return (income-10000)*0.2+35600;
+            } else if (income &lt;= 60000) {
+                return (income-30000)*0.1+76500;
+            } else {
+                return calculateInsuranceVeryHigh(income);
+        }
+        public double calculateInsuranceVeryHigh(double income) {
+            return (income- getAdjustment())* getWeight() + getConstant();
+        }
+        public int getConstant() {
+            return 105600;
+        }
+
+        public double getWeight() {
+            return 0.02;
+        }
+        public int getAdjustment() {
+            return 60000;
+        }
+    }
+</div>    </div>    <div class="chapter"><h2 id="ac62f437">Using Extract Delegate refactoring</h2>        <p id="ddceade2">Next, select all the methods created in the previous chapter, and invoke the <a href="extract-into-class-refactorings.html#extract_delegate">Extract delegate example</a>         refactoring:</p><figure><a class="lightbox" href="/help/img/idea/2019.3/ifelse_tutorial_extract_delegate_thumbnail.zoomed.png"><img alt="ifelse tutorial extract delegate thumbnail" title="ifelse tutorial extract delegate thumbnail" src="/help/img/idea/2019.3/ifelse_tutorial_extract_delegate_thumbnail.png" id="57788a63" width="111" height="66"></a></figure>        <p id="6da4796f">The newly created class has the name <code class="code">InsuranceStrategyVeryHigh</code>. </p>        <p id="bb2567a3">Then delete all the selected methods from the class <code class="code">IfElseDemo</code>. Thus you get        the following two classes:</p>        <div class="code-block" data-lang="java">
+package ifs;
+
+
+class IfElseDemo {
+
+    private final InsuranceStrategyVeryHigh insuranceStrategyVeryHigh = new InsuranceStrategyVeryHigh();
+
+    public double calculateInsurance(double income) {
+
+
+        if (income &lt;= 10000) {
+            return income*0.365;
+        } else if (income &lt;= 30000) {
+            return (income-10000)*0.2+35600;
+        } else if (income &lt;= 60000) {
+            return (income-30000)*0.1+76500;
+        } else {
+            return insuranceStrategyVeryHigh.calculateInsuranceVeryHigh(income);
+    }
+
+}
+        </div>        <p id="2c0a2595">and</p>        <div class="code-block" data-lang="java">
+ package ifs;
+
+ public class InsuranceStrategyVeryHigh {
+    public InsuranceStrategyVeryHigh() {
+    }
+
+    public double calculateInsuranceVeryHigh(double income) {
+        return (income - getAdjustment()) * getWeight() + getConstant();
+    }
+
+    public int getConstant() {
+        return 105600;
+    }
+
+    public double getWeight() {
+        return 0.02;
+    }
+
+    public int getAdjustment() {
+        return 60000;
+    }
+ }
+        </div>    </div><div class="chapter"><h2 id="6e3a9cf0">Fine tuning</h2>    <p id="9d38796f">This code requires some modifications. First, let's change the class <code class="code">IfElseDemo</code>:</p>    <ul class="list _ul"><li class="list__item" id="22842757"><p>Rename <kbd data-primary_default_for_windows="Shift+F6" data-primary_eclipse="Shift+Alt+R" data-primary_emacs="Shift+F6" data-primary_netbeans="Ctrl+R" data-primary_sublime_text="Shift+F6" data-primary_visual_studio="Shift+F6" data-secondary_macos="⇧F6" data-secondary_eclipse="⌥⇧R" data-secondary_eclipse_macos="⇧F6" data-secondary_emacs="⇧F6" data-secondary_intellij_idea_classic="⇧F6" data-secondary_netbeans="⌃R" data-secondary_sublime_text="⇧F6" data-secondary_sublime_text_macos="⇧F6" data-secondary_visual_studio="⇧F6">Shift+F6</kbd> the field <code class="code">insuranceStrategyVeryHigh</code> to            <code class="code">strategy</code> </p></li><li class="list__item" id="af97fb31"><p>Make this field not final.</p></li><li class="list__item" id="999b9ddb"><p>Using the intention action, split it into declaration and initialization:            <figure><img alt="ifelse tutorial split" title="ifelse tutorial split" src="/help/img/idea/2019.3/ifelse_tutorial_split.png" id="0e4d0276" width="635" height="411"></figure>        </p></li><li class="list__item" id="e3e93ad5"><p>Move the initialization down to the corresponding <code class="code">if-else</code> branch.</p></li></ul><p id="c1692073">Get the following code:</p><div class="code-block" data-lang="java">
+package ifs;
+
+class IfElseDemo {
+
+    private InsuranceStrategyVeryHigh strategy;
+
+    public double calculateInsurance(double income) {
+
+
+        if (income &lt;= 10000) {
+            return income*0.365;
+        } else if (income &lt;= 30000) {
+            return (income-10000)*0.2+35600;
+        } else if (income &lt;= 60000) {
+            return (income-30000)*0.1+76500;
+        } else {
+            strategy = new InsuranceStrategyVeryHigh();
+            return strategy.calculateInsuranceVeryHigh(income);
+        }
+
+    }
+
+}
+</div>    <p id="6e7b55d4">Next, let's modify the class <code class="code">InsuranceStrategyVeryHigh</code> - invoke the        <a href="extract-superclass.html">Extract Superclass</a>  refactoring for it. </p>    <figure><img alt="ifelse tutorial extract superclass" title="ifelse tutorial extract superclass" src="/help/img/idea/2019.3/ifelse_tutorial_extract_superclass.png" id="ba1b623a" width="565" height="590"></figure>    <p id="8341069c">Mind the settings in the <a href="extract-superclass-dialog.html">Extract Superclass Dialog</a> dialog:</p>    <ul class="list _ul"><li class="list__item" id="4208682b"><p>The name of the superclass to be generated is <code class="code">InsuranceStrategy</code>.</p></li><li class="list__item" id="c4af206b"><p>All the methods of the class <code class="code">InsuranceStrategyVeryHigh</code> are checked - it means        that they will be included in the superclass.</p></li><li class="list__item" id="4e48914e"><p>The method <code class="code">calculateInsuranceStrategyVeryHigh</code> remains non-abstract;        all the other methods are made abstract by selecting the <span class="control">Make Abstract</span> checkboxes.</p></li></ul>    <p id="f31f4e19">Agree to replace the usage of <code class="code">InsuranceStrategyVeryHigh</code> class (in        <code class="code">IfElseDemo</code> class) with the superclass, and get the following        <code class="code">InsuranceStrategy</code> class:</p>    <div class="code-block" data-lang="java">
+package ifs;
+
+public abstract class InsuranceStrategy {
+    public double calculateInsuranceVeryHigh(double income) {
+        return (income - getAdjustment()) * getWeight() + getConstant();
+    }
+
+    public abstract int getConstant();
+
+    public abstract double getWeight();
+
+    public abstract int getAdjustment();
+}
+    </div></div>    <div class="chapter"><h2 id="13660634">Implementing the abstract class</h2>        <p id="ce49b02b">Next, for this abstract class, use <span class="control">Implement Abstract Class</span> intention to create            implementations for all strategies:</p>        <figure><img alt="ifelse tutorial implement abstract" title="ifelse tutorial implement abstract" src="/help/img/idea/2019.3/ifelse_tutorial_implement_abstract.png" id="31b544e3" width="572" height="256"></figure>        <p id="d4df82b8">Name the new implementation classes <code class="code">InsuranceStrategyLow</code>,          <code class="code">InsuranceStrategyMedium</code> and <code class="code">InsuranceStrategyHigh</code>.</p>        <p id="73f5992b">For all new implementations provide correct <code class="code">return</code> statements for the methods            <code class="code">getAdjustment()</code>, <code class="code">getWeight()</code> and            <code class="code">getConstant()</code>.</p>        <p id="e2889207">Thus all implementation classes should look similar to the class            <code class="code">InsuranceStrategyVeryHigh</code>, but with strategy-specific adjustment, weight and            constant. For example:</p><div class="code-block" data-lang="java">
+package ifs;
+
+public class InsuranceStrategyMedium extends InsuranceStrategy {
+    @Override
+    public int getConstant() {
+        return 35600;
+    }
+
+    @Override
+    public double getWeight() {
+        return 0.2;
+    }
+
+    @Override
+    public int getAdjustment() {
+        return 10000;
+    }
+}
+</div>      <p id="2875a8c9">Note that in all newly created implementation classes the class names are grey - they are not used so far.</p><p id="6ddf5817">Next, bring forward the class <code class="code">IfElseDemo</code>, and modify all the branch bodies so that they    initialize the <code class="code">strategy</code> field, like in the last branch: </p><div class="code-block" data-lang="java">
+package ifs;
+
+class IfElseDemo {
+
+    private InsuranceStrategy strategy;
+
+    public double calculateInsurance(double income) {
+
+
+        if (income &lt;= 10000) {
+            strategy = new InsuranceStrategyLow();
+            return strategy.calculateInsuranceVeryHigh(income);
+        } else if (income &lt;= 30000) {
+            strategy = new InsuranceStrategyMedium();
+            return strategy.calculateInsuranceVeryHigh(income);
+        } else if (income &lt;= 60000) {
+            strategy = new InsuranceStrategyHigh();
+            return strategy.calculateInsuranceVeryHigh(income);
+        } else {
+            strategy = new InsuranceStrategyVeryHigh();
+            return strategy.calculateInsuranceVeryHigh(income);
+        }
+
+    }
+
+}
+</div>        <p id="76a80f6c">Finally, rename the method <code class="code">calculateInsuranceVeryHigh</code>: bring forward the class            <code class="code">InsuranceStrategy</code>, place the caret at the method name and press            <kbd data-primary_default_for_windows="Shift+F6" data-primary_eclipse="Shift+Alt+R" data-primary_emacs="Shift+F6" data-primary_netbeans="Ctrl+R" data-primary_sublime_text="Shift+F6" data-primary_visual_studio="Shift+F6" data-secondary_macos="⇧F6" data-secondary_eclipse="⌥⇧R" data-secondary_eclipse_macos="⇧F6" data-secondary_emacs="⇧F6" data-secondary_intellij_idea_classic="⇧F6" data-secondary_netbeans="⌃R" data-secondary_sublime_text="⇧F6" data-secondary_sublime_text_macos="⇧F6" data-secondary_visual_studio="⇧F6">Shift+F6</kbd>. The new name should be <code class="code">calculate</code>. </p>    </div><div class="chapter"><h2 id="e6ecd790">Happy end</h2>    <p id="d78514a8">And finally enjoy the code:</p>    <div class="code-block" data-lang="java">
+package ifs;
+
+class IfElseDemo {
+
+    private InsuranceStrategy strategy;
+
+    public double calculateInsurance(double income) {
+        if (income &lt;= 10000) {
+            strategy = new InsuranceStrategyLow();
+            return strategy.calculate(income);
+        } else if (income &lt;= 30000) {
+            strategy = new InsuranceStrategyMedium();
+            return strategy.calculate(income);
+        } else if (income &lt;= 60000) {
+            strategy = new InsuranceStrategyHigh();
+            return strategy.calculate(income);
+        } else {
+            strategy = new InsuranceStrategyVeryHigh();
+            return strategy.calculate(income);
+        }
+    }
+}
+    </div>    <p id="166dd295">Next, let's run the test class again. All tests should pass – we have refactored the code, but it still produces        the same results.</p></div><div class="last-modified" data-skip-index="skip">Last modified: 29 November 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="tutorial-introduction-to-refactoring.html">Introduction to Refactoring</a><a class="navigation-links__next" href="todo-example.html">TODO Example</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="//resources.jetbrains.com/storage/help-app/v3/app.js"></script></body></html>

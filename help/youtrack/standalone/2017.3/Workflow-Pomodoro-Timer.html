@@ -1,0 +1,173 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="/help/app/v2/analytics.js"></script><meta charset="UTF-8"><meta name="robots" content="noindex"><title>Pomodoro Timer - Help | YouTrack Standalone</title><link rel="stylesheet" href="/help/app/v2/app.css"></head><body data-id="Workflow-Pomodoro-Timer"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack Standalone Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>YouTrack Standalone 2017.3 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><h1 data-toc="Workflow-Pomodoro-Timer" id="Workflow-Pomodoro-Timer.xml">Pomodoro Timer</h1>  <p id="c7f0860b">This workflow supports the Pomodoro time management and time tracking technique.    Pomodoro was created by Francesco Cirillo in the 1980s. For details, visit <a href="http://cirillocompany.de/pages/pomodoro-technique/" data-external="true" target="_blank" rel="noopener noreferrer"><span>http://cirillocompany.de/pages/pomodoro-technique/</span></a>.  </p>  <div class="table-wrapper"><table class="left_header                 " width="100%" id="ebfc9841"><tbody><tr id="644d5d0d" class="ijRowOdd"><th id="ad1df339"><p>Name</p></th><td id="b92d0138"><p>@jetbrains/youtrack-workflow-pomodoro-timer</p></td></tr><tr id="0aee4c89" class="ijRowEven"><th id="0152a484"><p>Auto-attached</p></th><td id="2b755d3f"><p>no</p></td></tr><tr id="fe00dca9" class="ijRowOdd"><th id="4544d32d"><p>Modules</p></th><td id="4e8f45a5"><p>        <a href="#pomodoro-states">Define transitions for "State" field with Pomodoro timer</a>        (state-machine rule)        <br>        <a href="#pomodoro-countdown">Enable Pomodoro countdown</a>        (on-schedule rule)        <br>        <a href="#change-reason">Block changes to interruption cause without stopping timer</a>        (on-change rule)      </p></td></tr></tbody></table></div>  <p id="736400bf">    <b id="31efe278">To enable this workflow:</b>  </p>  <section class="procedure-steps"><ol class="list _decimal"><li class="list__item" id="ba018eab"><p>Enable and configure time tracking for your project.</p></li><li class="list__item" id="8e969c22"><p>Add an enumerated field with the name <span class="control">Pomodoro state</span> to your project.      Add the values <span class="control">Timer's running</span>, <span class="control">Not set</span>, <span class="control">Timer finished</span>,      and <span class="control">On a break</span> to the field.    </p></li><li class="list__item" id="1025c3b0"><p>Add an enumerated field with the name <span class="control">Pomodoro interruption</span> to your project.      Add the values <span class="control">Boss interrupted</span>, <span class="control">Facebook chat</span>, <span class="control">Phone        call</span>, and <span class="control">Urgent email</span> to the field.    </p></li><li class="list__item" id="10dd9796"><p>Add an integer-type field with the name <span class="control">Pomodoro countdown</span> to your project.    </p></li><li class="list__item" id="1063d739"><p>Attach the <span class="control">Pomodoro Timer</span> workflow to your project.    </p></li></ol></section>  <div class="chapter"><h2 id="62e75292">Use Case</h2>    <p id="dda9a3e8">This workflow lets users follow the Pomodoro time management strategy. The Pomodoro technique works like this:    </p>    <ul class="list _ul"><li class="list__item" id="32f6ee58"><p>Periods of activity are divided into equal intervals of time, which are called "pomodoros."</p></li><li class="list__item" id="aaa1cb2c"><p>A traditional pomodoro is 30 minutes long: 25 minutes of work plus a 5-minute break.</p></li><li class="list__item" id="70b95ff4"><p>Every four pomodoros, you are allowed to take a longer break of 15 to 30 minutes.</p></li><li class="list__item" id="aaaf2bcd"><p>A pomodoro cannot be interrupted or split up. It marks 25 minutes of pure work.</p></li><li class="list__item" id="2f2d6be2"><p>If interruptions occur, you stop your pomodoro and log the cause of the interruption.</p></li></ul>  </div>  <div class="chapter"><h2 id="1df4b73d">Modules</h2>    <p id="9a419f79">This workflow includes three modules.</p>    <div class="chapter"><h3 id="pomodoro-states">Define transitions for "State" field with Pomodoro timer</h3>      <p id="46aa38bf">The first module contains a state-machine rule that defines how a Pomodoro transitions from state to state.        The beauty of this rule is that for each finished or interrupted Pomodoro, YouTrack automatically adds a new        work item.        It automatically logs your work on a particular issue!      </p>      <div class="code-block" data-lang="Javascript"><code class="code-block__wrapper"><span class="kd">var</span> <span class="nx">entities</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;@jetbrains/youtrack-scripting-api/entities&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">workflow</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;@jetbrains/youtrack-scripting-api/workflow&#39;</span><span class="p">);</span>
+
+<span class="nx">exports</span><span class="p">.</span><span class="nx">rule</span> <span class="o">=</span> <span class="nx">entities</span><span class="p">.</span><span class="nx">Issue</span><span class="p">.</span><span class="nx">stateMachine</span><span class="p">({</span>
+  <span class="nx">title</span><span class="o">:</span> <span class="nx">workflow</span><span class="p">.</span><span class="nx">i18n</span><span class="p">(</span><span class="s1">&#39;Define transitions for &quot;State&quot; field with Pomodoro timer&#39;</span><span class="p">),</span>
+  <span class="nx">fieldName</span><span class="o">:</span> <span class="s1">&#39;Pomodoro state&#39;</span><span class="p">,</span>
+  <span class="nx">states</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s1">&#39;Not set&#39;</span><span class="o">:</span> <span class="p">{</span>
+      <span class="nx">initial</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+      <span class="nx">transitions</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">start</span><span class="o">:</span> <span class="p">{</span>
+          <span class="nx">targetState</span><span class="o">:</span> <span class="s1">&#39;Timer’s running&#39;</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+
+    <span class="s1">&#39;Timer’s running&#39;</span><span class="o">:</span> <span class="p">{</span>
+      <span class="nx">onEnter</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">ctx</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">ctx</span><span class="p">.</span><span class="nx">issue</span><span class="p">.</span><span class="nx">fields</span><span class="p">[</span><span class="s1">&#39;Pomodoro interruption&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+        <span class="nx">workflow</span><span class="p">.</span><span class="nx">message</span><span class="p">(</span><span class="nx">workflow</span><span class="p">.</span><span class="nx">i18n</span><span class="p">(</span><span class="s1">&#39;25 minutes pomodoro is started.&#39;</span><span class="p">));</span>
+        <span class="nx">ctx</span><span class="p">.</span><span class="nx">issue</span><span class="p">.</span><span class="nx">fields</span><span class="p">[</span><span class="s1">&#39;Pomodoro countdown&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">25</span><span class="p">;</span>
+      <span class="p">},</span>
+      <span class="nx">transitions</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">interrupt</span><span class="o">:</span> <span class="p">{</span>
+          <span class="nx">targetState</span><span class="o">:</span> <span class="s1">&#39;Not set&#39;</span><span class="p">,</span>
+          <span class="nx">action</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">ctx</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">ctx</span><span class="p">.</span><span class="nx">issue</span><span class="p">.</span><span class="nx">fields</span><span class="p">.</span><span class="nx">required</span><span class="p">(</span><span class="nx">ctx</span><span class="p">[</span><span class="s1">&#39;Pomodoro interruption&#39;</span><span class="p">],</span> <span class="nx">workflow</span><span class="p">.</span><span class="nx">i18n</span><span class="p">(</span><span class="s1">&#39;Please specify the interruption cause.&#39;</span><span class="p">));</span>
+
+            <span class="nx">ctx</span><span class="p">.</span><span class="nx">issue</span><span class="p">.</span><span class="nx">applyCommand</span><span class="p">(</span><span class="nx">addWorkToday</span><span class="p">(</span>
+              <span class="p">(</span><span class="mi">25</span> <span class="o">-</span> <span class="nx">ctx</span><span class="p">.</span><span class="nx">issue</span><span class="p">.</span><span class="nx">fields</span><span class="p">[</span><span class="s1">&#39;Pomodoro countdown&#39;</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span>
+              <span class="nx">workflow</span><span class="p">.</span><span class="nx">i18n</span><span class="p">(</span><span class="s1">&#39;Pomodoro was interrupted. The cause: \&#39;&#39;</span><span class="p">)</span> <span class="o">+</span>
+              <span class="nx">ctx</span><span class="p">.</span><span class="nx">issue</span><span class="p">.</span><span class="nx">fields</span><span class="p">[</span><span class="s1">&#39;Pomodoro interruption&#39;</span><span class="p">].</span><span class="nx">name</span> <span class="o">+</span>
+              <span class="s1">&#39;\&#39;.&#39;</span>
+            <span class="p">));</span>
+
+            <span class="nx">ctx</span><span class="p">.</span><span class="nx">issue</span><span class="p">.</span><span class="nx">fields</span><span class="p">[</span><span class="s1">&#39;Pomodoro countdown&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+          <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="nx">reminder</span><span class="o">:</span> <span class="p">{</span>
+          <span class="nx">targetState</span><span class="o">:</span> <span class="s1">&#39;Timer finished&#39;</span><span class="p">,</span>
+          <span class="nx">after</span><span class="o">:</span> <span class="nx">minutes</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+
+    <span class="s1">&#39;Timer finished&#39;</span><span class="o">:</span> <span class="p">{</span>
+      <span class="nx">transitions</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s1">&#39;take a break&#39;</span><span class="o">:</span> <span class="p">{</span>
+          <span class="nx">targetState</span><span class="o">:</span> <span class="s1">&#39;On a break&#39;</span><span class="p">,</span>
+          <span class="nx">action</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">ctx</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">workflow</span><span class="p">.</span><span class="nx">message</span><span class="p">(</span><span class="nx">workflow</span><span class="p">.</span><span class="nx">i18n</span><span class="p">(</span><span class="s1">&#39;5 minutes break.&#39;</span><span class="p">));</span>
+            <span class="nx">ctx</span><span class="p">.</span><span class="nx">issue</span><span class="p">.</span><span class="nx">applyCommand</span><span class="p">(</span><span class="nx">addWorkToday</span><span class="p">(</span><span class="s1">&#39;25m&#39;</span><span class="p">,</span> <span class="s1">&#39;+1 pomodoro.&#39;</span><span class="p">));</span>
+            <span class="nx">ctx</span><span class="p">.</span><span class="nx">issue</span><span class="p">.</span><span class="nx">fields</span><span class="p">[</span><span class="s1">&#39;Pomodoro countdown&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+          <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;discard&#39;</span><span class="o">:</span> <span class="p">{</span>
+          <span class="nx">targetState</span><span class="o">:</span> <span class="s1">&#39;Not set&#39;</span><span class="p">,</span>
+            <span class="nx">action</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">ctx</span><span class="p">)</span> <span class="p">{</span>
+              <span class="nx">ctx</span><span class="p">.</span><span class="nx">issue</span><span class="p">.</span><span class="nx">fields</span><span class="p">.</span><span class="nx">required</span><span class="p">(</span><span class="nx">ctx</span><span class="p">[</span><span class="s1">&#39;Pomodoro interruption&#39;</span><span class="p">],</span> <span class="nx">workflow</span><span class="p">.</span><span class="nx">i18n</span><span class="p">(</span><span class="s1">&#39;Please specify the interruption cause.&#39;</span><span class="p">));</span>
+
+              <span class="nx">ctx</span><span class="p">.</span><span class="nx">issue</span><span class="p">.</span><span class="nx">applyCommand</span><span class="p">(</span><span class="nx">addWorkToday</span><span class="p">(</span>
+                <span class="s1">&#39;25m&#39;</span><span class="p">,</span>
+                <span class="nx">workflow</span><span class="p">.</span><span class="nx">i18n</span><span class="p">(</span><span class="s1">&#39;Pomodoro was discarded. The cause: \&#39;&#39;</span><span class="p">)</span> <span class="o">+</span>
+                <span class="nx">ctx</span><span class="p">.</span><span class="nx">issue</span><span class="p">.</span><span class="nx">fields</span><span class="p">[</span><span class="s1">&#39;Pomodoro interruption&#39;</span><span class="p">].</span><span class="nx">name</span> <span class="o">+</span>
+                <span class="s2">&quot;&#39;.&quot;</span>
+              <span class="p">));</span>
+
+              <span class="nx">ctx</span><span class="p">.</span><span class="nx">issue</span><span class="p">.</span><span class="nx">fields</span><span class="p">[</span><span class="s1">&#39;Pomodoro countdown&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+            <span class="p">}</span>
+          <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+
+    <span class="s1">&#39;On a break&#39;</span><span class="o">:</span> <span class="p">{</span>
+      <span class="nx">transitions</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">start</span><span class="o">:</span> <span class="p">{</span>
+          <span class="nx">targetState</span><span class="o">:</span> <span class="s1">&#39;Timer’s running&#39;</span><span class="p">,</span>
+          <span class="nx">action</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">ctx</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">ctx</span><span class="p">.</span><span class="nx">issue</span><span class="p">.</span><span class="nx">applyCommand</span><span class="p">(</span><span class="nx">addWorkToday</span><span class="p">(</span>
+              <span class="p">(</span><span class="mi">5</span> <span class="o">-</span> <span class="nx">ctx</span><span class="p">.</span><span class="nx">issue</span><span class="p">.</span><span class="nx">fields</span><span class="p">[</span><span class="s1">&#39;Pomodoro countdown&#39;</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span>
+              <span class="nx">workflow</span><span class="p">.</span><span class="nx">i18n</span><span class="p">(</span><span class="s1">&#39;+1 short break.&#39;</span><span class="p">)</span>
+            <span class="p">));</span>
+          <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="nx">reminder</span><span class="o">:</span> <span class="p">{</span>
+          <span class="nx">targetState</span><span class="o">:</span> <span class="s1">&#39;Not set&#39;</span><span class="p">,</span>
+          <span class="nx">after</span><span class="o">:</span> <span class="nx">minutes</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span>
+          <span class="nx">action</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">ctx</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">ctx</span><span class="p">.</span><span class="nx">issue</span><span class="p">.</span><span class="nx">applyCommand</span><span class="p">(</span><span class="nx">addWorkToday</span><span class="p">(</span><span class="s1">&#39;5m&#39;</span><span class="p">,</span> <span class="nx">workflow</span><span class="p">.</span><span class="nx">i18n</span><span class="p">(</span><span class="s1">&#39;+1 break.&#39;</span><span class="p">)));</span>
+          <span class="p">}</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="nx">requirements</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s1">&#39;Pomodoro interruption&#39;</span><span class="o">:</span> <span class="p">{</span>
+      <span class="nx">type</span><span class="o">:</span> <span class="nx">entities</span><span class="p">.</span><span class="nx">EnumField</span><span class="p">.</span><span class="nx">fieldType</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;Pomodoro countdown&#39;</span><span class="o">:</span> <span class="p">{</span>
+      <span class="nx">type</span><span class="o">:</span> <span class="nx">entities</span><span class="p">.</span><span class="nx">Field</span><span class="p">.</span><span class="nx">integerType</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;Pomodoro state&#39;</span><span class="o">:</span> <span class="p">{</span>
+      <span class="nx">type</span><span class="o">:</span> <span class="nx">entities</span><span class="p">.</span><span class="nx">EnumField</span><span class="p">.</span><span class="nx">fieldType</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+
+
+<span class="kd">function</span> <span class="nx">minutes</span><span class="p">(</span><span class="nx">m</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">m</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">addWorkToday</span><span class="p">(</span><span class="nx">countdown</span><span class="p">,</span> <span class="nx">message</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="s1">&#39;add work Today &#39;</span> <span class="o">+</span> <span class="nx">countdown</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="nx">message</span><span class="p">;</span>
+<span class="p">}</span></code></div>    </div>    <div class="chapter"><h3 id="pomodoro-countdown">Enable Pomodoro countdown</h3>      <p id="419b12ae">The second module contains an on-schedule rule that runs the timer and invokes a 25-minute countdown.</p>      <div class="code-block" data-lang="Javascript"><code class="code-block__wrapper"><span class="kd">var</span> <span class="nx">entities</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;@jetbrains/youtrack-scripting-api/entities&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">workflow</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;@jetbrains/youtrack-scripting-api/workflow&#39;</span><span class="p">);</span>
+
+<span class="nx">exports</span><span class="p">.</span><span class="nx">rule</span> <span class="o">=</span> <span class="nx">entities</span><span class="p">.</span><span class="nx">Issue</span><span class="p">.</span><span class="nx">onSchedule</span><span class="p">({</span>
+  <span class="nx">title</span><span class="o">:</span> <span class="nx">workflow</span><span class="p">.</span><span class="nx">i18n</span><span class="p">(</span><span class="s1">&#39;Enable Pomodoro countdown&#39;</span><span class="p">),</span>
+  <span class="nx">search</span><span class="o">:</span> <span class="s1">&#39;has: {Pomodoro countdown} AND Pomodoro countdown: -0 AND (Pomodoro state: {Timer’s running} OR Pomodoro state: {On a break})&#39;</span><span class="p">,</span>
+  <span class="nx">cron</span><span class="o">:</span> <span class="s1">&#39;0 * * * * ?&#39;</span><span class="p">,</span>
+  <span class="nx">action</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">ctx</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">issueFields</span> <span class="o">=</span> <span class="nx">ctx</span><span class="p">.</span><span class="nx">issue</span><span class="p">.</span><span class="nx">fields</span><span class="p">;</span>
+    <span class="nx">issueFields</span><span class="p">[</span><span class="s1">&#39;Pomodoro countdown&#39;</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="p">},</span>
+  <span class="nx">requirements</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s1">&#39;PomodoroCountdown&#39;</span><span class="o">:</span> <span class="p">{</span>
+      <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Pomodoro countdown&#39;</span><span class="p">,</span>
+      <span class="nx">type</span><span class="o">:</span> <span class="nx">entities</span><span class="p">.</span><span class="nx">Field</span><span class="p">.</span><span class="nx">integerType</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;PomodoroState&#39;</span><span class="o">:</span> <span class="p">{</span>
+      <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Pomodoro state&#39;</span><span class="p">,</span>
+      <span class="nx">type</span><span class="o">:</span> <span class="nx">entities</span><span class="p">.</span><span class="nx">EnumField</span><span class="p">.</span><span class="nx">fieldType</span><span class="p">,</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">});</span></code></div>    </div>    <div class="chapter"><h3 id="change-reason">Block changes to interruption cause without stopping timer</h3>      <p id="231933fa">The last module contains an on-change rule that prevents the user from changing the cause of an interruption (by entering a value in the <span class="control">        Pomodoro interruption      </span> field) without stopping the timer.      </p>      <div class="code-block" data-lang="Javascript"><code class="code-block__wrapper"><span class="c1">// The Pomodoro technique is a time management method created by Francesco Cirillo in the 1980s. For details visit http://www.pomodorotechnique.com/</span>
+<span class="kd">var</span> <span class="nx">entities</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;@jetbrains/youtrack-scripting-api/entities&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">workflow</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;@jetbrains/youtrack-scripting-api/workflow&#39;</span><span class="p">);</span>
+
+<span class="nx">exports</span><span class="p">.</span><span class="nx">rule</span> <span class="o">=</span> <span class="nx">entities</span><span class="p">.</span><span class="nx">Issue</span><span class="p">.</span><span class="nx">onChange</span><span class="p">({</span>
+  <span class="nx">title</span><span class="o">:</span> <span class="nx">workflow</span><span class="p">.</span><span class="nx">i18n</span><span class="p">(</span><span class="s1">&#39;Block changes to interruption cause without stopping timer&#39;</span><span class="p">),</span>
+  <span class="nx">guard</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">ctx</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">issueFields</span> <span class="o">=</span> <span class="nx">ctx</span><span class="p">.</span><span class="nx">issue</span><span class="p">.</span><span class="nx">fields</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nx">issueFields</span><span class="p">.</span><span class="nx">isChanged</span><span class="p">(</span><span class="nx">ctx</span><span class="p">.</span><span class="nx">PomodoroInterruption</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">issueFields</span><span class="p">.</span><span class="nx">isChanged</span><span class="p">(</span><span class="nx">ctx</span><span class="p">.</span><span class="nx">PomodoroState</span><span class="p">);</span>
+  <span class="p">},</span>
+  <span class="nx">action</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">workflow</span><span class="p">.</span><span class="nx">check</span><span class="p">(</span>
+      <span class="kc">false</span><span class="p">,</span>
+      <span class="nx">workflow</span><span class="p">.</span><span class="nx">i18n</span><span class="p">(</span><span class="s1">&#39;Cannot change the interruption cause without changing the timer state.&#39;</span><span class="p">)</span>
+    <span class="p">);</span>
+  <span class="p">},</span>
+  <span class="nx">requirements</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s1">&#39;PomodoroInterruption&#39;</span><span class="o">:</span> <span class="p">{</span>
+      <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Pomodoro interruption&#39;</span><span class="p">,</span>
+      <span class="nx">type</span><span class="o">:</span> <span class="nx">entities</span><span class="p">.</span><span class="nx">EnumField</span><span class="p">.</span><span class="nx">fieldType</span>
+      <span class="s1">&#39;Boss interrupted&#39;</span><span class="o">:</span> <span class="p">{},</span>
+      <span class="s1">&#39;Facebook chat&#39;</span><span class="o">:</span> <span class="p">{},</span>
+      <span class="s1">&#39;Phone call&#39;</span><span class="o">:</span> <span class="p">{},</span>
+      <span class="s1">&#39;Urgent email&#39;</span><span class="o">:</span> <span class="p">{}</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;PomodoroState&#39;</span><span class="o">:</span> <span class="p">{</span>
+      <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Pomodoro state&#39;</span><span class="p">,</span>
+      <span class="nx">type</span><span class="o">:</span> <span class="nx">entities</span><span class="p">.</span><span class="nx">EnumField</span><span class="p">.</span><span class="nx">fieldType</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">});</span></code></div>    </div>  </div><div class="last-modified" data-skip-index="skip">Last modified: 7 March 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="Workflow-One-Vote-Comment.html">One Vote Comment</a><a class="navigation-links__next" href="Workflow-Spam-Blacklist.html">Profanity Blacklist</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="/help/app/v2/app.js"></script></body></html>

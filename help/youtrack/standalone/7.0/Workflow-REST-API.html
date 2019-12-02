@@ -1,0 +1,214 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="robots" content="noindex"><title>YouTrack Standalone 7.0 Help :: Using REST API Methods in Workflows</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Workflow-REST-API"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack Standalone Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>YouTrack Standalone 7.0 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="Workflow-Overview.html">Workflow Overview</a><a class="navigation-links__next" href="Access-Management.html">Access Management</a></div><h1>Using REST API Methods in Workflows</h1><a name="d217860e3"></a><p>YouTrack 7.0 brings REST client implementation to the workflow API.
+        You can now use workflows to script push-style integrations with your favorite tools.</p><a name="d217860e6"></a><p>Here's a basic example:</p><a name="d217860e9"></a><div class="code-block" data-lang="Javascript"><code class="code-block__wrapper"><span class="c1">// post new issue content to third-party tool and add response as a comment</span>
+
+<span class="nx">when</span> <span class="nx">issue</span><span class="p">.</span><span class="nx">becomesReported</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">addHttpHeader</span><span class="p">(</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">,</span> <span class="s2">&quot;text/html&quot;</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">response</span> <span class="o">=</span> <span class="nx">doHttpPost</span><span class="p">(</span><span class="s2">&quot;http://server.com/issueRegistry&quot;</span><span class="p">,</span> <span class="nx">issue</span><span class="p">.</span><span class="nx">description</span><span class="p">);</span>
+    <span class="nx">issue</span><span class="p">.</span><span class="nx">addComment</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span>
+<span class="p">}</span></code></div><a name="d217860e12"></a><h2>API Reference</h2>
+
+    <a name="d217860e14"></a><p>Use the following methods to add API calls to your workflow rules.</p>
+
+    <table class="" width="100%" id="d217860e17"><thead><tr id="d217860e19" class="ijRowHead"><a name="d217860e19"></a><th width="35%"><a name="d217860e21"></a>Method</th><th><a name="d217860e24"></a>Description</th></tr></thead><tbody><tr id="d217860e28" class="ijRowOdd"><a name="d217860e28"></a><td><a name="d217860e30"></a>void addHttpHeader(key: String, value: String)</td><td><a name="d217860e33"></a>Adds an HTTP header to the next request. Subsequent calls add multiple headers.
+                Any <code class="code" data-lang="Java">doHttp*</code> call uses up all of the accumulated headers and sets the internal header to an empty value.</td></tr><tr id="d217860e40" class="ijRowEven"><a name="d217860e40"></a><td><a name="d217860e42"></a>void addHttpFormField(key: String, value: String)</td><td><a name="d217860e45"></a>Adds a field to an HTTP form that is submitted with the next request. Subsequent calls add multiple fields.
+                The API implementation seamlessly encodes any form field value with <code class="code" data-lang="Java">application/x-www-form-urlencoded</code> and sets the MIME type (i.e. Content-Type header) accordingly.
+            Set to an empty value following any <code class="code" data-lang="Java">doHttp*</code> call.</td></tr><tr id="d217860e55" class="ijRowOdd"><a name="d217860e55"></a><td><a name="d217860e57"></a>void addHttpRequestParameter(key: String, value: String)</td><td><a name="d217860e60"></a>Adds a URL parameter (<code class="code" data-lang="Java">scheme://domain.com?key=value</code>) to the next request. Subsequent calls add multiple parameters.
+                URL parameter encoding is applied automatically to every parameter.
+            Set to an empty value following any <code class="code" data-lang="Java">doHttp*</code> call.</td></tr><tr id="d217860e70" class="ijRowEven"><a name="d217860e70"></a><td><a name="d217860e72"></a>String doHttpGet(url: String)</td><td><a name="d217860e75"></a>Executes an HTTP GET request to the specified URL.
+                Returns the response code, message, and body as a single string. For further details on how to parse the response, see <a href="#server-response">Server Response</a>.</td></tr><tr id="d217860e82" class="ijRowOdd"><a name="d217860e82"></a><td><a name="d217860e84"></a>String doHttpPost(url: String, body: String)</td><td><a name="d217860e87"></a>Executes an HTTP POST request to the specified URL.
+                You should either specify the string request payload or use the <code class="code" data-lang="Java">addHttpFormField</code> method to set the form field beforehand.
+                If you have already set the form field, the <code class="code" data-lang="Java">body</code> parameter is ignored.</td></tr><tr id="d217860e97" class="ijRowEven"><a name="d217860e97"></a><td><a name="d217860e99"></a>String doHttpPut(url: String, body: String)</td><td><a name="d217860e102"></a>Executes an HTTP PUT request to the specified URL. Payload handling rules are the same as for the POST method.</td></tr><tr id="d217860e106" class="ijRowOdd"><a name="d217860e106"></a><td><a name="d217860e108"></a>String doHttpDelete(url: String)</td><td><a name="d217860e111"></a>Executes an HTTP DELETE request to the specified URL.</td></tr></tbody></table>
+
+<a name="d217860e117"></a><h2>Authentication</h2>
+
+        <a name="d217860e119"></a><p>The REST client supports the HTTP basic access authentication scheme via headers.
+            To utilize this scheme, compute a base64(login:password) value and set the authorization header as follows:</p>
+
+        <a name="d217860e122"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="n">addHttpHeader</span><span class="o">(</span><span class="s">&quot;Authorization&quot;</span><span class="o">,</span> <span class="s">&quot;Basic amsudmNAbWFFR5ydTp5b3V0cmFjaw==&quot;</span><span class="o">);</span></code></div>
+
+        <a name="d217860e125"></a><p>Set the authorization header for every request, unless the target server provides cookies upon successful authentication.</p>
+
+        <a name="d217860e128"></a><p>HTTP cookies are managed transparently under the hood, when present.
+        That is, if any RESET call returns cookies, they persist automatically and provide access to the same domain until they expire.
+        You can also set cookies manually in the header:</p>
+
+        <a name="d217860e131"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="n">addHttpHeader</span><span class="o">(</span><span class="s">&quot;Cookie&quot;</span><span class="o">,</span> <span class="s">&quot;MyServiceCookie=732423sdfs73242&quot;</span><span class="o">);</span></code></div>
+
+    <a name="server-response"></a><h2>Server Response</h2>
+
+        <a name="d217860e138"></a><p>The REST client returns the server response as a single string with response code, response message, and an optional response body. For example:</p>
+
+<a name="d217860e141"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span> <span class="mi">404</span> <span class="n">Not</span> <span class="n">Found</span>
+<span class="o">{</span><span class="s">&quot;status&quot;</span><span class="o">:</span><span class="s">&quot;404&quot;</span><span class="o">,</span><span class="s">&quot;error&quot;</span><span class="o">:</span><span class="s">&quot;Not Found&quot;</span><span class="o">}</span></code></div>
+        <a name="d217860e144"></a><p>or</p>
+
+<a name="d217860e147"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span> <span class="mi">201</span> <span class="n">Created</span></code></div>
+
+        <a name="d217860e150"></a><p>It's always worth checking whether the HTTP response matches your expectations.</p>
+        <a name="d217860e154"></a><p>As for response parsing, the REST client doesn't offer any special utilities beyond the usual language string API.
+            The following code sample gives illustrates how to parse a server response:</p>
+
+<a name="d217860e157"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="k">if</span> <span class="o">(</span><span class="n">response</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s">&quot;201&quot;</span><span class="o">,</span> <span class="n">opts</span><span class="o">))</span> <span class="o">{</span>
+    <span class="n">debug</span><span class="o">(</span><span class="n">response</span><span class="o">);</span>
+    <span class="n">id</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="na">substringBetween</span><span class="o">(</span><span class="s">&quot;\&quot;id\&quot;:&quot;</span><span class="o">,</span> <span class="s">&quot;,&quot;</span><span class="o">);</span>
+    <span class="n">notes</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="na">substringBetween</span><span class="o">(</span><span class="s">&quot;\&quot;notes\&quot;:&quot;</span><span class="o">,</span> <span class="s">&quot;}&quot;</span><span class="o">);</span>
+<span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+    <span class="n">error</span><span class="o">(</span><span class="n">response</span><span class="o">);</span>
+<span class="o">}</span></code></div>
+        <a name="d217860e161"></a><h2>Secure Connections (SSL/TLS)</h2>
+
+        <a name="d217860e163"></a><p>The REST client supports <code class="code" data-lang="Java">https://</code> connections out of the box.
+        Although it's currently unable to present a client certificate during the handshake, it can still validate a server certificate against known certificate authorities.
+        To learn more about adding trusted certificates to YouTrack, see <a name="d217860e168"></a><a href="SSL-Certificates.html"><span>SSL Certificates</span></a>.</p>
+<a name="d217860e172"></a><h2>Best Practices</h2>
+            <a name="d217860e174"></a><p>For best results, observe the following guidelines.</p>
+
+            <ol class="list _decimal"><li class="list__item"><a name="d217860e179"></a>Know your protocol. If you're not yet familiar with HTTP, it's time to fill the gap.
+                    You should have at least a basic understanding of the protocol to script the integration and decrypt errors.</li><li class="list__item"><a name="d217860e182"></a>Know your API. Your favorite application that you're going to integrate with YouTrack almost certainly has documentation that tells you how to use their API.
+                    Check it out before you start to script an integration.
+                    For instance, here's a manual for the <a name="d217860e184"></a><a href="http://pastebin.com/api/" data-external="true"><span>Pastebin service</span></a>.</li><li class="list__item"><a name="d217860e188"></a> Use logging. Log errors with <code class="code" data-lang="Java">error(...)</code> and everything else with <code class="code" data-lang="Java">debug(...)</code>.</li><li class="list__item"><a name="d217860e197"></a>Use a third-party REST client to make sure your requests are formatted correctly.
+                    Diagnostic tools in clients like <a name="d217860e199"></a><span class="control">cURL</span>, <a name="d217860e202"></a><span class="control">Wget</span> or the <a name="d217860e205"></a><span class="control">Postman</span> extension for Chrome can help you to find out why your workflow is not acting as expected.</li><li class="list__item"><a name="d217860e209"></a>Don't forget to add <code class="code" data-lang="Java">Content-Type</code> and <code class="code" data-lang="Java">Accept</code> headers to your requests.
+                    The majority of APIs out there rely on these headers and refuse to work without them.</li></ol>
+
+<a name="d217860e220"></a><h2>Case Studies</h2>
+        <a name="d217860e222"></a><p>The following case studies illustrate how you can use the workflow REST API to integrate YouTrack with an external application.</p>
+<a name="d217860e225"></a><h3>Pastebin Integration</h3>
+
+        <a name="d217860e227"></a><p><a name="d217860e228"></a><a href="http://pastebin.com/" data-external="true"><span>Pastebin</span></a> is a  website where you can store text online for a set period of time.
+            You can paste any string of text like code snippets and extracts from log files.</p>
+
+        <a name="d217860e232"></a><p>In this case study, we extract code snippets from new issues and store them on Pastebin instead.
+            The issue description retains a link to the content that is moved to Pastebin. The following workflow rule demonstrates how this scenario is implemented:</p>
+
+<a name="d217860e235"></a><div class="code-block" data-lang="Javascript"><code class="code-block__wrapper"><span class="nx">rule</span> <span class="nx">Export</span> <span class="nx">code</span> <span class="nx">samples</span> <span class="nx">to</span> <span class="nx">pastebin</span><span class="p">.</span><span class="nx">com</span>
+
+<span class="nx">when</span> <span class="nx">issue</span><span class="p">.</span><span class="nx">becomesReported</span><span class="p">()</span> <span class="o">||</span> <span class="p">(</span><span class="nx">issue</span><span class="p">.</span><span class="nx">isReported</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="nx">issue</span><span class="p">.</span><span class="nx">description</span><span class="p">.</span><span class="nx">changed</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// find a code sample in issue description: the text between code markup tokens</span>
+    <span class="kd">var</span> <span class="nx">code</span> <span class="o">=</span> <span class="nx">issue</span><span class="p">.</span><span class="nx">description</span><span class="p">.</span><span class="nx">substringBetween</span><span class="p">(</span><span class="s2">&quot;{&quot;</span> <span class="o">+</span> <span class="s2">&quot;code&quot;</span> <span class="o">+</span> <span class="s2">&quot;}&quot;</span><span class="p">,</span> <span class="s2">&quot;{&quot;</span> <span class="o">+</span> <span class="s2">&quot;code&quot;</span> <span class="o">+</span> <span class="s2">&quot;}&quot;</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">code</span><span class="p">.</span><span class="nx">isNotBlank</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// pastebin accepts only forms, so we pack everything as form fields</span>
+        <span class="c1">// authentication of performed via api developer key</span>
+        <span class="nx">issue</span><span class="p">.</span><span class="nx">addHttpFormField</span><span class="p">(</span><span class="s2">&quot;api_dev_key&quot;</span><span class="p">,</span> <span class="s2">&quot;98bcac75e1e327b54c08947ea1dbcb7e&quot;</span><span class="p">);</span>
+        <span class="c1">// other fields describing our &quot;paste&quot;</span>
+        <span class="nx">issue</span><span class="p">.</span><span class="nx">addHttpFormField</span><span class="p">(</span><span class="s2">&quot;api_option&quot;</span><span class="p">,</span> <span class="s2">&quot;paste&quot;</span><span class="p">);</span>
+        <span class="nx">issue</span><span class="p">.</span><span class="nx">addHttpFormField</span><span class="p">(</span><span class="s2">&quot;api_paste_private&quot;</span><span class="p">,</span> <span class="s2">&quot;1&quot;</span><span class="p">);</span>
+        <span class="nx">issue</span><span class="p">.</span><span class="nx">addHttpFormField</span><span class="p">(</span><span class="s2">&quot;api_paste_name&quot;</span><span class="p">,</span> <span class="s2">&quot;Code sample from issue &quot;</span> <span class="o">+</span> <span class="nx">issue</span><span class="p">.</span><span class="nx">getId</span><span class="p">());</span>
+        <span class="nx">issue</span><span class="p">.</span><span class="nx">addHttpFormField</span><span class="p">(</span><span class="s2">&quot;api_paste_code&quot;</span><span class="p">,</span> <span class="nx">code</span><span class="p">.</span><span class="nx">trim</span><span class="p">(</span><span class="nx">side</span><span class="o">:</span> <span class="nx">both</span><span class="p">));</span>
+        <span class="c1">// form is ready, let&#39;s send it over the wire</span>
+        <span class="kd">var</span> <span class="nx">response</span> <span class="o">=</span> <span class="nx">issue</span><span class="p">.</span><span class="nx">doHttpPost</span><span class="p">(</span><span class="s2">&quot;http://pastebin.com/api/api_post.php&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">contains</span><span class="p">(</span><span class="s2">&quot;200 OK&quot;</span><span class="p">,</span> <span class="nx">opts</span><span class="p">))</span> <span class="p">{</span>
+            <span class="c1">// split the response by lines to get to the body</span>
+            <span class="c1">// response body contains a public URL for our code snippet</span>
+            <span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="nx">response</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot;\n&quot;</span><span class="p">,</span> <span class="nx">opts</span><span class="p">)[</span><span class="mi">1</span><span class="p">];</span>
+            <span class="nx">issue</span><span class="p">.</span><span class="nx">description</span> <span class="o">=</span> <span class="nx">issue</span><span class="p">.</span><span class="nx">description</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="s2">&quot;{&quot;</span> <span class="o">+</span> <span class="s2">&quot;code&quot;</span> <span class="o">+</span> <span class="s2">&quot;}&quot;</span> <span class="o">+</span> <span class="nx">code</span> <span class="o">+</span> <span class="s2">&quot;{&quot;</span> <span class="o">+</span> <span class="s2">&quot;code&quot;</span><span class="o">+</span> <span class="s2">&quot;}&quot;</span><span class="p">,</span> <span class="s2">&quot;See sample at &quot;</span> <span class="o">+</span> <span class="nx">url</span><span class="p">);</span>
+            <span class="nx">message</span><span class="p">(</span><span class="s2">&quot;Code sample is moved at &lt;a href=&#39;&quot;</span> <span class="o">+</span> <span class="nx">url</span> <span class="o">+</span> <span class="s2">&quot;&#39;&gt;&quot;</span> <span class="o">+</span> <span class="nx">url</span> <span class="o">+</span> <span class="s2">&quot;&lt;/a&gt;&quot;</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="c1">// something went wrong, we&#39;d better log the response</span>
+            <span class="nx">error</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></div>
+        <a name="d217860e238"></a><p>On the other hand, we may want to do the opposite: to expand any Pastebin link we met into a code snippet, i.e. to download it and insert into issue. Let's try to code it:</p>
+
+<a name="d217860e241"></a><div class="code-block" data-lang="Javascript"><code class="code-block__wrapper"><span class="nx">rule</span> <span class="nx">Import</span> <span class="nx">code</span> <span class="nx">samples</span> <span class="nx">from</span> <span class="nx">pastebin</span><span class="p">.</span><span class="nx">com</span>
+
+<span class="nx">when</span> <span class="nx">issue</span><span class="p">.</span><span class="nx">becomesReported</span><span class="p">()</span> <span class="o">||</span> <span class="p">(</span><span class="nx">issue</span><span class="p">.</span><span class="nx">isReported</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="nx">issue</span><span class="p">.</span><span class="nx">description</span><span class="p">.</span><span class="nx">changed</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// check, if issue description contains links to pastebin</span>
+    <span class="kd">var</span> <span class="nx">baseUrl</span> <span class="o">=</span> <span class="s2">&quot;http://pastebin.com/&quot;</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">urlBaseLength</span> <span class="o">=</span> <span class="nx">baseUrl</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">linkStart</span> <span class="o">=</span> <span class="nx">issue</span><span class="p">.</span><span class="nx">description</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">baseUrl</span><span class="p">,</span> <span class="nx">opts</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">linkStart</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// so we found a link, let&#39;s extract the key and download the contents via API</span>
+        <span class="kd">var</span> <span class="nx">pasteKey</span> <span class="o">=</span> <span class="nx">issue</span><span class="p">.</span><span class="nx">description</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="nx">linkStart</span> <span class="o">+</span> <span class="nx">urlBaseLength</span><span class="p">,</span> <span class="nx">linkStart</span> <span class="o">+</span> <span class="nx">urlBaseLength</span> <span class="o">+</span> <span class="mi">8</span><span class="p">);</span>
+        <span class="kd">var</span> <span class="nx">response</span> <span class="o">=</span> <span class="nx">issue</span><span class="p">.</span><span class="nx">doHttpGet</span><span class="p">(</span><span class="s2">&quot;http://pastebin.com/raw/&quot;</span> <span class="o">+</span> <span class="nx">pasteKey</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">contains</span><span class="p">(</span><span class="s2">&quot;200 OK&quot;</span><span class="p">,</span> <span class="nx">opts</span><span class="p">))</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">code</span> <span class="o">=</span> <span class="nx">response</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot;\n&quot;</span><span class="p">,</span> <span class="nx">opts</span><span class="p">)[</span><span class="mi">1</span><span class="p">];</span>
+            <span class="c1">// insert downloaded content into issue description</span>
+            <span class="nx">issue</span><span class="p">.</span><span class="nx">description</span> <span class="o">=</span> <span class="nx">issue</span><span class="p">.</span><span class="nx">description</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="nx">baseUrl</span> <span class="o">+</span> <span class="nx">pasteKey</span><span class="p">,</span> <span class="s2">&quot;{&quot;</span> <span class="o">+</span> <span class="s2">&quot;code&quot;</span> <span class="o">+</span> <span class="s2">&quot;}&quot;</span> <span class="o">+</span> <span class="nx">code</span> <span class="o">+</span> <span class="s2">&quot;{&quot;</span> <span class="o">+</span> <span class="s2">&quot;code&quot;</span> <span class="o">+</span> <span class="s2">&quot;}&quot;</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="c1">// something went wrong, we&#39;d better log the response</span>
+            <span class="nx">error</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></div>
+     
+    <a name="d217860e245"></a><h3>Custom Time Tracking with the Harvest Web Service</h3>
+
+
+        <a name="d217860e247"></a><p>Suppose that we want to bill customers for the working hours that we record in YouTrack.
+        The problem is that YouTrack isn't really built for managing invoices and associating spent time with specific customers.
+        An integration with a dedicated time tracking service can make life a lot easier.</p>
+
+        <a name="d217860e250"></a><p>One possible scenario is to introduce a custom field - <a name="d217860e252"></a><span class="control">Billable hours</span> - and post changes to the value of this field to the Harvest web service.</p>
+
+<a name="d217860e256"></a><div class="code-block" data-lang="Javascript"><code class="code-block__wrapper"><span class="nx">rule</span> <span class="nx">Post</span> <span class="nx">work</span> <span class="nx">item</span> <span class="nx">to</span> <span class="nx">Harvest</span>
+
+<span class="nx">when</span> <span class="nx">issue</span><span class="p">.</span><span class="nx">Billable</span> <span class="nx">hours</span><span class="p">.</span><span class="nx">changed</span> <span class="p">{</span>
+    <span class="c1">// we&#39;ve created an admin user in Harvest and use these credentials for authentication</span>
+    <span class="nx">addHttpHeader</span><span class="p">(</span><span class="s2">&quot;Authorization&quot;</span><span class="p">,</span><span class="s2">&quot;Basic amsudmNAbWFpbC5ydTp5b3V0cmFjaw==&quot;</span><span class="p">);</span>
+    <span class="nx">addHttpHeader</span><span class="p">(</span><span class="s2">&quot;Accept&quot;</span><span class="p">,</span><span class="s2">&quot;application/json&quot;</span><span class="p">);</span>
+    <span class="nx">addHttpHeader</span><span class="p">(</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">,</span><span class="s2">&quot;application/json&quot;</span><span class="p">);</span>
+    <span class="c1">// post hours on behalf of the specific user.</span>
+    <span class="c1">// this trick requires Harvest and YouTrack user logins to be synchronized</span>
+    <span class="nx">addHttpRequestUrlParameter</span><span class="p">(</span><span class="s2">&quot;of_user&quot;</span><span class="p">,</span><span class="nx">loggedInUser</span><span class="p">.</span><span class="nx">login</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">hours</span> <span class="o">=</span> <span class="nx">Billable</span> <span class="nx">hours</span> <span class="o">-</span> <span class="nx">Billable</span> <span class="nx">hours</span><span class="p">.</span><span class="nx">oldValue</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">json</span> <span class="o">=</span> <span class="s2">&quot;{\&quot;hours\&quot;:\&quot;&quot;</span><span class="o">+</span><span class="nx">hours</span><span class="o">+</span><span class="s2">&quot;\&quot;, \&quot;project_id\&quot;: \&quot;11698305\&quot;, \&quot;task_id\&quot;: \&quot;11698305\&quot;}&quot;</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">response</span> <span class="o">=</span> <span class="nx">doHttpPost</span><span class="p">(</span><span class="s2">&quot;https://youtrack.harvestapp.com/daily/add&quot;</span><span class="p">,</span><span class="nx">json</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">contains</span><span class="p">(</span><span class="s2">&quot;201&quot;</span><span class="p">,</span><span class="nx">opts</span><span class="p">))</span> <span class="p">{</span>
+        <span class="nx">debug</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+    <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+        <span class="nx">error</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></div>
+        <a name="d217860e259"></a><p>Let's consider another option: start time tracking when an issue moves to an <a name="d217860e261"></a><span class="control">In Progress</span> state and stop time tracking when the issue is resolved.
+        Lucky for us, Harvest has a timer API that we can use to start and stop the timers remotely. The <a name="d217860e264"></a><span class="control">Harvest ID</span> custom field is required to store the timer identifier.</p>
+
+<a name="d217860e268"></a><div class="code-block" data-lang="Javascript"><code class="code-block__wrapper"><span class="nx">rule</span> <span class="nx">Start</span> <span class="nx">Harvest</span> <span class="nx">timer</span>
+
+<span class="nx">when</span> <span class="nx">issue</span><span class="p">.</span><span class="nx">State</span><span class="p">.</span><span class="nx">becomes</span><span class="p">({</span><span class="nx">In</span> <span class="nx">Progress</span><span class="p">})</span> <span class="p">{</span>
+    <span class="c1">// we&#39;ve created an admin user in Harvest and use his credentials for authentication</span>
+    <span class="nx">addHttpHeader</span><span class="p">(</span><span class="s2">&quot;Authorization&quot;</span><span class="p">,</span><span class="s2">&quot;Basic amsudmNAbWFpbC5ydTp5b3V0cmFjaw==&quot;</span><span class="p">);</span>
+    <span class="nx">addHttpHeader</span><span class="p">(</span><span class="s2">&quot;Accept&quot;</span><span class="p">,</span><span class="s2">&quot;application/json&quot;</span><span class="p">);</span>
+    <span class="nx">addHttpHeader</span><span class="p">(</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">,</span><span class="s2">&quot;application/json&quot;</span><span class="p">);</span>
+    <span class="c1">// start timer on behalf of the specific user.</span>
+    <span class="c1">// this trick requires Harvest and YouTrack user logins to be synchronized</span>
+    <span class="nx">addHttpRequestUrlParameter</span><span class="p">(</span><span class="s2">&quot;of_user&quot;</span><span class="p">,</span><span class="nx">loggedInUser</span><span class="p">.</span><span class="nx">login</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">json</span> <span class="o">=</span> <span class="s2">&quot;{\&quot;project_id\&quot;: \&quot;11698305\&quot;, \&quot;task_id\&quot;: \&quot;11698305\&quot;}&quot;</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">response</span> <span class="o">=</span> <span class="nx">doHttpPost</span><span class="p">(</span><span class="s2">&quot;https://youtrack.harvestapp.com/daily/add&quot;</span><span class="p">,</span><span class="nx">json</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">contains</span><span class="p">(</span><span class="s2">&quot;201&quot;</span><span class="p">,</span><span class="nx">opts</span><span class="p">)</span> <span class="p">){</span>
+        <span class="nx">debug</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+        <span class="c1">// persist timer id to be able stop the timer later</span>
+        <span class="nx">Harvest</span> <span class="nx">ID</span> <span class="o">=</span> <span class="nx">response</span><span class="p">.</span><span class="nx">substringBetween</span><span class="p">(</span><span class="s2">&quot;\&quot;id\&quot;:&quot;</span><span class="p">,</span><span class="s2">&quot;,&quot;</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">error</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></div>
+        <a name="d217860e272"></a><p>The following workflow rule stops the Harvest timer when an issue is resolved.</p>
+<a name="d217860e275"></a><div class="code-block" data-lang="Javascript"><code class="code-block__wrapper"><span class="nx">rule</span> <span class="nx">Stop</span> <span class="nx">Harvest</span> <span class="nx">Timer</span>
+
+<span class="nx">when</span> <span class="nx">issue</span><span class="p">.</span><span class="nx">becomesResolved</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// we&#39;ve created an admin user in Harvest and use his credentials for authentication</span>
+    <span class="nx">addHttpHeader</span><span class="p">(</span><span class="s2">&quot;Authorization&quot;</span><span class="p">,</span><span class="s2">&quot;Basic amsudmNAbWFpbC5ydTp5b3V0cmFjaw==&quot;</span><span class="p">);</span>
+    <span class="nx">addHttpHeader</span><span class="p">(</span><span class="s2">&quot;Accept&quot;</span><span class="p">,</span><span class="s2">&quot;application/json&quot;</span><span class="p">);</span>
+    <span class="nx">addHttpHeader</span><span class="p">(</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">,</span><span class="s2">&quot;application/json&quot;</span><span class="p">);</span>
+    <span class="c1">// stop timer on behalf of the specific user.</span>
+    <span class="c1">// this trick requires Harvest and YouTrack user logins to be synchronized</span>
+    <span class="nx">addHttpRequestUrlParameter</span><span class="p">(</span><span class="s2">&quot;of_user&quot;</span><span class="p">,</span><span class="nx">loggedInUser</span><span class="p">.</span><span class="nx">login</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">json</span> <span class="o">=</span> <span class="s2">&quot;{\&quot;project_id\&quot;: \&quot;11698305\&quot;, \&quot;task_id\&quot;: \&quot;11698305\&quot;}&quot;</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">response</span> <span class="o">=</span> <span class="nx">doHttpGet</span><span class="p">(</span><span class="s2">&quot;https://youtrack.harvestapp.com/daily/timer/&quot;</span> <span class="o">+</span> <span class="nx">Harvest</span> <span class="nx">ID</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">contains</span><span class="p">(</span><span class="s2">&quot;200&quot;</span><span class="p">,</span><span class="nx">opts</span><span class="p">))</span> <span class="p">{</span>
+        <span class="nx">debug</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">error</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></div>
+
+     
+    <div class="last-modified">Last modified: 2 February 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

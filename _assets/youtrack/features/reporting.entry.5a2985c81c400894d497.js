@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[517],{516:function(n,o,t){t("ctTR"),n.exports=t("t6Ub")},BG4i:function(n,o,t){},t6Ub:function(n,o,t){var a=t("KI45");t("BG4i");var c=a(t("EVdn")),d=a(t("Am66")),e=a(t("h9hA"));d.default.domReady((function(){(0,c.default)(".js-carousel-dots").each((function(n,o){(0,e.default)(o,{dots:!0,innerArrows:!0})}))}))}},[[516,0]]]);
+//# sourceMappingURL=reporting.entry.630b557231e643e6c0d3.js.map

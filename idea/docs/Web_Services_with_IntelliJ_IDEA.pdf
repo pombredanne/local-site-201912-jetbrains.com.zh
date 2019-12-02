@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+                                            
+        <!-- Error reporting -->
+<script>(function(){
+  window.reportError = function(msg, file, line, col, err, isUnhandledRejection){};
+  var prevOnError = window.onerror;
+  var onError = function(msg, file, line, col, err) {
+    reportError(msg, file, line, col, err, false);
+    prevOnError && prevOnError.apply(window, arguments);
+    return false;
+  };
+  window.onerror = onError;
+  // Setup reporting for unhandled Promise rejection errors
+  window.addEventListener("unhandledrejection", function(e) {
+    if (!e.reason) return;
+    var l = getSrcLocation(e.reason);
+    reportError(e.reason.message, l.file, l.line, l.col, e.reason, true);
+  });
+  // Setup reporting for console.error and console.warn calls
+  patchConsole('error');
+  patchConsole('warn');
+  // Utility functions
+  function patchConsole(fnName) {
+    var fn = console[fnName];
+    console[fnName] = function() {
+      fn.apply(console, arguments);
+      var l; try {
+        throw new Error('_');
+      } catch (err) {
+        l = getSrcLocation(err, 1);
+      }
+      var msg = 'console.' + fnName + ': ' + Array.prototype.join.call(arguments, ' ');
+      reportError(msg, l.file, l.line, l.col, undefined, false);
+    };
+  }
+  function getSrcLocation(err, sd) {
+    var s = err && err.stack;
+    var l = s && s.split("\n")[1 + (sd|0)];
+    var r = l && (/^\s*at [^(]*\((.*?):(\d+)(:\d+)?\)$/.exec(l) || /^\s*at (.*?):(\d+)(:\d+)?$/.exec(l));
+    return r ? {file: r[1], line: r[2], col: r[3]} : {};
+  }
+})();</script>
+<!-- Error reporting -->        <!-- Google Tag Manager -->
+<script>(function() {
+  // Initialize Tag Manager queue
+  window.dataLayer = window.dataLayer || [];
+  window.gtmLoaded = false;
+  // Setup reporting for errors that occurred before Tag Manager initialized
+  var prevReportError = window.reportError;
+  var reportError = function(msg, file, line, col, err, isUnhandledRejection) {
+    if (!window.gtmLoaded || isUnhandledRejection) {
+      // Reproduce the behavior of the Tag Manager error handler
+      window.dataLayer.push(makeEvt(msg, file, line));
+    }
+    prevReportError && prevReportError.apply(window, arguments);
+  };
+  window.reportError = reportError;
+  // Utility functions
+  function makeEvt(msg, file, line) {
+    return {
+      event: "gtm.pageError", "gtm.errorMessage": msg,
+      "gtm.errorUrl": file, "gtm.errorLineNumber": line
+    };
+  }
+})();</script>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;j.addEventListener(
+    'load', function(){window.gtmLoaded=true});f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5P98');</script>
+<!-- End Google Tag Manager -->        <!-- Sentry -->
+<script>
+    (function() {
+        window.sentryLoaded = false;
+        window.errorsForSentry = [];
+        var prevReportError = window.reportError;
+        var reportError = function(
+            msg,
+            file,
+            line,
+            col,
+            err,
+            isUnhandledRejection
+        ) {
+            if (!window.sentryLoaded) {
+                window.errorsForSentry.push(err);
+            }
+            prevReportError && prevReportError.apply(window, arguments);
+        };
+        window.reportError = reportError;
+    })();
+</script>
+<script>
+    window.sentryLoad = function() {
+        window.sentryLoaded = true;
+        Sentry.init({
+            dsn: 'https://1adb2a61713144eda0786e5af50ddc51@sentry.io/1423069',
+            release:
+                "jetbrainscom@a6ccaa6ddb",
+            beforeSend: function(event) {
+                Object.keys(event).forEach(function(key) {
+                    var value = event[key];
+                    if (isEmail(value)) {
+                        delete event[key];
+                    }
+                });
+                return event;
+            }
+        });
+        Sentry.configureScope(function(scope) {
+            scope.setTag('page_locale', 'en-us');
+            scope.setTag('browser.locale', getPageLocale());
+
+            scope.setTag('http.urlFull', location.href);
+            var protocol = location.protocol || '';
+            //omit `:` from location.protocol string
+            var protocolString = protocol.substring(0, protocol.length - 1);
+
+            scope.setTag('http.protocol', protocolString);
+
+            scope.setTag('http.hostname', location.hostname);
+
+            var search = location.search || '';
+            //omit ? from location.search string
+            var searchString = search.substr(1);
+            if (searchString !== '') {
+                scope.setTag('http.query', searchString || '1');
+            }
+            var hash = location.hash || '';
+            //omit # from location.hash string
+            var hashString = hash.substr(1);
+            if (hashString !== '') {
+                scope.setTag('http.fragment', hashString);
+            }
+        });
+        window.errorsForSentry.forEach(Sentry.captureException);
+
+        function getPageLocale() {
+            return (
+                (navigator.languages && navigator.languages[0]) ||
+                navigator.language
+            );
+        }
+        function isEmail(value) {
+            var emailRegex = /[\+\-\_\.a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+\.[a-zA-Z0-9]+/g;
+            return emailRegex.test(value);
+        }
+    };
+</script>
+<script src="https://browser.sentry-cdn.com/5.7.1/bundle.min.js" crossorigin="anonymous" onload="sentryLoad()" async></script>
+<!-- End Sentry -->    
+                <title>Features - IntelliJ IDEA</title>
+    
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, maximum-scale=1">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#000000">
+<meta name="apple-mobile-web-app-title" content="JetBrains">
+<meta name="application-name" content="JetBrains">
+<meta name="msapplication-TileColor" content="#000000">
+<meta name="theme-color" content="#000000">    <link rel="canonical" href="https://www.jetbrains.com/idea/features/" />    <!-- .61-->
+                            <meta name="description" content="The most intelligent Java IDE with refactoring support."/>
+        
+                    <meta name="keywords" content="Java IDE, java editor, JSP, java web programming"/>
+        
+            
+        <link rel="alternate" hreflang="x-default" href="https://www.jetbrains.com/idea/features/" />
+
+                        <link rel="alternate" hreflang="en" href="https://www.jetbrains.com/idea/features/" />
+                                <link rel="alternate" hreflang="de" href="https://www.jetbrains.com/de-de/idea/features/" />
+                                <link rel="alternate" hreflang="es" href="https://www.jetbrains.com/es-es/idea/features/" />
+                                <link rel="alternate" hreflang="fr" href="https://www.jetbrains.com/fr-fr/idea/features/" />
+                                <link rel="alternate" hreflang="ja" href="https://www.jetbrains.com/ja-jp/idea/features/" />
+                                <link rel="alternate" hreflang="ko" href="https://www.jetbrains.com/ko-kr/idea/features/" />
+                                <link rel="alternate" hreflang="ru" href="https://www.jetbrains.com/ru-ru/idea/features/" />
+                                <link rel="alternate" hreflang="zh-CN" href="https://www.jetbrains.com/zh-cn/idea/features/" />
+                                            <link rel="alternate" hreflang="x-klingon" href="https://www.jetbrains.com/tl-aa/idea/features/" />
+            
+    
+    
+        
+    
+    
+    <script>
+        var current_lang = 'en-us';
+                                    var i18n_info = {"current_lang": "en-us", "languages": [{"canonical": "en", "code": "en-us", "label": "English", "page_translated": true, "url": "/idea/features/"}, {"canonical": "de", "code": "de-de", "label": "Deutsch", "page_translated": true, "url": "/de-de/idea/features/"}, {"canonical": "es", "code": "es-es", "label": "Espa\u00f1ol", "page_translated": true, "url": "/es-es/idea/features/"}, {"canonical": "fr", "code": "fr-fr", "label": "Fran\u00e7ais", "page_translated": true, "url": "/fr-fr/idea/features/"}, {"canonical": "ja", "code": "ja-jp", "label": "\u65e5\u672c\u8a9e", "page_translated": true, "url": "/ja-jp/idea/features/"}, {"canonical": "ko", "code": "ko-kr", "label": "\ud55c\uad6d\uc5b4", "page_translated": true, "url": "/ko-kr/idea/features/"}, {"canonical": "ru", "code": "ru-ru", "label": "\u0420\u0443\u0441\u0441\u043a\u0438\u0439", "page_translated": true, "url": "/ru-ru/idea/features/"}, {"canonical": "zh-CN", "code": "zh-cn", "label": "\u7b80\u4f53\u4e2d\u6587", "page_translated": true, "url": "/zh-cn/idea/features/"}, {"canonical": "pt-BR", "code": "pt-br", "label": "Portugu\u00eas do Brasil", "page_translated": false, "url": "/pt-br/idea/features/"}, {"canonical": "x-klingon", "code": "tl-aa", "label": "tlhIngan Hol", "page_translated": true, "url": "/tl-aa/idea/features/"}]};
+                            var navigationMenu = {"primary": {"id": "main_v2", "items": [{"id": "tools", "title": "Tools", "descriptionTitle": "Toolbox App", "descriptionLogoId": "toolbox", "descriptionLink": "Learn more", "descriptionUrl": "/toolbox-app/", "description": "Manage your tools the easy way", "src": "/img/banners-menu-main/toolbox-vertical.png", "horisontalSrc": "/img/banners-menu-main/toolbox-horisontal.png", "bgColor": "#3E0598", "isVisible": true, "hasCategories": true, "items": [{"title": "IDEs", "items": [{"isActive": false, "id": "appcode", "title": "AppCode", "url": "/objc/", "logoLeftActionId": "appcode", "items": [], "cleaned_url": "/objc/"}, {"isActive": false, "id": "clion", "title": "CLion", "url": "/clion/", "logoLeftActionId": "clion", "items": [], "cleaned_url": "/clion/"}, {"isActive": false, "id": "datalore", "title": "Datalore", "url": "https://datalore.io/", "isExternalLink": true, "logoLeftActionId": "datalore", "items": [], "cleaned_url": "https://datalore.io/"}, {"isActive": false, "id": "datagrip", "title": "DataGrip", "url": "/datagrip/", "logoLeftActionId": "datagrip", "items": [], "cleaned_url": "/datagrip/"}, {"isActive": false, "id": "goland", "title": "GoLand", "url": "/go/", "logoLeftActionId": "goland", "items": [], "cleaned_url": "/go/"}, {"isActive": false, "id": "idea", "title": "IntelliJ IDEA", "url": "/idea/", "logoLeftActionId": "intellij-idea", "items": [], "cleaned_url": "/idea/"}, {"isActive": false, "id": "phpstorm", "title": "PhpStorm", "url": "/phpstorm/", "logoLeftActionId": "phpstorm", "items": [], "cleaned_url": "/phpstorm/"}, {"isActive": false, "id": "pycharm", "title": "PyCharm", "url": "/pycharm/", "logoLeftActionId": "pycharm", "items": [], "cleaned_url": "/pycharm/"}, {"isActive": false, "id": "rider", "title": "Rider", "url": "/rider/", "logoLeftActionId": "rider", "items": [], "cleaned_url": "/rider/"}, {"isActive": false, "id": "rubymine", "title": "RubyMine", "url": "/ruby/", "logoLeftActionId": "rubymine", "items": [], "cleaned_url": "/ruby/"}, {"isActive": false, "id": "webstorm", "title": "WebStorm", "url": "/webstorm/", "logoLeftActionId": "webstorm", "items": [], "cleaned_url": "/webstorm/"}, {"isActive": false, "id": "toolbox", "type": "special", "title": "Toolbox App", "url": "/toolbox-app/", "logoLeftId": "toolbox", "description": "A control panel for your tools and projects", "items": [], "cleaned_url": "/toolbox-app/"}]}, {"title": ".NET & VISUAL STUDIO", "items": [{"isActive": false, "id": "resharper", "title": "ReSharper", "url": "/resharper/", "logoLeftActionId": "resharper", "items": [], "cleaned_url": "/resharper/"}, {"isActive": false, "id": "rider", "title": "Rider", "url": "/rider/", "logoLeftActionId": "rider", "items": [], "cleaned_url": "/rider/"}, {"isActive": false, "id": "resharper-cpp", "title": "ReSharper C++", "url": "/resharper-cpp/", "logoLeftActionId": "resharper-cpp", "items": [], "cleaned_url": "/resharper-cpp/"}, {"isActive": false, "id": "dotcover", "title": "dotCover", "url": "/dotcover/", "logoLeftActionId": "dotcover", "items": [], "cleaned_url": "/dotcover/"}, {"isActive": false, "id": "dotmemory", "title": "dotMemory", "url": "/dotmemory/", "logoLeftActionId": "dotmemory", "items": [], "cleaned_url": "/dotmemory/"}, {"isActive": false, "id": "dotpeek", "title": "dotPeek", "url": "/decompiler/", "logoLeftActionId": "dotpeek", "items": [], "cleaned_url": "/decompiler/"}, {"isActive": false, "id": "dottrace", "title": "dotTrace", "url": "/profiler/", "logoLeftActionId": "dottrace", "items": [], "cleaned_url": "/profiler/"}]}, {"title": "TEAM TOOLS", "items": [{"isActive": false, "id": "teamcity", "title": "TeamCity", "url": "/teamcity/", "logoLeftActionId": "teamcity", "items": [], "cleaned_url": "/teamcity/"}, {"isActive": false, "id": "upsource", "title": "Upsource", "url": "/upsource/", "logoLeftActionId": "upsource", "items": [], "cleaned_url": "/upsource/"}, {"isActive": false, "id": "youtrack", "title": "YouTrack", "url": "/youtrack/", "logoLeftActionId": "youtrack", "items": [], "cleaned_url": "/youtrack/"}, {"isActive": false, "id": "hub", "title": "Hub", "url": "/hub/", "logoLeftActionId": "hub", "items": [], "cleaned_url": "/hub/"}]}, {"title": "PLUGIN MARKETPLACE", "items": [{"isActive": false, "id": "bigdata", "title": "Big Data Tools", "url": "https://plugins.jetbrains.com/plugin/12494-big-data-tools", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/plugin/12494-big-data-tools"}, {"isActive": false, "id": "rustsupport", "title": "Rust", "url": "https://plugins.jetbrains.com/plugin/8182-rust", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/plugin/8182-rust"}, {"isActive": false, "id": "scalaplugin", "title": "Scala", "url": "https://plugins.jetbrains.com/plugin/1347-scala", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/plugin/1347-scala"}, {"isActive": false, "id": "idethemes", "title": "IDE Themes", "url": "https://plugins.jetbrains.com/search?tags=Theme", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/search?tags=Theme"}, {"isActive": false, "id": "plugins", "title": "All Plugins", "url": "https://plugins.jetbrains.com/", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/"}]}, {"title": "EDUCATION", "items": [{"isActive": false, "id": "pycharm-edu", "title": "PyCharm Edu", "url": "/education/", "urlHash": "#lang=python&role=learner", "logoLeftActionId": "pycharm-edu", "items": [], "cleaned_url": "/education/"}, {"isActive": false, "id": "idea-edu", "title": "IntelliJ IDEA Edu", "url": "/education/", "urlHash": "#lang=java&role=learner", "logoLeftActionId": "intellij-idea", "items": [], "cleaned_url": "/education/"}, {"isActive": false, "id": "jb-academy", "title": "JB Academy", "url": "/academy/", "items": [], "cleaned_url": "/academy/"}]}]}, {"id": "languages", "title": "Languages", "descriptionTitle": "Kotlin/Everywhere", "descriptionLogoId": "header-kotlin-everywhere", "descriptionLink": "Join in!", "descriptionUrl": "//everywhere.kotlinlang.org", "description": "A worldwide event series for learning the best Kotlin practices on all platforms", "descriptionBig": true, "src": "/img/banners-menu-main/kotlin-vertical.png", "horisontalSrc": "/img/banners-menu-main/kotlin-horisontal.png", "bgColor": "#D6721C", "isExternalLink": true, "isVisible": true, "hasCategories": false, "items": [{"isActive": false, "id": "kotlin", "title": "Kotlin", "url": "https://kotlinlang.org/", "isExternalLink": true, "logoLeftId": "header-kotlin-grayscale", "logoLeftActionId": "kotlin", "logoLeftSize": "50", "description": "Programming language \n for JVM & Android", "items": [], "cleaned_url": "https://kotlinlang.org/"}, {"isActive": false, "id": "mps", "title": "MPS", "url": "/mps/", "logoLeftId": "header-mps-grayscalse", "logoLeftActionId": "mps", "logoLeftSize": "50", "description": "Create your own domain-specific language", "items": [], "cleaned_url": "/mps/"}]}, {"id": "solutions", "title": "Solutions", "descriptionTitle": "JetBrains Academy", "descriptionLogoId": "academy-logo", "descriptionLink": "Join in!", "descriptionUrl": "/academy", "description": "An educational platform for future professionals", "src": "/img/banners-menu-main/academy-vertical.png", "horisontalSrc": "/img/banners-menu-main/academy-horisontal.png", "bgColor": "#53288E", "hasCategories": false, "isVisible": true, "items": [{"isActive": false, "title": "C++ Tools", "url": "/cpp/", "logoLeftId": "header-cpp-grayscale", "logoLeftActionId": "header-cpp", "description": "Tools for C/C++ development \nfor any platform", "items": [], "cleaned_url": "/cpp/"}, {"isActive": false, "title": "For Business", "url": "/store/business/", "logoLeftId": "header-for-business-grayscale", "logoLeftActionId": "header-for-business", "description": "Wide range of tools. \nAll major technologies covered", "items": [], "cleaned_url": "/store/business/"}, {"isActive": false, "title": "Game Development", "url": "/gamedev/", "logoLeftId": "header-gamedev-grayscale", "logoLeftActionId": "header-gamedev", "description": "Tools for game development \nfor any platform", "items": [], "cleaned_url": "/gamedev/"}, {"isActive": false, "title": "DevOps", "url": "/devops/", "logoLeftId": "header-devops-grayscale", "logoLeftActionId": "header-devops", "description": "Tools and integrations \nfor any infrastructure", "items": [], "cleaned_url": "/devops/"}, {"isActive": false, "title": "Education", "url": "/education/", "logoLeftId": "header-education-grayscale", "logoLeftActionId": "header-education", "description": "Products to learn and teach programming", "items": [], "cleaned_url": "/education/"}]}, {"id": "support", "title": "Support", "description": "Pricing and licensing for businesses and individuals", "descriptionTitle": "JetBrains Store", "descriptionLogoId": "header-store", "descriptionUrl": "/store/?fromMenu#edition=commercial", "descriptionLink": "visit store", "isVisible": true, "hasCategories": true, "items": [{"title": "CUSTOMERS", "items": [{"isActive": false, "title": "Sales Support", "url": "/support/sales/", "description": "Orders, payments", "items": [], "cleaned_url": "/support/sales/"}, {"isActive": false, "title": "Product Support", "url": "/support/", "description": "Tech support, documentation", "items": [], "cleaned_url": "/support/"}]}, {"title": "COMMUNITY PROGRAMS", "items": [{"isActive": false, "title": "Education", "url": "/community/education/", "description": "Students, classrooms, training", "items": [], "cleaned_url": "/community/education/"}, {"isActive": false, "title": "Open Source", "url": "/community/opensource/", "description": "Projects support", "items": [], "cleaned_url": "/community/opensource/"}, {"isActive": false, "title": "Sponsorship", "url": "/community/support/", "description": "User groups, events, technology experts", "items": [], "cleaned_url": "/community/support/"}]}]}, {"id": "company", "title": "Company", "isVisible": true, "hasCategories": true, "items": [{"title": "INITIATIVES", "items": [{"isActive": false, "title": "Open Source", "url": "/opensource/", "description": "Projects, contributions", "items": [], "cleaned_url": "/opensource/"}, {"isActive": false, "title": "Research", "url": "/research/", "description": "Market, Scientific", "items": [], "cleaned_url": "/research/"}]}, {"title": "COMPANY", "items": [{"isActive": false, "title": "About", "url": "/company/", "description": "People, customers, awards", "items": [], "cleaned_url": "/company/"}, {"isActive": false, "title": "Brand Assets", "url": "/company/brand/", "description": "Guidelines, logos", "items": [], "cleaned_url": "/company/brand/"}, {"isActive": false, "title": "Careers", "url": "/careers/apply/", "description": "Jobs, internships", "items": [], "cleaned_url": "/careers/apply/"}, {"isActive": false, "title": "Events", "url": "/company/events/", "description": "Conferences, meetups", "items": [], "cleaned_url": "/company/events/"}, {"isActive": false, "title": "Contacts", "url": "/company/contacts/", "description": "Partners, resellers, Kotlin training", "items": [], "cleaned_url": "/company/contacts/"}]}, {"title": "RESOURCES", "items": [{"isActive": false, "title": "Newsletters", "url": "/resources/newsletters/", "items": [], "cleaned_url": "/resources/newsletters/"}, {"isActive": false, "title": "Webinars", "url": "/resources/webinars/", "items": [], "cleaned_url": "/resources/webinars/"}, {"isActive": false, "title": "Early Access", "url": "/resources/eap/", "items": [], "cleaned_url": "/resources/eap/"}, {"isActive": false, "title": "Blog", "url": "//blog.jetbrains.com/", "isExternalLink": true, "items": [], "cleaned_url": "//blog.jetbrains.com/"}]}]}, {"isActive": false, "id": "store", "url": "/store/?fromNavMenu", "title": "Store", "isVisible": true, "hasCategories": false, "items": [], "cleaned_url": "/store/?fromNavMenu"}]}, "secondary": {"isActive": true, "id": "product_idea", "logoId": "intellij-idea", "url": "/idea/", "title": "IntelliJ IDEA", "items": [{"isActive": false, "title": "What's New", "url": "/idea/whatsnew/", "items": [], "cleaned_url": "/idea/whatsnew/"}, {"isActive": true, "title": "Features", "url": "/idea/features/", "items": [], "cleaned_url": "/idea/features/"}, {"isActive": false, "title": "Learn", "url": "/idea/documentation/", "items": [], "cleaned_url": "/idea/documentation/"}, {"isActive": false, "title": "Buy", "url": "/idea/buy/", "items": [], "cleaned_url": "/idea/buy/"}, {"isActive": false, "title": "Download", "url": "/idea/download/", "type": "button", "items": [], "cleaned_url": "/idea/download/"}], "cleaned_url": "/idea/"}};
+        
+        var is_layout_adaptive = false;
+                    is_layout_adaptive = true;
+        
+        var disable_language_picker = false;
+        
+        var english_only_url_prefixes = [];
+            </script>
+    
+            <script></script>
+    
+        
+    
+            <link href="/_assets/common.d44d81f300d3bff87efe.css" rel="stylesheet" type="text/css">
+<link href="/_assets/default-page.fabf52db4bf34ea78af0.css" rel="stylesheet" type="text/css">
+<link href="/_assets/idea/features/index.entry.a60b1d85fcecc9a45460.css" rel="stylesheet" type="text/css">
+<link href="/_assets/idea/inc/choose-edition/index.entry.016d965cda68bccf1340.css" rel="stylesheet" type="text/css">
+        <script src="/_assets/common.34604685b633d15ae3ed.js" type="text/javascript"></script>
+<script src="/_assets/default-page.2e180fc15a6b94fe7fa3.js" type="text/javascript"></script>
+<script src="/_assets/idea/features/index.entry.a9f5566b100163c03c1c.js" type="text/javascript"></script>
+<script src="/_assets/idea/inc/choose-edition/index.entry.bed6fb503cf7d4a624ca.js" type="text/javascript"></script>
+<script src="/_assets/idea/inc/social-footer/index.entry.0ff93008ad40c36f6493.js" type="text/javascript"></script>
+    
+            <!-- Social Media tag Starts -->
+    <!-- Open Graph data -->
+            <meta property="og:title" content="Features - IntelliJ IDEA"/>
+    
+                    <meta property="og:description" content="The most intelligent Java IDE with refactoring support."/>
+    <meta property="og:image" content="http://resources.jetbrains.com/storage/products/intellij-idea/img/meta/intellij-idea_1280x800.png"/>
+
+    <meta property="og:site_name" content="JetBrains"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="https://www.jetbrains.com/idea/features/"/>
+    <!-- Social Media tag Ends -->
+</head>
+
+<body class="nojs  body-adaptive">
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<script>
+/*! modernizr 3.2.0 (Custom Build) | MIT *
+ * http://modernizr.com/download/?-flexbox-flexboxtweener !*/
+!function(e,n,t){function r(e,n){return typeof e===n}function o(){var e,n,t,o,i,s,l;for(var f in v)if(v.hasOwnProperty(f)){if(e=[],n=v[f],n.name&&(e.push(n.name.toLowerCase()),n.options&&n.options.aliases&&n.options.aliases.length))for(t=0;t<n.options.aliases.length;t++)e.push(n.options.aliases[t].toLowerCase());for(o=r(n.fn,"function")?n.fn():n.fn,i=0;i<e.length;i++)s=e[i],l=s.split("."),1===l.length?Modernizr[l[0]]=o:(!Modernizr[l[0]]||Modernizr[l[0]]instanceof Boolean||(Modernizr[l[0]]=new Boolean(Modernizr[l[0]])),Modernizr[l[0]][l[1]]=o),C.push((o?"":"no-")+l.join("-"))}}function i(e,n){return!!~(""+e).indexOf(n)}function s(e){return e.replace(/([a-z])-([a-z])/g,function(e,n,t){return n+t.toUpperCase()}).replace(/^-/,"")}function l(e,n){return function(){return e.apply(n,arguments)}}function f(e,n,t){var o;for(var i in e)if(e[i]in n)return t===!1?e[i]:(o=n[e[i]],r(o,"function")?l(o,t||n):o);return!1}function a(e){return e.replace(/([A-Z])/g,function(e,n){return"-"+n.toLowerCase()}).replace(/^ms-/,"-ms-")}function u(){return"function"!=typeof n.createElement?n.createElement(arguments[0]):b?n.createElementNS.call(n,"http://www.w3.org/2000/svg",arguments[0]):n.createElement.apply(n,arguments)}function d(){var e=n.body;return e||(e=u(b?"svg":"body"),e.fake=!0),e}function p(e,t,r,o){var i,s,l,f,a="modernizr",p=u("div"),c=d();if(parseInt(r,10))for(;r--;)l=u("div"),l.id=o?o[r]:a+(r+1),p.appendChild(l);return i=u("style"),i.type="text/css",i.id="s"+a,(c.fake?c:p).appendChild(i),c.appendChild(p),i.styleSheet?i.styleSheet.cssText=e:i.appendChild(n.createTextNode(e)),p.id=a,c.fake&&(c.style.background="",c.style.overflow="hidden",f=_.style.overflow,_.style.overflow="hidden",_.appendChild(c)),s=t(p,e),c.fake?(c.parentNode.removeChild(c),_.style.overflow=f,_.offsetHeight):p.parentNode.removeChild(p),!!s}function c(n,r){var o=n.length;if("CSS"in e&&"supports"in e.CSS){for(;o--;)if(e.CSS.supports(a(n[o]),r))return!0;return!1}if("CSSSupportsRule"in e){for(var i=[];o--;)i.push("("+a(n[o])+":"+r+")");return i=i.join(" or "),p("@supports ("+i+") { #modernizr { position: absolute; } }",function(e){return"absolute"==getComputedStyle(e,null).position})}return t}function m(e,n,o,l){function f(){d&&(delete E.style,delete E.modElem)}if(l=r(l,"undefined")?!1:l,!r(o,"undefined")){var a=c(e,o);if(!r(a,"undefined"))return a}for(var d,p,m,h,y,v=["modernizr","tspan"];!E.style;)d=!0,E.modElem=u(v.shift()),E.style=E.modElem.style;for(m=e.length,p=0;m>p;p++)if(h=e[p],y=E.style[h],i(h,"-")&&(h=s(h)),E.style[h]!==t){if(l||r(o,"undefined"))return f(),"pfx"==n?h:!0;try{E.style[h]=o}catch(g){}if(E.style[h]!=y)return f(),"pfx"==n?h:!0}return f(),!1}function h(e,n,t,o,i){var s=e.charAt(0).toUpperCase()+e.slice(1),l=(e+" "+x.join(s+" ")+s).split(" ");return r(n,"string")||r(n,"undefined")?m(l,n,o,i):(l=(e+" "+S.join(s+" ")+s).split(" "),f(l,n,t))}function y(e,n,r){return h(e,t,t,n,r)}var v=[],g={_version:"3.2.0",_config:{classPrefix:"",enableClasses:!0,enableJSClass:!0,usePrefixes:!0},_q:[],on:function(e,n){var t=this;setTimeout(function(){n(t[e])},0)},addTest:function(e,n,t){v.push({name:e,fn:n,options:t})},addAsyncTest:function(e){v.push({name:null,fn:e})}},Modernizr=function(){};Modernizr.prototype=g,Modernizr=new Modernizr;var C=[],w="Moz O ms Webkit",x=g._config.usePrefixes?w.split(" "):[];g._cssomPrefixes=x;var S=g._config.usePrefixes?w.toLowerCase().split(" "):[];g._domPrefixes=S;var _=n.documentElement,b="svg"===_.nodeName.toLowerCase(),z={elem:u("modernizr")};Modernizr._q.push(function(){delete z.elem});var E={style:z.elem.style};Modernizr._q.unshift(function(){delete E.style}),g.testAllProps=h,g.testAllProps=y,Modernizr.addTest("flexbox",y("flexBasis","1px",!0)),Modernizr.addTest("flexboxtweener",y("flexAlign","end",!0)),o(),delete g.addTest,delete g.addAsyncTest;for(var P=0;P<Modernizr._q.length;P++)Modernizr._q[P]();e.Modernizr=Modernizr}(window,document);
+
+if (!Modernizr.flexbox && !Modernizr.flexboxtweener) {
+
+  var $body = $('body');
+
+  var nodesClasses = {
+    wrapper: 'not-supported-browser',
+    container: 'not-supported-browser__container',
+
+    title: 'not-supported-browser__title',
+    content: 'not-supported-browser__content',
+    logo: 'not-supported-browser__logo'
+  };
+
+  var nodes = {
+    wrapper: $('<div class="' + nodesClasses.wrapper + '"></div>'),
+    title: $('<div class="' + nodesClasses.title + '">Sorry, your browser is not fully supported</div>'),
+    content: $('<div class="' + nodesClasses.content + '">There may be some issues with pages layout in your current browser.<br/>Please use an alternate browser until we resolve the issues.<br/>Thank you.</div>'),
+    container: $('<div class="' + nodesClasses.container + '"></div>'),
+    logo: $('<div class="' + nodesClasses.logo + '"><svg class="sprite-img _jetbrains" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#jetbrains"></use></svg></div>')
+  };
+
+  $body.addClass('overflow-hidden');
+
+
+  nodes.content
+    .prepend(nodes.title)
+    .prepend(nodes.logo);
+
+  nodes.container
+    .append(nodes.content);
+
+  nodes.wrapper
+    .append(nodes.container)
+    .appendTo($body);
+}
+</script>
+<div class="page">
+                <div class="page__header">
+                <header class="menu-main header"  id="js-menu-main">
+    <div class="wt-container">
+        <div class="wt-row wt-row_nowrap wt-row_size_s wt-row_align-items_center">
+            <div class="wt-col-auto-fill">
+                <a href="/" class="menu-main__logo-link"><svg class="_jetbrains-simple sprite-img menu-main__logo" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#jetbrains-simple"></use></svg></a>
+            </div>
+            <div class="wt-col-inline wt-display-md-none menu-main-skeleton-text-1" style="min-width: 69px"></div>
+            <div class="wt-col-inline wt-display-md-none menu-main-skeleton-text-1" style="min-width: 81px"></div>
+            <div class="wt-col-inline wt-display-md-none menu-main-skeleton-text-1" style="min-width: 46px"></div>
+            <div class="wt-col-inline menu-main-skeleton-button"></div>
+            <div class="wt-col-inline menu-main-skeleton-button"></div>
+        </div>
+    </div>
+</header>
+
+
+
+  <div class="menu-second" id="js-menu-second">
+    <div class="wt-container">
+        <div id="js-menu-second-mobile-wrapper" class="wt-display-none">
+            <div id="js-menu-second-mobile" >
+                <div class="menu-second-mobile wt-row wt-row_size_m wt-row_align-items_center wt-row_justify_between">
+                    <div class="wt-col-inline menu-second-skeleton-text-2" style="max-width: 120px"></div>
+                    <div class="wt-col-inline menu-second-skeleton-button" style="max-width: 80px"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="js-menu-second-desktop" class="menu-second-desktop
+                       wt-row wt-row_size_0 wt-row_align-items_center">
+            <div class="wt-col-auto-fill">
+                <a class="menu-second-title-box"
+                   href="/idea/">
+                                            <span class="menu-second-title-box__logo jetbrains-logo">
+                            <svg class="_intellij-idea sprite-img" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#intellij-idea"></use></svg>
+                        </span>
+                    
+                    <span class="menu-second-title-box__title wt-h3">IntelliJ IDEA</span>
+                </a>
+            </div>
+
+                            
+                                                        <a href="/idea/whatsnew/"
+                       class="wt-col-inline wt-text-2 wt-text-2_hardness_average menu-second__link
+                                                                ">
+                        What&#39;s New
+                                            </a>
+                                            
+                                                        <a href="/idea/features/"
+                       class="wt-col-inline wt-text-2 wt-text-2_hardness_average menu-second__link
+                                                                wt-text-2_hardness_primary">
+                        Features
+                                            </a>
+                                            
+                                                        <a href="/idea/documentation/"
+                       class="wt-col-inline wt-text-2 wt-text-2_hardness_average menu-second__link
+                                                                ">
+                        Learn
+                                            </a>
+                                            
+                                                        <a href="/idea/buy/"
+                       class="wt-col-inline wt-text-2 wt-text-2_hardness_average menu-second__link
+                                                                ">
+                        Buy
+                                            </a>
+                                            
+                            
+                                                    
+                            <a href="/idea/download/"
+                   class="wt-col-inline menu-second__download-button wt-button wt-button_size_s wt-button_mode_primary">
+                    Download
+                </a>
+                    </div>
+
+    </div>
+</div>
+
+            </div>
+    
+    <div class="page__content ">
+        <nav class="js-add-side-toc"></nav>
+<section class="wt-section">
+<div class="wt-container">
+<div class="f-page-header">
+<h1 class="f-title">Making Development an Enjoyable Experience</h1>
+</div>
+</div>
+</section>
+<section class="wt-section">
+<div class="wt-container">
+<div class="f-section">
+<h2 class="f-title" data-title="Deep insight into your code">Deep insight into your code</h2>
+<p class="f-subtitle">IntelliJ IDEA analyzes your code, looking for connections between symbols
+                    across all project files and languages.
+                    Using this information it provides indepth coding assistance, quick navigation, clever error
+                    analysis, and,
+                    of course, refactorings.
+                </p>
+<div class="f-block f-block_1-of-2">
+<div class="f-img">
+<img alt="" src="/idea/features/screenshots/16/why_smart_completion.png">
+</div>
+<h3 class="f-title">Smart completion</h3>
+<p class="f-text"><kbd data-mac="^⇧Space">Ctrl+Shift+Space</kbd> gives you a list
+                        of the most relevant symbols applicable in the current context. This and other completions
+                        are constantly learning from you,
+                        moving the members of the most frequently used classes and packages to the top of the
+                        suggestions list, so you can select them faster.
+
+                    </p>
+<!--<a href="https://dzone.com/articles/top-20-code-completions-in-intellij-idea" target="_blank">Learn more</a>-->
+</div>
+<div class="f-block f-block_1-of-2">
+<div class="f-img">
+<img alt="" src="/idea/features/screenshots/16/why_chain_completion.png">
+</div>
+<h3 class="f-title">Chain completion</h3>
+<p class="f-text">Digs a tad deeper than Smart Completion and lists applicable symbols accessible
+                        via methods
+                        or getters in the current context. Say you're looking for a value of <code>Project</code>
+                        and only have the <code>Module module</code> declaration. Press <kbd data-mac="^⇧Space">Ctrl+Shift+Space</kbd>
+                        twice to get <code>module.getProject()</code> without any additional effort.
+                    </p>
+</div>
+<div class="f-block f-block_1-of-2">
+<div class="f-img">
+<img alt="" src="/idea/features/screenshots/16/why_static_members_completion.png">
+</div>
+<h3 class="f-title">Static members completion</h3>
+<p class="f-text">Lets you easily use static methods or constants. Offers a list of symbols matching
+                        your input
+                        and automatically adds required import statements.</p>
+</div>
+<div class="f-block f-block_1-of-2">
+<div class="f-img">
+<img alt="" src="/idea/features/screenshots/16/why_data_flow.png">
+</div>
+<h3 class="f-title">Data flow analysis</h3>
+<p class="f-text">When offering completion variants, IntelliJ IDEA analyses data flow to guess
+                        the possible runtime symbol type and refines choices based on that intel, automatically
+                        adding class casts.</p>
+</div>
+<div class="f-block f-block_1-of-2">
+<div class="f-img">
+<img alt="" src="/idea/features/screenshots/16/why_injected_languages.png">
+</div>
+<h3 class="f-title">Language injection</h3>
+<p class="f-text">Brings coding assistance for a selected language to expressions
+                        and string literals in another one, complete with all advantages you would normally have.
+                        For example, you can inject fragments of SQL, XPath, HTML, CSS, or JavaScript code into Java
+                        String literals.</p>
+</div>
+<div class="f-block f-block_1-of-2">
+<div class="f-img">
+<img alt="" src="/idea/features/screenshots/16/why_rename.png">
+</div>
+<h3 class="f-title">Cross-language refactorings</h3>
+<p class="f-text">Knowing everything about usages of a symbol, IntelliJ IDEA offers extremely
+                        effective,
+                        thorough refactorings.
+                        For example, when you Rename a class within a JPA statement, it will update everything, from
+                        JPA entity class, to every JPA expression where it is used.</p>
+</div>
+<div class="f-block f-block_1-of-2">
+<div class="f-img">
+<img alt="" src="/idea/features/screenshots/16/why_duplicates.png">
+</div>
+<h3 class="f-title">Detecting duplicates</h3>
+<p class="f-text">Finds duplicate code fragments on the fly. Even if you're only about to extract a
+                        variable,
+                        constant, or a method,
+                        IntelliJ IDEA will let you know that there is a similar code fragment that can be replaced
+                        along with the one you're woking on.</p>
+</div>
+<div class="f-block f-block_1-of-2">
+<div class="f-img">
+<img alt="" src="/idea/features/screenshots/16/why_unobtrusive.png">
+</div>
+<h3 class="f-title">Inspections and quick-fixes</h3>
+<p class="f-text">Whenever IntelliJ IDEA detects that you're about to make a mistake, a little
+                        lightbulb pops
+                        up in the editor. Clicking it or pressing
+                        <kbd data-mac="⌥Enter">Alt+Enter</kbd> opens a list of actions you can take to make things
+                        right.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="wt-section">
+<div class="wt-container">
+<div class="f-section">
+<h2 class="f-title" data-title="Developer ergonomics">Developer ergonomics</h2>
+<p class="f-subtitle">Every aspect of IntelliJ IDEA is designed with ergonomics in mind.
+                    IntelliJ IDEA is built on a principle
+                    that every minute a developer spends in the <a class="wt-link wt-link_external" href="https://en.wikipedia.org/wiki/Flow_(psychology)" target="_blank">flow</a> is a good
+                    minute,
+                    and things that break developers out of that flow are bad and should be avoided.</p>
+<div class="f-block f-block_1-of-2">
+<div class="f-img">
+<img alt="" src="/idea/features/screenshots/16/why_editor.png">
+</div>
+<h3 class="f-title">Editor-centric environment</h3>
+<div class="f-text">
+<p>Most of your time the editor (and the code) is the only thing visible on your screen, and you
+                            don't need to leave it to do something that isn't coding-related.</p>
+<p>Quick popups are helpful for checking additional information without leaving the context
+                            that you’re in. When you press
+                            <kbd data-mac="⌘Y">Ctrl+Shift+I</kbd>
+                            it shows you the definition for the symbol at
+                            caret.</p>
+<p>To generate code, you don't have to walk through complex wizards or fill huge forms.</p>
+</div>
+</div>
+<div class="f-block f-block_1-of-2">
+<div class="f-img">
+<img alt="" src="/idea/features/screenshots/16/why_create_new.png">
+</div>
+<h3 class="f-title">Shortcuts for everything</h3>
+<div class="f-text">
+<p>In IntelliJ IDEA you have dedicated keyboard shortcuts for nearly everything, including rapid
+                            selection and switching between tool windows and the editor.</p>
+<p>Accessing a tool window via its shortcut moves the input focus to it, so you can use all
+                            keyboard commands in its context. When you need to go back to the editor, just hit
+                            <kbd>Esc</kbd>.</p>
+<p>When you're in the Project tool window, you can not only navigate through the existing items,
+                            but also create new ones by just pressing <kbd data-mac="⌘N">Alt+Ins</kbd>.
+                        </p>
+</div>
+</div>
+<div class="f-block f-block_1-of-2">
+<div class="f-img">
+<img alt="" src="/idea/features/screenshots/16/why_speed_search.png">
+</div>
+<h3 class="f-title">Ergonomic user interface</h3>
+<div class="f-text">
+<p>All lists, trees and popups in IntelliJ IDEA provide you with quick search that instantly
+                            takes you to a set of items that contain text you’re typing in them.</p>
+<p>The first call of any IDE action is supposed to provide most expected results. Need more
+                            results? Press the
+                            shortcut again and the IDE will go deeper to find what you need.</p>
+</div>
+</div>
+<div class="f-block f-block_1-of-2">
+<div class="f-img">
+<img alt="" src="/idea/features/screenshots/16/why_inline_debugger.png">
+</div>
+<h3 class="f-title">Inline debugger</h3>
+<div class="f-text">
+<p>When you debug your code IntelliJ IDEA shows you variable values right in the source code,
+                            next to their usages.</p>
+<p>You don’t even have to hover the mouse over the variable, or switch to
+                            the Variables pane of the Debug tool window.</p>
+<p>Any time a variable changes its value, the IDE highlights it with a different color so that
+                            you can better understand how the state is changed over the code.
+                        </p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="wt-section">
+<div class="wt-container">
+<div class="f-section">
+<h2 class="f-title" data-title="Built-in developer tools">Built-in developer tools</h2>
+<p class="f-subtitle">To streamline your workflow, IntelliJ IDEA offers an unbeatable toolset right from
+                    the first
+                    start: decompiler, bytecode viewer, FTP and many more.</p>
+<div class="f-block f-block_1-of-2">
+<div class="f-img">
+<img alt="" src="/idea/features/screenshots/16/why_developer_tools.png">
+</div>
+<h3 class="f-title">Version control</h3>
+<p class="f-text">IntelliJ IDEA provides a unified interface for major version control systems
+                        including Git,
+                        SVN, Mercurial, CVS, Perforce, and TFS. The IDE lets you browse the history of changes,
+                        manage branches, merge conflicts and much more</p>
+</div>
+<div class="f-block f-block_1-of-2">
+<div class="f-img">
+<img alt="" src="/idea/features/screenshots/16/why_gradle.png">
+</div>
+<h3 class="f-title">Build tools</h3>
+<p class="f-text">IntelliJ IDEA supports Maven, Gradle, Ant, Gant, SBT, NPM, Webpack, Grunt, Gulp
+                        and other
+                        build tools. Seamlessly integrated, these tools help automate compilation, packaging,
+                        running tests, deployment and other activities</p>
+</div>
+<div class="f-block f-block_1-of-2">
+<div class="f-img">
+<img alt="" src="/idea/features/screenshots/16/why_test_runner.png">
+</div>
+<h3 class="f-title">Test runner and coverage</h3>
+<p class="f-text">IntelliJ IDEA lets you perform unit testing with ease. The IDE includes test
+                        runners and
+                        coverage tools for major test frameworks,
+                        including JUnit, TestNG, Spock; Cucumber, ScalaTest, spec2, and Karma.</p>
+</div>
+<div class="f-block f-block_1-of-2">
+<div class="f-img">
+<img alt="" src="/idea/features/screenshots/16/why_decompiler.png">
+</div>
+<h3 class="f-title">Decompiler</h3>
+<p class="f-text">IntelliJ IDEA comes with a built-in decompiler for Java classes. When you want to
+                        take a
+                        look inside a library that you don't have the source code for, now you can – without any
+                        third-party plugins.
+                    </p>
+</div>
+<div class="f-block f-block_1-of-2">
+<div class="f-img">
+<img alt="" src="/idea/features/screenshots/16/why_terminal.png">
+</div>
+<h3 class="f-title">Terminal</h3>
+<p class="f-text">The IDE comes with a built-in terminal. Depending on your platform,
+                        you can work with command line prompt, Far, powershell, or bash. Invoke the terminal with
+                        <kbd data-mac="⌥F12">Alt+F12</kbd> and execute any command–without leaving the IDE.</p>
+</div>
+<div class="f-block f-block_1-of-2">
+<div class="f-img">
+<img alt="" src="/idea/features/screenshots/16/idea-db-postgres-9.5.png">
+</div>
+<h3 class="f-title">Database tools</h3>
+<p class="f-text">Take advantage of intelligent coding assistance when editing SQL; connect to live
+                        databases;
+                        run queries; browse and export data; and even manage your schemes in a visual
+                        interface–right from the IDE.</p>
+<a class="f-action wt-link" href="https://www.jetbrains.com/datagrip/features/" target="_blank">Learn more</a>
+</div>
+<div class="f-block f-block_1-of-2">
+<div class="f-img">
+<img alt="" src="/idea/features/screenshots/16/why_application_servers.png">
+</div>
+<h3 class="f-title">Application servers</h3>
+<div class="f-text">
+<p>IntelliJ IDEA supports major application servers: Tomcat, JBoss, WebSphere, WebLogic,
+                            Glassfish, and many others.</p>
+<p>You can deploy your artifacts onto application servers and debug the
+                            deployed applications right from within the IDE.</p>
+</div>
+<a class="f-action wt-link" href="https://www.jetbrains.com/help/idea/creating-and-running-your-first-java-ee-application.html" target="_blank">Learn more</a>
+</div>
+<div class="f-block f-block_1-of-2">
+<div class="f-img">
+<img alt="" src="/idea/features/screenshots/16/idea-docker.png">
+</div>
+<h3 class="f-title">Docker</h3>
+<p class="f-text">Via a separate plugin, IntelliJ IDEA provides a dedicated tool window that lets
+                        you connect
+                        to locally running Docker machines to
+                        manage images, containers and Docker Compose services.</p>
+<a class="f-action wt-link" href="https://www.jetbrains.com/help/idea/docker.html" target="_blank">Learn more</a>
+</div>
+</div>
+</div>
+</section>
+<section class="wt-section">
+<div class="wt-container">
+<div class="f-section">
+<h2 class="f-title" data-title="Polyglot experience">Polyglot experience</h2>
+<p class="f-subtitle">In addition to Java, IntelliJ IDEA offers first-class support for top JVM and
+                    non-JVM frameworks
+                    and languages out of the box.</p>
+<div class="f-block f-block_1-of-2">
+<div class="f-img">
+<img alt="" src="/idea/features/screenshots/16/why_android.png">
+</div>
+<h3 class="f-title">First-class support for top frameworks</h3>
+<div class="f-text">
+<p>IntelliJ IDEA provides support for the most popular server-side and
+                            front-end frameworks.</p>
+<p>Take advantage of extended coding assistance for
+                            <strong>Spring</strong>, <strong>Java EE</strong>, <strong>Grails</strong>,
+                            <strong>Play</strong>, <strong>Android</strong>, <strong>GWT</strong>,
+                            <strong>Vaadin</strong>, <strong>Thymeleaf</strong>, <strong>React</strong>,
+                            <strong>AngularJS</strong>
+                            and other frameworks.</p>
+</div>
+</div>
+<div class="f-block f-block_1-of-2">
+<div class="f-img">
+<img alt="" src="/idea/features/screenshots/16/why_node.png">
+</div>
+<h3 class="f-title">Many languages–one IDE</h3>
+<div class="f-text">
+<p>While IntelliJ IDEA is an IDE for Java, it also understands many other languages, including
+                            <strong>Groovy</strong>, <strong>Kotlin</strong>,
+                            <strong>Scala</strong>, <strong>JavaScript</strong>, <strong>TypeScript</strong> and
+                            <strong>SQL</strong>.</p>
+<p>IntelliJ IDEA is a turnkey solution, but if you ever need anything extra, its rich <a class="wt-link wt-link_external" href="https://plugins.jetbrains.com/idea" target="_blank">plugin
+                            ecosystem</a> is here to help you.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="wt-section separator-top">
+<div class="wt-container">
+<div class="f-section">
+<h2 class="f-title" data-title="Choose your edition">Choose your edition</h2>
+</div>
+<div class="wt-offset-top-48">
+<script src="/idea/inc/choose-edition/index.entry.js" type="entry-point"></script><div class="overflow-x-md-auto" id="content">
+            <table class="wt-table wt-table_theme_light wt-table_size_m false f-idea-choose-edition-table">
+<colgroup>
+<col width="40%">
+<col width="30%">
+<col width="30%">
+</colgroup>
+<thead class="table__thead">
+<tr>
+<td>
+            License
+        </td>
+<td>
+            Commercial
+        </td>
+<td>
+            Open-source, <span class="text-nowrap">Apache 2.0<span class="jb-tooltip-target" data-target="Community Edition is open-source,
+            licensed under Apache 2.0. Projects like Android and Swift use Apache 2.0, so you're in good company.
+            It can also be used for commercial development.">?</span></span>
+</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+            Java, Kotlin, Groovy, Scala
+        </td>
+<td>
+<svg class="_check_24 sprite-img f-check wt-icon_size_m" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#check_24"></use></svg>
+</td>
+<td>
+<svg class="_check_24 sprite-img f-check wt-icon_size_m" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#check_24"></use></svg>
+</td>
+</tr>
+<tr>
+<td>
+            Android
+            <span class="jb-tooltip-target" data-target="IntelliJ IDEA provides the same coding assistance and
+                integrated toolset for developing Android applications as Android Studio, the official IDE for
+                Android application development from Google.">?</span>
+</td>
+<td>
+<svg class="_check_24 sprite-img f-check wt-icon_size_m" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#check_24"></use></svg>
+</td>
+<td>
+<svg class="_check_24 sprite-img f-check wt-icon_size_m" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#check_24"></use></svg>
+</td>
+</tr>
+<tr>
+<td>
+            Maven, Gradle, SBT
+        </td>
+<td>
+<svg class="_check_24 sprite-img f-check wt-icon_size_m" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#check_24"></use></svg>
+</td>
+<td>
+<svg class="_check_24 sprite-img f-check wt-icon_size_m" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#check_24"></use></svg>
+</td>
+</tr>
+<tr>
+<td>
+            Git, SVN, Mercurial
+        </td>
+<td>
+<svg class="_check_24 sprite-img f-check wt-icon_size_m" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#check_24"></use></svg>
+</td>
+<td>
+<svg class="_check_24 sprite-img f-check wt-icon_size_m" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#check_24"></use></svg>
+</td>
+</tr>
+<tr>
+<td>
+            Perforce
+        </td>
+<td>
+<svg class="_check_24 sprite-img f-check wt-icon_size_m" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#check_24"></use></svg>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+            JavaScript, <span class="text-nowrap">TypeScript
+                <span class="jb-tooltip-target" data-target="IntelliJ IDEA provides first-class support for JavaScript, HTML and CSS, as
+                well as their modern successors. Take advantage of advanced coding assistance for React,
+                AngularJS, and other JavaScript frameworks">?</span>
+</span>
+</td>
+<td>
+<svg class="_check_24 sprite-img f-check wt-icon_size_m" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#check_24"></use></svg>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+            Java EE, Spring, Play, Grails, Other <span class="text-nowrap">Frameworks
+                <span class="jb-tooltip-target" data-target="IntelliJ IDEA supports many other important JVM frameworks and technologies including Hibernate, Guice, FreeMarker, Velocity, Thymeleaf, and more">?</span>
+</span>
+</td>
+<td>
+<svg class="_check_24 sprite-img f-check wt-icon_size_m" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#check_24"></use></svg>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+            Database Tools, SQL
+        </td>
+<td>
+<svg class="_check_24 sprite-img f-check wt-icon_size_m" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#check_24"></use></svg>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+            Detecting <span class="text-nowrap">Duplicates
+            <span class="jb-tooltip-target" data-target="IntelliJ IDEA is able to find repetitive blocks of code in your project. <a href='https://www.jetbrains.com/help/idea/analyzing-duplicates.html' target='_blank'>Learn more…</a>">?</span>
+</span>
+</td>
+<td>
+<svg class="_check_24 sprite-img f-check wt-icon_size_m" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#check_24"></use></svg>
+</td>
+<td></td>
+</tr>
+</tbody>
+            <tfoot>
+<tr>
+<td>
+<a class="wt-button wt-button_size_m wt-button_mode_outline wt-offset-top-24" href="/idea/features/editions_comparison_matrix.html">Compare
+                    editions</a>
+</td>
+<td>
+<div class="button-with-note wt-offset-top-24">
+<div class="button-dropdown js-button-dropdown">
+<a class="button button-dropdown__link" href="/idea/download/download-thanks.html">Download</a>
+<button class="button button-dropdown__action js-button-dropdown-action">.exe
+    </button>
+<ul class="dropdown-link-list js-button-dropdown-content">
+<li><a class="dropdown-link-list__link" data-windows=".exe" href="/idea/download/download-thanks.html?platform=windows">Windows
+            (.exe)</a></li>
+<li><a class="dropdown-link-list__link" data-mac=".dmg" href="/idea/download/download-thanks.html?platform=mac">macOS
+            (.dmg)</a></li>
+<li><a class="dropdown-link-list__link" data-linux=".tar.gz" href="/idea/download/download-thanks.html?platform=linux">Linux
+            (.tar.gz)</a></li>
+</ul>
+</div><div class="button-with-note__note">Free trial</div>
+</div>
+</td>
+<td>
+<div class="button-with-note wt-offset-top-24">
+<div class="button-dropdown js-button-dropdown">
+<a class="button _dark button-dropdown__link" href="/idea/download/download-thanks.html?code=IIC">Download</a>
+<button class="button button-dropdown__action _dark js-button-dropdown-action">
+        .exe
+    </button>
+<ul class="dropdown-link-list js-button-dropdown-content">
+<li><a class="dropdown-link-list__link" data-windows=".exe" href="/idea/download/download-thanks.html?platform=windows&code=IIC">Windows
+            (.exe)</a></li>
+<li><a class="dropdown-link-list__link" data-mac=".dmg" href="/idea/download/download-thanks.html?platform=mac&code=IIC">macOS
+            (.dmg)</a></li>
+<li><a class="dropdown-link-list__link" data-linux=".tar.gz" href="/idea/download/download-thanks.html?platform=linux&code=IIC">Linux
+            (.tar.gz)</a></li>
+</ul>
+</div><div class="button-with-note__note">Free, open-source</div>
+</div>
+</td>
+</tr>
+</tfoot>
+    </table>    </div></div>
+</div>
+</section>
+<script src="/idea/inc/social-footer/index.entry.js" type="entry-point"></script><section class="wt-section wt-section_bg_gray-light">
+<div id="social-footer"></div>
+</section>    </div>
+
+            
+<div class="page__footer">
+    <footer class="footer" id="footer">
+        <div class="wt-container">
+            <div class="footer__main wt-row wt-row_size_m wt-row-sm_direction_column-reverse">
+                <div class="footer__logo wt-col-inline wt-display-md-none">
+                    <div class="jetbrains-logo _size-3 _full-block">
+                        <svg class="sprite-img jetbrains">
+                            <use xlink:href="#jetbrains" />
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="wt-col-auto-fill wt-col-sm-12">
+                    <div class="wt-row wt-row_size_xs wt-row-sm_size_m wt-offset-top-12">
+                        <div class="wt-col-inline footer-skeleton-button"></div>
+                        <div class="wt-col-inline footer-skeleton-button"></div>
+                        <div class="wt-col-inline footer-skeleton-button"></div>
+                        <div class="wt-col-inline footer-skeleton-button"></div>
+                    </div>
+
+                    <div class="footer-skeleton-text-2 wt-offset-top-24" style="max-width: 45%"></div>
+                    <div class="footer-skeleton-text-2 wt-offset-top-12" style="max-width: 70%"></div>
+                </div>
+
+                <div class="wt-col-inline wt-col-sm-12 wt-col_align-self_end wt-col-sm_align-self_start">
+                    <div class="wt-row wt-row_size_m wt-row_justify_end wt-row-sm_justify_start">
+                        <div class="wt-col-inline footer-skeleton-button" style="min-width: 180px"></div>
+                        <div class="wt-col-inline footer-skeleton-button" style="min-width: 80px"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+    </div>
+
+<script>
+(function () {
+  function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+      results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+  }
+
+  function updateQueryStringParameter(uri, key, value) {
+    var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+    var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+    if (uri.match(re)) {
+      return uri.replace(re, '$1' + key + "=" + value + '$2');
+    }
+    else {
+      return uri + separator + key + "=" + value;
+    }
+  }
+
+  var downloadLink = document.getElementById("download-link");
+  if (downloadLink != null) {
+    var platform = getParameterByName('platform');
+    platform = platform != null ? platform : "windows";
+    var href = downloadLink.getAttribute("href");
+    var code = getParameterByName("code");
+
+    if(code != null) {
+      href = updateQueryStringParameter(href, "code", code)
+    }
+    href = updateQueryStringParameter(href, "platform", platform);
+    downloadLink.setAttribute("href", href);
+  }
+})();
+</script><script>
+(function() {
+  var STORAGE_KEY_NAME = 'firefoxDisappearedSVGWorkaround';
+  var STORAGE_KEY_VALUE = '1';
+
+  var isFirefox = /firefox/i.test(navigator.userAgent);
+  if (!isFirefox || isFirefox && sessionStorage.getItem(STORAGE_KEY_NAME) === STORAGE_KEY_VALUE) {
+    return;
+  }
+
+  var arrayFrom = function (arrayLike) {
+    return Array.prototype.slice.call(arrayLike, 0);
+  };
+
+  function workaround() {
+    var uses = document.querySelectorAll('.page svg use');
+    var badNodesCount = 0;
+
+    arrayFrom(uses).forEach(function (node) {
+      var rect = node.getBoundingClientRect();
+      if (rect.width === 0 && rect.height === 0)
+        badNodesCount++;
+    });
+
+    if (badNodesCount === uses.length) {
+      sessionStorage.setItem(STORAGE_KEY_NAME, STORAGE_KEY_VALUE);
+      if (typeof dataLayer !== 'undefined')
+        dataLayer.push({'firefoxDisappearedSVGWorkaround': STORAGE_KEY_VALUE});
+
+      window.location.replace(window.location.href);
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', workaround);
+
+})();
+</script>      <link href="/_assets/banner-rotator.entry.07ac548a2a68a7922693.css" rel="stylesheet" type="text/css">
+      <script src="/_assets/banner-rotator.entry.b9ea3aaba598786010f0.js" type="text/javascript"></script>
+      
+      
+  <script>
+(function () {
+
+  'use strict';
+
+  function ImagesSrcReplacer () {
+
+    var attribute = 'data-src';
+    var matches = document.querySelectorAll('img[' + attribute + ']');
+
+    for (var i = 0, n = matches.length; i < n; i++) {
+
+      var attrValue = matches[i].getAttribute(attribute);
+
+      if (_isHighDensity ()) {
+
+        var name = attrValue.substring(0, attrValue.lastIndexOf('.'));
+        var extention = attrValue.substring(attrValue.lastIndexOf('.'), attrValue.length);
+
+        matches[i].setAttribute('src', name + '@2x' + extention);
+
+      } else {
+        matches[i].setAttribute('src', attrValue)
+      }
+    }
+
+    /**
+     * Detect high density
+     * @returns {*|boolean}
+     */
+    function _isHighDensity () {
+      return (
+      (window.matchMedia &&
+      (window.matchMedia('only screen and (min-resolution: 124dpi), only screen and (min-resolution: 1.3dppx), only screen and (min-resolution: 48.8dpcm)').matches ||
+       window.matchMedia('only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (-o-min-device-pixel-ratio: 2.6/2), only screen and (min--moz-device-pixel-ratio: 1.3), only screen and (min-device-pixel-ratio: 1.3)').matches)) ||
+      (window.devicePixelRatio &&
+       window.devicePixelRatio > 1.3));
+    }
+  }
+
+  return new ImagesSrcReplacer()
+
+}(document, window));
+</script></body>
+</html>

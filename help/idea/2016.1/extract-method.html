@@ -1,0 +1,154 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"></meta><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><title>IntelliJ IDEA 2016.1 Help :: Extract Method</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="procedures.refactoring.extractMethod"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.1 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWindow</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="extract-interface.html">Extract Interface</a><a class="navigation-links__next" href="extract-method-object.html">Extract Method Object</a></div><h1>Extract Method</h1><ul><li class="list__item"><a href="#d1855566e16">Basics</a></li><li class="list__item"><a href="#d1855566e91">Examples</a><ul class="list _bullet"><li class="list__item"><a href="#d1855566e93">Java example</a></li><li class="list__item"><a href="#d1855566e196">JavaScript example</a></li></ul></li><li class="list__item"><a href="#d1855566e394">Extracting a method</a></li><li class="list__item"><a href="#duplicate">Processing duplicates</a></li></ul><a name="d1855566e16"></a><h2>Basics</h2>
+    <a name="d1855566e18"></a><p>When the <a name="d1855566e21"></a><span class="emphasis">Extract Method</span>
+          refactoring is invoked
+         , IntelliJ IDEA analyses the selected block of code and
+       detects variables that are the input for the selected code fragment and the variables that are output for it.</p>
+                 
+             
+             
+             
+                <a name="d1855566e62"></a><p>
+                    If there is exactly one output variable, it is used as a return value for the extracted method. In
+                    case there are multiple output variables, the
+                    <a name="d1855566e64"></a><span class="keyword">Extract Method</span> refactoring may not be applied, and the error message appears.
+                </p>
+                <a name="d1855566e68"></a><p>
+                    There are several workarounds to allow
+                    <a name="d1855566e70"></a><span class="keyword">Extract Method</span> work in this case.
+                    For example, you may introduce a special data-class that contains all output values.
+                </p>
+
+                <aside class="warning sideblock">
+                    <a name="d1855566e76"></a><p>The Extract Method refactoring has the following limitations:</p>
+
+                    <ul class="list _ul"><li class="list__item"><a name="d1855566e81"></a>Refactoring does not work with multiple output values in automatic mode. You have to
+                            change your code before applying the refactoring.
+                        </li><li class="list__item"><a name="d1855566e84"></a>Refactoring does not work for a code fragment which conditionally returns from the
+                            containing method and is not placed at the end of it.
+                        </li></ul>
+                </aside>
+             
+<a name="d1855566e91"></a><h2>Examples</h2>
+               <a name="d1855566e93"></a><h2>Java example</h2>
+               <table class="" width="100%" id="d1855566e96"><thead><tr id="d1855566e98" class="ijRowHead"><a name="d1855566e98"></a><th width="50%"><a name="d1855566e100"></a>Before</th><th width="50%"><a name="d1855566e103"></a>After</th></tr></thead><tbody><tr id="d1855566e107" class="ijRowOdd"><a name="d1855566e107"></a><td><a name="d1855566e109"></a>
+						         <a name="d1855566e111"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">method</span><span class="o">()</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="n">a</span><span class="o">=</span><span class="mi">1</span><span class="o">;</span>
+    <span class="kt">int</span> <span class="n">b</span><span class="o">=</span><span class="mi">2</span><span class="o">;</span>
+    <span class="kt">int</span> <span class="n">c</span><span class="o">=</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="o">;</span>
+    <span class="kt">int</span> <span class="n">d</span><span class="o">=</span><span class="n">a</span><span class="o">+</span><span class="n">c</span><span class="o">;</span>
+<span class="o">}</span></code></div>
+					       </td><td><a name="d1855566e115"></a>
+						         <a name="d1855566e117"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">method</span><span class="o">()</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="n">a</span><span class="o">=</span><span class="mi">1</span><span class="o">;</span>
+    <span class="kt">int</span> <span class="n">b</span><span class="o">=</span><span class="mi">2</span><span class="o">;</span>
+    <span class="kt">int</span> <span class="n">c</span><span class="o">=</span><span class="n">add</span><span class="o">(</span><span class="n">a</span><span class="o">,</span><span class="n">b</span><span class="o">);</span>
+    <span class="kt">int</span> <span class="n">d</span><span class="o">=</span><span class="n">add</span><span class="o">(</span><span class="n">a</span><span class="o">,</span><span class="n">c</span><span class="o">);</span>
+<span class="o">}</span>
+    <span class="o">...</span>
+<span class="kd">private</span> <span class="kt">int</span> <span class="nf">add</span><span class="o">(</span><span class="kt">int</span> <span class="n">a</span><span class="o">,</span> <span class="kt">int</span> <span class="n">b</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="o">;</span>
+<span class="o">}</span></code></div>
+					       </td></tr><tr id="d1855566e122" class="ijRowEven"><a name="d1855566e122"></a><td><a name="d1855566e124"></a>
+						         <a name="d1855566e126"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kd">public</span> <span class="n">ArrayList</span> <span class="nf">method</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">String</span><span class="o">[]</span> <span class="n">strings</span> <span class="o">=</span> <span class="o">{</span><span class="s">&quot;a&quot;</span><span class="o">,</span><span class="s">&quot;b&quot;</span><span class="o">,</span><span class="s">&quot;c&quot;</span><span class="o">};</span>
+    <span class="n">ArrayList</span> <span class="n">list</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">();</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">strings</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span>
+        <span class="o">{</span><span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">strings</span><span class="o">[</span><span class="n">i</span><span class="o">]);}</span>
+    <span class="k">return</span> <span class="n">list</span><span class="o">;</span>
+<span class="o">}</span></code></div>
+					       </td><td><a name="d1855566e130"></a>
+						         <a name="d1855566e132"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kd">public</span> <span class="n">ArrayList</span> <span class="nf">method</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">String</span><span class="o">[]</span> <span class="n">strings</span> <span class="o">=</span> <span class="o">{</span><span class="s">&quot;a&quot;</span><span class="o">,</span><span class="s">&quot;ab&quot;</span><span class="o">,</span><span class="s">&quot;abc&quot;</span><span class="o">};</span>
+    <span class="n">ArrayList</span> <span class="n">list</span><span class="o">=</span><span class="n">add</span><span class="o">(</span><span class="n">strings</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">list</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kd">private</span> <span class="n">ArrayList</span> <span class="nf">add</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">strings</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">ArrayList</span> <span class="n">list</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">();</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">strings</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span>
+        <span class="o">{</span><span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">strings</span><span class="o">[</span><span class="n">i</span><span class="o">]);}</span>
+    <span class="k">return</span> <span class="n">list</span><span class="o">;</span>
+<span class="o">}</span></code></div>
+					       </td></tr></tbody></table>
+                
+         
+               <a name="d1855566e196"></a><h2>JavaScript example</h2>
+               <table class="" width="100%" id="d1855566e200"><thead><tr id="d1855566e202" class="ijRowHead"><a name="d1855566e202"></a><th width="50%"><a name="d1855566e204"></a>Before</th><th width="50%"><a name="d1855566e207"></a>After</th></tr></thead><tbody><tr id="d1855566e211" class="ijRowOdd"><a name="d1855566e211"></a><td><a name="d1855566e213"></a>
+ <a name="d1855566e215"></a><div class="code-block" data-lang="Javascript"><code class="code-block__wrapper"><span class="kd">function</span> <span class="nx">multiplication</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="nx">b</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">c</span> <span class="o">=</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">;</span>
+    <span class="nx">d</span> <span class="o">=</span> <span class="nx">c</span> <span class="o">*</span> <span class="nx">c</span><span class="p">;</span>
+<span class="k">return</span> <span class="nx">d</span><span class="p">;</span>
+<span class="p">}</span></code></div>
+                       </td><td><a name="d1855566e219"></a>
+                           <a name="d1855566e221"></a><div class="code-block" data-lang="Javascript"><code class="code-block__wrapper"><span class="kd">function</span> <span class="nx">sum</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="nx">b</span><span class="p">);</span>
+  <span class="k">return</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">;</span>
+
+  <span class="kd">function</span> <span class="nx">multiplication</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="nx">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">c</span> <span class="o">=</span> <span class="nx">sum</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="nx">b</span><span class="p">);</span>
+  <span class="nx">d</span> <span class="o">=</span> <span class="nx">c</span> <span class="o">*</span> <span class="nx">c</span><span class="p">;</span>
+  <span class="k">return</span> <span class="nx">d</span><span class="p">;</span>
+  <span class="p">}</span></code></div>
+                       </td></tr></tbody></table>
+
+                
+                
+                
+                
+         
+         
+                
+
+           <a name="d1855566e394"></a><h2>Extracting a method</h2>
+            <a name="d1855566e396"></a><a name="dynaProc0"></a><section class="procedure-steps"><h2>To extract a method, follow these steps</h2><ol class=".list _decimal"><li class="list__item">
+                        In the editor, select a block of code to be transformed into   a method or   a function.
+                        <aside class="tip sideblock">
+                            <a name="d1855566e407"></a><p>
+                                The code fragment to form the method does not necessarily have to be a set of
+                                statements. It may also be an expression used somewhere in the code.
+                            </p>
+                        </aside>
+                    </li><li class="list__item">
+                        On  the main menu or on  the context menu of the selection, choose
+                        <a name="d1855566e417"></a><span class="menupath">Refactor | Extract | Method</span> or press
+                        <kbd data-default="Ctrl+Alt+M" data-default_for_gnome="Ctrl+Alt+M" data-default_for_kde="Ctrl+Alt+M" data-default_for_xwin="Ctrl+Alt+M" data-emacs="Ctrl+Alt+M" data-jbuilder="Ctrl+Shift+E" data-visual_studio="Ctrl+Alt+M" data-netbeans_6.5="N/A" data-eclipse="Shift+Alt+M" data-mac_os_x_10.5_="&#x2325;&#x2318;M" data-mac_os_x="&#x2325;&#x2318;M" data-eclipse_mac_os_x="&#x2325;&#x2318;M" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+M</kbd>.
+                    </li><li class="list__item">In the <a name="d1855566e425"></a><span class="control">Extract Method</span> dialog box that opens, specify the name of the new function.</li><li class="list__item">To create a static method, select the <a name="d1855566e434"></a><span class="control">Declare Static</span> check box.</li><li class="list__item">In the <a name="d1855566e440"></a><span class="control">Parameters</span> area, do the following:
+                        <ul class="list _ul"><li class="list__item"><a name="d1855566e445"></a>
+                                Specify the variables to be passed as method parameters, by selecting/clearing the
+                                corresponding check boxes.
+                                <a name="d1855566e447"></a><p>If a parameter is disabled, a local variable of the
+                                corresponding type, with the initial value ...
+                                will be created in the extracted method, so that you will have to enter the initializer
+                                with an appropriate value manually.</p>
+                            </li><li class="list__item"><a name="d1855566e451"></a>
+                                Rename the desired parameters, by double-clicking the corresponding parameter lines and
+                                entering new names.
+                            </li></ul>
+                    </li><li class="list__item">In the <a name="d1855566e470"></a><span class="control">Visibility</span> area define the method's visibility scope.</li><li class="list__item">Check the result in the <a name="d1855566e476"></a><span class="control">Signature Preview</span> pane and click <a name="d1855566e479"></a><span class="control">OK</span>
+                to create the method. The selected code fragment will be replaced with a method call. Additionally,
+                IntelliJ IDEA will propose to replace any similar code fragments found within the current class.</li></ol></section>
+
+        <a name="duplicate"></a><h2>Processing duplicates</h2>
+         
+         
+            <a name="d1855566e589"></a><p>IntelliJ IDEA detects the duplicated code fragments that may accept different values as parameters
+                and shows the following suggestion in the format of the <a name="d1855566e591"></a><a href="differences-viewer-for-files.html"><span>Defferences Viewer</span></a>: </p>
+            <figure><img alt="ij_extract_method_duplicates" width="554" height="327" title="ij_extract_method_duplicates" src="/help/img/idea/2016.1/ij_extract_method_duplicates.png"></figure>
+            <a name="d1855566e597"></a><p>If you click the button <a name="d1855566e599"></a><span class="control">Accept Signature Change</span>, all the encountered duplicates will become highlighted,
+                and IntelliJ IDEA will ask you for the confirmation:</p>
+            <figure><img alt="ij_extract_method_duplicates1" width="393" height="200" title="ij_extract_method_duplicates1" src="/help/img/idea/2016.1/ij_extract_method_duplicates1.png"></figure>
+            <a name="d1855566e605"></a><p>Finally, after replacing the desired duplicates with the method call, you'll end up with the following code:</p>
+            <figure><img alt="ij_extract_method_duplicates2" width="280" height="152" title="ij_extract_method_duplicates2" src="/help/img/idea/2016.1/ij_extract_method_duplicates2.png"></figure>
+            <a name="d1855566e611"></a><p>You can also extract methods from the repetitive code fragments, which
+                IntelliJ IDEA finds in course of the <a name="d1855566e613"></a><a href="analyzing-duplicates.html"><span>duplicates analysis</span></a>.
+                The encountered duplicates display in the <a name="d1855566e616"></a><a href="duplicates-tool-window.html"><span>Duplicates tool window</span></a>,
+                where you can try to replace them with method calls.
+            </p>
+         
+    <div class="navigation-links _bottom"><a class="navigation-links__prev" href="extract-interface.html">Extract Interface</a><a class="navigation-links__next" href="extract-method-object.html">Extract Method Object</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content"><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d1855566e840"></a><a href="extract-method-dialog.html"><span>Extract Method Dialog</span></a></li></ul></div><div class="seealso__col"><h3>External Links:</h3><ul class="list"><li class="list__item"><a name="d1855566e862"></a><a href="http://wiki.jetbrains.net/intellij/Replace_conditional_logic_with_strategy_pattern" data-external="true"><span>Replace conditional logic with strategy pattern</span></a></li></ul></div></div></section><div class="last-modified">Last modified: 13 July 2016 </div></article><div id="disqus_thread"></div></div></section></main></div><script src="/help/app/app.js"></script></body></html>

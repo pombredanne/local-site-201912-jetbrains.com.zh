@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[10],{9:function(n,o,a){a("ctTR"),n.exports=a("lexT")},lexT:function(n,o,a){var e=a("KI45"),i=a("XHbo"),s=e(a("kIaO"));(0,i.initBuyPage)("buy-cards",{enableBannersRedirects:!0,pageProps:{productEditionsData:[{code:"CL",name:"CLion",description:s.default._({id:"A smart cross-platform IDE for C and C++"})}]}})}},[[9,0]]]);
+//# sourceMappingURL=new-buy.entry.25996eda1f9f7ad985ab.js.map

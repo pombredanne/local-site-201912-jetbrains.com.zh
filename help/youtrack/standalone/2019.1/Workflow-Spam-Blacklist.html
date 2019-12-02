@@ -1,0 +1,64 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="/help/app/v2/analytics.js"></script><meta charset="UTF-8"><meta name="robots" content="noindex"><title>Profanity Blacklist - Help | YouTrack Standalone</title><link rel="stylesheet" href="/help/app/v2/app.css"></head><body data-id="Workflow-Spam-Blacklist"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack Standalone Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>YouTrack Standalone 2019.1 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="Workflow-Spam-Blacklist" id="Workflow-Spam-Blacklist.xml">Profanity Blacklist</h1>  <p id="679e0525">This workflow blocks the submission of a description or comment if it contains a word from the blacklist.</p>  <div class="table-wrapper"><table class="left_header                 " width="100%" id="3a7d9d39"><tbody><tr id="6da418f1" class="ijRowOdd"><th id="669638db" width="20%"><p>Name</p></th><td id="4ef230c8"><p>@jetbrains/youtrack-workflow-profanity-blacklist</p></td></tr><tr id="ee43b94a" class="ijRowEven"><th id="2effc4b4"><p>Previous Title</p></th><td id="cabf44cc"><p>Spam Blacklist</p></td></tr><tr id="2e0f43d0" class="ijRowOdd"><th id="2579aa9c"><p>Auto-attached</p></th><td id="0ea311e9"><p>no</p></td></tr><tr id="29b0a04b" class="ijRowEven"><th id="99615ed9"><p>Modules</p></th><td id="c3359728"><p>        <a href="#stop-word">Block descriptions and comments that contain stop words</a>        (on-change rule)<br>        <a href="#profanity-common">profanity-common.js</a> (custom script)      </p></td></tr></tbody></table></div>  <div class="chapter"><h2 id="dad06a19">Use Case</h2>    <p id="b6e6e0e0">This workflow prevents users from submitting issues or comments that contain offensive language.      You can edit the rule to add words to or remove words from the blacklist.    </p>  </div>  <div class="chapter"><h2 id="408271c4">Modules</h2>    <p id="c132dd0b">This workflow contains two modules. The first is an on-change rule that checks the description and comment to see if it contains any word on the blacklist.    The second module is a custom script.</p>    <div class="chapter"><h3 id="stop-word">Block descriptions and comments that contain stop words</h3>      <p id="df35f926">When an issue is reported or updated, this rule checks the description and comment to see if it contains any word        on the blacklist.        If true, a warning is displayed. The user is informed that the description or comment contains one or more words        from the blacklist.      </p>      <div class="code-block" data-lang="javascript">var entities = require('@jetbrains/youtrack-scripting-api/entities');
+var workflow = require('@jetbrains/youtrack-scripting-api/workflow');
+var profanity = require('./profanity-common');
+
+exports.rule = entities.Issue.onChange({
+  title: 'Block descriptions and comments that contain stop words',
+  action: function(ctx) {
+    var issue = ctx.issue;
+    var texts = [];
+
+    function add(text) {
+      if (text) {
+        texts.push(text);
+      }
+    }
+
+    issue.getAdded('comments').forEach(function(comment) {
+      add(comment.text);
+    });
+
+    var becomesReported = issue.becomesReported;
+
+    if (becomesReported || issue.isChanged('summary')) {
+      add(issue.summary);
+    }
+
+    if (becomesReported || issue.isChanged('description')) {
+      add(issue.description);
+    }
+
+    texts.forEach(function(text) {
+      text = text.toLowerCase();
+
+      profanity.words.forEach(function(badWord) {
+        var index = text.indexOf(badWord);
+
+        while (index !== -1) {
+          var sepBefore = index === 0 || profanity.separators.indexOf(text.substring(index - 1, index)) &gt; -1;
+          var endIndex = index + badWord.length;
+          var sepAfter = endIndex === text.length || profanity.separators.indexOf(text.substring(endIndex, endIndex + 1)) &gt; -1;
+
+          workflow.check(!(sepBefore &amp;&amp; sepAfter), workflow.i18n('Prohibited to put the word {0}', badWord));
+
+          index = text.indexOf(badWord, endIndex);
+        }
+      });
+    });
+  }
+});</div>    </div>    <div class="chapter"><h3 id="profanity-common">profanity-common.js</h3>      <p id="f14d4cce">This custom script contains all of the words in the stop list.      This script is referenced in the on-change rule in the <code class="code">var profanity = require('./profanity-common');</code> declaration.</p>      <p id="79958f9b">If you find any profane words that are reported in your issues or any other words that you want to block, you can update the list of words in this module without modifying the workflow rule.</p>      <div class="code-block" data-lang="javascript">var workflow = require('@jetbrains/youtrack-scripting-api/workflow');
+
+exports.words = workflow.i18n(
+  '&lt;a comma-separated list of stop words&gt;'
+).split(', ').map(function(word) {
+  return word.toLowerCase();
+});
+
+exports.separators = '~`!@#$%^&amp;*()-_+=[]{}:;\'\"\\|,&lt;.&gt;/? \n\r\t';</div>    </div>  </div><div class="last-modified" data-skip-index="skip">Last modified: 8 July 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="Workflow-Pomodoro-Timer.html">Pomodoro Timer</a><a class="navigation-links__next" href="Workflow-Referred-Issues.html">Referred Issues</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="/help/app/v2/app.js"></script></body></html>

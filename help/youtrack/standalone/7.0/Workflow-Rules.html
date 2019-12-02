@@ -1,0 +1,126 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="robots" content="noindex"><title>YouTrack Standalone 7.0 Help :: Workflow Rules</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Workflow-Rules"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack Standalone Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>YouTrack Standalone 7.0 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="Workflow-Overview.html">Workflow Overview</a><a class="navigation-links__next" href="Workflow-Tutorial.html">Workflow Tutorial</a></div><h1>Workflow Rules</h1><a name="Sample_Workflow_Rules"></a><a name="d218720e5"></a><p>YouTrack provides three different types of workflow rules. The rule type defines the general conditions that cause the rule to be executed.</p><ul class="list _ul"><li class="list__item"><a name="d218720e10"></a><a href="#Stateless">Stateless Rules</a></li><li class="list__item"><a name="d218720e13"></a><a href="#Scheduled">Scheduled Rules</a></li><li class="list__item"><a name="d218720e16"></a><a href="#Statemachine">State-machine Rules</a></li></ul><a name="Stateless"></a><h2>Stateless Rules</h2>
+        <a name="d218720e22"></a><p>A <a name="d218720e24"></a><span class="control">Stateless Rule</span> defines the action to be performed when a change is applied to an issue.
+            The rule defines the guard condition that must be met for the rule to be executed.</p>
+        <a name="d218720e28"></a><p>A stateless rule is executed by the user who applies the change that matches the guard condition.</p>
+        <a name="Stateless_Rule_Sample"></a>
+        <a name="d218720e33"></a><h3>Sample Stateless Rule</h3>
+            <a name="d218720e35"></a><p>This rule performs the following actions when a change is applied to an issue:</p>
+            <ol class="list _decimal"><li class="list__item"><a name="d218720e40"></a>YouTrack checks for a change to the value in the <a name="d218720e42"></a><span class="control">Subsystem</span> field.</li><li class="list__item"><a name="d218720e46"></a>If the value in the <a name="d218720e48"></a><span class="control">Subsystem</span> changed, the issue is automatically assigned to the owner of the subsystem.</li></ol>
+
+            <a name="d218720e53"></a><div class="code-block" data-lang="Javascript"><code class="code-block__wrapper"><span class="nx">rule</span> <span class="nx">Set</span> <span class="nx">Assignee</span> <span class="nx">to</span> <span class="nx">a</span> <span class="nx">Subsystem</span> <span class="nx">Owner</span>
+
+<span class="nx">when</span> <span class="nx">issue</span><span class="p">.</span><span class="nx">Subsystem</span><span class="p">.</span><span class="nx">changed</span> <span class="p">{</span>
+    <span class="nx">issue</span><span class="p">.</span><span class="nx">Assignee</span> <span class="o">=</span> <span class="nx">issue</span><span class="p">.</span><span class="nx">Subsystem</span><span class="p">.</span><span class="nx">owner</span><span class="p">;</span>
+<span class="p">}</span></code></div>
+
+         
+    <a name="Scheduled"></a><h2>Scheduled Rules</h2>
+        <a name="d218720e60"></a><p>A <a name="d218720e62"></a><span class="control">Scheduled Rule</span> defines a schedule of events depending on a guard condition.
+            For example, you can periodically check for issues with specific attribute values and notify a user or a group.</p>
+        <a name="d218720e66"></a><p>A scheduled rule is executed by a special workflow user.
+            This is a system user account that is granted a full set of permissions.
+            The permissions for this account cannot be modified.
+            The workflow user account is not included in the license restrictions and is not displayed in the users list.</p>
+        <a name="d218720e69"></a><p>The guard conditions that you can use in a scheduled rule are limited.
+            You can only use queries that are optimized by the database.
+            These include queries that reference specific fields (for example, <code class="code" data-lang="Java">issue.Priority == {Critical}</code> or <code class="code" data-lang="Java">issue.Due Date &gt; now</code>).
+            A guard condition that uses a method or operation (for example, <code class="code" data-lang="Java">issue.isResolved()</code>) requires significant system resources to process.
+            Guard conditions that contain methods or operations in the expression are not supported.</p>
+        <a name="d218720e81"></a><p></p>
+
+        <a name="d218720e84"></a><h3>Sample Scheduled Rule</h3>
+            <a name="Scheduled_Rule_Sample"></a>
+
+            <a name="d218720e88"></a><p>This rule defines a schedule for the following periodic action:</p>
+            <ul class="list _ul"><li class="list__item"><a name="d218720e93"></a>Each day at 08:00, YouTrack checks issues that contain a value in the <a name="d218720e95"></a><span class="control">Due date</span> field.
+                    If the issue is due in fewer than two days, a notification is sent to the assignee. The notification is formatted as follows:
+                    <ul class="list _ul"><li class="list__item"><a name="d218720e100"></a>Subject line: Issue is due in less than two days</li><li class="list__item"><a name="d218720e103"></a>Text: You have less than two days remaining to resolve the following issue: &lt;issueID&gt;</li></ul>
+                </li></ul>
+            <a name="d218720e109"></a><div class="code-block" data-lang="Javascript"><code class="code-block__wrapper"><span class="nx">schedule</span> <span class="nx">rule</span> <span class="nx">Check</span> <span class="k">for</span> <span class="nx">Due</span> <span class="nx">date</span> <span class="nx">and</span> <span class="nx">notify</span> <span class="nx">assignee</span>
+
+<span class="nx">daily</span> <span class="nx">at</span> <span class="mi">08</span> <span class="o">:</span> <span class="mi">00</span> <span class="o">:</span> <span class="mi">00</span> <span class="p">[</span><span class="nx">issue</span><span class="p">.</span><span class="nx">Due</span> <span class="nx">date</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="nx">now</span> <span class="o">+</span> <span class="mi">2</span> <span class="nx">days</span><span class="p">)]</span> <span class="p">{</span>
+    <span class="nx">issue</span><span class="p">.</span><span class="nx">Assignee</span><span class="p">.</span><span class="nx">notify</span><span class="p">(</span><span class="s2">&quot;Issue is due in less than two days&quot;</span><span class="p">,</span> <span class="s2">&quot;You have less than two days remaining to resolve the following issue:&quot;</span> <span class="o">+</span> <span class="nx">issue</span><span class="p">.</span><span class="nx">getId</span><span class="p">());</span>
+<span class="p">}</span></code></div>
+            <a name="d218720e112"></a><p>The schedule uses the date constant <code class="code" data-lang="Java">08 : 00 : 00</code>, which uses the time zone setting for your YouTrack server.
+                The <code class="code" data-lang="Java">issue.Due date</code> references a custom field that stores the date and time as 12:00 UTC.
+                If, for example, your office is in California (UTC-7) and you want your users to be notified for all issues that are due in less than two days,
+                you need to offset the due date by seven hours.
+                For more information, see <a name="d218720e120"></a><a href="Workflow-Working-with-Dates-Times.html"><span>Working with Dates and Times</span></a>.</p>
+
+
+         
+    <a name="Statemachine"></a><h2>State-machine Rules</h2>
+        <a name="d218720e128"></a><p>A <a name="d218720e130"></a><span class="control">State-machine Rule</span> defines transitions between issue states.
+            A <a name="d218720e133"></a><i id="d218720e133">state</i> here is not only the <a name="d218720e136"></a><span class="control">State</span> field of an issue, but any field of an issue that has defined transitions from one value to another.
+            However, the most obvious and most often used state-machine rule is for transitions between values of the <a name="d218720e139"></a><span class="control">State</span> field.</p>
+        <a name="d218720e143"></a><p>When a state-machine rule is applied to a project, the options that are shown in the drop-down list for the field are restricted to the actions defined in the state-machine rule.</p>
+
+        <a name="d218720e146"></a><p>State-machine rules have two types of conditions.</p>
+        <ul class="list _ul"><li class="list__item"><a name="d218720e151"></a>The conditions <code class="code" data-lang="Java">enter</code>, <code class="code" data-lang="Java">exit</code>, and <code class="code" data-lang="Java">on</code> perform an action when the value for the field is set.
+            These conditions are executed by the user who changes the value of the field.</li><li class="list__item"><a name="d218720e163"></a>The condition <code class="code" data-lang="Java">in</code> performs an action after the specified time frame.
+            These conditions are executed by the workflow user account.</li></ul>
+
+        <a name="d218720e170"></a><h3>Sample State-machine Rule</h3>
+            <a name="State-machine_Rule_Sample"></a>
+
+            <a name="d218720e174"></a><p>This rule defines the following transitions for the <a name="d218720e176"></a><span class="control">State</span> field of an issue:</p>
+            <ol class="list _decimal"><li class="list__item"><a name="d218720e182"></a>An issue starts with the state <a name="d218720e184"></a><span class="control">Submitted</span>.</li><li class="list__item"><a name="d218720e188"></a>From the initial state, an issue can only transition to the following state:
+                    <ul class="list _ul"><li class="list__item"><a name="d218720e192"></a>On event (action) <a name="d218720e194"></a><span class="control">Open</span>, the state is set to <a name="d218720e197"></a><span class="control">Open</span>.</li></ul>
+                </li><li class="list__item"><a name="d218720e203"></a>From the <a name="d218720e205"></a><span class="control">Open</span> state, an issue can only transition to the following state:
+                    <ul class="list _ul"><li class="list__item"><a name="d218720e210"></a>On event (action) <a name="d218720e212"></a><span class="control">Fix</span>, the state is set to <a name="d218720e215"></a><span class="control">Fixed</span>.<br>
+                            In addition, when the state is set to <a name="d218720e220"></a><span class="control">Fixed</span>, the <a name="d218720e223"></a><span class="control">Subsystem</span> field is set to <a name="d218720e227"></a><span class="control">Testing</span>.</li><li class="list__item"><a name="d218720e231"></a>On event (action) <a name="d218720e233"></a><span class="control">Duplicate</span>, the state is set to <a name="d218720e236"></a><span class="control">Duplicate</span>.</li><li class="list__item"><a name="d218720e240"></a>On event (action) <a name="d218720e242"></a><span class="control">Can't reproduce</span>, the state is set to <a name="d218720e245"></a><span class="control">Can't Reproduce</span>.</li></ul>
+                </li><li class="list__item"><a name="d218720e251"></a>From the <a name="d218720e253"></a><span class="control">Fixed</span> state, an issue can only transition to the following state:
+                    <ul class="list _ul"><li class="list__item"><a name="d218720e258"></a>On event (action) <a name="d218720e260"></a><span class="control">Verify</span>, the state is set to <a name="d218720e263"></a><span class="control">Verified</span>.</li><li class="list__item"><a name="d218720e267"></a>On event (action) <a name="d218720e269"></a><span class="control">Reopen</span>, the state is set to <a name="d218720e272"></a><span class="control">Reopened</span>.</li></ul>
+                </li><li class="list__item"><a name="d218720e278"></a>From the <a name="d218720e280"></a><span class="control">Duplicate</span> and <a name="d218720e283"></a><span class="control">Can't Reproduce</span> states, the issue can only transition to <a name="d218720e286"></a><span class="control">Reopened</span>.</li><li class="list__item"><a name="d218720e291"></a>From the <a name="d218720e293"></a><span class="control">Reopened</span> state, the issue can only transition to <a name="d218720e296"></a><span class="control">Fixed</span>.</li></ol>
+
+            <a name="d218720e301"></a><div class="code-block" data-lang="Javascript"><code class="code-block__wrapper"><span class="nx">statemachine</span> <span class="nx">State</span> <span class="nx">lifecycle</span> <span class="k">for</span> <span class="nx">field</span> <span class="nx">State</span> <span class="p">{</span>
+
+    <span class="nx">initial</span> <span class="nx">state</span> <span class="nx">Submitted</span> <span class="p">{</span>
+        <span class="nx">on</span> <span class="nx">Open</span><span class="p">[</span><span class="nx">always</span><span class="p">]</span> <span class="k">do</span> <span class="p">{</span><span class="o">&lt;</span><span class="nx">define</span> <span class="nx">statements</span><span class="o">&gt;</span><span class="p">}</span> <span class="nx">transit</span> <span class="nx">to</span> <span class="nx">Open</span>
+    <span class="p">}</span>
+
+    <span class="nx">state</span> <span class="nx">Open</span> <span class="p">{</span>
+        <span class="nx">on</span> <span class="nx">Fix</span><span class="p">[</span><span class="nx">always</span><span class="p">]</span> <span class="k">do</span> <span class="p">{</span><span class="o">&lt;</span><span class="nx">define</span> <span class="nx">statements</span><span class="o">&gt;</span><span class="p">}</span> <span class="nx">transit</span> <span class="nx">to</span> <span class="nx">Fixed</span>
+
+        <span class="nx">on</span> <span class="nx">Duplicate</span><span class="p">[</span><span class="nx">always</span><span class="p">]</span> <span class="k">do</span> <span class="p">{</span><span class="o">&lt;</span><span class="nx">define</span> <span class="nx">statements</span><span class="o">&gt;</span><span class="p">}</span> <span class="nx">transit</span> <span class="nx">to</span> <span class="nx">Duplicate</span>
+
+        <span class="nx">on</span> <span class="nx">Can</span><span class="s1">&#39;t reproduce[always] do {&lt;define statements&gt;} transit to Can&#39;</span><span class="nx">t</span> <span class="nx">Reproduce</span>
+    <span class="p">}</span>
+
+    <span class="nx">state</span> <span class="nx">Fixed</span> <span class="p">{</span>
+        <span class="nx">enter</span> <span class="p">{</span>
+            <span class="nx">issue</span><span class="p">.</span><span class="nx">Subsystem</span> <span class="o">=</span> <span class="p">{</span><span class="nx">Testing</span><span class="p">};</span>
+        <span class="p">}</span>
+
+        <span class="nx">on</span> <span class="nx">Verify</span><span class="p">[</span><span class="nx">always</span><span class="p">]</span> <span class="k">do</span> <span class="p">{</span><span class="o">&lt;</span><span class="nx">define</span> <span class="nx">statements</span><span class="o">&gt;</span><span class="p">}</span> <span class="nx">transit</span> <span class="nx">to</span> <span class="nx">Verified</span>
+
+        <span class="nx">on</span> <span class="nx">Reopen</span><span class="p">[</span><span class="nx">always</span><span class="p">]</span> <span class="k">do</span> <span class="p">{</span><span class="o">&lt;</span><span class="nx">define</span> <span class="nx">statements</span><span class="o">&gt;</span><span class="p">}</span> <span class="nx">transit</span> <span class="nx">to</span> <span class="nx">Reopened</span>
+    <span class="p">}</span>
+
+    <span class="nx">state</span> <span class="nx">Verified</span> <span class="p">{</span>
+
+    <span class="p">}</span>
+
+    <span class="nx">state</span> <span class="nx">Reopened</span> <span class="p">{</span>
+        <span class="nx">on</span> <span class="nx">Fix</span><span class="p">[</span><span class="nx">always</span><span class="p">]</span> <span class="k">do</span> <span class="p">{</span><span class="o">&lt;</span><span class="nx">define</span> <span class="nx">statements</span><span class="o">&gt;</span><span class="p">}</span> <span class="nx">transit</span> <span class="nx">to</span> <span class="nx">Fixed</span>
+    <span class="p">}</span>
+
+    <span class="nx">state</span> <span class="nx">Duplicate</span> <span class="p">{</span>
+        <span class="nx">on</span> <span class="nx">Reopen</span><span class="p">[</span><span class="nx">always</span><span class="p">]</span> <span class="k">do</span> <span class="p">{</span><span class="o">&lt;</span><span class="nx">define</span> <span class="nx">statements</span><span class="o">&gt;</span><span class="p">}</span> <span class="nx">transit</span> <span class="nx">to</span> <span class="nx">Reopened</span>
+    <span class="p">}</span>
+
+    <span class="nx">state</span> <span class="nx">Can</span><span class="err">&#39;</span><span class="nx">t</span> <span class="nx">Reproduce</span> <span class="p">{</span>
+        <span class="nx">on</span>  <span class="nx">Reopen</span><span class="p">[</span><span class="nx">always</span><span class="p">]</span> <span class="k">do</span> <span class="p">{</span><span class="o">&lt;</span><span class="nx">define</span> <span class="nx">statements</span><span class="o">&gt;</span><span class="p">}</span> <span class="nx">transit</span> <span class="nx">to</span> <span class="nx">Reopened</span>
+    <span class="p">}</span>
+
+<span class="p">}</span></code></div>
+
+         
+    <div class="last-modified">Last modified: 2 February 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

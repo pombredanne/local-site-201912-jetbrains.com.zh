@@ -1,0 +1,70 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta class="swiftype" name="product" data-type="string" content="/idea/2016.3/"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><meta charset="UTF-8"><meta name="robots" content="noindex"><title>IntelliJ IDEA 2016.3 Help :: Analyzing Data Flow</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="topicId329648"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-swiftype-index="false"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.3 Help</h3><div class="shortcuts-switcher" data-swiftype-index="false"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Windows/Linux Default</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWin</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">Mac OS X</option><option data-group="secondary" value="eclipse_mac_os_x">Eclipse (Mac OS X)</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (Mac OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper (Mac OS X)</option><option data-group="secondary" value="emacs">Emacs (Mac OS X)</option></select></div><div class="panel-trigger" data-swiftype-index="false"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="validating-dependencies.html">Validating Dependencies</a></div><h1>Analyzing Data Flow</h1><a name="d801854e9"></a><p>On this page:</p><ul><li class="list__item"><a href="#d801854e15">Introduction</a></li><li class="list__item"><a href="#d801854e63">Analyzing data flow</a></li><li class="list__item"><a href="#d801854e112">Examining the results of Dataflow analysis</a><ul class="list _bullet"><li class="list__item"><a href="#d801854e121">Dataflow to Here</a></li><li class="list__item"><a href="#d801854e218">Dataflow from Here</a></li></ul></li></ul><a name="d801854e15"></a><h2>Introduction</h2>
+        <a name="d801854e17"></a><p>IntelliJ IDEA provides <a name="d801854e19"></a><span class="keyword">Dataflow Analysis</span> features to help you with code archeology - better understand the
+            inherited project code, interpret complicated parts of the code, find bottlenecks in the source, and more.</p>
+        <a name="d801854e23"></a><p>Specifically, <a name="d801854e25"></a><span class="keyword">Dataflow to/from here</span> features allow you to:</p>
+        <ul class="list _ul"><li class="list__item"><a name="d801854e31"></a>See where values assigned to a variable come from.</li><li class="list__item"><a name="d801854e34"></a>Find out all the possible values that a variable can have.</li><li class="list__item"><a name="d801854e37"></a>Find out the places an expression\variable\method parameter can flow into.</li><li class="list__item"><a name="d801854e40"></a>Reveal the places where potential <code class="code" data-lang="Java">NullPointerException</code> can arise.</li></ul>
+        <a name="d801854e47"></a><p>If you want to trace back the value passed to a parameter at caret, you can create a
+                <a name="d801854e49"></a><span class="emphasis">slice</span> view of the source code using the
+                <a name="d801854e52"></a><span class="menupath">Analyze | Dataflow to Here</span> command. Moreover, using
+                <a name="d801854e55"></a><span class="menupath">Analyze | Dataflow from Here</span>
+                command you can find the places an expression can flow into.
+                The results of each dataflow analysis are displayed in the dedicated tabs of the
+                <a name="d801854e58"></a><span class="emphasis">Analyze Dataflow</span> tool window.
+            </p>
+
+    <a name="d801854e63"></a><h2>Analyzing data flow</h2>
+  <a name="d801854e65"></a><p>To analyze dataflow to/from a symbol:</p>
+    <ol class="list _decimal"><li class="list__item"><a name="d801854e70"></a>
+        Open the desired file for editing, see <a name="d801854e72"></a><a href="opening-and-reopening-files-in-the-editor.html"><span>Opening and Reopening Files in the Editor</span></a>.</li><li class="list__item"><a name="d801854e75"></a>Place the caret at the symbol to be analyzed (expression\variable\method parameter).</li><li class="list__item"><a name="d801854e78"></a>On the main menu, or on the context menu, choose <a name="d801854e80"></a><span class="menupath">Analyze | Dataflow to Here</span>
+            or
+                <a name="d801854e86"></a><span class="menupath">Analyze | Dataflow from Here</span>
+          depending on your purposes.
+               </li><li class="list__item"><a name="d801854e93"></a>Specify the analysis scope and choose whether you want to ignore all values coming from the test code.</li><li class="list__item"><a name="d801854e96"></a>Click <a name="d801854e98"></a><span class="control">OK</span>. <a name="d801854e101"></a><a href="#dataflowresults"><span>Review</span></a> the analysis results in the dedicated <a name="d801854e104"></a><span class="control">Analyze Dataflow</span> tool window.</li></ol>
+<a name="dataflowresults"></a><a name="d801854e112"></a><h2>Examining the results of Dataflow analysis</h2>
+        <a name="d801854e114"></a><h2></h2>
+    <a name="d801854e116"></a><p>The following sections briefly describe how to "read" the dataflow analysis results.</p>
+    <ul></ul>
+    <a name="d801854e121"></a><h3>Dataflow to Here</h3>
+    <ul class="list _bullet"><li class="list__item"><a name="d801854e125"></a>
+          Expand the tree to dig in the chain of assignments and method calls that lead to the symbol in question.
+          Nodes with gray background denote duplicates (the usages that are already present in the tree in another location).
+          The image below shows an example of the <a name="d801854e127"></a><span class="emphasis">Dataflow to Here</span> analysis results:
+          <figure><img alt="img" title="img" src="/help/img/idea/2016.3/dataflowtohere.png" width="542" height="153"></figure>
+           
+          The values in this view flow in the following direction:
+           
+                the value for the field <code class="code" data-lang="Java">String authType</code> in <code class="code" data-lang="Java">SingleSignonMessage</code>
+                comes from the <code class="code" data-lang="Java">this.authType = authType</code> assignment statement in
+                <code class="code" data-lang="Java">SingleSignOnMessage.setAuthType()</code> method called from
+                <code class="code" data-lang="Java">ClusterSingleSignOn.register()</code> method with <code class="code" data-lang="Java">authType</code>
+                parameter and so on.
+           
+           
+      </li><li class="list__item"><a name="d801854e194"></a>
+            To find out what are the possible values a symbol can have, click
+            <a name="d801854e196"></a><span class="control">Group By Leaf Expression</span>
+            button on the main tool bar of the
+            <a name="d801854e199"></a><span class="control">Dataflow</span>
+            tool window.
+        </li><li class="list__item"><a name="d801854e203"></a>
+            To view the code of assignments and method calls, press the <img alt="icon_showDiff.png" title="icon_showDiff.png" src="/help/img/idea/2016.3/icon_showDiff.png" width="17" height="17" class="inline-icon-17"> toggle button.
+            IntelliJ IDEA adds a <a name="d801854e207"></a><span class="control">Preview</span> pane which shows the code of the assignment or call that is currently selected in the tree,
+            the code is highlighted:
+             
+        </li><li class="list__item"><a name="d801854e213"></a>
+            To navigate to the source code of an assignment or call, double click the relevant line in the tree.
+        </li></ul>
+     
+    <a name="d801854e218"></a><h3>Dataflow from Here</h3>
+    <a name="d801854e220"></a><p>The hierarchical view is similar to the results of <a name="d801854e222"></a><span class="emphasis">Dataflow to Here</span> analysis, but the values flow in the opposite direction.</p>
+    <figure><img alt="img" title="img" src="/help/img/idea/2016.3/dataflowfromhere1.png" width="561" height="123"></figure>
+     
+<div class="navigation-links _bottom"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="validating-dependencies.html">Validating Dependencies</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content">```
+                <div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d801854e241"></a><a href="finding-usages-in-project.html"><span>Finding Usages in Project</span></a></li></ul></div><div class="seealso__col"><h3>Concepts:</h3><ul class="list"><li class="list__item"><a name="d801854e234"></a><a href="code-analysis.html"><span>Code Analysis</span></a></li><li class="list__item"><a name="d801854e236"></a><a href="topicId175298.html"><span>Dataflow Analysis</span></a></li></ul></div></div></section><div class="last-modified" data-swiftype-index="false">Last modified: 21 March 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

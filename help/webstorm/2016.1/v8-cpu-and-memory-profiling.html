@@ -1,0 +1,574 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"></meta><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><title>WebStorm 2016.1 Help :: V8 CPU and Memory Profiling</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="V8_CPU_and_Memory_Profiling"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search WebStorm Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>WebStorm 2016.1 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWindow</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="running-nodeunit-tests.html">Running Nodeunit Tests</a><a class="navigation-links__next" href="using-jade-template-engine.html">Using JADE Template Engine</a></div><h1>V8 CPU and Memory Profiling</h1><a name="d264467e20"></a><p>
+        As you may know, <a name="d264467e22"></a><a href="https://code.google.com/p/v8/" data-external="true"><span>V8</span></a> is an open-source JavaScript engine developed by Google.
+        It is used in Google <a name="d264467e25"></a><span class="emphasis">Chrome</span>, <a name="d264467e28"></a><a href="http://www.chromium.org/Home" data-external="true"><span>Chromium</span></a>, <a name="d264467e31"></a><span class="emphasis">Node.js</span>,
+        and <a name="d264467e34"></a><a href="https://iojs.org/en/index.html" data-external="true"><span>io.js</span></a>.
+    </p><a name="d264467e38"></a><p>
+        <a name="d264467e40"></a><span class="emphasis">V8</span> has a sampling CPU profiler <a name="d264467e43"></a><span class="emphasis">V8 profiler</span> which is intended for capturing and analyzing CPU profiles and heap snapshots
+        for your <a name="d264467e46"></a><span class="emphasis">Node.js</span> applications. With V8 CPU profiling you can get a better understanding of which parts of your code take up the most CPU time,
+        and how your code is executed and optimized by the V8 JavaScript engine.
+    </p><a name="d264467e50"></a><p>
+        You can also open and explore profiles and snapshots captured in Google Chrome DevTools for your client-side code.
+    </p><a name="d264467e54"></a><p>
+        On this page:
+    </p><ul><li class="list__item"><a href="#d264467e59">Why Is Profiling Important</a></li><li class="list__item"><a href="#d264467e74">Before You Start</a></li><li class="list__item"><a href="#d264467e107">Preparing for V8 CPU and Memory Heap Profiling</a><ul class="list _bullet"><li class="list__item"><a href="#d264467e131">Installing the v8-profiler Package</a></li></ul></li><li class="list__item"><a href="#d264467e246">CPU Profiling</a><ul class="list _bullet"><li class="list__item"><a href="#d264467e336">Configuring CPU Profiling</a></li><li class="list__item"><a href="#d264467e390">Collecting CPU Profiling Information</a></li><li class="list__item"><a href="#d264467e420">Analyzing CPU Profiling Information</a><ul class="list _bullet"><li class="list__item"><a href="#d264467e437">Exploring Call Tress</a></li><li class="list__item"><a href="#d264467e564">Analyzing the Flame Chart</a><ul class="list _bullet"><li class="list__item"><a href="#d264467e568">Selecting a Fragment in the Timeline</a></li><li class="list__item"><a href="#d264467e573">Synchronization in the Flame Chart</a></li></ul></li></ul></li></ul></li><li class="list__item"><a href="#d264467e582">Memory Profiling</a><ul class="list _bullet"><li class="list__item"><a href="#d264467e617">Configuring Memory Profiling</a></li><li class="list__item"><a href="#d264467e691">Collecting Memory Profiling Information</a></li><li class="list__item"><a href="#d264467e728">Analyzing Memory Profiling Information</a><ul class="list _bullet"><li class="list__item"><a href="#d264467e782">Navigating through a Snapshot</a></li></ul></li></ul></li></ul><a name="d264467e59"></a><h2>Why Is Profiling Important</h2>
+        <ul class="list _bullet"><li class="list__item"><a name="d264467e63"></a>
+            A carefully designed algorithm can make your code faster and manage your memory consumption better, even more efficiently than the virtual machine can.
+            Profiling is the way to look inside the execution of your code and prove your assumptions about your design decisions.
+        </li><li class="list__item"><a name="d264467e66"></a>
+            Profiling is especially relevant for Javascript, which is a powerful language with advanced features like dynamic typing, closures,
+            and even the ability to create code at runtime. Therefore the behavior of the JavaScript engine is quite sophisticated,
+            and there are cases when you really need to go deep into the details of how the engine works.
+            Some of the code patterns you use need  being tweaked to allow the JavaScript optimizer to do its work.
+        </li><li class="list__item"><a name="d264467e69"></a>
+            JavaScript is by no means a simple language to judge if your code manages memory well.
+            Closure memory leaks are a good illustration of the fact that code that looks good and simple may still cause leaks.
+        </li></ul>
+    <a name="d264467e74"></a><h2>Before You Start</h2>
+        <ol class="list _decimal"><li class="list__item"><a name="d264467e78"></a>
+            Install the <a name="d264467e80"></a><a href="http://nodejs.org/#download" data-external="true"><span>Node.js</span></a> runtime environment version 0.11.0 or higher.
+        </li><li class="list__item"><a name="d264467e94"></a>
+             
+        Make sure the <a name="d7162e5450"></a><span class="emphasis">NodeJS</span> plugin is enabled.
+         
+        The plugin is bundled with WebStorm and activated by default.
+        If the plugin is not activated, enable it on the <a name="d7162e5458"></a><a href="plugins-2.html"><span>Plugins</span></a> page of the <a name="d7162e5460"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> as described in <a name="d7162e5462"></a><a href="enabling-and-disabling-plugins.html"><span>Enabling and Disabling Plugins</span></a>.
+     
+     
+        </li></ol>
+    <a name="d264467e107"></a><h2>Preparing for V8 CPU and Memory Heap Profiling</h2>
+        <a name="d264467e109"></a><p>
+            V8 CPU profiling is provided through the WebStorm built-in functionality, you do not need to install any additional software.
+        </p>
+        <a name="d264467e112"></a><p>
+            V8 memory heap profiling is provided through the
+            <a name="d264467e114"></a><a href="https://www.npmjs.com/package/v8-profiler" data-external="true"><span>v8-profiler</span></a> package.
+ 
+        </p>
+        <a name="d264467e120"></a><p>
+            The <a name="d264467e122"></a><span class="emphasis">v8-profiler</span> package can be installed from WebStorm using the <a name="d264467e125"></a><span class="emphasis">Node Package Manager (npm)</span>.
+             
+        </p>
+
+    <a name="d264467e131"></a><h3>Installing the v8-profiler Package</h3>
+            <a name="d264467e133"></a><p>
+                You can install the <a name="d264467e135"></a><span class="emphasis">v8-profiler</span> package using the <a name="d264467e138"></a><span class="emphasis">Node Package Manager (npm)</span>
+                either in the command line mode or on the <a name="d264467e141"></a><a href="node-js-and-npm.html"><span>Node.js and NPM</span></a> page
+                of the <a name="d264467e143"></a><span class="control">Settings</span> dialog box.
+            </p>
+            <a name="d264467e149"></a><p>
+                To install the <a name="d264467e151"></a><span class="emphasis">v8-profiler</span> package globally,
+                do one of the following:
+            </p>
+        <ul class="list _bullet"><li class="list__item"><a name="d264467e157"></a>
+            In the command line mode, type <code class="code" data-lang="Java">npm install -g v8-profiler</code>.
+        </li><li class="list__item"><a name="d264467e163"></a>
+            Use the <a name="d264467e165"></a><a href="node-js-and-npm.html"><span>Node.js and NPM</span></a> page of the
+            <a name="d264467e167"></a><span class="control">Settings</span> dialog box:
+            <ol class="list _decimal"><li class="list__item"><a name="d264467e174"></a>
+                     
+         
+            Open the <a name="d7162e7944"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by choosing <a name="d7162e7946"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d7162e7949"></a><span class="menupath">WebStorm | Preferences</span> for OS X,
+         
+         
+            and  
+         
+         
+         
+        click <a name="d7162e7972"></a><span class="control">Node.js and NPM</span> under <a name="d7162e7975"></a><span class="control">Languages &amp; Frameworks</span>.
+     
+     
+                </li><li class="list__item"><a name="d264467e186"></a>
+                    On the <a name="d264467e188"></a><span class="control">Node.js and NPM</span> page that opens, click <a name="d264467e191"></a><span class="control">Install</span> <img alt="add" width="12" height="12" title="add" src="/help/img/idea/2016.1/new.png" class="inline-icon-12">
+                    in the <a name="d264467e196"></a><span class="control">Packages </span> area.
+                </li><li class="list__item"><a name="d264467e200"></a>
+                    In the <a name="d264467e202"></a><span class="control">Available Packages</span> dialog box that opens,
+                    select the <a name="d264467e205"></a><span class="emphasis">v8-profiler</span> package
+                    from the list, possibly using the search field.
+                </li><li class="list__item"><a name="d264467e209"></a>
+                    Select the <a name="d264467e211"></a><span class="control">Options</span> check box and type <code class="code" data-lang="Java">-g</code> in the text box next to it
+                    to have the package installed <a name="d264467e217"></a><span class="emphasis">globally</span> and thus make it available from any WebStorm project.
+                </li><li class="list__item"><a name="d264467e221"></a>
+                    Click <a name="d264467e223"></a><span class="control">Install</span>.
+                </li><li class="list__item"><a name="d264467e228"></a>
+                    When the package is installed successfully, close the dialog box.
+                    WebStorm brings you back to the <a name="d264467e230"></a><span class="control">Node.js and NPM</span> page where the package is added to the list.
+                </li></ol>
+        </li></ul>
+        <a name="d264467e237"></a><p>
+            Learn more about installing packages through NPM at <a name="d264467e239"></a><a href="installing-and-removing-external-software-using-node-package-manager.html"><span>Installing and Removing External Software Using Node Package Manager</span></a>.
+        </p>
+
+     
+ 
+    <a name="d264467e246"></a><h2>CPU Profiling</h2>
+        <a name="d264467e248"></a><p>
+            With V8 CPU profiling you can get a better understanding of which parts of your code take up the most CPU time,
+            and how your code is executed and optimized by the V8 JavaScript engine.
+        </p>
+
+        <a name="d264467e251"></a><p>
+            To identify the processes that consume most of your CPU, you can use two methods: <a name="d264467e253"></a><span class="emphasis">sampling</span> and <a name="d264467e256"></a><span class="emphasis">tracing</span>.
+            <ul class="list _bullet"><li class="list__item"><a name="d264467e261"></a>
+                    When the <a name="d264467e263"></a><span class="emphasis">sampling</span> method is applied, you periodically record stack traces of your application.
+                    The periods between records are measured in conventional units referred to as <a name="d264467e266"></a><span class="emphasis">ticks</span>.
+                    <a name="d264467e269"></a><p>
+                        This method does not guarantee very good accuracy or precision for the following reason:
+                        snapshots are taken at random moments therefore any function can happen to be recorded in a snapshot.
+                        However, sampling can give us a rough picture of where the most of time is spent.
+                         
+                    </p>
+                </li><li class="list__item"><a name="d264467e275"></a>
+                    When the <a name="d264467e277"></a><span class="emphasis">tracing</span> method is used, we actively record tracing information by ourselves, directly in the code.
+                    It is obviously better to get exact measurements of how much time each method took,
+                    and also allows to count how many times the traced method was called.
+                    The disadvantage of this method is that it comes with bigger <a name="d264467e280"></a><span class="emphasis">result distortion</span> compared to <a name="d264467e283"></a><span class="emphasis">sampling</span>.
+                </li></ul>
+        </p>
+        <a name="d264467e289"></a><p>
+            <a name="d264467e291"></a><span class="emphasis">Result Distortion</span>. Both sampling and tracing introduce delays into execution and therefore influence the profiling results.
+            With sampling, delays can be estimated as some fixed amount of time for each sampling event and do not introduce greater distortion than the sampling method itself
+            (i.e. the delay is much shorter than the sampling interval).
+            With tracing, the profiling delay depends on the code and the places where we made tracing measurements.
+            For instance, if a traced method is called inside other traced methods numerously, all inner delays will accumulate for the outer method.
+            If so, it may be difficult to separate the execution time from tracing distortion.
+            </p>
+        <a name="d264467e295"></a><p>
+            Usually we use sampling and tracing methods together. We start with sampling to get an idea of which parts of our code take the most time,
+            and then instrument the code with tracing calls to zero on the issues.
+        </p>
+        <a name="d264467e298"></a><p>
+             
+        Measurements are made not only for the work of your code, but also activities performed by the engine itself, such as compilation,
+        calls of system libraries, optimization, and garbage collection.
+     
+            The following time metrics are made for execution of functions themselves and for performing activities:
+            <ul class="list _bullet"><li class="list__item"><a name="d264467e304"></a>
+                    <a name="d264467e306"></a><span class="emphasis">Total</span>: the number of ticks (the time) during which a function was executed or an activity was performed.
+                </li><li class="list__item"><a name="d264467e310"></a><a name="d264467e311"></a><span class="emphasis">Total%</span>: the ratio of a function/activity execution time to the entire time when measurements were made.</li><li class="list__item"><a name="d264467e315"></a><a name="d264467e316"></a><span class="emphasis">Self</span>: the pure execution time of a function/activity itself, without the time spent on executing functions called by it.</li><li class="list__item"><a name="d264467e320"></a><a name="d264467e321"></a><span class="emphasis">Self%</span>: the ratio of the pure execution time of a function/activity to the entire time when the measurements were made.</li><li class="list__item"><a name="d264467e325"></a><a name="d264467e326"></a><span class="emphasis">Of Parent</span>: the ratio of the pure execution time of a function to the execution time of the function that called it (<a name="d264467e329"></a><span class="emphasis">Parent</span>).</li></ul>
+        </p>
+        <a name="d264467e336"></a><a name="dynaProc0"></a><section class="procedure-steps"><h2>Configuring CPU Profiling</h2><p>
+                <a name="d264467e340"></a><p>
+                    To invoke V8 CPU profiling on application start, you need to specify additional settings
+                    in the <a name="d264467e342"></a><span class="control">Node.js</span> run configuration according to which the application will be launched.
+                </p>
+            </p><ol class=".list _decimal"><li class="list__item">
+                 
+            Choose <a name="d7162e7850"></a><span class="menupath">Run | Edit Configuration</span> on the main menu.
+            Alternatively, click <kbd data-default="Shift+Alt+F10" data-default_for_gnome="Shift+Alt+F10" data-default_for_kde="Shift+Alt+F10" data-default_for_xwin="Shift+Alt+F10" data-emacs="Alt+Shift+F10" data-visual_studio="Alt+Shift+F10" data-netbeans_6.5="N/A" data-eclipse="Shift+Alt+F10" data-mac_os_x_10.5_="&#x2303;&#x2325;R" data-mac_os_x="&#x2325;&#x21E7;F10" data-eclipse_mac_os_x="&#x2303;&#x2325;R" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Shift+Alt+F10</kbd>  and select <a name="d7162e7855"></a><span class="control">Edit Configuration</span>
+            from the pop-up menu.
+         
+            </li><li class="list__item">
+                From the list, choose the <a name="d264467e357"></a><span class="emphasis">Node.js</span> run configuration to activate CPU Profiling in or create a new configuration
+                as described in <a name="d264467e360"></a><a href="running-and-debugging-node-js.html"><span>Running and Debugging Node.js</span></a>.
+            </li><li class="list__item">
+                Switch to the <a name="d264467e365"></a><span class="control">V8 Profiling</span> pane and specify the following:
+                <ol class="list _decimal"><li class="list__item"><a name="d264467e370"></a>
+                        Select the <a name="d264467e372"></a><span class="control">Record CPU profiling info</span> check box.
+                    </li><li class="list__item"><a name="d264467e376"></a>
+                        In the <a name="d264467e378"></a><span class="control">Log folder</span> field, specify the folder to store recorded logs in.
+                        Profiling data are stored in V8 log files <code class="code" data-lang="Java">isolate-&lt;session number&gt;</code>.
+                    </li></ol>
+            </li></ol></section>
+
+        <a name="d264467e390"></a><a name="dynaProc1"></a><section class="procedure-steps"><h2>Collecting CPU Profiling Information</h2><ol class=".list _decimal"><li class="list__item">
+                Select the run configuration from the list on the main tool bar and then choose <a name="d264467e402"></a><span class="menupath">Run | Run &lt;configuration name&gt;</span> on the main menu
+                or click the <a name="d264467e405"></a><span class="control">Run</span> toolbar button <img alt="run.png" width="11" height="14" title="run.png" src="/help/img/idea/2016.1/run.png" class="inline-icon-14">.
+            </li><li class="list__item">
+                When the scenario that you need to profile is executed, stop the process by clicking <img alt="stop.png" width="12" height="12" title="stop.png" src="/help/img/idea/2016.1/stop.gif" class="inline-icon-12">
+                on the tool bar of the <a name="d264467e415"></a><span class="control">Run</span> tool window.
+            </li></ol><p class="procIntro">
+                <a name="d264467e394"></a><p>
+                    V8 log file will be processed by V8 scripts to calculate averaged call traces.
+                    WebStorm opens the <a name="d264467e396"></a><a href="v8-profiling-tool-window.html"><span>V8 Profiling Tool Window</span></a>.
+                </p>
+            </p></section>
+
+        <a name="d264467e420"></a><h3>Analyzing CPU Profiling Information</h3>
+            <a name="d264467e422"></a><p>
+                Analyzing the profiling logs is available after the process stops because currently stopping and restarting profiling during execution of an application is not supported.
+            </p>
+            <a name="d264467e425"></a><p>
+                The collected profiling data is displayed in the <a name="d264467e427"></a><a href="v8-profiling-tool-window.html"><span>V8 Profiling Tool Window</span></a> which WebStorm opens automatically when you stop your application.
+                 
+        If the window is already opened and shows the profiling data for another session, a new tab is added. Tabs that were opened automatically are named after the run configurations
+        that control execution of the applications and  collecting the profiling data.
+     
+            </p>
+            <a name="d264467e432"></a><p>
+                 
+        If you want to open and analyze some previously saved profiling data, choose <a name="d9041e2783"></a><span class="menupath">V8 Profiling - Analyze V8 Profiling Log</span> on the main menu
+        and select the relevant V8 log file <code class="code" data-lang="Java">isolate-&lt;session number&gt;</code>. WebStorm creates a separate tab with the name of the log file.
+     
+            </p>
+            <a name="d264467e437"></a><a name="dynaProc2"></a><section class="procedure-steps"><h2>Exploring Call Tress</h2><p>
+                    <a name="d264467e441"></a><p>
+                         
+        Based on the collected profiling data, WebStorm builds three call trees and displays each of them in a separate pane.
+        Having several call trees provides the possibility to analyze the application execution from two different points of view: on the one hand,
+        which calls were time consuming ("heavy"), and on the other hand, "who called whom".
+     
+                    </p>
+                        <ul class="list _bullet"><li class="list__item"><a name="d264467e448"></a>
+                                 
+        The <a name="d9041e2823"></a><span class="control">Top Calls</span> pane shows a list of performed activities sorted in the descending order by the <a name="d9041e2826"></a><span class="emphasis">Self</span> metrics.
+        For each activity WebStorm displays its <a name="d9041e2829"></a><span class="emphasis">Total</span>, <a name="d9041e2832"></a><span class="emphasis">Total%</span>, and <a name="d9041e2835"></a><span class="emphasis">Self%</span> metrics.
+         
+        For each function call, WebStorm displays the name of the file, the line, and the  column where the function is defined.
+     
+     
+                                <figure><img alt="v8ProfilerCPUTopCalls.png" width="625" height="319" title="v8ProfilerCPUTopCalls.png" src="/help/img/idea/2016.1/v8ProfilerCPUTopCalls.png"></figure>
+                                 
+        The diagram in the <a name="d9041e2878"></a><span class="control">Overview</span> pane shows distribution of self time for calls
+        with the <a name="d9041e2881"></a><span class="emphasis">Self%</span> metrics above 1%.
+     
+                                <figure><img alt="v8ProfilerCPUTopCallsOverviewPane.png" width="442" height="283" title="v8ProfilerCPUTopCallsOverviewPane.png" src="/help/img/idea/2016.1/v8ProfilerCPUTopCallsOverviewPane.png"></figure>
+                            </li><li class="list__item"><a name="d264467e459"></a>
+                                 
+        The <a name="d9041e2844"></a><span class="control">Bottom-up</span> pane also shows the performed activities sorted in the descending order by the <a name="d9041e2847"></a><span class="emphasis">Self</span> metrics. Unlike the <a name="d9041e2850"></a><span class="control">Top Calls</span> pane,
+        the <a name="d9041e2853"></a><span class="control">Bottom-up</span> pane shows only the activities with the <a name="d9041e2856"></a><span class="emphasis">Total%</span> metrics above 2 and the functions that called them. This is helpful if you encounter
+        a <a name="d9041e2860"></a><span class="emphasis">heavy</span> function and want to find out where it was called from.
+        <a name="d9041e2863"></a><p>
+            For each activity WebStorm displays its execution time in <a name="d9041e2865"></a><span class="emphasis">ticks</span> and the <a name="d9041e2868"></a><span class="emphasis">Of Parent</span> metrics.
+             
+        For each function call, WebStorm displays the name of the file, the line, and the  column where the function is defined.
+     
+        </p>
+     
+                            </li><li class="list__item"><a name="d264467e464"></a>
+                                 
+        The <a name="d9041e2887"></a><span class="control">Top-down</span> pane shows the entire call hierarchy with the functions that are execution entry points at the top.
+        For each activity WebStorm displays its <a name="d9041e2890"></a><span class="emphasis">Total</span>, <a name="d9041e2893"></a><span class="emphasis">Total%</span>, <a name="d9041e2896"></a><span class="emphasis">Self</span>, and <a name="d9041e2899"></a><span class="emphasis">Self%</span> metrics.
+         
+        For each function call, WebStorm displays the name of the file, the line, and the  column where the function is defined.
+     
+     
+                                 
+        Some of the functions may have been optimized by V8, see <a name="d9041e2933"></a><a href="http://floitsch.blogspot.de/2012/03/optimizing-for-v8-introduction.html" data-external="true"><span>Optimizing for V8</span></a> for details.
+        <ul class="list _bullet"><li class="list__item"><a name="d9041e2938"></a>
+                The functions that have been optimized are marked with an asterisk (<code class="code" data-lang="Java">*</code>) before the function name.
+            </li><li class="list__item"><a name="d9041e2944"></a>
+                The functions that possibly require optimization but still have not been optimized
+                are marked with a tilde (<code class="code" data-lang="Java">~</code>) character before the function name.
+                Though optimization may be delayed by the engine or skipped if the code is short-running,
+                a tilde (<code class="code" data-lang="Java">~</code>) points at a place where the code can be rewritten to achieve better performance.
+            </li></ul>
+     
+                                <figure><img alt="v8ProfilerCPUTrees.png" width="625" height="282" title="v8ProfilerCPUTrees.png" src="/help/img/idea/2016.1/v8ProfilerCPUTrees.png"></figure>
+                            </li></ul>
+
+                </p><ul class=".list "><li class="list__item">
+                    To navigate to the source code of a function, select the function in question in the tree and click <img alt="edit" width="14" height="15" title="edit" src="/help/img/idea/2016.1/edit.png" class="inline-icon-15"> on the toolbar
+                    or choose <a name="d264467e479"></a><span class="control">Jump to source</span> on the context menu of the selection.
+                    The file with the source code of the selected function is opened in the editor with the cursor positioned at the function.
+                </li><li class="list__item">
+                     
+        When a tab for a profiling session is opened, by default the nodes with heaviest calls are expanded. While exploring the trees, you may like to fold some nodes or expand other ones.
+     
+                    To restore the original tree presentation, click the <a name="d264467e487"></a><span class="control">Expand Heavy Traces</span> button <img alt="icon_expand_heavy_calls.png" width="15" height="15" title="icon_expand_heavy_calls.png" src="/help/img/idea/2016.1/icon_expand_heavy_calls.png" class="inline-icon-15"> on the toolbar.
+                </li><li class="list__item">
+                    To have WebStorm display only the calls that indeed cause performance problems, filter out light calls:
+                    <ol class="list _decimal"><li class="list__item"><a name="d264467e497"></a>
+                            Click the <a name="d264467e499"></a><span class="control">Filter</span> button <img alt="filter" width="16" height="16" title="filter" src="/help/img/idea/2016.1/filter.png" class="inline-icon-16"> on the toolbar.
+                        </li><li class="list__item"><a name="d264467e505"></a>
+                             
+        Using the slider, specify the minimum <a name="d9041e2914"></a><span class="emphasis">Total%</span> or <a name="d9041e2917"></a><span class="emphasis">Parent%</span> value for a call to be displayed and click <a name="d9041e2920"></a><span class="control">Done</span>.
+     
+                        </li></ol>
+                </li><li class="list__item">
+                    To expand or collapse all the nodes in the active pane, click <img alt="expandAll.png" width="16" height="22" title="expandAll.png" src="/help/img/idea/2016.1/expandAll.png" class="inline-icon-22"> or <img alt="collapseAll.png" width="12" height="14" title="collapseAll.png" src="/help/img/idea/2016.1/collapseAll.png" class="inline-icon-14"> on the toolbar respectively.
+                </li><li class="list__item">
+                    To expand or collapse a node, select it and choose <a name="d264467e522"></a><span class="control">Expand Node</span> or <a name="d264467e525"></a><span class="control">Collapse Node</span> on the context menu of the selection.
+                </li><li class="list__item">
+                    Save and compare calls and lines:
+                    <ul class="list _bullet"><li class="list__item"><a name="d264467e533"></a>
+                            To save a line with a function and its metrics, select the function and choose <a name="d264467e535"></a><span class="control">Copy</span> on the context menu of the selection.
+                             
+        This may be helpful if you want to compare the measurements for a function from two sessions, for example, after you make some improvements to the code.
+     
+                        </li><li class="list__item"><a name="d264467e541"></a>
+                            To save only the function name and the name of the file where the function is defined, select the function and choose <a name="d264467e543"></a><span class="control">Copy Call</span> on the context menu of the selection.
+                        </li><li class="list__item"><a name="d264467e547"></a>
+                            To compare an item with the contents of the Clipboard, select the item in question and choose <a name="d264467e549"></a><span class="control">Compare With Clipboard</span> on the context menu of the selection.
+                            Compare the items in the <a name="d264467e552"></a><span class="emphasis">Difference Viewer</span> that opens.
+                        </li></ul>
+                </li><li class="list__item">
+                    To save the call tree in the current pane to a text file, click <img alt="exportToTextFile.png" width="16" height="19" title="exportToTextFile.png" src="/help/img/idea/2016.1/exportToTextFile.png" class="inline-icon-19"> on the toolbar and specify the target file in the dialog box that opens.
+                </li></ul></section>
+
+            <a name="d264467e564"></a><h4>Analyzing the Flame Chart</h4>
+                 
+        <a name="d9041e3844"></a><p>
+            Use the multicolor chart in the <a name="d9041e3846"></a><span class="control">Flame Chart</span> tab to find where the application paused and explore the calls that provoked these pauses.
+            The chart consists of four areas:
+        </p>
+        <ul class="list _bullet"><li class="list__item"><a name="d9041e3852"></a>
+                The upper area shows a timeline with two sliders to limit the beginning and the end of a fragment to investigate.
+            </li><li class="list__item"><a name="d9041e3855"></a>
+                The bottom area shows a stack of calls in the form of a multicolor chart. When called for the first time, each function is assigned a random color,
+                whereupon every call of this function within the current session is shown in this color.
+            </li><li class="list__item"><a name="d9041e3858"></a>
+                The middle area shows a summary of  calls from the <a name="d9041e3860"></a><span class="emphasis">Garbage Collector</span>, the engine, the external calls,
+                and the execution itself. The  colors reserved for the <a name="d9041e3863"></a><span class="emphasis">Garbage Collector</span>, the engine , the external calls,
+                and the execution are listed on top of the area:
+                <figure><img alt="v8_flame_chart_reserved_colors.png" width="236" height="22" title="v8_flame_chart_reserved_colors.png" src="/help/img/idea/2016.1/v8_flame_chart_reserved_colors.png"></figure>
+            </li><li class="list__item"><a name="d9041e3869"></a>
+                The right-hand pane lists the calls within a selected fragment, for each call the list shows its duration, the name of the called function,
+                and file where the function is defined.
+            </li></ul>
+     
+                <a name="d264467e568"></a><h5>Selecting a Fragment in the Timeline</h5>
+                     
+        <a name="d9041e3876"></a><p>To explore  the processes within a certain period of time, you need to select the fragment in question. You can do it in two ways:</p>
+        <ul class="list _bullet"><li class="list__item"><a name="d9041e3881"></a>
+                Use the sliders:
+                <figure><img alt="v8_flame_chart_sliders.png" width="184" height="63" title="v8_flame_chart_sliders.png" src="/help/img/idea/2016.1/v8_flame_chart_sliders.png"></figure>
+            </li><li class="list__item"><a name="d9041e3886"></a>
+                Click the <a name="d9041e3888"></a><span class="emphasis">window</span> between two sliders and drag it to the required fragment:
+                <figure><img alt="v8_flame_chart_window_between_sliders.png" width="184" height="62" title="v8_flame_chart_window_between_sliders.png" src="/help/img/idea/2016.1/v8_flame_chart_window_between_sliders.png"></figure>
+            </li></ul>
+        <a name="d9041e3895"></a><p>
+            In either case, the multicolor chart below shows the stack of calls within the selected fragment.
+        </p>
+        <a name="d9041e3898"></a><p>
+            To enlarge the chart, click the selected fragment and then click the <a name="d9041e3900"></a><span class="control">Zoom</span> button <img alt="erDiagramIconZoomIn.png" width="22" height="23" title="erDiagramIconZoomIn.png" src="/help/img/idea/2016.1/erDiagramIconZoomIn.png" class="inline-icon-23">
+            on the toolbar. WebStorm opens a new tab and shows the selected fragment enlarged to fit the tab width so you can examine the fragment with more details.
+        </p>
+     
+                 
+                <a name="d264467e573"></a><h5>Synchronization in the Flame Chart</h5>
+                     
+        <a name="d9041e3909"></a><p>
+            The bottom and the right-hand areas are synchronized: as you drag the slider in the bottom area through the timeline
+            the focus in the right-hand pane moves to the call that was performed at each moment.
+        </p>
+        <a name="d9041e3912"></a><p>
+            Moreover, if you click a call in the bottom area, the slider moves to it automatically
+            and the focus in the right-hand pane switches to the corresponding function, if necessary the list scrolls automatically.
+            And vice versa, if you click an item in the list, WebStorm selects the corresponding call in the bottom area
+            and drags the slider to it automatically:
+            <figure><img alt="v8_flame_chart_.bottom_area.png" width="689" height="510" title="v8_flame_chart_.bottom_area.png" src="/help/img/idea/2016.1/v8_flame_chart_.bottom_area.png"></figure>
+        </p>
+         
+        <a name="d9041e3934"></a><p>
+            WebStorm supports navigation from the right-hand area to the source code of called functions, to the other panes of the tool window, and to areas in the flame chart with specific metrics.
+        </p>
+        <ul class="list _bullet"><li class="list__item"><a name="d9041e3939"></a>
+                To jump to the source code of a called function, select the call in question
+                and choose <a name="d9041e3941"></a><span class="control">Jump to Source</span> on the context menu of the selection.
+            </li><li class="list__item"><a name="d9041e3945"></a>
+                To switch to another pane, select the call in question, choose <a name="d9041e3947"></a><span class="control">Navigate To</span> on the context menu of the selection, and then choose the destination:
+                <ul class="list _bullet"><li class="list__item"><a name="d9041e3952"></a><a name="d9041e3953"></a><span class="control">Navigate in Top Calls</span></li><li class="list__item"><a name="d9041e3956"></a><a name="d9041e3957"></a><span class="control">Navigate in Bottom-up</span></li><li class="list__item"><a name="d9041e3960"></a><a name="d9041e3961"></a><span class="control">Navigate in Top-down</span></li></ul>
+                WebStorm switches to the selected pane and moves the focus to the call in question.
+            </li><li class="list__item"><a name="d9041e3966"></a>
+                To have the flame chart zoomed at the fragments with specific metrics of a call, select the call in question, choose <a name="d9041e3968"></a><span class="control">Navigate To</span> on the context menu of the slection,
+                and then choose the metrics:
+                <ul class="list _bullet"><li class="list__item"><a name="d9041e3973"></a><a name="d9041e3974"></a><span class="control">Navigate to Longest Time</span></li><li class="list__item"><a name="d9041e3977"></a><a name="d9041e3978"></a><span class="control">Navigate to Typical Time</span></li><li class="list__item"><a name="d9041e3981"></a><a name="d9041e3982"></a><span class="control">Navigate to Longest Self Time</span></li><li class="list__item"><a name="d9041e3985"></a><a name="d9041e3986"></a><span class="control">Navigate to Typical Self Time</span></li></ul>
+            </li></ul>
+     
+        <a name="d9041e3919"></a><p>
+            You can also navigate to the stacktrace of a call to view and anlyze exceptions. To do that, select the call in question and choose <a name="d9041e3921"></a><span class="control">Show As Stacktrace</span>. WebStorm opens the stacktrace in a separate tab,
+            to return to the <a name="d9041e3924"></a><span class="control">Flame Chart</span> pane, click <a name="d9041e3927"></a><span class="control">V8 CPU Profiling</span>  tool window button in the bottom tool window.
+        </p>
+     
+                 
+             
+         
+    <a name="d264467e582"></a><h2>Memory Profiling</h2>
+        <a name="d264467e584"></a><p>
+            Though the <a name="d264467e586"></a><span class="emphasis">V8</span> Javascript engine does memory management for you,
+            memory leaks or dynamic memory problems are still possible. Here are some examples of memory leaks or shortcomings reasons:
+            <ul class="list _bullet"><li class="list__item"><a name="d264467e591"></a>
+                    Using global objects to store collections of data, with complicated free policies.
+                </li><li class="list__item"><a name="d264467e594"></a>
+                    Errors in usages of closures: closures keep references onto outside objects.
+                </li><li class="list__item"><a name="d264467e597"></a>
+                    Keeping detached DOM nodes in javascript variables.
+                </li><li class="list__item"><a name="d264467e600"></a>
+                    Too frequent memory allocation.
+                </li></ul>
+            Memory management control is especially important for <a name="d264467e604"></a><span class="emphasis">Node.js</span> applications,
+            because the server-side code tend to run long while memory inaccuracy is accumulated.
+            </p>
+        <a name="d264467e608"></a><p>
+            <a name="d264467e610"></a><span class="emphasis">V8 heap snapshots</span> are complicated by their nature;
+            they include many “engine” objects; the inner structure of objects differs from what you expect while reading your code.
+            Learn more at <a name="d264467e613"></a><a href="https://developer.chrome.com/devtools/docs/javascript-memory-profiling" data-external="true"><span>Javascript Memory Profiling</span></a>.
+        </p>
+
+        <a name="d264467e617"></a><a name="dynaProc3"></a><section class="procedure-steps"><h2>Configuring Memory Profiling</h2><p>
+                <a name="d264467e621"></a><p>
+                    To allow taking memory snapshots, you need to specify additional settings
+                    in the <a name="d264467e623"></a><span class="control">Node.js</span> run configuration according to which the application will be launched.
+                </p>
+            </p><ol class=".list _decimal"><li class="list__item">
+                 
+            Choose <a name="d7162e7850"></a><span class="menupath">Run | Edit Configuration</span> on the main menu.
+            Alternatively, click <kbd data-default="Shift+Alt+F10" data-default_for_gnome="Shift+Alt+F10" data-default_for_kde="Shift+Alt+F10" data-default_for_xwin="Shift+Alt+F10" data-emacs="Alt+Shift+F10" data-visual_studio="Alt+Shift+F10" data-netbeans_6.5="N/A" data-eclipse="Shift+Alt+F10" data-mac_os_x_10.5_="&#x2303;&#x2325;R" data-mac_os_x="&#x2325;&#x21E7;F10" data-eclipse_mac_os_x="&#x2303;&#x2325;R" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Shift+Alt+F10</kbd>  and select <a name="d7162e7855"></a><span class="control">Edit Configuration</span>
+            from the pop-up menu.
+         
+            </li><li class="list__item">
+                From the list, choose the <a name="d264467e638"></a><span class="emphasis">Node.js</span> run configuration to activate CPU Profiling in or create a new configuration
+                as described in <a name="d264467e641"></a><a href="running-and-debugging-node-js.html"><span>Running and Debugging Node.js</span></a>.
+            </li><li class="list__item">
+                Switch to the <a name="d264467e646"></a><span class="control">V8 Profiling</span> pane and specify the following:
+                <ol class="list _decimal"><li class="list__item"><a name="d264467e651"></a>
+                        Select the <a name="d264467e653"></a><span class="control">Allow taling heap snapshots</span> check box.
+                    </li><li class="list__item"><a name="d264467e657"></a>
+                        In the <a name="d264467e659"></a><span class="control">Log folder</span> field, specify the folder to store recorded logs in.
+                        Profiling data are stored in V8 log files <code class="code" data-lang="Java">isolate-&lt;session number&gt;</code>.
+                    </li><li class="list__item"><a name="d264467e666"></a>
+                        Specify the <a name="d264467e668"></a><span class="emphasis">v8-profiler</span> package to use. Choose the relevant package from the <a name="d264467e671"></a><span class="control">v8-profiler package</span> drop-down list
+                        or click the <img alt="browseButton" width="15" height="15" title="browseButton" src="/help/img/idea/2016.1/browseButton.png" class="inline-icon-15"> button next to it and choose the package in the dialog box that opens.
+                    </li><li class="list__item"><a name="d264467e677"></a>
+                        Specify the port through which WebStorm communicates with the profiler, namely, sends a command to take a snapshot
+                        when you click the <a name="d264467e679"></a><span class="control">Take Heap Snapshot</span> button <img alt="ws_v8_profiling_take_snapshot" width="15" height="15" title="ws_v8_profiling_take_snapshot" src="/help/img/idea/2016.1/ws_v8_profiling_take_snapshot.png" class="inline-icon-15"> on the toolbar of the <a name="d264467e684"></a><span class="control">Run</span> tool window.
+                    </li></ol>
+            </li></ol></section>
+
+        <a name="d264467e691"></a><a name="dynaProc4"></a><section class="procedure-steps"><h2>Collecting Memory Profiling Information</h2><ol class=".list _decimal"><li class="list__item">
+                Select the run configuration from the list on the main tool bar and then choose <a name="d264467e695"></a><span class="menupath">Run | Run &lt;configuration name&gt;</span> on the main menu
+                or click the <a name="d264467e698"></a><span class="control">Run</span> toolbar button <img alt="run.png" width="11" height="14" title="run.png" src="/help/img/idea/2016.1/run.png" class="inline-icon-14">.
+            </li><li class="list__item">
+                At any time during the application execution, click the <a name="d264467e706"></a><span class="control">Take Heap Snapshot</span> button <img alt="ws_v8_profiling_take_snapshot" width="15" height="15" title="ws_v8_profiling_take_snapshot" src="/help/img/idea/2016.1/ws_v8_profiling_take_snapshot.png" class="inline-icon-15">
+                on the toolbar of the <a name="d264467e711"></a><span class="control">Run</span> tool window.
+            </li><li class="list__item">
+                In the dialog box that opens, choose the folder to store the taken snapshot in and specify the name to save the snapshot file with.
+                To start analyzing the snapshot immediately, select the <a name="d264467e717"></a><span class="control">Open snapshot</span> check box.
+            </li><li class="list__item">
+                Click <a name="d264467e723"></a><span class="control">OK</span> to save the snapshot.
+            </li></ol></section>
+
+        <a name="d264467e728"></a><h3>Analyzing Memory Profiling Information</h3>
+            <a name="d264467e730"></a><p>
+                The collected profiling data is displayed in the <a name="d264467e732"></a><a href="v8-heap-tool-window.html"><span>V8 Heap Tool Window</span></a> which opens when you take a snapshot at choose to open it.
+                 
+        If the window is already opened and shows the profiling data for another session, a new tab is added. Tabs that were opened automatically are named after the run configurations
+        that control execution of the applications and  collecting the profiling data.
+     
+            </p>
+
+            <a name="d264467e737"></a><p>
+                 
+        If you want to open and analyze some previously saved mempry profiling data, choose <a name="d9041e2793"></a><span class="menupath">V8 Profiling - Analyze V8 Heap Snapshot</span> on the main menu
+        and select the relevant <code class="code" data-lang="Java">.snapshot</code> file. WebStorm creates a separate tab with the name of the selected file.
+     
+            </p>
+            <a name="d264467e742"></a><p>
+                The tool window has three tabs that present the collected information from difference point of views.
+                <ul class="list _bullet"><li class="list__item"><a name="d264467e746"></a>
+                         
+         
+        The <a name="d9041e2965"></a><span class="control">Containment</span> tab shows the objects in you application grouped under several top-level entries: <a name="d9041e2968"></a><span class="emphasis">DOMWindow objects</span>,
+        <a name="d9041e2971"></a><span class="emphasis">Native browser objects</span>, and  <a name="d9041e2974"></a><span class="emphasis">GC Roots</span>, which are roots the <a name="d9041e2978"></a><span class="emphasis">Garbage Collector</span> actually uses.
+        See <a name="d9041e2981"></a><a href="https://developer.chrome.com/devtools/docs/javascript-memory-profiling#containment-view" data-external="true"><span>Containment View</span></a> for details.
+     
+                        <a name="d264467e753"></a><p>
+                             
+        For each object, the tab shows its <a name="d9041e2987"></a><span class="emphasis">distance from the GC root</span>, that is the shortest simple path of nodes between the object and the GC root,
+        the <a name="d9041e2990"></a><a href="https://developer.chrome.com/devtools/docs/javascript-memory-profiling#shallow-size" data-external="true"><span>shallow size</span></a>  of the object,
+        and the <a name="d9041e2993"></a><a href="https://developer.chrome.com/devtools/docs/javascript-memory-profiling#retained-size" data-external="true"><span>retained size</span></a> of the object.
+        Besides the absolute values of the object's size, WebStorm shows the percentage of memory the object occupies.
+     
+                        </p>
+                    </li><li class="list__item"><a name="d264467e759"></a>
+                         
+         
+        The <a name="d9041e3001"></a><span class="control">Biggest Objects</span> tab shows the most memory-consuming objects
+        sorted by their <a name="d9041e3004"></a><a href="https://developer.chrome.com/devtools/docs/javascript-memory-profiling#retained-size" data-external="true"><span>retained sizes</span></a>.
+        In this tab, you can spot memory leaks provoked by accumulating data in some global object.
+     
+                    </li><li class="list__item"><a name="d264467e767"></a>
+                         
+         
+        The <a name="d9041e3013"></a><span class="control">Summary</span> tab shows the objects in your application grouped by their types.
+        The tab shows the number of objects of each type, their size, and the percentage of memory that they occupy.
+        This information may be a clue to the memory state.
+     
+                    </li></ul>
+            </p>
+            <a name="d264467e777"></a><p>
+                 
+        Each tab has a <a name="d9041e3019"></a><span class="control">Details</span> pane, which shows the path to the currently selected object from GC roots
+        and the list of object’s <a name="d9041e3022"></a><span class="emphasis">retainers</span>, that is, the objects that keep links to the selected object.
+        Every heap snapshot has many “back” references and loops, so there are always many retainers for each object.
+     
+            </p>
+
+            <a name="d264467e782"></a><a name="dynaProc5"></a><section class="procedure-steps"><h2>Navigating through a Snapshot</h2><ul class=".list "><li class="list__item">
+                     
+        To help differentiate objects and move from one to another without losing the context, mark objects with text labels.
+        To set a label to an object, select the object of interest and click <img alt="ws_v8_profiling_mark.png" width="14" height="15" title="ws_v8_profiling_mark.png" src="/help/img/idea/2016.1/ws_v8_profiling_mark.png" class="inline-icon-15">
+        on the toolbar or choose <a name="d9041e3030"></a><span class="control">Mark</span> on the context menu of the selection. Then type the label to mark the object with in the dialog box that opens.
+     
+                </li><li class="list__item">
+                     
+        To navigate to the function or variable that corresponds to an object, select the object of interest and click <img alt="edit.png" width="14" height="15" title="edit.png" src="/help/img/idea/2016.1/edit.png" class="inline-icon-15"> on the toolbar
+        or choose <a name="d9041e3038"></a><span class="control">Edit Source</span> on the context menu of the selection. If the button and the menu option are disabled, this means that WebStorm has not found a function
+        or a variable that corresponds to the selected object.
+        <a name="d9041e3041"></a><p>
+            If several functions or variables are found, they are shown in a pop-up suggestion list.
+        </p>
+     
+                </li><li class="list__item">
+                     
+        To jump from an object in the <a name="d9041e3047"></a><span class="control">Biggest Objects</span> or <a name="d9041e3050"></a><span class="control">Summary</span> tab or <a name="d9041e3053"></a><span class="control">Occurrences</span> view to the same object in the <a name="d9041e3056"></a><span class="control">Containment</span> tab,
+        select the object in question in the <a name="d9041e3059"></a><span class="control">Biggest Objects</span> or <a name="d9041e3063"></a><span class="control">Summary</span> tab
+        and click <img alt="ws_v8_profiling_navigate_in_main_tree.png" width="15" height="15" title="ws_v8_profiling_navigate_in_main_tree.png" src="/help/img/idea/2016.1/ws_v8_profiling_navigate_in_main_tree.png" class="inline-icon-15"> on the toolbar
+        or choose <a name="d9041e3068"></a><span class="control">Navigate in Main Tree</span> on the context menu of the selection.
+         
+        This helps you investigate the object from the containment point of view and concentrate on the links between objects.
+     
+     
+                </li><li class="list__item">
+                     
+        To search through a snapshot:
+        <ol class="list _decimal"><li class="list__item"><a name="d9041e3082"></a>
+                In the <a name="d9041e3084"></a><span class="control">Containment</span> tab, click <img alt="find.png" width="15" height="15" title="find.png" src="/help/img/idea/2016.1/find.png" class="inline-icon-15"> on the toolbar.
+            </li><li class="list__item"><a name="d9041e3090"></a>
+                In the <a name="d9041e3092"></a><a href="v8-heap-search-dialog.html"><span>V8 Heap Search Dialog</span></a> that opens, specify the search pattern and the scope to search in. The available scopes are:
+                <ul class="list _bullet"><li class="list__item"><a name="d9041e3119"></a>
+            <a name="d9041e3121"></a><span class="control">Everywhere:</span> select this check box to search in all the scopes.
+            When this check box is selected, all the other search types are disabled.
+        </li><li class="list__item"><a name="d9041e3125"></a>
+            <a name="d9041e3127"></a><span class="control">Link Names:</span> select this check box to search among the object names that <a name="d9041e3130"></a><span class="emphasis">V8</span> creates
+            when calling the <a name="d9041e3133"></a><span class="emphasis">C++ runtime</span>,
+            see <a name="d9041e3136"></a><a href="http://stackoverflow.com/questions/11202824/what-is-in-javascript" data-external="true"><span>http://stackoverflow.com/questions/11202824/what-is-in-javascript</span></a>.
+            <a name="d9041e3139"></a><p>
+                In the <a name="d9041e3141"></a><a href="v8-heap-tool-window.html"><span>V8 Heap Tool Window</span></a>, link names are marked with the <code class="code" data-lang="Java">%</code> character (<code class="code" data-lang="Java">%&lt;link name&gt;</code>).
+            </p>
+        </li><li class="list__item"><a name="d9041e3151"></a>
+            <a name="d9041e3153"></a><span class="control">Class Names:</span> select this check box to search among functions-constructors.
+        </li><li class="list__item"><a name="d9041e3157"></a>
+            <a name="d9041e3159"></a><span class="control">Text Strings:</span> select this check box to perform a textual search in the contents of the objects.
+        </li><li class="list__item"><a name="d9041e3163"></a>
+            <a name="d9041e3165"></a><span class="control">Snapshot Object IDs:</span> select this check box to search among the unique identifiers of objects.
+            <a name="d9041e3168"></a><span class="emphasis">V8</span> assigns such a unique identifier in the format to each object when the object is created and
+            preserves it until the object is destroyed. This means that you can find and compare the same objects in several snapshots taken
+            within the same session.
+            <a name="d9041e3171"></a><p>
+                In the <a name="d9041e3173"></a><a href="v8-heap-tool-window.html"><span>V8 Heap Tool Window</span></a>, object IDs are marked with the <code class="code" data-lang="Java">@</code> character (<code class="code" data-lang="Java">@&lt;object id&gt;</code>).
+            </p>
+        </li><li class="list__item"><a name="d9041e3184"></a>
+            <a name="d9041e3186"></a><span class="control">Marks:</span> select this check box to search among the labels you set to objects manually
+            by clicking <img alt="ws_v8_profiling_mark.png" width="14" height="15" title="ws_v8_profiling_mark.png" src="/help/img/idea/2016.1/ws_v8_profiling_mark.png" class="inline-icon-15"> on the toolbar of the <a name="d9041e3191"></a><span class="control">Containment</span> tab.
+        </li></ul>
+                <a name="d9041e3099"></a><p>
+                    The search results are displayed in the <a name="d9041e3101"></a><span class="control">Details</span> pane, in a separate <a name="d9041e3104"></a><span class="control">Occurrences of '&lt;search pattern&gt;'</span> view.
+                    To have the search results shown grouped by the search scopes you specified, press the <a name="d9041e3107"></a><span class="control">Group by Type</span> toggle button on the toolbar.
+                </p>
+                <a name="d9041e3111"></a><p>
+                    When you open the dialog box next time, it will show the settings from the previous search.
+                </p>
+            </li></ol>
+     
+                </li></ul></section>
+         
+    <div class="navigation-links _bottom"><a class="navigation-links__prev" href="running-nodeunit-tests.html">Running Nodeunit Tests</a><a class="navigation-links__next" href="using-jade-template-engine.html">Using JADE Template Engine</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content"><div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d264467e811"></a><a href="running-and-debugging-node-js.html"><span>Running and Debugging Node.js</span></a></li><li class="list__item"><a name="d264467e813"></a><a href="node-js.html"><span>Node.js</span></a></li></ul></div><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d264467e818"></a><a href="run-debug-configuration-node-js.html"><span>Run/Debug Configuration: Node JS</span></a></li><li class="list__item"><a name="d264467e820"></a><a href="v8-heap-tool-window.html"><span>V8 Heap Tool Window</span></a></li><li class="list__item"><a name="d264467e822"></a><a href="v8-profiling-tool-window.html"><span>V8 Profiling Tool Window</span></a></li></ul></div></div></section><div class="last-modified">Last modified: 11 July 2016 </div></article><div id="disqus_thread"></div></div></section></main></div><script src="/help/app/app.js"></script></body></html>

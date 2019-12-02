@@ -1,0 +1,85 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"></meta><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><title>WebStorm 2016.1 Help :: Creating and Editing File Templates</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="procedures.createfiletemplates"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search WebStorm Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>WebStorm 2016.1 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWindow</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="parse-directive.html">#Parse Directive</a><a class="navigation-links__next" href="populating-projects.html">Populating Projects</a></div><h1>Creating and Editing File Templates</h1><a name="d574654e5"></a><p>WebStorm supports several ways of creating <a name="d574654e7"></a><a href="file-and-code-templates.html"><span>file templates</span></a>:</p><ul><li class="list__item"><a href="#d574654e15">Creating a file template from scratch</a></li><li class="list__item"><a href="#d574654e88">Creating a file template from an existing one</a></li><li class="list__item"><a href="#d574654e112">Creating a file template from a file</a></li><li class="list__item"><a href="#d574654e138">Creating and referencing include templates</a></li></ul><a name="scratch"></a><a name="d574654e15"></a><a name="dynaProc0"></a><section class="procedure-steps"><h2>Creating a file template from scratch</h2><ol class=".list _decimal"><li class="list__item">
+          <a name="d574654e19"></a><a href="accessing-settings.html"><span>Open Settings/Preferences dialog</span></a>
+          and under the Editor node, select <a name="d574654e24"></a><a href="file-and-code-templates-2.html"><span>File and Code Templates page</span></a>.
+      </li><li class="list__item">
+          Switch to the
+          <a name="d574654e30"></a><span class="control">Files</span> tab.
+      </li><li class="list__item">
+                Click <img alt="add.png" width="12" height="12" title="add.png" src="/help/img/idea/2016.1/new.png" class="inline-icon-12"> on the toolbar and specify the template name,
+                file extension, and the body of the template, which can contain:
+                <ol class="list _decimal"><li class="list__item"><a name="d574654e40"></a>Plain text.</li><li class="list__item"><a name="d574654e43"></a><code class="code" data-lang="Java">#parse</code> directives to work with <a name="d574654e47"></a><a href="#inc"><span>includes</span></a>.</li><li class="list__item"><a name="d574654e51"></a>Predefined variables to be expanded into corresponding values in the format <code class="code" data-lang="Java">${&lt;variable_name&gt;}</code>.
+                           
+                        <a name="d281998e45"></a><p>The available predefined file template variables are:</p>
+
+                         
+                        <ul class="list _bullet"><li class="list__item"><a name="d281998e58"></a>
+            <a name="project_name"></a>
+            <code class="code" data-lang="Java">${PROJECT_NAME}</code> - the name of the current project.</li><li class="list__item"><a name="d281998e72"></a>
+            <code class="code" data-lang="Java">${NAME}</code> - the name of the new file which you specify in the <a name="d281998e77"></a><span class="control">New File</span> dialog box during the file creation.</li><li class="list__item"><a name="d281998e81"></a>
+            <code class="code" data-lang="Java">${USER}</code> - the login name of the current user.</li><li class="list__item"><a name="d281998e88"></a>
+            <code class="code" data-lang="Java">${DATE}</code> - the current system date.</li><li class="list__item"><a name="d281998e94"></a>
+            <code class="code" data-lang="Java">${TIME}</code> - the current system time.</li><li class="list__item"><a name="d281998e100"></a>
+            <code class="code" data-lang="Java">${YEAR}</code> - the current year.</li><li class="list__item"><a name="d281998e106"></a>
+            <code class="code" data-lang="Java">${MONTH}</code> - the current month.</li><li class="list__item"><a name="d281998e112"></a>
+            <code class="code" data-lang="Java">${DAY}</code> - the current day of the month.</li><li class="list__item"><a name="d281998e118"></a>
+            <code class="code" data-lang="Java">${HOUR}</code> - the current hour.</li><li class="list__item"><a name="d281998e125"></a>
+            <code class="code" data-lang="Java">${MINUTE}</code> - the current minute.</li><li class="list__item"><a name="d281998e131"></a>
+            <code class="code" data-lang="Java">${PRODUCT_NAME}</code> - the name of the IDE in which the file will be created.</li><li class="list__item"><a name="d281998e137"></a>
+            <a name="new_vars"></a>
+                                <code class="code" data-lang="Java">${MONTH_NAME_SHORT}</code> - the first 3 letters of the month name. Example: Jan, Feb, etc.</li><li class="list__item"><a name="d281998e145"></a>
+            <code class="code" data-lang="Java">${MONTH_NAME_FULL}</code> - full name of a month. Example: January, February, etc.</li></ul>
+                         
+                     
+                    </li><li class="list__item"><a name="d574654e59"></a>Custom variables. Their names can be defined right in the template through the <code class="code" data-lang="Java">#set</code>
+                        directive or will be defined during the file creation.</li></ol>
+      </li><li class="list__item">To have the dollar character (<code class="code" data-lang="Java">$</code>) in a variable rendered "as is", use the <code class="code" data-lang="Java">${DS}</code>
+          variable instead. This variable evaluates to a plain dollar character (<code class="code" data-lang="Java">$</code>).</li><li class="list__item">Apply the changes and close the dialog box.</li></ol></section><a name="copy"></a><a name="d574654e88"></a><a name="dynaProc1"></a><section class="procedure-steps"><h2>Creating a file template from an existing one</h2><ol class=".list _decimal"><li class="list__item">Open the<a name="d574654e92"></a><a href="file-and-code-templates-2.html"><span>File Templates</span></a> settings page and switch to the <a name="d574654e95"></a><span class="control">Files</span> tab.</li><li class="list__item">Click <img alt="copy" width="14" height="16" title="copy" src="/help/img/idea/2016.1/copy.gif" class="inline-icon-16"> on the toolbar and change the template name,
+          extension, and source code as required.</li><li class="list__item">Apply the changes and close the dialog box.</li></ol></section><a name="file"></a><a name="d574654e112"></a><a name="dynaProc2"></a><section class="procedure-steps"><h2>Creating a file template from a file</h2><ol class=".list _decimal"><li class="list__item">Open the desired file in the editor.</li><li class="list__item">On the main menu, choose <a name="d574654e119"></a><span class="menupath">Tools | Save File as Template</span>.</li><li class="list__item">In the <a name="d574654e125"></a><a href="file-and-code-templates-2.html"><span>File and Code Templates</span></a>
+            dialog box that opens specify the new template name and edit
+            the source code, if necessary.</li><li class="list__item">Apply the changes and close the dialog box.</li></ol></section><a name="inc"></a><a name="d574654e138"></a><a name="dynaProc3"></a><section class="procedure-steps"><h2>Creating and referencing include templates</h2><p>
+            <a name="d574654e142"></a><p>Include templates are used to define reusable pieces of code to be inserted in file templates through
+                <code class="code" data-lang="Java">#parse</code> directives.
+                 
+            </p>
+        </p><ol class=".list _decimal"><li class="list__item">
+          In the <a name="d574654e160"></a><a href="file-and-code-templates-2.html"><span>File and Code Templates</span></a> settings page,
+          switch to the <a name="d574654e163"></a><span class="control">Includes</span> tab.
+      </li><li class="list__item">
+          Click <img alt="add.png" width="12" height="12" title="add.png" src="/help/img/idea/2016.1/new.png" class="inline-icon-12"> on the toolbar and specify the template name,
+          extension, and the source code. Do one of the following:
+          <ul class="list _bullet"><li class="list__item"><a name="d574654e173"></a>
+                  Use the
+                  <a name="d574654e175"></a><a href="file-template-variables.html#predefined_template_variables"><span>predefined file template variables</span></a>.
+              </li><li class="list__item"><a name="d574654e179"></a>
+                  Create custom template variables and define their values right in the include template using the
+                  <code class="code" data-lang="Java">#set</code> VTL directive.
+                  <a name="d574654e184"></a><p>
+                      For example, if you want to your full name inserted in the file header instead of your
+                      login name defined through the <code class="code" data-lang="Java">${USER}</code>, write the following construct:
+                  <a name="d574654e189"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+#set( $MyName = "John Smith" )
+                  </code></div>
+                  </p>
+                  <a name="d574654e193"></a><p>
+                      If, when applying a template, the values of certain template variable are not known,
+                      WebStorm will ask you to specify them.
+                  </p>
+              </li></ul>
+          <a name="d574654e198"></a><p>
+               
+              You can prevent treating dollar characters (<code class="code" data-lang="Java">$</code>) in template variables as prefixes. If you need a dollar character (<code class="code" data-lang="Java">$</code> inserted as is,
+              use the <code class="code" data-lang="Java">${DS}</code> file template variable instead. When the template is applied, this variable evaluates to a plain dollar character (<code class="code" data-lang="Java">$</code>).
+               
+          </p>
+      </li><li class="list__item">To use the include template, switch to the
+          <a name="d574654e219"></a><span class="control">Templates</span> tab, select the desired template and click
+          <a name="d574654e222"></a><span class="control">Edit</span>.
+      </li><li class="list__item">To include a template, insert the
+          <a name="d574654e228"></a><a href="parse-directive.html"><span>#parse directive</span></a> in the source code.</li></ol></section><div class="navigation-links _bottom"><a class="navigation-links__prev" href="parse-directive.html">#Parse Directive</a><a class="navigation-links__next" href="populating-projects.html">Populating Projects</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content"><div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d574654e246"></a><a href="creating-files-from-templates.html"><span>Creating Files from Templates</span></a></li></ul></div><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d574654e253"></a><a href="file-and-code-templates-2.html"><span>File and Code Templates</span></a></li></ul></div><div class="seealso__col"><h3>Concepts:</h3><ul class="list"><li class="list__item"><a name="d574654e239"></a><a href="file-and-code-templates.html"><span>File and Code Templates</span></a></li></ul></div></div></section><div class="last-modified">Last modified: 11 July 2016 </div></article><div id="disqus_thread"></div></div></section></main></div><script src="/help/app/app.js"></script></body></html>

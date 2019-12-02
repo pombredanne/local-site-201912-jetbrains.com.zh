@@ -1,0 +1,322 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta class="swiftype" name="product" data-type="string" content="/idea/2016.3/"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><meta charset="UTF-8"><meta name="robots" content="noindex"><title>IntelliJ IDEA 2016.3 Help :: Running and Debugging Node.js</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Running_and_Debugging_Node_JS"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-swiftype-index="false"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.3 Help</h3><div class="shortcuts-switcher" data-swiftype-index="false"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Windows/Linux Default</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWin</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">Mac OS X</option><option data-group="secondary" value="eclipse_mac_os_x">Eclipse (Mac OS X)</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (Mac OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper (Mac OS X)</option><option data-group="secondary" value="emacs">Emacs (Mac OS X)</option></select></div><div class="panel-trigger" data-swiftype-index="false"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="running-nodeunit-tests.html">Running Nodeunit Tests</a></div><h1>Running and Debugging Node.js</h1><a name="d766e18"></a><p><a name="d766e19"></a><span class="emphasis">This feature is supported in the Ultimate edition only.</span></p>
+             
+                <aside class="warning ">
+                    <a name="d1646e280"></a><p><a name="d1646e281"></a><span class="emphasis">
+                        The following is only valid when Node.js Plugin is installed and enabled!
+                    </span></p>
+                </aside>
+             
+        <a name="d361235e45"></a><p>In this section:</p><ul><li class="list__item"><a href="#d361235e51">Before you start</a></li><li class="list__item"><a href="#d361235e75">Local and remote modes of running or debugging Node.js applications</a></li><li class="list__item"><a href="#running">Running a Node.js application</a></li><li class="list__item"><a href="#debugLocal">Debugging a Node.js application locally</a></li><li class="list__item"><a href="#node_docker_run_debug">Debugging a Node.js application running on a Docker container</a></li><li class="list__item"><a href="#remote_debugging">Debugging a running Node.js application</a></li><li class="list__item"><a href="#Node.js_run">Creating a Node.js run/debug configuration</a></li><li class="list__item"><a href="#d361235e441">Enabling Live Editing during a Node.js debugging session</a></li><li class="list__item"><a href="#Node.js_remote_debug">Creating a Node.js remote debug configuration.</a></li><li class="list__item"><a href="#node_multiprocess_debugging">Node.js multiprocess debugging</a></li></ul><a name="d361235e51"></a><h2>Before you start</h2>
+    <a name="d361235e53"></a><p>
+         
+         
+             
+        <a name="d831e5647"></a><span class="emphasis">Install</span> and <a name="d831e5650"></a><span class="emphasis">enable</span> the NodeJS plugin.
+         
+         
+        The <a name="d831e5668"></a><span class="emphasis"></span> plugin is&nbsp;not&nbsp;bundled with IntelliJ IDEA, but it can be installed from the <a name="d831e5671"></a><span class="emphasis">JetBrains plugin repository</span>
+            as described in <a name="d831e5674"></a><a href="installing-updating-and-uninstalling-repository-plugins.html"><span>Installing, Updating and Uninstalling Repository Plugins</span></a> and <a name="d831e5676"></a><a href="enabling-and-disabling-plugins.html"><span>Enabling and Disabling Plugins</span></a>.
+     
+     
+         
+         
+    </p>
+<a name="d361235e75"></a><h2>Local and remote modes of running or debugging Node.js applications</h2>
+          <a name="d361235e77"></a><p>
+             <a name="d361235e79"></a><span class="emphasis">Running</span> a Node.js application in IntelliJ IDEA  is supported only in the <a name="d361235e82"></a><span class="emphasis">local</span> mode.
+              This means that IntelliJ IDEA itself starts the Node.js engine and the target application
+              according to a <a name="d361235e85"></a><a href="run-debug-configuration.html"><span>run configuration</span></a> and gets full control over the session.
+          </p>
+          <a name="d361235e89"></a><p>
+              <a name="d361235e91"></a><span class="emphasis">Debugging</span> can be performed in two modes:
+              <ul class="list _bullet"><li class="list__item"><a name="d361235e96"></a>
+                      Locally, with the Node.js engine started from IntelliJ IDEA.
+                  </li><li class="list__item"><a name="d361235e99"></a>
+                      Remotely, when IntelliJ IDEA connects to an already running Node.js application. This approach gives you the possibility to re-start a debugging session without re-starting the Node.js server.
+                  </li></ul>
+              In either case, the debugging session is initiated through a <a name="d361235e103"></a><a href="run-debug-configuration.html"><span>debug configuration</span></a>
+          </p>
+          <a name="d361235e107"></a><p>
+              You can also  
+        configure the behaviour of the browser and enable debugging the client-side code of the application.  This functionality is provided through a <code class="code" data-lang="Java">JavaScript Debug</code> run configuration, so
+     
+               
+         
+         
+        technically, IntelliJ IDEA creates separate run configurations for the server-side and the client-side code,
+        but you specify all your settings in one dedicated <a name="d19550e1325"></a><span class="emphasis">NodeJS</span> run configuration.
+     
+          </p>
+    <a name="running"></a><h2>Running a Node.js application</h2>
+            <ol class="list _decimal"><li class="list__item"><a name="d361235e124"></a>
+                <a name="d361235e126"></a><a href="#Node.js_run"><span>Create a Node.js run configuration</span></a>.
+            </li><li class="list__item"><a name="d361235e130"></a>
+                To launch the application, select the run configuration from the list on the main tool bar
+                and then choose <a name="d361235e132"></a><span class="menupath">Run | Run &lt;configuration name&gt;</span> on the main menu or click the <a name="d361235e135"></a><span class="control">Run</span> toolbar button 
+                <img alt="run.png" title="run.png" src="/help/img/idea/2016.3/run.png" width="11" height="14" class="inline-icon-14">. The <a name="d361235e140"></a><a href="run-tool-window.html"><span>Run</span></a> tool window opens.
+ 
+            </li><li class="list__item"><a name="d361235e146"></a>
+                Open the browser of your choice and open the page with the URL address generated through the
+                <a name="d361235e148"></a><a href="http://nodejs.org/api/net.html#net_server_listen_port_host_backlog_callback" data-external="true"><span>server.listen</span></a> function
+                based on the <code class="code" data-lang="Java">port</code> and <code class="code" data-lang="Java">host</code> parameters.
+                The page shows the result of executing your Node.js application.
+            </li></ol>
+        <a name="debugLocal"></a><h2>Debugging a Node.js application locally</h2>
+            <ol class="list _decimal"><li class="list__item"><a name="d361235e164"></a>
+                Set the <a name="d361235e166"></a><a href="using-breakpoints.html"><span>breakpoints</span></a> in the Node.js code, where necessary.
+                 
+        At least one breakpoint is necessary otherwise the program will be just executed. If you want the debugging tool to stop at the first line of your code, set a breakpoint at the first line.
+     
+            </li><li class="list__item"><a name="d361235e172"></a>
+                <a name="d361235e174"></a><a href="#Node.js_run"><span>Create a Node.js run/debug configuration</span></a>.
+            </li><li class="list__item"><a name="d361235e178"></a>
+                To start a debugging session,
+                 
+        select the required debug configuration from the list on the main tool bar
+        and then choose <a name="d19550e1331"></a><span class="menupath">Run | Debug &lt;configuration name&gt;</span> on the main menu or click the <a name="d19550e1334"></a><span class="control">Debug</span> toolbar button
+        <img alt="debug.png" title="debug.png" src="/help/img/idea/2016.3/debug.png" width="14" height="14" class="inline-icon-14">.
+     
+            </li><li class="list__item"><a name="d361235e185"></a>
+                Open the browser of your choice and open the starting page of your application. Control over the debugging session returns to IntelliJ IDEA.
+            </li><li class="list__item"><a name="d361235e189"></a>
+                Switch to IntelliJ IDEA, where the controls of the <a name="d361235e191"></a><span class="control">Debug</span> tool window are now enabled.
+                Proceed with the debugging session <a name="d361235e194"></a><a href="stepping-through-the-program.html"><span>step through the breakpoints</span></a>, switch between frames, change values on-the-fly,
+                <a name="d361235e197"></a><a href="examining-suspended-program.html"><span>examine a suspended program</span></a>, <a name="d361235e200"></a><a href="evaluating-expressions.html"><span>evaluate expressions</span></a>, and <a name="d361235e203"></a><a href="adding-editing-and-removing-watches.html"><span>set watches</span></a>.
+            </li></ol>
+        <a name="node_docker_run_debug"></a><h2>Debugging a Node.js application running on a Docker container</h2>
+        <ol class="list _decimal"><li class="list__item"><a name="d361235e213"></a>
+                Set the <a name="d361235e215"></a><a href="using-breakpoints.html"><span>breakpoints</span></a> in the Node.js code, where necessary.
+                 
+        At least one breakpoint is necessary otherwise the program will be just executed. If you want the debugging tool to stop at the first line of your code, set a breakpoint at the first line.
+     
+            </li><li class="list__item"><a name="d361235e221"></a>
+                 
+         
+        On the main menu, choose <a name="d19550e1302"></a><span class="menupath">Run | Edit Configurations</span>.
+        In the <a name="d19550e1305"></a><span class="control">Edit Configuration</span> dialog box, that opens, click the <a name="d19550e1308"></a><span class="control">Add New Configuration</span> toolbar button <img alt="add.png" title="add.png" src="/help/img/idea/2016.3/new.png" width="12" height="12" class="inline-icon-12">,
+        and choose <a name="d19550e1314"></a><span class="control">Node.js</span> on the context menu.
+     
+                In the <a name="d361235e228"></a><a href="run-debug-configuration-node-js.html"><span>Run/Debug Configuration: Node JS</span></a> dialog that opens, choose the relevant Node.js interpreter running in a Docker container.
+                Choose one of the  existing interpreters from the <a name="d361235e230"></a><span class="control">Node Interpreter</span> drp-down list or configure a new one
+                as described in <a name="d361235e233"></a><a href="configuring-node-js-interpreters.html"><span>Configuring Node.js Interpreters</span></a>.
+            </li><li class="list__item"><a name="d361235e236"></a>
+                Specify the Docker container settings.
+                 
+         
+        Type the settings manually, or click <img alt="/help/img/idea/2016.3/browseButton.png" title="/help/img/idea/2016.3/browseButton.png" src="/help/img/idea/2016.3/browseButton.png" width="15" height="15" class="inline-icon-15"> next to the field and specify the settings
+        in the <a name="d19550e6137"></a><span class="control">Edit Docker Container Settings</span> dialog that opens,
+        or select the <a name="d19550e6140"></a><span class="control">Auto configure</span> check box to have IntelliJ IDEA do it automatically.
+     
+                <a name="d361235e243"></a><p>
+                    To invoke the automatic configuration mode for a Docker container, select the <a name="d361235e245"></a><span class="control">Auto configure</span> check box
+                    in the <a name="d361235e248"></a><a href="run-debug-configuration-node-js.html"><span>Run/Debug Configuration: Node JS</span></a> dialog.
+                    In the <a name="d361235e250"></a><span class="emphasis">Automatic Configuration</span> mode:
+                </p>
+                <ul class="list _bullet"><li class="list__item"><a name="d19550e6150"></a>
+            IntelliJ IDEA creates  a new image and installs the <code class="code" data-lang="Java">npm</code> modules on it.
+            <a name="d19550e6155"></a><p>
+                To avoid reinstalling the modules on every start of the container and messing up with the local and system-specific dependencies,
+                IntelliJ IDEA  copies the <code class="code" data-lang="Java">package.json</code> configuration file to the <code class="code" data-lang="Java">/tmp/project_modules</code> folder on the image,
+                runs the <code class="code" data-lang="Java">npm install</code> command, and then copies the modules to the project folder in the container.
+                Changing <code class="code" data-lang="Java">package.json</code> in the project results in re-building the image.
+            </p>
+        </li><li class="list__item"><a name="d19550e6171"></a>
+            IntelliJ IDEA runs the Docker container with the created image and binds your project folder to <code class="code" data-lang="Java">/opt/project</code> folder
+            in the Docker container to ensure synchronization on update.
+            In addition to that, <code class="code" data-lang="Java">/opt/project/node_modules</code> will be mapped to the OS temporary directory.
+        </li></ul>
+                <a name="d361235e259"></a><p>
+                     
+
+        With automatic configuration, you still need to bind the port that your application is running on with the port of the container.
+         
+        Those exposed ports are available on the Docker host’s IP address (by default 192.168.99.100).
+        Such binding is required when you debug the client side of a <a name="d19550e6185"></a><span class="emphasis">Node.js Express</span> application
+        so you need to open the browser from your computer and access the application at the host of the container
+        through the port specified in the application.
+        <ol class="list _decimal"><li class="list__item"><a name="d19550e6190"></a>
+                Click <img alt="/help/img/idea/2016.3/browseButton.png" title="/help/img/idea/2016.3/browseButton.png" src="/help/img/idea/2016.3/browseButton.png" width="15" height="15" class="inline-icon-15"> next to the <a name="d19550e6194"></a><span class="control">Docker Container Settings</span> field.
+            </li><li class="list__item"><a name="d19550e6198"></a>
+                In the <a name="d19550e6200"></a><span class="control">Edit Docker Container Settings</span> dialog that opens, expand the <a name="d19550e6203"></a><span class="control">Port bindings</span> area.
+            </li><li class="list__item"><a name="d19550e6207"></a>
+                Click <img alt="/help/img/idea/2016.3/new.png" title="/help/img/idea/2016.3/new.png" src="/help/img/idea/2016.3/new.png" width="12" height="12" class="inline-icon-12">. The <a name="d19550e6211"></a><span class="control">Port bindings</span> dialog box opens. In this dialog box, map the ports as follows:
+                <ul class="list _bullet"><li class="list__item"><a name="d19550e6216"></a>
+                        In the <a name="d19550e6218"></a><span class="control">Container port</span> text box, type the port specified in your application.
+                    </li><li class="list__item"><a name="d19550e6222"></a>
+                        In the <a name="d19550e6224"></a><span class="control">Host port</span> text box, type the port through which you want to open the application in the browser from your computer.
+                    </li><li class="list__item"><a name="d19550e6228"></a>
+                        In the <a name="d19550e6230"></a><span class="control">Host IP</span> text box, type the IP address of the Docker's host, the default IP is 192.168.99.100.
+                        The host is specified in the <a name="d19550e6233"></a><span class="control">API URL</span> field on the <a name="d19550e6236"></a><a href="clouds.html"><span>Clouds</span></a> page of the  <a name="d19550e6238"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a>.
+                    </li><li class="list__item"><a name="d19550e6241"></a>
+                        Click <a name="d19550e6243"></a><span class="control">OK</span> to return to the <a name="d19550e6246"></a><span class="control">Edit Docker Container Settings</span> dialog where the new port mapping is added to the list.
+                    </li></ul>
+            </li><li class="list__item"><a name="d19550e6252"></a>
+                Click <a name="d19550e6254"></a><span class="control">OK</span> to return to the <a name="d19550e6257"></a><a href="run-debug-configuration-node-js.html"><span>Run/Debug Configuration: Node JS</span></a> dialog.
+            </li></ol>
+
+     
+                </p>
+            </li><li class="list__item"><a name="d361235e265"></a>
+                Save the run configuration.
+            </li><li class="list__item"><a name="d361235e268"></a>
+                Proceed as as during a local debugging session, as described above.
+            </li></ol>
+    <a name="remote_debugging"></a><h2>Debugging a running Node.js application</h2>
+
+ 
+                <a name="d361235e278"></a><p>
+                    With IntelliJ IDEA, you can connect to an already running Node.js applications. The application can be started either on the same machine or on a <a name="d361235e280"></a><span class="emphasis">physically remote host</span>.
+                </p>
+                <a name="d361235e284"></a><p>
+                    When the application to debug is running on a <a name="d361235e286"></a><span class="emphasis">physically remote host</span>, you need to run a proxy or any other software that ensures port forwarding on the Node.js server.
+                    This is necessary because the debug port can open only on the <code class="code" data-lang="Java">localhost</code> network interface. The <code class="code" data-lang="Java">localhost</code> network interface cannot be accessed from another machine
+                    therefore IntelliJ IDEA cannot connect to it upon initiating a debugging session.
+                </p>
+    <ol class="list _decimal"><li class="list__item"><a name="d361235e300"></a>
+                 
+                Make sure the application to debug has been launched in the target environment with the following parameters:
+                <code class="code" data-lang="Java">--debug-brk=&lt;port through which the debugger on the remote host interacts with the network interface which accepts external connections&gt;</code>
+
+   
+            </li><li class="list__item"><a name="d361235e312"></a>
+                <a name="d361235e314"></a><a href="#Node.js_remote_debug"><span>Create a Node.js Remote Debug</span></a> configuration: in the <a name="d361235e317"></a><span class="control">Debug port</span> text box,
+                type the port number through which you will interact with the remote host according to the <a name="d361235e320"></a><span class="emphasis">server access configuration</span>,
+                see <a name="d361235e323"></a><a href="creating-a-remote-server-configuration.html"><span>Creating a Remote Server Configuration</span></a>.
+            </li><li class="list__item"><a name="d361235e326"></a>
+                With the application still running, launch the <a name="d361235e328"></a><span class="control">Node.js Remote Debug</span> configuration (select the configuration in the list
+                and click the <a name="d361235e331"></a><span class="control">Debug</span> toolbar button <img alt="debug.png" title="debug.png" src="/help/img/idea/2016.3/debug.png" width="14" height="14" class="inline-icon-14">).
+            </li><li class="list__item"><a name="d361235e338"></a>
+                In the <a name="d361235e340"></a><span class="control">Run</span> tool window, copy the URL address of the server and open the corresponding page in the browser.
+                Control over the debugging session returns to IntelliJ IDEA.
+            </li><li class="list__item"><a name="d361235e344"></a>
+                Switch to IntelliJ IDEA. In the <a name="d361235e346"></a><span class="control">Debug</span> tool window, <a name="d361235e349"></a><a href="stepping-through-the-program.html"><span>step through the breakpoints</span></a>, switch between frames, change values on-the-fly,
+                <a name="d361235e352"></a><a href="examining-suspended-program.html"><span>examine a suspended program</span></a>, <a name="d361235e355"></a><a href="evaluating-expressions.html"><span>evaluate expressions</span></a>, and <a name="d361235e358"></a><a href="adding-editing-and-removing-watches.html"><span>set watches</span></a>.
+            </li></ol>
+        <a name="Node.js_run"></a><h2>Creating a Node.js run/debug configuration</h2>
+            <ol class="list _decimal"><li class="list__item"><a name="d831e8059"></a>
+             
+            Choose <a name="d831e8086"></a><span class="menupath">Run | Edit Configuration</span> on the main menu.
+            Alternatively, click <kbd data-default="Shift+Alt+F10" data-default_for_gnome="Shift+Alt+F10" data-default_for_kde="Shift+Alt+F10" data-default_for_xwin="Shift+Alt+F10" data-emacs="Alt+Shift+F10" data-jbuilder="Shift+Alt+F10" data-visual_studio="Alt+Shift+F10" data-netbeans_6.5="N/A" data-eclipse="Shift+Alt+F10" data-mac_os_x_10.5_="&#x2303;&#x2325;R" data-mac_os_x="&#x2325;&#x21E7;F10" data-eclipse_mac_os_x="&#x2303;&#x2325;R" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Shift+Alt+F10</kbd>  and select <a name="d831e8091"></a><span class="control">Edit Configuration</span>
+            from the pop-up menu.
+         
+        </li><li class="list__item"><a name="d831e8064"></a>
+             
+        In the <a name="d831e8072"></a><span class="control">Edit Configuration</span> dialog box that opens, click the <a name="d831e8075"></a><span class="control">Add New Configuration</span> toolbar button <img alt="add.png" title="add.png" src="/help/img/idea/2016.3/new.png" width="12" height="12" class="inline-icon-12">,
+        and choose <a name="d831e8080"></a><span class="control">Node.js</span> on the context menu.
+     
+        </li><li class="list__item"><a name="d361235e373"></a>
+                In the <a name="d361235e375"></a><a href="run-debug-configuration-node-js.html"><span>Run/Debug Configuration: Node.js</span></a> dialog box, that opens, specify the following:
+                <ul class="list _bullet"><li class="list__item"><a name="d361235e380"></a>The name of the configuration.</li><li class="list__item"><a name="d361235e383"></a>
+                        In the <a name="d361235e385"></a><span class="control">Node Interpreter</span> field, specify the Node.js installation to use.
+                        Choose the local or remote interpreter from the drop-down list, or click <img alt="/help/img/idea/2016.3/browseButton.png" title="/help/img/idea/2016.3/browseButton.png" src="/help/img/idea/2016.3/browseButton.png" width="15" height="15" class="inline-icon-15"> and choose the interpreter
+                        in the dialog box that opens, or configure an interpreter as described in <a name="d361235e390"></a><a href="configuring-node-js-interpreters.html"><span>Configuring Node.js Interpreters</span></a>.
+                                                     </li><li class="list__item"><a name="d361235e397"></a>In the <a name="d361235e399"></a><span class="control">JavaScript File</span> field, specify the location of the file to start running the Node.js application from.</li><li class="list__item"><a name="d361235e403"></a>If the file to run references any other files, specify their location in the <a name="d361235e405"></a><span class="control">Working directory</span> field.</li><li class="list__item"><a name="d361235e410"></a>
+                        If applicable, in the <a name="d361235e412"></a><span class="control">Application parameters</span> text box, specify the arguments to be passed to the application on start
+                        through the <a name="d361235e415"></a><a href="https://nodejs.org/api/process.html#process_process_argv" data-external="true"><span>process.argv</span></a> array.
+                    </li></ul>
+            </li><li class="list__item"><a name="d361235e421"></a>
+                If necessary,  
+        configure the behaviour of the browser and enable debugging the client-side code of the application.  This functionality is provided through a <code class="code" data-lang="Java">JavaScript Debug</code> run configuration, so
+     
+                 
+         
+         
+        technically, IntelliJ IDEA creates separate run configurations for the server-side and the client-side code,
+        but you specify all your settings in one dedicated <a name="d19550e1325"></a><span class="emphasis">NodeJS</span> run configuration.
+     
+
+            </li><li class="list__item"><a name="d361235e433"></a>
+                Click <a name="d361235e435"></a><span class="control">OK</span>, when ready.
+            </li></ol>
+        <a name="d361235e441"></a><h2>Enabling Live Editing during a Node.js debugging session</h2>
+
+                <a name="d361235e443"></a><p>
+                    You can  
+        configure the behaviour of the browser and enable debugging the client-side code of the application.  This functionality is provided through a <code class="code" data-lang="Java">JavaScript Debug</code> run configuration, so
+     
+                     
+         
+         
+        technically, IntelliJ IDEA creates separate run configurations for the server-side and the client-side code,
+        but you specify all your settings in one dedicated <a name="d19550e1325"></a><span class="emphasis">NodeJS</span> run configuration.
+     
+
+                </p>
+            <ol class="list _decimal"><li class="list__item"><a name="d361235e457"></a>
+                 
+            Choose <a name="d831e8086"></a><span class="menupath">Run | Edit Configuration</span> on the main menu.
+            Alternatively, click <kbd data-default="Shift+Alt+F10" data-default_for_gnome="Shift+Alt+F10" data-default_for_kde="Shift+Alt+F10" data-default_for_xwin="Shift+Alt+F10" data-emacs="Alt+Shift+F10" data-jbuilder="Shift+Alt+F10" data-visual_studio="Alt+Shift+F10" data-netbeans_6.5="N/A" data-eclipse="Shift+Alt+F10" data-mac_os_x_10.5_="&#x2303;&#x2325;R" data-mac_os_x="&#x2325;&#x21E7;F10" data-eclipse_mac_os_x="&#x2303;&#x2325;R" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Shift+Alt+F10</kbd>  and select <a name="d831e8091"></a><span class="control">Edit Configuration</span>
+            from the pop-up menu.
+         
+            </li><li class="list__item"><a name="d361235e465"></a>
+                From the list, choose the <a name="d361235e467"></a><span class="emphasis">Node.js</span> run configuration to activate the Live Edit functionality in.
+                In the dialog box that opens, switch to the <a name="d361235e470"></a><span class="control">Browser / Live Edit</span> tab.
+            </li><li class="list__item"><a name="d361235e474"></a>
+                Select the <a name="d361235e476"></a><span class="control">After launch</span> check box
+                 
+        to have a browser started automatically after a debugging session is launched. Specify the browser to use in the drop-down list next to the check box.
+        <ul class="list _bullet"><li class="list__item"><a name="d831e5798"></a>
+                To use the system default browser, choose <a name="d831e5800"></a><span class="control">Default</span>.
+            </li><li class="list__item"><a name="d831e5804"></a>
+                To use a custom browser, choose it from the list. Note that <a name="d831e5806"></a><span class="emphasis">Live Edit</span> is fully supported only in Chrome.
+            </li><li class="list__item"><a name="d831e5810"></a>
+                To configure browsers, click the <a name="d831e5812"></a><span class="control">Browse</span> button <img alt="/help/img/idea/2016.3/browseButton.png" title="/help/img/idea/2016.3/browseButton.png" src="/help/img/idea/2016.3/browseButton.png" width="15" height="15" class="inline-icon-15"> and adjust the settings in the <a name="d831e5817"></a><span class="control">Web Browsers</span> dialog box that opens.
+                For more information, see <a name="d831e5820"></a><a href="configuring-browsers.html"><span>Configuring Browsers</span></a>.  
+            </li></ul>
+     
+            </li><li class="list__item"><a name="d361235e482"></a>
+                Select the <a name="d361235e484"></a><span class="control">With JavaScript debugger</span> check box to enable the JavaScript debugger in the selected browser and specify the URL address to open the application at.
+            </li></ol>
+        <a name="Node.js_remote_debug"></a><h2>Creating a Node.js remote debug configuration.</h2>
+            <ol class="list _decimal"><li class="list__item"><a name="d361235e494"></a>
+                On the main menu, choose <a name="d361235e496"></a><span class="menupath">Run | Edit Configurations</span>.
+            </li><li class="list__item"><a name="d361235e500"></a>
+                In the <a name="d361235e502"></a><span class="control">Edit Configuration</span> dialog box, that opens, click the <a name="d361235e505"></a><span class="control">Add New Configuration</span> toolbar button <img alt="add.png" title="add.png" src="/help/img/idea/2016.3/new.png" width="12" height="12" class="inline-icon-12">,
+                and choose <a name="d361235e510"></a><span class="control">Node.js Remote Debug</span> on the context menu.
+            </li><li class="list__item"><a name="d361235e514"></a>
+                In the <a name="d361235e516"></a><a href="run-debug-configuration-node-js-remote-debug.html"><span>Run/Debug Configuration: Node.js Remote Debug</span></a> dialog box, that opens, specify the following:
+                <ul class="list _bullet"><li class="list__item"><a name="d361235e521"></a>The name of the configuration.</li><li class="list__item"><a name="d361235e524"></a>
+                        The host where the target application is running.
+                    </li><li class="list__item"><a name="d361235e527"></a>
+                        The port to connect to. Copy the port number from the information message in the <a name="d361235e529"></a><a href="run-tool-window.html"><span>Run</span></a> tool window that controls the running application.
+                    </li></ul>
+            </li><li class="list__item"><a name="d361235e535"></a>
+                Click <a name="d361235e537"></a><span class="control">OK</span>, when ready.
+            </li></ol>
+        <a name="node_multiprocess_debugging"></a><h2>Node.js multiprocess debugging</h2>
+        <a name="d361235e545"></a><p>
+            IntelliJ IDEA supports debugging additional <a name="d361235e547"></a><span class="emphasis">Node.js</span> processes
+            that are launched by the <a name="d361235e550"></a><a href="https://nodejs.org/api/child_process.html#child_process_child_process_fork_modulepath_args_options" data-external="true"><span>child_process.fork() method</span></a>
+            or by the <a name="d361235e553"></a><a href="https://nodejs.org/api/cluster.html" data-external="true"><span>cluster module</span></a>.
+            Such processes are shown as <a name="d361235e556"></a><span class="emphasis">threads</span> in the <a name="d361235e559"></a><a href="debug-tool-window-frames.html"><span>Frame</span></a> pane
+            on the  <a name="d361235e563"></a><a href="debug-tool-window-debugger.html"><span>Debugger tab</span></a> of the <a name="d361235e566"></a><a href="debug-tool-window.html"><span>Debug Tool Window</span></a>.
+        </p>
+        <ol class="list _decimal"><li class="list__item"><a name="d361235e571"></a>
+                Set the breakpoints in the processes to debug.
+            </li><li class="list__item"><a name="d361235e574"></a>
+                Create a <a name="d361235e576"></a><span class="emphasis">Node.js</span> run/debug configuration.
+ 
+            </li><li class="list__item"><a name="d361235e582"></a>
+                Choose the newly created configuration in the <a name="d361235e584"></a><span class="control">Select run/debug configuration</span> drop-down list on the tool bar
+                and click the <a name="d361235e587"></a><span class="control">Debug</span> toolbar button <img alt="/help/img/idea/2016.3/debug.png" title="/help/img/idea/2016.3/debug.png" src="/help/img/idea/2016.3/debug.png" width="14" height="14" class="inline-icon-14">.
+                <a name="d361235e592"></a><p>
+                    The <a name="d361235e594"></a><a href="debug-tool-window.html"><span>Debug tool window</span></a> opens and the <a name="d361235e597"></a><span class="control">Frames</span> drop-down list
+                    shows the additional processes as threads as soon as they are launched:
+                    <figure><img alt="ws_node_multiprocess.png" title="ws_node_multiprocess.png" src="/help/img/idea/2016.3/ws_node_multiprocess.png" width="271" height="89"></figure>
+                </p>
+                <a name="d361235e603"></a><p>
+                    To examine the data (variables, watches, etc.) for a process,
+                    select its thread in the list and view its data in the <a name="d361235e605"></a><a href="debug-tool-window-variables.html"><span>Variables</span></a> and <a name="d361235e608"></a><a href="debug-tool-window-watches.html"><span>Debug Tool Window. Watches</span></a> panes.
+                    When you select another process, the contents of the panes are updated accordingly.
+                </p>
+            </li></ol>
+
+    <div class="navigation-links _bottom"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="running-nodeunit-tests.html">Running Nodeunit Tests</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content">```
+                <div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d361235e618"></a><a href="node-js.html"><span>Node.js</span></a></li><li class="list__item"><a name="d361235e620"></a><a href="running.html"><span>Running</span></a></li><li class="list__item"><a name="d361235e623"></a><a href="debugging.html"><span>Debugging</span></a></li><li class="list__item"><a name="d361235e627"></a><a href="creating-and-editing-run-debug-configurations.html"><span>Creating and Editing Run/Debug Configurations</span></a></li></ul></div><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d361235e634"></a><a href="run-debug-configuration-node-js.html"><span>Run/Debug Configuration: Node JS</span></a></li><li class="list__item"><a name="d361235e636"></a><a href="run-debug-configuration-node-js-remote-debug.html"><span>Run/Debug Configuration: Node JS Remote Debug</span></a></li><li class="list__item"><a name="d361235e638"></a><a href="run-tool-window.html"><span>Run Tool Window</span></a></li><li class="list__item"><a name="d361235e641"></a><a href="debug-tool-window.html"><span>Debug Tool Window</span></a></li></ul></div></div></section><div class="last-modified" data-swiftype-index="false">Last modified: 21 March 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

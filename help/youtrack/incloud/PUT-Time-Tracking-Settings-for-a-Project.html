@@ -1,0 +1,40 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta charset="UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="//resources.jetbrains.com/storage/help-app/v3/analytics.js"></script><title>PUT Time Tracking Settings for a Project - Help | YouTrack InCloud</title><link rel="stylesheet" href="//resources.jetbrains.com/storage/help-app/v3/app.css"></head><body data-id="PUT-Time-Tracking-Settings-for-a-Project" data-breadcrumbs="Resources-for-Developers.xml|Resources for Developers/deprecated-rest-api-reference.xml|Old REST API/Time-Tracking-REST-API.xml|Time Tracking REST API/Time-Tracking-Settings-Methods.xml|Time Tracking Settings Methods/PUT-Time-Tracking-Settings-for-a-Project.xml|PUT Time Tracking Settings for a Project" data-main-title="PUT Time Tracking Settings for a Project"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack InCloud Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>YouTrack InCloud 2019.2 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="PUT-Time-Tracking-Settings-for-a-Project" id="PUT-Time-Tracking-Settings-for-a-Project.xml">PUT Time Tracking Settings for a Project</h1>    <a name="PUT_/rest/admin/project/{projectId}/timetracking"></a>    <h2 id="9b84f014">PUT /rest/admin/project/{projectId}/timetracking</h2>    <p id="7338cf0c">Configure time tracking settings for a specific project.</p>    <div class="code-block" data-lang="none">
+        PUT /rest/admin/project/{projectId}/timetracking
+        &lt;SETTINGS&gt;
+    </div>    <p id="c0a8c5aa">        <code class="code">&lt;SETTINGS&gt;</code>        here is a XML-formatted set of settings to be set for a time tracking configuration in the specified project.    </p>    <a name="Sample_"></a>    <h3 id="5ca6b9fa">Sample</h3>    <p id="b22eef9c">        <b id="a94cc8b6">Request:</b>    </p>    <p id="958e27e1">        <code class="code">&lt;SETTINGS&gt;</code>        block of parameters varies depending on the current status of time tracking and its configuration in the        project:    </p>    <ul class="list _bullet"><li class="list__item" id="383266a0"><p>To enable timetracking in the project without configuring fields:            <div class="code-block" data-lang="none">
+                PUT https://example.com/youtrack/rest/admin/project/TST/timetracking
+                Connection: keep-alive
+                Cookie: $Version=0; JSESSIONID=axezv08lvrvrzpvvih22ricx; $Path=/
+                &lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+                &lt;settings enabled="true"/&gt;
+    </div>        </p></li><li class="list__item" id="073a8dd9"><p>To disable timetracking in the project:            <div class="code-block" data-lang="none">
+                PUT https://example.com/youtrack/rest/admin/project/TST/timetracking
+                Connection: keep-alive
+                Cookie: $Version=0; JSESSIONID=axezv08lvrvrzpvvih22ricx; $Path=/
+                &lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+                &lt;settings enabled="false"/&gt;
+    </div>        </p></li><li class="list__item" id="4ceadd71">            <p id="05652aa7">To enable timetracking in the project and configure time tracking fields:</p>            <div class="code-block" data-lang="none">
+                PUT https://example.com/youtrack/rest/admin/project/TST/timetracking
+                Connection: keep-alive
+                Cookie: $Version=0; JSESSIONID=axezv08lvrvrzpvvih22ricx; $Path=/
+                &lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+                &lt;settings enabled="true"&gt;
+                &lt;estimation name="Estimation"/&gt;
+                &lt;spentTime name="Spent time"/&gt;
+                &lt;/settings&gt;
+    </div>        </li><li class="list__item" id="3b17d9d3"><p>To change a field that is used for the time estimating:            <div class="code-block" data-lang="none">
+                PUT https://example.com/youtrack/rest/admin/project/TST/timetracking
+                Connection: keep-alive
+                Cookie: $Version=0; JSESSIONID=axezv08lvrvrzpvvih22ricx; $Path=/
+                &lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+                &lt;settings enabled="true"&gt;
+                &lt;estimation name="EstimateTime"/&gt;
+                &lt;/settings&gt;
+    </div>        </p></li></ul>    <p id="e4339600">        <b id="807abbae">Response:</b>    </p>    <p id="8e2c5fbb">In the response you get the acknowledgement of the operation, either successful or not.</p>    <div class="last-modified" data-skip-index="skip">Last modified: 29 November 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="PUT-System-wide-Time-Tracking-Settings.html">PUT System-wide Time Tracking Settings</a><a class="navigation-links__next" href="GET-Time-Tracking-Settings-for-a-Project.html">GET Time Tracking Settings for a Project</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="//resources.jetbrains.com/storage/help-app/v3/app.js"></script></body></html>

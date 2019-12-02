@@ -1,0 +1,129 @@
+
+
+
+<!doctype html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>Zones / ReSharper  DevGuide</title>
+    <link rel="stylesheet" href="/help/resharper/sdk/app/app.css">
+    <link rel="shortcut icon" href="/help/resharper/sdk/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="57x57" href="/help/resharper/sdk/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/help/resharper/sdk/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/help/resharper/sdk/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/help/resharper/sdk/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/help/resharper/sdk/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/help/resharper/sdk/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/help/resharper/sdk/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/help/resharper/sdk/apple-touch-icon-180x180.png">
+    <link rel="mask-icon" href="/help/resharper/sdk/apple-mask-icon.svg" color="black">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-square70x70logo" content="/help/resharper/sdk/mstile-70x70.png">
+    <meta name="msapplication-TileImage" content="/help/resharper/sdk/mstile-144x144.png">
+    <meta name="msapplication-square150x150logo" content="/help/resharper/sdk/mstile-150x150.png">
+    <meta name="msapplication-wide310x150logo" content="/help/resharper/sdk/mstile-310x150.png">
+    <meta name="msapplication-square310x310logo" content="/help/resharper/sdk/mstile-310x310.png">
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="Documentation for writing extensions for ReSharper" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.jetbrains.com/help/resharper/sdk//Platform/Zones.html" />
+    <meta property="og:site_name" content="JetBrains ReSharper" />
+    <meta property="og:title" content="Zones" />
+    <meta property="og:description" content="Documentation for writing extensions for ReSharper" />
+    <meta property="og:image" content="https://www.jetbrains.com/help/resharper/sdk/jetbrains.png" />
+    <meta property="article:modified_time" content="2017-07-10T19:28:42+00:00" />
+    <!-- <meta property="article:section" content="" /> 
+    <meta property="article:tag" content="" /> -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@JBPlatform" />
+    <meta name="twitter:title" content="Zones" />
+    <meta name="twitter:description" content="Documentation for writing extensions for ReSharper" />
+    <meta name="twitter:image" content="https://www.jetbrains.com/help/resharper/sdk/jetbrains.png" />
+    <meta class="swiftype" name="product" data-type="string" content="/help/resharper/sdk/"></meta>
+<link  rel="stylesheet" href="/help/resharper/sdk/app/styles.css"></head>
+<body data-id="Platform/Zones">
+<div class="wrapper">
+    <section class="panel _nav">
+        <header class="panel__header">
+            <div class="container">
+                <form class="search-box">
+                    <label for="search-box__input" class="search-box__label">
+                        <input type="text" class="search-box__input" id="search-box__input" placeholder="Search ReSharper  DevGuide">
+                    </label>
+                    <div class="search-box__clear" title="Clear"></div>
+                </form>
+            </div>
+        </header>
+        <nav class="panel__content">
+            <div class="container _nav">
+                <menu class="nav-tree"></menu>
+            </div>
+            <div class="container _footer panel__footer">
+                <p><a data-bypass="true" href="//youtrack.jetbrains.com/issues/IJSDK">Send feedback</a></p>
+                <p>&copy; 2000&ndash;2018 <a href="//www.jetbrains.com">JetBrains</a> s.r.o.<br>
+                    All rights reserved.</p>
+            </div>
+        </nav>
+    </section>
+
+    <main class="panel _main" role="main">
+        <header class="panel__header">
+            <div class="container">
+                <h3>ReSharper DevGuide</h3>
+                
+                <div class="panel-trigger"></div>
+            </div>
+        </header>
+        <section class="panel__content">
+            <div class="container">
+                <article class="article" data-shortcut-switcher="false">
+                    <div class="navigation-links _top" data-swiftype-index="false">
+                        <a class="navigation-links__prev" href="/Platform/ComponentModel.html">Component Model</a>
+                        <a class="navigation-links__next" href="/Platform/TextControl.html">TextControl</a>
+                    </div>
+                    <a data-bypass="true" href="https://github.com/JetBrains/resharper-devguide/edit/master/Platform/Zones.md" class="page-link-to-github" target="_blank" rel="noopener noreferrer" title="Edit this page on GitHub">
+                        <i class="github-icon"></i>
+                        <span class="text">Edit page</span>
+                    </a>
+
+                    <h1>Zones</h1>
+                    <p>Zones provide logical dependency management for features. Code can declare what Zones it requires and exports, enabling tooling to ensure correct layering, packaging and deployment. Features, implemented as Zones, can be independently licensed and disabled. Products can be created by combining Features, and multiple Products can be efficiently installed by sharing overlapping Features.</p>
+
+<a name="background" class="elem-anchor"></a>
+<h2>Background<a href="#background" class="anchor-link"><span></span></a></h2>
+
+<p>Zones were introduced with ReSharper 9.0 to enable a shared binary distribution of products built on the ReSharper platform.</p>
+
+<p>Previously, ReSharper, dotCover, dotTrace, etc. shared a common codebase as source code. This allowed for standalone installations of the products, even allowing for different versions of the common codebase to be installed together. However, this approach causes increased resource usage when multiple products are installed in Visual Studio. The de-coupling also doesn’t solve the problem of co-ordinated release schedules for integration points (e.g. dotCover needs to be updated to integrate with a new version of ReSharper’s test runner).</p>
+
+<p>Clearly, a better strategy is to share a binary implementation of the common codebase. However, this introduces complexity when installing multiple products. Each product requires a different feature set, and it is the intersection of all features from all products that should be installed.</p>
+
+<p>One approach would be to install the superset of all referenced assemblies, but this can force assembly packaging decisions based on product usage, rather than for architectural reasons. For example, dotCover might require NUnit test discovery, but not the analysis and highlights for test attribute usage. Or the NUnit feature supports both C# and Visual Basic, but the user has only purchased support for C# in ReSharper. These scenarios might force the NUnit support to ship in three (or more!) separate assemblies. Trying to split assemblies based on product feature intersection would produce a combinatorial explosion of smaller assemblies, increasing maintenance costs and runtime overhead.</p>
+
+<p>Zones are an abstraction designed to manage this complexity by providing logical packaging based on feature sets. A component, such as Code Coverage for Unit Tests depends on the Unit Test Runner Zone being available. As long as the Unit Test Runner Zone is active, the Code Coverage for Unit Tests feature is active, and the unit test runner can now display code coverage. If the Unit Test Runner Zone isn’t installed, the Code Coverage for Unit Tests feature isn’t activated, and doesn’t get loaded. Furthermore, if the Unit Test Runner Zone is installed, but not activated (perhaps it’s not licensed), the Code Coverage for Unit Tests feature isn’t activated. This is very powerful - the Unit Test Runner Zone can be available on disk, but not available to use (because the owning product isn’t installed, or the feature isn’t licensed). This provides the logical separation of feature sets from assembly packaging.</p>
+
+<p>This is implemented on top of the Component Model. Only components that are parts of installed, licensed and active Zones are enabled. Any component that isn’t part of a Zone that is installed, licensed and active is not available to the application. This decouples the product from the physical packaging of components into assemblies, and allows decisions on shipping and packaging to be made for architectural and layering reasons, rather than trying to satisfy combinations of product boundaries.</p>
+
+
+                    <div class="navigation-links _bottom" data-swiftype-index="false">
+                        <a class="navigation-links__prev" href="/Platform/ComponentModel.html">Component Model</a>
+                        <a class="navigation-links__next" href="/Platform/TextControl.html">TextControl</a>
+                    </div>
+                    <div class="last-modified">
+                        Last modified: 10 July 2017
+                    </div>
+                </article>
+
+                <section class="disqus">
+                    <div id="disqus_thread"></div>
+                </section>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="/help/resharper/sdk/app/app.js" data-baseurl="/help/resharper/sdk/"></script>
+
+</body>
+</html>
+

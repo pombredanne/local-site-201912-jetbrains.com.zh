@@ -1,0 +1,55 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="/help/app/v2/analytics.js"></script><meta charset="UTF-8"><title>Generating Delegating Members - Help | JetBrains Rider</title><link rel="stylesheet" href="/help/app/v2/app.css"></head><body data-id="Code_Generation__Delegating_Members" data-disqus-id="Code_Generation__Delegating_Members_rdr"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search JetBrains Rider Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>JetBrains Rider 2018.3 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="visual_studio" selected>Visual Studio</option><option data-group="primary" value="resharper">ReSharper</option><option data-group="primary" value="_default">Default (IntelliJ IDEA)</option><option data-group="secondary" value="visual_studio_osx">Visual Studio (macOS)</option><option data-group="secondary" value="resharper_osx">ReSharper (macOS)</option><option data-group="secondary" value="mac_os_x_10.5_">Mac OS X 10.5+ (IntelliJ IDEA)</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="active"><h1 data-toc="Code_Generation__Delegating_Members" id="Code_Generation__Delegating_Members.xml">Generating Delegating Members</h1>                    <p id="42bf0b78">                                    <span data-skip-index="skip" class="menupath">Code | Generate | Delegating Members</span>            <br>            <kbd data-visual_studio="Alt+Insert" data-resharper="Alt+Insert" data-_default="Alt+Insert" data-visual_studio_osx="⌥ Insert" data-resharper_osx="⌘ ^ N" data-mac_os_x_10.5_="⌘ N">Alt+Insert</kbd> |            <span class="control">Delegating Members</span>                                </p>        <p id="8d89d186">        With JetBrains Rider,        you can quickly generate members that delegate execution to public members (methods and properties)        available through private fields and properties - in other words,        publish the desired part of the interface of any private field or property in the containing type.    </p>    <p id="69f57b2e">        In the example below, this command is used to generate delegating members for the        <code class="code">_center</code> field:    </p>    <div class="table-wrapper"><table class="                 " width="100%" id="20490aad"><thead><tr id="66dc1421" class="ijRowHead"><th id="4bafbd56"><p>Before generation</p></th><th id="d53b53b0"><p>After generation</p></th></tr></thead><tbody><tr id="678f7a3a" class="ijRowOdd"><td id="df47d714"><p>      <div class="code-block" data-lang="C#">
+class Point
+{
+    public Point(int x, int y) { X = x; Y = y; }
+
+    public int X { get; }
+    public int Y { get; }
+
+    public void DoSomething() {}
+}
+
+class Circle
+{
+    int _radius;
+    Point _center;
+}
+    </div>            </p></td><td id="ef820c5a"><p>    <div class="code-block" data-lang="C#">
+class Point
+{
+    public Point(int x, int y) { X = x; Y = y; }
+
+    public int X { get; }
+    public int Y { get; }
+
+    public void DoSomething() {}
+}
+
+class Circle
+{
+    int _radius;
+    Point _center;
+
+    public int X
+    {
+        get { return _center.X; }
+    }
+
+    public int Y
+    {
+        get { return _center.Y; }
+    }
+
+    public void DoSomething()
+    {
+        _center.DoSomething();
+    }
+}
+    </div>            </p></td></tr></tbody></table></div>                        <section class="procedure-steps"><h2 id="bdee83fd">To generate delegating members</h2><ol class="list _decimal"><li class="list__item" id="63510e26"><p>            In the editor, set the caret on the type name or            within a type at the line where you want to insert delegating members.            If the caret is on the type name, the generated code will be added in the beginning of the type declaration.        </p></li><li class="list__item" id="ee516f4e"><p>            Press            <kbd data-visual_studio="Alt+Insert" data-resharper="Alt+Insert" data-_default="Alt+Insert" data-visual_studio_osx="⌥ Insert" data-resharper_osx="⌘ ^ N" data-mac_os_x_10.5_="⌘ N">Alt+Insert</kbd>            or choose                            <span data-skip-index="skip" class="menupath">Code | Generate...</span>              from the main menu.            Alternatively, you can press            <kbd data-visual_studio="Ctrl+Shift+A" data-resharper="Ctrl+Shift+A" data-_default="Ctrl+Shift+A" data-visual_studio_osx="⌘ ⇧ A" data-resharper_osx="⌘ ⇧ A" data-mac_os_x_10.5_="⌘ ⇧ A">Ctrl+Shift+A</kbd>, start typing the command name in the pop-up, and then choose it there.        </p></li><li class="list__item" id="89aee902"><p>            In the            <span class="control">Generate</span>            pop-up menu, select            <span class="control">Delegating Members</span>.        </p></li><li class="list__item" id="89b1eaf9"><p>            In the            <span class="control">Generate</span>            dialog that appears,            you will see a list of private properties and fields in the current type.            You can expand these items to see the members of their types.            Select some or all of these type members, and JetBrains Rider will            generate wrappers in the current type that delegate execution to selected type members.            <figure><img alt="Generating delegating members with JetBrains Rider" title="Generating delegating members with JetBrains Rider" src="/help/img/rider/2018.3/Code_Generation__Delegating_members__Generate.png" id="3a1e019d" width="414" height="336"></figure>        </p></li><li class="list__item" id="8da00416"><p>            Click                        <span class="control">OK</span>            to complete the wizard.                    </p></li></ol></section>                                                                            <div class="last-modified" data-skip-index="skip">Last modified: 25 April 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="Code_Generation_Deconstructors.html">Generating Deconstructors</a><a class="navigation-links__next" href="Code_Generation_Dispose_Pattern.html">Generating Dispose Pattern</a></div><section class="seealso" data-skip-index="skip"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content"><div class="seealso__col" data-skip-index="skip"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a href="Code_Generation__Type_Constructors.html"><span>Generating Type Constructors</span></a></li><li class="list__item"><a href="Code_Generation__Properties.html"><span>Generating Properties</span></a></li><li class="list__item"><a href="Code_Generation__Implementing_Overriding_Methods.html"><span>Implementing/Overriding Members</span></a></li><li class="list__item"><a href="Code_Generation__Partial_Methods.html"><span>Generating Partial Methods</span></a></li><li class="list__item"><a href="Code_Generation__Equality_Members.html"><span>Generating Equality Members</span></a></li><li class="list__item"><a href="Code_Generation__Generating_Equality_Comparer.html"><span>Generating Equality Comparer</span></a></li><li class="list__item"><a href="Code_Generation__Formatting_Members.html"><span>Generating Formatting Members</span></a></li></ul></div><div class="seealso__col" data-skip-index="skip"><h3>External Links:</h3><ul class="list"><li class="list__item"><a href="http://msdn.microsoft.com/en-us/library/ms173171(v=vs.80).aspx" data-external="true" target="_blank" rel="noopener noreferrer"><span>Delegates (C# Programming Guide) in the MSDN Documentation</span></a></li><li class="list__item"><a href="http://blog.andrei.rinea.ro/2012/07/30/resharper-hidden-features-generate-delegating-members" data-external="true" target="_blank" rel="noopener noreferrer"><span>Andrei Rinea. ReSharper hidden features – Generate Delegating Members</span></a></li></ul></div></div></section></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="/help/app/v2/app.js"></script></body></html>

@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[248],{247:function(n,o,e){e("ctTR"),n.exports=e("BMq+")},"BMq+":function(n,o,e){var s=e("KI45")(e("h9hA")),a=e("Am66"),t=e("Sk6u");a.domReady((function(){new s.default($(".js-carousel-dots-main"),{dots:!0,innerArrows:!0}),new t({versions:[{name:"2018.3",date:"Nov 26",columns:6}]})}))}},[[247,0]]]);
+//# sourceMappingURL=index.entry.3ae8741ffeda27d399b1.js.map

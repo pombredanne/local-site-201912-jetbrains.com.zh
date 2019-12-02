@@ -1,0 +1,72 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="robots" content="noindex"><title>YouTrack Standalone 7.0 Help :: Import from FogBugz</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Import-from-FogBugz"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack Standalone Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>YouTrack Standalone 7.0 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="Import-Projects-from-JIRA.html">Import Projects from JIRA</a><a class="navigation-links__next" href="Import-from-Google-Code-Issue-Tracker.html">Import from Google Code Issue Tracker</a></div><h1>Import from FogBugz</h1><aside class="note sideblock">
+        <a name="d60431e5"></a><p>
+            <a name="d60431e7"></a><p>Before you begin:</p>
+            <a name="d60431e10"></a><p>Please note that if you try to re-import same project several times, then you must delete previously imported data before the next attempt. </p>
+        </p>
+    </aside><a name="Importing_Issues_from_FogBugz"></a><a name="d60431e17"></a><p>This document covers importing issues from a FogBugz instance to YouTrack server using the <a name="d60431e19"></a><a href="Python-Client-Library.html"><span>Python Client Library</span></a>.</p><a name="d60431e22"></a><p><a name="d60431e23"></a><b id="d60431e23">Version compatibility note</b></p><a name="d60431e26"></a><p>Current implementation of the <a name="d60431e28"></a><a href="Python-Client-Library.html"><span>Python Client Library</span></a> and scripts is compatible with YouTrack 3.x and 4.x REST API and Python 2.6. If you use YouTrack 2.x, please refer to YouTrack Release Downloads Archive for the <a name="d60431e30"></a><a href="#Tools"><span>YouTrack 2.x compatible versions of the library and scripts</span></a>.</p><a name="d60431e35"></a><a name="dynaProc0"></a><section class="procedure-steps"><h2>To import issues from a FogBugz server to YouTrack:</h2><ol class=".list _decimal"><li class="list__item">Download <a name="d60431e39"></a><a href="http://www.jetbrains.com/youtrack/tools/index.html" data-external="true"><span>the latest version</span></a> of YouTrack's <a name="d60431e42"></a><a href="Python-Client-Library.html"><span>Python Client Library</span></a> and unzip it.</li><li class="list__item">Ensure that <a name="d60431e47"></a><a href="http://www.python.org/download/" data-external="true"><span>Python</span></a> is installed in your system.</li><li class="list__item">In the mapping file, specify names of the FogBugz projects to be imported in YouTrack as follows:
+            <a name="d60431e53"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">fbugz.PROJECTS_TO_IMPORT = [u&#39;Project1_name&#39;, u&#39;Project2_name&#39;, ...,  u&#39;ProjectN_name&#39;]</code></div>
+            You can either specify the comma-separated list of projects to be imported in the default <code class="code" data-lang="xml">defaultFBugz.py</code> mapping file
+            or create a new mapping file. The new mapping file should be created in the <code class="code" data-lang="xml">&lt;library install directory&gt;\python\fbugz</code> directory. </li><li class="list__item">FogBugz allows its users to create new categories for issues. If you have defined any categories in your FogBugz instance,
+            then to import issues successfully you have to correct the default mapping file (or created new one (see the previous step of this procedure)
+            to set the correspondence between categories in FogBugz and YouTrack issue's attributes.
+            <a name="d60431e65"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="n">fbugz</span><span class="o">.</span><span class="na">CATEGORY</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="err">&#39;</span><span class="n">Feature</span><span class="err">&#39;</span>       <span class="o">:</span>   <span class="err">&#39;</span><span class="n">Feature</span><span class="err">&#39;</span><span class="o">,</span>
+    <span class="err">&#39;</span><span class="n">Bug</span><span class="err">&#39;</span>           <span class="o">:</span>   <span class="err">&#39;</span><span class="n">Bug</span><span class="err">&#39;</span><span class="o">,</span>
+    <span class="err">&#39;</span><span class="n">Inquiry</span><span class="err">&#39;</span>       <span class="o">:</span>   <span class="err">&#39;</span><span class="n">Feature</span><span class="err">&#39;</span><span class="o">,</span>
+    <span class="err">&#39;</span><span class="n">Schedule</span> <span class="n">Item</span><span class="err">&#39;</span> <span class="o">:</span>   <span class="err">&#39;</span><span class="n">Task</span><span class="err">&#39;</span><span class="o">,</span>
+    <span class="err">&#39;</span><span class="n">FB</span> <span class="n">Category</span><span class="err">&#39;</span>   <span class="o">:</span>   <span class="err">&#39;</span><span class="n">YT</span> <span class="n">Type</span><span class="err">&#39;</span>
+<span class="o">}</span></code></div>
+        </li><li class="list__item">If you have created a new mapping file, you should specify a path to it in the <code class="code" data-lang="xml">fb2youtrack.py</code> script file.
+            In this case, don't forget to comment out the default <code class="code" data-lang="xml">defaultFBugz.py</code> mapping file.</li><li class="list__item">Execute the following command:
+            <a name="d60431e81"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">python fb2youtrack.py target_url target_login target_password source_url source_login source_password max_issue_id</code></div>
+            Enter values for the following command-line parameters:
+            <table class="" width="100%" id="d60431e84"><thead><tr id="d60431e86" class="ijRowHead"><a name="d60431e86"></a><th width="15%"><a name="d60431e88"></a>
+                        Parameter
+                    </th><th><a name="d60431e91"></a>
+                        Description
+                    </th></tr></thead><tbody><tr id="d60431e95" class="ijRowOdd"><a name="d60431e95"></a><td><a name="d60431e97"></a>
+                        <code class="code" data-lang="Java">target_url</code>
+                    </td><td><a name="d60431e103"></a>
+                        An URL to a target YouTrack server you want to import issues to.
+                    </td></tr><tr id="d60431e107" class="ijRowEven"><a name="d60431e107"></a><td><a name="d60431e109"></a>
+                        <code class="code" data-lang="Java">target_login</code>
+                    </td><td><a name="d60431e115"></a>
+                        Username to log into the target YouTrack server.
+                    </td></tr><tr id="d60431e119" class="ijRowOdd"><a name="d60431e119"></a><td><a name="d60431e121"></a>
+                        <code class="code" data-lang="Java">target_password</code>
+                    </td><td><a name="d60431e127"></a>
+                        Password to log in to the target YouTrack server.
+                    </td></tr><tr id="d60431e131" class="ijRowEven"><a name="d60431e131"></a><td><a name="d60431e133"></a>
+                        <code class="code" data-lang="Java">source_url</code>
+                    </td><td><a name="d60431e139"></a>
+                        An URL to a source FogBugz server, from which you want to import issues.
+                    </td></tr><tr id="d60431e144" class="ijRowOdd"><a name="d60431e144"></a><td><a name="d60431e146"></a>
+                        <code class="code" data-lang="Java">source_login</code>
+                    </td><td><a name="d60431e152"></a>
+                        Username to log in to a source FogBugz server.
+                    </td></tr><tr id="d60431e156" class="ijRowEven"><a name="d60431e156"></a><td><a name="d60431e158"></a>
+                        <code class="code" data-lang="Java">source_password</code>
+                    </td><td><a name="d60431e164"></a>
+                        Password to log in to the source FogBugz server.
+                    </td></tr><tr id="d60431e168" class="ijRowOdd"><a name="d60431e168"></a><td><a name="d60431e170"></a>
+                        <code class="code" data-lang="Java">max_issue_id</code>
+                    </td><td><a name="d60431e176"></a>
+                        This parameter defines the maximum issue id to import. In FogBugz issues are sequentially numbered through all projects, that is,
+                        for example, <a name="d60431e178"></a><i id="d60431e178">issue-1</i> belongs to <a name="d60431e181"></a><i id="d60431e181">project-1</i>, <a name="d60431e184"></a><i id="d60431e184">issue-2</i>  to <a name="d60431e187"></a><i id="d60431e187">project-2</i>, and <a name="d60431e190"></a><i id="d60431e190">issue-3</i> &mdash; to <a name="d60431e194"></a><i id="d60431e194">project-1</i>.
+                        By defining <code class="code" data-lang="Java">max_issue_id</code> you specify the range of issue IDs in FogBugz, which will be searched for issues belonging to specific projects
+                        (specified in the mapping file), and then imported to YouTrack.
+                    </td></tr></tbody></table>
+        </li></ol></section><a name="d60431e205"></a><h2>Issues with HTML Content</h2>
+        <a name="Note_About_Issues_with_HTML_Content"></a>
+
+        <a name="d60431e209"></a><p>YouTrack does not render an HTML content in FogBugz issues, so HTML content in imported issues will be displayed as source HTML code with all tags. For example:<br>
+            <figure><a class="lightbox" href="/help/img/youtrack/7.0/fbHtmlContent.zoomed.png"><img alt="/help/img/youtrack/7.0/fbHtmlContent.png" title="/help/img/youtrack/7.0/fbHtmlContent.png" src="/help/img/youtrack/7.0/fbHtmlContent.png" width="621" height="289"></a></figure>
+        </p>
+    <div class="last-modified">Last modified: 2 February 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

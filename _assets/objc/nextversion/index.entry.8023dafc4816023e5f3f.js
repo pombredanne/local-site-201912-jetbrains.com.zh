@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[261],{260:function(o,e,n){n("ctTR"),o.exports=n("sgUj")},sgUj:function(o,e,n){var s=n("KI45")(n("V93b")),a=n("Am66"),p=n("pF6c");n("y4GL"),a.domReady((function(){s.default.create(".js-next-releases",{code:p.appcode,displayDownloads:1,showToolboxBanner:!0,versionsToDisplay:["2019.3"]})}))}},[[260,0]]]);
+//# sourceMappingURL=index.entry.5a31909a180f2777ec84.js.map

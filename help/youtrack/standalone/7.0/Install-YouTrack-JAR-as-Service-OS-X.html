@@ -1,0 +1,54 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="robots" content="noindex"><title>YouTrack Standalone 7.0 Help :: Install YouTrack JAR as a Service on OS X</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Install-YouTrack-JAR-as-Service-OS-X"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack Standalone Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>YouTrack Standalone 7.0 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="Configure-JAR-Installation.html">Configure a JAR Installation</a><a class="navigation-links__next" href="Install-YouTrack-JAR-as-Service-Linux.html">Install YouTrack JAR as a Service on Linux</a></div><h1>Install YouTrack JAR as a Service on OS X</h1><a name="d63931e3"></a><p>Use the following setup to install and run YouTrack as a service on OS X.</p><a name="d63931e6"></a><h2>Prerequisites</h2>
+        <a name="d63931e8"></a><p>To perform this installation, verify that the following prerequisites are met:</p>
+        <ul class="list _ul"><li class="list__item"><a name="d63931e13"></a>You are using Java SE Development Kit 8 or later.</li><li class="list__item"><a name="d63931e16"></a>Any external hostname (proxy hostname) is resolvable from the actual host where YouTrack is installed.</li></ul>
+    <a name="d63931e21"></a><h2>Installation</h2>
+        <a name="Installing_Standalone_YouTrack_JAR_as_a_Service_on_Mac_OS_X"></a>
+        <a name="d63931e25"></a><p>The following procedure describes how to install and run YouTrack JAR as a service on OS X.
+            The service is managed by the <code class="code" data-lang="Java">launchd</code> daemon/agent manager.</p>
+
+        <a name="d63931e31"></a><a name="dynaProc0"></a><section class="procedure-steps"><h2>To install the YouTrack JAR distribution as a service on OS X:</h2><ol class=".list _decimal"><li class="list__item">Download the JAR distribution from the <a name="d63931e35"></a><a href="https://www.jetbrains.com/youtrack/download/get_youtrack.html" data-external="true"><span>JetBrains website</span></a>.</li><li class="list__item">Create a user account to run the YouTrack service. For example, <code class="code" data-lang="Java">youtrack</code>.
+                The <code class="code" data-lang="Java">youtrack</code> user account manages YouTrack data and services.</li><li class="list__item">Download the <a name="d63931e50"></a><a href="http://wrapper.tanukisoftware.com/" data-external="true"><span>Tanuki Java Service Wrapper</span></a> that is compatible with your operating system.</li><li class="list__item">Extract the wrapper archive to the home directory of the service user account.
+                <a name="d63931e56"></a><p>For usability, we also recommend that you rename the wrapper directory. For example, <code class="code" data-lang="Java">standalone</code>.</p>
+                <a name="d63931e62"></a><div class="code-block" data-lang="Console"><code class="code-block__wrapper">tar xzvf wrapper-macosx-universal-&lt;version&gt;.tar.gz
+mv wrapper-macosx-universal-&lt;version&gt; standalone</code></div>
+                <a name="d63931e65"></a><p>The directory structure for the wrapper should be similar to the following example:</p>
+                <a name="d63931e68"></a><div class="code-block" data-lang="Console"><code class="code-block__wrapper">./standalone
+./standalone/bin
+./standalone/conf
+./standalone/doc
+./standalone/lib
+./standalone/logs
+./standalone/src</code></div>
+            </li><li class="list__item">Copy the YouTrack JAR file to the wrapper directory:
+                <a name="d63931e74"></a><div class="code-block" data-lang="Console"><code class="code-block__wrapper">cp youtrack-&lt;version&gt;.jar ~youtrack/standalone/</code></div>
+            </li><li class="list__item">Create a soft link to the JAR file:
+                <a name="d63931e81"></a><div class="code-block" data-lang="Console"><code class="code-block__wrapper"><span class="nb">cd</span> ~youtrack/standalone/
+ln -s youtrack-&lt;version&gt;.jar youtrack.jar</code></div>
+            </li><li class="list__item">Create a <code class="code" data-lang="Java">launchd</code> system startup script as <code class="code" data-lang="Java">youtrack.plist</code>.
+                <a name="startupscript"></a>
+                <aside class="note sideblock"><a name="d63931e96"></a><p>If you need help writing the script, check out <a name="d63931e98"></a><a href="http://www.macupdate.com/app/mac/46920/lingon-x" data-external="true"><span>Lingon X</span></a>.
+                    This application makes it easy to create scripts and run services.</p></aside>
+            </li><li class="list__item">Place the <code class="code" data-lang="Java">youtrack.plist</code> script in the <code class="code" data-lang="Java">&lt;service_user_home&gt;/Library/LaunchAgents</code> folder.
+            </li><li class="list__item">Replace the configuration file of an existing wrapper <code class="code" data-lang="Java">~youtrack/standalone/conf/wrapper.conf</code> with the following configuration file:
+                <a data-external="true" href="resources/wrapper.conf" target="_blank" rel="noopener noreferrer">wrapper.conf</a>
+                <a name="d63931e120"></a><p>Modify the configuration file to match your YouTrack installation.</p>
+                <aside class="note sideblock">
+                    <a name="d63931e125"></a><p>By default, the new YouTrack instance is configured to use TCP port 8080.
+                        You can change this setting in the <code class="code" data-lang="Java">wrappers.conf</code> file.
+                        If you run YouTrack behind a reverse proxy server, you can configure the forwarding ports on the proxy server.</p>
+                </aside>
+                <a name="d63931e132"></a><p>The <code class="code" data-lang="Java">wrapper.conf</code> file includes references to the following mandatory JVM options:</p>
+                <ul class="list _ul"><li class="list__item"><a name="d63931e141"></a>The maximum Permanent Generation memory is set with the JVM option <code class="code" data-lang="Java">-XX:MaxMetaspaceSize=256m</code>.</li><li class="list__item"><a name="d63931e147"></a>The maximum Java heap size is set with the property <code class="code" data-lang="Java">wrapper.java.maxmemory=1536</code>.
+                    Do not set this property lower than <code class="code" data-lang="Java">1024m</code> or <code class="code" data-lang="Java">1g</code>.</li></ul>
+            </li><li class="list__item">Run the wrapper to test the installation.<br>
+                If the test is successful, the following conditions are met:
+                <ul class="list _ul"><li class="list__item"><a name="d63931e167"></a>YouTrack starts successfully.</li><li class="list__item"><a name="d63931e170"></a>The <code class="code" data-lang="Java">youtrack.pid</code> file is created in the <code class="code" data-lang="Java">~youtrack/standalone/</code> folder.</li><li class="list__item"><a name="d63931e179"></a>The <code class="code" data-lang="Java">wrapper.log</code> file is created in the <code class="code" data-lang="Java">~youtrack/standalone/logs/</code> folder.</li></ul>
+            </li><li class="list__item">Add the new startup script to the system startup scripts sequence.</li></ol></section>
+<div class="last-modified">Last modified: 2 February 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

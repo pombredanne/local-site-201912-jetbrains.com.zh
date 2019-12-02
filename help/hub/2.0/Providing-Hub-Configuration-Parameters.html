@@ -1,0 +1,97 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="robots" content="noindex"><meta charset="UTF-8"><meta name="robots" content="noindex"><title>Hub 2.0 Help :: Set System Properties and JVM Options</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Providing-Hub-Configuration-Parameters"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search Hub Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>Hub 2.0 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="Configure-JVM-Options.html">Configure JVM Options</a><a class="navigation-links__next" href="Configuration-Parameters.html">Configure System Properties</a></div><h1>Set System Properties and JVM Options</h1><a name="d69640e3"></a><p>On this page:</p><ul><li class="list__item"><a href="#d69640e86">Configuration Guidelines</a></li><li class="list__item"><a href="#d69640e135">Syntax</a></li><li class="list__item"><a href="#set-ad-hoc-parameter">Set an Ad Hoc Parameter</a></li><li class="list__item"><a href="#update-configuration-file">Update the Configuration File</a></li></ul><a name="d69640e8"></a><p>You can configure the system properties and JVM options for your Hub instance.</p><ul class="list _ul"><li class="list__item"><a name="d69640e13"></a>Many system properties correspond to system settings that can be set in the user interface.
+            For a complete list of Hub-specific system properties, see <a name="d69640e15"></a><a href="Configuration-Parameters.html"><span>Configure System Properties</span></a>.</li><li class="list__item"><a name="d69640e18"></a>The JVM options let you manage behavioral, garbage collection, performance, and debugging options for your server.
+            These settings are not visible in the user interface.</li></ul><a name="d69640e22"></a><p>You can set the system properties for Hub with commands that are interpreted by script files.
+        These script files are included in your Hub installation.
+        There are two commands that you can use to update your Hub installation.</p><table class="" width="100%" id="d69640e26"><thead><tr id="d69640e28" class="ijRowHead"><a name="d69640e28"></a><th><a name="d69640e30"></a>Command</th><th><a name="d69640e33"></a>Description</th></tr></thead><tbody><tr id="d69640e37" class="ijRowOdd"><a name="d69640e37"></a><td><a name="d69640e39"></a><code class="code" data-lang="Java">start</code></td><td><a name="d69640e43"></a>Starts the Hub server.
+                System properties and JVM options that are added as ad hoc parameters to the start command are applied directly to the Hub database.
+                For details, see <a href="#set-ad-hoc-parameter">Set an Ad Hoc Parameter</a>.</td></tr><tr id="d69640e49" class="ijRowEven"><a name="d69640e49"></a><td><a name="d69640e51"></a><code class="code" data-lang="Java">configure</code></td><td><a name="d69640e55"></a>Updates the Hub configuration.
+                System properties and JVM options that are referenced in the configure command are added to the <code class="code" data-lang="Java">hub.jvmoptions</code> configuration file.
+                For details, see <a href="#update-configuration-file">Update the Configuration File</a>.</td></tr></tbody></table><a name="d69640e65"></a><p>These commands are available for both MSI and ZIP installations.
+        To execute these commands in an MSI distribution, open the <a name="d69640e67"></a><span class="control">Command Prompt</span> window as an administrator.</p><aside class="note sideblock">
+        <a name="d69640e73"></a><p>The commands on this page are for Linux and OS X.
+            For a Windows installation, replace <code class="code" data-lang="Java">.sh</code> with <code class="code" data-lang="Java">.bat</code> and use the backslash.</p>
+    </aside><a name="d69640e83"></a><p>Always execute commands on behalf of the OS user that runs the Hub service.
+        These commands create configuration files and folders. The Hub service user should have sufficient permissions to access these files and folders.</p><a name="d69640e86"></a><h2>Configuration Guidelines</h2>
+        <a name="d69640e88"></a><p>Hub stores system properties in and JVM options in an internal configuration file.
+            Every time you start the Hub service, Hub reads this file and applies this configuration to the Hub database.</p>
+        <a name="d69640e91"></a><p>The one-way synchronization from the configuration file to the database can lead to problems if you're not careful.
+            System properties that are set in the Hub user interface are applied directly to the Hub database.
+            If you change a setting in the user interface that has been updated in the configuration file, the setting in the configuration file is applied to the database on restart, overwriting the setting in the UI.</p>
+        <a name="d69640e94"></a><p>To avoid conflicts, follow these guidelines:</p>
+        <ul class="list _ul"><li class="list__item"><a name="d69640e99"></a>If the system property is available in the user interface, update and manage these settings in the user interface.
+                This ensures that you don't have synchronization issues with the configuration file.
+                <a name="d69640e101"></a><p>If you choose to modify any of these system properties programmatically, <a name="d69640e103"></a><a href="#set-ad-hoc-parameter"><span>pass them as ad hoc parameters</span></a> with the <code class="code" data-lang="Java">start</code> command.
+                    This method updates the settings in the database without applying changes to the configuration file.</p></li><li class="list__item"><a name="d69640e110"></a>If the setting is not managed in the user interface, you have two options:
+                <ul class="list _ul"><li class="list__item"><a name="d69640e114"></a>To change a setting on a temporary basis, <a name="d69640e116"></a><a href="#set-ad-hoc-parameter"><span>pass the setting as an ad hoc parameter</span></a> with the <code class="code" data-lang="Java">start</code> start command.
+                        This method updates the database for the current run and does not change the configuration file.
+                        Use this option when you want to test changes to your server configuration.</li><li class="list__item"><a name="d69640e123"></a>To change a setting on a persistent basis, <a name="d69640e125"></a><a href="#update-configuration-file"><span>update the configuration file</span></a>.
+                        You can use the <code class="code" data-lang="Java">configure</code> command or edit the configuration file manually.</li></ul></li></ul>
+    <a name="d69640e135"></a><h2>Syntax</h2>
+        <a name="d69640e137"></a><p>Use the following syntax to update system settings:</p>
+        <ul class="list _ul"><li class="list__item"><a name="d69640e142"></a>Declare an option that is passed to the Java virtual machine with the <code class="code" data-lang="Java">-J</code> prefix.
+                You can set multiple options in a single command. For example:<br>
+                <a name="d69640e149"></a><div class="code-block" data-lang="Console"><code class="code-block__wrapper">hub configure -J-Xmx1024m -J-XX:+HeapDumpOnOutOfMemoryError</code></div></li><li class="list__item"><a name="d69640e152"></a>Pass the setting as an ad hoc parameter in the <code class="code" data-lang="Java">start</code> command with the <code class="code" data-lang="Java">--J</code> prefix. For example:<br>
+                <a name="d69640e162"></a><div class="code-block" data-lang="Console"><code class="code-block__wrapper">hub start --J-Xmx1024m --J-XX:+HeapDumpOnOutOfMemoryError</code></div></li><li class="list__item"><a name="d69640e165"></a>Follow the prefix with a system property or JVM option.
+                Do not add any spaces between the prefix and the option.
+                The symbol that precedes the option determines how it is applied.
+                <ul class="list _ul"><li class="list__item"><a name="d69640e169"></a>Add an option with the <code class="code" data-lang="Java">-</code> symbol.</li><li class="list__item"><a name="d69640e175"></a>Remove an option with the <code class="code" data-lang="Java">+</code> symbol.
+                        If you specify a value, the corresponding option is only removed if it has exactly the same value.</li></ul></li><li class="list__item"><a name="d69640e182"></a>Set system properties with <code class="code" data-lang="Java">D</code> arguments. For example:<br>
+                <a name="d69640e189"></a><div class="code-block" data-lang="Console"><code class="code-block__wrapper">hub start --J-Djetbrains.jetpass.smtp.from<span class="o">=</span>no-reply@test.com</code></div></li></ul>
+    <a name="set-ad-hoc-parameter"></a><h2>Set an Ad Hoc Parameter</h2>
+        <a name="d69640e197"></a><p>When you want to modify a setting on a temporary basis, you can use an ad hoc parameter in the service start command.
+            This method bypasses the configuration file and runs Hub with the specified parameters.
+            Subsequent starts that do not specify the ad hoc parameter use the settings that are stored in the configuration file.</p>
+
+        <a name="d69640e200"></a><a name="dynaProc0"></a><section class="procedure-steps"><h2>To change a setting on a temporary basis:</h2><ol class=".list _decimal"><li class="list__item"><a name="d69640e203"></a><a href="Starting-and-Stopping-Hub.html"><span>Stop the Hub service</span></a>.</li><li class="list__item">In a command-line interface, change the directory to <code class="code" data-lang="Java">&lt;hub_home&gt;/bin</code>.
+                <ul class="list _ul"><li class="list__item"><a name="d69640e214"></a>For a ZIP installation, the <code class="code" data-lang="Java">&lt;hub_home&gt;/bin</code> directory is the location where the ZIP distribution was unpacked during installation.</li><li class="list__item"><a name="d69640e220"></a>For an MSI installation, the <code class="code" data-lang="Java">&lt;hub_home&gt;/bin</code> directory is <code class="code" data-lang="Java">%programdata%\JetBrains\Hub</code>.</li></ul></li><li class="list__item">Enter the <code class="code" data-lang="Java">hub.sh start</code>command, followed by all of the settings that you want to pass to the Hub database on start.
+                Use the <code class="code" data-lang="Java">--J</code> prefix to pass the settings as ad hoc parameters.
+                For example:<br>
+                <a name="d69640e240"></a><div class="code-block" data-lang="Console"><code class="code-block__wrapper">hub.sh start --J-XX:+HeapDumpOnOutOfMemoryError --J-Djetbrains.jetpass.smtp.from<span class="o">=</span>no-reply@test.com</code></div>
+                <ul class="list _ul"><li class="list__item"><a name="d69640e245"></a>The Hub service starts using the specified settings.</li><li class="list__item"><a name="d69640e248"></a>The <code class="code" data-lang="Java">hub.jvmoptions</code> configuration file is not modified.</li></ul>
+            </li></ol></section>
+        <a name="d69640e257"></a><p>To run Hub with the previous settings, simply restart the service without passing any custom parameters.</p>
+    <a name="update-configuration-file"></a><h2>Update the Configuration File</h2>
+
+        <a name="d69640e263"></a><p>When you want to update a setting on a persistent basis, update the configuration file.
+            You can update the file programmatically, or manually change the settings in the file.</p>
+
+        <aside class="warning sideblock"><a name="d69640e267"></a><p>To avoid synchronization problems, only use this procedure to update system properties that are not available in the Hub user interface.
+            For a list of properties that you can update in the Hub UI, see <a name="d69640e269"></a><a href="Configuration-Parameters.html"><span>Configure System Properties</span></a>.</p></aside>
+
+        <a name="d69640e272"></a><a name="dynaProc1"></a><section class="procedure-steps"><h2>To configure system properties and JVM options programmatically:</h2><ol class=".list _decimal"><li class="list__item"><a name="d69640e275"></a><a href="Starting-and-Stopping-Hub.html"><span>Stop the Hub service</span></a>.</li><li class="list__item">In a command-line interface, change the directory to <code class="code" data-lang="Java">&lt;hub_home&gt;/bin</code>.
+                <ul class="list _ul"><li class="list__item"><a name="d69640e286"></a>For a ZIP installation, the <code class="code" data-lang="Java">&lt;hub_home&gt;/bin</code> directory is the location where the ZIP distribution was unpacked during installation.</li><li class="list__item"><a name="d69640e292"></a>For an MSI installation, the <code class="code" data-lang="Java">&lt;hub_home&gt;/bin</code> directory is <code class="code" data-lang="Java">%programdata%\JetBrains\Hub</code>.</li></ul></li><li class="list__item">Enter the <code class="code" data-lang="Java">hub.sh configure</code> command, followed by all of the settings that you want to update in the configuration file. For example:<br>
+                <code class="code" data-lang="Console">hub.sh configure -J-XX:+HeapDumpOnOutOfMemoryError -J-Djetbrains.jetpass.smtp.from=no-reply@test.com</code>
+
+            </li><li class="list__item"><a name="d69640e314"></a><a href="Starting-and-Stopping-Hub.html"><span>Start the Hub service</span></a>.</li></ol></section>
+
+        <a name="d69640e319"></a><p>If you prefer not to modify the configuration file from the command line, you can edit the <code class="code" data-lang="Java">hub.jvmoptions</code> file manually.
+            This file is created automatically when you modify the default configuration.
+            The location of the file depends on the distribution type of your Hub installation.</p>
+        <aside class="note sideblock"><a name="d69640e326"></a><p>Changing Database Location</p>
+
+            <a name="d69640e329"></a><p>You cannot change the database location manually.
+                This parameter is rewritten on server start. To change the database location, see <a name="d69640e331"></a><a href="Change-Database-Location.html"><span>Change Database Location</span></a>.
+            </p>
+        </aside>
+        <ul class="list _bullet"><li class="list__item"><a name="d69640e338"></a>For a ZIP distribution, the file is located in the <code class="code" data-lang="Java">&lt;Hub Installation Directory&gt;\conf</code> directory.</li><li class="list__item"><a name="d69640e344"></a>For an MSI distribution the file is located in the <code class="code" data-lang="Java">%programdata%\JetBrains\Hub\conf</code> directory.</li></ul>
+        <a name="d69640e351"></a><p>If you have not changed the JVM options for your server, the directory contains a sample configuration file.
+            The sample configuration file uses the <code class="code" data-lang="Java">.dist</code> extension and contains a list of default JVM options.
+            If the file you want to edit does not exist:</p>
+        <ul class="list _ul"><li class="list__item"><a name="d69640e359"></a>Copy the <a name="d69640e361"></a><span class="control">hub.jvmoptions.dist</span> file and save it as <a name="d69640e364"></a><span class="control">hub.jvmoptions</span><br>
+                or</li><li class="list__item"><a name="d69640e369"></a>Create a <a name="d69640e371"></a><span class="control">hub.jvmoptions</span> file in this directory and paste the contents of the sample configuration file into it.</li></ul>
+
+        <a name="d69640e376"></a><p>You can then edit the contents of the file to configure the system properties and JVM options.</p>
+
+        <a name="d69640e379"></a><a name="dynaProc2"></a><section class="procedure-steps"><h2>To configure system properties or JVM options manually:</h2><ol class=".list _decimal"><li class="list__item"><a name="d69640e382"></a><a href="Starting-and-Stopping-Hub.html"><span>Stop the Hub service</span></a>.</li><li class="list__item">Open the <code class="code" data-lang="Java">hub.jvmoptions</code> file.</li><li class="list__item">Edit the JVM options directly in the file.
+                To set a pre-defined JVM option, simply uncomment the corresponding line.
+                <ul class="list _ul"><li class="list__item"><a name="d69640e396"></a>List each JVM option on a new line.</li><li class="list__item"><a name="d69640e399"></a>Add system properties to the end of the file.</li></ul></li><li class="list__item">Save and close the file.</li><li class="list__item"><a name="d69640e407"></a><a href="Starting-and-Stopping-Hub.html"><span>Start the Hub service</span></a>.
+                <ul class="list _ul"><li class="list__item"><a name="d69640e412"></a>The changes to the configuration file are copied to the Hub database.</li><li class="list__item"><a name="d69640e415"></a>The Hub service starts using the specified settings.</li></ul>
+            </li></ol></section>
+    <div class="last-modified">Last modified: 19 September 2016 </div></article><div id="disqus_thread"></div></div></section></main></div><script src="/help/app/app.js"></script></body></html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="robots" content="noindex"><title>YouTrack Standalone 7.0 Help :: HipChat Integration</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Hipchat-Integration"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack Standalone Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>YouTrack Standalone 7.0 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="Integration-with-Test-Management-Tools.html">Test Management Tools</a><a class="navigation-links__next" href="Slack-Integration.html">Slack Integration (XMPP)</a></div><h1>HipChat Integration</h1><a name="d53076e3"></a><p>YouTrack supports integration with a HipChat Server.
+        With this integration, you can send notifications to a HipChat room when:</p><ul class="list _ul"><li class="list__item"><a name="d53076e8"></a>A new issue is created in a specific project.</li><li class="list__item"><a name="d53076e11"></a>An existing issue is updated in a specific project.</li></ul><a name="d53076e15"></a><p>This integration is designed for use on a per-room basis in HipChat, and is enabled on a per-project basis in YouTrack.
+        For best results, we recommend that you enable this integration for HipChat rooms where users who have permission to view issues in a related YouTrack project meet to discuss their work.</p><a name="d53076e18"></a><p>To set up an integration with HipChat, follow these steps:</p><ol class="list _decimal"><li class="list__item"><a name="d53076e23"></a><a href="#install-room-integration">Install a Per-Room Integration on Your HipChat Server</a></li><li class="list__item"><a name="d53076e26"></a><a href="#customize-workflow">Customize the HipChat Integration Workflow</a></li><li class="list__item"><a name="d53076e29"></a><a href="#enable-workflow">Enable the HipChat Integration Workflow in YouTrack</a></li></ol><a name="d53076e34"></a><p>The basic setup described here lets you post updates from a single YouTrack project to a specific room in HipChat.
+    For more complex integrations, see <a href="#multi-project">Multi-room and Multi-project Configurations</a>.</p><a name="install-room-integration"></a><h2>Install a Per-Room Integration on Your HipChat Server</h2>
+
+        <a name="d53076e41"></a><p>The HipChat integration is enabled on a per-project basis in YouTrack. For this reason, it is designed to support per-room integration.</p>
+        <a name="d53076e44"></a><a name="dynaProc0"></a><section class="procedure-steps"><h2>To install a per-room integration:</h2><ol class=".list _decimal"><li class="list__item">In your HipChat Server, open the <a name="d53076e48"></a><span class="control">Group admin &gt; Rooms</span> page.</li><li class="list__item">Select a room.</li><li class="list__item">Click <a name="d53076e57"></a><span class="control">Integrations</span> in the left menu bar.</li><li class="list__item">On the <a name="d53076e63"></a><span class="control">Integrations</span> page, select <a name="d53076e66"></a><span class="control">Build your own integration</span>.</li><li class="list__item">Enter a name for your integration and click the <a name="d53076e72"></a><span class="control">Create</span> button.
+            <ul class="list _ul"><li class="list__item"><a name="d53076e77"></a>HipChat displays the URL you need to send messages to this room.</li></ul>
+            <figure><a class="lightbox" href="/help/img/youtrack/7.0/hipchatIntegrationToken.zoomed.png"><img alt="/help/img/youtrack/7.0/hipchatIntegrationToken.png" title="/help/img/youtrack/7.0/hipchatIntegrationToken.png" src="/help/img/youtrack/7.0/hipchatIntegrationToken.png" width="600" height="433"></a></figure>
+            </li><li class="list__item">Copy the post URL for your HipChat room and paste it into a text editor.
+                In the following procedure, you add this URL to your workflow rules in YouTrack.</li><li class="list__item">Click the <a name="d53076e90"></a><span class="control">Save</span> button.</li></ol></section>
+
+    <a name="customize-workflow"></a><h2>Customize the HipChat Integration Workflow</h2>
+
+        <a name="d53076e98"></a><p>The next step is to edit the HipChat Integration workflow so it sends notifications to your HipChat room.</p>
+        <a name="d53076e101"></a><p>This workflow contains two rules: <a name="d53076e103"></a><span class="control">Issue Added</span> and <a name="d53076e106"></a><span class="control">Issue Modified</span>.
+        To receive notifications when issues are added and modified, customize both rules with the URL for your room in HipChat.</p>
+        <a name="d53076e110"></a><a name="dynaProc1"></a><section class="procedure-steps"><h2>To customize the HipChat Integration workflow:</h2><ol class=".list _decimal"><li class="list__item">Download the HipChat Integration workflow from the <a name="d53076e132"></a><a href="https://github.com/JetBrains/youtrack-workflows/blob/master/Integration_With_HipChat/jetbrains-youtrack-hipchat.zip" data-external="true"><span>YouTrack Custom Workflow Repository</span></a>.</li><li class="list__item">Open the YouTrack Workflow Editor.</li><li class="list__item">From the <a name="d53076e141"></a><span class="control">Workflow</span> menu, select <a name="d53076e144"></a><span class="control">Import Workflow from File</span>.</li><li class="list__item">Select the ZIP archive that you downloaded in step 1.
+            <ul class="list _ul"><li class="list__item"><a name="d53076e152"></a>The workflow is imported into the workflow editor.</li></ul></li><li class="list__item">Open the first workflow rule that you want to customize.</li><li class="list__item">Locate the <code class="code" data-lang="Java">URLs</code> variable declaration in the code.</li><li class="list__item">Replace the whole URL with the URL that you copied from your HipChat server in the previous procedure.
+            Specifically, you need to replace the following placeholders in the workflow rule with variables from your HipChat Server:
+                <aside class="note sideblock"><a name="d53076e169"></a><p>The workflow rules have placeholders for two URLs.</p>
+                    <a name="d53076e172"></a><p>When you specify the URL for a single HipChat room, set the URL in quotation marks and remove the trailing comma.</p></aside>
+
+                <table class="" width="100%" id="d53076e175"><thead><tr id="d53076e177" class="ijRowHead"><a name="d53076e177"></a><th><a name="d53076e179"></a>Placeholder</th><th><a name="d53076e182"></a>Value</th></tr></thead><tbody><tr id="d53076e186" class="ijRowOdd"><a name="d53076e186"></a><td><a name="d53076e188"></a><code class="code" data-lang="Java">TEST_INSTANCE</code></td><td><a name="d53076e192"></a>Replace with the subdomain of your HipChat Server.</td></tr><tr id="d53076e196" class="ijRowEven"><a name="d53076e196"></a><td><a name="d53076e198"></a><code class="code" data-lang="Java">room_number</code></td><td><a name="d53076e202"></a>Replace with the ID of the HipChat room.</td></tr><tr id="d53076e206" class="ijRowOdd"><a name="d53076e206"></a><td><a name="d53076e208"></a><code class="code" data-lang="Java">TOKEN</code></td><td><a name="d53076e212"></a>Replace with the auth token for your HipChat room.</td></tr></tbody></table>
+                <a name="d53076e217"></a><p>Your variable declaration should look something like this:</p>
+                <a name="d53076e220"></a><div class="code-block" data-lang="Javascript"><code class="code-block__wrapper"><span class="kd">var</span> <span class="nx">URLs</span> <span class="o">=</span> <span class="s2">&quot;</span>
+<span class="s2">    https://subdomain.hipchat.com/v2/room/1234567/notification?auth_token=AbC4EfGhIjKlMNoPqRsTu1nFrS1tp0w&quot;</span><span class="p">.</span>
+    <span class="nx">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="nx">opts</span><span class="p">);</span></code></div>
+
+            </li><li class="list__item">Repeat steps 6 and 7 for the second workflow rule.</li><li class="list__item">From the <a name="d53076e229"></a><span class="control">Workflow</span> menu, select <a name="d53076e232"></a><span class="control">Upload Workflows to Server</span>.
+            <ul class="list _ul"><li class="list__item"><a name="d53076e237"></a>The customized workflows are uploaded to your YouTrack server.</li></ul></li></ol><aside class="note sideblock" data-title="Permissions">
+                <br>
+                <br>
+                <a name="d53076e118"></a><p><a name="d53076e119"></a><span class="control">Hub</span></p>
+                <ul class="list _ul"><li class="list__item"><a name="d53076e124"></a>Low-level Administration <img alt="/help/img/youtrack/7.0/iconGlobe.png" title="/help/img/youtrack/7.0/iconGlobe.png" src="/help/img/youtrack/7.0/iconGlobe.png" width="14" height="15" class="inline-icon-15"></li></ul>
+            </aside></section>
+
+    <a name="enable-workflow"></a><h2>Enable the HipChat Integration Workflow in YouTrack</h2>
+        <a name="d53076e245"></a><p>The last step is to attach the HipChat Integration workflow to your project in YouTrack.</p>
+        <aside class="note sideblock" data-title="Permissions">
+            <br>
+            <br>
+            <a name="d53076e254"></a><p><a name="d53076e255"></a><span class="control">Hub</span></p>
+            <ul class="list _ul"><li class="list__item"><a name="d53076e260"></a>Read Project</li><li class="list__item"><a name="d53076e263"></a>Update Project</li></ul>
+        </aside>
+
+        <a name="d53076e268"></a><a name="dynaProc2"></a><section class="procedure-steps"><h2>To enable the HipChat Integration workflow:</h2><ol class=".list _decimal"><li class="list__item">Open the project that you want to integrate with HipChat.</li><li class="list__item">Click the <a name="d53076e275"></a><span class="control">Edit project</span> link.</li><li class="list__item">Select the <a name="d53076e281"></a><span class="control">Workflow</span> tab.</li><li class="list__item">From the <a name="d53076e287"></a><span class="control">Attach workflows</span> list, select <code class="code" data-lang="Java">jetbrains-youtrack-hipchat</code>.
+            <ul class="list _ul"><li class="list__item"><a name="d53076e295"></a>The HipChat Integration workflow is attached to your project.</li></ul></li><li class="list__item">Expand the workflow and select the <a name="d53076e301"></a><span class="control">Issue Added</span> rule.</li><li class="list__item">If the <a name="d53076e308"></a><span class="control">requires setup</span> flag is displayed, click the <a name="d53076e311"></a><span class="control">Configure project</span> button.
+            <ul class="list _ul"><li class="list__item"><a name="d53076e316"></a>The custom field (<a name="d53076e318"></a><span class="control">State</span>) that is required for the workflow is added to your project.</li><li class="list__item"><a name="d53076e322"></a>The workflow is enabled and ready for use with your project.</li></ul></li></ol></section>
+    <a name="d53076e328"></a><p>When the setup is complete and the workflow is attached to your project:</p><ul class="list _ul"><li class="list__item"><a name="d53076e333"></a>Notification is sent to the room when an issue is created in the project.
+        <figure><img alt="/help/img/youtrack/7.0/hipchatIntegrationNewIssue.png" title="/help/img/youtrack/7.0/hipchatIntegrationNewIssue.png" src="/help/img/youtrack/7.0/hipchatIntegrationNewIssue.png" width="866" height="158"></figure>
+        </li><li class="list__item"><a name="d53076e338"></a>Notification is sent to the room when an issue in the project is updated.
+        <figure><img alt="/help/img/youtrack/7.0/hipchatIntegrationUpdate.png" title="/help/img/youtrack/7.0/hipchatIntegrationUpdate.png" src="/help/img/youtrack/7.0/hipchatIntegrationUpdate.png" width="865" height="160"></figure>
+        </li></ul><a name="d53076e345"></a><p>In each notification, the notification subject and YouTrack issue ID are set as direct links to the issue in YouTrack.</p><a name="multi-project"></a><h2>Multi-room and Multi-project Configurations</h2>
+
+        <a name="d53076e350"></a><p>The basic setup lets you post updates from a single YouTrack project to a specific room in HipChat.
+         However, you can easily configure this setup for more complex integration scenarios.</p>
+
+        <a name="d53076e353"></a><h3>One Project, Many Rooms</h3>
+
+
+        <a name="d53076e355"></a><p>The HipChat Integration workflow is scripted to support an integration between one YouTrack project and multiple rooms in HipChat.
+        You can build integrations for different rooms in HipChat and add the URL for each room to your workflow rules.</p>
+
+        <a name="d53076e358"></a><p>The following lines of code in the workflow can be customized to send notifications to multiple rooms from a single project:</p>
+
+        <a name="d53076e361"></a><div class="code-block" data-lang="Javascript"><code class="code-block__wrapper"><span class="kd">var</span> <span class="nx">URLs</span> <span class="o">=</span> <span class="s2">&quot;</span>
+<span class="s2">    https://TEST_INSTANCE.hipchat.com/v2/room/room_number/notification?auth_token=TOKEN,https://TEST_INSTANCE.hipchat.com/v2/room/room_number/notification?auth_token=TOKEN&quot;</span><span class="p">.</span>
+    <span class="nx">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="nx">opts</span><span class="p">);</span></code></div>
+
+        <a name="d53076e364"></a><p>The workflow that you download from the repository contains placeholders for two rooms.
+            The <code class="code" data-lang="Java">split</code> operation uses the <code class="code" data-lang="Java">,</code> character to split the string that is set in quotation marks into separate URLs for each room.</p>
+        <a name="d53076e373"></a><p>With this format, you can continue to add comma-separated URLs for multiple rooms to the workflow.</p>
+         
+        <a name="d53076e377"></a><h3>Many Projects, One Room</h3>
+            <a name="d53076e379"></a><p>If you want to send notifications from multiple YouTrack projects to a single room in HipChat, the setup is relatively simple.</p>
+                <ol class="list _decimal"><li class="list__item"><a name="d53076e384"></a>Follow the steps described here to add the URL for your HipChat room to the workflow rules.</li><li class="list__item"><a name="d53076e387"></a>Attach this workflow to all of the projects you want to report to HipChat.</li></ol>
+         
+        <a name="d53076e392"></a><h3>Separate Projects, Separate Rooms</h3>
+            <a name="d53076e394"></a><p>In a slightly more complicated setup, you have multiple teams who discuss different projects in separate rooms.
+            You want to direct notifications from specific projects to the rooms where each team meets to discuss their issues.</p>
+            <a name="d53076e397"></a><p>The easiest way to handle this situation is to create separate workflows for each project and customize the rules accordingly.</p>
+            <a name="d53076e400"></a><a name="dynaProc3"></a><section class="procedure-steps"><h2>To support this use case:</h2><ol class=".list _decimal"><li class="list__item">Create a new workflow in the workflow editor.
+                Give the workflow a name that shows its relationship to the project where it will be applied.</li><li class="list__item">Copy the rules from the HipChat Integration workflow and past them to the new workflow.</li><li class="list__item">Update the URLs in the workflow rules to reference the HipChat rooms that you want to notify in this project.</li><li class="list__item">Repeat steps 1 through 3 for every room or set of rooms that you want to notify in each project.</li><li class="list__item">Upload the workflows to your server.</li><li class="list__item">Attach each workflow to the project for which it has been customized.</li></ol></section>
+
+            <a name="d53076e422"></a><p>An alternative approach is to add conditional statements to your workflow rules.
+            With conditional statements, you can identify the project that each issue belongs to and send notifications to dedicated rooms in HipChat.
+            You can then attach the same workflow to all of the projects that are referenced in the workflow and update the same set of workflow rules when you want to enable HipChat integration in a new project.</p>
+            <a name="d53076e425"></a><p>To support this use case, add a conditional statement to the <code class="code" data-lang="Java">URLs</code> variable declaration. Use the following sample as a guide:</p>
+            <a name="d53076e432"></a><div class="code-block" data-lang="Javascript"><code class="code-block__wrapper"><span class="kd">var</span> <span class="nx">URLs</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">issue</span><span class="p">.</span><span class="nx">project</span><span class="p">.</span><span class="nx">shortName</span> <span class="o">==</span> <span class="s2">&quot;Project_ 1&quot;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">URLs</span> <span class="o">=</span> <span class="s2">&quot;https://TEST_INSTANCE.hipchat.com/v2/room/room_1/notification?auth_token=TOKEN&quot;</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="nx">opts</span><span class="p">);</span>
+<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">issue</span><span class="p">.</span><span class="nx">project</span><span class="p">.</span><span class="nx">shortName</span> <span class="o">==</span> <span class="s2">&quot;Project_2&quot;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">URLs</span> <span class="o">=</span> <span class="s2">&quot;https://TEST_INSTANCE.hipchat.com/v2/room/room_2/notification?auth_token=TOKEN&quot;</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="nx">opts</span><span class="p">);</span>
+<span class="p">}</span></code></div>
+            <a name="d53076e435"></a><p>To send notifications to multiple rooms in each project, replace the single URL with a comma-separated list of URLs.
+                The <code class="code" data-lang="Java">split</code> operation splits the string that is set in quotation marks into separate URLs for each room. </p>
+
+
+
+         
+    <div class="last-modified">Last modified: 2 February 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

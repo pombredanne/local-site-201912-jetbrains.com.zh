@@ -1,0 +1,129 @@
+
+
+
+<!doctype html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>Lifetime / ReSharper  DevGuide</title>
+    <link rel="stylesheet" href="/help/resharper/sdk/app/app.css">
+    <link rel="shortcut icon" href="/help/resharper/sdk/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="57x57" href="/help/resharper/sdk/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/help/resharper/sdk/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/help/resharper/sdk/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/help/resharper/sdk/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/help/resharper/sdk/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/help/resharper/sdk/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/help/resharper/sdk/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/help/resharper/sdk/apple-touch-icon-180x180.png">
+    <link rel="mask-icon" href="/help/resharper/sdk/apple-mask-icon.svg" color="black">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-square70x70logo" content="/help/resharper/sdk/mstile-70x70.png">
+    <meta name="msapplication-TileImage" content="/help/resharper/sdk/mstile-144x144.png">
+    <meta name="msapplication-square150x150logo" content="/help/resharper/sdk/mstile-150x150.png">
+    <meta name="msapplication-wide310x150logo" content="/help/resharper/sdk/mstile-310x150.png">
+    <meta name="msapplication-square310x310logo" content="/help/resharper/sdk/mstile-310x310.png">
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="Documentation for writing extensions for ReSharper" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.jetbrains.com/help/resharper/sdk//Platform/Lifetime.html" />
+    <meta property="og:site_name" content="JetBrains ReSharper" />
+    <meta property="og:title" content="Lifetime" />
+    <meta property="og:description" content="Documentation for writing extensions for ReSharper" />
+    <meta property="og:image" content="https://www.jetbrains.com/help/resharper/sdk/jetbrains.png" />
+    <meta property="article:modified_time" content="2017-07-10T19:28:42+00:00" />
+    <!-- <meta property="article:section" content="" /> 
+    <meta property="article:tag" content="" /> -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@JBPlatform" />
+    <meta name="twitter:title" content="Lifetime" />
+    <meta name="twitter:description" content="Documentation for writing extensions for ReSharper" />
+    <meta name="twitter:image" content="https://www.jetbrains.com/help/resharper/sdk/jetbrains.png" />
+    <meta class="swiftype" name="product" data-type="string" content="/help/resharper/sdk/"></meta>
+<link  rel="stylesheet" href="/help/resharper/sdk/app/styles.css"></head>
+<body data-id="Platform/Lifetime">
+<div class="wrapper">
+    <section class="panel _nav">
+        <header class="panel__header">
+            <div class="container">
+                <form class="search-box">
+                    <label for="search-box__input" class="search-box__label">
+                        <input type="text" class="search-box__input" id="search-box__input" placeholder="Search ReSharper  DevGuide">
+                    </label>
+                    <div class="search-box__clear" title="Clear"></div>
+                </form>
+            </div>
+        </header>
+        <nav class="panel__content">
+            <div class="container _nav">
+                <menu class="nav-tree"></menu>
+            </div>
+            <div class="container _footer panel__footer">
+                <p><a data-bypass="true" href="//youtrack.jetbrains.com/issues/IJSDK">Send feedback</a></p>
+                <p>&copy; 2000&ndash;2018 <a href="//www.jetbrains.com">JetBrains</a> s.r.o.<br>
+                    All rights reserved.</p>
+            </div>
+        </nav>
+    </section>
+
+    <main class="panel _main" role="main">
+        <header class="panel__header">
+            <div class="container">
+                <h3>ReSharper DevGuide</h3>
+                
+                <div class="panel-trigger"></div>
+            </div>
+        </header>
+        <section class="panel__content">
+            <div class="container">
+                <article class="article" data-shortcut-switcher="false">
+                    <div class="navigation-links _top" data-swiftype-index="false">
+                        <a class="navigation-links__prev" href="/Platform/Logging.html">Logging</a>
+                        <a class="navigation-links__next" href="/Platform/ComponentModel.html">Component Model</a>
+                    </div>
+                    <a data-bypass="true" href="https://github.com/JetBrains/resharper-devguide/edit/master/Platform/Lifetime.md" class="page-link-to-github" target="_blank" rel="noopener noreferrer" title="Edit this page on GitHub">
+                        <i class="github-icon"></i>
+                        <span class="text">Edit page</span>
+                    </a>
+
+                    <h1>Lifetime</h1>
+                    <p>The <code class="code highlight language-text">JetBrains.DataFlow.Lifetime</code> class is used for cleanup code and resource management. <code class="code highlight language-text">Lifetime</code> is similar to, but different from <code class="code highlight language-text">IDisposable</code>. In fact, you can consider <code class="code highlight language-text">Lifetime</code> to be the “dual” of <code class="code highlight language-text">IDisposable</code>.</p>
+
+<aside class="note">
+  <p> This class is used <em>extensively</em> throughout the codebase, and it is <em>highly recommended</em> that you understand what it is and how it works.</p>
+</aside>
+
+<p><code class="code highlight language-text">IDisposable</code> is best suited to deterministic cleanup of a limited number of objects in a small scope. That is, it’s ideal when you have created one or maybe two objects that need cleanup at a specific point in code; the <code class="code highlight language-text">using</code> keyword makes this particularly easy.</p>
+
+<p>However, when dealing with multiple objects that require cleanup, or that live longer than a single method call, more and more code is required for housekeeping of the <code class="code highlight language-text">IDisposable</code> instances, including providing the means to invoke <code class="code highlight language-text">Dispose</code>. This pattern can quickly and easily spread to calling code, meaning a lot of extra code is required just to manage resources and cleanup.</p>
+
+<p>The <code class="code highlight language-text">Lifetime</code> class reduces this boilerplate by approaching the issue from the opposite direction. It is responsible for the housekeeping of the clean up tasks. Calling code can register callbacks with the <code class="code highlight language-text">Lifetime</code>, and when it’s terminated, those callbacks are executed, in reverse order, performing any required cleanup. This way, the housekeeping is moved out of user code.</p>
+
+<p>Instead of returning an <code class="code highlight language-text">IDisposable</code> object that knows how to perform cleanup, and which needs collating and disposing, a method that needs to perform cleanup will accept a <code class="code highlight language-text">Lifetime</code> instance, and register a callback that performs the cleanup. Now a single instance is maintaining all of the cleanup code, and there is no resource management housekeeping code in the calling class.</p>
+
+<p>Furthermore, the <code class="code highlight language-text">Lifetime</code> class allows for “nested” <code class="code highlight language-text">Lifetime</code> instances, which can either be terminated independently, or when parent <code class="code highlight language-text">Lifetime</code> terminates.</p>
+
+
+
+                    <div class="navigation-links _bottom" data-swiftype-index="false">
+                        <a class="navigation-links__prev" href="/Platform/Logging.html">Logging</a>
+                        <a class="navigation-links__next" href="/Platform/ComponentModel.html">Component Model</a>
+                    </div>
+                    <div class="last-modified">
+                        Last modified: 10 July 2017
+                    </div>
+                </article>
+
+                <section class="disqus">
+                    <div id="disqus_thread"></div>
+                </section>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="/help/resharper/sdk/app/app.js" data-baseurl="/help/resharper/sdk/"></script>
+
+</body>
+</html>
+

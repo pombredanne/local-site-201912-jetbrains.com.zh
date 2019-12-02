@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+                                                    <!-- Error reporting -->
+<script>(function(){
+  window.reportError = function(msg, file, line, col, err, isUnhandledRejection){};
+  var prevOnError = window.onerror;
+  var onError = function(msg, file, line, col, err) {
+    reportError(msg, file, line, col, err, false);
+    prevOnError && prevOnError.apply(window, arguments);
+    return false;
+  };
+  window.onerror = onError;
+  // Setup reporting for unhandled Promise rejection errors
+  window.addEventListener("unhandledrejection", function(e) {
+    if (!e.reason) return;
+    var l = getSrcLocation(e.reason);
+    reportError(e.reason.message, l.file, l.line, l.col, e.reason, true);
+  });
+  // Setup reporting for console.error and console.warn calls
+  patchConsole('error');
+  patchConsole('warn');
+  // Utility functions
+  function patchConsole(fnName) {
+    var fn = console[fnName];
+    console[fnName] = function() {
+      fn.apply(console, arguments);
+      var l; try {
+        throw new Error('_');
+      } catch (err) {
+        l = getSrcLocation(err, 1);
+      }
+      var msg = 'console.' + fnName + ': ' + Array.prototype.join.call(arguments, ' ');
+      reportError(msg, l.file, l.line, l.col, undefined, false);
+    };
+  }
+  function getSrcLocation(err, sd) {
+    var s = err && err.stack;
+    var l = s && s.split("\n")[1 + (sd|0)];
+    var r = l && (/^\s*at [^(]*\((.*?):(\d+)(:\d+)?\)$/.exec(l) || /^\s*at (.*?):(\d+)(:\d+)?$/.exec(l));
+    return r ? {file: r[1], line: r[2], col: r[3]} : {};
+  }
+})();</script>
+<!-- Error reporting -->        <!-- Google Tag Manager -->
+<script>(function() {
+  // Initialize Tag Manager queue
+  window.dataLayer = window.dataLayer || [];
+  window.gtmLoaded = false;
+  // Setup reporting for errors that occurred before Tag Manager initialized
+  var prevReportError = window.reportError;
+  var reportError = function(msg, file, line, col, err, isUnhandledRejection) {
+    if (!window.gtmLoaded || isUnhandledRejection) {
+      // Reproduce the behavior of the Tag Manager error handler
+      window.dataLayer.push(makeEvt(msg, file, line));
+    }
+    prevReportError && prevReportError.apply(window, arguments);
+  };
+  window.reportError = reportError;
+  // Utility functions
+  function makeEvt(msg, file, line) {
+    return {
+      event: "gtm.pageError", "gtm.errorMessage": msg,
+      "gtm.errorUrl": file, "gtm.errorLineNumber": line
+    };
+  }
+})();</script>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;j.addEventListener(
+    'load', function(){window.gtmLoaded=true});f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5P98');</script>
+<!-- End Google Tag Manager -->        <!-- Sentry -->
+<script>
+    (function() {
+        window.sentryLoaded = false;
+        window.errorsForSentry = [];
+        var prevReportError = window.reportError;
+        var reportError = function(
+            msg,
+            file,
+            line,
+            col,
+            err,
+            isUnhandledRejection
+        ) {
+            if (!window.sentryLoaded) {
+                window.errorsForSentry.push(err);
+            }
+            prevReportError && prevReportError.apply(window, arguments);
+        };
+        window.reportError = reportError;
+    })();
+</script>
+<script>
+    window.sentryLoad = function() {
+        window.sentryLoaded = true;
+        Sentry.init({
+            dsn: 'https://1adb2a61713144eda0786e5af50ddc51@sentry.io/1423069',
+            release:
+                "jetbrainscom@a6ccaa6ddb",
+            beforeSend: function(event) {
+                Object.keys(event).forEach(function(key) {
+                    var value = event[key];
+                    if (isEmail(value)) {
+                        delete event[key];
+                    }
+                });
+                return event;
+            }
+        });
+        Sentry.configureScope(function(scope) {
+            scope.setTag('page_locale', 'en-us');
+            scope.setTag('browser.locale', getPageLocale());
+
+            scope.setTag('http.urlFull', location.href);
+            var protocol = location.protocol || '';
+            //omit `:` from location.protocol string
+            var protocolString = protocol.substring(0, protocol.length - 1);
+
+            scope.setTag('http.protocol', protocolString);
+
+            scope.setTag('http.hostname', location.hostname);
+
+            var search = location.search || '';
+            //omit ? from location.search string
+            var searchString = search.substr(1);
+            if (searchString !== '') {
+                scope.setTag('http.query', searchString || '1');
+            }
+            var hash = location.hash || '';
+            //omit # from location.hash string
+            var hashString = hash.substr(1);
+            if (hashString !== '') {
+                scope.setTag('http.fragment', hashString);
+            }
+        });
+        window.errorsForSentry.forEach(Sentry.captureException);
+
+        function getPageLocale() {
+            return (
+                (navigator.languages && navigator.languages[0]) ||
+                navigator.language
+            );
+        }
+        function isEmail(value) {
+            var emailRegex = /[\+\-\_\.a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+\.[a-zA-Z0-9]+/g;
+            return emailRegex.test(value);
+        }
+    };
+</script>
+<script src="https://browser.sentry-cdn.com/5.7.1/bundle.min.js" crossorigin="anonymous" onload="sentryLoad()" async></script>
+<!-- End Sentry -->    
+                <title>Rider Unity用のクロスプラットフォームС#エディタ</title>
+    
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, maximum-scale=1">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#000000">
+<meta name="apple-mobile-web-app-title" content="JetBrains">
+<meta name="application-name" content="JetBrains">
+<meta name="msapplication-TileColor" content="#000000">
+<meta name="theme-color" content="#000000">    <link rel="canonical" href="https://www.jetbrains.com/jp/dotnet/promo/unity/" />    <!-- .61-->
+                
+        
+                    <meta name="description" content="JetBrains is a cutting-edge software vendor specializing in the creation of intelligent development tools, including IntelliJ IDEA – the leading Java IDE, and the Kotlin programming language."/>
+            <meta name="keywords" content="JetBrains, IntelliJ, IntelliJ IDEA, java, Java IDE, C#, .NET, refactoring, productivity, Visual Studio plugins, developer productivity tools."/>
+            
+        <link rel="alternate" hreflang="x-default" href="https://www.jetbrains.com/languages/jp/dotnet/promo/unity/" />
+
+                        <link rel="alternate" hreflang="en" href="https://www.jetbrains.com/jp/dotnet/promo/unity/" />
+                                                                                                                        
+    
+    
+        <link href="https://www.jetbrains.com/dotnet/promo/unity/" hreflang="x-default" rel="alternate"><link href="https://www.jetbrains.com/dotnet/promo/unity/" hreflang="en" rel="alternate"><link href="https://www.jetbrains.com/kr/dotnet/promo/unity/" hreflang="kr" rel="alternate"><link href="https://www.jetbrains.com/jp/dotnet/promo/unity/" hreflang="ja" rel="alternate"><link href="https://www.jetbrains.com/zh/dotnet/promo/unity/" hreflang="zh" rel="alternate"><link href="https://www.jetbrains.com/zh/dotnet/promo/unity/" hreflang="zh-Hans" rel="alternate">
+    <!-- Twitter Card data -->
+<meta content="summary_large_image" name="twitter:card">
+<meta content="@jetbrainsrider" name="twitter:site">
+<meta content="Rider: Cross-platform .NET IDE by JetBrains" name="twitter:title">
+<meta content="Develop .NET, ASP.NET, .NET Core, Xamarin or Unity applications on Windows, Mac, Linux" name="twitter:description">
+<meta content="@jetbrainsrider" name="twitter:creator">
+<meta content="http://resources.jetbrains.com/storage/products/rider/img/meta/rider_1280x800.png" name="twitter:image:src">
+<meta content="Platforms:" name="twitter:label1">
+<meta content="Windows, macOS, Linux" name="twitter:data1"><!-- End Twitter Card data -->
+<!-- Start Schema.org -->
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org/",
+  "@type": "Product",
+  "name": "Rider",
+  "alternateName": "JetBrains Rider",
+  "logo": "http://resources.jetbrains.com/storage/products/rider/img/meta/rider_logo_300x300.png",
+  "image": "http://resources.jetbrains.com/storage/products/rider/img/meta/rider_1280x800.png",
+  "description": "Rider: Cross-platform .NET IDE by JetBrains",
+  "brand": {
+    "@type": "Brand",
+    "name": "JetBrains"
+  },
+  "offers": {
+    "@type": "AggregateOffer",
+    "lowPrice": "13.90",
+    "highPrice": "34.90",
+    "priceCurrency": "USD"
+  },
+  "releaseDate": "2019-08-29T09:00",
+  "sameAs": [
+          "https://twitter.com/JetBrainsRider"
+        ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Rider",
+  "image": "http://resources.jetbrains.com/storage/products/rider/img/meta/rider_1280x800.png",
+  "url": "https://www.jetbrains.com/rider/",
+  "author": {
+    "@type": "Organization",
+    "name": "JetBrains"
+  },
+  "datePublished": "2019-08-29T09:00",
+  "publisher": {
+    "@type": "Organization",
+    "name": "JetBrains"
+  },
+  "applicationCategory": "IDE, code editor, csharp editor, .net programming, integrated development environment",
+  "downloadUrl": "https://www.jetbrains.com/rider/download/",
+  "operatingSystem": "Windows, macOS, Linux",
+  "requirements": "RAM: 2 GB, Free space: 1.5 GB, Screen Resolution: 1024x768",
+  "screenshot": "http://www.jetbrains.com/rider/img/screenshots/rider_navigation_preview@2x.png",
+  "softwareVersion": "2019.2"
+}
+</script>
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "WebPage",
+        "@id": "https://www.jetbrains.com/rider/#webpage",
+        "url": "https://www.jetbrains.com/rider/",
+        "name": "Rider: Cross-platform .NET IDE by JetBrains",
+        "description": "Develop .NET, ASP.NET, .NET Core, Xamarin or Unity applications on Windows, Mac, Linux",
+        "image": "http://resources.jetbrains.com/storage/products/rider/img/meta/rider_1280x800.png"
+    }
+</script><!-- End Schema.org -->
+    
+    <script>
+        var current_lang = 'en-us';
+                                    var i18n_info = {"current_lang": "en-us", "languages": [{"canonical": "en", "code": "en-us", "label": "English", "page_translated": true, "url": "/jp/dotnet/promo/unity/"}, {"canonical": "de", "code": "de-de", "label": "Deutsch", "page_translated": false, "url": "/de-de/jp/dotnet/promo/unity/"}, {"canonical": "es", "code": "es-es", "label": "Espa\u00f1ol", "page_translated": false, "url": "/es-es/jp/dotnet/promo/unity/"}, {"canonical": "fr", "code": "fr-fr", "label": "Fran\u00e7ais", "page_translated": false, "url": "/fr-fr/jp/dotnet/promo/unity/"}, {"canonical": "ja", "code": "ja-jp", "label": "\u65e5\u672c\u8a9e", "page_translated": false, "url": "/ja-jp/jp/dotnet/promo/unity/"}, {"canonical": "ko", "code": "ko-kr", "label": "\ud55c\uad6d\uc5b4", "page_translated": false, "url": "/ko-kr/jp/dotnet/promo/unity/"}, {"canonical": "ru", "code": "ru-ru", "label": "\u0420\u0443\u0441\u0441\u043a\u0438\u0439", "page_translated": false, "url": "/ru-ru/jp/dotnet/promo/unity/"}, {"canonical": "zh-CN", "code": "zh-cn", "label": "\u7b80\u4f53\u4e2d\u6587", "page_translated": false, "url": "/zh-cn/jp/dotnet/promo/unity/"}, {"canonical": "pt-BR", "code": "pt-br", "label": "Portugu\u00eas do Brasil", "page_translated": false, "url": "/pt-br/jp/dotnet/promo/unity/"}, {"canonical": "x-klingon", "code": "tl-aa", "label": "tlhIngan Hol", "page_translated": false, "url": "/tl-aa/jp/dotnet/promo/unity/"}]};
+                            var navigationMenu = {"primary": {"id": "main_v2", "items": [{"id": "tools", "title": "Tools", "descriptionTitle": "Toolbox App", "descriptionLogoId": "toolbox", "descriptionLink": "Learn more", "descriptionUrl": "/toolbox-app/", "description": "Manage your tools the easy way", "src": "/img/banners-menu-main/toolbox-vertical.png", "horisontalSrc": "/img/banners-menu-main/toolbox-horisontal.png", "bgColor": "#3E0598", "isVisible": true, "hasCategories": true, "items": [{"title": "IDEs", "items": [{"isActive": false, "id": "appcode", "title": "AppCode", "url": "/objc/", "logoLeftActionId": "appcode", "items": [], "cleaned_url": "/objc/"}, {"isActive": false, "id": "clion", "title": "CLion", "url": "/clion/", "logoLeftActionId": "clion", "items": [], "cleaned_url": "/clion/"}, {"isActive": false, "id": "datalore", "title": "Datalore", "url": "https://datalore.io/", "isExternalLink": true, "logoLeftActionId": "datalore", "items": [], "cleaned_url": "https://datalore.io/"}, {"isActive": false, "id": "datagrip", "title": "DataGrip", "url": "/datagrip/", "logoLeftActionId": "datagrip", "items": [], "cleaned_url": "/datagrip/"}, {"isActive": false, "id": "goland", "title": "GoLand", "url": "/go/", "logoLeftActionId": "goland", "items": [], "cleaned_url": "/go/"}, {"isActive": false, "id": "idea", "title": "IntelliJ IDEA", "url": "/idea/", "logoLeftActionId": "intellij-idea", "items": [], "cleaned_url": "/idea/"}, {"isActive": false, "id": "phpstorm", "title": "PhpStorm", "url": "/phpstorm/", "logoLeftActionId": "phpstorm", "items": [], "cleaned_url": "/phpstorm/"}, {"isActive": false, "id": "pycharm", "title": "PyCharm", "url": "/pycharm/", "logoLeftActionId": "pycharm", "items": [], "cleaned_url": "/pycharm/"}, {"isActive": false, "id": "rider", "title": "Rider", "url": "/rider/", "logoLeftActionId": "rider", "items": [], "cleaned_url": "/rider/"}, {"isActive": false, "id": "rubymine", "title": "RubyMine", "url": "/ruby/", "logoLeftActionId": "rubymine", "items": [], "cleaned_url": "/ruby/"}, {"isActive": false, "id": "webstorm", "title": "WebStorm", "url": "/webstorm/", "logoLeftActionId": "webstorm", "items": [], "cleaned_url": "/webstorm/"}, {"isActive": false, "id": "toolbox", "type": "special", "title": "Toolbox App", "url": "/toolbox-app/", "logoLeftId": "toolbox", "description": "A control panel for your tools and projects", "items": [], "cleaned_url": "/toolbox-app/"}]}, {"title": ".NET & VISUAL STUDIO", "items": [{"isActive": false, "id": "resharper", "title": "ReSharper", "url": "/resharper/", "logoLeftActionId": "resharper", "items": [], "cleaned_url": "/resharper/"}, {"isActive": false, "id": "rider", "title": "Rider", "url": "/rider/", "logoLeftActionId": "rider", "items": [], "cleaned_url": "/rider/"}, {"isActive": false, "id": "resharper-cpp", "title": "ReSharper C++", "url": "/resharper-cpp/", "logoLeftActionId": "resharper-cpp", "items": [], "cleaned_url": "/resharper-cpp/"}, {"isActive": false, "id": "dotcover", "title": "dotCover", "url": "/dotcover/", "logoLeftActionId": "dotcover", "items": [], "cleaned_url": "/dotcover/"}, {"isActive": false, "id": "dotmemory", "title": "dotMemory", "url": "/dotmemory/", "logoLeftActionId": "dotmemory", "items": [], "cleaned_url": "/dotmemory/"}, {"isActive": false, "id": "dotpeek", "title": "dotPeek", "url": "/decompiler/", "logoLeftActionId": "dotpeek", "items": [], "cleaned_url": "/decompiler/"}, {"isActive": false, "id": "dottrace", "title": "dotTrace", "url": "/profiler/", "logoLeftActionId": "dottrace", "items": [], "cleaned_url": "/profiler/"}]}, {"title": "TEAM TOOLS", "items": [{"isActive": false, "id": "teamcity", "title": "TeamCity", "url": "/teamcity/", "logoLeftActionId": "teamcity", "items": [], "cleaned_url": "/teamcity/"}, {"isActive": false, "id": "upsource", "title": "Upsource", "url": "/upsource/", "logoLeftActionId": "upsource", "items": [], "cleaned_url": "/upsource/"}, {"isActive": false, "id": "youtrack", "title": "YouTrack", "url": "/youtrack/", "logoLeftActionId": "youtrack", "items": [], "cleaned_url": "/youtrack/"}, {"isActive": false, "id": "hub", "title": "Hub", "url": "/hub/", "logoLeftActionId": "hub", "items": [], "cleaned_url": "/hub/"}]}, {"title": "PLUGIN MARKETPLACE", "items": [{"isActive": false, "id": "bigdata", "title": "Big Data Tools", "url": "https://plugins.jetbrains.com/plugin/12494-big-data-tools", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/plugin/12494-big-data-tools"}, {"isActive": false, "id": "rustsupport", "title": "Rust", "url": "https://plugins.jetbrains.com/plugin/8182-rust", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/plugin/8182-rust"}, {"isActive": false, "id": "scalaplugin", "title": "Scala", "url": "https://plugins.jetbrains.com/plugin/1347-scala", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/plugin/1347-scala"}, {"isActive": false, "id": "idethemes", "title": "IDE Themes", "url": "https://plugins.jetbrains.com/search?tags=Theme", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/search?tags=Theme"}, {"isActive": false, "id": "plugins", "title": "All Plugins", "url": "https://plugins.jetbrains.com/", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/"}]}, {"title": "EDUCATION", "items": [{"isActive": false, "id": "pycharm-edu", "title": "PyCharm Edu", "url": "/education/", "urlHash": "#lang=python&role=learner", "logoLeftActionId": "pycharm-edu", "items": [], "cleaned_url": "/education/"}, {"isActive": false, "id": "idea-edu", "title": "IntelliJ IDEA Edu", "url": "/education/", "urlHash": "#lang=java&role=learner", "logoLeftActionId": "intellij-idea", "items": [], "cleaned_url": "/education/"}, {"isActive": false, "id": "jb-academy", "title": "JB Academy", "url": "/academy/", "items": [], "cleaned_url": "/academy/"}]}]}, {"id": "languages", "title": "Languages", "descriptionTitle": "Kotlin/Everywhere", "descriptionLogoId": "header-kotlin-everywhere", "descriptionLink": "Join in!", "descriptionUrl": "//everywhere.kotlinlang.org", "description": "A worldwide event series for learning the best Kotlin practices on all platforms", "descriptionBig": true, "src": "/img/banners-menu-main/kotlin-vertical.png", "horisontalSrc": "/img/banners-menu-main/kotlin-horisontal.png", "bgColor": "#D6721C", "isExternalLink": true, "isVisible": true, "hasCategories": false, "items": [{"isActive": false, "id": "kotlin", "title": "Kotlin", "url": "https://kotlinlang.org/", "isExternalLink": true, "logoLeftId": "header-kotlin-grayscale", "logoLeftActionId": "kotlin", "logoLeftSize": "50", "description": "Programming language \n for JVM & Android", "items": [], "cleaned_url": "https://kotlinlang.org/"}, {"isActive": false, "id": "mps", "title": "MPS", "url": "/mps/", "logoLeftId": "header-mps-grayscalse", "logoLeftActionId": "mps", "logoLeftSize": "50", "description": "Create your own domain-specific language", "items": [], "cleaned_url": "/mps/"}]}, {"id": "solutions", "title": "Solutions", "descriptionTitle": "JetBrains Academy", "descriptionLogoId": "academy-logo", "descriptionLink": "Join in!", "descriptionUrl": "/academy", "description": "An educational platform for future professionals", "src": "/img/banners-menu-main/academy-vertical.png", "horisontalSrc": "/img/banners-menu-main/academy-horisontal.png", "bgColor": "#53288E", "hasCategories": false, "isVisible": true, "items": [{"isActive": false, "title": "C++ Tools", "url": "/cpp/", "logoLeftId": "header-cpp-grayscale", "logoLeftActionId": "header-cpp", "description": "Tools for C/C++ development \nfor any platform", "items": [], "cleaned_url": "/cpp/"}, {"isActive": false, "title": "For Business", "url": "/store/business/", "logoLeftId": "header-for-business-grayscale", "logoLeftActionId": "header-for-business", "description": "Wide range of tools. \nAll major technologies covered", "items": [], "cleaned_url": "/store/business/"}, {"isActive": false, "title": "Game Development", "url": "/gamedev/", "logoLeftId": "header-gamedev-grayscale", "logoLeftActionId": "header-gamedev", "description": "Tools for game development \nfor any platform", "items": [], "cleaned_url": "/gamedev/"}, {"isActive": false, "title": "DevOps", "url": "/devops/", "logoLeftId": "header-devops-grayscale", "logoLeftActionId": "header-devops", "description": "Tools and integrations \nfor any infrastructure", "items": [], "cleaned_url": "/devops/"}, {"isActive": false, "title": "Education", "url": "/education/", "logoLeftId": "header-education-grayscale", "logoLeftActionId": "header-education", "description": "Products to learn and teach programming", "items": [], "cleaned_url": "/education/"}]}, {"id": "support", "title": "Support", "description": "Pricing and licensing for businesses and individuals", "descriptionTitle": "JetBrains Store", "descriptionLogoId": "header-store", "descriptionUrl": "/store/?fromMenu#edition=commercial", "descriptionLink": "visit store", "isVisible": true, "hasCategories": true, "items": [{"title": "CUSTOMERS", "items": [{"isActive": false, "title": "Sales Support", "url": "/support/sales/", "description": "Orders, payments", "items": [], "cleaned_url": "/support/sales/"}, {"isActive": false, "title": "Product Support", "url": "/support/", "description": "Tech support, documentation", "items": [], "cleaned_url": "/support/"}]}, {"title": "COMMUNITY PROGRAMS", "items": [{"isActive": false, "title": "Education", "url": "/community/education/", "description": "Students, classrooms, training", "items": [], "cleaned_url": "/community/education/"}, {"isActive": false, "title": "Open Source", "url": "/community/opensource/", "description": "Projects support", "items": [], "cleaned_url": "/community/opensource/"}, {"isActive": false, "title": "Sponsorship", "url": "/community/support/", "description": "User groups, events, technology experts", "items": [], "cleaned_url": "/community/support/"}]}]}, {"id": "company", "title": "Company", "isVisible": true, "hasCategories": true, "items": [{"title": "INITIATIVES", "items": [{"isActive": false, "title": "Open Source", "url": "/opensource/", "description": "Projects, contributions", "items": [], "cleaned_url": "/opensource/"}, {"isActive": false, "title": "Research", "url": "/research/", "description": "Market, Scientific", "items": [], "cleaned_url": "/research/"}]}, {"title": "COMPANY", "items": [{"isActive": false, "title": "About", "url": "/company/", "description": "People, customers, awards", "items": [], "cleaned_url": "/company/"}, {"isActive": false, "title": "Brand Assets", "url": "/company/brand/", "description": "Guidelines, logos", "items": [], "cleaned_url": "/company/brand/"}, {"isActive": false, "title": "Careers", "url": "/careers/apply/", "description": "Jobs, internships", "items": [], "cleaned_url": "/careers/apply/"}, {"isActive": false, "title": "Events", "url": "/company/events/", "description": "Conferences, meetups", "items": [], "cleaned_url": "/company/events/"}, {"isActive": false, "title": "Contacts", "url": "/company/contacts/", "description": "Partners, resellers, Kotlin training", "items": [], "cleaned_url": "/company/contacts/"}]}, {"title": "RESOURCES", "items": [{"isActive": false, "title": "Newsletters", "url": "/resources/newsletters/", "items": [], "cleaned_url": "/resources/newsletters/"}, {"isActive": false, "title": "Webinars", "url": "/resources/webinars/", "items": [], "cleaned_url": "/resources/webinars/"}, {"isActive": false, "title": "Early Access", "url": "/resources/eap/", "items": [], "cleaned_url": "/resources/eap/"}, {"isActive": false, "title": "Blog", "url": "//blog.jetbrains.com/", "isExternalLink": true, "items": [], "cleaned_url": "//blog.jetbrains.com/"}]}]}, {"isActive": false, "id": "store", "url": "/store/?fromNavMenu", "title": "Store", "isVisible": true, "hasCategories": false, "items": [], "cleaned_url": "/store/?fromNavMenu"}]}, "secondary": {}};
+        
+        var is_layout_adaptive = false;
+        
+        var disable_language_picker = false;
+        
+        var english_only_url_prefixes = [];
+            </script>
+    
+            <script></script>
+    
+        
+    
+    <link href="/_assets/common.d44d81f300d3bff87efe.css" rel="stylesheet" type="text/css">
+<link href="/_assets/default-page.fabf52db4bf34ea78af0.css" rel="stylesheet" type="text/css">
+<link href="/_assets/landing-page.8b6edb42023719387891.css" rel="stylesheet" type="text/css">
+<link href="/_assets/dotnet/promo/unity/index.entry.f8ae58e3b5dff7b5cf69.css" rel="stylesheet" type="text/css">
+    <script src="/_assets/common.34604685b633d15ae3ed.js" type="text/javascript"></script>
+<script src="/_assets/default-page.2e180fc15a6b94fe7fa3.js" type="text/javascript"></script>
+<script src="/_assets/landing-page.82c83c95d1b792922f23.js" type="text/javascript"></script>
+<script src="/_assets/dotnet/promo/unity/index.entry.19bbda3706d53c03d4a5.js" type="text/javascript"></script>
+
+            <!-- Social Media tag Starts -->
+    <!-- Open Graph data -->
+            <meta property="og:title" content="Rider Unity用のクロスプラットフォームС#エディタ"/>
+    
+                    <meta property="og:description" content="JetBrains is a cutting-edge software vendor specializing in the creation of intelligent development tools, including IntelliJ IDEA – the leading Java IDE, and the Kotlin programming language."/>
+    <meta property="og:image" content="http://resources.jetbrains.com/storage/products/jetbrains/img/meta/jetbrains_1280x800.png"/>
+
+    <meta property="og:site_name" content="JetBrains"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="https://www.jetbrains.com/languages/jp/dotnet/promo/unity/"/>
+    <!-- Social Media tag Ends -->
+</head>
+<body class="landing-page  ">
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<div class="page">
+    <header class="page__header landing-header">
+    <div class="wt-container">
+      <a href="/"><svg class="_jetbrains-simple sprite-img landing-header__logo" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#jetbrains-simple"></use></svg></a>
+    </div>
+</header>
+
+    <div class="page__content">
+        <section class="section position-relative section-header no-padding-top no-padding-bottom">
+<div data-product-name="rider" id="announce-placeholder"></div>
+<div class="wt-container article-content">
+<div class="wt-row wt-row_size_m wt-row_justify_center text-center">
+<div class="wt-col-8 wt-col-lg-10">
+<h1 class="_extra-big">Unity用Rider</h1>
+<h2 class="margin-bottom-vertical-unit">Unity用にC#を書くためのよりスマートな方法
+                        </h2>
+<div class="button-group margin-bottom-vertical-unit">
+<a class="button" href="/jp/rider/download/download-thanks.html">ダウンロード</a>
+<a class="button _gray _icon-video js-popup" href="https://youtu.be/N7bHiFKC_uQ">動画を見る</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="section no-padding-top">
+<div class="wt-container article-content margin-top-vertical-unit-half margin-bottom-vertical-unit quote-block">
+<div class="wt-row wt-row_size_m wt-row_justify_center text-center">
+<div class="wt-col-6 wt-col-lg-8">
+<div class="quote-block__text">Riderを使ってC#を書くと、私は幸せになれます。 実際に問題なく動作するコードリファクタリングツールを今まで見たことがありませんでした。 それに頼ることができるなら、驚くべきことです。</div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-row_align-items_center wt-row_justify_center">
+<div class="wt-col-4 text-right">
+<div class="screen-img">
+<img src="/dotnet/promo/unity/img/customer@2x.png" width="100">
+</div>
+</div>
+<div class="wt-col-4">
+<p class="_color-gray no-margin-bottom">Joachim Ante、<br>Unity CTO & 創設者</p>
+</div>
+</div>
+</div>
+<div class="wt-container margin-bottom-vertical-unit-half">
+<div class="wt-row wt-row_size_m margin-bottom-vertical-unit">
+<div class="wt-col-4">
+<div class="features-block">
+<h4 class="features-block__title">パワフルなクロスプラットフォームC#エディタ</h4>
+<p>JetBrains Riderは高速でパワフルな <nobr>C#エディタで、</nobr> Windows、Mac、Linux上で動作するUnity用です。
+                            無敵の2500個以上のスマートコードの検査とリファクタリングを備えたRiderは、C#の経験を強化し、誤りのないコードをより速く書くことができます。
+                        </p>
+</div>
+<div class="features-block">
+<h4 class="features-block__title">Unityで簡単にスタート</h4>
+<p>RiderにはUnityサポートがビルトインされています。Unityソリューションを開くと、Riderは、C#スクリプトとシェーダーファイル用のデフォルトエディタとして<strong>Riderを使用するように、自動的にUnityを構築します</strong>。 完了したら、C#スクリプトまたはシェーダーアセットをダブルクリックすると、Riderのソリューションが開きます。</p>
+</div>
+</div>
+<div class="wt-col-5 wt-offset-left-1">
+<div class="screen-img">
+<img alt="Unityで簡単にスタート" class="js-gif" data-gif-src="/dotnet/promo/unity/img/screenshots/rider_unity_demo.gif" src="/dotnet/promo/unity/img/screenshots/rider_unity_demo@2x.png" width="700">
+</div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m margin-bottom-vertical-unit">
+<div class="wt-col-4">
+<div class="features-block">
+<h4 class="features-block__title">Unityエディタをコントロール</h4>
+<p>統合された双方向通信のおかげで、<em>Play mode</em>に切り替えて、Riderからまったく離れずに一時停止して1つのフレームをステップすることができます。 ツールバーにはUnityエディタの同じボタンに対応し、Unityエディタと同じ動作を制御するゲームビューボタン、<em>Play</em>、<em>Pause</em>、および<em>Step</em>ボタンが含まれています。 ステータスバーの小さなUnityアイコンは、Unityエディタが接続されているか、リフレッシュしているか、または<em>Play mode</em>になっているかを示します。 <em>Edit mode</em>でRiderに適用された変更は、即座にUnityエディタに送信されます。
+                        </p>
+</div>
+<div class="features-block">
+<h4 class="features-block__title">Unityテストを実行する</h4>
+<p>Riderでは、UnityのAPIとやりとりするテストを実行することができます。すべてRider内から単一フレームをステップ実行できます。 またもちろん、通常のテストと同じように、Unity固有のテストの結果を調べることができます。結果でフィルタリングし、スタックトレースをクリックしてコードをナビゲートすることができます。</p>
+</div>
+</div>
+<div class="wt-col-5 wt-offset-left-1">
+<div class="screen-img">
+<div class="screen-img">
+<img alt="RiderでUnityユニットテストを実行" src="/dotnet/promo/unity/img/screenshots/unity_unit_testing@2x.png" width="700">
+</div>
+</div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m margin-bottom-vertical-unit">
+<div class="wt-col-4">
+<div class="features-block">
+<h4 class="features-block__title">Unityコンソールログ</h4>
+<p>リンクされたスタックトレースを持つ<em>Unityログ</em>ツールウィンドウでは、Unityエディタコンソールに記録されているものと同じイベントを探索できます。 これにより、カテゴリ別（エラー、警告、またはメッセージ）にフィルタリングしたり、記録された時間に基づいてイベントを非表示にしたりすることができ（<em>Play</em>または<em>Edit</em>モード）、また、ログエントリに記述されているソースファイル、クラス、メソッド、またはプロパティに簡単にナビゲートできます。
+                            <em>Unity Logs</em>は、<em>Playモード</em>に切り替わるたびに、自動的にその出力を消去します。
+                        </p>
+</div>
+</div>
+<div class="wt-col-5 wt-offset-left-1">
+<div class="screen-img">
+<div class="screen-img">
+<img alt="RiderでUnity Logsを表示する" src="/dotnet/promo/unity/img/screenshots/unity_log_viewer@2x.png" width="700">
+</div>
+</div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m margin-bottom-vertical-unit">
+<div class="wt-col-4">
+<div class="features-block">
+<h4 class="features-block__title">コードヒント</h4>
+<p>Riderは、C#用に一流のコード解析を提供します。これには、Unity固有のコード検査とそのためのクイックフィックスが含まれています。</p>
+<p>例えば、Riderは、<code class="_no-bg">タグ</code>プロパティとの非効率な文字列リテラルの比較を警告し、<code class="_no-bg"> CompareTag</code>の呼び出しとしてこれを書き直すためのクイックフィックスを提供します。</p>
+<p>同様に、Riderは、<code class="_no-bg">MonoBehaviour</code>または<code class="_no-bg">ScriptableObject</code>から派生するクラスの新しいインスタンスを作成するために<code class="_no-bg">新しい</code>キーワードを使用しようとすると、警告します。
+                            <kbd>Alt+Enter</kbd>を押すだけで、Riderに問題を解決させることができます。
+                        </p>
+</div>
+</div>
+<div class="wt-col-5 wt-offset-left-1">
+<div class="screen-img">
+<img alt="Unity用のコードヒント" class="js-gif" data-gif-src="/dotnet/promo/unity/img/screenshots/quick_fix.gif" src="/dotnet/promo/unity/img/screenshots/quick_fix_preview@2x.png" width="700">
+</div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m margin-bottom-vertical-unit">
+<div class="wt-col-4">
+<div class="features-block">
+<h4 class="features-block__title">簡単にUnityをデバッグ</h4>
+<p>Riderは、Unityエディタで実行されるC#スクリプトのデバッグを非常に簡単にします。 すべてがすでに構成済みです。あとはただ、<em>Debug</em>ツールバーのボタン、メニュー項目、またはキーボードショートカットを押すだけで、実行中のUnityエディタにデバッガを追加できます。 エディタでブレークポイントを設定したり、コードをステップ実行したり、ローカルを見たり、値を見たり、式を評価したりできます。</p>
+<p>Riderを使用すると、デバッグ情報がないコードをデバッグすることもできます。
+                                Riderは<strong>オンザフライで自動的に外部ライブラリをデコンパイルします</strong>。これにより、デコンパイルされたコードをデバッグし、関数にステップインし、ブレークポイントを設定し、ローカルと変数を表示して設定できます。</p>
+</div>
+</div>
+<div class="wt-col-5 wt-offset-left-1">
+<div class="screen-img">
+<img alt="RiderでUnityのデバッグ" src="/dotnet/promo/unity/img/screenshots/debugging@2x.png" width="700">
+</div>
+</div>
+</div><div class="wt-row wt-row_size_m">
+<div class="wt-col-4">
+<div class="features-block">
+<h4 class="features-block__title">シェーダーサポート</h4>
+<p>また、Riderは<em>.shader </em>ファイルのサポートを追加し、シンタックスハイライト、コードの折りたたみ、ブレースマッチングなども備えています。 ShaderLabセクションのシンタックスエラーがハイライトされ、
+<em>todo</em>コメントは、 <em>To Do Explorer</em>に取り込まれ、編集用のカラーピッカーを使用してカラープロパティがハイライトされます。 Cg/HLSLブロック内など、ファイル全体を通してシンプルな単語補完が可能です。
+                        </p>
+</div>
+<div class="features-block">
+<h4 class="features-block__title">Unityドキュメントを見る</h4>
+<p>Riderは<strong>Unityシンボル用の外部ドキュメント</strong>を表示します。 <em>Quick Documentation</em>ポップアップからアイコンをクリック（Visual Studioキーマップを使用している場合は<kbd>Ctrl+Shift+F1 </kbd>）するか、<em>View External Documentation</em>アクション（<kbd>Shift+F1</kbd>）を直接使用して、ローカルにインストールされているドキュメント、またはUnityのホストされているドキュメント（ローカルで使用できない場合）にナビゲートできます。
+                        </p>
+</div>
+</div>
+<div class="wt-col-5 wt-offset-left-1">
+<div class="screen-img">
+<img alt="Riderのシェーダーサポート" src="/dotnet/promo/unity/img/screenshots/shader_preview@2x.png" width="700">
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="section _bg-extra-dark section-promo">
+<div class="wt-container article-content">
+<div class="wt-row wt-row_size_m wt-row_justify_center text-center">
+<div class="wt-col-6">
+<div class="rider_logo margin-bottom-vertical-unit">
+<img src="/dotnet/promo/unity/img/rider-white.svg" width="400">
+</div>
+<h2 class="_color-light margin-bottom-vertical-unit">
+<span class="text-nowrap">Unity開発用の新しい</span>
+<span class="text-nowrap">クロスプラットフォームIDEをお試しください</span>
+</h2>
+</div>
+<div class="wt-col-12">
+<div class="button-with-note">
+<a class="button-with-note__button button" href="/jp/rider/download/download-thanks.html">ダウンロード</a>
+<div class="button-with-note__note">無料30日間体験版</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="section _bg-medium">
+<div class="wt-container article-content">
+<div class="wt-row wt-row_size_m margin-top-vertical-unit">
+<div class="wt-col-12">
+<h2>機能</h2>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__icon">
+<div class="features-icon">
+<svg class="_smartEditor sprite-img _black" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#smartEditor"></use></svg>
+</div>
+</div>
+<h3 class="features-block__title">コード解析＆クイックフィックス</h3>
+<p>Riderは2500種類以上のライブコード検査を誇り、検出された問題を個別に、または一括して解決するための1000個以上の自動クイックフィックスを備えております。 ソリューション全体のエラー解析は、コードの問題を監視し、現在開いていないファイルであっても、問題が発生した場合に通知します。</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__icon">
+<div class="features-icon">
+<svg class="_codeNavigation sprite-img _black" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#codeNavigation"></use></svg>
+</div>
+</div>
+<h3 class="features-block__title">コードナビゲーション</h3>
+<p>コードベース内のあらゆるファイル、タイプ、またはメンバーに即座にジャンプ、設定やアクションを見つけることが可能です。 シンボルの使用法を見つけたり、シンボルからベースシンボル、派生シンボル、拡張メソッド、または実装へとナビゲートできます。</p>
+</div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__icon">
+<div class="features-icon">
+<svg class="_generateCommonCode sprite-img _black" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#generateCommonCode"></use></svg>
+</div>
+</div>
+<h3 class="features-block__title">リファクタリング</h3>
+<p>Riderは、50個以上のグローバルな自動リファクタリングと、ローカルコード変換用の450個以上のより小さなコンテキストアクションを提供いたします。 メソッド、インタフェース、クラスの名前を変更、抽出、タイプの移動やコピー、代替シンタックスの使用などできます！　</p>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<div class="features-block__icon">
+<div class="features-icon">
+<svg class="_cuttingEdge sprite-img _black" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#cuttingEdge"></use></svg>
+</div>
+</div>
+<h3 class="features-block__title">さらに…</h3>
+<p>単体テストのサポート、コードのクリーンアップ、統合されたバージョン管理、コミット間のコードを保存できるローカル履歴、NuGetサポート、データベースツールなどがございます。 Riderは、MarkdownサポートからVIMキーボードバインドまで、プラグインを活用して簡単に拡張できます。
+                        </p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="section section-customers-logo">
+<div class="wt-container article-content">
+<h2>お客様</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6">
+<div class="features-block">
+<p>間違いなく最高のMac用のUnity IDEです。 例えようのないデバッグとリファクタリング機能。</p>
+<p class="_color-gray-light">— Erin Keenan、エンジニア、N3tworkモバイルゲーム会社</p>
+</div>
+<div class="features-block">
+<p class="sub-title">すでにRiderをご使用の企業の皆様に加わって、Unityゲームをご開発ください。</p>
+<a class="button" href="/jp/rider/download/download-thanks.html">ダウンロード</a>
+</div>
+</div>
+<div class="wt-col-6">
+<div class="features-block">
+<p>仕事用に適切なツールを所持することは、あらゆる市場、特にゲーム開発の競走で優位に立つためにとても重要なことです。 Yakutoでは、各開発者がJetBrains Toolboxサブスクリプションを持っています。生産性を上げるために非常に貴重なものであると私たちは感じています。 私たちは主にMacでC#で作業しています。 以前、ReSharperを実行するVMを意味していましたが、Riderを活用することで、私たちは1つのOSにネイティブ対応できます。これは凄いことです。 ユニティデバッグはシームレスになり、拡張機能にはユニティ対応の重要なコンテキストが追加されています。 ReSharperのベテランとして、私はRiderに完全に自信を持っています。リファクタリング、ソリューション全体の解析、テストランナーなど、すべてが備わっています。 RiderがなかったらC#開発は考えられませんでした。</p>
+<p class="_color-gray-light">— James Gratton、CTO、Yakuto</p>
+</div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-row_align-items_center wt-row_justify_center customers-list margin-bottom-vertical-unit-half">
+<div class="wt-col-3">
+<svg class="_wooga sprite-img customers-list__logo" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#wooga"></use></svg>
+</div>
+<div class="wt-col-3">
+<img class="customers-list__logo" src="/dotnet/promo/unity/img/goodgame-studios_logo.svg" width="160">
+</div>
+<div class="wt-col-3">
+<img class="customers-list__logo" src="/dotnet/promo/unity/img/klab_logo.png" width="160">
+</div>
+<div class="wt-col-3">
+<img class="customers-list__logo" src="/dotnet/promo/unity/img/kama-games_logo.svg" width="150">
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-row_align-items_center wt-row_justify_center customers-list">
+<div class="wt-col-3">
+<img class="customers-list__logo" src="/dotnet/promo/unity/img/disruptor-beam_logo.png" width="110">
+</div>
+<div class="wt-col-3">
+<img class="customers-list__logo" src="/dotnet/promo/unity/img/inno-games_logo.svg" width="130">
+</div>
+<div class="wt-col-3">
+<img class="customers-list__logo" height="106" src="/dotnet/promo/unity/img/alawar_logo.png">
+</div>
+<div class="wt-col-3">
+<img class="customers-list__logo" src="/dotnet/promo/unity/img/cygames_logo.png" width="160">
+</div>
+</div>
+</div>
+</section>    </div>
+
+    <footer class="page__footer landing-footer">
+    <div class="wt-container">
+        <div class="landing-footer__logo jetbrains-logo _full-block">
+            <a href="/"><svg class="_jetbrains-simple sprite-img" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#jetbrains-simple"></use></svg></a>
+        </div>
+        <div class="landing-footer__copy">
+            <span class="text-nowrap">Copyright &copy; 2000&ndash;2019 JetBrains s.r.o.</span>
+        </div>
+    </div>
+</footer></div>
+<script>
+(function() {
+  var STORAGE_KEY_NAME = 'firefoxDisappearedSVGWorkaround';
+  var STORAGE_KEY_VALUE = '1';
+
+  var isFirefox = /firefox/i.test(navigator.userAgent);
+  if (!isFirefox || isFirefox && sessionStorage.getItem(STORAGE_KEY_NAME) === STORAGE_KEY_VALUE) {
+    return;
+  }
+
+  var arrayFrom = function (arrayLike) {
+    return Array.prototype.slice.call(arrayLike, 0);
+  };
+
+  function workaround() {
+    var uses = document.querySelectorAll('.page svg use');
+    var badNodesCount = 0;
+
+    arrayFrom(uses).forEach(function (node) {
+      var rect = node.getBoundingClientRect();
+      if (rect.width === 0 && rect.height === 0)
+        badNodesCount++;
+    });
+
+    if (badNodesCount === uses.length) {
+      sessionStorage.setItem(STORAGE_KEY_NAME, STORAGE_KEY_VALUE);
+      if (typeof dataLayer !== 'undefined')
+        dataLayer.push({'firefoxDisappearedSVGWorkaround': STORAGE_KEY_VALUE});
+
+      window.location.replace(window.location.href);
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', workaround);
+
+})();
+</script>      <link href="/_assets/banner-rotator.entry.07ac548a2a68a7922693.css" rel="stylesheet" type="text/css">
+      <script src="/_assets/banner-rotator.entry.b9ea3aaba598786010f0.js" type="text/javascript"></script>
+      
+      
+  <script>
+(function () {
+
+  'use strict';
+
+  function ImagesSrcReplacer () {
+
+    var attribute = 'data-src';
+    var matches = document.querySelectorAll('img[' + attribute + ']');
+
+    for (var i = 0, n = matches.length; i < n; i++) {
+
+      var attrValue = matches[i].getAttribute(attribute);
+
+      if (_isHighDensity ()) {
+
+        var name = attrValue.substring(0, attrValue.lastIndexOf('.'));
+        var extention = attrValue.substring(attrValue.lastIndexOf('.'), attrValue.length);
+
+        matches[i].setAttribute('src', name + '@2x' + extention);
+
+      } else {
+        matches[i].setAttribute('src', attrValue)
+      }
+    }
+
+    /**
+     * Detect high density
+     * @returns {*|boolean}
+     */
+    function _isHighDensity () {
+      return (
+      (window.matchMedia &&
+      (window.matchMedia('only screen and (min-resolution: 124dpi), only screen and (min-resolution: 1.3dppx), only screen and (min-resolution: 48.8dpcm)').matches ||
+       window.matchMedia('only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (-o-min-device-pixel-ratio: 2.6/2), only screen and (min--moz-device-pixel-ratio: 1.3), only screen and (min-device-pixel-ratio: 1.3)').matches)) ||
+      (window.devicePixelRatio &&
+       window.devicePixelRatio > 1.3));
+    }
+  }
+
+  return new ImagesSrcReplacer()
+
+}(document, window));
+</script></body>
+</html>

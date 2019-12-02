@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+                                                    <!-- Error reporting -->
+<script>(function(){
+  window.reportError = function(msg, file, line, col, err, isUnhandledRejection){};
+  var prevOnError = window.onerror;
+  var onError = function(msg, file, line, col, err) {
+    reportError(msg, file, line, col, err, false);
+    prevOnError && prevOnError.apply(window, arguments);
+    return false;
+  };
+  window.onerror = onError;
+  // Setup reporting for unhandled Promise rejection errors
+  window.addEventListener("unhandledrejection", function(e) {
+    if (!e.reason) return;
+    var l = getSrcLocation(e.reason);
+    reportError(e.reason.message, l.file, l.line, l.col, e.reason, true);
+  });
+  // Setup reporting for console.error and console.warn calls
+  patchConsole('error');
+  patchConsole('warn');
+  // Utility functions
+  function patchConsole(fnName) {
+    var fn = console[fnName];
+    console[fnName] = function() {
+      fn.apply(console, arguments);
+      var l; try {
+        throw new Error('_');
+      } catch (err) {
+        l = getSrcLocation(err, 1);
+      }
+      var msg = 'console.' + fnName + ': ' + Array.prototype.join.call(arguments, ' ');
+      reportError(msg, l.file, l.line, l.col, undefined, false);
+    };
+  }
+  function getSrcLocation(err, sd) {
+    var s = err && err.stack;
+    var l = s && s.split("\n")[1 + (sd|0)];
+    var r = l && (/^\s*at [^(]*\((.*?):(\d+)(:\d+)?\)$/.exec(l) || /^\s*at (.*?):(\d+)(:\d+)?$/.exec(l));
+    return r ? {file: r[1], line: r[2], col: r[3]} : {};
+  }
+})();</script>
+<!-- Error reporting -->        <!-- Google Tag Manager -->
+<script>(function() {
+  // Initialize Tag Manager queue
+  window.dataLayer = window.dataLayer || [];
+  window.gtmLoaded = false;
+  // Setup reporting for errors that occurred before Tag Manager initialized
+  var prevReportError = window.reportError;
+  var reportError = function(msg, file, line, col, err, isUnhandledRejection) {
+    if (!window.gtmLoaded || isUnhandledRejection) {
+      // Reproduce the behavior of the Tag Manager error handler
+      window.dataLayer.push(makeEvt(msg, file, line));
+    }
+    prevReportError && prevReportError.apply(window, arguments);
+  };
+  window.reportError = reportError;
+  // Utility functions
+  function makeEvt(msg, file, line) {
+    return {
+      event: "gtm.pageError", "gtm.errorMessage": msg,
+      "gtm.errorUrl": file, "gtm.errorLineNumber": line
+    };
+  }
+})();</script>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;j.addEventListener(
+    'load', function(){window.gtmLoaded=true});f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5P98');</script>
+<!-- End Google Tag Manager -->        <!-- Sentry -->
+<script>
+    (function() {
+        window.sentryLoaded = false;
+        window.errorsForSentry = [];
+        var prevReportError = window.reportError;
+        var reportError = function(
+            msg,
+            file,
+            line,
+            col,
+            err,
+            isUnhandledRejection
+        ) {
+            if (!window.sentryLoaded) {
+                window.errorsForSentry.push(err);
+            }
+            prevReportError && prevReportError.apply(window, arguments);
+        };
+        window.reportError = reportError;
+    })();
+</script>
+<script>
+    window.sentryLoad = function() {
+        window.sentryLoaded = true;
+        Sentry.init({
+            dsn: 'https://1adb2a61713144eda0786e5af50ddc51@sentry.io/1423069',
+            release:
+                "jetbrainscom@a6ccaa6ddb",
+            beforeSend: function(event) {
+                Object.keys(event).forEach(function(key) {
+                    var value = event[key];
+                    if (isEmail(value)) {
+                        delete event[key];
+                    }
+                });
+                return event;
+            }
+        });
+        Sentry.configureScope(function(scope) {
+            scope.setTag('page_locale', 'en-us');
+            scope.setTag('browser.locale', getPageLocale());
+
+            scope.setTag('http.urlFull', location.href);
+            var protocol = location.protocol || '';
+            //omit `:` from location.protocol string
+            var protocolString = protocol.substring(0, protocol.length - 1);
+
+            scope.setTag('http.protocol', protocolString);
+
+            scope.setTag('http.hostname', location.hostname);
+
+            var search = location.search || '';
+            //omit ? from location.search string
+            var searchString = search.substr(1);
+            if (searchString !== '') {
+                scope.setTag('http.query', searchString || '1');
+            }
+            var hash = location.hash || '';
+            //omit # from location.hash string
+            var hashString = hash.substr(1);
+            if (hashString !== '') {
+                scope.setTag('http.fragment', hashString);
+            }
+        });
+        window.errorsForSentry.forEach(Sentry.captureException);
+
+        function getPageLocale() {
+            return (
+                (navigator.languages && navigator.languages[0]) ||
+                navigator.language
+            );
+        }
+        function isEmail(value) {
+            var emailRegex = /[\+\-\_\.a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+\.[a-zA-Z0-9]+/g;
+            return emailRegex.test(value);
+        }
+    };
+</script>
+<script src="https://browser.sentry-cdn.com/5.7.1/bundle.min.js" crossorigin="anonymous" onload="sentryLoad()" async></script>
+<!-- End Sentry -->    
+                <title>Java Learning Topics 2018 - JetBrains</title>
+    
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, maximum-scale=1">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#000000">
+<meta name="apple-mobile-web-app-title" content="JetBrains">
+<meta name="application-name" content="JetBrains">
+<meta name="msapplication-TileColor" content="#000000">
+<meta name="theme-color" content="#000000">    <link rel="canonical" href="https://www.jetbrains.com/research/java-developer-learning/" />    <!-- .61-->
+        <meta class="local" content="Check the insights of Java developers' learning patterns and preferences." name="description"><meta class="local" content="http://resources.jetbrains.com/storage/products/research/java-developer-learning/img/meta/preview_1280x800.png" name="image"><meta class="local" content="Java Learning Topics 2018 - JetBrains" property="og:title"><meta class="local" content="Check the insights of Java developers' learning patterns and preferences." property="og:description"><meta class="local" content="http://resources.jetbrains.com/storage/products/research/java-developer-learning/img/meta/preview_1280x800.png" property="og:image"><meta class="local" content="JetBrains" property="og:site_name"><meta class="local" content="website" property="og:type"><meta class="local" content="https://www.jetbrains.com/research/java-developer-learning/" property="og:url"><meta class="local" content="summary_large_image" name="twitter:card"><meta class="local" content="@JetBrains_Edu" name="twitter:site"><meta class="local" content="Java Learning Topics 2018 - JetBrains" name="twitter:title"><meta class="local" content="Check the insights of Java developers' learning patterns and preferences." name="twitter:description"><meta class="local" content="@JetBrains_Edu" name="twitter:creator"><meta class="local" content="http://resources.jetbrains.com/storage/products/research/java-developer-learning/img/meta/preview_1280x800.png" name="twitter:image:src"><meta class="local" content="Java Learning Topics 2018 - JetBrains" itemprop="name"><meta class="local" content="Check the insights of Java developers' learning patterns and preferences." itemprop="description"><meta class="local" content="http://resources.jetbrains.com/storage/products/research/java-developer-learning/img/meta/preview_1280x800.png" itemprop="image">
+        <link rel="alternate" hreflang="x-default" href="https://www.jetbrains.com/research/java-developer-learning/" />
+
+                        <link rel="alternate" hreflang="en" href="https://www.jetbrains.com/research/java-developer-learning/" />
+                                                                                                                        
+    
+    
+        
+    
+    
+    <script>
+        var current_lang = 'en-us';
+                                    var i18n_info = {"current_lang": "en-us", "languages": [{"canonical": "en", "code": "en-us", "label": "English", "page_translated": true, "url": "/research/java-developer-learning/"}, {"canonical": "de", "code": "de-de", "label": "Deutsch", "page_translated": false, "url": "/de-de/research/java-developer-learning/"}, {"canonical": "es", "code": "es-es", "label": "Espa\u00f1ol", "page_translated": false, "url": "/es-es/research/java-developer-learning/"}, {"canonical": "fr", "code": "fr-fr", "label": "Fran\u00e7ais", "page_translated": false, "url": "/fr-fr/research/java-developer-learning/"}, {"canonical": "ja", "code": "ja-jp", "label": "\u65e5\u672c\u8a9e", "page_translated": false, "url": "/ja-jp/research/java-developer-learning/"}, {"canonical": "ko", "code": "ko-kr", "label": "\ud55c\uad6d\uc5b4", "page_translated": false, "url": "/ko-kr/research/java-developer-learning/"}, {"canonical": "ru", "code": "ru-ru", "label": "\u0420\u0443\u0441\u0441\u043a\u0438\u0439", "page_translated": false, "url": "/ru-ru/research/java-developer-learning/"}, {"canonical": "zh-CN", "code": "zh-cn", "label": "\u7b80\u4f53\u4e2d\u6587", "page_translated": false, "url": "/zh-cn/research/java-developer-learning/"}, {"canonical": "pt-BR", "code": "pt-br", "label": "Portugu\u00eas do Brasil", "page_translated": false, "url": "/pt-br/research/java-developer-learning/"}, {"canonical": "x-klingon", "code": "tl-aa", "label": "tlhIngan Hol", "page_translated": false, "url": "/tl-aa/research/java-developer-learning/"}]};
+                            var navigationMenu = {"primary": {"id": "main_v2", "items": [{"id": "tools", "title": "Tools", "descriptionTitle": "Toolbox App", "descriptionLogoId": "toolbox", "descriptionLink": "Learn more", "descriptionUrl": "/toolbox-app/", "description": "Manage your tools the easy way", "src": "/img/banners-menu-main/toolbox-vertical.png", "horisontalSrc": "/img/banners-menu-main/toolbox-horisontal.png", "bgColor": "#3E0598", "isVisible": true, "hasCategories": true, "items": [{"title": "IDEs", "items": [{"isActive": false, "id": "appcode", "title": "AppCode", "url": "/objc/", "logoLeftActionId": "appcode", "items": [], "cleaned_url": "/objc/"}, {"isActive": false, "id": "clion", "title": "CLion", "url": "/clion/", "logoLeftActionId": "clion", "items": [], "cleaned_url": "/clion/"}, {"isActive": false, "id": "datalore", "title": "Datalore", "url": "https://datalore.io/", "isExternalLink": true, "logoLeftActionId": "datalore", "items": [], "cleaned_url": "https://datalore.io/"}, {"isActive": false, "id": "datagrip", "title": "DataGrip", "url": "/datagrip/", "logoLeftActionId": "datagrip", "items": [], "cleaned_url": "/datagrip/"}, {"isActive": false, "id": "goland", "title": "GoLand", "url": "/go/", "logoLeftActionId": "goland", "items": [], "cleaned_url": "/go/"}, {"isActive": false, "id": "idea", "title": "IntelliJ IDEA", "url": "/idea/", "logoLeftActionId": "intellij-idea", "items": [], "cleaned_url": "/idea/"}, {"isActive": false, "id": "phpstorm", "title": "PhpStorm", "url": "/phpstorm/", "logoLeftActionId": "phpstorm", "items": [], "cleaned_url": "/phpstorm/"}, {"isActive": false, "id": "pycharm", "title": "PyCharm", "url": "/pycharm/", "logoLeftActionId": "pycharm", "items": [], "cleaned_url": "/pycharm/"}, {"isActive": false, "id": "rider", "title": "Rider", "url": "/rider/", "logoLeftActionId": "rider", "items": [], "cleaned_url": "/rider/"}, {"isActive": false, "id": "rubymine", "title": "RubyMine", "url": "/ruby/", "logoLeftActionId": "rubymine", "items": [], "cleaned_url": "/ruby/"}, {"isActive": false, "id": "webstorm", "title": "WebStorm", "url": "/webstorm/", "logoLeftActionId": "webstorm", "items": [], "cleaned_url": "/webstorm/"}, {"isActive": false, "id": "toolbox", "type": "special", "title": "Toolbox App", "url": "/toolbox-app/", "logoLeftId": "toolbox", "description": "A control panel for your tools and projects", "items": [], "cleaned_url": "/toolbox-app/"}]}, {"title": ".NET & VISUAL STUDIO", "items": [{"isActive": false, "id": "resharper", "title": "ReSharper", "url": "/resharper/", "logoLeftActionId": "resharper", "items": [], "cleaned_url": "/resharper/"}, {"isActive": false, "id": "rider", "title": "Rider", "url": "/rider/", "logoLeftActionId": "rider", "items": [], "cleaned_url": "/rider/"}, {"isActive": false, "id": "resharper-cpp", "title": "ReSharper C++", "url": "/resharper-cpp/", "logoLeftActionId": "resharper-cpp", "items": [], "cleaned_url": "/resharper-cpp/"}, {"isActive": false, "id": "dotcover", "title": "dotCover", "url": "/dotcover/", "logoLeftActionId": "dotcover", "items": [], "cleaned_url": "/dotcover/"}, {"isActive": false, "id": "dotmemory", "title": "dotMemory", "url": "/dotmemory/", "logoLeftActionId": "dotmemory", "items": [], "cleaned_url": "/dotmemory/"}, {"isActive": false, "id": "dotpeek", "title": "dotPeek", "url": "/decompiler/", "logoLeftActionId": "dotpeek", "items": [], "cleaned_url": "/decompiler/"}, {"isActive": false, "id": "dottrace", "title": "dotTrace", "url": "/profiler/", "logoLeftActionId": "dottrace", "items": [], "cleaned_url": "/profiler/"}]}, {"title": "TEAM TOOLS", "items": [{"isActive": false, "id": "teamcity", "title": "TeamCity", "url": "/teamcity/", "logoLeftActionId": "teamcity", "items": [], "cleaned_url": "/teamcity/"}, {"isActive": false, "id": "upsource", "title": "Upsource", "url": "/upsource/", "logoLeftActionId": "upsource", "items": [], "cleaned_url": "/upsource/"}, {"isActive": false, "id": "youtrack", "title": "YouTrack", "url": "/youtrack/", "logoLeftActionId": "youtrack", "items": [], "cleaned_url": "/youtrack/"}, {"isActive": false, "id": "hub", "title": "Hub", "url": "/hub/", "logoLeftActionId": "hub", "items": [], "cleaned_url": "/hub/"}]}, {"title": "PLUGIN MARKETPLACE", "items": [{"isActive": false, "id": "bigdata", "title": "Big Data Tools", "url": "https://plugins.jetbrains.com/plugin/12494-big-data-tools", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/plugin/12494-big-data-tools"}, {"isActive": false, "id": "rustsupport", "title": "Rust", "url": "https://plugins.jetbrains.com/plugin/8182-rust", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/plugin/8182-rust"}, {"isActive": false, "id": "scalaplugin", "title": "Scala", "url": "https://plugins.jetbrains.com/plugin/1347-scala", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/plugin/1347-scala"}, {"isActive": false, "id": "idethemes", "title": "IDE Themes", "url": "https://plugins.jetbrains.com/search?tags=Theme", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/search?tags=Theme"}, {"isActive": false, "id": "plugins", "title": "All Plugins", "url": "https://plugins.jetbrains.com/", "isExternalLink": true, "items": [], "cleaned_url": "https://plugins.jetbrains.com/"}]}, {"title": "EDUCATION", "items": [{"isActive": false, "id": "pycharm-edu", "title": "PyCharm Edu", "url": "/education/", "urlHash": "#lang=python&role=learner", "logoLeftActionId": "pycharm-edu", "items": [], "cleaned_url": "/education/"}, {"isActive": false, "id": "idea-edu", "title": "IntelliJ IDEA Edu", "url": "/education/", "urlHash": "#lang=java&role=learner", "logoLeftActionId": "intellij-idea", "items": [], "cleaned_url": "/education/"}, {"isActive": false, "id": "jb-academy", "title": "JB Academy", "url": "/academy/", "items": [], "cleaned_url": "/academy/"}]}]}, {"id": "languages", "title": "Languages", "descriptionTitle": "Kotlin/Everywhere", "descriptionLogoId": "header-kotlin-everywhere", "descriptionLink": "Join in!", "descriptionUrl": "//everywhere.kotlinlang.org", "description": "A worldwide event series for learning the best Kotlin practices on all platforms", "descriptionBig": true, "src": "/img/banners-menu-main/kotlin-vertical.png", "horisontalSrc": "/img/banners-menu-main/kotlin-horisontal.png", "bgColor": "#D6721C", "isExternalLink": true, "isVisible": true, "hasCategories": false, "items": [{"isActive": false, "id": "kotlin", "title": "Kotlin", "url": "https://kotlinlang.org/", "isExternalLink": true, "logoLeftId": "header-kotlin-grayscale", "logoLeftActionId": "kotlin", "logoLeftSize": "50", "description": "Programming language \n for JVM & Android", "items": [], "cleaned_url": "https://kotlinlang.org/"}, {"isActive": false, "id": "mps", "title": "MPS", "url": "/mps/", "logoLeftId": "header-mps-grayscalse", "logoLeftActionId": "mps", "logoLeftSize": "50", "description": "Create your own domain-specific language", "items": [], "cleaned_url": "/mps/"}]}, {"id": "solutions", "title": "Solutions", "descriptionTitle": "JetBrains Academy", "descriptionLogoId": "academy-logo", "descriptionLink": "Join in!", "descriptionUrl": "/academy", "description": "An educational platform for future professionals", "src": "/img/banners-menu-main/academy-vertical.png", "horisontalSrc": "/img/banners-menu-main/academy-horisontal.png", "bgColor": "#53288E", "hasCategories": false, "isVisible": true, "items": [{"isActive": false, "title": "C++ Tools", "url": "/cpp/", "logoLeftId": "header-cpp-grayscale", "logoLeftActionId": "header-cpp", "description": "Tools for C/C++ development \nfor any platform", "items": [], "cleaned_url": "/cpp/"}, {"isActive": false, "title": "For Business", "url": "/store/business/", "logoLeftId": "header-for-business-grayscale", "logoLeftActionId": "header-for-business", "description": "Wide range of tools. \nAll major technologies covered", "items": [], "cleaned_url": "/store/business/"}, {"isActive": false, "title": "Game Development", "url": "/gamedev/", "logoLeftId": "header-gamedev-grayscale", "logoLeftActionId": "header-gamedev", "description": "Tools for game development \nfor any platform", "items": [], "cleaned_url": "/gamedev/"}, {"isActive": false, "title": "DevOps", "url": "/devops/", "logoLeftId": "header-devops-grayscale", "logoLeftActionId": "header-devops", "description": "Tools and integrations \nfor any infrastructure", "items": [], "cleaned_url": "/devops/"}, {"isActive": false, "title": "Education", "url": "/education/", "logoLeftId": "header-education-grayscale", "logoLeftActionId": "header-education", "description": "Products to learn and teach programming", "items": [], "cleaned_url": "/education/"}]}, {"id": "support", "title": "Support", "description": "Pricing and licensing for businesses and individuals", "descriptionTitle": "JetBrains Store", "descriptionLogoId": "header-store", "descriptionUrl": "/store/?fromMenu#edition=commercial", "descriptionLink": "visit store", "isVisible": true, "hasCategories": true, "items": [{"title": "CUSTOMERS", "items": [{"isActive": false, "title": "Sales Support", "url": "/support/sales/", "description": "Orders, payments", "items": [], "cleaned_url": "/support/sales/"}, {"isActive": false, "title": "Product Support", "url": "/support/", "description": "Tech support, documentation", "items": [], "cleaned_url": "/support/"}]}, {"title": "COMMUNITY PROGRAMS", "items": [{"isActive": false, "title": "Education", "url": "/community/education/", "description": "Students, classrooms, training", "items": [], "cleaned_url": "/community/education/"}, {"isActive": false, "title": "Open Source", "url": "/community/opensource/", "description": "Projects support", "items": [], "cleaned_url": "/community/opensource/"}, {"isActive": false, "title": "Sponsorship", "url": "/community/support/", "description": "User groups, events, technology experts", "items": [], "cleaned_url": "/community/support/"}]}]}, {"id": "company", "title": "Company", "isVisible": true, "hasCategories": true, "items": [{"title": "INITIATIVES", "items": [{"isActive": false, "title": "Open Source", "url": "/opensource/", "description": "Projects, contributions", "items": [], "cleaned_url": "/opensource/"}, {"isActive": false, "title": "Research", "url": "/research/", "description": "Market, Scientific", "items": [], "cleaned_url": "/research/"}]}, {"title": "COMPANY", "items": [{"isActive": false, "title": "About", "url": "/company/", "description": "People, customers, awards", "items": [], "cleaned_url": "/company/"}, {"isActive": false, "title": "Brand Assets", "url": "/company/brand/", "description": "Guidelines, logos", "items": [], "cleaned_url": "/company/brand/"}, {"isActive": false, "title": "Careers", "url": "/careers/apply/", "description": "Jobs, internships", "items": [], "cleaned_url": "/careers/apply/"}, {"isActive": false, "title": "Events", "url": "/company/events/", "description": "Conferences, meetups", "items": [], "cleaned_url": "/company/events/"}, {"isActive": false, "title": "Contacts", "url": "/company/contacts/", "description": "Partners, resellers, Kotlin training", "items": [], "cleaned_url": "/company/contacts/"}]}, {"title": "RESOURCES", "items": [{"isActive": false, "title": "Newsletters", "url": "/resources/newsletters/", "items": [], "cleaned_url": "/resources/newsletters/"}, {"isActive": false, "title": "Webinars", "url": "/resources/webinars/", "items": [], "cleaned_url": "/resources/webinars/"}, {"isActive": false, "title": "Early Access", "url": "/resources/eap/", "items": [], "cleaned_url": "/resources/eap/"}, {"isActive": false, "title": "Blog", "url": "//blog.jetbrains.com/", "isExternalLink": true, "items": [], "cleaned_url": "//blog.jetbrains.com/"}]}]}, {"isActive": false, "id": "store", "url": "/store/?fromNavMenu", "title": "Store", "isVisible": true, "hasCategories": false, "items": [], "cleaned_url": "/store/?fromNavMenu"}]}, "secondary": {"isActive": true, "id": "research", "url": "/research/", "title": "Research", "items": [], "cleaned_url": "/research/"}};
+        
+        var is_layout_adaptive = false;
+        
+        var disable_language_picker = false;
+        
+        var english_only_url_prefixes = [];
+            </script>
+    
+            <script></script>
+    
+        
+    
+    <link href="/_assets/common.d44d81f300d3bff87efe.css" rel="stylesheet" type="text/css">
+<link href="/_assets/default-page.fabf52db4bf34ea78af0.css" rel="stylesheet" type="text/css">
+<link href="/_assets/landing-page.8b6edb42023719387891.css" rel="stylesheet" type="text/css">
+<link href="/_assets/research/java-developer-learning/index.entry.04e6bd6bc56d891361f0.css" rel="stylesheet" type="text/css">
+<link href="/_assets/research/inc/java-developer-footer.entry.484591a6ba8b25269322.css" rel="stylesheet" type="text/css">
+    <script src="/_assets/common.34604685b633d15ae3ed.js" type="text/javascript"></script>
+<script src="/_assets/default-page.2e180fc15a6b94fe7fa3.js" type="text/javascript"></script>
+<script src="/_assets/landing-page.82c83c95d1b792922f23.js" type="text/javascript"></script>
+<script src="/_assets/research/java-developer-learning/index.entry.764d9fcb3a5d485572f1.js" type="text/javascript"></script>
+<script src="/_assets/research/inc/java-developer-footer.entry.06d48048fbf26e40dd2f.js" type="text/javascript"></script>
+
+            <!-- Social Media tag Starts -->
+    <!-- Open Graph data -->
+            <meta property="og:title" content="Java Learning Topics 2018 - JetBrains"/>
+    
+                    <meta property="og:description" content="Check the insights of Java developers' learning patterns and preferences."/>
+    <meta property="og:image" content="http://resources.jetbrains.com/storage/products/research/java-developer-learning/img/meta/preview_1280x800.png"/>
+
+    <meta property="og:site_name" content="JetBrains"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="https://www.jetbrains.com/research/java-developer-learning/"/>
+    <!-- Social Media tag Ends -->
+</head>
+<body class="landing-page  ">
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<div class="page">
+    <header class="page__header landing-header">
+    <div class="wt-container">
+      <a href="/"><svg class="_jetbrains-simple sprite-img landing-header__logo" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#jetbrains-simple"></use></svg></a>
+    </div>
+</header>
+
+    <div class="page__content">
+        <section class="wt-section wt-section_theme_dark page-header">
+<div class="wt-container">
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-3 wt-col-md-12">
+<h1 class="wt-hero wt-hero_theme_dark">Java Learning Topics 2018</h1>
+</div>
+</div>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-5 wt-col-md-12">
+<p class="wt-subtitle-2 wt-subtitle-2_flow">In autumn 2018, JetBrains polled over 1,500 Java developers worldwide to identify their learning patterns and preferences. Here's what we’ve found.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="wt-section wt-section_bg_gray-light">
+<div class="wt-container section-label">
+<div class="wt-row wt-row_size_m wt-offset-top-96">
+<div class="wt-col-7 wt-col-md-12">
+<p class="wt-subtitle-2">In addition to survey results and insights, we’ve added some learning recommendations from experienced JetBrainers. May the drive to learn be with you!</p>
+</div>
+<div class="wt-col-4 wt-offset-left-1 wt-col-lg-5 wt-offset-left-lg-0 wt-col-md-12 wt-offset-top-md-48">
+<div class="manager">
+<div class="manager__photo">
+<img data-src="/research/java-developer-learning/img/ekaterina-tuzova.png" has-retina alt='Ekaterina Tuzova' width='72'>
+</div>
+<div class="manager__text">
+<h4 class="wt-h4">Ekaterina Tuzova</h4>
+<p class="wt-text-2">
+                                Product Manager for Data Science IDE,<br>
+                                Team Lead in Edu Tools at JetBrains
+                            </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="wt-section">
+<div class="wt-container">
+<h2 class="wt-h2 wt-h2_flow" title="Methodology">Methodology</h2>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-7 wt-col-md-12">
+<p class="wt-text-2 wt-text-2_flow">We distributed the survey via targeted ads on Facebook, Twitter, and LinkedIn and via company channels (panel respondents and the <a class="wt-link" href="//twitter.com/intellijidea" target="_blank">@intellijidea</a> account in Twitter). We collected 400 complete and valid responses from the US, Germany, and UK via different advertising. The rest of the respondents were recruited from other countries via company channels. </p>
+</div>
+<div class="wt-col-4 wt-offset-left-1 wt-col-lg-5 wt-offset-left-lg-0 wt-col-md-12">
+<p class="wt-text-2 wt-text-2_flow">Some bias is likely present because JetBrains users may have been more willing on average to complete the survey in advertising channels, and because we’ve included JetBrains followers in the sample.</p>
+<p class="wt-text-2 wt-text-2_flow">The <a class="wt-link" href="http://resources.jetbrains.com/storage/products/research/java-developer-learning/data/data.zip" target="_blank">raw survey data</a> are available for your perusal.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="wt-section wt-section_bg_dark wt-section_theme_dark" id="takeaways">
+<div class="wt-container">
+<h2 class="wt-h2 wt-h2_flow">Key Takeaways</h2>
+<div class="wt-row wt-row_size_m wt-offset-top-48 keys">
+<div class="wt-col-3 wt-col-lg-4 wt-col-md-12 keys__item">
+<span class="wt-h1 wt-h1_theme_dark color-primary keys__title">JavaScript</span>
+<p class="wt-text-1 wt-text-1_theme_dark wt-offset-top-12 keys__text">is the most frequently used second language among Java developers.</p>
+<div class="share-text wt-offset-top-24 wt-offset-top-md-0">
+<div class="js-quick-share js-quick-share_static" data-section="takeaways" data-text="JavaScript is the most frequently used second language among Java developers. via @JetBrains_Edu"></div>
+</div>
+</div>
+<div class="wt-col-3 wt-offset-left-1 wt-col-lg-4 wt-offset-left-lg-0 wt-col-md-12 wt-offset-top-md-48 keys__item">
+<span class="wt-h1 wt-h1_theme_dark color-primary keys__title">92%</span>
+<p class="wt-text-1 wt-text-1_theme_dark wt-offset-top-12 keys__text">of Java developers use an IDE as their most frequently used development tool.</p>
+<div class="share-text wt-offset-top-24 wt-offset-top-md-0">
+<div class="js-quick-share js-quick-share_static" data-section="takeaways" data-text="92% of Java developers use an IDE as their most frequently used development tool. via @JetBrains_Edu"></div>
+</div>
+</div>
+<div class="wt-col-3 wt-offset-left-1 wt-col-lg-4 wt-offset-left-lg-0 wt-col-md-12 wt-offset-top-md-48 keys__item">
+<span class="wt-h1 wt-h1_theme_dark color-primary keys__title">26%</span>
+<p class="wt-text-1 wt-text-1_theme_dark wt-offset-top-12 keys__text">of Java developers are intending to move to a new industry.</p>
+<div class="share-text wt-offset-top-24 wt-offset-top-md-0">
+<div class="js-quick-share js-quick-share_static" data-section="takeaways" data-text="26% of Java developers are intending to move to a new industry. via @JetBrains_Edu"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="wt-section">
+<div class="wt-container">
+<h2 class="wt-h2 wt-h2_flow" title="Programming languages">Programming languages</h2>
+<div class="wt-row wt-row_size_m wt-offset-top-48">
+<div class="wt-col-8 wt-col-lg-12">
+<div id="proglang_1"></div>
+</div>
+</div>
+</div>
+</section>
+<section class="wt-section wt-section_bg_gray-light">
+<div class="wt-container section-label">
+<div class="wt-row wt-row_size_m wt-offset-top-96">
+<div class="wt-col-7 wt-col-md-12">
+<p class="wt-subtitle-2">Coding games for beginners and advanced programmers on <a class="wt-link" href="//checkio.org/" target="_blank">CheckiO</a> are a great way to improve your JavaScript or Python skills!</p>
+</div>
+<div class="wt-col-4 wt-offset-left-1 wt-col-lg-5 wt-offset-left-lg-0 wt-col-md-12 wt-offset-top-md-48">
+<div class="manager">
+<div class="manager__text">
+<h4 class="wt-h4">Ekaterina Tuzova</h4>
+<p class="wt-text-2">
+                                Product Manager for Data Science IDE, <br>
+                                Team Lead in Edu Tools at JetBrains
+                            </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="wt-section">
+<div class="wt-container">
+<div class="wt-row wt-row_size_m wt-offset-top-96">
+<div class="wt-col-10 wt-col-lg-12">
+<div id="proglang_2"></div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-96">
+<div class="wt-col-6 wt-col-md-12">
+<div id="proglang_3"></div>
+</div>
+<div class="wt-col-6 wt-col-md-12 wt-offset-top-md-96">
+<div id="proglang_4"></div>
+</div>
+</div>
+</div>
+</section>
+<section class="wt-section wt-section_bg_gray-light" id="kotlin">
+<div class="wt-container section-label">
+<div class="wt-row wt-row_size_m wt-offset-top-96">
+<div class="wt-col-7 wt-col-md-12">
+<p class="wt-subtitle-2 share-text">
+                        17% of Java developers plan to adopt/migrate to Kotlin. If you’re one of them, check out JetBrains <a class="wt-link" href="/education/?fromMenu#lang=kotlin&role=learner" target="_blank">Kotlin courses</a>.
+                    <span class="js-quick-share" data-section="kotlin" data-text="17% of Java developers plan to adopt/migrate to Kotlin. If you’re one of them, check out JetBrains Kotlin courses. via @JetBrains_Edu"></span>
+</p>
+</div>
+<div class="wt-col-4 wt-offset-left-1 wt-col-lg-5 wt-offset-left-lg-0 wt-col-md-12 wt-offset-top-md-48">
+<div class="manager">
+<div class="manager__text">
+<h4 class="wt-h4">Ekaterina Tuzova</h4>
+<p class="wt-text-2">
+                                Product Manager for Data Science IDE, <br>
+                                Team Lead in Edu Tools at JetBrains
+                            </p>
+</div>
+</div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-48 kotlin">
+<div class="wt-col-3 wt-col-lg-4 wt-col-md-12">
+<h3 class="wt-h1 color-primary kotlin__title">Kotlin Koans</h3>
+<p class="wt-text-1 wt-offset-top-12">The <a class="wt-link" href="//www.jetbrains.com/help/education/learner-start-guide.html?section=Kotlin%20Koans" target="_blank">Kotlin Koans course</a> is a series of exercises specially designed to get you familiar with the Kotlin syntax.</p>
+</div>
+<div class="wt-col-3 wt-offset-left-1 wt-col-lg-4 wt-offset-left-lg-0 wt-col-md-12 wt-offset-top-md-48">
+<h3 class="wt-h1 color-primary kotlin__title">Atomic Kotlin</h3>
+<p class="wt-text-1 wt-offset-top-12"><a class="wt-link" href="//www.jetbrains.com/help/education/learner-start-guide.html?section=Atomic%20Kotlin" target="_blank">Atomic Kotlin</a> is the EAP book that explains Kotlin to both novices and experienced programmers with no prior Java experience required. The book is accompanied by the course – a set of code examples and small tasks with automatic checking and available answers.</p>
+</div>
+<div class="wt-col-4 wt-offset-left-1 wt-col-lg-4 wt-offset-left-lg-0 wt-col-md-12 wt-offset-top-md-48">
+<h3 class="wt-h1 color-primary kotlin__title">Kotlin for Java Developers</h3>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-9 wt-col-lg-12">
+<p class="wt-text-1 wt-offset-top-12">The <a class="wt-link" href="//www.coursera.org/learn/kotlin-for-java-developers" target="_blank">Coursera course</a> for experienced Java developers who want to learn the intricacies of Kotlin and its differences from Java. The course includes programming assignments to be solved using JetBrains Educational Products.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="wt-section wt-section_bg_dark wt-section_theme_dark">
+<div class="wt-container">
+<h2 class="wt-h2 wt-h2_flow" title="Java Background">Java Background</h2>
+<div class="wt-row wt-row_size_m wt-offset-top-24">
+<div class="wt-col-12">
+<div id="javabackground_1"></div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-96">
+<div class="wt-col-10 wt-col-lg-12">
+<div id="javabackground_2"></div>
+</div>
+</div>
+</div>
+</section>
+<section class="wt-section">
+<div class="wt-container">
+<h2 class="wt-h2 wt-h2_flow" title="Working Environment">Working Environment</h2>
+<div class="wt-row wt-row_size_m wt-offset-top-48">
+<div class="wt-col-6 wt-col-md-12">
+<div id="workaround_1"></div>
+</div>
+<div class="wt-col-6 wt-col-md-12 wt-offset-top-md-48">
+<div id="workaround_2"></div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-96">
+<div class="wt-col-12">
+<div id="workaround_3"></div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-96">
+<div class="wt-col-12">
+<div id="workaround_4"></div>
+</div>
+</div>
+</div>
+</section>
+<section class="wt-section wt-section_bg_dark wt-section_theme_dark">
+<div class="wt-container">
+<h2 class="wt-h2 wt-h2_flow" title="Learning patterns">Learning patterns</h2>
+<div class="wt-row wt-row_size_m wt-offset-top-24">
+<div class="wt-col-6 wt-col-md-12">
+<div id="learning_1"></div>
+</div>
+<div class="wt-col-6 wt-col-md-12 wt-offset-top-md-48">
+<div id="learning_2"></div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-96">
+<div class="wt-col-12">
+<div id="learning_3"></div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-96">
+<div class="wt-col-12">
+<div id="learning_4"></div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-96">
+<div class="wt-col-12">
+<div id="learning_5"></div>
+</div>
+</div>
+</div>
+</section>
+<section class="wt-section">
+<div class="wt-container">
+<h2 class="wt-h2 wt-h2_flow" title="Skills and Knowledge">Skills and Knowledge</h2>
+<div class="wt-row wt-row_size_m wt-offset-top-48">
+<div class="wt-col-12">
+<div id="skills_1"></div>
+</div>
+</div>
+</div>
+</section>
+<section class="wt-section wt-section_bg_dark wt-section_theme_dark">
+<div class="wt-container">
+<h2 class="wt-h2 wt-h2_flow" title="Demography">Demography</h2>
+<div class="wt-row wt-row_size_m wt-offset-top-24">
+<div class="wt-col-10 wt-col-lg-12">
+<div id="demography_1"></div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-96">
+<div class="wt-col-12">
+<h3 class="wt-h3 wt-h3_theme_dark">What country do you live in?</h3>
+<p class="wt-text-3 wt-text-3_flow">Number of answers: 1361</p>
+<div class="wt-row wt-row_size_m wt-offset-top-48">
+<div class="wt-col-8 wt-col-lg-9 wt-col-md-12">
+<svg class="_map sprite-img js-global-map" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#map"></use></svg>
+</div>
+<div class="wt-col-2 wt-offset-left-1 wt-col-md-12 wt-offset-left-md-0 wt-offset-top-md-24">
+<div class="js-country-list">
+<ul class="wt-text-3 wt-text-3_theme_dark">
+<li data-cc="de"><p><span>21%</span>Germany</p></li>
+<li data-cc="us"><p><span>13%</span>United States</p></li>
+<li data-cc="pl"><p><span>8%</span>Poland</p></li>
+<li data-cc="gb"><p><span>7%</span>United Kingdom</p></li>
+<li data-cc="ua"><p><span>7%</span>Ukraine</p></li>
+<li data-cc="ca"><p><span>4%</span>Canada</p></li>
+<li data-cc="ru"><p><span>3%</span>Russia</p></li>
+<li data-cc="it"><p><span>2%</span>Italy</p></li>
+<li data-cc="cz"><p><span>2%</span>Czech Republic</p></li>
+<li data-cc="fr"><p><span>2%</span>France</p></li>
+<li><p><span>30%</span>Others</p></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-96">
+<div class="wt-col-12">
+<div id="demography_3"></div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-96">
+<div class="wt-col-12">
+<div id="demography_4"></div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-96">
+<div class="wt-col-10 wt-col-lg-12">
+<div id="demography_5"></div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-96">
+<div class="wt-col-12">
+<div id="demography_6"></div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-96">
+<div class="wt-col-12">
+<div id="demography_7"></div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-96">
+<div class="wt-col-12">
+<div id="demography_8"></div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-96">
+<div class="wt-col-12">
+<div id="demography_9"></div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-96">
+<div class="wt-col-6 wt-col-md-12">
+<div id="demography_10"></div>
+</div>
+<div class="wt-col-6 wt-col-md-12 wt-offset-top-md-96">
+<div id="demography_11"></div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-96">
+<div class="wt-col-12">
+<div id="demography_12"></div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-96">
+<div class="wt-col-12">
+<div id="demography_13"></div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-96">
+<div class="wt-col-12">
+<div id="demography_14"></div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-96">
+<div class="wt-col-12">
+<div id="demography_15"></div>
+</div>
+</div>
+</div>
+</section>
+<section class="wt-section wt-section_bg_gray-light">
+<div class="wt-container section-label">
+<div class="wt-row wt-row_size_m wt-offset-top-96">
+<div class="wt-col-7 wt-col-md-12">
+<h1 class="wt-h1">JetBrains Academy</h1>
+<p class="wt-text-1 wt-offsetop-12">Begin a unique educational experience. </p>
+</div>
+<div class="wt-col-4 wt-offset-left-1 wt-col-lg-5 wt-offset-left-lg-0">
+<div class="manager manager_hidden_md">
+<div class="manager__text">
+<h4 class="wt-h4">Ekaterina Tuzova</h4>
+<p class="wt-text-2">
+                                Product Manager for Data Science IDE, <br>
+                                Team Lead in Edu Tools at JetBrains
+                            </p>
+</div>
+</div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-48 wt-offset-top-md-24">
+<div class="wt-col-7 wt-col-md-12">
+<p class="wt-subtitle-2"><a class="wt-link" href="/academy/" target="_blank">JetBrains Academy</a> features a project-based Java learning platform that challenges learners to integrate computer science knowledge while completing real projects. </p>
+</div>
+<div class="wt-col-4 wt-offset-left-1 wt-col-lg-5 wt-offset-left-lg-0 wt-col-md-12 wt-offset-top-md-48">
+<div class="manager manager_hidden_lg">
+<div class="manager__text">
+<h4 class="wt-h4">Ekaterina Tuzova</h4>
+<p class="wt-text-2">
+                                Product Manager for Data Science IDE, <br>
+                                Team Lead in Edu Tools at JetBrains
+                            </p>
+</div>
+</div>
+<p class="wt-text-2 wt-offset-top-md-48">Build applications from scratch, improving them version by version as you learn more and more. Use professional tools to work on projects such as the special educational version of IntelliJ IDEA Community.</p>
+<p class="wt-text-2 wt-text-2_flow">Get ready to become a professional.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="wt-section wt-section_bg_gray-light separator-top">
+<div class="wt-container">
+<h3 class="wt-h3 wt-offset-top-96">Learning Tips & tricks</h3>
+<div class="wt-row wt-row_size_m wt-offset-top-48">
+<div class="wt-col-7 wt-offset-left-3 wt-col-lg-8 wt-offset-left-lg-2 wt-col-md-12 wt-offset-left-md-0 tips-trick">
+<h4 class="wt-h1 color-primary tips-trick__title">Stay determined</h4>
+<p class="wt-text-1 wt-text-1_flow">Software development is an enormous area so the learning process might become tough just because of the amount of available information. Don’t take it too hard on yourself: you face difficulties because there’s so much to learn, not because you’re not smart enough. If you ever consider quitting, do it because you’re no longer interested. Otherwise, believe in yourself and keep going!</p>
+<h4 class="wt-h1 wt-offset-top-96 wt-offset-top-md-48 color-primary tips-trick__title">Begin with a project</h4>
+<p class="wt-text-1 wt-text-1_flow">I suggest to come up with a challenging project regardless of how impossible it might seem - automatic watering system, budgeting application, chatbot, etc.! An exciting task inspires you to learn and provides an excellent hands-on practice.</p>
+<h4 class="wt-h1 wt-offset-top-96 wt-offset-top-md-48 color-primary tips-trick__title">Self-reflect</h4>
+<p class="wt-text-1 wt-text-1_flow">While facing a complex topic, you might be tempted to skip it. Stay determined! Consider going through earlier themes to look for missing details. Otherwise, think about alternative solutions that may help you overcome difficulties. </p>
+<h4 class="wt-h1 wt-offset-top-96 wt-offset-top-md-48 color-primary tips-trick__title">Seek help</h4>
+<p class="wt-text-1 wt-text-1_flow">It’s always OK to ask for advice from mentors while learning computer science (and even later when working in industry). An outsider’s opinion is helpful to get around a challenge. Discussions with colleagues prompt you to come with a fresh way to fix a problem you wouldn’t beat on your own. </p>
+<h4 class="wt-h1 wt-offset-top-96 wt-offset-top-md-48 color-primary tips-trick__title">Play</h4>
+<p class="wt-text-1 wt-text-1_flow">Try educational puzzles like CheckIO, CodinGame, and others. It’s a good way to see algorithms in action—all while beating monsters and earning points. </p>
+<h4 class="wt-h1 wt-offset-top-96 wt-offset-top-md-48 color-primary tips-trick__title">Put together a portfolio</h4>
+<p class="wt-text-1 wt-text-1_flow">Every project you do is an excellent addition to the portfolio. Get familiar with version control systems and put your code out there. Your best resume is an active GitHub account. </p>
+</div>
+</div>
+</div>
+</section>
+
+    <section class="java-developer-footer wt-section wt-section_bg_dark wt-section_theme_dark">
+<div class="wt-container">
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-5 wt-col-lg-6 wt-col-md-8 wt-col-sm-12">
+<h2 class="wt-h2 wt-h2_flow">Thank you for your time!</h2>
+<p class="wt-text-1 wt-text-1_flow">
+                    Enjoyed going through the survey findings? <br>
+                    Share this report with your friends and colleagues
+                </p>
+<div class="share _light-background js-share wt-offset-top-24">
+<div class="share__button _twitter twitter"></div>
+<div class="share__button _facebook facebook"></div>
+</div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m">
+<div class="wt-col-6 wt-col-md-8 wt-col-sm-12">
+<form class="form js-marketo-form">
+<h3 class="wt-h3 wt-h3_flow">Participate in future surveys:</h3>
+<div class="form__fields-wrapper">
+<div class="wt-row wt-row_size_m wt-offset-top-24">
+<div class="wt-col-10 wt-col-sm-12">
+<div class="form__field self-submit-input">
+<input autocomplete="email" class="input java-developer-footer__email-input" name="Email" placeholder="Your email address" required="" type="email">
+</div>
+</div>
+</div>
+<div class="form__field">
+<label class="checkbox java-developer-footer__checkbox">
+<input class="js-checkbox-validate-form" id="surveyPanel" name="surveyPanel" type="checkbox" value="true">
+<span class="checkbox__icon"></span>
+<span class="checkbox__label">I want to participate in future JetBrains surveys</span>
+</label>
+</div>
+<div class="form__field">
+<label class="checkbox java-developer-footer__checkbox">
+<input class="js-checkbox-validate-form" id="surveyResults" name="surveyResults" type="checkbox" value="true">
+<span class="checkbox__icon"></span>
+<span class="checkbox__label">I want to receive future JetBrains research results</span>
+</label>
+</div>
+<div class="form__field">
+<label class="checkbox java-developer-footer__checkbox">
+<input class="js-checkbox-validate-form" id="sendCommunityNewsletter" name="sendCommunityNewsletter" type="checkbox" value="yes">
+<span class="checkbox__icon"></span>
+<span class="checkbox__label">I want to receive emails about JetBrains company news, products and services</span>
+</label>
+</div>
+<div class="form-privacy-checkbox java-developer-footer__checkbox" data-form-id="3551"></div>
+<input class="button _dark java-developer-footer__submit-button" type="submit" value="Submit">
+</div>
+<input name="subId" type="hidden" value="62">
+<input name="formid" type="hidden" value="3551">
+</form>
+<div class="form__after-submit margin-bottom-vertical-unit-half" data-form-id="3551">
+<p class="wt-text-2 wt-text-2_flow">Thanks for your request!</p>
+</div>
+</div>
+</div>
+<div class="wt-row wt-row_size_m wt-offset-top-48">
+<div class="wt-col-6 wt-col-lg-8 wt-col-md-10 wt-col-sm-12">
+<p class="wt-text-1 wt-text-1_theme_dark">If you have any questions about this survey or suggestions for future ones, please contact us at <a class="wt-link wt-link_theme_dark java-developer-footer__link" href="mailto:surveys@jetbrains.com" target="_blank">surveys@jetbrains.com</a>.</p>
+</div>
+</div>
+</div>
+</section>
+    <div class="toc-right" id="toc"></div>    </div>
+
+    <footer class="page__footer landing-footer">
+    <div class="wt-container">
+        <div class="landing-footer__logo jetbrains-logo _full-block">
+            <a href="/"><svg class="_jetbrains-simple sprite-img" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#jetbrains-simple"></use></svg></a>
+        </div>
+        <div class="landing-footer__copy">
+            <span class="text-nowrap">Copyright &copy; 2000&ndash;2019 JetBrains s.r.o.</span>
+        </div>
+    </div>
+</footer></div>
+<script>
+(function() {
+  var STORAGE_KEY_NAME = 'firefoxDisappearedSVGWorkaround';
+  var STORAGE_KEY_VALUE = '1';
+
+  var isFirefox = /firefox/i.test(navigator.userAgent);
+  if (!isFirefox || isFirefox && sessionStorage.getItem(STORAGE_KEY_NAME) === STORAGE_KEY_VALUE) {
+    return;
+  }
+
+  var arrayFrom = function (arrayLike) {
+    return Array.prototype.slice.call(arrayLike, 0);
+  };
+
+  function workaround() {
+    var uses = document.querySelectorAll('.page svg use');
+    var badNodesCount = 0;
+
+    arrayFrom(uses).forEach(function (node) {
+      var rect = node.getBoundingClientRect();
+      if (rect.width === 0 && rect.height === 0)
+        badNodesCount++;
+    });
+
+    if (badNodesCount === uses.length) {
+      sessionStorage.setItem(STORAGE_KEY_NAME, STORAGE_KEY_VALUE);
+      if (typeof dataLayer !== 'undefined')
+        dataLayer.push({'firefoxDisappearedSVGWorkaround': STORAGE_KEY_VALUE});
+
+      window.location.replace(window.location.href);
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', workaround);
+
+})();
+</script>      <link href="/_assets/banner-rotator.entry.07ac548a2a68a7922693.css" rel="stylesheet" type="text/css">
+      <script src="/_assets/banner-rotator.entry.b9ea3aaba598786010f0.js" type="text/javascript"></script>
+      
+      
+  <script>
+(function () {
+
+  'use strict';
+
+  function ImagesSrcReplacer () {
+
+    var attribute = 'data-src';
+    var matches = document.querySelectorAll('img[' + attribute + ']');
+
+    for (var i = 0, n = matches.length; i < n; i++) {
+
+      var attrValue = matches[i].getAttribute(attribute);
+
+      if (_isHighDensity ()) {
+
+        var name = attrValue.substring(0, attrValue.lastIndexOf('.'));
+        var extention = attrValue.substring(attrValue.lastIndexOf('.'), attrValue.length);
+
+        matches[i].setAttribute('src', name + '@2x' + extention);
+
+      } else {
+        matches[i].setAttribute('src', attrValue)
+      }
+    }
+
+    /**
+     * Detect high density
+     * @returns {*|boolean}
+     */
+    function _isHighDensity () {
+      return (
+      (window.matchMedia &&
+      (window.matchMedia('only screen and (min-resolution: 124dpi), only screen and (min-resolution: 1.3dppx), only screen and (min-resolution: 48.8dpcm)').matches ||
+       window.matchMedia('only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (-o-min-device-pixel-ratio: 2.6/2), only screen and (min--moz-device-pixel-ratio: 1.3), only screen and (min-device-pixel-ratio: 1.3)').matches)) ||
+      (window.devicePixelRatio &&
+       window.devicePixelRatio > 1.3));
+    }
+  }
+
+  return new ImagesSrcReplacer()
+
+}(document, window));
+</script></body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta charset="UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="//resources.jetbrains.com/storage/help-app/v3/analytics.js"></script><title>Type Extension Methods - Help | MPS</title><link rel="stylesheet" href="//resources.jetbrains.com/storage/help-app/v3/app.css"></head><body data-id="Type+Extension+Methods.html"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search MPS Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>MPS 2019.2 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="primary_default" selected>Default</option><option data-group="primary" value="primary_default_for_gnome">Default for GNOME</option><option data-group="primary" value="primary_default_for_kde">Default for KDE</option><option data-group="primary" value="primary_default_for_xwin">Default for XWin</option><option data-group="primary" value="primary_eclipse">Eclipse</option><option data-group="primary" value="primary_eclipse_mac_os_x">Eclipse (Mac OS X)</option><option data-group="primary" value="primary_emacs">Emacs</option><option data-group="primary" value="primary_jbuilder">JBuilder</option><option data-group="primary" value="primary_mac_os_x">Mac OS X</option><option data-group="primary" value="primary_mac_os_x_10.5_">Mac OS X 10.5+</option><option data-group="primary" value="primary_netbeans">NetBeans</option><option data-group="primary" value="primary_visual_studio">Visual Studio</option><option data-group="secondary" value="secondary_default">Default</option><option data-group="secondary" value="secondary_default_for_gnome">Default for GNOME</option><option data-group="secondary" value="secondary_default_for_kde">Default for KDE</option><option data-group="secondary" value="secondary_default_for_xwin">Default for XWin</option><option data-group="secondary" value="secondary_eclipse">Eclipse</option><option data-group="secondary" value="secondary_eclipse_mac_os_x">Eclipse (Mac OS X)</option><option data-group="secondary" value="secondary_emacs">Emacs</option><option data-group="secondary" value="secondary_jbuilder">JBuilder</option><option data-group="secondary" value="secondary_mac_os_x">Mac OS X</option><option data-group="secondary" value="secondary_mac_os_x_10.5_">Mac OS X 10.5+</option><option data-group="secondary" value="secondary_netbeans">NetBeans</option><option data-group="secondary" value="secondary_visual_studio">Visual Studio</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="Type+Extension+Methods.html" id="type-extension-methods.xml">Type Extension Methods</h1>   <p id="99193178">The language <i id="5e97818e">jetbrains.mps.extensionMethods</i> provides a way to extend any valid MPS type with newly defined or overriden methods, akin to Java static methods.</p>   <div class="code-block" data-lang="none">"This is an ordinary string with a surpricing behavior!".myNewMethod()
+"Develop with pleasure!".isAPleasureMessage()
+int num = ...
+num.isPrime()
+</div>   <p id="171a317f">Whereas static methods never become an internal part of the extended class and one has to always specify the "extended" object to operate on as one of the parameters to the extended method, with an <i id="5d8e9069">extension method</i> the new method gets added directly to the list of operations available on the target type.</p>   <p id="9f514591">So, provided we wanted to add a <i id="43b48130">reverse</i> method to the <i id="8d0b7f65">string</i> type, instead of the good old "static method" way:</p>   <div class="code-block" data-lang="none">public static string reverse(string target) {
+    //reverse the target
+
+}
+</div>   <p id="87ea9a6c">we would create new <i id="ae9c6220">Extension Methods</i> through <i id="fc90ac72">New -&gt; j.m.baseLanguage.extensionMethods/type extension</i>, define the new method and tie it to the string class:</p>   <div class="code-block" data-lang="none">public extension methods MySampleMethods for string {
+  &lt;&lt;static fields&gt;&gt;
+  public string reverse() {
+    //reverse the string, refering to it through 'this'
+  }
+}
+</div>   <p id="d2297a68">The very same mechanism can be used to override existing methods. And when in need to call the original method, just call it on <i id="e6806b8e">this</i>:</p>   <div class="code-block" data-lang="none">&nbsp;public extension methods MySampleMethods for string {
+  &lt;&lt;static fields&gt;&gt;
+  public string trim() {
+    this.trim() + " trimmed"  //calls the original trim() implementation
+  }
+}
+</div>   <p id="423a5c60">Since MPS does a good job to visually distinguish the original and overriden methods through the <i id="6c8e8578">extension methods</i> mechanism, you can't make a mistake picking the right one from the drop-down list.</p>   <p id="f1748ea1">      <figure><img alt="extension methods1" title="extension methods1" src="/help/img/idea/2019.2/extension-methods1.png" id="e6e93466" width="562" height="230"></figure>      <br> Obviously this mechanism can be used to implement orthgonal concepts on your own domain objects as well:</p>   <div class="code-block" data-lang="none">public extension methods Sample for my_type {
+  &lt;&lt;static fields&gt;&gt;
+  public int foo() {
+    return this.bar();
+  }
+
+}
+</div>   <p id="c69220ed">With the declaration as above, one could write an operation on type <i id="a67afef3">my_type</i>:</p>   <div class="code-block" data-lang="none">my_type var = ...;
+var.foo();
+</div>   <h3 id="rootnodes">Root Nodes</h3>   <p id="7344a44f">There are two equally good ways to extend types with methods. <i id="1b45f2a6">Type Extension</i> allows to you to add methods to a single type in one place, while <i id="e477520b">Simple Extension Method Container</i> comes in handy, when you need one place to implement an orthogonal concept for multiple different types.</p>   <h4 id="typeextension">Type Extension</h4>   <p id="ffc5f527">This root contains declarations of extension methods for a single type.</p>   <div class="code-block" data-lang="none">[public|protected|private] extension methods containerName for extendedType {
+  &lt;&lt;static fields&gt;&gt;
+    &lt;&lt;extension methods&gt;&gt;
+}
+</div>   <p id="715004ad">Extension method declaration.</p>   <div class="code-block" data-lang="none">public ret_Type methodName() {
+  &lt;no statements&gt;
+}
+</div>   <h4 id="simpleextensionmethodcontainer">Simple Extension Method Container</h4>   <div class="code-block" data-lang="none">[public|protected|private] extension methods containerName {
+  &lt;&lt;static fields&gt;&gt;
+    &lt;&lt;extension methods&gt;&gt;
+}
+</div>   <p id="0b2cab6a">Extension method declaration. The target type is specified per method.</p>   <div class="code-block" data-lang="none">public ret_type methodName() for extendedType {
+  &lt;no statements&gt;
+}
+</div>   <div class="table-wrapper"><table width="100%" id="9c43635a"><thead><tr id="e92c5837" class="ijRowHead"><th id="ce0e5af7">            <p id="8f465aa0">declaration part</p>         </th><th id="c78f9ea5">            <p id="4b0e3888">allowed contents</p>         </th></tr></thead><tbody><tr id="e31f16f3" class="ijRowOdd"><td id="41ba89cc">            <p id="67e87426">               <b id="a0cbd11d">containerName</b>            </p>         </td><td id="62b275d1">            <p id="e3758086">any valid identifier</p>         </td></tr><tr id="5092cd0d" class="ijRowEven"><td id="1f830a77">            <p id="6a8315f5">               <b id="31589678">extendedType</b>            </p>         </td><td id="c643fefb">            <p id="b49c8b4d">any valid MPS type</p>         </td></tr></tbody></table></div>   <p id="e7067cd9">Both roots may contain one or more static fields. These are available to all methods in the container.</p>   <div class="last-modified" data-skip-index="skip">Last modified: 30 August 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="regexp-language.html">Regexp language</a><a class="navigation-links__next" href="builders.html">Builders</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="//resources.jetbrains.com/storage/help-app/v3/app.js"></script></body></html>

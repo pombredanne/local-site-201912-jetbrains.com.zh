@@ -1,0 +1,403 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta class="swiftype" name="product" data-type="string" content="/idea/2016.3/"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><meta charset="UTF-8"><meta name="robots" content="noindex"><title>IntelliJ IDEA 2016.3 Help :: Change Signature</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="procedures.refactoring.changeMethodSignature"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-swiftype-index="false"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.3 Help</h3><div class="shortcuts-switcher" data-swiftype-index="false"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Windows/Linux Default</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWin</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">Mac OS X</option><option data-group="secondary" value="eclipse_mac_os_x">Eclipse (Mac OS X)</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (Mac OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper (Mac OS X)</option><option data-group="secondary" value="emacs">Emacs (Mac OS X)</option></select></div><div class="panel-trigger" data-swiftype-index="false"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="change-method-signature-in-java.html">Change Method Signature in Java</a></div><h1>Change Signature</h1><a name="d913450e32"></a><p>In this section:</p><ul><li class="list__item"><a href="#d913450e37">Basics</a></li><li class="list__item"><a href="#d913450e116">Examples</a></li><li class="list__item"><a href="#d913450e187">Initializer, default value, and propagation of new parameters</a></li><li class="list__item"><a href="#d913450e274">More refactoring examples</a></li><li class="list__item"><a href="#d913450e544">Changing a method signature</a></li></ul><a name="d913450e37"></a><h2>Basics</h2>
+        <a name="d913450e39"></a><p>The <a name="d913450e41"></a><span class="keyword">Change Signature</span> refactoring combines several different modifications
+            that can be applied to a method signature. You can use this refactoring for the following purposes:</p>
+        <ul class="list _bullet"><li class="list__item"><a name="d913450e47"></a>To change the method name.</li><li class="list__item"><a name="d913450e50"></a>To change the method return type.</li><li class="list__item"><a name="d913450e53"></a>To add new parameters and remove the existing ones.</li><li class="list__item"><a name="d913450e56"></a>To assign default values to the parameters.</li><li class="list__item"><a name="d913450e59"></a>To reorder parameters.</li><li class="list__item"><a name="d913450e63"></a>To change parameter names and types.</li><li class="list__item"><a name="d913450e69"></a>To propagate new parameters through the method call hierarchy.</li></ul>
+         
+         
+
+
+        <a name="d913450e77"></a><p>When changing a method signature, IntelliJ IDEA searches for all usages of the method and
+            updates all the calls, implementations, and override replacements of the method that can be safely
+            modified to reflect the change.</p>
+         
+
+        <aside class="note sideblock">
+            <ul class="list _bullet"><li class="list__item"><a name="d913450e87"></a>
+                    The Change Method Signature refactoring is supported for Java, PHP, JavaScript, and ActionScript.
+                </li><li class="list__item"><a name="d913450e98"></a>You can access this refactoring from a
+                    <a name="d913450e100"></a><a href="working-with-diagrams.html"><span>UML Class diagram</span></a>.
+                </li><li class="list__item"><a name="d913450e104"></a>The
+                    <a name="d913450e106"></a><span class="emphasis">Change Method Signature</span>
+                    refactoring is applicable to a constructor.
+                    In this case, however, the name and the return type cannot be changed.
+                </li></ul>
+        </aside>
+<a name="actionscript_code_example"></a><a name="d913450e116"></a><h2>Examples</h2>
+        <table class="             " width="100%" id="d913450e118"><thead><tr id="d913450e120" class="ijRowHead"><a name="d913450e120"></a><th><a name="d913450e122"></a>Before</th><th><a name="d913450e125"></a>After</th></tr></thead><tbody><tr id="d913450e129" class="ijRowOdd"><a name="d913450e129"></a><td><a name="d913450e131"></a>
+<a name="d913450e133"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="c1">// The function paint() is declared in</span>
+<span class="c1">// the IShape interface.</span>
+
+
+
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">IShape</span> <span class="o">{</span>
+    <span class="n">function</span> <span class="nf">paint</span><span class="o">(</span><span class="n">g</span><span class="o">:</span> <span class="n">Graphics</span><span class="o">):</span> <span class="kt">void</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="c1">// This function is then called within the</span>
+<span class="c1">// paint() function of the Canvas class.</span>
+
+
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Canvas</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">var</span> <span class="n">shapes</span><span class="o">:</span> <span class="n">Vector</span><span class="o">.&lt;</span><span class="n">IShape</span><span class="o">&gt;;</span>
+
+    <span class="kd">public</span> <span class="n">function</span> <span class="nf">paint</span><span class="o">(</span><span class="n">g</span><span class="o">:</span> <span class="n">Graphics</span><span class="o">):</span> <span class="kt">void</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="n">each</span> <span class="o">(</span><span class="n">var</span> <span class="n">shape</span><span class="o">:</span> <span class="n">IShape</span> <span class="n">in</span> <span class="n">shapes</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">shape</span><span class="o">.</span><span class="na">paint</span><span class="o">(</span><span class="n">g</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">// Now we are going to show an example of the</span>
+<span class="c1">// Change Signature refactoring for the function</span>
+<span class="c1">// paint() of the IShape interface.</span></code></div>
+            </td><td><a name="d913450e137"></a>
+                    <a name="d913450e139"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="c1">// In this refactoring example we have changed the name of the existing parameter</span>
+<span class="c1">// and introduced two new parameters. Note that the first of the new parameters is</span>
+<span class="c1">// a required parameter while the second is optional because the default value</span>
+<span class="c1">// for it is specified in the function definition.</span>
+
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">IShape</span> <span class="o">{</span>
+    <span class="n">function</span> <span class="nf">paint</span><span class="o">(</span><span class="n">graphics</span><span class="o">:</span><span class="n">Graphics</span><span class="o">,</span> <span class="n">wireframe</span><span class="o">:</span><span class="n">Boolean</span><span class="o">,</span> <span class="n">offset</span><span class="o">:</span><span class="n">Point</span> <span class="o">=</span> <span class="kc">null</span><span class="o">):</span><span class="kt">void</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="c1">// When performing this refactoring, the new parameters were propagated to</span>
+<span class="c1">// the paint() function of the Canvas class. As a result, the signature of</span>
+<span class="c1">// Canvas.paint() has changed. Also note how IShape.paint() within</span>
+<span class="c1">// Canvas.paint() is called now.</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Canvas</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">var</span> <span class="n">shapes</span><span class="o">:</span> <span class="n">Vector</span><span class="o">.&lt;</span><span class="n">IShape</span><span class="o">&gt;;</span>
+
+    <span class="kd">public</span> <span class="n">function</span> <span class="nf">paint</span><span class="o">(</span><span class="n">g</span><span class="o">:</span><span class="n">Graphics</span><span class="o">,</span> <span class="n">wireframe</span><span class="o">:</span><span class="n">Boolean</span><span class="o">):</span> <span class="kt">void</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="n">each</span> <span class="o">(</span><span class="n">var</span> <span class="n">shape</span><span class="o">:</span> <span class="n">IShape</span> <span class="n">in</span> <span class="n">shapes</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">shape</span><span class="o">.</span><span class="na">paint</span><span class="o">(</span><span class="n">g</span><span class="o">,</span> <span class="n">wireframe</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="c1">// Other results for this refactoring are possible.</span>
+<span class="c1">// For more information, see the discussion that follows.</span></code></div>
+            </td></tr><tr id="d1646e274" class="ijRowEven"><a name="d1646e274"></a><td colspan="2"><a name="d1646e276"></a>
+                <aside class="warning ">
+                    <a name="d1646e280"></a><p><a name="d1646e281"></a><span class="emphasis">
+                        The following is only valid when Python Plugin is installed and enabled!
+                    </span></p>
+                </aside>
+            </td></tr><tr id="d913450e149" class="ijRowOdd"><a name="d913450e149"></a><td><a name="d913450e151"></a>
+
+<a name="d913450e153"></a><div class="code-block" data-lang="Python"><code class="code-block__wrapper"><span class="c"># This function will be renamed:</span>
+<span class="k">def</span> <span class="nf">fibonacci</span><span class="p">(</span> <span class="n">n</span> <span class="p">):</span>
+    <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="n">b</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span> <span class="n">b</span> <span class="p">)</span>
+        <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s">&quot;n = &quot;</span><span class="p">))</span>
+<span class="n">fibonacci</span><span class="p">(</span> <span class="n">n</span> <span class="p">)</span></code></div>
+                    </td><td><a name="d913450e157"></a>
+<a name="d913450e159"></a><div class="code-block" data-lang="Python"><code class="code-block__wrapper"><span class="c"># Function with the new name:</span>
+<span class="k">def</span> <span class="nf">fibonacci_numbers</span><span class="p">(</span> <span class="n">n</span> <span class="p">):</span>
+    <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="n">b</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span> <span class="n">b</span> <span class="p">)</span>
+        <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s">&quot;n = &quot;</span><span class="p">))</span>
+<span class="n">fibonacci_numbers</span><span class="p">(</span> <span class="n">n</span> <span class="p">)</span></code></div>
+
+                    </td></tr><tr id="d1646e274" class="ijRowEven"><a name="d1646e274"></a><td colspan="2"><a name="d1646e276"></a>
+                <aside class="warning ">
+                    <a name="d1646e280"></a><p><a name="d1646e281"></a><span class="emphasis">
+                        The following is only valid when Python Plugin is installed and enabled!
+                    </span></p>
+                </aside>
+            </td></tr><tr id="d913450e170" class="ijRowOdd"><a name="d913450e170"></a><td><a name="d913450e172"></a>
+
+<a name="d913450e174"></a><div class="code-block" data-lang="Python"><code class="code-block__wrapper"><span class="c"># New parameters will be added:</span>
+<span class="k">def</span> <span class="nf">fibonacci</span><span class="p">(</span> <span class="n">n</span> <span class="p">):</span>
+    <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="n">b</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span> <span class="n">b</span> <span class="p">)</span>
+        <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s">&quot;n = &quot;</span><span class="p">)</span>
+<span class="n">fibonacci</span><span class="p">(</span> <span class="n">n</span> <span class="p">)</span></code></div>
+                    </td><td><a name="d913450e178"></a>
+<a name="d913450e180"></a><div class="code-block" data-lang="Python"><code class="code-block__wrapper"><span class="c"># Function with the new parameters.</span>
+<span class="c"># Do not forget to specify the default values of the parameters, which will be used in the function call.</span>
+<span class="k">def</span> <span class="nf">fibonacci</span><span class="p">(</span> <span class="n">n</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span> <span class="p">):</span>
+    <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span> <span class="c"># this should be done manually!</span>
+    <span class="k">while</span> <span class="n">b</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span> <span class="n">b</span> <span class="p">)</span>
+        <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s">&quot;n = &quot;</span><span class="p">)</span>
+<span class="n">fibonacci</span><span class="p">(</span> <span class="n">n</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span> <span class="p">)</span></code></div>
+
+                    </td></tr></tbody></table>
+       <a name="d913450e187"></a><h2>Initializer, default value, and propagation of new parameters</h2>
+        <a name="d913450e189"></a><p>For each new parameter added to a method, you can specify:</p>
+        <ul class="list _ul"><li class="list__item"><a name="d913450e194"></a>A value (or an expression) to be used for initializing the parameter (the
+                    <a name="d913450e196"></a><span class="control">Initializer</span> field in IntelliJ IDEA).</li><li class="list__item"><a name="d913450e200"></a>A default value (or an expression) (the <a name="d913450e202"></a><span class="control">Default value</span> field).</li></ul>
+     
+        <a name="d913450e209"></a><p>You can also propagate the parameters you have introduced to the methods that call the function whose
+                signature you are changing.</p>
+            <a name="d913450e212"></a><p>The refactoring result depends on whether you specify the default value and whether you use propagation.</p>
+            <a name="d913450e215"></a><p><a name="d913450e216"></a><span class="control">Propagation.</span>
+                New parameters can be propagated to any method that calls the method whose signature you are
+                changing.
+                In such case, generally, the signatures of the calling methods change accordingly.
+                <br>
+                These changes, however, also depend on the  combination of the initializer and the
+                default value set for the new parameters  
+                 .
+            </p>
+     
+     
+            <a name="d913450e231"></a><p><a name="d913450e232"></a><span class="control">Initializer.</span> The value specified in the <a name="d913450e235"></a><span class="control">Initializer</span>
+                field is added to the function definition as the default parameter value. This makes the corresponding
+                parameter an optional parameter. (See the discussion of required and optional parameters in
+                <a name="d913450e238"></a><a href="http://livedocs.adobe.com/flex/3/html/03_Language_and_Syntax_19.html" data-external="true"><span>Flex/ActionScript documentation</span></a>.)</p>
+            <a name="d913450e242"></a><p>If the default value for the new parameter is not specified (in the <a name="d913450e244"></a><span class="control">Default value</span>
+                field), irrespective of whether or not the propagation is used, the method calls and the signatures of
+                the calling methods don't change.</p>
+            <a name="d913450e248"></a><p>If both, the initializer and the default value are specified, the refactoring result depends on whether
+                or not the propagation is used:</p>
+            <ul class="list _ul"><li class="list__item"><a name="d913450e253"></a>If the propagation is not used, the initializer value don't affect the function calls and the
+                    signatures of the calling functions.</li><li class="list__item"><a name="d913450e256"></a>If the propagation is used, the initializer value is added to the definition of the calling function
+                    as the default value for the corresponding parameter (in the same way as in the function whose
+                    signature you are changing).
+                </li></ul>
+     
+            <a name="d913450e261"></a><p><a name="d913450e262"></a><span class="control">Default value.</span>
+                Generally, this is the value to be added to the method calls.</p>
+            <a name="d913450e267"></a><p>If the new parameter is not propagated to a calling method, the calls within such
+                method will also use this value.</p>
+            <a name="d913450e270"></a><p>If the propagation is used, this value won't matter for the method calls within the
+                calling methods.</p>
+<a name="d913450e274"></a><h2>More refactoring examples</h2>
+            <a name="d913450e276"></a><p>To see how different refactoring settings discussed above affect the refactoring result, let us consider
+                the following examples.</p>
+            <a name="d913450e279"></a><p>All the examples are a simplified version of the refactoring
+                <a name="d913450e281"></a><a href="#actionscript_code_example"><span>shown earlier</span></a>. In all cases, a new parameter
+                <code class="code" data-lang="Java">wireframe</code> of the type <code class="code" data-lang="Java">Boolean</code> is added to the function <code class="code" data-lang="Java">paint()</code>
+                defined in the <code class="code" data-lang="Java">IShape</code> interface.</p>
+            <a name="d913450e297"></a><p>In different examples, different combinations of the initializer and the default value are used, and the
+                new parameter is either propagated to <code class="code" data-lang="Java">Canvas.paint()</code> (which calls
+                <code class="code" data-lang="Java">IShape.paint()</code>) or not.</p>
+            <table class=" wide             " width="100%" id="d913450e306"><thead><tr id="d913450e308" class="ijRowHead"><a name="d913450e308"></a><th><a name="d913450e310"></a>Initializer</th><th><a name="d913450e313"></a>Default value</th><th><a name="d913450e316"></a>Propagation used</th><th><a name="d913450e319"></a>Result</th></tr></thead><tbody><tr id="d913450e323" class="ijRowOdd"><a name="d913450e323"></a><td><a name="d913450e325"></a></td><td><a name="d913450e327"></a>false</td><td><a name="d913450e330"></a>Yes</td><td><a name="d913450e333"></a>
+<a name="d913450e335"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">IShape</span> <span class="o">{</span>
+    <span class="n">function</span> <span class="nf">paint</span><span class="o">(</span><span class="n">g</span><span class="o">:</span><span class="n">Graphics</span><span class="o">,</span> <span class="n">wireframe</span><span class="o">:</span><span class="n">Boolean</span><span class="o">):</span><span class="kt">void</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="c1">// The function paint() in the Canvas class:</span>
+
+<span class="kd">public</span> <span class="n">function</span> <span class="nf">paint</span><span class="o">(</span><span class="n">g</span><span class="o">:</span><span class="n">Graphics</span><span class="o">,</span> <span class="n">wireframe</span><span class="o">:</span><span class="n">Boolean</span><span class="o">):</span> <span class="kt">void</span>
+<span class="o">{</span>
+    <span class="k">for</span> <span class="n">each</span>
+    <span class="o">(</span>
+    <span class="n">var</span> <span class="n">shape</span><span class="o">:</span> <span class="n">IShape</span> <span class="n">in</span> <span class="n">shapes</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">shape</span><span class="o">.</span><span class="na">paint</span><span class="o">(</span><span class="n">g</span><span class="o">,</span><span class="n">wireframe</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></div>
+                    </td></tr><tr id="d913450e340" class="ijRowEven"><a name="d913450e340"></a><td><a name="d913450e342"></a></td><td><a name="d913450e344"></a>false</td><td><a name="d913450e347"></a>No</td><td><a name="d913450e350"></a>
+<a name="d913450e352"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">IShape</span> <span class="o">{</span>
+    <span class="n">function</span> <span class="nf">paint</span><span class="o">(</span><span class="n">g</span><span class="o">:</span><span class="n">Graphics</span><span class="o">,</span> <span class="n">wireframe</span><span class="o">:</span><span class="n">Boolean</span><span class="o">):</span><span class="kt">void</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="c1">// The function paint() in the Canvas class:</span>
+
+<span class="kd">public</span> <span class="n">function</span> <span class="nf">paint</span><span class="o">(</span><span class="n">g</span><span class="o">:</span><span class="n">Graphics</span><span class="o">):</span> <span class="kt">void</span>
+<span class="o">{</span>
+    <span class="k">for</span> <span class="n">each</span>
+    <span class="o">(</span>
+    <span class="n">var</span> <span class="n">shape</span><span class="o">:</span> <span class="n">IShape</span> <span class="n">in</span> <span class="n">shapes</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">shape</span><span class="o">.</span><span class="na">paint</span><span class="o">(</span><span class="n">g</span><span class="o">,</span><span class="kc">false</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></div>
+                    </td></tr><tr id="d913450e357" class="ijRowOdd"><a name="d913450e357"></a><td><a name="d913450e359"></a>true</td><td><a name="d913450e362"></a></td><td><a name="d913450e364"></a>Yes</td><td><a name="d913450e367"></a>
+<a name="d913450e369"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">IShape</span> <span class="o">{</span>
+    <span class="n">function</span> <span class="nf">paint</span><span class="o">(</span><span class="n">g</span><span class="o">:</span><span class="n">Graphics</span><span class="o">,</span> <span class="n">wireframe</span><span class="o">:</span><span class="n">Boolean</span> <span class="o">=</span> <span class="kc">true</span><span class="o">):</span><span class="kt">void</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="c1">// The function paint() in the Canvas class:</span>
+
+<span class="kd">public</span> <span class="n">function</span> <span class="nf">paint</span><span class="o">(</span><span class="n">g</span><span class="o">:</span><span class="n">Graphics</span><span class="o">):</span>
+    <span class="kt">void</span>
+    <span class="o">{</span>
+        <span class="k">for</span> <span class="n">each</span>
+        <span class="o">(</span>
+            <span class="n">var</span> <span class="n">shape</span><span class="o">:</span> <span class="n">IShape</span> <span class="n">in</span> <span class="n">shapes</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">shape</span><span class="o">.</span><span class="na">paint</span><span class="o">(</span><span class="n">g</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span></code></div>
+                    </td></tr><tr id="d913450e374" class="ijRowEven"><a name="d913450e374"></a><td><a name="d913450e376"></a>true</td><td><a name="d913450e379"></a></td><td><a name="d913450e381"></a>No</td><td><a name="d913450e384"></a>
+<a name="d913450e386"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">IShape</span> <span class="o">{</span>
+    <span class="n">function</span> <span class="nf">paint</span><span class="o">(</span><span class="n">g</span><span class="o">:</span><span class="n">Graphics</span><span class="o">,</span> <span class="n">wireframe</span><span class="o">:</span><span class="n">Boolean</span> <span class="o">=</span> <span class="kc">true</span><span class="o">):</span><span class="kt">void</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="c1">// The function paint() in the Canvas class:</span>
+
+<span class="kd">public</span> <span class="n">function</span> <span class="nf">paint</span><span class="o">(</span><span class="n">g</span><span class="o">:</span><span class="n">Graphics</span><span class="o">):</span><span class="kt">void</span>
+<span class="o">{</span>
+    <span class="k">for</span> <span class="n">each</span>
+    <span class="o">(</span>
+        <span class="n">var</span> <span class="n">shape</span><span class="o">:</span> <span class="n">IShape</span> <span class="n">in</span> <span class="n">shapes</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">shape</span><span class="o">.</span><span class="na">paint</span><span class="o">(</span><span class="n">g</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span></code></div>
+                    </td></tr><tr id="d913450e392" class="ijRowOdd"><a name="d913450e392"></a><td><a name="d913450e394"></a>true</td><td><a name="d913450e397"></a>false</td><td><a name="d913450e400"></a>Yes</td><td><a name="d913450e403"></a>
+ <a name="d913450e405"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">IShape</span> <span class="o">{</span>
+   <span class="n">function</span> <span class="nf">paint</span><span class="o">(</span><span class="n">g</span><span class="o">:</span><span class="n">Graphics</span><span class="o">,</span> <span class="n">wireframe</span><span class="o">:</span><span class="n">Boolean</span> <span class="o">=</span> <span class="kc">true</span><span class="o">):</span><span class="kt">void</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="c1">// The function paint() in the Canvas class:</span>
+
+<span class="kd">public</span> <span class="n">function</span> <span class="nf">paint</span><span class="o">(</span><span class="n">g</span><span class="o">:</span><span class="n">Graphics</span><span class="o">,</span> <span class="n">wireframe</span><span class="o">:</span><span class="n">Boolean</span> <span class="o">=</span> <span class="kc">true</span><span class="o">):</span>
+   <span class="kt">void</span> <span class="o">{</span>
+       <span class="k">for</span> <span class="n">each</span>
+       <span class="o">(</span>
+       <span class="n">var</span> <span class="n">shape</span><span class="o">:</span> <span class="n">IShape</span> <span class="n">in</span> <span class="n">shapes</span><span class="o">)</span> <span class="o">{</span>
+           <span class="n">shape</span><span class="o">.</span><span class="na">paint</span><span class="o">(</span><span class="n">g</span><span class="o">,</span><span class="n">wireframe</span><span class="o">);</span>
+           <span class="o">}</span>
+       <span class="o">}</span></code></div>
+                    </td></tr><tr id="d913450e410" class="ijRowEven"><a name="d913450e410"></a><td><a name="d913450e412"></a>true</td><td><a name="d913450e415"></a>false</td><td><a name="d913450e418"></a>No</td><td><a name="d913450e421"></a>
+<a name="d913450e423"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">IShape</span> <span class="o">{</span>
+    <span class="n">function</span> <span class="nf">paint</span><span class="o">(</span><span class="n">g</span><span class="o">:</span><span class="n">Graphics</span><span class="o">,</span>
+<span class="nl">wireframe:</span><span class="n">Boolean</span> <span class="o">=</span> <span class="kc">true</span><span class="o">):</span><span class="kt">void</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="c1">// The function paint() in the Canvas class:</span>
+
+<span class="kd">public</span> <span class="n">function</span> <span class="nf">paint</span><span class="o">(</span><span class="n">g</span><span class="o">:</span><span class="n">Graphics</span><span class="o">):</span>
+    <span class="kt">void</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="n">each</span>
+        <span class="o">(</span>
+            <span class="n">var</span> <span class="n">shape</span><span class="o">:</span> <span class="n">IShape</span> <span class="n">in</span> <span class="n">shapes</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">shape</span><span class="o">.</span><span class="na">paint</span><span class="o">(</span><span class="n">g</span><span class="o">,</span><span class="kc">false</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span></code></div>
+                    </td></tr></tbody></table>
+        <a name="d913450e544"></a><h2>Changing a method signature</h2>
+            <ol class="list _decimal"><li class="list__item"><a name="d913450e548"></a>In the editor, place the cursor within the name of the method whose signature you want to change.</li><li class="list__item"><a name="d913450e551"></a>Do one of the following:
+                <ul class="list _ul"><li class="list__item"><a name="d913450e555"></a>Press <kbd data-default="Ctrl+F6" data-default_for_gnome="Ctrl+F6" data-default_for_kde="Ctrl+6" data-default_for_xwin="Ctrl+F6" data-emacs="Ctrl+F6" data-jbuilder="N/A" data-visual_studio="Ctrl+F6" data-netbeans_6.5="N/A" data-eclipse="Shift+Alt+C" data-mac_os_x_10.5_="&#x2318;F6" data-mac_os_x="&#x2318;F6" data-eclipse_mac_os_x="&#x2325;&#x2318;C" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+F6</kbd>.</li><li class="list__item"><a name="d913450e560"></a>Choose <a name="d913450e562"></a><span class="control">Refactor | Change Signature</span> on the main menu or
+                         .</li><li class="list__item"><a name="d913450e569"></a>Choose <a name="d913450e571"></a><span class="control">Refactor | Change Signature</span> on the context menu.</li></ul>
+            </li><li class="list__item"><a name="d913450e577"></a>In the <a name="d913450e579"></a><span class="control">Change Signature</span> dialog, make the necessary changes to the method signature
+                and specify what other, related, changes are required.
+                <a name="d913450e582"></a><p>You can:</p>
+                <ul class="list _ul"><li class="list__item"><a name="d913450e587"></a>Change the method name. To do that, edit the text in the <a name="d913450e589"></a><span class="control">Name</span> field.</li><li class="list__item"><a name="d913450e593"></a>Change the method return type by editing the contents of the
+                        <a name="d913450e595"></a><span class="control">Return type</span> field.</li><li class="list__item"><a name="d913450e599"></a><a name="manage_params"></a>Manage the method parameters using the table and the buttons in
+                        the <a name="d913450e602"></a><span class="control">Parameters</span> area:
+                        <ul class="list _ul"><li class="list__item"><a name="d913450e607"></a>To add a new parameter, click <img alt="/help/img/idea/2016.3/new.png" title="/help/img/idea/2016.3/new.png" src="/help/img/idea/2016.3/new.png" width="12" height="12" class="inline-icon-12"> and specify the properties of the new
+                                parameter in the corresponding table row.
+                                 
+                                <a name="d913450e613"></a><p>When adding parameters, you may want to
+                                    <a name="d913450e615"></a><a href="#propagate_params"><span>propagate these parameters</span></a> to the methods that
+                                    call the current method.</p>
+                                 
+                                <a name="d913450e621"></a><p>In the <a name="d913450e623"></a><span class="emphasis">PHP</span> context, when the
+                                    <a name="d913450e626"></a><span class="emphasis">Change signature</span> refactoring is invoked from the constructor of
+                                    a class, the new parameter can be initialized as a class field.
+                                    To do that, use the <a name="d913450e629"></a><span class="control">Create and initialize class properties</span> check
+                                    box:</p>
+                                    <ul class="list _ul"><li class="list__item"><a name="d604e3360"></a>
+            When this check box is selected and you add a parameter, this parameter is initialized as a field.
+            IntelliJ IDEA creates a protected field with the same name as this parameter and adds  a line with the following assignment:
+            <code class="code" data-lang="Java">$this-&gt;&lt;parameter_name&gt; = $&lt;parameter_name&gt;;</code>
+        </li><li class="list__item"><a name="d604e3366"></a>
+            When the check box is cleared, a parameter is added without initialization.
+        </li></ul>
+                                 
+        <a name="d604e3372"></a><p>
+            For example, you have the following constructor:
+            <a name="d604e3374"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+class ChangeSignatureNewParam {
+    function __construct() {
+        $a = "Constructor in ChangeSignatureNewParam";
+        print $a;
+    }
+}
+            </code></div>
+            If you invoke the <a name="d604e3377"></a><span class="emphasis">Change signature</span> refactoring from the __construct() method and add a new <code class="code" data-lang="Java">$q</code> parameter,
+            the result will depend on whether you select or clear the  <a name="d604e3383"></a><span class="control">Create and initialize class properties</span> check box:
+        </p>
+        <table class="             " width="100%" id="d604e3387"><thead><tr id="d604e3389" class="ijRowHead"><a name="d604e3389"></a><th><a name="d604e3391"></a>
+                    The <a name="d604e3393"></a><span class="control">Create and initialize class properties</span> check box is selected
+                </th><th><a name="d604e3397"></a>
+                    The <a name="d604e3399"></a><span class="control">Create and initialize class properties</span> check box is cleared
+                </th></tr></thead><tbody><tr id="d604e3404" class="ijRowOdd"><a name="d604e3404"></a><td><a name="d604e3406"></a>
+                    <a name="d604e3408"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+class ChangeSignatureNewParam {
+private $q;
+    function __construct( $q ) {
+        $a = "Constructor in ChangeSignatureNewParam";
+        print $a;
+        $this-&gt;q = $q;
+    }
+}
+                    </code></div>
+                </td><td><a name="d604e3412"></a>
+                    <a name="d604e3414"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+class ChangeSignatureNewParam {
+    function __construct( $q ) {
+        $a = "Constructor in ChangeSignatureNewParam";
+        print $a;
+    }
+}
+                    </code></div>
+                </td></tr></tbody></table>
+     
+                                 
+                            </li><li class="list__item"><a name="d913450e642"></a>To remove a parameter, click any of the cells in the corresponding row and click
+                                <img alt="/help/img/idea/2016.3/delete.png" title="/help/img/idea/2016.3/delete.png" src="/help/img/idea/2016.3/delete.png" width="12" height="12" class="inline-icon-12">.</li><li class="list__item"><a name="d913450e647"></a>To reorder the parameters, use the <img alt="/help/img/idea/2016.3/arrowUp.png" title="/help/img/idea/2016.3/arrowUp.png" src="/help/img/idea/2016.3/arrowUp.png" width="12" height="12" class="inline-icon-12"> and <img alt="/help/img/idea/2016.3/arrowDown.png" title="/help/img/idea/2016.3/arrowDown.png" src="/help/img/idea/2016.3/arrowDown.png" width="12" height="12" class="inline-icon-12">
+                                buttons. For example, if you wanted to put a certain parameter first in the list, click
+                                any of the cells in the row corresponding to that parameter, and then click
+                                <img alt="/help/img/idea/2016.3/arrowUp.png" title="/help/img/idea/2016.3/arrowUp.png" src="/help/img/idea/2016.3/arrowUp.png" width="12" height="12" class="inline-icon-12"> the required number of times.</li><li class="list__item"><a name="d913450e656"></a>To change the name, type, the initializer, or the default value of a
+                                parameter, make the necessary edits in the table of parameters (in the fields
+                                <a name="d913450e658"></a><span class="control">Name</span>
+                                <a name="d913450e661"></a><span class="control">Type</span>,
+                                <a name="d913450e664"></a><span class="control">Initializer</span> and
+                                <a name="d913450e667"></a><span class="control">Default value</span> respectively).
+                            </li></ul>
+                    </li><li class="list__item"><a name="d913450e682"></a>
+                        <a name="propagate_params"></a>
+                        Propagate new method parameters (if any) along the hierarchy of the methods
+                        that call the current method.
+                        <a name="d913450e686"></a><p>(There may be methods that call the method whose signature you are changing.
+                            These methods, in their turn, may be called by other methods, and so on.
+                            You can propagate the changes you are making to the parameters of the current method
+                            through the hierarchy of calling methods and also specify which calling methods
+                            should be affected and which shouldn't.)</p>
+                        <a name="d913450e689"></a><p>To propagate a new parameter:</p>
+                        <ol class="list _decimal"><li class="list__item"><a name="d913450e694"></a>Click the <a name="d913450e696"></a><span class="control">Propagate Parameters</span> button
+                                <img alt="/help/img/idea/2016.3/propagateParameters.png" title="/help/img/idea/2016.3/propagateParameters.png" src="/help/img/idea/2016.3/propagateParameters.png" width="13" height="17" class="inline-icon-17">.</li><li class="list__item"><a name="d913450e702"></a>In the left-hand pane of the
+                                <a name="d913450e704"></a><span class="control">Select Methods to Propagate New Parameters</span> dialog,
+                                expand the necessary nodes and select the check boxes next to the methods you want
+                                the new parameters to be propagated to.
+                                    <a name="d913450e707"></a><p>To help you select the necessary methods, the code for the calling method
+                                        and the method being called is shown in the right-hand part of the dialog
+                                        (in the <a name="d913450e709"></a><span class="control">Caller Method</span> and
+                                        <a name="d913450e712"></a><span class="control">Callee Method</span> panes respectively).</p>
+                                    <a name="d913450e716"></a><p>As you switch between the methods in the left-hand pane, the code in the
+                                        right-hand pane changes accordingly.</p>
+                            </li><li class="list__item"><a name="d913450e720"></a>Click <a name="d913450e722"></a><span class="control">OK</span>.</li></ol>
+                    </li></ul>
+            </li><li class="list__item"><a name="d913450e730"></a>To perform the refactoring right away, click <a name="d913450e732"></a><span class="control">Refactor</span>.
+                <a name="d913450e735"></a><p>To <a name="d913450e737"></a><a href="find-tool-window.html"><span>see the expected changes</span></a> and make the necessary adjustments prior to
+                    actually performing the refactoring, click <a name="d913450e740"></a><span class="control">Preview</span>.</p>
+                 
+                 
+            </li></ol>
+            <aside class="note sideblock">
+                <a name="d913450e752"></a><p><a name="d913450e753"></a><a href="auto-completing-code.html"><span>Code completion</span></a> is available in the <a name="d913450e756"></a><span class="control">Default value</span> field
+                    of the table in the <a name="d913450e759"></a><span class="control">Parameters</span> area.</p>
+            </aside>
+        <div class="navigation-links _bottom"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="change-method-signature-in-java.html">Change Method Signature in Java</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content">```
+                <div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d913450e784"></a><a href="change-method-signature-in-java.html#java_change_signature_proc"><span>Changing a method signature in Java</span></a></li><li class="list__item"><a name="d913450e787"></a><a href="change-method-signature-in-actionscript.html#actionscript_change_signature_proc"><span>Changing a method signature in ActionScript</span></a></li></ul></div><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d913450e793"></a><a href="change-signature-dialog-for-java.html"><span>Change Signature Dialog for Java</span></a></li><li class="list__item"><a name="d913450e796"></a><a href="change-signature-dialog-for-actionscript.html"><span>Change Signature Dialog for ActionScript</span></a></li><li class="list__item"><a name="d913450e798"></a><a href="change-signature-dialog-for-javascript.html"><span>Change Signature Dialog for JavaScript</span></a></li></ul></div><div class="seealso__col"><h3>Tutorials and Examples:</h3><ul class="list"><li class="list__item"><a name="d913450e772"></a><a href="change-method-signature-in-java.html#java_example"><span>Java</span></a></li><li class="list__item"><a name="d913450e775"></a><a href="change-method-signature-in-actionscript.html#actionscript_code_example"><span>ActionScript</span></a></li><li class="list__item"><a name="d913450e778"></a><a href="change-method-signature-in-actionscript.html#actionscript_more_examples"><span>More refactoring examples for ActionScript</span></a></li></ul></div></div></section><div class="last-modified" data-swiftype-index="false">Last modified: 21 March 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

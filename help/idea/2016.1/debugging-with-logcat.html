@@ -1,0 +1,62 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"></meta><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><title>IntelliJ IDEA 2016.1 Help :: Debugging with Logcat</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="topicId198354"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.1 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWindow</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="choosing-the-target-device-manually.html">Choosing the Target Device Manually</a><a class="navigation-links__next" href="managing-virtual-devices.html">Managing Virtual Devices</a></div><h1>Debugging with Logcat</h1><a name="d1689e1650"></a><p>
+            In IntelliJ IDEA, debugging of Android applications is provided through the support of the <a name="d1689e1652"></a><a href="http://developer.android.com/tools/help/logcat.html" data-external="true"><span>logcat</span></a> functionality
+            that stores a log of system debug output. Log messages include a stack trace when the emulator throws an error,
+            so you can <a name="d1689e1655"></a><a href="navigating-from-stacktrace-to-source-code.html"><span>navigate to the exception location</span></a> in the source code.
+        </p><a name="d1057858e14"></a><p>
+            The <a name="d1057858e16"></a><span class="keyword">logcat</span> functionality is handled by the <a name="d1057858e19"></a><a href="http://developer.android.com/guide/developing/tools/adb.html" data-external="true"><span>Android Debug Bridge</span></a> (adb).
+            This service supports interaction between your development environment, Android devices, emulators and other tools, for example,
+            <a name="d1057858e22"></a><a href="http://developer.android.com/guide/developing/debugging/ddms.html" data-external="true"><span>DDMS</span></a>.
+        </p><a name="d1057858e26"></a><p>
+                If various tools that use ADB are launched simultaneously, they may conflict with each other, so it is recommended to <a name="d1057858e28"></a><a href="#disable_logcat"><span>disable the logcat functionality</span></a>
+                before switching from IntelliJ IDEA to an ADB-managed tool.
+            </p><a name="d1057858e32"></a><p>In IntelliJ IDEA, the <a name="d1057858e34"></a><span class="keyword">logcat</span> functionality is available through the <a name="d1057858e37"></a><span class="control">Logcat</span> tab of the <a name="d1057858e40"></a><a href="android-tool-window.html"><span>Android tool window</span></a>.
+            By default, the tab is activated automatically every time an application is deployed and launched successfully.
+             
+        </p><a name="d1057858e46"></a><p>
+        The <a name="d1057858e48"></a><a href="http://developer.android.com/tools/help/logcat.html" data-external="true"><span>logcat</span></a> functionality is also available
+        from the <a name="d1057858e51"></a><a href="debug-tool-window.html"><span>Debug tool window</span></a>. The only difference is that while the
+        <a name="d1057858e54"></a><span class="control">Logcat</span> tab in the <a name="d1057858e57"></a><a href="debug-tool-window.html"><span>Debug tool window</span></a> shows a log of all processes,
+        in the <a name="d1057858e60"></a><a href="android-tool-window.html"><span>Android tool window</span></a> you can filter log messages by a specific
+        process.
+    </p><aside class="tip sideblock">
+        <a name="d1057858e66"></a><p>
+            When logcat is attached to a device, it keeps auto-scrolling you to the bottom of the log. If you want to stop the automatic scroll, start scrolling the log with your mouse.
+        </p>
+    </aside><a name="d1057858e70"></a><p>
+    On this page:
+</p><ul><li class="list__item"><a href="#d1057858e76">Switching the Logcat functionality on and off</a></li><li class="list__item"><a href="#d1057858e90">Showing and hiding the Logcat tab</a></li><li class="list__item"><a href="#d1057858e125">Defining the scope of log data to display</a></li></ul><a name="d1057858e76"></a><a name="dynaProc0"></a><section class="procedure-steps"><h2>Switching the Logcat functionality on and off</h2><ul class=".list "><li class="list__item">
+            <a name="disable_logcat"></a>
+            To enable/disable logcat, in the main menu navigate to <a name="d1057858e82"></a><span class="control">Tools | Android</span> and toggle the <a name="d1057858e85"></a><span class="control">Enable ADB Integration</span> option.
+        </li></ul></section><a name="d1057858e90"></a><a name="dynaProc1"></a><section class="procedure-steps"><h2>Showing and hiding the Logcat tab</h2><p>
+            <a name="d1057858e94"></a><p>
+                By default, the <a name="d1057858e96"></a><span class="control">Logcat</span> tab is activated automatically every time an application is deployed and launched successfully.
+                You can disable automatic display of the <a name="d1057858e99"></a><span class="control">Logcat</span> pane by performing the following steps:
+            </p>
+        </p><ol class=".list _decimal"><li class="list__item">
+            <a name="d1057858e106"></a><a href="creating-an-android-run-debug-configuration.html"><span>Start creating an Android run/debug configuration</span></a> or open an existing configuration for editing (in the main menu, navigate to
+            <a name="d1057858e109"></a><span class="control">Run | Edit Configurations</span> and select the required configuration).
+        </li><li class="list__item">
+            Switch to the <a name="d1057858e115"></a><span class="control">Logcat</span> tab and clear the <a name="d1057858e118"></a><span class="control">Show logcat automatically</span> check box.
+        </li></ol></section><a name="filter"></a><a name="d1057858e125"></a><a name="dynaProc2"></a><section class="procedure-steps"><h2>Defining the scope of log data to display</h2><p>
+            <a name="d1057858e129"></a><p>
+                During a debug session, you can switch to the <a name="d1057858e131"></a><a href="android-tool-window.html"><span>Android tool window</span></a>
+                and configure the scope of log data to be displayed. You can:
+            </p>
+            <ul class="list _ul"><li class="list__item"><a name="d1057858e137"></a>
+                    Select to only see messages related to a specific process.
+                </li><li class="list__item"><a name="d1057858e140"></a>
+                    Define a log level for messages to be displayed.
+                </li><li class="list__item"><a name="d1057858e143"></a>
+                Create log data filter configurations.
+                </li></ul>
+            <a name="d1057858e147"></a><p>
+                For detailed instructions on how to configure these options, refer to <a name="d1057858e149"></a><a href="android-tool-window.html"><span>Android tool window</span></a>.
+            </p>
+        </p></section><div class="navigation-links _bottom"><a class="navigation-links__prev" href="choosing-the-target-device-manually.html">Choosing the Target Device Manually</a><a class="navigation-links__next" href="managing-virtual-devices.html">Managing Virtual Devices</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content"><div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d1057858e166"></a><a href="monitoring-the-debug-information.html"><span>Monitoring the Debug Information</span></a></li><li class="list__item"><a name="d1057858e170"></a><a href="running-and-debugging-android-applications.html"><span>Running and Debugging Android Applications</span></a></li><li class="list__item"><a name="d1057858e172"></a><a href="android.html"><span>Android</span></a></li></ul></div><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d1057858e179"></a><a href="android-tool-window.html"><span>Android Tool Window</span></a></li><li class="list__item"><a name="d1057858e181"></a><a href="android-reference.html"><span>Android Reference</span></a></li></ul></div><div class="seealso__col"><h3>Concepts:</h3><ul class="list"><li class="list__item"><a name="d1057858e159"></a><a href="topicId48.html"><span>Running and Debugging</span></a></li></ul></div></div></section><div class="last-modified">Last modified: 13 July 2016 </div></article><div id="disqus_thread"></div></div></section></main></div><script src="/help/app/app.js"></script></body></html>

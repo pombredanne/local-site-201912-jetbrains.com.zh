@@ -1,0 +1,39 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta charset="UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="//resources.jetbrains.com/storage/help-app/v3/analytics.js"></script><title>Get Saved Searches for a User - Help | YouTrack Standalone</title><link rel="stylesheet" href="//resources.jetbrains.com/storage/help-app/v3/app.css"></head><body data-id="Get-Saved-Searches-for-a-User" data-breadcrumbs="Resources-for-Developers.xml|Resources for Developers/deprecated-rest-api-reference.xml|Old REST API/General-REST-API.xml|General REST API/User-Related-Methods.xml|User Related Methods/Get-Saved-Searches-for-a-User.xml|Get Saved Searches for a User" data-main-title="Get Saved Searches for a User"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack Standalone Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>YouTrack Standalone 2019.2 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="Get-Saved-Searches-for-a-User" id="Get-Saved-Searches-for-a-User.xml">Get Saved Searches for a User</h1>    <a name="GET_/user/{user}/filter"></a>    <h2 id="9d0f00c9">GET /user/{user}/filter</h2>    <p id="e320327a">Get the list of saved searches for a specific user</p>    <p id="31a5c6c4">        <div class="code-block" data-lang="none">GET /rest/user/{user}/filter</div>    </p>    <p id="fd9f99de">        <b id="1e99ad1a">Parameters:</b>    </p>    <div class="table-wrapper"><table class=" wide" width="100%" id="928eed17"><thead><tr id="2b4af429" class="ijRowHead"><th id="7b7647d6"><p>Name</p></th><th id="0a261958"><p>Type</p></th><th id="fe7c95b7"><p>Description</p></th></tr></thead><tbody><tr id="eb3e9d09" class="ijRowOdd"><td id="a522867f"><p>user</p></td><td id="369b9884"><p>userByLogin</p></td><td id="793de928"><p>Login name of a user to get Saved searches for.</p></td></tr></tbody></table></div>    <h3 id="82c9620f">Sample</h3>    <h4 id="0294281f">Sample 1</h4>    <p id="c3057dcb">        <b id="d971e337">Request</b>    </p>    <div class="code-block" data-lang="none">
+        GET https://example.com/youtrack/rest/user/app_exception/filters
+        Connection: keep-alive
+        Cookie: $Version=0; JSESSIONID=342efpzevk821sa2fh6oszm07; $Path=/;
+        jetbrains.charisma.main.security.PRINCIPAL=MTVhMjY2OGUxMTUxMTI5MGMzNjhlZWM5NTJiNGJkNmIyNzc3NjdjZmM3YWU4MTVjYzQwYWE1MWZlYTkwNTcxNzphcHBfZXhjZXB0aW9u;
+        $Path=/
+    </div>    <p id="d998998b">        <b id="5f4058aa">Response</b>    </p>    <div class="code-block" data-lang="none">
+        HTTP/1.1 200 OK
+        Content-Type: application/xml;charset=UTF-8
+        Content-Length: 309
+
+        &lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+        &lt;queries&gt;
+        &lt;query name="Assigned to me" query="for: me"/&gt;
+        &lt;query name="Reported by me" query="by: me"/&gt;
+        &lt;query name="Assigned to me" query="for: me"/&gt;
+        &lt;query name="Commented by me" query="commenter: me"/&gt;
+        &lt;query name="Reported by me" query="by: me"/&gt;
+        &lt;/queries&gt;
+    </div>    <h4 id="ca22ca76">Sample 2</h4>    <p id="80c09ef5">        <b id="504b9f9c">Request</b>    </p>    <div class="code-block" data-lang="none">
+        GET https://example.com/youtrack/rest/user/root/filters
+        Connection: keep-alive
+        Cookie: $Version=0; JSESSIONID=342efpzevk821sa2fh6oszm07; $Path=/;
+        jetbrains.charisma.main.security.PRINCIPAL=MTVhMjY2OGUxMTUxMTI5MGMzNjhlZWM5NTJiNGJkNmIyNzc3NjdjZmM3YWU4MTVjYzQwYWE1MWZlYTkwNTcxNzphcHBfZXhjZXB0aW9u;
+        $Path=/
+    </div>    <p id="2d68894b">        <b id="8986af5b">Response</b>    </p>    <div class="code-block" data-lang="none">
+        HTTP/1.1 403 Forbidden
+        Content-Type: text/plain
+        Transfer-Encoding: chunked
+
+        &lt;error&gt;You have no rights to read user.&lt;/error&gt;
+    </div><div class="last-modified" data-skip-index="skip">Last modified: 29 November 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="Get-User-by-Login-Name.html">Get User by Login Name</a><a class="navigation-links__next" href="Methods-Related-to-Saved-Searches.html">Methods Related to Saved Searches</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="//resources.jetbrains.com/storage/help-app/v3/app.js"></script></body></html>

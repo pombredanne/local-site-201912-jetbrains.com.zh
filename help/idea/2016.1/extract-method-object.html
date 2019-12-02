@@ -1,0 +1,57 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"></meta><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><title>IntelliJ IDEA 2016.1 Help :: Extract Method Object</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="topicId575410"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.1 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWindow</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="extract-method.html">Extract Method</a><a class="navigation-links__next" href="extract-parameter-object.html">Extract Parameter Object</a></div><h1>Extract Method Object</h1><a name="d1712048e8"></a><p>The
+                <a name="d1712048e10"></a><span class="control">Extract Method Object</span>
+                refactoring moves method into a new class, converting all the local variables to
+                its fields, allowing you to decompose the method into other methods on the same object.
+                It is an alternative to the <a name="d1712048e13"></a><a href="extract-method.html"><span>Extract Method</span></a>,
+                and can be used when you have multiple return values in an extracted method.
+            </p><a name="d1712048e16"></a><h2>Example</h2><table class="" width="100%" id="d1712048e19"><thead><tr id="d1712048e21" class="ijRowHead"><a name="d1712048e21"></a><th><a name="d1712048e23"></a>Before</th><th><a name="d1712048e26"></a>After</th></tr></thead><tbody><tr id="d1712048e30" class="ijRowOdd"><a name="d1712048e30"></a><td><a name="d1712048e32"></a>
+<a name="d1712048e34"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kd">class</span> <span class="nc">Account</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="nf">gamma</span> <span class="o">(</span><span class="kt">int</span> <span class="n">val1</span><span class="o">,</span> <span class="o">...)</span> <span class="o">{</span>
+	    <span class="c1">//some computations</span>
+		             <span class="k">return</span> <span class="n">c</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></div>
+				     </td><td><a name="d1712048e38"></a>
+<a name="d1712048e40"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="kd">class</span> <span class="nc">Account</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="nf">gamma</span> <span class="o">(</span><span class="kt">int</span> <span class="n">val1</span><span class="o">,</span> <span class="o">...)</span> <span class="o">{</span>
+        <span class="n">Calculations</span> <span class="n">calculations</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Calculations</span><span class="o">(</span><span class="n">val1</span><span class="o">,</span> <span class="o">...).</span><span class="na">invoke</span><span class="o">();</span>
+        <span class="kt">int</span> <span class="n">c</span> <span class="o">=</span> <span class="n">calculations</span><span class="o">.</span><span class="na">getC</span><span class="o">();</span>
+        <span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="n">calculations</span><span class="o">.</span><span class="na">getA</span><span class="o">();</span>
+        <span class="k">return</span> <span class="n">c</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">private</span> <span class="kd">class</span> <span class="nc">Calculations</span> <span class="o">{</span>
+        <span class="kd">private</span> <span class="kt">int</span> <span class="n">val1</span><span class="o">;</span>
+        <span class="o">...</span>
+        <span class="kd">private</span> <span class="kt">int</span> <span class="n">a</span><span class="o">;</span>
+        <span class="kd">private</span> <span class="kt">int</span> <span class="n">c</span><span class="o">;</span>
+        <span class="kd">public</span> <span class="nf">Calculations</span><span class="o">(</span><span class="kt">int</span> <span class="n">val1</span><span class="o">,</span> <span class="o">...)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">val1</span> <span class="o">=</span> <span class="n">val1</span><span class="o">;</span>
+            <span class="o">...</span>
+        <span class="o">}</span>
+        <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getA</span><span class="o">()</span> <span class="o">{</span><span class="k">return</span> <span class="n">a</span><span class="o">;}</span>
+        <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getC</span><span class="o">()</span> <span class="o">{</span><span class="k">return</span> <span class="n">c</span><span class="o">;}</span>
+        <span class="kd">public</span> <span class="n">Calculations</span> <span class="nf">invoke</span><span class="o">()</span> <span class="o">{</span>
+            <span class="o">...</span><span class="c1">//computations</span>
+               <span class="k">return</span> <span class="k">this</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></div>
+				     </td></tr></tbody></table><a name="d1712048e47"></a><a name="dynaProc0"></a><section class="procedure-steps"><h2>To extract a method object, follow these steps</h2><ol class=".list _decimal"><li class="list__item">In the editor, select the method code block to be extracted into the object.</li><li class="list__item">On the main menu, or from the context menu of the selection, choose
+                <a name="d1712048e54"></a><span class="menupath">Refactor | Extract | Method Object</span>. </li><li class="list__item">Select whether you want to create inner class, or anonymous class.
+            <aside class="note sideblock">
+                <a name="d1712048e62"></a><p>You cannot extract the method object into an anonymous class, if the selected method code block
+                    contains
+                    local variables that should be accessed individually somewhere else. In this case method object can
+                    be extracted
+                    into inner class, that will contain needed getters.
+                </p>
+            </aside>
+			   </li><li class="list__item">If you want to create an inner class, you need to specify the name for the class and the visibility scope.
+            You can also make the class static, if needed.</li><li class="list__item">If you want to create an anonymous class, you should specify method's name. </li><li class="list__item">In the <a name="d1712048e76"></a><span class="control">Parameters</span> area select the variables that will be used as a parameters.</li><li class="list__item">Review <a name="d1712048e82"></a><span class="control">Signature Preview</span> and click <a name="d1712048e85"></a><span class="control">OK</span>.</li></ol></section><div class="navigation-links _bottom"><a class="navigation-links__prev" href="extract-method.html">Extract Method</a><a class="navigation-links__next" href="extract-parameter-object.html">Extract Parameter Object</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content"><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d1712048e94"></a><a href="extract-method-object-dialog.html"><span>Extract Method Object Dialog</span></a></li></ul></div></div></section><div class="last-modified">Last modified: 13 July 2016 </div></article><div id="disqus_thread"></div></div></section></main></div><script src="/help/app/app.js"></script></body></html>

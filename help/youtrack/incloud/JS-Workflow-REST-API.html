@@ -1,0 +1,198 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta charset="UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="//resources.jetbrains.com/storage/help-app/v3/analytics.js"></script><title>Using REST API Methods in JavaScript Workflows - Help | YouTrack InCloud</title><link rel="stylesheet" href="//resources.jetbrains.com/storage/help-app/v3/app.css"></head><body data-id="JS-Workflow-REST-API" data-breadcrumbs="Administration.xml|Administration/Workflow-Guide.xml|Workflows/Workflows-in-JavaScript.xml|JavaScript Workflow Reference/JS-Workflow-REST-API.xml|Using REST API Methods in JavaScript Workflows" data-main-title="Using REST API Methods in JavaScript Workflows"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack InCloud Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>YouTrack InCloud 2019.2 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="JS-Workflow-REST-API" id="JS-Workflow-REST-API.xml">Using REST API Methods in JavaScript Workflows</h1>    <p id="dee0baa3">Since release 7.0 YouTrack brings REST client implementation to the workflow API.    You can use workflows to script push-style integrations with your favorite tools.</p>    <p id="2fcbdd3f">See complete API reference in <a href="v1-http.html">Http</a> module documentation.</p>    <p id="2ab63048">Here's a basic example:</p><div class="code-block" data-lang="javascript">
+// Post issue content to third-party tool and add response as a comment
+var connection = new http.Connection('http://server.com');
+connection.addHeader('Content-Type', 'text/html');
+var response = connection.postSync('/issueRegistry', [], issue.description);
+if (response &amp;&amp; response.code === 200) {
+    issue.addComment(response.response);
+}
+</div>    <div class="chapter"><h2 id="workflow-rest-authentication" data-toc="JS-Workflow-REST-API#workflow-rest-authentication">Authentication</h2>        <p id="0102c357">The REST client supports the HTTP basic access authentication scheme via headers.        To utilize this scheme, compute a base64(login:password) value and set the authorization header as follows:</p>        <div class="code-block" data-lang="none">connection.addHeader('Authorization', 'Basic amsudmNAbWFFR5ydTp5b3V0cmFjaw==');</div>        <p id="fbae1e1f">Set the authorization header for every request, unless the target server provides cookies upon successful authentication.</p>        <p id="11a7f809">HTTP cookies are managed transparently under the hood, when present.        That is, if any REST call returns cookies, they persist automatically and provide access to the same domain until they expire.        You can also set cookies manually in the header:</p>        <div class="code-block" data-lang="none">connection.addHeader('Cookie', 'MyServiceCookie=732423sdfs73242');</div>    </div>    <div class="chapter"><h2 id="server-response" data-toc="JS-Workflow-REST-API#server-response">Server Response</h2>        <p id="9b579cfc">The REST client returns the server response as an object, described in        <a href="v1-Response.html">Response</a>.</p>    </div>    <div class="chapter"><h2 id="workflow-rest-secure-connection-ssl" data-toc="JS-Workflow-REST-API#workflow-rest-secure-connection-ssl">Secure Connections (SSL/TLS)</h2>        <p id="5a5e1093">The REST client supports <code class="code">https://</code> connections out of the box.        Although it's currently unable to present a client certificate during the handshake,        it can still validate a server certificate against known certificate authorities.        To learn more about adding trusted certificates to YouTrack, see <a href="SSL-Certificates.html">SSL Certificates</a>.</p>    </div>    <div class="chapter"><h2 id="workflow-rest-best-practices" data-toc="JS-Workflow-REST-API#workflow-rest-best-practices">Best Practices</h2>        <p id="6c13c994">For best results, observe the following guidelines.</p>        <ol class="list _decimal"><li class="list__item" id="2a3d2baa"><p>Know your protocol. If you're not yet familiar with HTTP, it's time to fill the gap.                You should have at least a basic understanding of the protocol to script the integration and decrypt errors.</p></li><li class="list__item" id="710cd2bb"><p>Know your API. Your favorite application that you're going to integrate with YouTrack almost certainly                has documentation that tells you how to use their API.                Check it out before you start to script an integration.                For instance, here's a manual for the <a href="https://pastebin.com/api/" data-external="true" target="_blank" rel="noopener noreferrer">Pastebin service</a>.</p></li><li class="list__item" id="d1933f82"><p>Use logging. Log errors and everything else with <code class="code">console.log(...)</code>.</p></li><li class="list__item" id="07828704"><p>Use a third-party REST client to make sure your requests are formatted correctly.                Diagnostic tools in clients like <span class="control">cURL</span>, <span class="control">Wget</span>                or the <span class="control">Postman</span> extension for Chrome can help you to find out                why your workflow is not acting as expected.</p></li><li class="list__item" id="a3444f55"><p>Don't forget to add <code class="code">Content-Type</code> and <code class="code">Accept</code> headers to your requests.                The majority of APIs out there rely on these headers and refuse to work without them.</p></li></ol>    </div>    <div class="chapter"><h2 id="workflow-rest-case-studies" data-toc="JS-Workflow-REST-API#workflow-rest-case-studies">Case Studies</h2>        <p id="e5cc70c6">The following case studies illustrate how you can use the workflow REST API to integrate YouTrack with an external application.</p>        <div class="chapter"><h3 id="workflow-rest-pastebin-integratoin">Pastebin Integration</h3>            <p id="040a6b11"><a href="https://pastebin.com/" data-external="true" target="_blank" rel="noopener noreferrer">Pastebin</a> is a  website where you can store text online for a set                period of time.            You can paste any string of text like code snippets and extracts from log files.</p>            <p id="4cc36075">In this case study, we extract code snippets from new issues and store them on Pastebin instead.            The issue description retains a link to the content that is moved to Pastebin.            The following workflow rule demonstrates how this scenario is implemented:</p><div class="code-block" data-lang="javascript">var entities = require('@jetbrains/youtrack-scripting-api/entities');
+var http = require('@jetbrains/youtrack-scripting-api/http');
+var workflow = require('@jetbrains/youtrack-scripting-api/workflow');
+
+exports.rule = entities.Issue.onChange({
+    title: 'Export to Pastebin.com',
+    action: function(ctx) {
+        var issue = ctx.issue;
+        if (issue.becomesReported || (issue.isReported &amp;&amp; issue.isChanged('description'))) {
+            // Find a code sample in issue description: the text between code markup tokens.
+            var findCode = function() {
+                var start = issue.description.indexOf('{code}');
+                if (start !== -1) {
+                    var end = issue.description.indexOf('{code}', start + 1);
+                    if (end !== -1) {
+                        return issue.description.substring(start + 6, end);
+                    }
+                }
+                return '';
+            };
+
+            var code = findCode();
+            if (code.length !== 0) {
+                var connection = new http.Connection('https://pastebin.com');
+                connection.addHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+                // Pastebin accepts only forms, so we pack everything as form fields.
+                // Authentication of performed via api developer key.
+                var payload = [];
+                payload.push({name: 'api_option', value: 'paste'});
+                payload.push({name: 'api_dev_key', value: '98bcac75e1e327b54c08947ea1dbcb7e'});
+                payload.push({name: 'api_paste_private', value: 1});
+                payload.push({name: 'api_paste_name', value: 'Code sample from issue ' + issue.id});
+                payload.push({name: 'api_paste_code', value: code.trim()});
+
+                var response = connection.postSync('/api/api_post.php', [], payload);
+
+                if (response.code === 200 &amp;&amp; response.response.indexOf('https://pastebin.com/') !== -1) {
+                    var url = response.response;
+                    issue.description = issue.description.replace('{code}' + code + '{code}',
+                                                                  'See sample at ' + url);
+                    workflow.message('Code sample is moved at &lt;a href="' + url + '"&gt;' + url + "&lt;/a&gt;");
+                } else {
+                    workflow.message('Failed to replace code due to: ' + response.response);
+                }
+            }
+        }
+    }
+});</div>            <p id="f27db726">On the other hand, we may want to do the opposite: to expand any Pastebin link we met into a code snippet,            i.e. to download it and insert into issue. Let's try to code it:</p><div class="code-block" data-lang="javascript">var entities = require('@jetbrains/youtrack-scripting-api/entities');
+var http = require('@jetbrains/youtrack-scripting-api/http');
+var workflow = require('@jetbrains/youtrack-scripting-api/workflow');
+
+exports.rule = entities.Issue.onChange({
+    title: 'Import from Pastebin.com',
+    action: function(ctx) {
+        var issue = ctx.issue;
+        if (issue.becomesReported || (issue.isReported &amp;&amp; issue.isChanged('description'))) {
+            var baseUrl = "https://pastebin.com/";
+            var urlBaseLength = baseUrl.length;
+
+            // Check, if issue description contains a link to pastebin.
+            var linkStart = issue.description.indexOf(baseUrl);
+            if (linkStart !== -1) {
+                // So we found a link, let's extract the key and download the contents via API.
+                var pasteKey = issue.description.substring(linkStart + urlBaseLength, linkStart + urlBaseLength + 8);
+                var connection = new http.Connection('https://pastebin.com');
+                var response = connection.getSync('/raw/' + pasteKey, []);
+
+                if (response.code === 200) {
+                    var url = baseUrl + pasteKey;
+                    issue.description = issue.description.replace(url, '{code}' + response.response + '{code}');
+                    workflow.message('Code sample is moved from &lt;a href="' + url + '"&gt;' + url + "&lt;/a&gt;");
+                } else {
+                    workflow.message('Failed to import code due to: ' + response.response);
+                }
+            }
+        }
+    }
+});</div>        </div>        <div class="chapter"><h3 id="workflow-rest-harvest-integration-time-tracking">Custom Time Tracking with the Harvest Web Service</h3>            <p id="fa6942f3">Suppose that we want to bill customers for the working hours that we record in YouTrack.            The problem is that YouTrack isn't really built for managing invoices and associating spent time with specific customers.            An integration with a dedicated time tracking service can make life a lot easier.</p>            <p id="08743b0a">Let's first introduce a common part for all scripts below: a <span class="control">common</span> custom script,            containing connection initialization and common payload fields:</p>            <div class="code-block" data-lang="javascript">var http = require('@jetbrains/youtrack-scripting-api/http');
+
+exports.userIds = {
+  'jane.smith': '1790518',
+  'john.black': '1703589'
+};
+
+exports.initConnection = function() {
+  var connection = new http.Connection('https://yourapp.harvestapp.com');
+  // see http://help.getharvest.com/api-v1/authentication/authentication/http-basic/
+  connection.addHeader('Authorization',
+                       'Basic bXJzLm1hcml5YS8kYXZ5ZG94YUBnbWFpbC0jb206a3V6eWEyMDA0');
+  connection.addHeader('Accept', 'application/json');
+  connection.addHeader('Content-Type', 'application/json');
+  return connection;
+};
+
+exports.initPayload = function(user) {
+  return {
+    project_id: '14383202',
+    task_id: '8120350',
+    user_id: exports.userIds[user.login]
+  };
+};</div>            <p id="baa108f9">One possible scenario is to introduce a custom field - <span class="control">Billable hours</span> -            and post changes to the value of this field to the Harvest web service.</p>            <div class="code-block" data-lang="javascript">var entities = require('@jetbrains/youtrack-scripting-api/entities');
+var workflow = require('@jetbrains/youtrack-scripting-api/workflow');
+var common = require('./common');
+
+exports.rule = entities.Issue.onChange({
+  title: 'Post Work Item',
+  action: function(ctx) {
+    var issue = ctx.issue;
+    if (issue.fields.isChanged(ctx.Hours)) {
+      var hours = (issue.fields.Hours || 0) - (issue.fields.oldValue(ctx.Hours) || 0);
+      var connection = common.initConnection();
+      var payload = common.initPayload(ctx.currentUser);
+      payload.hours = hours;
+      var response = connection.postSync('/daily/add', [], payload);
+      if (response &amp;&amp; response.code === 201) {
+        workflow.message('A work item was added to Harvest!');
+      } else {
+        workflow.message('Something went wrong when adding a work item to Harvest: ' + response);
+      }
+    }
+  },
+  requirements: {
+    Hours: {
+      type: entities.Field.integerType,
+      name: 'Billable hours'
+    }
+  }
+});</div>            <p id="fbf1aa98">Let's consider another option: start time tracking when an issue moves to an            <span class="control">In Progress</span> state and stop time tracking when the issue is resolved.            Lucky for us, Harvest has a timer API that we can use to start and stop the timers remotely.            The <span class="control">Harvest ID</span> custom field is required to store the timer identifier.</p>            <div class="code-block" data-lang="javascript">var entities = require('@jetbrains/youtrack-scripting-api/entities');
+var workflow = require('@jetbrains/youtrack-scripting-api/workflow');
+var common = require('./common');
+
+exports.rule = entities.Issue.onChange({
+  title: 'Start Timer',
+  action: function(ctx) {
+    var issue = ctx.issue;
+    if (issue.fields.becomes(ctx.State, ctx.State['In Progress'])) {
+      var connection = common.initConnection();
+      var payload = common.initPayload(ctx.currentUser);
+      var response = connection.postSync('/daily/add', [], payload);
+      if (response &amp;&amp; response.code === 201) {
+        issue.fields.HID = JSON.parse(response.response).id;
+        workflow.message('A timer is started at Harvest!');
+      } else {
+        workflow.message('Something went wrong when starting a timer at Harvest: ' + response);
+      }
+    }
+  },
+  requirements: {
+    HID: {
+      type: entities.Field.stringType,
+      name: 'Harvest ID'
+    },
+    State: {
+      type: entities.State.fieldType,
+      'In Progress': {}
+    }
+  }
+});</div>            <p id="5e1f3402">The following workflow rule stops the Harvest timer when an issue is resolved.</p>            <div class="code-block" data-lang="javascript">var entities = require('@jetbrains/youtrack-scripting-api/entities');
+var workflow = require('@jetbrains/youtrack-scripting-api/workflow');
+var common = require('./common');
+
+exports.rule = entities.Issue.onChange({
+  title: 'Stop Timer',
+  action: function(ctx) {
+    var issue = ctx.issue;
+    if (issue.becomesResolved &amp;&amp; issue.fields.HID) {
+      var connection = common.initConnection();
+      var response = connection.getSync('/daily/timer/' + issue.fields.HID);
+      if (response &amp;&amp; response.code === 200) {
+        workflow.message('A timer is stopped at Harvest!');
+      } else {
+        workflow.message('Something went wrong when stopping a timer at Harvest: ' + response);
+      }
+    }
+  },
+  requirements: {
+    HID: {
+      type: entities.Field.stringType,
+      name: 'Harvest ID'
+    }
+  }
+});</div>        </div>    </div><div class="last-modified" data-skip-index="skip">Last modified: 29 November 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="Slack-Integration-HTML.html">Building Integrations with Slack</a><a class="navigation-links__next" href="Workflow-Localization.html">Localizing Workflow Messages</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="//resources.jetbrains.com/storage/help-app/v3/app.js"></script></body></html>

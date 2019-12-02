@@ -1,0 +1,270 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta class="swiftype" name="product" data-type="string" content="/idea/2016.3/"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><meta charset="UTF-8"><meta name="robots" content="noindex"><title>IntelliJ IDEA 2016.3 Help :: Working with Sass and SCSS in Compass Projects</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Transpiling_Compass_to_CSS"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-swiftype-index="false"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.3 Help</h3><div class="shortcuts-switcher" data-swiftype-index="false"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Windows/Linux Default</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWin</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">Mac OS X</option><option data-group="secondary" value="eclipse_mac_os_x">Eclipse (Mac OS X)</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (Mac OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper (Mac OS X)</option><option data-group="secondary" value="emacs">Emacs (Mac OS X)</option></select></div><div class="panel-trigger" data-swiftype-index="false"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="xml-java-binding.html">XML-Java Binding</a></div><h1>Working with Sass and SCSS in Compass Projects</h1><a name="d766e18"></a><p><a name="d766e19"></a><span class="emphasis">This feature is supported in the Ultimate edition only.</span></p><a name="d400027e36"></a><p>
+                IntelliJ IDEA supports development in projects structured in compliance with the <a name="d400027e38"></a><a href="http://compass-style.org/" data-external="true"><span>Compass framework</span></a>.
+                This framework uses <a name="d400027e41"></a><span class="emphasis">Sass</span> and <a name="d400027e44"></a><span class="emphasis">SCSS</span> extensions of <a name="d400027e47"></a><span class="emphasis">CSS</span>.
+            </p><a name="d400027e51"></a><p>
+                On this page:
+            </p><ul><li class="list__item"><a href="#compassPrerequisites">Preparing for Compass development</a></li><li class="list__item"><a href="#d400027e154">Setting up a Compass project</a></li><li class="list__item"><a href="#d400027e203">Integrating Compass with IntelliJ IDEA</a></li><li class="list__item"><a href="#d400027e306">Creating a Compass Sass or a Compass SCSS transpiler</a></li><li class="list__item"><a href="#d400027e461">Running a Compass Sass or Compass SCSS transpiler</a></li></ul><a name="compassPrerequisites"></a><h2>Preparing for Compass development</h2>
+
+                <a name="d400027e58"></a><p>
+                    The <a name="d400027e60"></a><span class="emphasis">Compass</span> framework is installed through the <a name="d400027e63"></a><span class="emphasis">Ruby Gem manager</span>, therefore you need to install <a name="d400027e66"></a><span class="emphasis">Ruby</span> first.
+                </p>
+            <ol class="list _decimal"><li class="list__item"><a name="d400027e72"></a>
+                <a name="d400027e74"></a><a href="http://www.ruby-lang.org/en/downloads/" data-external="true"><span>Download and install Ruby</span></a>.
+            </li><li class="list__item"><a name="d400027e78"></a>
+                Specify a <code class="code" data-lang="Java">path</code> variable for the folder where the Ruby executable file and the <code class="code" data-lang="Java">gem.bat</code> file are stored.
+                This lets you launch <a name="d400027e86"></a><span class="emphasis">Ruby</span> and <a name="d400027e89"></a><span class="emphasis">Gem Manager</span> from any folder and ensures that <a name="d400027e92"></a><span class="emphasis">Ruby</span> is successfully launched during transpilation.
+            </li><li class="list__item"><a name="d400027e96"></a>
+                 
+                     
+        <a name="d831e5647"></a><span class="emphasis">Install</span> and <a name="d831e5650"></a><span class="emphasis">enable</span> the Sass Support plugin.
+         
+         
+        The <a name="d831e5668"></a><span class="emphasis"></span> plugin is&nbsp;not&nbsp;bundled with IntelliJ IDEA, but it can be installed from the <a name="d831e5671"></a><span class="emphasis">JetBrains plugin repository</span>
+            as described in <a name="d831e5674"></a><a href="installing-updating-and-uninstalling-repository-plugins.html"><span>Installing, Updating and Uninstalling Repository Plugins</span></a> and <a name="d831e5676"></a><a href="enabling-and-disabling-plugins.html"><span>Enabling and Disabling Plugins</span></a>.
+     
+     
+                     
+         
+        The <a name="d831e5668"></a><span class="emphasis"></span> plugin is&nbsp;not&nbsp;bundled with IntelliJ IDEA, but it can be installed from the <a name="d831e5671"></a><span class="emphasis">JetBrains plugin repository</span>
+            as described in <a name="d831e5674"></a><a href="installing-updating-and-uninstalling-repository-plugins.html"><span>Installing, Updating and Uninstalling Repository Plugins</span></a> and <a name="d831e5676"></a><a href="enabling-and-disabling-plugins.html"><span>Enabling and Disabling Plugins</span></a>.
+     
+                 
+                 
+            </li><li class="list__item"><a name="d400027e117"></a>
+                Install <a name="d400027e119"></a><span class="emphasis">Compass</span>.
+                <ol class="list _decimal"><li class="list__item"><a name="d400027e124"></a>
+                        The installation is performed in the command line mode. To start the built-in <a name="d400027e126"></a><span class="emphasis">Terminal</span>,
+                        hover your mouse pointer over <img alt="/help/img/idea/2016.3/show_tool_window_bars.png" title="/help/img/idea/2016.3/show_tool_window_bars.png" src="/help/img/idea/2016.3/show_tool_window_bars.png" width="14" height="14" class="inline-icon-14"> in the lower left corner of the IDE,
+                        then choose <a name="d400027e131"></a><span class="control">Terminal</span> from the menu (see <a name="d400027e134"></a><a href="working-with-embedded-local-terminal.html"><span>Working with Embedded Local Terminal</span></a> for details).
+                    </li><li class="list__item"><a name="d400027e137"></a>
+                        Type the following command at the command line prompt:
+                        <a name="d400027e139"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+gem install compass
+                        </code></div>
+                        <a name="d400027e142"></a><p>
+                            The tool is installed to the folder where Ruby executable file and the <code class="code" data-lang="Java">gem.bat</code> file are stored.
+                        </p>
+                    </li></ol>
+            </li></ol>
+        <a name="d400027e154"></a><h2>Setting up a Compass project</h2>
+
+                <a name="d400027e156"></a><p>
+                    You can have a project set up according to the Compass requirements in two ways: create a new Compass project or create an empty project and introduce a Compass-specific structure in it.
+                    In either case, a project is set up through command line commands.
+                    Of course, you can set up a Compass project externally and then open it in IntelliJ IDEA.
+                </p>
+                <a name="d400027e159"></a><p>
+                    During project set-up, a <code class="code" data-lang="Java">conf.rb</code> configuration file is generated. You will need to specify the location of this file when integrating Compass with IntelliJ IDEA.
+                </p>
+            <ul class="list _bullet"><li class="list__item"><a name="d400027e167"></a>
+                To set up the Compass-specific structure in an existing project:
+                <ol class="list _decimal"><li class="list__item"><a name="d831e5738"></a>
+            Open the desired project in IntelliJ IDEA.
+        </li><li class="list__item"><a name="d831e5741"></a>
+            Open the built-in <a name="d831e5743"></a><span class="control">Terminal</span> by hovering your mouse pointer over <img alt="/help/img/idea/2016.3/show_tool_window_bars.png" title="/help/img/idea/2016.3/show_tool_window_bars.png" src="/help/img/idea/2016.3/show_tool_window_bars.png" width="14" height="14" class="inline-icon-14"> in the lower left corner of IntelliJ IDEA
+            and choosing <a name="d831e5748"></a><span class="control">Terminal</span> from the menu.
+             
+        </li><li class="list__item"><a name="d400027e173"></a>
+                        At the command line prompt, type:
+                        <a name="d400027e175"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+compass init
+                        </code></div>
+                    </li></ol>
+            </li><li class="list__item"><a name="d400027e181"></a>
+                To create a Compass project from scratch:
+                <ol class="list _decimal"><li class="list__item"><a name="d831e5738"></a>
+            Open the desired project in IntelliJ IDEA.
+        </li><li class="list__item"><a name="d831e5741"></a>
+            Open the built-in <a name="d831e5743"></a><span class="control">Terminal</span> by hovering your mouse pointer over <img alt="/help/img/idea/2016.3/show_tool_window_bars.png" title="/help/img/idea/2016.3/show_tool_window_bars.png" src="/help/img/idea/2016.3/show_tool_window_bars.png" width="14" height="14" class="inline-icon-14"> in the lower left corner of IntelliJ IDEA
+            and choosing <a name="d831e5748"></a><span class="control">Terminal</span> from the menu.
+             
+        </li><li class="list__item"><a name="d400027e187"></a>
+                        Switch to the folder that will be the parent for the new project folder. Type the following command:
+                        <a name="d400027e189"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+cd &lt;parent folder name&gt;
+                        </code></div>
+                    </li><li class="list__item"><a name="d400027e193"></a>
+                       At the command line prompt, type:
+                        <a name="d400027e195"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+compass create &lt;the name of the project to be created&gt;
+                        </code></div>
+                    </li></ol>
+            </li></ul>
+        <a name="d400027e203"></a><h2>Integrating Compass with IntelliJ IDEA</h2>
+                <a name="d400027e205"></a><p>
+                    To develop a Compass-specific project in IntelliJ IDEA, you need to specify the Compass executable file <code class="code" data-lang="Java">compass</code> and the project configuration file <code class="code" data-lang="Java">config.rb</code>.
+                    You can do it either through the <a name="d400027e213"></a><span class="control">Compass Support</span> page of the <a name="d400027e216"></a><span class="control">Settings</span>
+              dialog box or on the fly using an intention action
+                    that opens the <a name="d400027e223"></a><span class="control">Compass Support</span> dialog box.
+                </p>
+            <ol class="list _decimal"><li class="list__item"><a name="d400027e229"></a>
+                Open the <a name="d400027e231"></a><span class="control">Compass</span> page or dialog box by doing one of the following:
+                <ul class="list _bullet"><li class="list__item"><a name="d400027e236"></a>
+                         
+         
+            Open the <a name="d831e8187"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by pressing <kbd data-default="Ctrl+Alt+S" data-default_for_gnome="Ctrl+Alt+S" data-default_for_kde="Ctrl+Alt+S" data-default_for_xwin="Ctrl+Alt+S" data-emacs="Ctrl+Alt+S" data-jbuilder="N/A" data-visual_studio="Alt+F7" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Alt+S" data-mac_os_x_10.5_="&#x2318;," data-mac_os_x="&#x2318;," data-eclipse_mac_os_x="&#x2318;," data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+S</kbd> or by choosing <a name="d831e8191"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d831e8194"></a><span class="menupath">IntelliJ IDEA | Preferences</span> for OS X,
+         
+         
+            and  
+         
+         
+         
+        click <a name="d831e8217"></a><span class="control">Compass</span> under <a name="d831e8220"></a><span class="control">Languages &amp; Frameworks</span>.
+     
+     
+                    </li><li class="list__item"><a name="d400027e248"></a>
+                        <ol class="list _decimal"><li class="list__item"><a name="d400027e252"></a>
+                                In a <code class="code" data-lang="Java">.sass</code> or <code class="code" data-lang="Java">.scss</code> file, type the following <a name="d400027e260"></a><span class="emphasis">import</span> statement:
+                                <a name="d400027e263"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+@import 'compass'
+                                </code></div>
+                            </li><li class="list__item"><a name="d400027e267"></a>
+                                Click the red bulb icon or press <kbd data-default="Alt+Enter" data-default_for_gnome="Alt+Enter" data-default_for_kde="Alt+Enter" data-default_for_xwin="Alt+Enter" data-emacs="Alt+Enter" data-jbuilder="Alt+Enter" data-visual_studio="Alt+Enter" data-netbeans_6.5="N/A" data-eclipse="Alt+Enter" data-mac_os_x_10.5_="&#x2325;⏎" data-mac_os_x="&#x2325;⏎" data-eclipse_mac_os_x="&#x2318;1" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Enter</kbd>. Then choose <a name="d400027e271"></a><span class="control">Configure Compass</span> from the suggestion list.
+                            </li></ol>
+                        The <a name="d400027e276"></a><span class="control">Compass Support</span> dialog box opens.
+                    </li></ul>
+            </li><li class="list__item"><a name="d400027e282"></a>
+                To activate Compass support, select the <a name="d400027e284"></a><span class="control">Enable Compass support</span> check box.
+            </li><li class="list__item"><a name="d400027e288"></a>
+                In the <a name="d400027e290"></a><span class="control">Compass executable file</span> text box,  
+        specify the location of the <code class="code" data-lang="Java">compass</code> executable file under the Ruby installation. Type the path manually, for example,
+        <code class="code" data-lang="Java">C:\Ruby200-x64\bin\compass</code>, or choose it from the drop-down list, or click the <a name="d37778e395"></a><span class="control">Browse</span> button <img alt="/help/img/idea/2016.3/browseButton.png" title="/help/img/idea/2016.3/browseButton.png" src="/help/img/idea/2016.3/browseButton.png" width="15" height="15" class="inline-icon-15">
+        and choose the location of the <code class="code" data-lang="Java">compass</code> file in the dialog box that opens.
+     
+            </li><li class="list__item"><a name="d400027e296"></a>
+                In the <a name="d400027e298"></a><span class="control">Config path</span> field,
+                 
+        specify the location of the project Compass configuration file <code class="code" data-lang="Java">config.rb</code>.    Type the path manually, for example,
+        <code class="code" data-lang="Java">C:\my_projects\\compass_project\config.rb</code>, or choose it from the drop-down list, or click the <a name="d37778e412"></a><span class="control">Browse</span> button <img alt="/help/img/idea/2016.3/browseButton.png" title="/help/img/idea/2016.3/browseButton.png" src="/help/img/idea/2016.3/browseButton.png" width="15" height="15" class="inline-icon-15">
+        and choose the location of the <code class="code" data-lang="Java">compass</code> file int he dialog box that opens.
+        <a name="d37778e421"></a><p>
+            The Compass configuration file <code class="code" data-lang="Java">config.rb</code> is generated during project set-up through <code class="code" data-lang="Java">compass create</code> or <code class="code" data-lang="Java">compass init</code> commands.
+        </p>
+     
+            </li></ol>
+        <a name="d400027e306"></a><h2>Creating a Compass Sass or a Compass SCSS transpiler</h2>
+                <a name="d400027e308"></a><p>
+                    <a name="d400027e310"></a><span class="emphasis">Sass</span> and <a name="d400027e313"></a><span class="emphasis">SCSS</span> are not processed by browsers that work with CSS code.
+                    Therefore to be executed, Sass or SCSS code has to be translated into CSS. This operation is referred to as <a name="d400027e316"></a><span class="emphasis">transpilation</span>
+                    and the tools that perform it are called <a name="d400027e319"></a><span class="emphasis">transpilers</span>.
+                </p>
+                <a name="d400027e323"></a><p>
+                    IntelliJ IDEA supports integration with a transpiler tool that translates Sass and SCSS code from a Compass project without changing the Compass-specific project structure.
+                </p>
+                <a name="d400027e326"></a><p>
+                     
+         
+        In IntelliJ IDEA, transpiler configurations are called <a name="d37778e30"></a><span class="emphasis">File Watchers</span>.
+        For each supported transpiler, IntelliJ IDEA provides a predefined <a name="d37778e33"></a><span class="emphasis">File Watcher</span> template.
+        Predefined <a name="d37778e36"></a><span class="emphasis">File Watcher</span> templates are available at the IntelliJ IDEA level. To run a transpiler against your project files, you need to
+        create a project-specific <a name="d37778e39"></a><span class="emphasis">File Watcher</span> based on the relevant template, at least, specify the path to the transpiler to use on your machine.
+
+     
+                </p>
+            <a name="d400027e331"></a><p>
+                 
+            IntelliJ IDEA provides a common procedure and user interface for creating <a name="d37778e103"></a><span class="emphasis">File Watchers</span> of all types.
+            The only difference is in the predefined templates you choose in each case.
+     
+            </p>
+
+
+            <ol class="list _decimal"><li class="list__item"><a name="d400027e338"></a>
+                 
+
+             
+                Install and enable the <a name="d37778e317"></a><span class="keyword">File Watchers</span> repository plugin.
+                <a name="d37778e320"></a><p>
+                    The plugin is&nbsp;<a name="d37778e322"></a><u id="d37778e322">not</u>&nbsp;bundled with IntelliJ IDEA, but it is available from the <a name="d37778e325"></a><a href="http://plugins.jetbrains.com/ruby" data-external="true"><span>IntelliJ IDEA plugin repository</span></a>
+                    <a name="d37778e328"></a><a href="https://plugins.jetbrains.com/plugin/7177?pr=idea" data-external="true"><span>plugin repository</span></a>.
+                    See <a name="d37778e331"></a><a href="installing-updating-and-uninstalling-repository-plugins.html"><span>Installing, Updating and Uninstalling Repository Plugins</span></a> and <a name="d37778e333"></a><a href="enabling-and-disabling-plugins.html"><span>Enabling and Disabling Plugins</span></a> for details.
+                </p>
+             
+             
+
+     
+            </li><li class="list__item"><a name="d400027e343"></a>
+                 
+
+            To start creating a <a name="d37778e109"></a><span class="emphasis">File Watcher</span>, open the Settings/Preferences dialog box by choosing
+             
+             
+                <a name="d37778e117"></a><span class="menupath">File | Settings</span> for Windows and Linux or <a name="d37778e120"></a><span class="menupath">IntelliJ IDEA | Preferences</span> for OS X
+             
+            on the main menu, and then click <a name="d37778e124"></a><span class="control">File Watchers</span> under the <a name="d37778e127"></a><span class="control">Tools</span> node.
+            The <a name="d37778e131"></a><a href="file-watchers.html"><span>File Watchers page</span></a> that opens, shows the list of <a name="d37778e134"></a><span class="emphasis">File Watchers</span> that are already configured in the project.
+
+     
+            </li><li class="list__item"><a name="d400027e348"></a>
+                Click the <a name="d400027e350"></a><span class="control">Add</span> button <img alt="new.png" title="new.png" src="/help/img/idea/2016.3/new.png" width="12" height="12" class="inline-icon-12"> or press <kbd data-default="Alt+Insert" data-default_for_gnome="Alt+Insert" data-default_for_kde="Alt+Insert" data-default_for_xwin="Alt+Insert" data-emacs="Alt+Insert" data-jbuilder="Alt+Insert" data-visual_studio="Alt+Insert" data-netbeans_6.5="N/A" data-eclipse="Alt+Insert" data-mac_os_x_10.5_="&#x2318;N" data-mac_os_x="&#x2303;N" data-eclipse_mac_os_x="&#x2318;N" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Insert</kbd>
+                and choose the <a name="d400027e357"></a><span class="control">compass sass</span> or <a name="d400027e360"></a><span class="control">compass scss</span> predefined template from the pop-up list.
+            </li><li class="list__item"><a name="d400027e364"></a>
+                In the <a name="d400027e366"></a><span class="control">Program</span> text box, specify the path to the executable file:
+                <ul class="list _bullet"><li class="list__item"><a name="d400027e371"></a>
+               <code class="code" data-lang="Java">compass.bat</code> for Windows</li><li class="list__item"><a name="d400027e377"></a>
+               <code class="code" data-lang="Java">compass</code> for Unix and OS X</li></ul>
+                Type the path manually or click the <a name="d400027e384"></a><span class="control">Browse</span> button <img alt="browseButton.png" title="browseButton.png" src="/help/img/idea/2016.3/browseButton.png" width="15" height="15" class="inline-icon-15"> and choose the file location in the dialog box that opens.
+            </li><li class="list__item"><a name="d400027e390"></a>
+                In the <a name="d400027e392"></a><span class="control">Arguments</span> text box, type one of the following depending on the operating system used:
+                <ul class="list _bullet"><li class="list__item"><a name="d400027e397"></a>
+                        For OS X:
+                        <ul class="list _bullet"><li class="list__item"><a name="d400027e401"></a>
+                                <code class="code" data-lang="Java">compile $ProjectFileDir$</code> to process an entire directory
+                            </li><li class="list__item"><a name="d400027e407"></a>
+                                <code class="code" data-lang="Java">compile $ProjectFileDir$ $FilePath$</code> to process a single file
+                            </li></ul>
+                    </li><li class="list__item"><a name="d400027e415"></a>
+                        For Windows:
+                        <ul class="list _bullet"><li class="list__item"><a name="d400027e419"></a>
+                                <code class="code" data-lang="Java">compile $UnixSeparators($ProjectFileDir$)$</code> to process an entire directory
+                            </li><li class="list__item"><a name="d400027e425"></a>
+                                <code class="code" data-lang="Java">compile $UnixSeparators($FilePath$)$</code> to process a single file
+                            </li></ul>
+                    </li><li class="list__item"><a name="d400027e433"></a>
+                        For Linux (Ubuntu):
+                        <ul class="list _bullet"><li class="list__item"><a name="d400027e437"></a>
+                                <code class="code" data-lang="Java">compile $ProjectFileDir$</code> to process an entire directory
+                            </li><li class="list__item"><a name="d400027e443"></a>
+                                <code class="code" data-lang="Java">compile $ProjectFileDir$ $FilePath$</code> to process a single file
+                            </li></ul>
+                    </li></ul>
+            </li><li class="list__item"><a name="d400027e454"></a>
+                 
+            Proceed as described on page <a name="d37778e140"></a><a href="using-file-watchers.html"><span>Using File Watchers</span></a>.
+     
+            </li></ol>
+    <a name="d400027e461"></a><h2>Running a Compass Sass or Compass SCSS transpiler</h2>
+             
+         
+        <a name="d37778e147"></a><p>
+            When you open a Sass or SCSS file, IntelliJ IDEA checks whether an applicable file watcher is available in the current project. If such file watcher is configured but disabled,
+            IntelliJ IDEA displays a pop-up window that informs you about the configured file watcher and suggests to enable it.
+        </p>
+         
+        <a name="d37778e153"></a><p>
+            If an applicable file watcher is configured and enabled in the current project, IntelliJ IDEA starts it automatically
+            upon the event specified in the <a name="d37778e155"></a><a href="new-watcher-dialog.html"><span>New Watcher dialog</span></a>.
+            <ul class="list _bullet"><li class="list__item"><a name="d37778e160"></a>
+                    If the <a name="d37778e162"></a><span class="control">Immediate file synchronization</span> check box is selected, the <a name="d37778e165"></a><span class="emphasis">File Watcher</span> is invoked as soon as any changes are made to the source code.
+                </li><li class="list__item"><a name="d37778e169"></a>
+                    If the <a name="d37778e171"></a><span class="control">Immediate file synchronization</span> check box is cleared,
+                    the <a name="d37778e174"></a><span class="emphasis">File Watcher</span>  is started upon save (<a name="d37778e177"></a><span class="menupath">File | Save All</span>, <kbd data-default="Ctrl+S" data-default_for_gnome="Ctrl+S" data-default_for_kde="Ctrl+S" data-default_for_xwin="Ctrl+S" data-emacs="Ctrl+X, Ctrl+S" data-jbuilder="Ctrl+S" data-visual_studio="Ctrl+S" data-netbeans_6.5="N/A" data-eclipse="Ctrl+S" data-mac_os_x_10.5_="&#x2318;S" data-mac_os_x="&#x2318;S" data-eclipse_mac_os_x="&#x2318;S" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+S</kbd>) or when you move focus from IntelliJ IDEA
+                    (upon frame deactivation).
+                </li></ul>
+        </p>
+     
+            <a name="d400027e465"></a><p>
+                IntelliJ IDEA creates a separate file with the generated output. The file has the name of the source Sass or SCSS file
+                and the extension <code class="code" data-lang="Java">css</code>. The location of the generated files is defined in the <a name="d400027e470"></a><span class="control">Output paths to refresh</span> text box of the <a name="d400027e473"></a><a href="new-watcher-dialog.html"><span>New Watcher dialog</span></a>.
+                However, in the <a name="d400027e476"></a><span class="control">Project Tree</span>, they are shown under the source file which is now displayed as a node.
+            </p>
+    <div class="navigation-links _bottom"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="xml-java-binding.html">XML-Java Binding</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content">```
+                <div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d400027e485"></a><a href="using-file-watchers.html"><span>Using File Watchers</span></a></li><li class="list__item"><a name="d400027e487"></a><a href="minifying-css.html"><span>Minifying CSS</span></a></li><li class="list__item"><a name="d400027e489"></a><a href="transpiling-sass-less-and-scss-to-css.html"><span>Transpiling Sass, Less, and SCSS to CSS</span></a></li><li class="list__item"><a name="d400027e491"></a><a href="transpiling-stylus-to-css.html"><span>Transpiling Stylus to CSS</span></a></li></ul></div><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d400027e496"></a><a href="compass.html"><span>Compass</span></a></li><li class="list__item"><a name="d400027e498"></a><a href="file-watchers.html"><span>File Watchers</span></a></li><li class="list__item"><a name="d400027e500"></a><a href="new-watcher-dialog.html"><span>New Watcher Dialog</span></a></li></ul></div></div></section><div class="last-modified" data-swiftype-index="false">Last modified: 21 March 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

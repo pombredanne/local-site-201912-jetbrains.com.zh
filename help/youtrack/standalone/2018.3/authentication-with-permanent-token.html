@@ -1,0 +1,54 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="/help/app/v2/analytics.js"></script><meta charset="UTF-8"><meta name="robots" content="noindex"><title>Permanent Token Authorization - Help | YouTrack Standalone</title><link rel="stylesheet" href="/help/app/v2/app.css"></head><body data-id="authentication-with-permanent-token"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack Standalone Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>YouTrack Standalone 2018.3 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><h1 data-toc="authentication-with-permanent-token" id="authentication-with-permanent-token.xml">Permanent Token Authorization</h1>        <p id="67a6c383">Permanent tokens give you secure access to YouTrack from your client applications and scripts.          Compared to OAuth 2.0, authorization with a permanent token has the following advantages:</p>          <ul class="list _ul"><li class="list__item" id="6d1930a5"><p><b id="2cd0aa5b">Secure token-based authorization</b> — authorize access without implementing a complex OAuth&nbsp;2.0 authorization flow to obtain access tokens.</p></li><li class="list__item" id="1623682e"><p><b id="b3e8c1bd">Simple management</b> — create your own permanent tokens in your user profile. If you suspect that your                        connection has been compromised, you can delete the token at any time and generate a new one.</p></li><li class="list__item" id="e58d855e"><p><b id="8f5724fd">Granular access</b> — leverage the permission scheme to restrict the scope for different users.                  Permanent tokens only authorize actions that are allowed for the user who the token belongs to.                  You can create dedicated accounts for API users and grant a specific set of permissions to each.</p></li></ul>        <p id="e0babbd4">To learn how to create or delete a permanent token in your user profile, see <a href="Manage-Permanent-Token.html"><span>Manage Permanent Tokens</span></a>.</p>        <div class="chapter"><h2 id="permanent-token-sample">Sample Request</h2>        <p id="a65e092a">The following sample shows a REST API call which utilizes a permanent token as the            <code class="code" data-lang="Java">Bearer</code> attribute of the <code class="code" data-lang="Java">Authorization</code> header.        </p>        <p id="2d667d57">            <b id="03d00248">Request:</b>        </p>                        <div class="code-block" data-lang="cURL"><code class="code-block__wrapper">curl -X GET <span class="se">\</span>
+<span class="s1">&#39;https://youtrack.example.com/api/admin/projects?fields=id,name,shortName,createdBy%28login,name,id%29,leader%28login,name,id%29&#39;</span> <span class="se">\</span>
+-H <span class="s1">&#39;Authorization: Bearer perm:cm9vdA==.dG9rZW4=.rNZ38ije7uiWwnUTRDdyFDdUkoPUPi&#39;</span> <span class="se">\</span>
+-H <span class="s1">&#39;Accept: application/json&#39;</span> <span class="se">\</span>
+-H <span class="s1">&#39;Content-Type: application/json&#39;</span></code></div>                        <p id="ae16e11f">            <b id="23e0f18b">Response:</b>        </p>        <div class="code-block" data-lang="xml"><code class="code-block__wrapper">HTTP 200 OK
+Cache-Control → no-cache, no-store, no-transform, must-revalidate
+Content-Encoding → gzip
+Content-Length → 208
+Content-Type → application/json;charset=utf-8
+Date →Tue, 07 Aug 2018 11:01:17 GMT
+Server → YouTrack
+Vary →Accept-Encoding, User-Agent
+X-Content-Type-Options →nosniff
+X-Frame-Options →SAMEORIGIN
+X-XSS-Protection →1; mode=block
+[
+    {
+        &quot;shortName&quot;: &quot;RAP&quot;,
+        &quot;leader&quot;: {
+            &quot;login&quot;: &quot;john.doe&quot;,
+            &quot;name&quot;: &quot;John Doe&quot;,
+            &quot;id&quot;: &quot;1-2&quot;
+        },
+        &quot;createdBy&quot;: {
+            &quot;login&quot;: &quot;john.doe&quot;,
+            &quot;name&quot;: &quot;John Doe&quot;,
+            &quot;id&quot;: &quot;1-2&quot;
+        },
+        &quot;name&quot;: &quot;Rest Api Project&quot;,
+        &quot;id&quot;: &quot;0-2&quot;
+    },
+    {
+        &quot;shortName&quot;: &quot;SP&quot;,
+        &quot;leader&quot;: {
+            &quot;login&quot;: &quot;root&quot;,
+            &quot;name&quot;: &quot;John Smith&quot;,
+            &quot;id&quot;: &quot;1-1&quot;
+        },
+        &quot;createdBy&quot;: {
+            &quot;login&quot;: &quot;root&quot;,
+            &quot;name&quot;: &quot;John Smith&quot;,
+            &quot;id&quot;: &quot;1-1&quot;
+        },
+        &quot;name&quot;: &quot;Sample Project&quot;,
+        &quot;id&quot;: &quot;0-0&quot;
+    }
+]</code></div>        </div><div class="last-modified" data-skip-index="skip">Last modified: 7 March 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="api-log-in-to-youtrack.html">Log in to YouTrack</a><a class="navigation-links__next" href="OAuth-Authorization.html">OAuth 2.0 Authorization</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="/help/app/v2/app.js"></script></body></html>

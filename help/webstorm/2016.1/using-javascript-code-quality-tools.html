@@ -1,0 +1,398 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"></meta><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><title>WebStorm 2016.1 Help :: Using JavaScript Code Quality Tools</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Using_JSLint_Code_Quality_Tool"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search WebStorm Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>WebStorm 2016.1 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWindow</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="using-gulp-task-runner.html">Using Gulp Task Runner</a><a class="navigation-links__next" href="using-meteor.html">Using Meteor</a></div><h1>Using JavaScript Code Quality Tools</h1><a name="d257323e44"></a><p>
+              WebStorm provides facilities to run JavaScript-specific code quality inspections through integration with the following code verification tools:
+              <ul class="list _bullet"><li class="list__item"><a name="d257323e48"></a>
+                      <a name="d257323e50"></a><a href="http://www.jslint.com/" data-external="true"><span>JSLint</span></a>. The tool is bundled with WebStorm.
+                  </li><li class="list__item"><a name="d257323e54"></a>
+                      <a name="d257323e56"></a><a href="http://www.jshint.com/" data-external="true"><span>JSHint</span></a>. WebStorm comes bundled with the default version of the tool, but you can have an alternative version downloaded.
+                  </li><li class="list__item"><a name="d257323e60"></a> 
+            <a name="closure_linter"></a>
+                      <a name="d257323e64"></a><a href="https://developers.google.com/closure/utilities/" data-external="true"><span>Closure Linter</span></a>. The tool is not bundled with WebStorm, so you need to download it yourself.
+                  </li><li class="list__item"><a name="d257323e68"></a>
+                      <a name="d257323e70"></a><a href="http://catatron.com/node-jscs/" data-external="true"><span>JSCS</span></a>. The tool is not bundled with WebStorm, but you can install it from the WebStorm interface
+                      using the <a name="d257323e73"></a><span class="emphasis">Node Package Manager (npm)</span>.
+                  </li><li class="list__item"><a name="d257323e77"></a>
+                      <a name="d257323e79"></a><a href="http://eslint.org/" data-external="true"><span>ESLint</span></a>. The tool is not bundled with WebStorm, but you can install it from the WebStorm interface
+                      using the <a name="d257323e82"></a><span class="emphasis">Node Package Manager (npm)</span>.
+                  </li></ul>
+          </p><a name="d257323e88"></a><p>
+              All these tools register themselves as WebStorm code inspections:
+              they check JavaScript code for most common mistakes and discrepancies without running the application.
+                  When a tool is activated, it launches automatically on the edited <a name="d257323e90"></a><span class="emphasis">JavaScript</span> file.
+                  Discrepancies are highlighted and reported in pop-up information windows, a pop-up window appears when you hover the mouse pointer
+              over a stripe in the <a name="d257323e93"></a><span class="control">Validation</span> sidebar.
+              You can also press <kbd data-default="Alt+Enter" data-default_for_gnome="Alt+Enter" data-default_for_kde="Alt+Enter" data-default_for_xwin="Alt+Enter" data-emacs="Alt+Enter" data-visual_studio="Alt+Enter" data-netbeans_6.5="N/A" data-eclipse="Alt+Enter" data-mac_os_x_10.5_="&#x2325;⏎" data-mac_os_x="&#x2325;⏎" data-eclipse_mac_os_x="&#x2318;1" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Enter</kbd> to examine errors and apply suggested quick fixes.
+              Learn more about inspections and intention actions at <a name="d257323e98"></a><a href="code-inspection.html"><span>Code Inspection</span></a> and <a name="d257323e100"></a><a href="intention-actions.html"><span>Intention Actions</span></a>.
+          </p><a name="d257323e103"></a><p>
+              On this page:
+          </p><ul><li class="list__item"><a href="#d257323e109">Enabling and Configuring the Built-in JSLint Tool</a></li><li class="list__item"><a href="#d257323e151">Enabling and Configuring JSHint</a></li><li class="list__item"><a href="#d257323e226">Enabling and Configuring Closure Linter</a></li><li class="list__item"><a href="#JSCS">Using JSCS</a></li><li class="list__item"><a href="#ESLint">Using ESLint</a></li></ul><a name="d257323e109"></a><h2>Enabling and Configuring the Built-in JSLint Tool</h2>
+            <ol class="list _decimal"><li class="list__item"><a name="d257323e113"></a>
+                 
+         
+            Open the <a name="d7162e7876"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by choosing <a name="d7162e7878"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d7162e7881"></a><span class="menupath">WebStorm | Preferences</span> for OS X.
+         
+         
+     
+                <a name="d257323e117"></a><p>
+                     
+         
+         
+        Expand the <a name="d7162e7933"></a><span class="control">JavaScript</span> node under <a name="d7162e7936"></a><span class="control">Languages&amp;Frameworks</span>, and then
+     
+                     
+         
+         
+         
+        click <a name="d7162e7972"></a><span class="control">JSLint</span> under <a name="d7162e7975"></a><span class="control">Code Quality Tools</span>.
+     
+                </p>
+            </li><li class="list__item"><a name="d257323e137"></a>
+                On the <a name="d257323e139"></a><a href="jslint.html"><span>JSLint page</span></a> that opens, select the <a name="d257323e142"></a><span class="control">Enable</span> check box. After that all the controls in the page become available.
+            </li><li class="list__item"><a name="d257323e146"></a>
+                Define the set of common mistakes to check the code for. To enable a validation, select the check box next to it.
+            </li></ol>
+        <a name="d257323e151"></a><h2>Enabling and Configuring JSHint</h2>
+            <ol class="list _decimal"><li class="list__item"><a name="d257323e155"></a>
+                 
+         
+            Open the <a name="d7162e7876"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by choosing <a name="d7162e7878"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d7162e7881"></a><span class="menupath">WebStorm | Preferences</span> for OS X.
+         
+         
+     
+                <a name="d257323e159"></a><p>
+                     
+         
+         
+        Expand the <a name="d7162e7933"></a><span class="control">JavaScript</span> node under <a name="d7162e7936"></a><span class="control">Languages&amp;Frameworks</span>, and then
+     
+                     
+         
+         
+         
+        click <a name="d7162e7972"></a><span class="control">JSHint</span> under <a name="d7162e7975"></a><span class="control">Code Quality Tools</span>.
+     
+                </p>
+            </li><li class="list__item"><a name="d257323e179"></a>
+                On the <a name="d257323e181"></a><a href="jshint.html"><span>JSHint page</span></a> that opens, select the <a name="d257323e184"></a><span class="control">Enable</span> check box. After that all the controls in the page become available.
+            </li><li class="list__item"><a name="d257323e188"></a>
+                From the <a name="d257323e190"></a><span class="control">Version</span> drop-down list, choose the version of the tool to apply.
+                <a name="d257323e193"></a><p>
+                     
+                        WebStorm comes bundled with <a name="d10031e106"></a><span class="emphasis">version 1.0.0</span>, which is used by default.
+                        WebStorm provides the ability to download another version, which is not bundled. Actually, the alternative version is downloaded only once, whereupon it is available without download.
+                         
+                </p>
+            </li><li class="list__item"><a name="d257323e199"></a>
+                Configure the behaviour of JSHint:
+                <ul class="list _bullet"><li class="list__item"><a name="d257323e203"></a>
+                        To have the code verified according to the rules from a previously created configuration file, select the <a name="d257323e205"></a><span class="control">Use config files</span> check box.
+                        <a name="d257323e208"></a><p>
+                             
+                    A configuration file is a JSON file with the extension <code class="code" data-lang="Java">.jshintrc</code> that specifies which JSHint options should be enabled or disabled.
+                    WebStorm will look for a <code class="code" data-lang="Java">.jshintrc</code> file in the working directory. If the search fails, WebStorm will search in the parent folder, then again in the parent folder.
+                    The process is repeated until WebStorm finds a <code class="code" data-lang="Java">.jshintrc</code> or reaches the project root. To have WebStorm still run verification in this case,
+                    specify the default configuration file to use.
+                        <a name="d10031e74"></a><p>
+                            Starting with WebStorm version 6.0.1, the <a name="d10031e76"></a><span class="emphasis">globals</span> setting in <code class="code" data-lang="Java">.jshintrc</code> is supported.
+                            For earlier versions, a <a name="d10031e82"></a><span class="emphasis">Predefined (, separated)"</span> tree node is displayed in the bottom of the tree in the UI.
+                        </p>
+                     
+                        </p>
+                    </li><li class="list__item"><a name="d257323e214"></a>
+                        To configure verification manually, clear the check box and define the set of common mistakes to check the code for in the <a name="d257323e216"></a><span class="control">Options</span> area.
+                         
+                    The controls in the area fall into two groups:
+                    <ul class="list _bullet"><li class="list__item"><a name="d10031e127"></a>
+                            <a name="d10031e129"></a><span class="control">Enforcing options:</span> select the check boxes in this group to enable very strict behaviour of the verification tool and thus allow only safe JavaScript.
+                        </li><li class="list__item"><a name="d10031e133"></a>
+                            <a name="d10031e135"></a><span class="control">Relaxing options:</span> select/clear the check boxes in this area to suppress warnings when certain types of discrepancies are detected.
+                        </li><li class="list__item"><a name="d10031e139"></a>
+                            <a name="d10031e141"></a><span class="control">Environments:</span> select/clear these check boxes to specify for which environments you want global properties predefined.
+                        </li></ul>
+                     
+                        To enable a validation, select the check box next to it.
+                    </li></ul>
+            </li></ol>
+        <a name="d257323e226"></a><h2>Enabling and Configuring Closure Linter</h2>
+            <ol class="list _decimal"><li class="list__item"><a name="d257323e230"></a>
+                <a name="d257323e232"></a><a href="https://developers.google.com/closure/utilities/docs/linter_howto" data-external="true"><span>Download and install the Closure Linter tool</span></a>.
+            </li><li class="list__item"><a name="d257323e236"></a>
+                 
+         
+            Open the <a name="d7162e7876"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by choosing <a name="d7162e7878"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d7162e7881"></a><span class="menupath">WebStorm | Preferences</span> for OS X.
+         
+         
+     
+                <a name="d257323e240"></a><p>
+                     
+         
+         
+        Expand the <a name="d7162e7933"></a><span class="control">JavaScript</span> node under <a name="d7162e7936"></a><span class="control">Languages&amp;Frameworks</span>, and then
+     
+                     
+         
+         
+         
+        click <a name="d7162e7972"></a><span class="control">Closure Linter</span> under <a name="d7162e7975"></a><span class="control">Code Quality Tools</span>.
+     
+                </p>
+            </li><li class="list__item"><a name="d257323e260"></a>
+                On the <a name="d257323e262"></a><a href="closure-linter.html"><span>Closure Linter page</span></a> that opens, select the <a name="d257323e265"></a><span class="control">Enable</span> check box.
+                After that all the controls in the page become available.
+            </li><li class="list__item"><a name="d257323e269"></a>
+                Specify the path to the <a name="d257323e271"></a><span class="emphasis">Closure Linter</span> executable file:
+                <ul class="list _bullet"><li class="list__item"><a name="d9041e2031"></a><code class="code" data-lang="Java">&lt;Python_home&gt;\Scripts\jslint.exe</code> for Windows</li><li class="list__item"><a name="d9041e2036"></a><code class="code" data-lang="Java">/usr/local/bin/gjslint</code> for Linux and OS X</li></ul>
+            </li><li class="list__item"><a name="d257323e280"></a>
+                Specify the path to the previously created configuration file.
+            </li></ol>
+
+            <a name="d257323e284"></a><p>
+                Note that the behaviour of <a name="d257323e286"></a><span class="emphasis">Closure Linter</span> may slightly differ depending on whether it is run from WebStorm
+                or in the command line mode if a configuration file is parsed before the <code class="code" data-lang="Java">gjslint</code> process started
+                and all the parsed options are passed as arguments to the <code class="code" data-lang="Java">gjslint</code> process.
+                When <a name="d257323e295"></a><span class="emphasis">Closure Linter</span> is running inside WebStorm, the <code class="code" data-lang="Java">gjslint</code> process is launched in the following way:
+                <a name="d257323e302"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">gjslint</span> <span class="o">--</span><span class="n">flagfile</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">config_file</span> <span class="o">--</span><span class="n">recurse</span><span class="o">=</span><span class="n">no</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">user_source_file</span><span class="o">.</span><span class="na">js</span></code></div>
+                Therefore, the following command fails if the configuration file has a space instead of a <code class="code" data-lang="Java">=</code>:
+                <a name="d257323e308"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper"><span class="o">--</span><span class="n">jslint_error</span> <span class="n">indentation</span></code></div>
+            </p>
+        <a name="JSCS"></a><h2>Using JSCS</h2>
+        <a name="d257323e315"></a><p>
+            The <a name="d257323e317"></a><a href="http://catatron.com/node-jscs/" data-external="true"><span>JSCS</span></a> tool is run through <a name="d257323e320"></a><span class="emphasis">NodeJS</span>,
+            therefore make sure the <a name="d257323e323"></a><a href="http://nodejs.org/#download" data-external="true"><span>NodeJS</span></a> framework is downloaded and installed on your computer.
+            The framework also contains the <a name="d257323e326"></a><a href="https://npmjs.org/" data-external="true"><span>Node Package Manager(npm)</span></a> through which <a name="d257323e329"></a><span class="emphasis">JSCS</span> is installed.
+        </p>
+        <a name="d257323e333"></a><p>
+            Integration with <a name="d257323e335"></a><span class="emphasis">NodeJS</span> and <a name="d257323e338"></a><span class="emphasis">NPM</span> is supported through the <a name="d257323e341"></a><span class="emphasis">NodeJs</span> plugin.
+             
+        The plugin is bundled with WebStorm and activated by default.
+        If the plugin is not activated, enable it on the <a name="d7162e5458"></a><a href="plugins-2.html"><span>Plugins</span></a> page of the <a name="d7162e5460"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> as described in <a name="d7162e5462"></a><a href="enabling-and-disabling-plugins.html"><span>Enabling and Disabling Plugins</span></a>.
+     
+             
+        </p>
+
+        <a name="installJSCS"></a><p>To install JSCS:
+        </p>
+        <ol class="list _decimal"><li class="list__item"><a name="d257323e354"></a>
+                 
+         
+            Open the <a name="d7162e7944"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by choosing <a name="d7162e7946"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d7162e7949"></a><span class="menupath">WebStorm | Preferences</span> for OS X,
+         
+         
+            and  
+         
+         
+         
+        click <a name="d7162e7972"></a><span class="control">Node.js and NPM</span> under <a name="d7162e7975"></a><span class="control">Languages &amp; Frameworks</span>.
+     
+     
+            </li><li class="list__item"><a name="d257323e366"></a>
+                 
+        On the <a name="d9041e82"></a><span class="control">Node.js and NPM</span> page that opens, the <a name="d9041e85"></a><span class="control">Packages</span> area shows all the Node.js-dependent packages
+        that are currently installed on your computer, both at the <a name="d9041e88"></a><span class="emphasis">global</span> and at the <a name="d9041e91"></a><span class="emphasis">project</span> level.
+        Click <img alt="add" width="12" height="12" title="add" src="/help/img/idea/2016.1/new.png" class="inline-icon-12">.
+     
+            </li><li class="list__item"><a name="d257323e371"></a>
+                In the <a name="d257323e373"></a><span class="control">Available Packages</span> dialog box that opens, select the <code class="code" data-lang="Java">jscs</code> package and
+                click <a name="d257323e379"></a><span class="control">Install Package</span>.
+                <a name="d257323e382"></a><p>
+                    Learn more about installing tools through <a name="d257323e384"></a><span class="emphasis">NPM</span> in <a name="d257323e387"></a><a href="installing-and-removing-external-software-using-node-package-manager.html"><span>Installing and Removing External Software Using Node Package Manager</span></a>.
+                </p>
+            </li></ol>
+
+        <a name="d257323e392"></a><p>
+            To activate and configure JSCS:
+        </p>
+    <ol class="list _decimal"><li class="list__item"><a name="d257323e398"></a>
+             
+         
+            Open the <a name="d7162e7876"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by choosing <a name="d7162e7878"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d7162e7881"></a><span class="menupath">WebStorm | Preferences</span> for OS X.
+         
+         
+     
+            <a name="d257323e402"></a><p>
+                 
+         
+         
+        Expand the <a name="d7162e7933"></a><span class="control">JavaScript</span> node under <a name="d7162e7936"></a><span class="control">Languages&amp;Frameworks</span>, and then
+     
+                 
+         
+         
+         
+        click <a name="d7162e7972"></a><span class="control">JSCS</span> under <a name="d7162e7975"></a><span class="control">Code Quality Tools</span>.
+     
+            </p>
+        </li><li class="list__item"><a name="d257323e422"></a>
+            Select the <a name="d257323e424"></a><span class="control">Enable</span> check box to activate <a name="d257323e427"></a><span class="emphasis">JSCS</span>. After that the controls in the dialog box become available.
+        </li><li class="list__item"><a name="d257323e431"></a>
+            In the <a name="d257323e433"></a><span class="control">Node Interpreter</span> field,
+             
+        specify the NodeJS installation home. Type the path to the NodeJS executable file manually,
+        or click the <img alt="browseButton.png" width="15" height="15" title="browseButton.png" src="/help/img/idea/2016.1/browseButton.png" class="inline-icon-15"> button
+        and select the location in the dialog box, that opens.
+     
+        </li><li class="list__item"><a name="d257323e439"></a>
+            In the <a name="d257323e441"></a><span class="control">JSCS Package</span> field,  
+        specify the location of the <code class="code" data-lang="Java">jscs</code> package installed in the current project,
+        see <a name="d9041e661"></a><a href="#installJSCS"><span>Installing JSCS</span></a>.
+     
+        </li><li class="list__item"><a name="d257323e447"></a>
+            Appoint the <a name="d257323e449"></a><a href="http://catatron.com/node-jscs/#configuration" data-external="true"><span>configuration</span></a> to use.
+             
+        <a name="d9041e684"></a><p>
+            By default, WebStorm first looks for a <code class="code" data-lang="Java">jscsConfig</code> property in the <code class="code" data-lang="Java">package.json</code> file of the current project.
+            If no such property is found, WebStorm looks for a <code class="code" data-lang="Java">.jscsrc</code> or a <code class="code" data-lang="Java">.jscs.json</code> configuration file. WebStorm starts the search from the folder
+            where the file to be checked is stored, then searches in the parent folder, and so on until reaches the project root.
+            Accordingly, you have to define the configuration to apply either as a <code class="code" data-lang="Java">jscsConfig</code> property in the <code class="code" data-lang="Java">package.json</code> file
+            or in a  <code class="code" data-lang="Java">.jscsrc</code> or a <code class="code" data-lang="Java">.jscs.json</code> configuration file, or in a custom <a name="d9041e711"></a><span class="emphasis">JSON</span> configuration file.
+        </p>
+        <a name="d9041e715"></a><p>
+            You can also apply a predefined set of rules, either independently or in combination with a configuration file.
+            In the latter case, the rules from the configuration file override the predefined rules.
+        </p>
+     
+            <ul class="list _bullet"><li class="list__item"><a name="d9041e721"></a>
+            To have WebStorm look for a <code class="code" data-lang="Java">jscsConfig</code> property in the <code class="code" data-lang="Java">package.json</code> file or for a <code class="code" data-lang="Java">.jscsrc</code> or a <code class="code" data-lang="Java">.jscs.json</code> file,
+            choose the <a name="d9041e735"></a><span class="control">Search for config(s)</span> option.
+        </li><li class="list__item"><a name="d9041e739"></a>
+            To use a custom file, choose the <a name="d9041e741"></a><span class="control">Configuration File</span> option and specify the location fo the file in the <a name="d9041e744"></a><span class="control">Path</span> field. Choose the path from the drop-down list,
+            or type it manually, or click the <img alt="browseButton" width="15" height="15" title="browseButton" src="/help/img/idea/2016.1/browseButton.png" class="inline-icon-15"> button and select the relevant file from the dialog box that opens.
+        </li><li class="list__item"><a name="d9041e750"></a>
+            To have a predefined set or rules applied, choose the desired set from the <a name="d9041e752"></a><span class="control">Code Style Preset</span> drop-down list.
+        </li></ul>
+        </li><li class="list__item"><a name="d257323e461"></a>
+            If necessary, from the <a name="d257323e463"></a><span class="control">Code Style Preset</span> drop-down list,
+             
+        choose the set of predefined rules associated with the code style you use.
+     
+        </li></ol>
+    <a name="ESLint"></a><h2>Using ESLint</h2>
+        <a name="d257323e473"></a><p>
+            The <a name="d257323e475"></a><a href="http://eslint.org/" data-external="true"><span>ESLint</span></a> tool is run through <a name="d257323e478"></a><span class="emphasis">NodeJS</span>,
+            therefore make sure the <a name="d257323e481"></a><a href="http://nodejs.org/#download" data-external="true"><span>NodeJS</span></a> framework is downloaded and installed on your computer.
+            The framework also contains the <a name="d257323e484"></a><a href="https://npmjs.org/" data-external="true"><span>Node Package Manager(npm)</span></a> through which <a name="d257323e487"></a><span class="emphasis">JSCS</span> is installed.
+        </p>
+        <a name="d257323e491"></a><p>
+            Integration with <a name="d257323e493"></a><span class="emphasis">NodeJS</span> and <a name="d257323e496"></a><span class="emphasis">NPM</span> is supported through the <a name="d257323e499"></a><span class="emphasis">NodeJS</span> plugin.
+             
+        The plugin is bundled with WebStorm and activated by default.
+        If the plugin is not activated, enable it on the <a name="d7162e5458"></a><a href="plugins-2.html"><span>Plugins</span></a> page of the <a name="d7162e5460"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> as described in <a name="d7162e5462"></a><a href="enabling-and-disabling-plugins.html"><span>Enabling and Disabling Plugins</span></a>.
+     
+             
+        </p>
+
+    <a name="installESLint"></a><p>
+        To install ESLint:
+    </p>
+        <ol class="list _decimal"><li class="list__item"><a name="d257323e512"></a>
+             
+         
+            Open the <a name="d7162e7944"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by choosing <a name="d7162e7946"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d7162e7949"></a><span class="menupath">WebStorm | Preferences</span> for OS X,
+         
+         
+            and  
+         
+         
+         
+        click <a name="d7162e7972"></a><span class="control">Node.js and NPM</span> under <a name="d7162e7975"></a><span class="control">Languages &amp; Frameworks</span>.
+     
+     
+        </li><li class="list__item"><a name="d257323e524"></a>
+             
+        On the <a name="d9041e82"></a><span class="control">Node.js and NPM</span> page that opens, the <a name="d9041e85"></a><span class="control">Packages</span> area shows all the Node.js-dependent packages
+        that are currently installed on your computer, both at the <a name="d9041e88"></a><span class="emphasis">global</span> and at the <a name="d9041e91"></a><span class="emphasis">project</span> level.
+        Click <img alt="add" width="12" height="12" title="add" src="/help/img/idea/2016.1/new.png" class="inline-icon-12">.
+     
+        </li><li class="list__item"><a name="d257323e529"></a>
+            In the <a name="d257323e531"></a><span class="control">Available Packages</span> dialog box that opens, select the <code class="code" data-lang="Java">eslint</code> package and
+            click <a name="d257323e537"></a><span class="control">Install Package</span>.
+            <a name="d257323e540"></a><p>
+                Learn more about installing tools through <a name="d257323e542"></a><span class="emphasis">NPM</span> in <a name="d257323e545"></a><a href="installing-and-removing-external-software-using-node-package-manager.html"><span>Installing and Removing External Software Using Node Package Manager</span></a>.
+            </p>
+
+        </li></ol>
+
+        <a name="d257323e550"></a><p>
+            To activate and configure ESLint:
+        </p>
+        <ol class="list _decimal"><li class="list__item"><a name="d257323e556"></a>
+             
+         
+            Open the <a name="d7162e7876"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by choosing <a name="d7162e7878"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d7162e7881"></a><span class="menupath">WebStorm | Preferences</span> for OS X.
+         
+         
+     
+            <a name="d257323e560"></a><p>
+                 
+         
+         
+        Expand the <a name="d7162e7933"></a><span class="control">JavaScript</span> node under <a name="d7162e7936"></a><span class="control">Languages&amp;Frameworks</span>, and then
+     
+                 
+         
+         
+         
+        click <a name="d7162e7972"></a><span class="control">ESLint</span> under <a name="d7162e7975"></a><span class="control">Code Quality Tools</span>.
+     
+            </p>
+        </li><li class="list__item"><a name="d257323e580"></a>
+                Select the <a name="d257323e582"></a><span class="control">Enable</span> check box to activate <a name="d257323e585"></a><span class="emphasis">JSCS</span>. After that the controls in the dialog box become available.
+            </li><li class="list__item"><a name="d257323e589"></a>
+                In the <a name="d257323e591"></a><span class="control">Node Interpreter</span> field,
+                 
+        specify the NodeJS installation home. Type the path to the NodeJS executable file manually,
+        or click the <img alt="browseButton.png" width="15" height="15" title="browseButton.png" src="/help/img/idea/2016.1/browseButton.png" class="inline-icon-15"> button
+        and select the location in the dialog box, that opens.
+     
+            </li><li class="list__item"><a name="d257323e597"></a>
+                In the <a name="d257323e599"></a><span class="control">ESLint Package</span> field,  
+        specify the location of the <code class="code" data-lang="Java">eslint</code> package installed in the current project,
+        see <a name="d9041e670"></a><a href="#installESLint"><span>Installing ESLint</span></a>.
+     
+            </li><li class="list__item"><a name="d257323e605"></a>
+                Appoint the configuration to use.
+                 
+        <a name="d9041e760"></a><p>
+            By default, WebStorm first looks for a <code class="code" data-lang="Java">.eslintrc</code> configuration file. WebStorm starts the search from the folder
+            where the file to be checked is stored, then searches in the parent folder, and so on until reaches the project root.
+            If no <code class="code" data-lang="Java">.eslintrc</code> file is found, <a name="d9041e768"></a><span class="emphasis">ESLint</span> uses its default embedded configuration file.
+            Accordingly, you have to define the configuration to apply either in a <code class="code" data-lang="Java">.eslintrc</code> configuration file,
+            or in a custom <a name="d9041e774"></a><span class="emphasis">JSON</span> configuration file, or rely on the default embedded configuration.
+        </p>
+     
+                <ul class="list _bullet"><li class="list__item"><a name="d9041e799"></a>
+            To have WebStorm look for a <code class="code" data-lang="Java">.eslintrc</code> file, choose the <a name="d9041e804"></a><span class="control">Search for .eslintrc</span> option.
+            If no <code class="code" data-lang="Java">.eslintrc</code> file is found, the default embedded configuration file will be used.
+        </li><li class="list__item"><a name="d9041e811"></a>
+            To use a custom file, choose the <a name="d9041e813"></a><span class="control">Configuration File</span> option and specify the location fo the file in the <a name="d9041e816"></a><span class="control">Path</span> field. Choose the path from the drop-down list,
+            or type it manually, or click the <img alt="browseButton" width="15" height="15" title="browseButton" src="/help/img/idea/2016.1/browseButton.png" class="inline-icon-15"> button and select the relevant file from the dialog box that opens.
+        </li></ul>
+            </li><li class="list__item"><a name="d257323e616"></a>
+                If necessary, in the <a name="d257323e618"></a><span class="control">Additional Rules Directory</span> field,
+                 
+ 
+        specify the location of the files with additional code verification rules.
+        These rules will be applied after the rules from <code class="code" data-lang="Java">.eslintrc</code> or the above specified custom configuration file
+        and accordingly will override them.
+     
+            </li><li class="list__item"><a name="d257323e627"></a>
+                If necessary, in the <a name="d257323e629"></a><span class="control">Extra ESLint Options</span> field,
+                 
+        specify additional command line options to run <a name="d9041e859"></a><span class="emphasis">ESLint</span> with using spaces as separators.
+        See <a name="d9041e862"></a><a href="http://eslint.org/docs/user-guide/command-line-interface#options" data-external="true"><span>ESLint Command Line Interface Options</span></a> for details.
+     
+            </li></ol>
+    <div class="navigation-links _bottom"><a class="navigation-links__prev" href="using-gulp-task-runner.html">Using Gulp Task Runner</a><a class="navigation-links__next" href="using-meteor.html">Using Meteor</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content"><div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d257323e641"></a><a href="code-inspection.html"><span>Code Inspection</span></a></li><li class="list__item"><a name="d257323e645"></a><a href="javascript-specific-guidelines.html"><span>JavaScript-Specific Guidelines</span></a></li></ul></div><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d257323e652"></a><a href="jshint.html"><span>JSHint</span></a></li><li class="list__item"><a name="d257323e654"></a><a href="jslint.html"><span>JSLint</span></a></li><li class="list__item"><a name="d257323e656"></a><a href="closure-linter.html"><span>Closure Linter</span></a></li><li class="list__item"><a name="d257323e658"></a><a href="eslint.html"><span>ESLint</span></a></li><li class="list__item"><a name="d257323e660"></a><a href="jscs.html"><span>JSCS</span></a></li><li class="list__item"><a name="d257323e663"></a><a href="inspections.html"><span>Inspections</span></a></li></ul></div></div></section><div class="last-modified">Last modified: 11 July 2016 </div></article><div id="disqus_thread"></div></div></section></main></div><script src="/help/app/app.js"></script></body></html>

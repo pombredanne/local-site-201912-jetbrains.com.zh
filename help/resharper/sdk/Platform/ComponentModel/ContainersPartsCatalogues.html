@@ -1,0 +1,348 @@
+
+
+
+<!doctype html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>Containers, Parts and Catalogues / ReSharper  DevGuide</title>
+    <link rel="stylesheet" href="/help/resharper/sdk/app/app.css">
+    <link rel="shortcut icon" href="/help/resharper/sdk/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="57x57" href="/help/resharper/sdk/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/help/resharper/sdk/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/help/resharper/sdk/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/help/resharper/sdk/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/help/resharper/sdk/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/help/resharper/sdk/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/help/resharper/sdk/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/help/resharper/sdk/apple-touch-icon-180x180.png">
+    <link rel="mask-icon" href="/help/resharper/sdk/apple-mask-icon.svg" color="black">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-square70x70logo" content="/help/resharper/sdk/mstile-70x70.png">
+    <meta name="msapplication-TileImage" content="/help/resharper/sdk/mstile-144x144.png">
+    <meta name="msapplication-square150x150logo" content="/help/resharper/sdk/mstile-150x150.png">
+    <meta name="msapplication-wide310x150logo" content="/help/resharper/sdk/mstile-310x150.png">
+    <meta name="msapplication-square310x310logo" content="/help/resharper/sdk/mstile-310x310.png">
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="Documentation for writing extensions for ReSharper" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.jetbrains.com/help/resharper/sdk//Platform/ComponentModel/ContainersPartsCatalogues.html" />
+    <meta property="og:site_name" content="JetBrains ReSharper" />
+    <meta property="og:title" content="Containers, Parts and Catalogues" />
+    <meta property="og:description" content="Documentation for writing extensions for ReSharper" />
+    <meta property="og:image" content="https://www.jetbrains.com/help/resharper/sdk/jetbrains.png" />
+    <meta property="article:modified_time" content="2017-07-10T19:28:42+00:00" />
+    <!-- <meta property="article:section" content="" /> 
+    <meta property="article:tag" content="" /> -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@JBPlatform" />
+    <meta name="twitter:title" content="Containers, Parts and Catalogues" />
+    <meta name="twitter:description" content="Documentation for writing extensions for ReSharper" />
+    <meta name="twitter:image" content="https://www.jetbrains.com/help/resharper/sdk/jetbrains.png" />
+    <meta class="swiftype" name="product" data-type="string" content="/help/resharper/sdk/"></meta>
+<link  rel="stylesheet" href="/help/resharper/sdk/app/styles.css"></head>
+<body data-id="Platform/ComponentModel/ContainersPartsCatalogues">
+<div class="wrapper">
+    <section class="panel _nav">
+        <header class="panel__header">
+            <div class="container">
+                <form class="search-box">
+                    <label for="search-box__input" class="search-box__label">
+                        <input type="text" class="search-box__input" id="search-box__input" placeholder="Search ReSharper  DevGuide">
+                    </label>
+                    <div class="search-box__clear" title="Clear"></div>
+                </form>
+            </div>
+        </header>
+        <nav class="panel__content">
+            <div class="container _nav">
+                <menu class="nav-tree"></menu>
+            </div>
+            <div class="container _footer panel__footer">
+                <p><a data-bypass="true" href="//youtrack.jetbrains.com/issues/IJSDK">Send feedback</a></p>
+                <p>&copy; 2000&ndash;2018 <a href="//www.jetbrains.com">JetBrains</a> s.r.o.<br>
+                    All rights reserved.</p>
+            </div>
+        </nav>
+    </section>
+
+    <main class="panel _main" role="main">
+        <header class="panel__header">
+            <div class="container">
+                <h3>ReSharper DevGuide</h3>
+                
+                <div class="panel-trigger"></div>
+            </div>
+        </header>
+        <section class="panel__content">
+            <div class="container">
+                <article class="article" data-shortcut-switcher="false">
+                    <div class="navigation-links _top" data-swiftype-index="false">
+                        
+                        <a class="navigation-links__next" href="/Platform/VisualStudio/ComponentModel.html">Component Model and Visual Studio interfaces</a>
+                    </div>
+                    <a data-bypass="true" href="https://github.com/JetBrains/resharper-devguide/edit/master/Platform/ComponentModel/ContainersPartsCatalogues.md" class="page-link-to-github" target="_blank" rel="noopener noreferrer" title="Edit this page on GitHub">
+                        <i class="github-icon"></i>
+                        <span class="text">Edit page</span>
+                    </a>
+
+                    <h1>Containers, Parts and Catalogues</h1>
+                    <aside class="note">
+  <p> This is an advanced, deep dive into the implementation of the Component Model. It is not necessary to understand this in order to use the Component Model, or solution or shell components.</p>
+</aside>
+
+<ul id="markdown-toc">
+  <li><a href="#containers" id="markdown-toc-containers"><span>Containers</span></a></li>
+  <li><a href="#registering-part-types" id="markdown-toc-registering-part-types"><span>Registering part types</span></a></li>
+  <li><a href="#chaining-containers" id="markdown-toc-chaining-containers"><span>Chaining containers</span></a></li>
+  <li><a href="#registering-resolvers" id="markdown-toc-registering-resolvers"><span>Registering resolvers</span></a></li>
+  <li><a href="#composition" id="markdown-toc-composition"><span>Composition</span></a></li>
+  <li><a href="#resolving-instances" id="markdown-toc-resolving-instances"><span>Resolving instances</span></a></li>
+  <li><a href="#cardinality" id="markdown-toc-cardinality"><span>Cardinality</span></a></li>
+  <li><a href="#overriding-and-replacing-components" id="markdown-toc-overriding-and-replacing-components"><span>Overriding and replacing components</span></a></li>
+  <li><a href="#catalogue-sets" id="markdown-toc-catalogue-sets"><span>Catalogue sets</span></a></li>
+  <li><a href="#catalogues" id="markdown-toc-catalogues"><span>Catalogues</span></a></li>
+</ul>
+
+<p>The Component Model is designed to create loosely coupled, composable applications. Shell and solution components are just one example of doing this, and are implemented on top of infrastructure that allows for more flexibility and custom handling of component creation and lifetime. In other words, the Component Model is a complete <a href="http://en.wikipedia.org/wiki/Inversion_of_control" data-external="true" target="_blank" rel="noopener noreferrer"><span>Inversion of Control</span></a> framework.</p>
+
+<p>At application startup, ReSharper creates several “containers”. These are the environment container, the shell container and, when a solution is opened, the solution container. These containers are created based on a catalogue set, that is, a collection of catalogues, where a catalogue is a collection of assemblies and exported types known as “parts”. By default, a part is recognised as a type that is decorated with an attribute that derives from <code class="code highlight language-text">PartAttribute</code>. Both <code class="code highlight language-text">ShellComponentAttribute</code> and <code class="code highlight language-text">SolutionComponentAttribute</code> derive (indirectly) from <code class="code highlight language-text">PartAttribute</code>.</p>
+
+<p>The container is responsible for creating object instances from the part types. Any dependencies declared in the part type’s constructor are also created and passed in. The container is also responsible for lifetime management of these parts, terminating each part’s <code class="code highlight language-text">Lifetime</code> or calling <code class="code highlight language-text">Dispose</code> when the container itself is terminated. All object instances are created when the container is composed.</p>
+
+<p>Typically, this infrastructure is not required by end-user code. Marking code as a shell or solution component is usually enough. However, it is sometimes necessary to manage lifetime or construction in a different way, and this can be done with a separate container. For example, the PSI’s <code class="code highlight language-text">DaemonStageManager</code> class creates its own container to manager the classes that handle analysis highlighting, in order to properly handle the correct grouping and ordering of the stages. It creates the container based on the application’s catalogue set, filtering for parts that are decorated with the <code class="code highlight language-text">[DaemonStage]</code> attribute. It is declared as a <code class="code highlight language-text">[SolutionComponent]</code>, which means the container and all of its components are also scoped to the solution lifetime.</p>
+
+<a name="containers" class="elem-anchor"></a>
+<h2>Containers<a href="#containers" class="anchor-link"><span></span></a></h2>
+
+<p>The <code class="code highlight language-text">ComponentContainer</code> class is the implementation of the container, and is responsible for resolving parts into object instances. It takes a collection of <code class="code highlight language-text">IComponentDescriptor</code> instances, each of which know how to create a single part. When the container is “composed”, the component descriptors are iterated, and the component is created, resolving dependencies as it does.</p>
+
+<p>Once composed, the container can resolve part type requests by passing the type to a list of <code class="code highlight language-text">IValueResolvers</code> that can map a part type request to one or more component descriptor instances. Once the descriptors have been resolved, the descriptor’s cached object instance is used. The value resolvers job is to allow for creating new descriptors for types that aren’t among the component descriptors, for example, <code class="code highlight language-text">IEnumerable&lt;TPart&gt;</code>, <code class="code highlight language-text">IViewable&lt;TPart&gt;</code> or <code class="code highlight language-text">Lazy&lt;TPart&gt;</code>.</p>
+
+<p>Creating a container is simply a matter of calling <code class="code highlight language-text">new</code>, passing in a <code class="code highlight language-text">Lifetime</code> and an id for diagnostics. The <code class="code highlight language-text">Lifetime</code> is the controlling lifetime of the container - when this <code class="code highlight language-text">Lifetime</code> terminates, the container terminates, as do all component descriptors and value resolvers. As a part of this, all component instances are also terminated, and any <code class="code highlight language-text">Dispose</code> methods are called.</p>
+
+<p>The third parameter to the constructor is an instance of <code class="code highlight language-text">IInitializationStrategy</code>. This is used to control how the parts are created when the container is composed. More on this later.</p>
+
+<a name="registering-part-types" class="elem-anchor"></a>
+<h2>Registering part types<a href="#registering-part-types" class="anchor-link"><span></span></a></h2>
+
+<p>Before the container can be composed, it must know how it will create the component instances for the requested parts. This is handled by a collection of <code class="code highlight language-text">IComponentDescriptor</code> instances, each of which describes how to create a single part. These component descriptors are passed to the container by one of the following methods:</p>
+
+<ul>
+  <li><code class="code highlight language-text">RegisterSource(IViewable&lt;IEnumerable&lt;IComponentDescriptor&gt;&gt; componentSource)</code> registers an observable collection of sequences of component descriptors. This observable collection can add or remove new descriptor collections at any time.</li>
+  <li><code class="code highlight language-text">RegisterDescriptors(IList&lt;IComponentDescriptor&gt; descriptors)</code> and <code class="code highlight language-text">RegisterDescriptors(Lifetime, IList&lt;IComponentDescriptor&gt; descriptors)</code>. The latter allows for descriptors to be tied to a <code class="code highlight language-text">Lifetime</code>, and  removed when the <code class="code highlight language-text">Lifetime</code> is terminated.</li>
+</ul>
+
+<p>The Component Model provides several implementations of <code class="code highlight language-text">IComponentDescriptor</code>, including parts created as singletons, parts created by factory methods, and parts wrapped in <code class="code highlight language-text">Lazy&lt;T&gt;</code>. Rather than use the <code class="code highlight language-text">RegisterDescriptors</code> methods directly, it is usually easier to use the extension methods on <code class="code highlight language-text">ComponentContainerEx</code>:</p>
+
+<ul>
+  <li><code class="code highlight language-text">Register(this ComponentContainer, Type type)</code>, <code class="code highlight language-text">Register&lt;T&gt;(this ComponentContainer)</code> and <code class="code highlight language-text">Register&lt;T&gt;(this ComponentContainer, Lifetime)</code> register a type with the container, optionally with a <code class="code highlight language-text">Lifetime</code> to allow for removing the type from the container. The descriptor added to the container is an instance of <code class="code highlight language-text">SingletonTypeComponentDescriptor</code>, which creates a singleton instance of the type.</li>
+  <li><code class="code highlight language-text">Register(this ComponentContainer, object instance)</code> registers an existing object instance.</li>
+  <li><code class="code highlight language-text">Register(this ComponentContainer, Func&lt;IValueResolveContext, T&gt; factory)</code> registers a factory that takes in a resolve context, and returns an object. The returned value is treated as a singleton.</li>
+</ul>
+
+<p>However, the simplest way of providing descriptors is to use the <code class="code highlight language-text">RegisterSource</code> method with an instance of <code class="code highlight language-text">CatalogueComponentSource</code>. This class converts a catalogue set implementing <code class="code highlight language-text">IPartsCatalogueSet</code> into a collection of component descriptors. Since it’s also an <code class="code highlight language-text">IViewable</code> of component descriptor collections, whenever a new catalogue is added to the catalogue set, it broadcasts a new collection of component descriptors.</p>
+
+<p>The source is also created with an <code class="code highlight language-text">IPartsSelector</code> and a collection of <code class="code highlight language-text">IPartsCatalogueFilter</code> instances. Both items filter the parts from the catalogue set, but for different purposes.</p>
+
+<p>The <code class="code highlight language-text">IPartsSelector</code> is used to select which parts can be created. Typically this is an instance on the static <code class="code highlight language-text">PartsSelector</code> class:</p>
+
+<ul>
+  <li><code class="code highlight language-text">PartsSelector.Leafs</code> selects only leaf parts. This allows parts to be overridden by deriving classes. If the base class and the derived class are both identified as a part (typically due to a <code class="code highlight language-text">[Part]</code> derived attribute), then both classes would be eligible when resolving a base interface. Selecting only leaf parts will strip out the base classes, and only select the derived.</li>
+  <li><code class="code highlight language-text">PartsSelector.LeafsAndHides</code> selects only leaf parts, but also allows a part to replace another part. If a part implements <code class="code highlight language-text">IHideImplementation&lt;TPart&gt;</code> then the part with type <code class="code highlight language-text">TPart</code> is not selected. This allows for overriding implementations without deriving.</li>
+  <li><code class="code highlight language-text">PartsSelector.All</code> selects all parts, leaf and non-leaf. This can cause the Component Model to throw if a requested interface can be resolved by both a base and derived component instance.</li>
+  <li><code class="code highlight language-text">PartsSelector.Default</code>. The same as <code class="code highlight language-text">PartsSelector.LeafsAndHides</code>.</li>
+</ul>
+
+<p>The collection of <code class="code highlight language-text">IPartsCatalogueFilter</code> can be used to filter the parts that are to be created, for example, using the <code class="code highlight language-text">CatalogueAttributeFilter</code> to filter for <code class="code highlight language-text">SolutionComponentAttribute</code> parts.</p>
+
+<p>The easiest way to register a source is to use one of the <code class="code highlight language-text">RegisterCatalogue</code> extension methods from <code class="code highlight language-text">CatalogueComponents</code>:</p>
+
+<div class="code-block" data-lang="csharp"><code class="code-block__wrapper"><span class="k">public</span> <span class="k">void</span> <span class="nf">Register</span><span class="p">(</span><span class="n">ComponentContainer</span> <span class="n">container</span><span class="p">,</span> <span class="n">IPartsCatalogSet</span> <span class="n">catalogSet</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="c1">// Register a catalog set with an attribute filter for MyPartAttribute</span>
+  <span class="n">container</span><span class="p">.</span><span class="n">RegisterCatalogue</span><span class="p">&lt;</span><span class="n">MyPartAttribute</span><span class="p">&gt;(</span><span class="n">catalogSet</span><span class="p">);</span>
+<span class="p">}</span>
+</code></div>
+
+<p>Note that if a new component descriptor is added after the container has been composed, the container is recomposed, and the new parts are immediately instantiated and available.</p>
+
+<a name="chaining-containers" class="elem-anchor"></a>
+<h2>Chaining containers<a href="#chaining-containers" class="anchor-link"><span></span></a></h2>
+
+<p>The container can be “chained” to another container. When resolving a type, if it can’t be found, the chained container will be called. This allows for satisfying dependencies that exist outside of the current container. For example, the solution container has <code class="code highlight language-text">SolutionAttribute</code> based parts registered, but some of those solution components will require dependencies that are shell components. By chaining the solution container to the shell container, those dependencies can be satisfied from the shell container.</p>
+
+<p>Chaining is handled with the <code class="code highlight language-text">ChainTo</code> extension method:</p>
+
+<div class="code-block" data-lang="csharp"><code class="code-block__wrapper"><span class="k">public</span> <span class="n">ComponentContainer</span> <span class="nf">Create</span><span class="p">(</span><span class="n">CatalogComponentSource</span> <span class="n">source</span><span class="p">,</span> <span class="n">ComponentContainer</span> <span class="n">parent</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">return</span> <span class="k">new</span> <span class="nf">ComponentContainer</span><span class="p">(</span><span class="n">lifetime</span><span class="p">,</span> <span class="s">"myContainer"</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">RegisterSource</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">ChainTo</span><span class="p">(</span><span class="n">parent</span><span class="p">);</span>
+<span class="p">}</span>
+</code></div>
+
+<a name="registering-resolvers" class="elem-anchor"></a>
+<h2>Registering resolvers<a href="#registering-resolvers" class="anchor-link"><span></span></a></h2>
+
+<p>Each part type is registered with the container as an instance of <code class="code highlight language-text">IComponentDescriptor</code>. This interface inherits the <code class="code highlight language-text">IValueDescriptor</code> interface, which provides the <code class="code highlight language-text">GetValue</code> method for getting the actual object instance of the descriptor.</p>
+
+<p>Each registered descriptor can create an instance of a specific type of object, but there are no descriptors for returning a list of parts that implement a common interface - for example, if a component wants to get all object instances that can handle code completion, it can add a constructor dependency of <code class="code highlight language-text">IEnumerable&lt;ICodeCompletionItemsProvider&gt;</code>, or to get a live list that handles container recompisition, <code class="code highlight language-text">IViewable&lt;ICodeCompletionItemsProvider&gt;</code>.</p>
+
+<p>Requests for these types are handled by an extensible set of value resolvers, implementing the <code class="code highlight language-text">IValueResolver</code> interface. These value resolvers take in a request for a part type, and return an instance of <code class="code highlight language-text">IValueDescriptor</code>. For example, the default component resolver simply looks up the part type in the registered component descriptors, and returns it.</p>
+
+<p>When resolving, the container will chain the request for a type through a known set of resolvers:</p>
+
+<ul>
+  <li><code class="code highlight language-text">EnumerableValueResolver</code> which will return an <code class="code highlight language-text">IEnumerable&lt;TPart&gt;</code> with all component instances of type <code class="code highlight language-text">TPart</code></li>
+  <li><code class="code highlight language-text">ViewableValueResolver</code> returns a live <code class="code highlight language-text">IViewable&lt;TPart&gt;</code> which will include any new component instances found when the container is recomposed (perhaps a new catalogue has been added to a catalogue set).</li>
+  <li>The default component resolver, which simply looks up the part in the list of component descriptors.</li>
+  <li><code class="code highlight language-text">DelegatingContainerValueResolver</code> will handle any requests for <code class="code highlight language-text">IComponentContainer</code> by looking at the current context and finding the parent container</li>
+  <li><code class="code highlight language-text">LifetimeValueResolver</code> will satisfy any requests for <code class="code highlight language-text">Lifetime</code> by creating a value resolver that will manage a <code class="code highlight language-text">LifetimeDefinition</code>. When asked for the value, it will create a <code class="code highlight language-text">Lifetime</code> instance. When the container is terminated, all value resolvers are terminated, and any <code class="code highlight language-text">LifetimeDefinition</code> instances here will also be terminated. This is how the <code class="code highlight language-text">Lifetime</code> passed to a component constructor is managed.</li>
+  <li><code class="code highlight language-text">LoggerValueResolver</code> will resolve <code class="code highlight language-text">ILogger</code> requests by deferring to <code class="code highlight language-text">Logger.GetLogger()</code> using the fully qualified name of the requesting type.</li>
+  <li><code class="code highlight language-text">LazyValueResolver</code> will resolve <code class="code highlight language-text">Lazy&lt;TPart&gt;</code> requests. The returned <code class="code highlight language-text">Lazy&lt;T&gt;</code> will lazily resolve the requested part when used. Note that this requires <code class="code highlight language-text">JetBrains.Util.Lazy&lt;T&gt;</code> and does NOT support <code class="code highlight language-text">System.Lazy&lt;T&gt;</code> (since ReSharper is a .net 3.5 application and <code class="code highlight language-text">System.Lazy&lt;T&gt;</code> is a .net 4 type. ReSharper will throw an explicit exception is <code class="code highlight language-text">System.Lazy&lt;T&gt;</code> is used.</li>
+  <li><code class="code highlight language-text">OptionalValueResolver</code> will resolve <code class="code highlight language-text">Optional&lt;T&gt;</code> requests. The target in the returned <code class="code highlight language-text">Optional&lt;T&gt;</code> is immediately evaluated, but can return null without throwing exceptions.</li>
+</ul>
+
+<p>The <code class="code highlight language-text">ComponentContainer.RegisterResolver</code> method allows for registering custom resolvers that get inserted, and is how container chaining is implemented.</p>
+
+<a name="composition" class="elem-anchor"></a>
+<h2>Composition<a href="#composition" class="anchor-link"><span></span></a></h2>
+
+<p>Composition is simply handled by a simple call to <code class="code highlight language-text">Compose</code>. The container will pass each <code class="code highlight language-text">IComponentDescriptor</code> to the <code class="code highlight language-text">IInitializationStrategy.Schedule</code> method of the strategy passed in to the container constructor. If no strategy was passed, the <code class="code highlight language-text">InitializationStrategyDefault</code> class is used, which immediately calls <code class="code highlight language-text">GetValue()</code> on the descriptor, which immediately creates and caches the component instance.</p>
+
+<p>Alternatively, when creating the container, you can pass in an instance of <code class="code highlight language-text">DelayedInitializationStrategy</code>, which schedules each call to <code class="code highlight language-text">IComponentDescriptor</code> to the current <code class="code highlight language-text">Dispatcher</code>, as a background priority action. This means it will get called when the application’s <code class="code highlight language-text">Dispatcher</code> is next idle. Note that initialisation will still happen on the current thread.</p>
+
+<aside class="note">
+  <p> This strategy is very useful for application start up, as it means the application no longer blocks during startup. However, it should be used with care! Using the default strategy, all objects are instantiated before the <code class="code highlight language-text">Compose</code> method completes. With <code class="code highlight language-text">DelaredInitializationStrategy</code>, the call to <code class="code highlight language-text">Compose</code> completes before all objects are instantiated.</p>
+
+  <p>However, trying to resolve a part that is still queued up for delayed initialisation simply creates and caches the object instance, resolving any dependencies as it does so. It is therefore safe to use components with delayed initialisation.</p>
+</aside>
+
+<p>A component can opt-out of delayed initialisation by setting the <code class="code highlight language-text">Requirement</code> property on its attribute:</p>
+
+<div class="code-block" data-lang="csharp"><code class="code-block__wrapper"><span class="na">[ShellComponent(Requirement = InstantiationRequirement.Immediate)]</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">MyImmediateComponent</span>
+<span class="p">{</span>
+<span class="p">}</span>
+</code></div>
+
+<p>This feature has been added for application startup, and is automatically applied to the shell container, but not to other containers. As such, the <code class="code highlight language-text">Requirement</code> property is only implemented on the <code class="code highlight language-text">ComponentAttribute</code>, rather than the <code class="code highlight language-text">PartsAttribute</code>. However, (warning - implementation detail!) the reflection code to look for the <code class="code highlight language-text">Requirement</code> property is loosely typed, and will work with a property declared on a <code class="code highlight language-text">PartsAttribute</code> derived type.</p>
+
+<a name="resolving-instances" class="elem-anchor"></a>
+<h2>Resolving instances<a href="#resolving-instances" class="anchor-link"><span></span></a></h2>
+
+<p>Once the container has been composed, object instances can be retrieved using the extension methods in <code class="code highlight language-text">ComponentContainerEx</code>.  These methods include:</p>
+
+<ul>
+  <li><code class="code highlight language-text">GetViewable&lt;T&gt;</code> returns an <code class="code highlight language-text">IViewable&lt;T&gt;</code> observable collection of all current instances of <code class="code highlight language-text">T</code> in the container. It will also notify any new instances that are added to the container from a component source.</li>
+  <li><code class="code highlight language-text">GetComponents&lt;T&gt;</code> returns an <code class="code highlight language-text">IEnumerable&lt;T&gt;</code> of all current instances of <code class="code highlight language-text">T</code> in the container. This is not a “live” collection - any new instances added are not reflected in the enumerable.</li>
+  <li><code class="code highlight language-text">GetComponent&lt;T&gt;</code> returns a single instance of <code class="code highlight language-text">T</code>. If there are more than one instances, this method will throw.</li>
+  <li><code class="code highlight language-text">TryGetComponent&lt;T&gt;</code> tries to return an instance of <code class="code highlight language-text">T</code>, if it exists in the container. If it doesn’t exist, the out parameter is null, and the method returns <code class="code highlight language-text">false</code>.</li>
+  <li><code class="code highlight language-text">HasComponent&lt;T&gt;</code> looks to see if an instance of <code class="code highlight language-text">T</code> exists in the container.</li>
+</ul>
+
+<p>These methods take some of the legwork out of managing an instance of <code class="code highlight language-text">IValueResolveContext</code> when calling <code class="code highlight language-text">ComponentContainer.Resolve</code> to get an instance of <code class="code highlight language-text">IValueDescriptor</code>. If a descriptor is returned (the container will return <code class="code highlight language-text">null</code> if a descriptor is not available), the <code class="code highlight language-text">IValueDescriptor.GetValue</code> method is called, returning the value. Typically, the value was already been created when the container was composed, and the cached value is returned.</p>
+
+<p>The <code class="code highlight language-text">T</code> passed to these methods can be any type in the type hierarchy of the required instance. It can be the most derived class, an abstract base class or an implemented interface.</p>
+
+<a name="cardinality" class="elem-anchor"></a>
+<h2>Cardinality<a href="#cardinality" class="anchor-link"><span></span></a></h2>
+
+<p>Typically, a container will be made up of only the most derived types of a hierarchy, thanks to the use of the <code class="code highlight language-text">LeafsAndHides</code> parts selector. However, this does not dictate how many instances of a particular base type or interface are available in the container. For example, given the following:</p>
+
+<div class="code-block" data-lang="csharp"><code class="code-block__wrapper"><span class="k">public</span> <span class="k">interface</span> <span class="nc">IFoo</span> <span class="p">{</span> <span class="p">}</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">Foo1</span> <span class="p">:</span> <span class="n">IFoo</span> <span class="p">{</span> <span class="p">}</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">Foo2</span> <span class="p">:</span> <span class="n">IFoo</span> <span class="p">{</span> <span class="p">}</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">Base</span> <span class="p">{</span> <span class="p">}</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">Derived</span> <span class="p">{</span> <span class="p">}</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">MostDerived</span> <span class="p">{</span> <span class="p">}</span>
+</code></div>
+
+<p>The container will make available two instances of <code class="code highlight language-text">IFoo</code> - <code class="code highlight language-text">Foo1</code> and <code class="code highlight language-text">Foo2</code>. However, there is only implementation of <code class="code highlight language-text">Base</code> - the <code class="code highlight language-text">MostDerived</code> class.</p>
+
+<p>It is important to get this right when consuming dependencies in the constructor. For example, the following constructor will fail, since there are multiple instances of <code class="code highlight language-text">IFoo</code> that can satisfy the parameter:</p>
+
+<div class="code-block" data-lang="csharp"><code class="code-block__wrapper"><span class="na">[ShellComponent]</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">MyComponent</span><span class="p">(</span><span class="n">IFoo</span> <span class="n">foo</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="p">}</span>
+</code></div>
+
+<p>Each component descriptor is assigned a “cardinality” - single or multiple. This cardinality is set the first time the component is resolved. If a single instance is being resolved, such as the use of <code class="code highlight language-text">IFoo</code> in the example above, the cardinality is set to “single”. If an <code class="code highlight language-text">IEnumerable&lt;T&gt;</code> or <code class="code highlight language-text">IViewable&lt;T&gt;</code> is being resolved, the cardinality of <code class="code highlight language-text">T</code> is set to “multiple”.</p>
+
+<p>When running a checked build, the cardinality is verified whenever a component is resolved, and if the cardinality of the request does not match the cardinality of the component, an error is logged, and an exception is thrown. When not running a checked build, this validation does not occur and the Component Model will try to resolve the component. This will succeed when requesting multiple instances of a component with single cardinality (it will return a collection of one item), however it will definitely fail when trying to resolve a single instance of a component with multiple cardinality (which should it return?).</p>
+
+<a name="overriding-and-replacing-components" class="elem-anchor"></a>
+<h2>Overriding and replacing components<a href="#overriding-and-replacing-components" class="anchor-link"><span></span></a></h2>
+
+<p>As seen above, only the most derived instance of a type is added to the container. This makes it possible for third party code to override types belonging to the ReSharper Platform. While this can be useful, it is discouraged, as only one third party can override a component - if a second third party tries to override the same component, then multiple leaf instances are introduced to the component, and resolution will fail.</p>
+
+<p>It is also possible to replace a component completely, without deriving from it. If a component implements <code class="code highlight language-text">IHideImplementation&lt;T&gt;</code>, then the <code class="code highlight language-text">LeafsAndHides</code> selector will replace the existing implementation <code class="code highlight language-text">T</code> in the container with the current component.</p>
+
+<div class="code-block" data-lang="csharp"><code class="code-block__wrapper"><span class="na">[ShellComponent]</span>
+<span class="k">public</span> <span class="k">void</span> <span class="n">AnotherComponent</span> <span class="p">:</span> <span class="n">IFoo</span>
+<span class="p">{</span>
+<span class="p">}</span>
+
+<span class="na">[ShellComponent]</span>
+<span class="k">public</span> <span class="k">void</span> <span class="n">MyComponent</span> <span class="p">:</span> <span class="n">IFoo</span><span class="p">,</span> <span class="n">IHideImplementation</span><span class="p">&lt;</span><span class="n">AnotherComponent</span><span class="p">&gt;</span>
+<span class="p">{</span>
+<span class="p">}</span>
+</code></div>
+
+<p>While both <code class="code highlight language-text">AnotherComponent</code> and <code class="code highlight language-text">MyComponent</code> implement <code class="code highlight language-text">IFoo</code>, only <code class="code highlight language-text">MyComponent</code> is added to the container, since it explicitly declares that it hides the implementation <code class="code highlight language-text">AnotherComponent</code>. Note that it hides a specific implementation class, and it does not hide all implementations of <code class="code highlight language-text">T</code>.</p>
+
+<a name="catalogue-sets" class="elem-anchor"></a>
+<h2>Catalogue sets<a href="#catalogue-sets" class="anchor-link"><span></span></a></h2>
+
+<p>The main source of part types for a container is a catalogue set, which is essentially an observable collection of catalogues, implementing the <code class="code highlight language-text">IPartsCatalogueSet</code> interface.</p>
+
+<div class="code-block" data-lang="csharp"><code class="code-block__wrapper"><span class="k">public</span> <span class="k">interface</span> <span class="nc">IPartsCatalogueSet</span>
+<span class="p">{</span>
+  <span class="n">IViewable</span><span class="p">&lt;</span><span class="n">IPartsCatalogue</span><span class="p">&gt;</span> <span class="n">Catalogues</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="p">}</span>
+  <span class="n">IViewable</span><span class="p">&lt;</span><span class="n">IPartsCatalogue</span><span class="p">&gt;</span> <span class="n">CataloguesPreview</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span>
+</code></div>
+
+<p>The observable collection <code class="code highlight language-text">Catalogues</code> is the list of current catalogues known to the catalogue set, but it will also notify subscribers of new catalogues being added to the set. This allows for recomposition of the catalogue set, and therefore any containers that are based on this catalogue set.</p>
+
+<p>The <code class="code highlight language-text">CataloguesPreview</code> property is a similar observable collection to the <code class="code highlight language-text">Catalogues</code> property, except new catalogues are added to this collection first. This allows for viewers to be notified of a new catalogue before it is processed, allowing for work before a container processes the new types.</p>
+
+<p>At application startup, the <code class="code highlight language-text">JetEnvironment</code> class is responsible for setting up the catalogue sets. It creates an instance of <code class="code highlight language-text">FullProductCatalogueSet</code>, passing in a list of all of the assemblies that make up the product. The catalogue set is initially created with a single catalogue made up of all of these assemblies, and containing a list of types that are decorated with <code class="code highlight language-text">[Part]</code> derived attributes. This catalogue set is an unfiltered collection of all parts that are available to the application. Note that no component instances have been created yet.</p>
+
+<p>It also exposes an <code class="code highlight language-text">EnvironmentPartCatalogSet</code>, which is an instance of <code class="code highlight language-text">PartsCatalogueSet</code>. This is a filtered view of the <code class="code highlight language-text">FullProductCatalogSet</code> that strips out any parts that are not part of a <a href="/help/resharper/sdk/Platform/Zones.html"><span>Zone</span></a>. This catalogue set is used to populate the component containers.</p>
+
+<a name="catalogues" class="elem-anchor"></a>
+<h2>Catalogues<a href="#catalogues" class="anchor-link"><span></span></a></h2>
+
+<p>An <code class="code highlight language-text">IPartsCatalogue</code> is a class that maintains and exposes a collection of metadata about the assemblies in the catalogue, and all the types that are to be treated as parts. By default, the parts are defined as any type that is decorated with an attribute that derives from <code class="code highlight language-text">PartAttribute</code>, but this isn’t required, and the Component Model can use any type. However, ReSharper’s containers only support <code class="code highlight language-text">[Part]</code> decorated parts.</p>
+
+<p>The metadata about the assemblies and the types does not come from reflection, but is efficiently read directly from the IL of the assemblies, and cached.</p>
+
+<p>The default implementation of <code class="code highlight language-text">PartsCatalogue</code> maintains a simple list of assemblies and types, while the <code class="code highlight language-text">AttributedIndexedPartsCatalogue</code> optimises to parts that are defined by attribute, and indexes each part type by attribute, allowing quicker access to all parts that are e.g. <code class="code highlight language-text">[SolutionComponent]</code> parts.</p>
+
+
+                    <div class="navigation-links _bottom" data-swiftype-index="false">
+                        
+                        <a class="navigation-links__next" href="/Platform/VisualStudio/ComponentModel.html">Component Model and Visual Studio interfaces</a>
+                    </div>
+                    <div class="last-modified">
+                        Last modified: 10 July 2017
+                    </div>
+                </article>
+
+                <section class="disqus">
+                    <div id="disqus_thread"></div>
+                </section>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="/help/resharper/sdk/app/app.js" data-baseurl="/help/resharper/sdk/"></script>
+
+</body>
+</html>
+

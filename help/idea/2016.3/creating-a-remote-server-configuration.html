@@ -1,0 +1,301 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta class="swiftype" name="product" data-type="string" content="/idea/2016.3/"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><meta charset="UTF-8"><meta name="robots" content="noindex"><title>IntelliJ IDEA 2016.3 Help :: Creating a Remote Server Configuration</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Creating_a_Remote_Server_Configuration"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-swiftype-index="false"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.3 Help</h3><div class="shortcuts-switcher" data-swiftype-index="false"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Windows/Linux Default</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWin</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">Mac OS X</option><option data-group="secondary" value="eclipse_mac_os_x">Eclipse (Mac OS X)</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (Mac OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper (Mac OS X)</option><option data-group="secondary" value="emacs">Emacs (Mac OS X)</option></select></div><div class="panel-trigger" data-swiftype-index="false"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="customizing-upload-download.html">Customizing Upload/Download</a></div><h1>Creating a Remote Server Configuration</h1><a name="d65357e3"></a><p>
+         
+         
+        The functionality described on this page and in the entire chapter <a name="d538e722"></a><a href="deployment-working-with-web-servers.html"><span>Working with Web Servers: Copying Files</span></a>
+        is available only in the <a name="d538e725"></a><span class="emphasis">Ultimate Edition</span> of IntelliJ IDEA.
+     
+    </p><a name="d65357e10"></a><p>
+        On this page:
+    </p><ul><li class="list__item"><a href="#d65357e15">Basics</a></li><li class="list__item"><a href="#d65357e50">Creating a server configuration: specifying its name, type, and visibility</a></li><li class="list__item"><a href="#d65357e152">Specifying user credentials defined during registration on the host</a></li><li class="list__item"><a href="#d65357e253">Enabling connection to the server and specifying the server configuration root</a></li><li class="list__item"><a href="#d65357e288">Mapping local folders to folders on the server and the URL addresses to access them</a></li><li class="list__item"><a href="#d65357e309">Overloading the deployment destination by configuring nested mappings</a></li></ul><a name="d65357e15"></a><h2>Basics</h2>
+    <a name="d65357e17"></a><p>
+               
+        A <a name="d538e691"></a><span class="emphasis">remote server</span> is a server on another computer (remote host).
+     
+          </p>
+          <a name="d65357e22"></a><p>
+              To configure access to the server in this set-up, you need to specify the following:
+          </p>
+          <ol class="list _decimal"><li class="list__item"><a name="d65357e27"></a>
+                  Connection settings: server host, port, and user credentials.
+              </li><li class="list__item"><a name="d65357e30"></a>
+                  The <a name="d65357e32"></a><span class="emphasis">server configuration root</span> folder and the URL address to access it.
+              </li><li class="list__item"><a name="d65357e36"></a>
+                  Correspondence between the <a name="d65357e38"></a><span class="emphasis">project root folder</span>, the folder on the server to copy the data from the <a name="d65357e41"></a><span class="emphasis">project root folder</span> to,
+                  and the URL address to access the copied data on the server. This correspondence is called <a name="d65357e44"></a><span class="emphasis">mapping</span>.
+              </li></ol>
+
+
+<a name="d65357e50"></a><h2>Creating a server configuration: specifying its name, type, and visibility</h2>
+        <ol class="list _decimal"><li class="list__item"><a name="d538e5"></a>
+            Open the <a name="d538e7"></a><a href="deployment.html"><span>Deployment</span></a> page by doing one of the following:
+            <ul class="list _bullet"><li class="list__item"><a name="d538e11"></a>
+                     
+         
+            Open the <a name="d831e8187"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by pressing <kbd data-default="Ctrl+Alt+S" data-default_for_gnome="Ctrl+Alt+S" data-default_for_kde="Ctrl+Alt+S" data-default_for_xwin="Ctrl+Alt+S" data-emacs="Ctrl+Alt+S" data-jbuilder="N/A" data-visual_studio="Alt+F7" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Alt+S" data-mac_os_x_10.5_="&#x2318;," data-mac_os_x="&#x2318;," data-eclipse_mac_os_x="&#x2318;," data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+S</kbd> or by choosing <a name="d831e8191"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d831e8194"></a><span class="menupath">IntelliJ IDEA | Preferences</span> for OS X,
+         
+         
+            and  
+         
+         
+         
+        click <a name="d831e8217"></a><span class="control">Deployment</span> under <a name="d831e8220"></a><span class="control">Build, Execution, Deployment</span>.
+     
+     
+                </li><li class="list__item"><a name="d538e23"></a>
+                    Choose <a name="d538e25"></a><span class="menupath">Tools | Deployment | Configuration</span> on the main menu.
+                </li></ul>
+        </li><li class="list__item"><a name="d538e31"></a>
+            In the left-hand pane, that shows a list of all the existing server configurations, click the <a name="d538e33"></a><span class="control">Add</span> toolbar button <img alt="add.png" title="add.png" src="/help/img/idea/2016.3/new.png" width="12" height="12" class="inline-icon-12">.
+            The <a name="d538e38"></a><a href="add-server-dialog.html"><span>Add Server dialog box</span></a> opens.
+        </li><li class="list__item"><a name="d65357e63"></a>
+                Specify the server configuration name in the <a name="d65357e65"></a><span class="control">Name</span> text box.
+                From the <a name="d65357e68"></a><span class="control">Type</span> drop-down list, choose the server configuration type depending on the protocol you are going to use to exchange the data with the server.
+                <ul class="list _bullet"><li class="list__item"><a name="d65357e73"></a>
+                        <a name="d65357e75"></a><span class="control">FTP:</span> choose this option to have IntelliJ IDEA access the server
+                        via the FTP <a name="d65357e78"></a><a href="http://en.wikipedia.org/wiki/File_Transfer_Protocol" data-external="true"><span>file transfer protocol</span></a>.
+                    </li><li class="list__item"><a name="d65357e82"></a>
+                        <a name="d65357e84"></a><span class="control">SFTP:</span> choose this option to have IntelliJ IDEA access the server
+                        via the <a name="d65357e87"></a><a href="http://en.wikipedia.org/wiki/SFTP" data-external="true"><span>SFTP</span></a> file transfer protocol.
+                    </li><li class="list__item"><a name="d65357e91"></a>
+                        <a name="d65357e93"></a><span class="control">FTPS:</span> choose this option to have IntelliJ IDEA access the server
+                        via the  FTP file transfer protocol over SSL (the <a name="d65357e96"></a><a href="http://en.wikipedia.org/wiki/FTPS" data-external="true"><span>FTPS</span></a> extension).
+                    </li></ul>
+                <a name="d65357e101"></a><p>
+                     
+        When editing the server configuration name in the <a name="d538e401"></a><span class="control">Name</span> text box,
+        use the <a name="d538e404"></a><span class="control">Up</span> and <a name="d538e407"></a><span class="control">Down</span> keys on your keyboard to change the preselected server access to type in the <a name="d538e410"></a><span class="control">Type</span> drop-down list.
+     
+                </p>
+            </li><li class="list__item"><a name="d65357e107"></a>
+                Use the <a name="d65357e109"></a><span class="control">Visible only for this project</span> check box
+                 
+        to configure the visibility of the server access configuration (deployment configuration).
+     
+                <ul class="list _bullet"><li class="list__item"><a name="d65357e116"></a>
+                         
+        Select the check box to restrict the use of the configuration to the current project.
+        Such configurations cannot be reused outside the current project,
+        they do not appear in the list of available configurations in other projects.
+     
+                         
+        For example, if this check box is selected in an SFTP configuration, you cannot use your SSH credentials from it when you configure
+        a remote interpreter.
+     
+                    </li><li class="list__item"><a name="d65357e123"></a>
+                         
+        When the check box is cleared, the configuration is visible in all IntelliJ IDEA projects and the settings from, including SSH credentials,
+        can be reused.
+     
+                    </li></ul>
+                 
+        See <a name="d538e769"></a><a href="configuring-node-js-interpreters.html"><span>Configuring Node.js Interpreters</span></a> and <a name="d538e771"></a><a href="configuring-remote-php-interpreters.html"><span>Configuring Remote PHP Interpreters</span></a>
+          for details.
+     
+            </li><li class="list__item"><a name="d65357e132"></a>
+                Click <a name="d65357e134"></a><span class="control">OK</span>. The <a name="d65357e137"></a><span class="control">Add Server</span> dialog box closes and you return to the <a name="d65357e140"></a><span class="control">Connection</span> tab of the <a name="d65357e143"></a><span class="control">Deployment</span> dialog box.
+                 
+        <a name="d538e45"></a><p>
+            <a name="defaultServer"></a>
+            Click the <a name="d538e49"></a><span class="control">Use as Default</span> toolbar button <img alt="icon_use_web_server_configuration_as_default.png" title="icon_use_web_server_configuration_as_default.png" src="/help/img/idea/2016.3/icon_use_web_server_configuration_as_default.png" width="18" height="20" class="inline-icon-20">
+            to have IntelliJ IDEA silently apply the current configuration in the following cases:</p>
+        <ul class="list _bullet"><li class="list__item"><a name="d538e57"></a>
+                <a name="d538e59"></a><a href="uploading-and-downloading-files.html#automaticUploadOnUpdate"><span>Automatic upload of changed files</span></a>.
+            </li><li class="list__item"><a name="d538e63"></a>
+                <a name="d538e65"></a><a href="uploading-and-downloading-files.html#manually"><span>Manual upload of files</span></a> without choosing the target host.
+            </li><li class="list__item"><a name="d538e69"></a>
+                <a name="d538e71"></a><a href="comparing-deployed-files-and-folders-with-their-local-versions.html"><span>Comparing local files and folders</span></a> with their remote versions.
+            </li></ul>
+     
+            </li></ol>
+<a name="d65357e152"></a><h2>Specifying user credentials defined during registration on the host</h2>
+        <ol class="list _decimal"><li class="list__item"><a name="d65357e156"></a>
+                Specify the registration mode:
+                <ul class="list _bullet"><li class="list__item"><a name="d65357e160"></a>
+                        To login in a regular mode, specify the login in the <a name="d65357e162"></a><span class="control">User name</span> text box.
+                    </li><li class="list__item"><a name="d65357e166"></a>
+                        To enable <a name="d65357e168"></a><a href="http://www.businessdictionary.com/definition/anonymous-FTP.html" data-external="true"><span>anonymous access</span></a> to the server with your email address as password,
+                        select the <a name="d65357e171"></a><span class="control">Login as anonymous</span> check box.
+                    </li></ul>
+            </li><li class="list__item"><a name="d65357e177"></a>
+                Specify the way to authenticate to the server:
+                <ul class="list _bullet"><li class="list__item"><a name="d65357e181"></a>
+                        For <a name="d65357e183"></a><span class="emphasis">FTP server</span>, type your password and select the <a name="d65357e186"></a><span class="control">Save password</span> check box to have IntelliJ IDEA remember it.
+                    </li><li class="list__item"><a name="d65357e190"></a>
+                        For <a name="d65357e192"></a><span class="emphasis">SFTP server</span>, choose the way to authenticate to the server. Do one of the following:
+                        <ul class="list _bullet"><li class="list__item"><a name="d65357e197"></a>
+                                To use standard authentication, choose <a name="d65357e199"></a><span class="control">Password</span>, specify the password,
+                                and select the <a name="d65357e202"></a><span class="control">Save password</span> check box to have IntelliJ IDEA remember it.
+                            </li><li class="list__item"><a name="d65357e206"></a>
+                                To use <a name="d65357e208"></a><a href="http://www.ssh.com/" data-external="true"><span>SSH authentication</span></a> via a key pair, choose <a name="d65357e211"></a><span class="control">Key pair (OpenSSH)</span>.
+                                 
+                            <a name="d47182e311"></a><p>
+                                To apply this authentication method, you need to have your private key on the client machine and your public key on the remote server you connect to.
+                                IntelliJ IDEA supports private keys generated using the <a name="d47182e313"></a><a href="http://www.openssh.com/" data-external="true"><span>OpenSSH</span></a> utility.
+                                See <a name="d47182e316"></a><a href="http://wiki.qnap.com/wiki/How_To_Set_Up_Authorized_Keys" data-external="true"><span>http://wiki.qnap.com/wiki/How_To_Set_Up_Authorized_Keys</span></a> for details.
+                            </p>
+                             
+                                <a name="d65357e216"></a><p>
+                                    Type the private key file and the passphrase in the corresponding text boxes.
+                                </p>
+                            </li></ul>
+                    </li><li class="list__item"><a name="d65357e222"></a>
+                        For <a name="d65357e224"></a><span class="emphasis">FTPS server</span>, specify your user name and password and choose the security mechanism to apply.
+                        <ul class="list _bullet"><li class="list__item"><a name="d65357e229"></a>
+                                Choose <a name="d65357e231"></a><span class="control">Explicit</span>
+                                to have the <a name="d65357e234"></a><a href="http://www.smartftp.com/support/kb/what-is-the-difference-between-implicit-ssl-and-explicit-ssl-f189.html" data-external="true"><span>explicit (active) security</span></a> applied.
+                                Immediately after establishing connection, the FTP client on your machine sends a command to the server
+                                to establish secure control connection through the default FTP port.
+                            </li><li class="list__item"><a name="d65357e238"></a>
+                                Choose <a name="d65357e240"></a><span class="control">Implicit</span>
+                                to have the <a name="d65357e243"></a><a href="http://www.smartftp.com/support/kb/what-is-the-difference-between-implicit-ssl-and-explicit-ssl-f189.html" data-external="true"><span>implicit (passive) security</span></a> applied.
+                                In this case, security is provided automatically upon establishing connection to the server
+                                which appoints a separate port for secure connections.
+                            </li></ul>
+                    </li></ul>
+            </li></ol>
+<a name="d65357e253"></a><h2>Enabling connection to the server and specifying the server configuration root</h2>
+        <ol class="list _decimal"><li class="list__item"><a name="d65357e257"></a>
+                Specify the host name of the FTP/SFTP/FTPS server to exchange data with and the port to which this server listens.
+                 
+            The default values are:
+                <ul class="list _bullet"><li class="list__item"><a name="d47182e208"></a>
+                        21 for FTP and FTPS
+                    </li><li class="list__item"><a name="d47182e211"></a>
+                        22 for SFTP
+                    </li></ul>
+             
+            </li><li class="list__item"><a name="d65357e262"></a>
+                In the <a name="d65357e264"></a><span class="control">Root path</span> text box,
+                 
+        specify the  <a name="d538e254"></a><span class="emphasis">server configuration root</span> relative to your <a name="d538e257"></a><span class="emphasis">user home</span> which was defined when you registered your account.
+        This folder will be the highest one in the folder structure accessible through the current server configuration.
+        Do one of the following:
+        <ul class="list _bullet"><li class="list__item"><a name="d538e262"></a>
+                Accept the default value <code class="code" data-lang="Java">/</code>, which points at the <a name="d538e267"></a><span class="emphasis">user home</span> folder on the server.
+            </li><li class="list__item"><a name="d538e271"></a>
+                Type the path manually.
+            </li><li class="list__item"><a name="d538e274"></a>
+                Click the <a name="d538e276"></a><span class="control">Browse</span> button <img alt="browseButton.png" title="browseButton.png" src="/help/img/idea/2016.3/browseButton.png" width="15" height="15" class="inline-icon-15"> and select the desired folder in the <a name="d538e281"></a><span class="control">Choose Root Path</span> dialog box that opens.
+            </li><li class="list__item"><a name="d538e285"></a>
+                Click the <a name="d538e287"></a><span class="control">Autodetect</span> button and have IntelliJ IDEA detect the user home folder settings on the FTP/SFTP server and set up the <a name="d538e290"></a><span class="control">root path</span> according to them.
+                The button is only enabled when you have specified your user name and password.
+            </li></ul>
+     
+            </li><li class="list__item"><a name="d65357e270"></a>
+                In the <a name="d65357e272"></a><span class="control">Web server root URL</span> text box, type the URL address to access the server configuration root
+                ( 
+        The <a name="d538e520"></a><span class="emphasis">server configuration root</span> is the highest folder in the file tree on the <a name="d538e523"></a><span class="emphasis">local</span> or <a name="d538e526"></a><span class="emphasis">remote</span> server
+        accessible through the server configuration. For <a name="d538e529"></a><span class="emphasis">in-place</span> servers, it is the project root.
+     ).
+                 
+        Both the <a name="d538e310"></a><span class="emphasis">HTTP</span> and the <a name="d538e313"></a><span class="emphasis">HTTPS</span> protocols are supported.
+        <a name="d538e316"></a><p>
+            To access a server through <a name="d538e318"></a><span class="emphasis">HTTPS</span>, you need to acquire a certificate file <code class="code" data-lang="Java">&lt;certificate_name&gt;.cert</code> signed by a recognized <a name="d538e324"></a><span class="emphasis">authority</span>
+            and import this certificate in the <a name="d538e327"></a><a href="http://docs.oracle.com/javase/6/docs/technotes/guides/security/jsse/JSSERefGuide.html#CustomizingStores" data-external="true"><span>truststore/keystore</span></a>
+            of the <a name="d538e330"></a><span class="emphasis">Oracle JRE (Java Runtime Environment)</span> on which IntelliJ IDEA runs. Note that self-signed certificates are rejected as unsafe.
+        </p>
+        <a name="d538e334"></a><a name="dynaProc0"></a><section class="procedure-steps"><h2>To import a certificate in Oracle JRE:</h2><ol class=".list _decimal"><li class="list__item">
+                    Open the embedded <a name="d538e338"></a><span class="control">Terminal</span> and type the following command:
+                    <a name="d538e341"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+&lt;jre_home&gt;/bin/keytool.exe -importcert -keystore &lt;path to jre truststore/keystore&gt; -file &lt;full_path_to_&lt;cert_name&gt;.cert&gt;
+                    </code></div>
+                    If you are using the <a name="d538e344"></a><span class="emphasis">Oracle JRE</span> bundled with IntelliJ IDEA, the default path to the truststore/keystore is <code class="code" data-lang="Java">&lt;%product_installation_folder&gt;/jre/jre/lib/security/jssecacerts</code>
+                    or <code class="code" data-lang="Java">&lt;%product_installation_folder&gt;/jre/jre/lib/security/cacerts</code>.
+                    <a name="d538e354"></a><p>
+                        Otherwise it is <code class="code" data-lang="Java">&lt;jre_home&gt;/jre/lib/security/jssecacerts</code> or <code class="code" data-lang="Java">&lt;jre_home&gt;/jre/lib/security/cacerts</code>.
+                    </p>
+                </li><li class="list__item">
+                    When asked to enter a password for the truststore/keystore, specify the default one <code class="code" data-lang="Java">changeit</code>.
+                </li><li class="list__item">
+                    Open the <code class="code" data-lang="Java">IntelliJ IDEA.exe.vmoptions</code> file in the <code class="code" data-lang="Java">&lt;IntelliJ IDEA_installation_folder&gt;/bin</code> and add the following line to it:
+                    <a name="d538e378"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+-Djavax.net.ssl.keyStore=&lt;path to keystore&gt;
+                    </code></div>
+                </li><li class="list__item">
+                    Restart IntelliJ IDEA.
+                </li></ol><p id="d538e385" class="procIntro">
+            <a name="d538e387"></a><p>Learn more at <a name="d538e389"></a><a href="http://docs.oracle.com/javase/6/docs/technotes/guides/security/jsse/JSSERefGuide.html#InstallationAndCustomization" data-external="true"><span>Java6</span></a> and
+            <a name="d538e392"></a><a href="http://docs.oracle.com/javase/7/docs/technotes/guides/security/jsse/JSSERefGuide.html#InstallationAndCustomization" data-external="true"><span>Java7</span></a>.</p>
+            </p></section>
+     
+            </li><li class="list__item"><a name="d65357e280"></a>
+                Click the <a name="d65357e282"></a><span class="control">Open</span> button to make sure that the specified URL address is accessible and points at the correct Web page.
+            </li></ol>
+<a name="d65357e288"></a><h2>Mapping local folders to folders on the server and the URL addresses to access them</h2>
+        <a name="d65357e290"></a><p>
+         
+         
+        Configure <a name="d538e146"></a><span class="emphasis">mappings</span>, that is,
+         
+        set correspondence between the project folders, the folders on the server to copy project files to,
+        and the URL addresses to access the copied data on the server
+     .
+        The easiest way is to map the entire project root folder to a folder on the server, whereupon the project folder structure  will be repeated on the server,
+        provided that you have selected the <a name="d538e151"></a><span class="control">Create Empty directories</span> check box in the <a name="d538e154"></a><a href="options.html"><span>Options dialog box</span></a>.
+         
+                    "For more details, see <a name="d538e160"></a><a href="customizing-upload-download.html"><span>Customizing Upload/Download</span></a>.
+         
+         
+</p>
+        <ol class="list _decimal"><li class="list__item"><a name="d538e81"></a>
+            Switch to the <a name="d538e83"></a><span class="control">Mappings</span> tab.
+        </li><li class="list__item"><a name="d538e87"></a>
+            In the <a name="d538e89"></a><span class="control">Local Path</span> text box,
+             
+        specify the full path to the desired folder in the project tree.
+        In the simplest case it is the project root.
+     
+        </li><li class="list__item"><a name="d538e95"></a>
+            In the <a name="d538e97"></a><span class="control">Deployment Path</span> text box,
+             
+        specify the folder on the server where IntelliJ IDEA will upload the data from the folder specified in the <a name="d538e117"></a><span class="control">Local Path</span> text box.
+        Type the path to the folder relative to the <a name="d538e120"></a><span class="emphasis">server configuration root</span>. If the folder with the specified name does not exist yet, IntelliJ IDEA will create it,
+        provided that you have selected the <a name="d538e123"></a><span class="control">Create Empty directories</span> check box in the <a name="d538e126"></a><a href="options.html"><span>Options dialog box</span></a>. For more details, see <a name="d538e129"></a><a href="customizing-upload-download.html"><span>Customizing Upload/Download</span></a>.
+     
+        </li><li class="list__item"><a name="d538e103"></a>
+            In the <a name="d538e105"></a><span class="control">Web Path</span> text box,
+             
+        type the path to the folder on the server relative to the <a name="d538e135"></a><span class="emphasis">server configuration root</span>.
+        Actually, type the relative path you typed in the <a name="d538e138"></a><span class="control">Deployment Path</span> text box.
+     
+        </li></ol>
+<a name="d65357e309"></a><h2>Overloading the deployment destination by configuring nested mappings</h2>
+         
+         
+        <a name="d65357e315"></a><p>
+            You can configure separate mappings for a specific folder under the your project root to have the contents of this folder
+            synchronized with another location on the remote host.
+            </p>
+        <a name="d65357e318"></a><p>
+            Suppose you have configured the mappings as follows:
+            <table class="              _layout-fixed" width="100%" id="d65357e320"><thead><tr id="d65357e322" class="ijRowHead"><a name="d65357e322"></a><th width="30%"><a name="d65357e324"></a>Local Path</th><th width="60%"><a name="d65357e327"></a>Deployment Path</th></tr></thead><tbody><tr id="d65357e331" class="ijRowOdd"><a name="d65357e331"></a><td><a name="d65357e333"></a>
+                        <code class="code" data-lang="Java">&lt;project_root&gt;</code>
+                    </td><td><a name="d65357e339"></a>
+                        <code class="code" data-lang="Java">ftp://.../htdocs/my_project</code>
+                    </td></tr><tr id="d65357e346" class="ijRowEven"><a name="d65357e346"></a><td><a name="d65357e348"></a>
+                        <code class="code" data-lang="Java">&lt;project_root&gt;/my_folder</code>
+                    </td><td><a name="d65357e354"></a>
+                        <code class="code" data-lang="Java">ftp://.../htdocs/my_folder</code>
+                    </td></tr></tbody></table>
+            Then the files in your project will be uploaded as follows:
+            <table class="              _layout-fixed" width="100%" id="d65357e362"><thead><tr id="d65357e364" class="ijRowHead"><a name="d65357e364"></a><th width="30%"><a name="d65357e366"></a>Local Path</th><th width="60%"><a name="d65357e369"></a>Deployment Path</th></tr></thead><tbody><tr id="d65357e373" class="ijRowOdd"><a name="d65357e373"></a><td><a name="d65357e375"></a>
+                        <code class="code" data-lang="Java">&lt;project_root&gt;/file1.js</code>
+                    </td><td><a name="d65357e381"></a>
+                        <code class="code" data-lang="Java">ftp://.../htdocs/my_project/file1.js</code>
+                    </td></tr><tr id="d65357e388" class="ijRowEven"><a name="d65357e388"></a><td><a name="d65357e390"></a>
+                        <code class="code" data-lang="Java">&lt;project_root&gt;/my_folder/file2.js</code>
+                    </td><td><a name="d65357e396"></a>
+                        <code class="code" data-lang="Java">ftp://.../htdocs/my_folder/file2.js</code><br>
+                        instead of <code class="code" data-lang="Java">ftp://.../htdocs/my_project/my_folder/file2.js</code>
+                    </td></tr></tbody></table>
+        </p>
+    <div class="navigation-links _bottom"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="customizing-upload-download.html">Customizing Upload/Download</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content">```
+                <div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d65357e414"></a><a href="deployment-working-with-web-servers.html"><span>Deployment. Working with Web Servers</span></a></li><li class="list__item"><a name="d65357e422"></a><a href="creating-an-in-place-server-configuration.html"><span>Creating an In-Place Server Configuration</span></a></li><li class="list__item"><a name="d65357e427"></a><a href="creating-a-local-server-configuration.html"><span>Creating a Local Server Configuration</span></a></li></ul></div><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d65357e434"></a><a href="deployment.html"><span>Deployment</span></a></li><li class="list__item"><a name="d65357e438"></a><a href="deployment-connection-tab.html"><span>Deployment: Connection Tab</span></a></li></ul></div></div></section><div class="last-modified" data-swiftype-index="false">Last modified: 21 March 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

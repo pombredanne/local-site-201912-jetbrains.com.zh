@@ -1,0 +1,606 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="robots" content="noindex"><title>YouTrack Standalone 7.0 Help :: REST Import Sample</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="REST-Import-Sample"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack Standalone Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>YouTrack Standalone 7.0 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="Import-Users.html">Import Users</a><a class="navigation-links__next" href="Import-Attachment-to-an-Issue.html">Import Attachment to an Issue</a></div><h1>REST Import Sample</h1><ul class="list _links"></ul><a name="Login"></a><a name="d121905e7"></a><h3>Login</h3><a name="d121905e10"></a><p>
+         <a name="d121905e12"></a><b id="d121905e12">Request</b></p><a name="d121905e15"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">POST http://localhost:8081/rest/user/login
+Content-Length: 24
+Connection: keep-alive
+Content-Type: application/x-www-form-urlencoded
+
+login=root<span class="err">&amp;</span>password=root</code></div><a name="d121905e19"></a><p>
+         <a name="d121905e21"></a><b id="d121905e21">Response</b>
+</p><a name="d121905e25"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">HTTP/1.1 200 OK
+Expires: Thu, 01-Jan-1970 00:00:00 GMT
+Set-Cookie: JSESSIONID=2h2curh13q3p11s564124l5jm;Path=/
+Set-Cookie: jetbrains.charisma.main.security.PRINCIPAL=NDgxMzQ5NGQxMzdlMTYzMWJiYTM
+wMWQ1YWNhYjZlN2JiN2FhNzRjZTExODVkNDU2NTY1ZWY1MWQ3Mzc2NzdiMjpyb290;Path=/;Expires=Thu, 07-Apr-2011 13:53:29 GMT
+Content-Type: application/xml;charset=UTF-8
+Transfer-Encoding: chunked
+Server: Jetty(6.1.23)
+
+<span class="nt">&lt;login&gt;</span>ok<span class="nt">&lt;/login&gt;</span></code></div><a name="d121905e28"></a><p>There is no line break in the value of "Set-Cookie" header. It is added here to fix layout overflow.</p><a name="Import_users"></a><a name="d121905e33"></a><h3>Import users</h3><a name="d121905e36"></a><p>
+         <a name="d121905e38"></a><b id="d121905e38">Request</b></p><a name="d121905e42"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">PUT http://localhost:8081/rest/import/users
+Content-Length: 904
+Connection: keep-alive
+Content-Type: application/xml
+Cookie: $Version=0; JSESSIONID=2h2curh13q3p11s564124l5jm; $Path=/; jetbrains.charisma.main.security.PRINCIPAL=NDgx
+MzQ5NGQxMzdlMTYzMWJiYTMwMWQ1YWNhYjZlN2JiN2FhNzRjZTExODVkNDU2NTY1ZWY1MWQ3Mzc2NzdiMjpyb290; $Path=/
+
+<span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;</span>
+<span class="nt">&lt;list&gt;</span>
+  <span class="nt">&lt;user</span> <span class="na">login=</span><span class="s">&quot;lenin&quot;</span> <span class="na">fullName=</span><span class="s">&quot;Ulyanov Vladimir Ilyich&quot;</span> <span class="na">email=</span><span class="s">&quot;lenin@mavzoley.su&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;user</span> <span class="na">login=</span><span class="s">&quot;stalin&quot;</span> <span class="na">fullName=</span><span class="s">&quot;Dzhugashvili Ioseb Besarionis&quot;</span> <span class="na">email=</span><span class="s">&quot;stalin@necropolis.cremlin.su&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;user</span> <span class="na">login=</span><span class="s">&quot;malenkov&quot;</span> <span class="na">fullName=</span><span class="s">&quot;Georgy Maximilianovich Malenkov&quot;</span> <span class="na">email=</span><span class="s">&quot;malenkov@kuntsevo.msk.ru&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;user</span> <span class="na">login=</span><span class="s">&quot;khrushchev&quot;</span> <span class="na">fullName=</span><span class="s">&quot;Khrushchev Nikita Sergeyevich&quot;</span> <span class="na">email=</span><span class="s">&quot;khrushchev@novodevichy.msk.ru&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;user</span> <span class="na">login=</span><span class="s">&quot;brezhnev&quot;</span> <span class="na">fullName=</span><span class="s">&quot;Brezhnev Leonid Ilyich&quot;</span> <span class="na">email=</span><span class="s">&quot;brezhnev@necropolis.cremlin.su&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;user</span> <span class="na">login=</span><span class="s">&quot;andropov&quot;</span> <span class="na">fullName=</span><span class="s">&quot;Andropov Yuri Vladimirovich&quot;</span> <span class="na">email=</span><span class="s">&quot;andropov@necropolis.cremlin.su&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;user</span> <span class="na">login=</span><span class="s">&quot;chernenko&quot;</span> <span class="na">fullName=</span><span class="s">&quot;Chernenko Konstantin Ustinovich&quot;</span> <span class="na">email=</span><span class="s">&quot;chernenko@necropolis.cremlin.su&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;user</span> <span class="na">login=</span><span class="s">&quot;gorbachev&quot;</span> <span class="na">fullName=</span><span class="s">&quot;Gorbachev Mikhail Sergeyevich&quot;</span> <span class="na">email=</span><span class="s">&quot;gorbi@zaria.phoros.ua&quot;</span>
+        <span class="na">jabber=</span><span class="s">&quot;gorbi@zaria.phoros.ua&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/list&gt;</span></code></div><a name="d121905e45"></a><p>There is no line break in the value of "Cookie" header. It is added here to fix layout overflow.</p><a name="d121905e48"></a><p>
+         <a name="d121905e50"></a><b id="d121905e50">Response</b>
+</p><a name="d121905e54"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">HTTP/1.1 200 OK
+Content-Type: application/xml;charset=UTF-8
+Content-Length: 379
+Server: Jetty(6.1.23)
+
+<span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;</span>
+<span class="nt">&lt;importReport&gt;</span>
+  <span class="nt">&lt;item</span> <span class="na">imported=</span><span class="s">&quot;true&quot;</span> <span class="na">id=</span><span class="s">&quot;lenin&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;item</span> <span class="na">imported=</span><span class="s">&quot;true&quot;</span> <span class="na">id=</span><span class="s">&quot;stalin&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;item</span> <span class="na">imported=</span><span class="s">&quot;true&quot;</span> <span class="na">id=</span><span class="s">&quot;malenkov&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;item</span> <span class="na">imported=</span><span class="s">&quot;true&quot;</span> <span class="na">id=</span><span class="s">&quot;khrushchev&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;item</span> <span class="na">imported=</span><span class="s">&quot;true&quot;</span> <span class="na">id=</span><span class="s">&quot;brezhnev&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;item</span> <span class="na">imported=</span><span class="s">&quot;true&quot;</span> <span class="na">id=</span><span class="s">&quot;andropov&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;item</span> <span class="na">imported=</span><span class="s">&quot;true&quot;</span> <span class="na">id=</span><span class="s">&quot;chernenko&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;item</span> <span class="na">imported=</span><span class="s">&quot;true&quot;</span> <span class="na">id=</span><span class="s">&quot;gorbachev&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/importReport&gt;</span></code></div><a name="Create_project"></a><a name="d121905e59"></a><h3>Create project</h3><a name="d121905e63"></a><p>
+         <a name="d121905e65"></a><b id="d121905e65">Request</b></p><a name="d121905e68"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">PUT http://localhost:8081/rest/admin/project/CMN?projectName=Communism<span class="err">&amp;</span>projectLeadLogin=lenin<span class="err">&amp;</span>description=You+Know
+Content-Length: 0
+Connection: keep-alive
+Cookie: $Version=0; JSESSIONID=2h2curh13q3p11s564124l5jm; $Path=/; jetbrains.charisma.main.security.PRINCIPAL=NDg...</code></div><a name="d121905e71"></a><p>Here and further "Cookie" header is cut.</p><a name="d121905e74"></a><p>
+         <a name="d121905e76"></a><b id="d121905e76">Response</b>
+</p><a name="d121905e80"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">HTTP/1.1 201 Created
+Content-Type: application/xml;charset=UTF-8
+Location: http://localhost:8081/charisma/rest/admin/project/CMN
+Content-Length: 0
+Server: Jetty(6.1.23)</code></div><a name="Add_first_subsystem"></a><a name="d121905e86"></a><h3>Add first subsystem</h3><a name="d121905e89"></a><p>
+         <a name="d121905e91"></a><b id="d121905e91">Request</b></p><a name="d121905e94"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">PUT http://localhost:8081/rest/admin/project/CMN/subsystem/Revolution?defaultAssignee=lenin
+Content-Length: 0
+Connection: keep-alive
+Cookie: $Version=0; JSESSIONID=2h2curh13q3p11s564124l5jm; $Path=/; jetbrains.charisma.main.security.PRINCIPAL=NDg...</code></div><a name="d121905e97"></a><p>
+         <a name="d121905e99"></a><b id="d121905e99">Response</b>
+</p><a name="d121905e103"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">HTTP/1.1 201 Created
+Content-Type: application/xml;charset=UTF-8
+Location: http://localhost:8081/charisma/rest/admin/project/CMN/subsystem/Revolution
+Content-Length: 0
+Server: Jetty(6.1.23)</code></div><a name="Add_second_subsystem"></a><a name="d121905e109"></a><h3>Add second subsystem</h3><a name="d121905e112"></a><p>
+         <a name="d121905e114"></a><b id="d121905e114">Request</b></p><a name="d121905e117"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">PUT http://localhost:8081/rest/admin/project/CMN/subsystem/Collectivization?defaultAssignee=stalin
+Content-Length: 0
+Connection: keep-alive
+Cookie: $Version=0; JSESSIONID=2h2curh13q3p11s564124l5jm; $Path=/; jetbrains.charisma.main.security.PRINCIPAL=NDg...</code></div><a name="d121905e120"></a><p>
+         <a name="d121905e122"></a><b id="d121905e122">Response</b>
+</p><a name="d121905e126"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">HTTP/1.1 201 Created
+Content-Type: application/xml;charset=UTF-8
+Location: http://localhost:8081/charisma/rest/admin/project/CMN/subsystem/Collectivization
+Content-Length: 0
+Server: Jetty(6.1.23)</code></div><a name="Add_first_version"></a><a name="d121905e132"></a><h3>Add first version</h3><a name="d121905e135"></a><p>
+         <a name="d121905e137"></a><b id="d121905e137">Request</b></p><a name="d121905e140"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">PUT http://localhost:8081/rest/admin/project/CMN/version/War%20Communism?releaseDate=-1539430807<span class="err">&amp;</span>isReleased=true
+Content-Length: 0
+Connection: keep-alive
+Cookie: $Version=0; JSESSIONID=2h2curh13q3p11s564124l5jm; $Path=/; jetbrains.charisma.main.security.PRINCIPAL=NDg...</code></div><a name="d121905e143"></a><p>
+         <a name="d121905e145"></a><b id="d121905e145">Response</b>
+</p><a name="d121905e149"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">HTTP/1.1 201 Created
+Content-Type: application/xml;charset=UTF-8
+Location: http://localhost:8081/charisma/rest/admin/project/CMN/version/War+Communism
+Content-Length: 0
+Server: Jetty(6.1.23)</code></div><a name="Add_second_version"></a><a name="d121905e155"></a><h3>Add second version</h3><a name="d121905e158"></a><p>
+         <a name="d121905e160"></a><b id="d121905e160">Request</b></p><a name="d121905e163"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">PUT http://localhost:8081/rest/admin/project/CMN/version/NEP?releaseDate=-1328010007<span class="err">&amp;</span>isReleased=true<span class="err">&amp;</span>isArchived=true
+Content-Length: 0
+Connection: keep-alive
+Cookie: $Version=0; JSESSIONID=2h2curh13q3p11s564124l5jm; $Path=/; jetbrains.charisma.main.security.PRINCIPAL=NDg...</code></div><a name="d121905e166"></a><p>
+         <a name="d121905e168"></a><b id="d121905e168">Response</b>
+</p><a name="d121905e172"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">HTTP/1.1 201 Created
+Content-Type: application/xml;charset=UTF-8
+Location: http://localhost:8081/charisma/rest/admin/project/CMN/version/NEP
+Content-Length: 0
+Server: Jetty(6.1.23)</code></div><a name="Add_third_version"></a><a name="d121905e178"></a><h3>Add third version</h3><a name="d121905e181"></a><p>
+         <a name="d121905e183"></a><b id="d121905e183">Request</b></p><a name="d121905e186"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">PUT http://localhost:8081/rest/admin/project/CMN/version/Industrialization
+Content-Length: 0
+Connection: keep-alive
+Cookie: $Version=0; JSESSIONID=2h2curh13q3p11s564124l5jm; $Path=/; jetbrains.charisma.main.security.PRINCIPAL=NDg...</code></div><a name="d121905e189"></a><p>
+         <a name="d121905e191"></a><b id="d121905e191">Response</b>
+</p><a name="d121905e195"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">HTTP/1.1 201 Created
+Content-Type: application/xml;charset=UTF-8
+Location: http://localhost:8081/charisma/rest/admin/project/CMN/version/Industrialization
+Content-Length: 0
+Server: Jetty(6.1.23)</code></div><a name="Create_integer_custom_field"></a><a name="d121905e201"></a><h3>Create integer custom field</h3><a name="d121905e204"></a><p>
+         <a name="d121905e206"></a><b id="d121905e206">Request</b></p><a name="d121905e209"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">PUT http://localhost:8081/rest/admin/customfield/field/victims?typeName=integer<span class="err">&amp;</span>defaultVisibility=false
+Content-Length: 0
+Connection: keep-alive
+Cookie: $Version=0; JSESSIONID=2h2curh13q3p11s564124l5jm; $Path=/; jetbrains.charisma.main.security.PRINCIPAL=NDg...</code></div><a name="d121905e212"></a><p>
+         <a name="d121905e214"></a><b id="d121905e214">Response</b>
+</p><a name="d121905e218"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">HTTP/1.1 201 Created
+Content-Type: application/xml;charset=UTF-8
+Location: http://localhost:8081/charisma/rest/admin/customfield/field/victims
+Content-Length: 0
+Server: Jetty(6.1.23)</code></div><a name="Attach_integer_custom_field_to_the_project"></a><a name="d121905e224"></a><h3>Attach integer custom field to the project</h3><a name="d121905e227"></a><p>
+         <a name="d121905e229"></a><b id="d121905e229">Request</b></p><a name="d121905e232"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">PUT http://localhost:8081/rest/admin/project/CMN/customfield/victims?emptyFieldText=unknown
+Content-Length: 0
+Connection: keep-alive
+Cookie: $Version=0; JSESSIONID=2h2curh13q3p11s564124l5jm; $Path=/; jetbrains.charisma.main.security.PRINCIPAL=NDg...</code></div><a name="d121905e235"></a><p>
+         <a name="d121905e237"></a><b id="d121905e237">Response</b>
+</p><a name="d121905e241"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">HTTP/1.1 201 Created
+Content-Type: application/xml;charset=UTF-8
+Location: http://localhost:8081/charisma/rest/admin/project/CMN/customfield/victims
+Content-Length: 0
+Server: Jetty(6.1.23)</code></div><a name="Create_enumeration_custom_field"></a><a name="d121905e247"></a><h3>Create enumeration custom field</h3><a name="d121905e250"></a><p>
+         <a name="d121905e252"></a><b id="d121905e252">Request</b></p><a name="d121905e255"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">PUT http://localhost:8081/rest/admin/customfield/field/party?typeName=enum[1]<span class="err">&amp;</span>defaultVisibility=true
+Content-Length: 0
+Connection: keep-alive
+Cookie: $Version=0; JSESSIONID=2h2curh13q3p11s564124l5jm; $Path=/; jetbrains.charisma.main.security.PRINCIPAL=NDg...</code></div><a name="d121905e258"></a><p>
+         <a name="d121905e260"></a><b id="d121905e260">Response</b>
+</p><a name="d121905e264"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">HTTP/1.1 201 Created
+Content-Type: application/xml;charset=UTF-8
+Location: http://localhost:8081/charisma/rest/admin/customfield/field/party
+Content-Length: 0
+Server: Jetty(6.1.23)</code></div><a name="Create_enumeration_values_bundle"></a><a name="d121905e270"></a><h3>Create enumeration values bundle</h3><a name="d121905e273"></a><p>
+         <a name="d121905e275"></a><b id="d121905e275">Request</b></p><a name="d121905e278"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">PUT http://localhost:8081/rest/admin/customfield/bundle
+Content-Length: 320
+Connection: keep-alive
+Content-Type: application/xml
+Cookie: $Version=0; JSESSIONID=2h2curh13q3p11s564124l5jm; $Path=/; jetbrains.charisma.main.security.PRINCIPAL=NDg...
+
+<span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;</span>
+<span class="nt">&lt;enumeration</span> <span class="na">name=</span><span class="s">&quot;RussianCommunistParties&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;value&gt;</span>РСДРП 1898 - 1912<span class="nt">&lt;/value&gt;</span>
+  <span class="nt">&lt;value&gt;</span>РСДРП (б) 1912 - 1917<span class="nt">&lt;/value&gt;</span>
+  <span class="nt">&lt;value&gt;</span>РКП (б) 1918 - 1925<span class="nt">&lt;/value&gt;</span>
+  <span class="nt">&lt;value&gt;</span>ВКП (б) 1925 - 1952<span class="nt">&lt;/value&gt;</span>
+  <span class="nt">&lt;value&gt;</span>КПСС 1952 - 1993<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/enumeration&gt;</span></code></div><a name="d121905e281"></a><p>
+         <a name="d121905e283"></a><b id="d121905e283">Response</b>
+</p><a name="d121905e287"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">HTTP/1.1 201 Created
+Content-Type: application/xml;charset=UTF-8
+Location: http://localhost:8081/charisma/rest/admin/customfield/type/RussianCommunistParties
+Content-Length: 0
+Server: Jetty(6.1.23)</code></div><a name="Attach_enumeration_custom_field_to_the_project"></a><a name="d121905e293"></a><h3>Attach enumeration custom field to the project</h3><a name="d121905e296"></a><p>
+         <a name="d121905e298"></a><b id="d121905e298">Request</b></p><a name="d121905e301"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">PUT http://localhost:8081/rest/admin/project/CMN/customfield/party?bundle=RussianCommunistParties
+Content-Length: 0
+Connection: keep-alive
+Cookie: $Version=0; JSESSIONID=2h2curh13q3p11s564124l5jm; $Path=/; jetbrains.charisma.main.security.PRINCIPAL=NDg...</code></div><a name="d121905e304"></a><p>
+         <a name="d121905e306"></a><b id="d121905e306">Response</b>
+</p><a name="d121905e310"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">HTTP/1.1 201 Created
+Content-Type: application/xml;charset=UTF-8
+Location: http://localhost:8081/charisma/rest/admin/project/CMN/customfield/party
+Content-Length: 0
+Server: Jetty(6.1.23)</code></div><a name="Import_first_issues_package"></a><a name="d121905e316"></a><h3>Import first issues package</h3><a name="d121905e319"></a><p>In the real life issue package will contain more then two issues.</p><a name="d121905e322"></a><p>
+         <a name="d121905e324"></a><b id="d121905e324">Request</b></p><a name="d121905e327"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">PUT http://localhost:8081/rest/import/CMN/issues
+Content-Length: 3155
+Connection: keep-alive
+Content-Type: application/xml
+Cookie: $Version=0; JSESSIONID=2h2curh13q3p11s564124l5jm; $Path=/; jetbrains.charisma.main.security.PRINCIPAL=NDg...
+
+<span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;</span>
+<span class="nt">&lt;issues&gt;</span>
+<span class="nt">&lt;issue&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;numberInProject&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;value&gt;</span>1917<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;summary&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;value&gt;</span>Exterminate tsar<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;description&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;value&gt;</span>The Russian Revolution is the collective term for the series of revolutions in Russia in 1917, which
+        destroyed the Tsarist autocracy and led to the creation of the Soviet Union. In the first revolution of
+        February 1917 (March in the Gregorian calendar), the Tsar was deposed and replaced by a Provisional government.
+        In the second revolution, during October, the Provisional Government was removed and replaced with
+        a Bolshevik (Communist) government.<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;created&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;value&gt;</span>1149678852000<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;updated&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;value&gt;</span>1159374446000<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;updaterName&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;value&gt;</span>stalin<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;resolved&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;value&gt;</span>1260367510059<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;priority&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;value&gt;</span>1<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;type&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;value&gt;</span>Task<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;state&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;value&gt;</span>Fixed<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;subsystem&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;value&gt;</span>Revolution<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;fixedVersion&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;value&gt;</span>War Communism<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;assigneeName&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;value&gt;</span>lenin<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;reporterName&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;value&gt;</span>lenin<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;fixedInBuild&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;value&gt;</span>Next build<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;victims&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>11<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;party&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>РСДРП (б) 1912 - 1917<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+
+    <span class="nt">&lt;comment</span> <span class="na">author=</span><span class="s">&quot;stalin&quot;</span> <span class="na">text=</span><span class="s">&quot;It is enough that the people know there was an election. The people who cast the</span>
+<span class="s">votes decide nothing. The people who count the votes decide everything.&quot;</span> <span class="na">created=</span><span class="s">&quot;1267030230127&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;comment</span> <span class="na">author=</span><span class="s">&quot;khrushchev&quot;</span> <span class="na">text=</span><span class="s">&quot;Support by United States rulers is rather in the nature of the support that</span>
+<span class="s">the rope gives to a hanged man.&quot;</span> <span class="na">created=</span><span class="s">&quot;1267030238721&quot;</span> <span class="na">updated=</span><span class="s">&quot;1267030230127&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/issue&gt;</span>
+<span class="nt">&lt;issue&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;numberInProject&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;value&gt;</span>1928<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;summary&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;value&gt;</span>Implement collectivization<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;created&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;value&gt;</span>1149678852000<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;priority&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;value&gt;</span>1<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;type&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;value&gt;</span>Feature<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;state&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;value&gt;</span>Fixed<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;assigneeName&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;value&gt;</span>stalin<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;reporterName&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;value&gt;</span>stalin<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;subsystem&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;value&gt;</span>Collectivization<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;fixedVersion&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;value&gt;</span>Industrialization<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;victims&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;value&gt;</span>1300000<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;party&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;value&gt;</span>ВКП (б) 1925 - 1952<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+<span class="nt">&lt;/issue&gt;</span>
+<span class="nt">&lt;/issues&gt;</span></code></div><a name="d121905e330"></a><p>
+         <a name="d121905e332"></a><b id="d121905e332">Response</b>
+</p><a name="d121905e336"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">HTTP/1.1 200 OK
+Content-Type: application/xml;charset=UTF-8
+Content-Length: 150
+Server: Jetty(6.1.23)
+
+<span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;</span>
+<span class="nt">&lt;importReport&gt;</span>
+  <span class="nt">&lt;item</span> <span class="na">imported=</span><span class="s">&quot;true&quot;</span> <span class="na">id=</span><span class="s">&quot;1917&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;item</span> <span class="na">imported=</span><span class="s">&quot;true&quot;</span> <span class="na">id=</span><span class="s">&quot;1928&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/importReport&gt;</span></code></div><a name="Try_to_import_second_issues_package_(test_mode)"></a><a name="d121905e342"></a><h3>Try to import second issues package (test mode)</h3><a name="d121905e345"></a><p>Import attempt in the test mode. No issues are actually saved.</p><a name="d121905e348"></a><p>
+         <a name="d121905e350"></a><b id="d121905e350">Request</b></p><a name="d121905e353"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">PUT http://localhost:8081/rest/import/CMN/issues?test=true
+Content-Length: 3125
+Connection: keep-alive
+Content-Type: application/xml
+Cookie: $Version=0; JSESSIONID=2h2curh13q3p11s564124l5jm; $Path=/; jetbrains.charisma.main.security.PRINCIPAL=NDg...
+
+<span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;</span>
+<span class="nt">&lt;issues&gt;</span>
+  <span class="nt">&lt;issue&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;numberInProject&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>1917<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;summary&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>Exterminate tsar<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;description&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>The Russian Revolution is the collective term for the series of revolutions in Russia in 1917, which
+        destroyed the Tsarist autocracy and led to the creation of the Soviet Union. In the first revolution of February
+        1917 (March in the Gregorian calendar), the Tsar was deposed and replaced by a Provisional government. In the
+        second revolution, during October, the Provisional Government was removed and replaced with a Bolshevik
+        (Communist) government.
+      <span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;created&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>1149678852000<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;updated&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>1159374446000<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;updaterName&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>stalin<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;resolved&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>1260367510059<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;priority&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>1<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;type&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>Task<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;state&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>Fixed<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;subsystem&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>Revolution<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;fixedVersion&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>War Communism<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;assigneeName&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>lenin<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;reporterName&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>lenin<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;fixedInBuild&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>Next build<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;Build&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>Some Read Only<span class="nt">&lt;/value&gt;</span>
+      <span class="nt">&lt;value&gt;</span>Value<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;scf&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>1260317512059<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;cf&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>1<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;comment</span> <span class="na">author=</span><span class="s">&quot;who!&quot;</span> <span class="na">text=</span><span class="s">&quot;It is enough that the people know there was an election. The people who cast the votes</span>
+<span class="s">decide nothing. The people who count the votes decide everything.&quot;</span> <span class="na">created=</span><span class="s">&quot;1267030230127&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;comment</span> <span class="na">author=</span><span class="s">&quot;root&quot;</span> <span class="na">text=</span><span class="s">&quot;Support by United States rulers is rather in the nature of the support that the rope</span>
+<span class="s">gives to a hanged man.&quot;</span> <span class="na">created=</span><span class="s">&quot;1267030238721&quot;</span> <span class="na">updated=</span><span class="s">&quot;1267030230127&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/issue&gt;</span>
+  <span class="nt">&lt;issue&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;numberInProject&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>1987<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;summary&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>Perestroyka<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;description&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span># Reduce GDP
+        # Split USSR into separate states
+        # Reduce population
+      <span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;created&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>1149678852000<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;priority&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>1<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;type&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>Bug<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;state&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>Open<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;assigneeName&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>gorbachev<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;reporterName&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>gorbachev<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;party&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;value&gt;</span>КПСС 1952 - 1993<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+  <span class="nt">&lt;/issue&gt;</span>
+<span class="nt">&lt;/issues&gt;</span></code></div><a name="d121905e356"></a><p>
+         <a name="d121905e358"></a><b id="d121905e358">Response</b>
+</p><a name="d121905e363"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">HTTP/1.1 400 Bad Request
+Content-Type: application/xml;charset=UTF-8
+Content-Length: 445
+Server: Jetty(6.1.23)
+
+<span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;</span>
+<span class="nt">&lt;importReport&gt;</span>
+  <span class="nt">&lt;item</span> <span class="na">imported=</span><span class="s">&quot;false&quot;</span> <span class="na">id=</span><span class="s">&quot;1917&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;error</span> <span class="na">fieldName=</span><span class="s">&quot;numberInProject&quot;</span> <span class="na">value=</span><span class="s">&quot;1917&quot;</span><span class="nt">&gt;</span>Value is not unique<span class="nt">&lt;/error&gt;</span>
+    <span class="nt">&lt;error</span> <span class="na">fieldName=</span><span class="s">&quot;comment.author&quot;</span> <span class="na">value=</span><span class="s">&quot;who!&quot;</span><span class="nt">&gt;</span>Value is unknown<span class="nt">&lt;/error&gt;</span>
+    <span class="nt">&lt;error</span> <span class="na">fieldName=</span><span class="s">&quot;Build&quot;</span><span class="nt">&gt;</span>Field is unknown<span class="nt">&lt;/error&gt;</span>
+    <span class="nt">&lt;error</span> <span class="na">fieldName=</span><span class="s">&quot;scf&quot;</span><span class="nt">&gt;</span>Field is unknown<span class="nt">&lt;/error&gt;</span>
+    <span class="nt">&lt;error</span> <span class="na">fieldName=</span><span class="s">&quot;cf&quot;</span><span class="nt">&gt;</span>Field is unknown<span class="nt">&lt;/error&gt;</span>
+  <span class="nt">&lt;/item&gt;</span>
+  <span class="nt">&lt;item</span> <span class="na">imported=</span><span class="s">&quot;true&quot;</span> <span class="na">id=</span><span class="s">&quot;1987&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/importReport&gt;</span></code></div><a name="Import_second_issues_package_(with_errors)"></a><a name="d121905e368"></a><h3>Import second issues package (with errors)</h3><a name="d121905e371"></a><p>Only one of two provided issues is actually imported.</p><a name="d121905e374"></a><p>
+         <a name="d121905e376"></a><b id="d121905e376">Request</b></p><a name="d121905e379"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">PUT http://localhost:8081/rest/import/CMN/issues
+Content-Length: 3125
+Connection: keep-alive
+Content-Type: application/xml
+Cookie: $Version=0; JSESSIONID=2h2curh13q3p11s564124l5jm; $Path=/; jetbrains.charisma.main.security.PRINCIPAL=NDg...
+
+<span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;</span>
+<span class="nt">&lt;issues&gt;</span>
+  <span class="nt">&lt;issue&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;numberInProject&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>1917<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;summary&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>Exterminate tsar<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;description&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>The Russian Revolution is the collective term for the series of revolutions in Russia in 1917, which
+        destroyed the Tsarist autocracy and led to the creation of the Soviet Union. In the first revolution of February
+        1917 (March in the Gregorian calendar), the Tsar was deposed and replaced by a Provisional government. In the
+        second revolution, during October, the Provisional Government was removed and replaced with a Bolshevik
+        (Communist) government.
+      <span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;created&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>1149678852000<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;updated&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>1159374446000<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;updaterName&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>stalin<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;resolved&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>1260367510059<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;priority&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>1<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;type&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>Task<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;state&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>Fixed<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;subsystem&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>Revolution<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;fixedVersion&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>War Communism<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;assigneeName&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>lenin<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;reporterName&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>lenin<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;fixedInBuild&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>Next build<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;Build&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>Some Read Only<span class="nt">&lt;/value&gt;</span>
+      <span class="nt">&lt;value&gt;</span>Value<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;scf&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>1260317512059<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;cf&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>1<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;comment</span> <span class="na">author=</span><span class="s">&quot;who!&quot;</span> <span class="na">text=</span><span class="s">&quot;It is enough that the people know there was an election. The people who cast the votes</span>
+<span class="s">decide nothing. The people who count the votes decide everything.&quot;</span> <span class="na">created=</span><span class="s">&quot;1267030230127&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;comment</span> <span class="na">author=</span><span class="s">&quot;root&quot;</span> <span class="na">text=</span><span class="s">&quot;Support by United States rulers is rather in the nature of the support that the rope</span>
+<span class="s">gives to a hanged man.&quot;</span> <span class="na">created=</span><span class="s">&quot;1267030238721&quot;</span> <span class="na">updated=</span><span class="s">&quot;1267030230127&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/issue&gt;</span>
+  <span class="nt">&lt;issue&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;numberInProject&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>1987<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;summary&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>Perestroyka<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;description&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span># Reduce GDP
+        # Split USSR into separate states
+        # Reduce population
+      <span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;created&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>1149678852000<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;priority&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>1<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;type&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>Bug<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;state&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>Open<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;assigneeName&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>gorbachev<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;reporterName&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value&gt;</span>gorbachev<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;party&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;value&gt;</span>КПСС 1952 - 1993<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+  <span class="nt">&lt;/issue&gt;</span>
+<span class="nt">&lt;/issues&gt;</span></code></div><a name="d121905e383"></a><p>
+         <a name="d121905e385"></a><b id="d121905e385">Response</b>
+</p><a name="d121905e389"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">HTTP/1.1 400 Bad Request
+Content-Type: application/xml;charset=UTF-8
+Content-Length: 445
+Server: Jetty(6.1.23)
+
+<span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;</span>
+<span class="nt">&lt;importReport&gt;</span>
+  <span class="nt">&lt;item</span> <span class="na">imported=</span><span class="s">&quot;false&quot;</span> <span class="na">id=</span><span class="s">&quot;1917&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;error</span> <span class="na">fieldName=</span><span class="s">&quot;numberInProject&quot;</span> <span class="na">value=</span><span class="s">&quot;1917&quot;</span><span class="nt">&gt;</span>Value is not unique<span class="nt">&lt;/error&gt;</span>
+    <span class="nt">&lt;error</span> <span class="na">fieldName=</span><span class="s">&quot;comment.author&quot;</span> <span class="na">value=</span><span class="s">&quot;who!&quot;</span><span class="nt">&gt;</span>Value is unknown<span class="nt">&lt;/error&gt;</span>
+    <span class="nt">&lt;error</span> <span class="na">fieldName=</span><span class="s">&quot;Build&quot;</span><span class="nt">&gt;</span>Field is unknown<span class="nt">&lt;/error&gt;</span>
+    <span class="nt">&lt;error</span> <span class="na">fieldName=</span><span class="s">&quot;scf&quot;</span><span class="nt">&gt;</span>Field is unknown<span class="nt">&lt;/error&gt;</span>
+    <span class="nt">&lt;error</span> <span class="na">fieldName=</span><span class="s">&quot;cf&quot;</span><span class="nt">&gt;</span>Field is unknown<span class="nt">&lt;/error&gt;</span>
+  <span class="nt">&lt;/item&gt;</span>
+  <span class="nt">&lt;item</span> <span class="na">imported=</span><span class="s">&quot;true&quot;</span> <span class="na">id=</span><span class="s">&quot;1987&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/importReport&gt;</span></code></div><a name="Create_issue_link_type"></a><a name="d121905e394"></a><h3>Create issue link type</h3><a name="d121905e397"></a><p>
+         <a name="d121905e399"></a><b id="d121905e399">Request</b></p><a name="d121905e402"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">PUT http://localhost:8081/rest/admin/issueLinkType/Rescind?outwardName=rescinds<span class="err">&amp;</span>inwardName=rescinded+by<span class="err">&amp;</span>directed=true
+Content-Length: 0
+Connection: keep-alive
+Cookie: $Version=0; JSESSIONID=2h2curh13q3p11s564124l5jm; $Path=/; jetbrains.charisma.main.security.PRINCIPAL=NDg...</code></div><a name="d121905e406"></a><p>
+         <a name="d121905e408"></a><b id="d121905e408">Response</b>
+</p><a name="d121905e412"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">HTTP/1.1 201 Created
+Content-Type: application/xml;charset=UTF-8
+Location: http://localhost:8081/charisma/rest/admin/issueLinkType/Rescind
+Content-Length: 0
+Server: Jetty(6.1.23)</code></div><a name="Import_links"></a><a name="d121905e417"></a><h3>Import links</h3><a name="d121905e420"></a><p>
+         <a name="d121905e422"></a><b id="d121905e422">Request</b></p><a name="d121905e425"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">PUT http://localhost:8081/rest/import/links
+Content-Length: 199
+Connection: keep-alive
+Content-Type: application/xml
+Cookie: $Version=0; JSESSIONID=2h2curh13q3p11s564124l5jm; $Path=/; jetbrains.charisma.main.security.PRINCIPAL=NDg...
+
+<span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;</span>
+<span class="nt">&lt;list&gt;</span>
+  <span class="nt">&lt;link</span> <span class="na">typeName=</span><span class="s">&quot;depend&quot;</span> <span class="na">source=</span><span class="s">&quot;CMN-1928&quot;</span> <span class="na">target=</span><span class="s">&quot;CMN-1917&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;link</span> <span class="na">typeName=</span><span class="s">&quot;rescind&quot;</span> <span class="na">source=</span><span class="s">&quot;CMN-1987&quot;</span> <span class="na">target=</span><span class="s">&quot;CMN-1928&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/list&gt;</span></code></div><a name="d121905e429"></a><p>
+         <a name="d121905e431"></a><b id="d121905e431">Response</b>
+</p><a name="d121905e435"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">HTTP/1.1 200 OK
+Content-Type: application/xml;charset=UTF-8
+Content-Length: 130
+Server: Jetty(6.1.23)
+
+<span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;</span>
+<span class="nt">&lt;importReport&gt;</span>
+  <span class="nt">&lt;item</span> <span class="na">imported=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;item</span> <span class="na">imported=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/importReport&gt;</span></code></div><a name="Upload_attachment"></a><a name="d121905e440"></a><h3>Upload attachment</h3><a name="d121905e443"></a><p>
+         <a name="d121905e445"></a><b id="d121905e445">Request</b></p><a name="d121905e448"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">POST http://localhost:8081/rest/issue/CMN-1917/attachment?authorLogin=gorbachev<span class="err">&amp;</span>created=1149678852000
+Content-Length: 7839
+Connection: keep-alive
+Content-Type: multipart/form-data; boundary=---------------------------7d159c1302d0y0
+Cookie: $Version=0; JSESSIONID=1eufd2pvosy59101uv1zr0bi1y; $Path=/; jetbrains.charisma.main.security.PRINCIPAL=NDg...
+
+-----------------------------7d159c1302d0y0
+Content-Disposition: form-data; name=&quot;flag.png&quot;; filename=&quot;flag.png&quot;
+Content-Type: image/png
+Content-Transfer-Encoding: binary
+
+<span class="nt">&lt;actual</span> <span class="err">file</span> <span class="err">content,</span> <span class="err">not</span> <span class="err">shown</span> <span class="err">here</span><span class="nt">&gt;</span>
+-----------------------------7d159c1302d0y0--</code></div><a name="d121905e452"></a><p>
+         <a name="d121905e454"></a><b id="d121905e454">Response</b>
+</p><a name="d121905e458"></a><div class="code-block" data-lang="xml"><code class="code-block__wrapper">HTTP/1.1 201 Created
+Content-Type: application/xml;charset=UTF-8
+Location: http://localhost:8081/rest/issue/CMN-1917/attachment/_persistent/flag.png?file=45-50<span class="err">&amp;</span>v=0<span class="err">&amp;</span>c=true
+Content-Length: 0
+Server: Jetty(6.1.23)</code></div><div class="last-modified">Last modified: 2 February 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

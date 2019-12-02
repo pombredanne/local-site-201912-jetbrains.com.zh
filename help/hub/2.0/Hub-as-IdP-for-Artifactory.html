@@ -1,0 +1,44 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"></meta><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><title>Hub 2.0 Help :: Hub as SAML Identity Provider for Artifactory</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Hub-as-IdP-for-Artifactory"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search Hub Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>Hub 2.0 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="Hub-as-IdP-for-Google.html">Hub as SAML Identity Provider for Google Apps for Work</a><a class="navigation-links__next" href="Backing-up-and-restoring-data.html">Backup</a></div><h1>Hub as SAML Identity Provider for Artifactory</h1><a name="d62265e3"></a><h2>Prerequisites</h2>
+        <ul class="list _bullet"><li class="list__item"><a name="d62265e7"></a>You mast have administrator privileges in both Artifactory and Hub.</li><li class="list__item"><a name="d62265e10"></a>You must have the SSL certificate that is packed into the <code class="code" data-lang="Java">.p12</code>
+                key store that is set up for SAML connection in Hub.</li></ul>
+    <a name="d62265e18"></a><a name="dynaProc0"></a><section class="procedure-steps"><h2>Configure SSO for Artifactory with Hub as IdP</h2><ol class=".list _decimal"><li class="list__item">Log into Artifactory with administrator privileges. Open <a name="d62265e22"></a><span class="menupath">Admin module &gt; Security &gt; SAML
+            SSO</span>.
+        </li><li class="list__item">Enable the SAML integration and provide the following parameters:
+            <table class="" width="100%" id="d62265e28"><thead><tr id="d62265e30" class="ijRowHead"><a name="d62265e30"></a><th width="20%"><a name="d62265e32"></a>Parameter</th><th><a name="d62265e35"></a>Description</th></tr></thead><tbody><tr id="d62265e39" class="ijRowOdd"><a name="d62265e39"></a><td><a name="d62265e41"></a>SAML Login URL</td><td><a name="d62265e44"></a>Paste the content of the
+                        <a name="d62265e46"></a><span class="control">Sign In URL</span>
+                        field on
+                        <a name="d62265e49"></a><span class="menupath">More Settings &gt; SAML2.0 &gt; Settings</span>
+                        page of the Hub server.
+                    </td></tr><tr id="d62265e54" class="ijRowEven"><a name="d62265e54"></a><td><a name="d62265e56"></a>SAML Logout URL</td><td><a name="d62265e59"></a>Paste the content of the
+                        <a name="d62265e61"></a><span class="control">Sign Out URL</span>
+                        field on
+                        <a name="d62265e64"></a><span class="menupath">More Settings &gt; SAML2.0 &gt; Settings</span>
+                        page of the Hub server.
+                    </td></tr><tr id="d62265e69" class="ijRowOdd"><a name="d62265e69"></a><td><a name="d62265e71"></a>SAML Service Provider Name</td><td><a name="d62265e74"></a>Set up the service provider name of Artifactory by which it should be recognized in Hub. Use the domain name of your Artifactory instance.</td></tr><tr id="d62265e78" class="ijRowEven"><a name="d62265e78"></a><td><a name="d62265e80"></a>SAML Certificate</td><td><a name="d62265e83"></a>Paste the content of the certificate that you packed into the <code class="code" data-lang="Java">.p12</code>
+                        key store that is set up for SAML connection in Hub.
+                    </td></tr></tbody></table>
+
+        </li><li class="list__item">Configure options related to processing unknown user accounts by Artifactory. We recommend that you enable the <a name="d62265e94"></a><span class="control">Auto Create Artifactory Users</span> option.
+        </li><li class="list__item">Save the configuration.</li><li class="list__item">Configure
+            <a name="d62265e103"></a><span class="control">Custom URL Base</span>
+            of your Artifactory. Refer to the
+            <a name="d62265e106"></a><a href="https://www.jfrog.com/confluence/display/RTF/Configuring+Artifactory#ConfiguringArtifactory-CustomURLBase" data-external="true"><span>Artifactory documentation</span></a>
+            for details.
+        </li><li class="list__item">In Hub, open the <a name="d62265e113"></a><span class="menupath">More&nbsp;Settings &gt; SAML&nbsp;2.0 &gt; Registered Service Providers</span> tab.
+        </li><li class="list__item">
+            Click the <a name="d62265e119"></a><span class="control">Register service provider...</span> button.
+        </li><li class="list__item">In the dialog, provide the following parameters of the Artifactory service:
+            <table class="left_header" width="100%" id="d62265e125"><thead><tr id="d62265e127" class="ijRowHead"><a name="d62265e127"></a><th width="20%"><a name="d62265e129"></a>Parameter</th><th><a name="d62265e132"></a>Description</th></tr></thead><tbody><tr id="d62265e136" class="ijRowOdd"><a name="d62265e136"></a><th><a name="d62265e138"></a>Name</th><td><a name="d62265e141"></a>Enter a name to be displayed for the Artifactory service in Hub.</td></tr><tr id="d62265e145" class="ijRowEven"><a name="d62265e145"></a><th><a name="d62265e147"></a>Issuer</th><td><a name="d62265e150"></a>Use the name of your Artifactory service.
+                        If you use the Cloud version of Artifactory, enter the name in the format <code class="code" data-lang="Java">&lt;accountname&gt;.artifactoryonline.com</code>.
+                    </td></tr><tr id="d62265e157" class="ijRowOdd"><a name="d62265e157"></a><th><a name="d62265e159"></a>Description</th><td><a name="d62265e162"></a>Optionally, enter a description of the Artifactory service.</td></tr><tr id="d62265e166" class="ijRowEven"><a name="d62265e166"></a><th><a name="d62265e168"></a>Consumer URL</th><td><a name="d62265e171"></a>Enter the Assertion Consumer Service (ACS) URL of your Artifactory service.
+                        General format of the URL is: <code class="code" data-lang="Java">&lt;Custom Base URL&gt;/webapp/saml/loginResponse</code>
+                    </td></tr><tr id="d62265e179" class="ijRowOdd"><a name="d62265e179"></a><th><a name="d62265e181"></a>Hub should send <code class="code" data-lang="Java">LogoutResponse</code></th><td><a name="d62265e186"></a>Make sure that the option is disabled.</td></tr></tbody></table>
+
+        </li></ol></section><div class="last-modified">Last modified: 19 September 2016 </div></article><div id="disqus_thread"></div></div></section></main></div><script src="/help/app/app.js"></script></body></html>

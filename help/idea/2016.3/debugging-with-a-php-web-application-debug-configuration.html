@@ -1,0 +1,169 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta class="swiftype" name="product" data-type="string" content="/idea/2016.3/"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><meta charset="UTF-8"><meta name="robots" content="noindex"><title>IntelliJ IDEA 2016.3 Help :: Debugging with a PHP Web Application Debug Configuration</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Creating_PHP_Web_Application_Debug_Configuration"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-swiftype-index="false"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.3 Help</h3><div class="shortcuts-switcher" data-swiftype-index="false"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Windows/Linux Default</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWin</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">Mac OS X</option><option data-group="secondary" value="eclipse_mac_os_x">Eclipse (Mac OS X)</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (Mac OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper (Mac OS X)</option><option data-group="secondary" value="emacs">Emacs (Mac OS X)</option></select></div><div class="panel-trigger" data-swiftype-index="false"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="zero-configuration-debugging.html">Zero-Configuration Debugging</a></div><h1>Debugging with a PHP Web Application Debug Configuration</h1><a name="d766e18"></a><p><a name="d766e19"></a><span class="emphasis">This feature is supported in the Ultimate edition only.</span></p>
+             
+                <aside class="warning ">
+                    <a name="d1646e280"></a><p><a name="d1646e281"></a><span class="emphasis">
+                        The following is only valid when PHP Plugin is installed and enabled!
+                    </span></p>
+                </aside>
+             
+        <a name="d63136e16"></a><p>In this section:</p><ul><li class="list__item"><a href="#d63136e22">Introduction</a></li><li class="list__item"><a href="#d63136e40">Preparing the debugging engine</a></li><li class="list__item"><a href="#d63136e45">Setting breakpoints</a></li><li class="list__item"><a href="#d63136e56">Creating a debug configuration of the type PHP Web Application</a></li><li class="list__item"><a href="#d63136e147">Initiating a debugging session and examining the suspended program</a></li><li class="list__item"><a href="#d63136e167">Specifying scripts to skip requests to</a></li></ul><a name="d63136e22"></a><h2>Introduction</h2>
+        <a name="d63136e24"></a><p>In this debugging mode, IntelliJ IDEA fully controls the debugging process:
+            it launches the application, opens the browser, and activates the debugging engine
+            according to a <a name="d63136e26"></a><span class="emphasis">PHP Web Application debug configuration</span>.</p>
+      <a name="d63136e30"></a><p>
+        A <a name="d604e1942"></a><span class="keyword">PHP Web Application</span> debug configuration tells IntelliJ IDEA the URL address to access the starting page of the application,
+        the browser to open the starting page in, and the <a name="d604e1945"></a><span class="emphasis">debug server configuration</span> to use.
+    </p>
+ 
+        <a name="d63136e35"></a><p>You can also specify the scripts requests to which you want IntelliJ IDEA to ignore during debugging.
+             
+            This approach can be useful, when your application contains scripts that use AJAX. Suppose you have a <code class="code" data-lang="Java">menu-ajax-script.php</code> that "reloads" a part of your web page.
+            This script works properly so you do not need to debug it. However, this script is still requested during the debugging session. To have incoming connections to this script ignored,
+            add the <code class="code" data-lang="Java">menu-ajax-script.php</code> script to the <a name="d2863e82"></a><span class="emphasis">skipped paths</span> list. You can also group such scripts into folders and add these folders to the "ignore list".
+            </p>
+
+    <a name="d63136e40"></a><h2>Preparing the debugging engine</h2>
+       
+        <a name="d2863e19"></a><p>
+            Before you start debugging, make sure that you have a debugging engine installed and configured properly. IntelliJ IDEA supports debugging with two most popular tools:
+            <a name="d2863e21"></a><a href="http://xdebug.org/download.php" data-external="true"><span>Xdebug</span></a> and <a name="d2863e24"></a><a href="http://www.zend.com/en/products/studio/downloads" data-external="true"><span>Zend Debugger</span></a>.
+            These tools cannot be used simultaneously because they block each other.
+            To avoid this problem, you need to update the corresponding sections in the <code class="code" data-lang="Java">php.ini</code>
+            file as described in <a name="d2863e30"></a><a href="configuring-xdebug.html"><span>Configuring Xdebug</span></a> and <a name="d2863e32"></a><a href="configuring-zend-debugger.html"><span>Configuring Zend Debugger</span></a>.
+        </p>
+            <a name="d2863e35"></a><p>
+                To open the active <code class="code" data-lang="Java">php.ini</code> file in the editor:
+                 
+        <ol class="list _decimal"><li class="list__item"><a name="d604e882"></a>
+                 
+         
+            Open the <a name="d831e8187"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by pressing <kbd data-default="Ctrl+Alt+S" data-default_for_gnome="Ctrl+Alt+S" data-default_for_kde="Ctrl+Alt+S" data-default_for_xwin="Ctrl+Alt+S" data-emacs="Ctrl+Alt+S" data-jbuilder="N/A" data-visual_studio="Alt+F7" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Alt+S" data-mac_os_x_10.5_="&#x2318;," data-mac_os_x="&#x2318;," data-eclipse_mac_os_x="&#x2318;," data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+S</kbd> or by choosing <a name="d831e8191"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d831e8194"></a><span class="menupath">IntelliJ IDEA | Preferences</span> for OS X,
+         
+         
+            and  
+         
+         
+         
+        click <a name="d831e8217"></a><span class="control">PHP</span> under <a name="d831e8220"></a><span class="control">Languages&amp;Frameworks</span>.
+     
+     
+            </li><li class="list__item"><a name="d604e894"></a>
+                On the <a name="d604e896"></a><a href="php.html"><span>PHP</span></a> page that opens, click <img alt="browseButton.png" title="browseButton.png" src="/help/img/idea/2016.3/browseButton.png" width="15" height="15" class="inline-icon-15"> next to the <a name="d604e900"></a><span class="control">CLI Interpreter</span> field.
+            </li><li class="list__item"><a name="d604e904"></a>
+                In the <a name="d604e906"></a><span class="control">CLI Interpreters</span> dialog box that opens, the <a name="d604e909"></a><span class="control">Configuration File</span> read-only field
+                shows the path to the active <code class="code" data-lang="Java">php.ini</code> file. Click <a name="d604e915"></a><span class="control">Open in Editor</span>.
+            </li></ol>
+     
+            </p>
+         
+    <a name="d63136e45"></a><h2>Setting breakpoints</h2>
+              <a name="d63136e47"></a><p>
+        <a name="d604e2086"></a><span class="keyword">Breakpoints</span> are source code markers used to trigger actions during a debugging session.
+         
+        Typically, the purpose behind setting a breakpoint is to suspend program execution to allow you to
+        examine program data. However, IntelliJ IDEA can use breakpoints as triggers for a variety of different
+        actions. Breakpoints can be set at any time during the debugging process. Your breakpoints don't affect
+        your source files directly, but the breakpoints and their settings are saved with your IntelliJ IDEA
+        project so you can reuse them across debugging sessions.
+     
+    </p>
+          <ol class="list _decimal"><li class="list__item"><a name="d604e2094"></a>
+            Place the caret on the desired line of the source code.
+            <a name="d604e2096"></a><p>
+                Breakpoints can be set in the PHP context inside <code class="code" data-lang="Java">*.php</code>, <code class="code" data-lang="Java">*.html</code>, and files of other types.
+                Only executable lines are valid locations for line breakpoints. Comments, declarations, and empty lines are not valid locations for the
+            </p>
+        </li><li class="list__item"><a name="d604e2106"></a>
+            Do one of the following:
+            <ul class="list _ul"><li class="list__item"><a name="d604e2110"></a>Click the left gutter area at a line where you want to toggle a breakpoint.</li><li class="list__item"><a name="d604e2113"></a>On the main menu, choose <a name="d604e2115"></a><span class="menupath">Run | Toggle Line Breakpoint</span>.</li><li class="list__item"><a name="d604e2119"></a>Press <kbd data-default="Ctrl+F8" data-default_for_gnome="Ctrl+F8" data-default_for_kde="Ctrl+8" data-default_for_xwin="Ctrl+F8" data-emacs="Ctrl+F8" data-jbuilder="Ctrl+F8" data-visual_studio="F9" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Shift+B" data-mac_os_x_10.5_="&#x2318;F8" data-mac_os_x="&#x2318;F8" data-eclipse_mac_os_x="&#x21E7;&#x2318;B" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+F8</kbd>.</li></ul>
+        </li></ol>
+    <a name="d63136e56"></a><h2>Creating a debug configuration of the type PHP Web Application</h2>
+          <ol class="list _decimal"><li class="list__item"><a name="d63136e60"></a>Open the <a name="d63136e62"></a><a href="run-debug-configurations.html"><span>Run/Debug Configuration</span></a> dialog box by doing one of the following:
+                  <ul class="list _bullet"><li class="list__item"><a name="d63136e67"></a>On the main menu, choose <a name="d63136e69"></a><span class="menupath">Run | Edit Configurations</span>.</li><li class="list__item"><a name="d63136e73"></a>Press <kbd data-default="Shift+Alt+F10" data-default_for_gnome="Shift+Alt+F10" data-default_for_kde="Shift+Alt+F10" data-default_for_xwin="Shift+Alt+F10" data-emacs="Alt+Shift+F10" data-jbuilder="Shift+Alt+F10" data-visual_studio="Alt+Shift+F10" data-netbeans_6.5="N/A" data-eclipse="Shift+Alt+F10" data-mac_os_x_10.5_="&#x2303;&#x2325;R" data-mac_os_x="&#x2325;&#x21E7;F10" data-eclipse_mac_os_x="&#x2303;&#x2325;R" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Shift+Alt+F10</kbd>, then press <kbd>0</kbd> to display
+                          the <a name="d63136e80"></a><span class="control">Edit Configuration</span> dialog box
+                          or select the configuration from the pop-up window and press <kbd data-default="F4" data-default_for_gnome="F4" data-default_for_kde="F4" data-default_for_xwin="F4" data-emacs="F4" data-jbuilder="N/A" data-visual_studio="F4" data-netbeans_6.5="N/A" data-eclipse="F12" data-mac_os_x_10.5_="&#x2318;&#x2193;" data-mac_os_x="F4" data-eclipse_mac_os_x="F3" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">F4</kbd>.</li></ul>
+              </li><li class="list__item"><a name="d63136e88"></a>Click <img alt="/help/img/idea/2016.3/new.png" title="/help/img/idea/2016.3/new.png" src="/help/img/idea/2016.3/new.png" width="12" height="12" class="inline-icon-12"> on the toolbar or press <kbd data-default="Insert" data-default_for_gnome="Insert" data-default_for_kde="Insert" data-default_for_xwin="Insert" data-emacs="Insert" data-jbuilder="Insert" data-visual_studio="Insert" data-netbeans_6.5="N/A" data-eclipse="Insert" data-mac_os_x_10.5_="&#x21E7;&#x232B;" data-mac_os_x="N/A" data-eclipse_mac_os_x="&#x21E7;&#x232B;" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Insert</kbd>. From
+                  the drop-down list, select the <a name="d63136e94"></a><span class="control">PHP Web Application</span> configuration type.
+                  The <a name="d63136e97"></a><a href="run-debug-configuration-php-web-application.html"><span>PHP Web Application</span></a> dialog box opens.</li><li class="list__item"><a name="d63136e101"></a>Specify the configuration name.</li><li class="list__item"><a name="d63136e104"></a>Choose the applicable debug server configuration from the <a name="d63136e106"></a><span class="control">Server</span> drop-down list
+                  or click the <a name="d63136e109"></a><span class="control">Browse</span> button <img alt="browseButton.png" title="browseButton.png" src="/help/img/idea/2016.3/browseButton.png" width="15" height="15" class="inline-icon-15">.
+                  and define a debug server configuration in the <a name="d63136e114"></a><a href="servers.html"><span>Servers</span></a> dialog box that opens
+                  as described in <a name="d63136e116"></a><a href="creating-a-php-debug-server-configuration.html"><span>Creating a PHP Debug Server Configuration</span></a></li><li class="list__item"><a name="d63136e118"></a>In the <a name="d63136e120"></a><span class="control">Start URL</span> text box, type the server path to the file that implements the
+                  application starting page.
+                  Specify the path relative to the server configuration root
+                  ( 
+        The <a name="d538e520"></a><span class="emphasis">server configuration root</span> is the highest folder in the file tree on the <a name="d538e523"></a><span class="emphasis">local</span> or <a name="d538e526"></a><span class="emphasis">remote</span> server
+        accessible through the server configuration. For <a name="d538e529"></a><span class="emphasis">in-place</span> servers, it is the project root.
+     ).
+                  The read-only field below shows the URL address of the application starting page. The URL address is
+                  composed dynamically as you type.</li><li class="list__item"><a name="d63136e127"></a>Specify the browser to open the application in. Choose a configured browser from the
+                  <a name="d63136e129"></a><span class="control">Browser</span> drop-down list or click the <a name="d63136e132"></a><span class="control">Browse</span> button
+                  <img alt="/help/img/idea/2016.3/browseButton.png" title="/help/img/idea/2016.3/browseButton.png" src="/help/img/idea/2016.3/browseButton.png" width="15" height="15" class="inline-icon-15"> and <a name="d63136e137"></a><a href="configuring-browsers.html"><span>specify another browser</span></a> in the
+                  <a name="d63136e140"></a><a href="web-browsers.html"><span>Web Browsers</span></a> dialog box that opens.</li></ol>
+    <a name="d63136e147"></a><h2>Initiating a debugging session and examining the suspended program</h2>
+          <ol class="list _decimal"><li class="list__item"><a name="d63136e151"></a>To start debugging, click the <a name="d63136e153"></a><span class="control">Debug</span> button <img alt="debug.png" title="debug.png" src="/help/img/idea/2016.3/debug.png" width="14" height="14" class="inline-icon-14"> on the
+              toolbar.</li><li class="list__item"><a name="d63136e159"></a>
+        As soon as the debugger suspends on reaching the first breakpoint, examine the application by analyzing <a name="d604e1813"></a><span class="emphasis">frames</span>.
+        A <a name="d604e1816"></a><span class="emphasis">frame</span> corresponds to an active method or function call and  stores the local variables of the called method or function, the arguments to it,
+        and the code context that enables expression evaluation.
+        All currently active frames are displayed on the <a name="d604e1819"></a><span class="control">Frames</span> pane of the <a name="d604e1822"></a><a href="debug-tool-window.html"><span>Debug tool window</span></a>.
+        where you can switch between them and analyze the information stored therein in the <a name="d604e1825"></a><span class="control">Variables</span> and <a name="d604e1829"></a><span class="control">Watches</span> panes.
+        For more details, see the section <a name="d604e1832"></a><a href="examining-suspended-program.html"><span>Examining Suspended Program</span></a>.  
+    </li><li class="list__item"><a name="d63136e162"></a>
+        Continue running the program and examine its frames as soon as it is suspended again.
+        <ul class="list _bullet"><li class="list__item"><a name="d604e1841"></a>
+                To control the program execution manually, step through the code using the commands under the <a name="d604e1843"></a><span class="menupath">Run</span> menu or toolbar buttons:
+                <a name="d604e1846"></a><span class="menupath">Step Into</span>&nbsp;(<kbd data-default="F7" data-default_for_gnome="F7" data-default_for_kde="F7" data-default_for_xwin="F7" data-emacs="F7" data-jbuilder="F7" data-visual_studio="F11" data-netbeans_6.5="N/A" data-eclipse="F5" data-mac_os_x_10.5_="F7" data-mac_os_x="F7" data-eclipse_mac_os_x="F5" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">F7</kbd>),  <a name="d604e1851"></a><span class="menupath">Step Out</span>&nbsp;(<kbd data-default="Shift+F8" data-default_for_gnome="Shift+F8" data-default_for_kde="Shift+F8" data-default_for_xwin="Shift+F8" data-emacs="Shift+F8" data-jbuilder="Shift+F8" data-visual_studio="Shift+F11" data-netbeans_6.5="N/A" data-eclipse="F7" data-mac_os_x_10.5_="&#x21E7;F8" data-mac_os_x="&#x21E7;F8" data-eclipse_mac_os_x="F7" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Shift+F8</kbd>),
+                <a name="d604e1857"></a><span class="menupath">Step Over</span>&nbsp;(<kbd data-default="F8" data-default_for_gnome="F8" data-default_for_kde="F8" data-default_for_xwin="F8" data-emacs="F8" data-jbuilder="F8" data-visual_studio="F10" data-netbeans_6.5="N/A" data-eclipse="F6" data-mac_os_x_10.5_="F8" data-mac_os_x="F8" data-eclipse_mac_os_x="F6" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">F8</kbd>), and others.
+                For more details, see <a name="d604e1862"></a><a href="stepping-through-the-program.html"><span>Stepping Through the Program</span></a>.  
+            </li><li class="list__item"><a name="d604e1867"></a>
+                To have the program run automatically up to the next breakpoint,
+                resume the session by choosing <a name="d604e1869"></a><span class="menupath">Run | Resume Program</span> or pressing <kbd data-default="F9" data-default_for_gnome="F9" data-default_for_kde="F9" data-default_for_xwin="F9" data-emacs="F9" data-jbuilder="N/A" data-visual_studio="F5" data-netbeans_6.5="N/A" data-eclipse="F8" data-mac_os_x_10.5_="&#x2325;&#x2318;R" data-mac_os_x="F9" data-eclipse_mac_os_x="F8" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">F9</kbd>
+            </li></ul>
+    </li></ol>
+    <a name="d63136e167"></a><h2>Specifying scripts to skip requests to</h2>
+              <a name="d63136e169"></a><p>
+            This approach can be useful, when your application contains scripts that use AJAX. Suppose you have a <code class="code" data-lang="Java">menu-ajax-script.php</code> that "reloads" a part of your web page.
+            This script works properly so you do not need to debug it. However, this script is still requested during the debugging session. To have incoming connections to this script ignored,
+            add the <code class="code" data-lang="Java">menu-ajax-script.php</code> script to the <a name="d2863e82"></a><span class="emphasis">skipped paths</span> list. You can also group such scripts into folders and add these folders to the "ignore list".
+            </p>
+          <ol class="list _decimal"><li class="list__item"><a name="d604e1879"></a>
+             
+         
+            Open the <a name="d831e8113"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by pressing <kbd data-default="Ctrl+Alt+S" data-default_for_gnome="Ctrl+Alt+S" data-default_for_kde="Ctrl+Alt+S" data-default_for_xwin="Ctrl+Alt+S" data-emacs="Ctrl+Alt+S" data-jbuilder="N/A" data-visual_studio="Alt+F7" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Alt+S" data-mac_os_x_10.5_="&#x2318;," data-mac_os_x="&#x2318;," data-eclipse_mac_os_x="&#x2318;," data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Alt+S</kbd> or by choosing <a name="d831e8117"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d831e8120"></a><span class="menupath">IntelliJ IDEA | Preferences</span> for OS X.
+         
+         
+     
+             
+         
+         
+        Expand the <a name="d831e8176"></a><span class="control">PHP</span> node under <a name="d831e8179"></a><span class="control">Languages &amp; Frameworks</span>, and then
+     
+             
+         
+         
+         
+        click <a name="d831e8217"></a><span class="control">Skipped Paths</span> under <a name="d831e8220"></a><span class="control">Debug</span>.
+     
+        </li><li class="list__item"><a name="d604e1900"></a>
+            On the <a name="d604e1902"></a><a href="skipped-paths.html"><span>Skipped Paths</span></a> page that opens, configure an "ignore list" of scripts and folders with scripts not to be invoked if IntelliJ IDEA receives incoming connections to them.
+            <ul class="list _bullet"><li class="list__item"><a name="d604e1906"></a>
+                    To add a new entry to the list, click the <a name="d604e1908"></a><span class="control">Add</span> button <img alt="add.png" title="add.png" src="/help/img/idea/2016.3/new.png" width="12" height="12" class="inline-icon-12"> or press <kbd data-default="Alt+Insert" data-default_for_gnome="Alt+Insert" data-default_for_kde="Alt+Insert" data-default_for_xwin="Alt+Insert" data-emacs="Alt+Insert" data-jbuilder="Alt+Insert" data-visual_studio="Alt+Insert" data-netbeans_6.5="N/A" data-eclipse="Alt+Insert" data-mac_os_x_10.5_="&#x2318;N" data-mac_os_x="&#x2303;N" data-eclipse_mac_os_x="&#x2318;N" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Insert</kbd>.
+                    Then click the <a name="d604e1915"></a><span class="control">Browse</span> button <img alt="browseButton.png" title="browseButton.png" src="/help/img/idea/2016.3/browseButton.png" width="15" height="15" class="inline-icon-15"> and in the dialog box that opens choose the file or folder to skip connections to.
+                </li><li class="list__item"><a name="d604e1921"></a>
+                    To remove an entry from the list, select it and click the <a name="d604e1923"></a><span class="control">Remove</span> button <img alt="delete.png" title="delete.png" src="/help/img/idea/2016.3/delete.png" width="12" height="12" class="inline-icon-12"> or press <kbd data-default="Alt+Delete" data-default_for_gnome="Alt+Delete" data-default_for_kde="Alt+Delete" data-default_for_xwin="Alt+Delete" data-emacs="N/A" data-jbuilder="Alt+Delete" data-visual_studio="Alt+Delete" data-netbeans_6.5="N/A" data-eclipse="Alt+Delete" data-mac_os_x_10.5_="&#x2318;&#x2326;" data-mac_os_x="&#x2318;&#x2326;" data-eclipse_mac_os_x="N/A" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Alt+Delete</kbd>.
+                    The script will be now executed upon receiving requests to it.
+                </li></ul>
+        </li><li class="list__item"><a name="d604e1933"></a>
+            To have IntelliJ IDEA inform you every time it receives a request to a script to be skipped, select the <a name="d604e1935"></a><span class="control">Notify about skipped paths</span> check box.
+        </li></ol>
+     <div class="navigation-links _bottom"><a class="navigation-links__prev" href="meet-intellij-idea.html">Meet IntelliJ IDEA</a><a class="navigation-links__next" href="zero-configuration-debugging.html">Zero-Configuration Debugging</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content">```
+                <div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d63136e183"></a><a href="php-debugging-session.html"><span>PHP Debugging Session</span></a></li><li class="list__item"><a name="d63136e185"></a><a href="creating-and-editing-run-debug-configurations.html"><span>Creating and Editing Run/Debug Configurations</span></a></li><li class="list__item"><a name="d63136e188"></a><a href="debugging-php-applications.html"><span>Debugging PHP Applications</span></a></li><li class="list__item"><a name="d63136e190"></a><a href="debugging.html"><span>Debugging</span></a></li></ul></div><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d63136e196"></a><a href="run-debug-configuration-php-web-application.html"><span>Run/Debug Configuration: PHP Web Application</span></a></li><li class="list__item"><a name="d63136e199"></a><a href="servers.html"><span>Servers</span></a></li></ul></div></div></section><div class="last-modified" data-swiftype-index="false">Last modified: 21 March 2017 </div></article><div id="disqus_thread"></div></div></section></main></div><script></script><script src="/help/app/app.js"></script></body></html>

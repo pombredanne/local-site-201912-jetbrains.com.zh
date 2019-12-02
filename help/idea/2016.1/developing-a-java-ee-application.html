@@ -1,0 +1,271 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"></meta><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><title>IntelliJ IDEA 2016.1 Help :: Developing a Java EE application</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Creating_and_running_your_first_Java_EE_application"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search IntelliJ IDEA Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ IDEA 2016.1 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWindow</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="jbuilder">JBuilder</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="true"><div class="navigation-links _top"><a class="navigation-links__prev" href="debugging-your-first-java-application.html">Debugging Your First Java Application</a><a class="navigation-links__next" href="keyboard-shortcuts-you-cannot-miss.html">Keyboard Shortcuts You Cannot Miss</a></div><h1>Developing a Java EE application</h1><a name="d123931e3"></a><p>This tutorial illustrates the Java EE application development workflow.</p><a name="d123931e6"></a><p>The application that we will develop will be a minimal one. It'll be a one JSP page Java web application.
+        However, the IntelliJ IDEA features discussed here are applicable to Java EE applications of any complexity.</p><ul><li class="list__item"><a href="#d123931e11">Before you start</a></li><li class="list__item"><a href="#d123931e37">Creating a project</a></li><li class="list__item"><a href="#d123931e146">Exploring the project structure</a></li><li class="list__item"><a href="#source_code">Developing source code</a></li><li class="list__item"><a href="#d123931e237">Running the application</a></li><li class="list__item"><a href="#d123931e273">Modifying the code and observing the changes</a></li><li class="list__item"><a href="#explore_run_config">Exploring a run configuration. Fixing debug settings</a></li><li class="list__item"><a href="#d123931e435">Exploring an artifact configuration</a></li><li class="list__item"><a href="#d123931e534">Packaging the application into a WAR file</a></li><li class="list__item"><a href="#d123931e607">Deploying an artifact onto a running server</a></li></ul><a name="d123931e11"></a><h2>Before you start</h2>
+        <a name="d123931e13"></a><p>Make sure that the following software is installed on your computer:</p>
+        <ul class="list _ul"><li class="list__item"><a name="d123931e18"></a>IntelliJ IDEA ULTIMATE Edition.</li><li class="list__item"><a name="d123931e21"></a>Java SE Development Kit (JDK), version 6 or later.
+                <a name="d123931e23"></a><a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" data-external="true"><span>Download Oracle JDK</span></a>.</li><li class="list__item"><a name="d123931e27"></a>GlassFish Server, version 3.0.1 or later.
+                <a name="d123931e29"></a><a href="https://glassfish.java.net/download.html" data-external="true"><span>Download GlassFish</span></a>.
+                (You can use any other Java EE-enabled application server.
+                GlassFish is used here just as an example.)</li><li class="list__item"><a name="d123931e33"></a>A web browser.</li></ul>
+    <a name="d123931e37"></a><h2>Creating a project</h2>
+        <ol class="list _decimal"><li class="list__item"><a name="d123931e41"></a>Click <a name="d123931e43"></a><span class="control">Create New Project</span> on the Welcome screen, or
+                select <a name="d123931e46"></a><span class="control">File | New | Project</span>.
+                <a name="d123931e49"></a><p>The <a name="d123931e51"></a><span class="control">New Project</span> wizard opens.</p>
+            </li><li class="list__item"><a name="d123931e56"></a>In the left-hand pane, select <a name="d123931e58"></a><span class="control">Java Enterprise</span>.
+ 
+            </li><li class="list__item"><a name="d123931e64"></a>
+                If the JDK that you want to use is already defined in IntelliJ IDEA,
+                select that JDK from the <a name="d123931e66"></a><span class="control">Project SDK</span> list.
+                Otherwise, click <a name="d123931e69"></a><span class="control">New</span>, select <a name="d123931e72"></a><span class="control">JDK</span>,
+                and select the JDK installation folder in the dialog that opens.
+ 
+            </li><li class="list__item"><a name="define_glassfish"></a>
+                Specify the application server that you are going to use.
+ 
+                (We'll use GlassFish Server.)
+                <a name="d123931e82"></a><p>
+                    If GlassFish is not defined in IntelliJ IDEA yet,
+                    click <a name="d123931e84"></a><span class="control">New</span> to the right of the <a name="d123931e87"></a><span class="control">Application Server</span> field and
+                    select <a name="d123931e90"></a><span class="control">Glassfish Server</span>.</p>
+ 
+ 
+                <a name="d123931e98"></a><p>
+                    In the <a name="d123931e100"></a><span class="control">Glassfish Server</span> dialog,
+                    specify the GlassFish Server installation directory.</p>
+ 
+            </li><li class="list__item"><a name="d123931e107"></a>
+                Under <a name="d123931e109"></a><span class="control">Additional Libraries and Frameworks</span>,
+                select the <a name="d123931e112"></a><span class="control">Web Application</span> check box.
+ 
+ 
+                <figure><img alt="HWJEE009NewProjectFirstPageFinal" width="590" height="441" title="HWJEE009NewProjectFirstPageFinal" src="/help/img/idea/2016.1/HWJEE009NewProjectFirstPageFinal.png"></figure>
+                <a name="d123931e122"></a><p>
+                    Click <a name="d123931e124"></a><span class="control">Next</span>.</p></li><li class="list__item"><a name="d123931e129"></a>
+                Specify the name for your new project (e.g. <code class="code" data-lang="Java">JavaEEHelloWorld</code>).
+                <figure><img alt="HWJEE010NewProjectName" width="590" height="132" title="HWJEE010NewProjectName" src="/help/img/idea/2016.1/HWJEE010NewProjectName.png"></figure>
+                <a name="d123931e136"></a><p>
+                    Click <a name="d123931e138"></a><span class="control">Finish</span> and wait while IntelliJ IDEA is creating the project.</p>
+            </li></ol>
+    <a name="d123931e146"></a><h2>Exploring the project structure</h2>
+        <a name="d123931e148"></a><p>
+            When the project is created, you'll see something similar to this
+            in the <a name="d123931e150"></a><span class="control">Project</span> tool window.</p>
+        <figure><img alt="HWJEE011ProjectInit" width="420" height="270" title="HWJEE011ProjectInit" src="/help/img/idea/2016.1/HWJEE011ProjectInit.png"></figure>
+        <ul class="list _ul"><li class="list__item"><a name="d123931e158"></a><a name="d123931e159"></a><span class="control">JavaEEHelloWorld</span> is a module folder (which in this case coincides with the project
+                folder). The <code class="code" data-lang="Java">.idea</code> folder and the file <code class="code" data-lang="Java">JavaEEHelloWorld.iml</code> contain
+                configuration data for your project and module respectively. The folder <code class="code" data-lang="Java">src</code> is for your
+                Java source code. The folder <code class="code" data-lang="Java">web</code> is for the web part of your application.
+                At the moment this folder contains the deployment descriptor <code class="code" data-lang="Java">WEB-INF\web.xml</code> and
+                the file <code class="code" data-lang="Java">index.jsp</code> intended as a starting page of your application.</li><li class="list__item"><a name="d123931e182"></a><a name="d123931e183"></a><span class="control">External Libraries</span> include your JDK and the JAR files for working with GlassFish.</li></ul>
+    <a name="source_code"></a><h2>Developing source code</h2>
+ 
+        <a name="d123931e193"></a><p>Our application will be a single JSP page application. Its only function will be to output the text
+            <a name="d123931e195"></a><i id="d123931e195">Hello World!</i></p>
+ 
+
+        <ol class="list _decimal"><li class="list__item"><a name="d123931e202"></a>Open <code class="code" data-lang="Java">index.jsp</code> for editing: select the file in the <a name="d123931e207"></a><span class="control">Project</span> tool window
+                and press <kbd data-default="F4" data-default_for_gnome="F4" data-default_for_kde="F4" data-default_for_xwin="F4" data-emacs="F4" data-jbuilder="N/A" data-visual_studio="F4" data-netbeans_6.5="N/A" data-eclipse="F12" data-mac_os_x_10.5_="&#x2318;&#x2193;" data-mac_os_x="F4" data-eclipse_mac_os_x="F3" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">F4</kbd>.</li><li class="list__item"><a name="d123931e217"></a>Between <code class="code" data-lang="Java">&lt;body&gt;</code> and <code class="code" data-lang="Java">&lt;/body&gt;</code>
+                type <code class="code" data-lang="Java">Hello, World!</code>
+                <figure><img alt="HWJEEIndexJSPHelloWorld" width="590" height="256" title="HWJEEIndexJSPHelloWorld" src="/help/img/idea/2016.1/HWJEEIndexJSPHelloWorld.png"></figure>
+                <a name="d123931e230"></a><p>The code at this step is ready.</p></li></ol>
+    <a name="d123931e237"></a><h2>Running the application</h2>
+        <a name="d123931e239"></a><p>
+            In the upper-right part of the workspace, click <img alt="run" width="11" height="14" title="run" src="/help/img/idea/2016.1/run.png" class="inline-icon-14">.</p>
+        <figure><img alt="HWJEE019Run" width="314" height="103" title="HWJEE019Run" src="/help/img/idea/2016.1/HWJEE019Run.png"></figure>
+        <a name="d123931e246"></a><p>
+            IntelliJ IDEA compiles your source code and builds an application artifact.
+            (We'll discuss artifacts a bit later.
+            For now, the artifact is your application in deployment-ready format.)</p>
+ 
+        <a name="d123931e251"></a><p>
+            After that, the <a name="d123931e253"></a><span class="control">Run</span> tool window opens.
+            IntelliJ IDEA starts the server and deploys the artifact onto it.</p>
+        <figure><img alt="HWJEE020RunToolWindow" width="590" height="248" title="HWJEE020RunToolWindow" src="/help/img/idea/2016.1/HWJEE020RunToolWindow.png"></figure>
+ 
+    <a name="d123931e262"></a><p>Finally, your default web browser starts and you see the application output <code class="code" data-lang="Java">Hello, World!</code> there.</p>
+ 
+        <figure><img alt="HWJEE021HelloWorldInBrowser" width="590" height="184" title="HWJEE021HelloWorldInBrowser" src="/help/img/idea/2016.1/HWJEE021HelloWorldInBrowser.png"></figure>
+    <a name="d123931e273"></a><h2>Modifying the code and observing the changes</h2>
+        <ol class="list _decimal"><li class="list__item"><a name="d123931e279"></a>
+                In <code class="code" data-lang="Java">index.jsp</code>, change <code class="code" data-lang="Java">Hello, World!</code>
+                to <code class="code" data-lang="Java">Hello!</code>.
+                <figure><img alt="HWJEE022ModifyCode" width="590" height="256" title="HWJEE022ModifyCode" src="/help/img/idea/2016.1/HWJEE022ModifyCode.png"></figure></li><li class="list__item"><a name="d123931e292"></a>
+                In the <a name="d123931e294"></a><span class="control">Run</span> tool window, click Update <img alt="update_icon" width="14" height="15" title="update_icon" src="/help/img/idea/2016.1/update_icon.png" class="inline-icon-15">.
+                <figure><img alt="HWJEE023RunToolWindowUpdate" width="254" height="135" title="HWJEE023RunToolWindowUpdate" src="/help/img/idea/2016.1/HWJEE023RunToolWindowUpdate.png"></figure></li><li class="list__item"><a name="d123931e301"></a>
+                In the <a name="d123931e303"></a><span class="control">Update</span> dialog,
+                select <a name="d123931e306"></a><span class="control">Update resources</span> and click <a name="d123931e309"></a><span class="control">OK</span>.
+                (For more information, see <a href="updating-applications-on-application-servers.html#update_options">Application update options</a>.)
+                <figure><img alt="HWJEE024UpdateDialog" width="235" height="268" title="HWJEE024UpdateDialog" src="/help/img/idea/2016.1/HWJEE024UpdateDialog.png"></figure>
+            </li><li class="list__item"><a name="d123931e317"></a>
+ 
+                Switch to the web browser and reload the page to see the changes.
+                <figure><img alt="HWJEE025HelloInBrowser" width="590" height="184" title="HWJEE025HelloInBrowser" src="/help/img/idea/2016.1/HWJEE025HelloInBrowser.png"></figure></li></ol>
+        <a name="d123931e323"></a><p>
+            See also, <a name="d123931e325"></a><a href="updating-applications-on-application-servers.html"><span>Updating Applications on Application Servers</span></a>.</p>
+    <a name="explore_run_config"></a><h2>Exploring a run configuration. Fixing debug settings</h2>
+        <a name="d123931e331"></a><p>
+            When creating the project, we specified GlassFish as an application server.
+            As a result, IntelliJ IDEA created a run configuration for GlassFish.</p>
+        <a name="d123931e334"></a><p>
+            When we performed the Run command (<img alt="run" width="11" height="14" title="run" src="/help/img/idea/2016.1/run.png" class="inline-icon-14">),
+            we started that run configuration.
+            Now let's take a look at the run configuration and see how its settings
+            map onto the events that we've just observed.</p>
+        <ol class="list _decimal"><li class="list__item"><a name="d123931e341"></a>
+                Click the run configuration selector and select <a name="d123931e343"></a><span class="control">Edit Configurations</span>.
+                <figure><img alt="HWJEE026EditConfigurations" width="314" height="154" title="HWJEE026EditConfigurations" src="/help/img/idea/2016.1/HWJEE026EditConfigurations.png"></figure>
+                <a name="d123931e348"></a><p>The <a name="d123931e350"></a><span class="control">Run/Debug Configurations</span> dialog opens and
+                    the settings for the GlassFish run configuration are shown.</p>
+                <figure><img alt="HWJEE027RunDebugConfigurations" width="590" height="149" title="HWJEE027RunDebugConfigurations" src="/help/img/idea/2016.1/HWJEE027RunDebugConfigurations.png"></figure>
+                <a name="d123931e356"></a><p>The <a name="d123931e358"></a><span class="control">Before launch</span> task list (in the lower part of the dialog) specifies that
+                    the application code should be compiled and the corresponding artifact should be built
+                    prior to executing the run configuration.</p>
+
+                <figure><img alt="HWJEE028RunConfigBeforeLaunch" width="590" height="172" title="HWJEE028RunConfigBeforeLaunch" src="/help/img/idea/2016.1/HWJEE028RunConfigBeforeLaunch.png"></figure></li><li class="list__item"><a name="d123931e365"></a>
+                Select the <a name="d123931e367"></a><span class="control">Startup/Connection</span> tab to see how the server is started
+                in the run, debug and code coverage modes.
+                <figure><img alt="HWJEE030RunConfigStartupConnection" width="590" height="315" title="HWJEE030RunConfigStartupConnection" src="/help/img/idea/2016.1/HWJEE030RunConfigStartupConnection.png"></figure>
+            </li><li class="list__item"><a name="d123931e373"></a>
+                Select the <a name="d123931e375"></a><span class="control">Deployment</span> tab to see which artifacts are deployed
+                after the server is started.
+                <figure><img alt="HWJEE029RunConfigDeployment" width="590" height="170" title="HWJEE029RunConfigDeployment" src="/help/img/idea/2016.1/HWJEE029RunConfigDeployment.png"></figure>
+            </li><li class="list__item"><a name="d123931e381"></a>Go back to the <a name="d123931e383"></a><span class="control">Server</span> tab.
+                <a name="d123931e386"></a><p>The settings under <a name="d123931e388"></a><span class="control">Open browser</span> specify that after launch
+                    (i.e. after the server is started and the artifacts are deployed onto it)
+                    the default web browser should start and go to the specified URL
+                    (<code class="code" data-lang="Java">http://localhost:8080/JavaEEHelloWorld_war_exploded</code>).</p>
+                <a name="d123931e395"></a><p>The settings to the right of <a name="d123931e397"></a><span class="control">On 'Update' action</span> specify that
+                    on clicking <img alt="update_icon" width="14" height="15" title="update_icon" src="/help/img/idea/2016.1/update_icon.png" class="inline-icon-15"> in the <a name="d123931e402"></a><span class="control">Run</span> tool window
+                    the <a name="d123931e405"></a><span class="control">Update</span> dialog should be shown and
+                    the <a name="d123931e408"></a><span class="control">Update resources</span> option should be used by default.
+                    (The last used update option becomes the default one).</p>
+                <figure><img alt="HWJEE028RunConfigServer" width="591" height="230" title="HWJEE028RunConfigServer" src="/help/img/idea/2016.1/HWJEE028RunConfigServer.png"></figure></li><li class="list__item"><a name="d123931e414"></a>
+                Note the warning <a name="d123931e416"></a><i id="d123931e416">Debug settings are invalid</i> in the lower part of the dialog.
+                Click <a name="d123931e419"></a><span class="control">Fix</span>.
+                (IntelliJ IDEA makes the necessary changes to GlassFish <code class="code" data-lang="Java">domain.xml</code> configuration file.)
+                <figure><img alt="HWJEE031RunConfigFix" width="590" height="95" title="HWJEE031RunConfigFix" src="/help/img/idea/2016.1/HWJEE031RunConfigFix.png"></figure></li><li class="list__item"><a name="d123931e428"></a>
+                Click <a name="d123931e430"></a><span class="control">OK</span>.</li></ol>
+    <a name="d123931e435"></a><h2>Exploring an artifact configuration</h2>
+        <a name="d123931e437"></a><p>
+            The word artifact in IntelliJ IDEA may mean one of the following:
+            1) an artifact configuration, i.e. a specification of the output to be generated for a project;
+            2) an actual output generated according to such a specification (configuration).</p>
+        <a name="d123931e440"></a><p>
+            When creating the project, we indicated that we were going to develop a web application.
+            As a result, IntelliJ IDEA, among other things,
+            created a configuration for building a web application.
+            Let's have a look at this configuration.</p>
+        <ol class="list _decimal"><li class="list__item"><a name="d123931e445"></a>
+                Open the <a name="d123931e447"></a><span class="control">Project Structure</span> dialog:
+                <a name="d123931e450"></a><span class="control">File | Project Structure</span> or
+                <kbd data-default="Ctrl+Shift+Alt+S" data-default_for_gnome="Ctrl+Shift+Alt+S" data-default_for_kde="Ctrl+Shift+Alt+S" data-default_for_xwin="Ctrl+Shift+Alt+S" data-emacs="Ctrl+Alt+Shift+S" data-jbuilder="Ctrl+Shift+Alt+S" data-visual_studio="Ctrl+Alt+Shift+S" data-netbeans_6.5="N/A" data-eclipse="Ctrl+Shift+Alt+S" data-mac_os_x_10.5_="&#x2318;;" data-mac_os_x="&#x2318;;" data-eclipse_mac_os_x="&#x2318;;" data-intellij_idea_classic_os_x="N/A" data-xcode="N/A" data-resharper="N/A" data-resharper_osx="N/A">Ctrl+Shift+Alt+S</kbd>.</li><li class="list__item"><a name="d123931e456"></a>
+                Under <a name="d123931e458"></a><span class="control">Project Settings</span>, select <a name="d123931e461"></a><span class="control">Artifacts</span>.
+                <a name="d123931e464"></a><p>
+                    The available artifact configurations are shown in the pane to the right
+                    under <img alt="add" width="12" height="12" title="add" src="/help/img/idea/2016.1/new.png" class="inline-icon-12"> and <img alt="delete" width="12" height="12" title="delete" src="/help/img/idea/2016.1/delete.png" class="inline-icon-12">.
+                    (There's only one configuration at the moment.)</p>
+                <figure><img alt="HWJEE032ProjectStructureArtifacts" width="590" height="237" title="HWJEE032ProjectStructureArtifacts" src="/help/img/idea/2016.1/HWJEE032ProjectStructureArtifacts.png"></figure>
+                <a name="d123931e473"></a><p>
+                    The artifact settings are shown in the right-hand part of the dialog.</p>
+                <figure><img alt="HWJEE033ProjectStructureArtifactSettings" width="590" height="336" title="HWJEE033ProjectStructureArtifactSettings" src="/help/img/idea/2016.1/HWJEE033ProjectStructureArtifactSettings.png"></figure>
+                <a name="d123931e479"></a><p>
+                    <a name="d123931e481"></a><span class="control">Type.</span>
+                    The artifact type is Web Application: Exploded.
+                    This is a decompressed web application archive (WAR),
+                    a directory structure that is ready for deployment onto a web server.</p>
+                <a name="d123931e485"></a><p>
+                    <a name="d123931e487"></a><span class="control">Output directory.</span>
+                    The artifact, when built, is placed into
+                    <code class="code" data-lang="Java">&lt;project_folder&gt;\out\artifacts\JavaEEHelloWorld_war_exploded</code>.</p>
+                <a name="d123931e494"></a><p>
+                    <a name="d123931e496"></a><span class="control">Output Layout.</span>
+                    The artifact structure is shown in the left-hand pane of the
+                    <a name="d123931e499"></a><span class="control">Output Layout</span> tab.</p>
+                <a name="d123931e503"></a><p>
+                    The <a name="d123931e505"></a><span class="control">&lt;output root&gt;</span> corresponds to the output directory.
+                    Other elements have the following meanings:</p>
+                <ul class="list _ul"><li class="list__item"><a name="d123931e511"></a>
+                        <a name="d123931e513"></a><span class="control">'JavaEEHelloWorld' compile output</span> represents
+                        compiled Java classes whose sources are located in the
+                        <code class="code" data-lang="Java">src</code> directory.
+                        These are placed into <code class="code" data-lang="Java">WEB-INF\classes</code> in the output directory.</li><li class="list__item"><a name="d123931e523"></a>
+                        <a name="d123931e525"></a><span class="control">'Web' facet resources</span> represent the contents of
+                        the <code class="code" data-lang="Java">web</code> directory.</li></ul></li></ol>
+    <a name="d123931e534"></a><h2>Packaging the application into a WAR file</h2>
+        <a name="d123931e536"></a><p>
+            When you get to the stage when you are happy with your application,
+            you may want to place it in a WAR (web application archive).
+            To do that, you should create an appropriate artifact configuration and
+            then build the artifact:</p>
+        <ol class="list _decimal"><li class="list__item"><a name="d123931e541"></a>
+                Click <img alt="add" width="12" height="12" title="add" src="/help/img/idea/2016.1/new.png" class="inline-icon-12">, point to <a name="d123931e545"></a><span class="control">Web Application: Archive</span> and
+                select <a name="d123931e548"></a><span class="control">For 'JavaEEHelloWorld: war exploded'</span>.
+                <figure><img alt="HWJEE034ProjectStructureNewArtifact" width="590" height="411" title="HWJEE034ProjectStructureNewArtifact" src="/help/img/idea/2016.1/HWJEE034ProjectStructureNewArtifact.png"></figure>
+                <a name="d123931e553"></a><p>
+                    A new artifact configuration is created and
+                    its settings are shown in the right-hand part of the dialog.</p>
+                <figure><img alt="HWJEE035ProjectStructureNewArtifactSettings" width="590" height="380" title="HWJEE035ProjectStructureNewArtifactSettings" src="/help/img/idea/2016.1/HWJEE035ProjectStructureNewArtifactSettings.png"></figure></li><li class="list__item"><a name="d123931e559"></a>
+                If necessary, create a manifest file for your archive:
+                click <a name="d123931e561"></a><span class="control">Create Manifest</span> and
+                agree to the location suggested by IntelliJ IDEA (<code class="code" data-lang="Java">web\META-INF\MANIFEST.MF</code>).</li><li class="list__item"><a name="d123931e568"></a>
+                Click <a name="d123931e570"></a><span class="control">OK</span> in the <a name="d123931e573"></a><span class="control">Project Structure</span> dialog.</li><li class="list__item"><a name="d123931e577"></a>
+                Select <a name="d123931e579"></a><span class="control">Build | Build Artifacts</span>.
+                <figure><img alt="HWJEE036BuildArtifacts" width="233" height="187" title="HWJEE036BuildArtifacts" src="/help/img/idea/2016.1/HWJEE036BuildArtifacts.png"></figure></li><li class="list__item"><a name="d123931e584"></a>
+                In the <a name="d123931e586"></a><span class="control">Build Artifact</span> popup,
+                point to <a name="d123931e589"></a><span class="control">JavaEEHelloWorld:war</span> and
+                select <a name="d123931e592"></a><span class="control">Build</span>.
+                <figure><img alt="HWJEE037BuildArtifactPopup" width="284" height="161" title="HWJEE037BuildArtifactPopup" src="/help/img/idea/2016.1/HWJEE037BuildArtifactPopup.png"></figure>
+                <a name="d123931e597"></a><p>
+                    Now if you look at the <code class="code" data-lang="Java">out\artifacts\JavaEEHelloWorld_war</code> folder,
+                    you'll see the archive there.</p>
+                <figure><img alt="HWJEE038ArtifactInProjectToolWindow" width="420" height="308" title="HWJEE038ArtifactInProjectToolWindow" src="/help/img/idea/2016.1/HWJEE038ArtifactInProjectToolWindow.png"></figure></li></ol>
+    <a name="d123931e607"></a><h2>Deploying an artifact onto a running server</h2>
+        <a name="d123931e609"></a><p>
+            Sometimes you need to deploy your app onto a running server.
+            This section provides a how-to example.</p>
+        <a name="d123931e612"></a><p>
+            Server run configurations that don't start a server are called <a name="d123931e614"></a><i id="d123931e614">remote</i>.
+            Such run configurations can be used, for example,
+            for deploying applications to servers that are already running.
+            (See <a href="working-with-server-run-debug-configurations.html#local_and_remote_run_configs">Local and remote run configurations</a>.)</p>
+        <a name="d123931e620"></a><p>
+            Let's create a run configuration for deploying our WAR artifact to the running server and see how it works.
+            (By now, the server has been started by the run configuration
+            <a name="d123931e622"></a><a href="#explore_run_config"><span>discussed earlier</span></a>.)</p>
+        <ol class="list _decimal"><li class="list__item"><a name="d123931e628"></a>
+                Click the run configuration selector and select <a name="d123931e630"></a><span class="control">Edit Configurations</span>.
+                <figure><img alt="HWJEE026EditConfigurations" width="314" height="154" title="HWJEE026EditConfigurations" src="/help/img/idea/2016.1/HWJEE026EditConfigurations.png"></figure>
+            </li><li class="list__item"><a name="d123931e636"></a>
+                Click <img alt="add" width="12" height="12" title="add" src="/help/img/idea/2016.1/new.png" class="inline-icon-12">, point to <a name="d123931e640"></a><span class="control">GlassFish Server</span> and
+                select <a name="d123931e643"></a><span class="control">Remote</span>.
+                <figure><img alt="HWJEE039NewRemoteServerRunConfig" width="590" height="374" title="HWJEE039NewRemoteServerRunConfig" src="/help/img/idea/2016.1/HWJEE039NewRemoteServerRunConfig.png"></figure></li><li class="list__item"><a name="d123931e648"></a>
+                Change the run configuration name <code class="code" data-lang="Java">Unnamed</code> to something more sensible
+                (e.g. <code class="code" data-lang="Java">GlassFishRemote</code>).
+                <figure><img alt="HWJEE040RunConfigName" width="590" height="149" title="HWJEE040RunConfigName" src="/help/img/idea/2016.1/HWJEE040RunConfigName.png"></figure></li><li class="list__item"><a name="d123931e658"></a>
+                Specify the artifact to be deployed to the server: select the <a name="d123931e660"></a><span class="control">Deployment</span> tab,
+                click <img alt="add" width="12" height="12" title="add" src="/help/img/idea/2016.1/new.png" class="inline-icon-12"> and select <a name="d123931e665"></a><span class="control">Artifact</span>.
+                <figure><img alt="HWJEE041DeploymentPlusArtifact" width="590" height="170" title="HWJEE041DeploymentPlusArtifact" src="/help/img/idea/2016.1/HWJEE041DeploymentPlusArtifact.png"></figure>
+                <a name="d123931e670"></a><p>
+                    In the dialog that opens, select the WAR artifact.</p>
+                <figure><img alt="HWJEE042SelectArtifact" width="492" height="185" title="HWJEE042SelectArtifact" src="/help/img/idea/2016.1/HWJEE042SelectArtifact.png"></figure>
+                <a name="d123931e676"></a><p>
+                    The result should look similar to this:</p>
+                <figure><img alt="HWJEE043ArtifactDefined" width="590" height="170" title="HWJEE043ArtifactDefined" src="/help/img/idea/2016.1/HWJEE043ArtifactDefined.png"></figure></li><li class="list__item"><a name="d123931e681"></a>
+                Click <a name="d123931e683"></a><span class="control">OK</span> in the <a name="d123931e686"></a><span class="control">Run/Debug Configurations</span> dialog.
+                <a name="d123931e689"></a><p>
+                    Now let's see how this run configuration works.</p></li><li class="list__item"><a name="d123931e693"></a>
+                Execute the run configuration: click <img alt="run" width="11" height="14" title="run" src="/help/img/idea/2016.1/run.png" class="inline-icon-14">.
+                <figure><img alt="HWJEE044Run" width="314" height="103" title="HWJEE044Run" src="/help/img/idea/2016.1/HWJEE044Run.png"></figure>
+                <a name="d123931e699"></a><p>
+                    The run configuration output is shown in the <a name="d123931e701"></a><span class="control">Run</span> tool window.</p>
+                <figure><img alt="HWJEE045RunToolWindow" width="590" height="248" title="HWJEE045RunToolWindow" src="/help/img/idea/2016.1/HWJEE045RunToolWindow.png"></figure>
+                <a name="d123931e707"></a><p>
+                    After a while, a new tab in your web browser opens, and you see the application output there.</p>
+                <figure><img alt="HWJEE046HelloInBrowser" width="590" height="184" title="HWJEE046HelloInBrowser" src="/help/img/idea/2016.1/HWJEE046HelloInBrowser.png"></figure></li></ol>
+    <div class="navigation-links _bottom"><a class="navigation-links__prev" href="debugging-your-first-java-application.html">Debugging Your First Java Application</a><a class="navigation-links__next" href="keyboard-shortcuts-you-cannot-miss.html">Keyboard Shortcuts You Cannot Miss</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content"><div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d123931e724"></a><a href="java-ee.html"><span>Java EE</span></a></li><li class="list__item"><a name="d123931e727"></a><a href="working-with-application-servers.html"><span>Working with Application Servers</span></a></li></ul></div><div class="seealso__col"><h3>Getting Started:</h3><ul class="list"><li class="list__item"><a name="d123931e719"></a><a href="Application_Servers.html"><span>Application Servers</span></a></li></ul></div><div class="seealso__col"><h3>External Links:</h3><ul class="list"><li class="list__item"><a name="d123931e733"></a><a href="https://www.jetbrains.com/idea/documentation/video-tutorials.jsp" data-external="true"><span>Video tutorials</span></a></li></ul></div></div></section><div class="last-modified">Last modified: 13 July 2016 </div></article><div id="disqus_thread"></div></div></section></main></div><script src="/help/app/app.js"></script></body></html>

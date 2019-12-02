@@ -1,0 +1,198 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta name="robots" content="noindex"></meta><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><title>WebStorm 2016.1 Help :: Creating a Project Using Yeoman Generator</title><link rel="stylesheet" href="/help/app/app.css"></head><body data-id="Creating_a_Project_Using_Yeoman_Generator"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><div class="wrapper"><section class="panel _nav"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search WebStorm Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header"><div class="container"><h3>WebStorm 2016.1 Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="default" selected>Default (Windows/Linux)</option><option data-group="primary" value="default_for_gnome">GNOME</option><option data-group="primary" value="default_for_kde">KDE</option><option data-group="primary" value="default_for_xwin">XWindow</option><option data-group="primary" value="emacs">Emacs</option><option data-group="primary" value="visual_studio">Visual Studio</option><option data-group="primary" value="netbeans_6.5">NetBeans 6.5</option><option data-group="primary" value="eclipse">Eclipse</option><option data-group="secondary" value="mac_os_x_10.5_">Default (Mac OS X 10.5+)</option><option data-group="secondary" value="mac_os_x">OS X</option><option data-group="secondary" value="eclipse_mac_os_x">OS X Eclipse</option><option data-group="secondary" value="intellij_idea_classic_os_x">IntelliJ IDEA Classic (OS X)</option><option data-group="secondary" value="xcode">Xcode</option><option data-group="secondary" value="visual_studio">Visual Studio</option><option data-group="secondary" value="resharper">ReSharper</option><option data-group="secondary" value="resharper_osx">ReSharper OSX</option><option data-group="secondary" value="emacs">Emacs</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="false"><div class="navigation-links _top"><a class="navigation-links__prev" href="generating-a-project-from-a-framework-template.html">Generating a Project from a Framework Template</a><a class="navigation-links__next" href="opening-reopening-and-closing-projects.html">Opening, Reopening and Closing Projects</a></div><h1>Creating a Project Using Yeoman Generator</h1><a name="d36801e33"></a><p>
+     
+        WebStorm supports integration with the <a name="d9041e3768"></a><a href="http://yeoman.io/" data-external="true"><span>Yeoman</span></a> tool and provides interface for using it in generating framework-specific
+        project stubs.
+     
+</p><a name="d36801e38"></a><p>
+              On this page:
+          </p><ul><li class="list__item"><a href="#d36801e44">Before You Start</a></li><li class="list__item"><a href="#d36801e79">Installing Yeoman</a></li><li class="list__item"><a href="#installGenerator">Configuring a List of Project Stub Generators</a></li><li class="list__item"><a href="#d36801e281">Creating a Project by a Generator</a></li></ul><a name="d36801e44"></a><h2>Before You Start</h2>
+      <ol class="list _decimal"><li class="list__item"><a name="d36801e48"></a>
+               
+            Download and install <a name="d25102e42"></a><a href="http://nodejs.org/" data-external="true"><span>Node.js</span></a>. The runtime environment is required for two reasons:
+            <ul class="list _bullet"><li class="list__item"><a name="d25102e47"></a>
+                    The Yeoman tool is started through <a name="d25102e49"></a><span class="emphasis">Node.js</span>.
+                </li><li class="list__item"><a name="d25102e53"></a>
+                    <a name="d25102e55"></a><span class="emphasis">NPM</span>, which is a part of the runtime environment, is also the easiest way to download the Yeoman tool.
+                </li></ul>
+             
+          </li><li class="list__item"><a name="d36801e53"></a>
+               
+            If you are going to use the command line mode, make sure the path to the parent folder of the <a name="d25102e67"></a><span class="emphasis">Node.js</span> executable file
+            and the path to the <code class="code" data-lang="Java">npm</code> folder are added to the <code class="code" data-lang="Java">PATH</code> variable.
+                This enables you to launch the Yeoman tool and <a name="d25102e76"></a><span class="emphasis">npm</span> from any folder.
+             
+          </li><li class="list__item"><a name="d36801e58"></a>
+              Make sure the <a name="d36801e60"></a><span class="emphasis">Yeoman</span> and the <a name="d36801e63"></a><span class="emphasis">NodeJS</span> plugins are installed and enabled.
+               
+                   
+        The plugins are bundled with WebStorm and activated by default.
+        If the plugins are not activated, enable them on the <a name="d7162e5467"></a><a href="plugins-2.html"><span>Plugins</span></a> page of the
+        <a name="d7162e5469"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> as described in <a name="d7162e5471"></a><a href="enabling-and-disabling-plugins.html"><span>Enabling and Disabling Plugins</span></a>.
+     
+               
+               
+          </li></ol>
+  <a name="d36801e79"></a><h2>Installing Yeoman</h2>
+        <a name="d36801e81"></a><p>
+            The easiest way to install <a name="d36801e83"></a><span class="emphasis">Yeoman</span> is to use the <a name="d36801e86"></a><span class="emphasis">Node Package Manager (npm)</span>,
+            which is a part of <a name="d36801e89"></a><a href="http://nodejs.org/" data-external="true"><span>Node.js</span></a>.
+            <a name="d36801e92"></a><span class="emphasis">Yeoman</span> can be installed both <a name="d36801e95"></a><span class="emphasis">globally</span> or <a name="d36801e99"></a><span class="emphasis">locally</span>, in a project.
+            It is recommended that you install <a name="d36801e102"></a><span class="emphasis">globally</span> because in this case you can run it from any folder
+            but not from its installation folder.
+         </p>
+            <a name="d36801e106"></a><p>
+                WebStorm provides interface for global and local installation modes.
+                Alternatively, you can install <a name="d36801e108"></a><span class="emphasis">Yeoman</span> manually through the command line.
+            </p>
+            <a name="d36801e112"></a><p>
+                To install <a name="d36801e114"></a><span class="emphasis">Yeoman</span> from WebStorm using the <a name="d36801e117"></a><span class="control">Node.js and NPM</span> page of the <a name="d36801e120"></a><span class="control">Settings</span> dialog box:
+            </p>
+            <ol class="list _decimal"><li class="list__item"><a name="d36801e126"></a>
+                     
+         
+            Open the <a name="d7162e7944"></a><a href="settings-preferences-dialog.html"><span>Settings / Preferences Dialog</span></a> by choosing <a name="d7162e7946"></a><span class="menupath">File | Settings</span> for Windows and Linux or
+            <a name="d7162e7949"></a><span class="menupath">WebStorm | Preferences</span> for OS X,
+         
+         
+            and  
+         
+         
+         
+        click <a name="d7162e7972"></a><span class="control">Node.js and NPM</span> under <a name="d7162e7975"></a><span class="control">Languages&amp;Frameworks</span>.
+     
+     
+                </li><li class="list__item"><a name="d36801e138"></a>
+                     
+         
+         
+        On the <a name="d1973e127"></a><span class="control">NPM and Node.js</span> page that opens, the <a name="d1973e130"></a><span class="control">Packages</span> area shows all the Node.js-dependent packages
+        that are currently installed on your computer, both at the <a name="d1973e133"></a><span class="emphasis">global</span> and at the <a name="d1973e137"></a><span class="emphasis">project</span> level.
+        Click <img alt="add" width="12" height="12" title="add" src="/help/img/idea/2016.1/new.png" class="inline-icon-12">.
+     
+                </li><li class="list__item"><a name="d36801e146"></a>
+                    In the <a name="d36801e148"></a><span class="control">Available Packages</span> dialog box that opens, select the <a name="d36801e151"></a><span class="emphasis">yo</span> package from the list.
+                </li><li class="list__item"><a name="d36801e155"></a>
+                    For global installation, select the <a name="d36801e157"></a><span class="control">Options</span> check box and type <code class="code" data-lang="Java">-g</code> in the text box next to it.
+                </li><li class="list__item"><a name="d36801e164"></a>
+                    Click <a name="d36801e166"></a><span class="control">Install Package</span> to start installation.
+                </li></ol>
+            <a name="d36801e171"></a><p>
+                To run the installation from the command line:
+            </p>
+            <ol class="list _decimal"><li class="list__item"><a name="d36801e177"></a>
+                     
+ 
+        Launch the embedded <a name="d9041e48"></a><span class="control">Terminal</span>
+        by hovering  your mouse pointer over <img alt="show_tool_window_bars" width="14" height="14" title="show_tool_window_bars" src="/help/img/idea/2016.1/show_tool_window_bars.png" class="inline-icon-14"> in the lower left corner of WebStorm and choosing  <a name="d9041e53"></a><span class="control">Terminal</span> from the menu
+        (see <a name="d9041e56"></a><a href="working-with-embedded-local-terminal.html"><span>Working with Embedded Local Terminal</span></a> for details).
+     
+                </li><li class="list__item"><a name="d36801e187"></a>
+                    Type the following command at the command line prompt:
+                    <a name="d36801e189"></a><div class="code-block" data-lang="Java"><code class="code-block__wrapper">
+npm install -g yo
+                    </code></div>
+                    where <code class="code" data-lang="Java">-g</code> means <a name="d36801e195"></a><span class="emphasis">global installation</span>
+ 
+                </li></ol>
+
+
+
+
+
+
+
+ 
+        <a name="installGenerator"></a><h2>Configuring a List of Project Stub Generators</h2>
+        <ol class="list _decimal"><li class="list__item"><a name="d36801e209"></a>
+                 
+                 
+        Choose
+         
+         
+            <a name="d9041e1495"></a><span class="menupath">File | New Project</span>
+         
+        on the main menu
+        or click the <a name="d9041e1499"></a><span class="control">New Project</span> button on the <a name="d9041e1502"></a><span class="control">Welcome screen</span>.
+         The <a name="d9041e1507"></a><a href="create-new-project-select-project-type.html"><span>Create New Project: Select Project Type</span></a> dialog box opens. 
+         
+     
+                 
+                 
+            </li><li class="list__item"><a name="d36801e238"></a>
+                 
+                    In the left-hand pane, choose <a name="d36801e242"></a><span class="control">Yeoman</span>.
+                 
+                 
+            </li><li class="list__item"><a name="d36801e256"></a>
+                 
+                    The right-hand pane shows all the previously installed <a name="d36801e260"></a><a href="http://yeoman.io/generators/" data-external="true"><span>Yeoman generators</span></a>.
+                 
+                 
+                Click <a name="d36801e270"></a><span class="control">Install Generator</span>.
+            </li><li class="list__item"><a name="d36801e274"></a>
+                 
+        From the dialog box that opens showing all the available generator packages,
+        select the required package in the left-hand pane and click the <a name="d9041e3731"></a><span class="control">Install Generator</span> button
+        that appears in the right-hand pane. You can install several packages one after another without leaving the dialog box.
+        <a name="d9041e3734"></a><p>
+            When the installation is over, click <a name="d9041e3736"></a><span class="control">Close</span> to return
+            to the list of generators which is already expanded with the newly added package.
+        </p>
+     
+            </li></ol>
+    <a name="d36801e281"></a><h2>Creating a Project by a Generator</h2>
+        <ol class="list _decimal"><li class="list__item"><a name="d36801e285"></a>
+                 
+                     
+        Choose
+         
+         
+            <a name="d9041e1495"></a><span class="menupath">File | New Project</span>
+         
+        on the main menu
+        or click the <a name="d9041e1499"></a><span class="control">New Project</span> button on the <a name="d9041e1502"></a><span class="control">Welcome screen</span>.
+         The <a name="d9041e1507"></a><a href="create-new-project-select-project-type.html"><span>Create New Project: Select Project Type</span></a> dialog box opens. 
+         
+     
+                 
+                 
+            </li><li class="list__item"><a name="d36801e314"></a>
+                 
+                    In the left-hand pane, choose <a name="d36801e318"></a><span class="control">Yeoman</span>.
+                 
+                 
+            </li><li class="list__item"><a name="d36801e332"></a>
+                 
+                    The right-hand pane shows all the previously installed <a name="d36801e336"></a><a href="http://yeoman.io/generators/" data-external="true"><span>Yeoman generators</span></a>.
+                    To expand the list, click <a name="d36801e339"></a><span class="control">Install Generator</span>, see <a name="d36801e342"></a><a href="#installGenerator"><span>Creating a Project Using Yeoman Generator</span></a> above.
+                 
+                 
+                <a name="d36801e351"></a><p>
+                    Select the required generator from the list and click <a name="d36801e353"></a><span class="control">Next</span>.
+                </p>
+            </li><li class="list__item"><a name="d36801e358"></a>
+                 
+        Specify the required settings in the <a name="d9041e3743"></a><span class="control">New Project</span> wizard that starts.
+        The number of pages and their contents depend on the chosen generator.
+     
+            </li><li class="list__item"><a name="d36801e363"></a>
+                 
+        On the last page of the wizard, select or clear the <a name="d9041e3750"></a><span class="control">Run npm install&amp;bower install</span> check box
+        to specify whether you want to run
+        <a name="d9041e3753"></a><span class="emphasis">Node Package Manager</span> and <a name="d9041e3756"></a><span class="emphasis">Bower</span> to install the packages
+        that are required for developing  the new project.
+     
+            </li><li class="list__item"><a name="d36801e369"></a>
+                 
+        Click <a name="d9041e3762"></a><span class="control">Next</span> and choose to open the new project in the current window or in the new one.
+     
+            </li></ol>
+
+    <div class="navigation-links _bottom"><a class="navigation-links__prev" href="generating-a-project-from-a-framework-template.html">Generating a Project from a Framework Template</a><a class="navigation-links__next" href="opening-reopening-and-closing-projects.html">Opening, Reopening and Closing Projects</a></div><section class="seealso"><div class="seealso__header"><h2>See Also</h2></div><div class="seealso__content"><div class="seealso__col"><h3>Procedures:</h3><ul class="list"><li class="list__item"><a name="d36801e380"></a><a href="generating-a-project-from-a-framework-template.html"><span>Generating a Project from a Framework Template</span></a></li></ul></div><div class="seealso__col"><h3>Reference:</h3><ul class="list"><li class="list__item"><a name="d36801e385"></a><a href="yeoman.html"><span>Yeoman</span></a></li><li class="list__item"><a name="d36801e387"></a><a href="create-new-project-yeoman.html"><span>Create New Project: Yeoman</span></a></li><li class="list__item"><a name="d36801e389"></a><a href="node-js-and-npm.html"><span>Node.js and NPM</span></a></li></ul></div></div></section><div class="last-modified">Last modified: 11 July 2016 </div></article><div id="disqus_thread"></div></div></section></main></div><script src="/help/app/app.js"></script></body></html>

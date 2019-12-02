@@ -1,0 +1,53 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html lang="en-US"><head><meta charset="UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-5P98');
+                    </script><script src="//resources.jetbrains.com/storage/help-app/v3/analytics.js"></script><title>Apply Command to an Issue - Help | YouTrack InCloud</title><link rel="stylesheet" href="//resources.jetbrains.com/storage/help-app/v3/app.css"></head><body data-id="Apply-Command-to-an-Issue" data-breadcrumbs="Resources-for-Developers.xml|Resources for Developers/deprecated-rest-api-reference.xml|Old REST API/General-REST-API.xml|General REST API/Issues-Related-Methods.xml|Issues Related Methods/Apply-Command-to-an-Issue.xml|Apply Command to an Issue" data-main-title="Apply Command to an Issue"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack InCloud Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>YouTrack InCloud 2019.2 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="Apply-Command-to-an-Issue" id="Apply-Command-to-an-Issue.xml">Apply Command to an Issue</h1>   <a name="POST_/issue/{issue}/execute"></a>   <h2 id="ac018b5d">POST /issue/{issue}/execute</h2>  <p id="b2315a1f">Apply a command to an issue.</p>   <p id="375aa6d0">This method lets you update multiple issue attributes in a single call.   For example, update custom fields, add tags, and link issues.</p>   <p id="00ed8738">      <div class="code-block" data-lang="none">POST /rest/issue/{issue}/execute?{command}&amp;{comment}&amp;{group}&amp;{disableNotifications}&amp;{runAs}</div>   </p>   <p id="133a697d">         <b id="07142047">Parameters:</b></p><div class="table-wrapper"><table class=" wide  _layout-fixed" width="100%" id="efeaa747"><thead><tr id="633e6747" class="ijRowHead"><th id="ab130cd2"><p> Name </p></th><th id="66afc162"><p> Type </p></th><th id="3884ab30"><p> Description </p></th></tr></thead><tbody><tr id="6b46999a" class="ijRowOdd"><td id="4bfc5c77"><p> issue </p></td><td id="a1c298de"><p> issueById </p></td><td id="26a5090b"><p>The ID of the issue for which the command is applied.</p></td></tr><tr id="ae4f3c05" class="ijRowEven"><td id="6afdabac"><p> command </p></td><td id="00b73c74"><p> string </p></td><td id="43eb4ce8">A command to apply to the specified issue.                 The command can contain a string of attributes and their values.                 This means that you can change multiple attributes with a single command.                 For example, the following command sets the values for the custom fields <code class="code">Type=Bug</code>, <code class="code">Priority=Critical</code>, <code class="code">Fix version=5.1</code>, and adds the <code class="code">regression</code> tag:                  <div class="code-block" data-lang="none"><code class="code-block__wrapper">Type Bug Priority Critical add Fix versions 5.1 tag regression</code></div>                  <p id="e7959e22">For more details about commands in YouTrack, refer to the <a href="Commands.html">basic description</a> and <a href="Command-Reference.html">Command Reference</a>.</p> </td></tr><tr id="6f9805a3" class="ijRowOdd"><td id="3b6a7f95"><p> comment </p></td><td id="dff3e285"><p> string </p></td><td id="a7208126"><p> A comment to add to an issue. </p></td></tr><tr id="5ff0b686" class="ijRowEven"><td id="5c800faf"><p> group </p></td><td id="76e27727"><p> string </p></td><td id="849daf82"><p>The name of a group. Use to set the visibility settings for a comment. </p></td></tr><tr id="975f1d7b" class="ijRowOdd"><td id="8b1555ba"><p> disableNotifications </p></td><td id="42ddc893"><p> boolean </p></td><td id="b47b84ea"><p> If <code class="code">true</code>, the command is applied without notification.                 The default value is <code class="code">false</code>. </p></td></tr><tr id="c51d17fd" class="ijRowEven"><td id="63f44e3a"><p>runAs</p></td><td id="ab559d8c"><p>string</p></td><td id="f0224664">Login for a user on whose behalf the command is executed.        <aside data-type="note" class="prompt" data-title="" rel="f0224664" id="18fb65ac">            <p id="1084b6f0">To use the <code class="code">runAs</code> parameter, you must have the <span class="control">Low-level Administration</span>                permission in the project for the target issue. For more information about permissions, see                <a href="YouTrack-Permissions-Reference.html">Permissions Reference</a>            </p>        </aside>            </td></tr></tbody></table></div>   <h3 id="d2a021b7">Samples</h3>   <h4 id="18bae32f">Sample 1</h4>   <p id="7c0d0d7f">         <b id="6e5f0d75">Request</b></p>   <p id="fcc07626">The following request applies command for the issue with ID "HBR-60" and sets issue Type to "exception" and simultaneously adds a comment "exception naturally!":</p>   <div class="code-block" data-lang="none">
+POST https://example.com/youtrack/rest/issue/HBR-60/execute
+Content-Length: 46
+Connection: keep-alive
+Content-Type: application/x-www-form-urlencoded
+Cookie: $Version=0; JSESSIONID=n7hq7t8o49ae15sgbq5hn9ic; $Path=/; jetbrains.charisma.main.security.PRINCIPAL=MTVhMjY2OGUxMTUxMTI5MGMzNjhlZWM5NTJiNGJkNmIyNzc3NjdjZmM3YWU4MTVjYzQwYWE1MWZlYTkwNTcxNzphcHBfZXhjZXB0aW9u; $Path=/
+
+command=exception&amp;comment=exception naturally!
+</div>   <p id="73cd06c0">         <b id="9e8d883e">Response</b></p>   <div class="code-block" data-lang="none">
+HTTP/1.1 200 OK
+Content-Type: application/xml;charset=UTF-8
+Content-Length: 0
+</div>   <h4 id="9d7869e7">Sample 2</h4>   <p id="900fa3ab">The command in this sample is applied to the issue "TP-30" and sets its Priority to "Major" and State to "Fixed".</p>   <p id="a76bbc92">         <b id="0d38d358">Request</b></p>   <div class="code-block" data-lang="none">
+POST /youtrack/rest/issue/TP-30/execute HTTP/1.0
+Host: sample.myjetbrains.com 
+Content-Length: 41
+Content-Type: application/x-www-form-urlencoded
+Cookie: JSESSIONID=dxe03plylrrg1nkwf23twrl49; Path=/youtrack; jetbrains.charisma.main.security.PRINCIPAL=ZmNhNzIwYmQwYyM0YjNjMWYyNzQ4MjRiMDgzZDNhNGVlZjEwZGFlOTAwNmZlOTZmZDNiYzJiMzIyYWZlMDM5ZDpyb290; Path=/youtrack;
+
+command=Priority%20Major%20State%20Fixed
+</div>   <p id="d8a64b62">         <b id="31687efd">Response</b></p>   <div class="code-block" data-lang="none">
+HTTP/1.1 200 OK
+Server: nginx
+Date: Tue, 21 Jan 2014 11:08:05 GMT
+Content-Type: application/xml; charset=UTF-8
+Content-Length: 0
+Connection: close
+</div>   <a name="Sample_3"></a>   <h4 id="40f00b45">Sample 3</h4>   <p id="46c1930c">Below you will find a sample of an erroneous command.</p>   <p id="cb8c20bd">         <b id="b9d486e7">Request</b></p>   <div class="code-block" data-lang="none">
+POST /youtrack/rest/issue/TP-30/execute HTTP/1.0
+Host: sample.myjetbrains.com 
+Content-Length: 41
+Content-Type: application/x-www-form-urlencoded
+Cookie: JSESSIONID=dxe03plylrrg1nkwf23twrl49; Path=/youtrack; jetbrains.charisma.main.security.PRINCIPAL=ZmNhNzIwYmQwYyM0YjNjMWYyNzQ4MjRiMDgzZDNhNGVlZjEwZGFlOTAwNmZlOTZmZDNiYzJiMzIyYWZlMDM5ZDpyb290; Path=/youtrack;
+
+command=Priority%20Major%20State%20Fixes
+</div>   <p id="3bc59284">         <b id="e7aaf585">Response</b></p>   <div class="code-block" data-lang="none">
+HTTP/1.1 400 Bad Request
+Server: nginx
+Date: Tue, 21 Jan 2014 11:10:24 GMT
+Content-Type: application/xml; charset=UTF-8
+Content-Length: 108
+Connection: close
+
+&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;&lt;error&gt;Unknown command: State expected: Fixes&lt;/error&gt;
+Connection closed by foreign host.
+</div><div class="last-modified" data-skip-index="skip">Last modified: 29 November 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="Update-an-Issue.html">Update an Issue</a><a class="navigation-links__next" href="Intellisense-for-commands.html">Intellisense for commands</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="//resources.jetbrains.com/storage/help-app/v3/app.js"></script></body></html>

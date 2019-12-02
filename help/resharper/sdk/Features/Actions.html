@@ -1,0 +1,223 @@
+
+
+
+<!doctype html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>Actions and Menu Items / ReSharper  DevGuide</title>
+    <link rel="stylesheet" href="/help/resharper/sdk/app/app.css">
+    <link rel="shortcut icon" href="/help/resharper/sdk/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="57x57" href="/help/resharper/sdk/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/help/resharper/sdk/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/help/resharper/sdk/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/help/resharper/sdk/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/help/resharper/sdk/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/help/resharper/sdk/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/help/resharper/sdk/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/help/resharper/sdk/apple-touch-icon-180x180.png">
+    <link rel="mask-icon" href="/help/resharper/sdk/apple-mask-icon.svg" color="black">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-square70x70logo" content="/help/resharper/sdk/mstile-70x70.png">
+    <meta name="msapplication-TileImage" content="/help/resharper/sdk/mstile-144x144.png">
+    <meta name="msapplication-square150x150logo" content="/help/resharper/sdk/mstile-150x150.png">
+    <meta name="msapplication-wide310x150logo" content="/help/resharper/sdk/mstile-310x150.png">
+    <meta name="msapplication-square310x310logo" content="/help/resharper/sdk/mstile-310x310.png">
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="Documentation for writing extensions for ReSharper" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.jetbrains.com/help/resharper/sdk//Features/Actions.html" />
+    <meta property="og:site_name" content="JetBrains ReSharper" />
+    <meta property="og:title" content="Actions and Menu Items" />
+    <meta property="og:description" content="Documentation for writing extensions for ReSharper" />
+    <meta property="og:image" content="https://www.jetbrains.com/help/resharper/sdk/jetbrains.png" />
+    <meta property="article:modified_time" content="2017-07-10T19:28:42+00:00" />
+    <!-- <meta property="article:section" content="" /> 
+    <meta property="article:tag" content="" /> -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@JBPlatform" />
+    <meta name="twitter:title" content="Actions and Menu Items" />
+    <meta name="twitter:description" content="Documentation for writing extensions for ReSharper" />
+    <meta name="twitter:image" content="https://www.jetbrains.com/help/resharper/sdk/jetbrains.png" />
+    <meta class="swiftype" name="product" data-type="string" content="/help/resharper/sdk/"></meta>
+<link  rel="stylesheet" href="/help/resharper/sdk/app/styles.css"></head>
+<body data-id="Features/Actions">
+<div class="wrapper">
+    <section class="panel _nav">
+        <header class="panel__header">
+            <div class="container">
+                <form class="search-box">
+                    <label for="search-box__input" class="search-box__label">
+                        <input type="text" class="search-box__input" id="search-box__input" placeholder="Search ReSharper  DevGuide">
+                    </label>
+                    <div class="search-box__clear" title="Clear"></div>
+                </form>
+            </div>
+        </header>
+        <nav class="panel__content">
+            <div class="container _nav">
+                <menu class="nav-tree"></menu>
+            </div>
+            <div class="container _footer panel__footer">
+                <p><a data-bypass="true" href="//youtrack.jetbrains.com/issues/IJSDK">Send feedback</a></p>
+                <p>&copy; 2000&ndash;2018 <a href="//www.jetbrains.com">JetBrains</a> s.r.o.<br>
+                    All rights reserved.</p>
+            </div>
+        </nav>
+    </section>
+
+    <main class="panel _main" role="main">
+        <header class="panel__header">
+            <div class="container">
+                <h3>ReSharper DevGuide</h3>
+                
+                <div class="panel-trigger"></div>
+            </div>
+        </header>
+        <section class="panel__content">
+            <div class="container">
+                <article class="article" data-shortcut-switcher="false">
+                    <div class="navigation-links _top" data-swiftype-index="false">
+                        <a class="navigation-links__prev" href="/Features/Analysis.html">Analysis</a>
+                        <a class="navigation-links__next" href="/Features/Completion.html">Code Completion</a>
+                    </div>
+                    <a data-bypass="true" href="https://github.com/JetBrains/resharper-devguide/edit/master/Features/Actions.md" class="page-link-to-github" target="_blank" rel="noopener noreferrer" title="Edit this page on GitHub">
+                        <i class="github-icon"></i>
+                        <span class="text">Edit page</span>
+                    </a>
+
+                    <h1>Actions and Menu Items</h1>
+                    <aside class="warning">
+  <p> This topic relates to ReSharper 8, and has not been updated to ReSharper 9 or the ReSharper Platform.</p>
+</aside>
+
+<p>While the bulk of ReSharper is concerned with presenting its own types of UI (popups, dialog windows, etc.), certain features can be implemented using traditional menu items that would be familiar to anyone who has done Visual Studio plugin development. A menu item subsequently triggers an <em>action</em>, i.e. a unit of work associated with this menu item.</p>
+
+<a name="when-to-create-actions" class="elem-anchor"></a>
+<h2>When to create Actions<a href="#when-to-create-actions" class="anchor-link"><span></span></a></h2>
+
+<p>There are essentially two use cases for creating Actions.</p>
+
+<p>The first use case is when you want to expose a particular ReSharper feature, such as e.g., a Context Action, as a Visual Studio command that can be bound to a shortcut. The relevance of this depends on the feature.</p>
+
+<p>The second use case would be a situation where you want your action to do things unrelated to the ReSharper infrastructure. Examples of such actions would be an action to show an About dialog box, to open up a Help File for your plugin, or fire up some other process.</p>
+
+<p>Both of these use cases are accommodated by the Action subsystem.</p>
+
+<a name="making-actions" class="elem-anchor"></a>
+<h2>Making actions<a href="#making-actions" class="anchor-link"><span></span></a></h2>
+
+<p>In order to add your own menu items to the infrastructure, you need to do the following things:</p>
+
+<ul>
+  <li>Create an <code class="code highlight language-text">Actions.xml</code> file which will contain definitions of actions and the places where to insert them.</li>
+  <li>Ensure the <code class="code highlight language-text">Actions.xml</code> file is embedded as a resource in your assembly</li>
+  <li>Ensure that the assembly has an ActionsXml attribute pointing to the above file.</li>
+  <li>Define action handlers for the actions.</li>
+</ul>
+
+<p>Let’s take a look at these steps in turn.</p>
+
+<a name="actionsxml" class="elem-anchor"></a>
+<h2>Actions.xml<a href="#actionsxml" class="anchor-link"><span></span></a></h2>
+
+<p><code class="code highlight language-text">Actions.xml</code> is an embedded resource you can keep in your project. ReSharper is able to locate the resource due to the <code class="code highlight language-text">ActionsXml</code> attribute with which the assembly is decorated. For example:</p>
+
+<div class="code-block" data-lang="csharp"><code class="code-block__wrapper"><span class="na">[assembly: ActionsXml("JetBrains.ReSharper.PowerToys.MenuItem.Actions.xml")]</span>
+</code></div>
+
+<aside class="note">
+  <p>: This attribute is no longer required in ReSharper 8. ReSharper will instead look for all embedded resources in an assembly to see if it matches the name <code class="code highlight language-text">Actions.xml</code></p>
+</aside>
+
+<p>The XML file itself is fairly simple. At the root level, it uses the <code class="code highlight language-text">actions</code> element. Within it, there are several different types of content.</p>
+
+<p>One mandatory type of content is action elements, which indicate the ID of the action concerned, the text that gets displayed, and (optionally) an image. The image can be, e.g., a 16x16 pixel GIF stored as an embedded resource.</p>
+
+<div class="code-block" data-lang="xml"><code class="code-block__wrapper"><span class="nt">&lt;action</span> <span class="na">id=</span><span class="s">"AddMenuItem.ShowCurrentSolution"</span> <span class="na">text=</span><span class="s">"Show Current Solution"</span>
+        <span class="na">image=</span><span class="s">"JetBrains.ReSharper.PowerToys.MenuItem.testImage.gif"</span> <span class="nt">/&gt;</span>
+</code></div>
+
+<p>This is the way actions are defined, but how are they inserted into existing menus? This is what the insert element is for. In this element, you specify the Group ID where the items are inserted, as well as the position they are inserted in (e.g., “last”).</p>
+
+<p>When specifying the group ID, you can specify</p>
+
+<ul>
+  <li>A ReSharper menu (e.g., “ReSharper.Navigate”)</li>
+  <li>A Visual Studio menu (e.g., “VS#Solution”)</li>
+</ul>
+
+<p>For Visual Studio, the part following VS# is the path in the command bar structure of VS itself. You can also use the menu CommandID for this, in the form “VS#(GUID:ID)”.</p>
+
+<p>Consequently, to insert a separator and the ShowCurrentLineNumber action into the VS code window, you would add the following:</p>
+
+<div class="code-block" data-lang="xml"><code class="code-block__wrapper"><span class="nt">&lt;insert</span> <span class="na">group-id=</span><span class="s">"VS#Code Window"</span> <span class="na">position=</span><span class="s">"last"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;separator</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;action-ref</span> <span class="na">id=</span><span class="s">"AddMenuItem.ShowCurrentLineNumber"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/insert&gt;</span>
+</code></div>
+
+<a name="action-handlers" class="elem-anchor"></a>
+<h2>Action Handlers<a href="#action-handlers" class="anchor-link"><span></span></a></h2>
+
+<p>An action handler is the piece of code that handles an action. It is simply a class decorated by the <code class="code highlight language-text">IActionHandler</code> interface and implementing the <code class="code highlight language-text">IActionHandler</code> interface.</p>
+
+<p>Now, you’re probably wondering - how is the action handler bound to an action? Well, there are two ways to do this. One is to name the class file to match the action, such that an action of <code class="code highlight language-text">AddMenuItem.ShowCurrentSolution</code> matches the class name of <code class="code highlight language-text">AddMenuItem_ShowCurrentSolutionAction</code>. As you may have guessed, underscores get ‘turned’ into dots, and suffixes such as <code class="code highlight language-text">Action</code> or <code class="code highlight language-text">ActionHandler</code> are removed.</p>
+
+<p>Concerning the <code class="code highlight language-text">IActionHandler</code> interface, it requires that you implement two methods.</p>
+
+<p>The first - <code class="code highlight language-text">Update()</code> - returns a boolean value indicating whether the menu item is enabled or disabled. For example, if your action needs a solution to work on, you could specify the following Update() method:</p>
+
+<div class="code-block" data-lang="csharp"><code class="code-block__wrapper"><span class="k">public</span> <span class="kt">bool</span> <span class="nf">Update</span><span class="p">(</span><span class="n">IDataContext</span> <span class="n">context</span><span class="p">,</span> <span class="n">ActionPresentation</span> <span class="n">presentation</span><span class="p">,</span> <span class="n">DelegateUpdate</span> <span class="n">nextUpdate</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="c1">// fetch active solution from context</span>
+  <span class="n">ISolution</span> <span class="n">solution</span> <span class="p">=</span> <span class="n">context</span><span class="p">.</span><span class="nf">GetData</span><span class="p">(</span><span class="n">JetBrains</span><span class="p">.</span><span class="n">ProjectModel</span><span class="p">.</span><span class="n">DataContext</span><span class="p">.</span><span class="n">DataConstants</span><span class="p">.</span><span class="n">SOLUTION</span><span class="p">);</span>
+
+  <span class="c1">// enable this action if there is an active solution, disable otherwise</span>
+  <span class="k">return</span> <span class="n">solution</span> <span class="p">!=</span> <span class="k">null</span><span class="p">;</span>
+<span class="p">}</span>
+</code></div>
+
+<p>The second method is called <code class="code highlight language-text">Execute()</code>. This is the method where the action is actually executed.</p>
+
+<a name="redefining-action-handlers" class="elem-anchor"></a>
+<h2>Redefining Action Handlers<a href="#redefining-action-handlers" class="anchor-link"><span></span></a></h2>
+
+<p>If you wish to override existing actions, you can create a custom shell component that finds an existing action and adds a different handler for it. For example, here is a custom action handler override for the <code class="code highlight language-text">TypeHierarchy.ClassHierarchy</code> action:</p>
+
+<div class="code-block" data-lang="csharp"><code class="code-block__wrapper"><span class="na">[ShellComponent]</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">CustomActionHandlerManager</span>
+<span class="p">{</span>
+  <span class="k">public</span> <span class="nf">CustomActionHandlerManager</span><span class="p">(</span><span class="n">Lifetime</span> <span class="n">lifetime</span><span class="p">,</span> <span class="n">IActionManager</span> <span class="n">actionManager</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="kt">var</span> <span class="n">classHierarchy</span> <span class="p">=</span> <span class="n">actionManager</span><span class="p">.</span><span class="nf">GetUpdatableAction</span><span class="p">(</span><span class="s">"TypeHierarchy.ClassHierarchy"</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">classHierarchy</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>
+      <span class="n">classHierarchy</span><span class="p">.</span><span class="nf">AddHandler</span><span class="p">(</span><span class="n">lifetime</span><span class="p">,</span> <span class="k">new</span> <span class="nf">WholeMembersHierarchyActions</span><span class="p">());</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></div>
+
+
+
+                    <div class="navigation-links _bottom" data-swiftype-index="false">
+                        <a class="navigation-links__prev" href="/Features/Analysis.html">Analysis</a>
+                        <a class="navigation-links__next" href="/Features/Completion.html">Code Completion</a>
+                    </div>
+                    <div class="last-modified">
+                        Last modified: 10 July 2017
+                    </div>
+                </article>
+
+                <section class="disqus">
+                    <div id="disqus_thread"></div>
+                </section>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="/help/resharper/sdk/app/app.js" data-baseurl="/help/resharper/sdk/"></script>
+
+</body>
+</html>
+
