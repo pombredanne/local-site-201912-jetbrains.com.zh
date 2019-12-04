@@ -1,215 +1,81 @@
-<!DOCTYPE html
-  SYSTEM "about:legacy-compat">
-<html lang="en-US"><head><meta charset="UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+<html lang="en-US" ><head><meta charset="UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
                         new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
                         j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                         '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
                         })(window,document,'script','dataLayer','GTM-5P98');
-                    </script><script src="//resources.jetbrains.com/storage/help-app/v3/analytics.js"></script><title>Import Issues - Help | YouTrack Standalone</title><link rel="stylesheet" href="//resources.jetbrains.com/storage/help-app/v3/app.css"></head><body data-id="Import-Issues" data-breadcrumbs="Resources-for-Developers.xml|Resources for Developers/deprecated-rest-api-reference.xml|Old REST API/Import-REST-API.xml|Import REST API/Import-Issues.xml|Import Issues" data-main-title="Import Issues"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack Standalone Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>YouTrack Standalone 2019.2 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="Import-Issues" id="Import-Issues.xml">Import Issues</h1>   <a name="PUT_/import/{project}/issues"></a>   <h2 id="de20f97f">PUT /import/{project}/issues</h2>   <p id="a3b752fd">Bulk issues import</p>   <p id="ee31939e">      <div class="code-block" data-lang="none">PUT /rest/import/{project}/issues?{assigneeGroup}&amp;{test}</div>   </p>   <p id="529dd33f">         <b id="b87607b8">Parameters:</b></p><div class="table-wrapper"><table class=" wide" width="100%" id="dbd1a408"><thead><tr id="3fda7e6b" class="ijRowHead"><th id="13dc4236"><p> Name </p></th><th id="4ba9ae5d"><p> Type </p></th><th id="9572d189"><p> Description </p></th></tr></thead><tbody><tr id="41c28799" class="ijRowOdd"><td id="4eacc529"><p> project </p></td><td id="74b5ccad"><p> string </p></td><td id="ae027a89"><p> Imported project short name </p></td></tr><tr id="d05e6a0a" class="ijRowEven"><td id="89443eb8"><p> assigneeGroup </p></td><td id="c4e36f97"><p> string </p></td><td id="7e77acf4"><p> Optional group to add assignees to. If this parameter is not provided default project assignee group is used </p></td></tr><tr id="2a34365b" class="ijRowOdd"><td id="493f3951"><p> test </p></td><td id="5b410f59"><p> boolean </p></td><td id="182c18c6"><p> If true, issues are not saved, but request is verified. </p></td></tr></tbody></table></div>   <p id="36d615be">         <b id="12d877bf">Request body:</b>         <br>Predefined and custom fields are provided using the same notation:</p><div class="code-block" data-lang="none">
-&lt;field name="Field name"&gt;
-  &lt;value&gt;First value&lt;/value&gt;
-  &lt;value&gt;Second value&lt;/value&gt;
-  &lt;value&gt;...&lt;/value&gt;
-&lt;/field&gt;
-</div>If field is single valued only first value element is taken. 'Field' element for optional fields could be omitted.<br>Following predefined fields are available:<div class="table-wrapper"><table class=" wide" width="100%" id="9ed44e3f"><thead><tr id="f7862894" class="ijRowHead"><th id="c90e627e"><p> Name </p></th><th id="2fceb119"><p> Type </p></th><th id="63e3e94c"><p> Cardinality </p></th><th id="787f1825"><p> Required </p></th><th id="213230df"><p> Description </p></th></tr></thead><tbody><tr id="cc782bfa" class="ijRowOdd"><td id="0c170caa"><p> numberInProject </p></td><td id="943f4cfb"><p> long </p></td><td id="d150c84e"><p> single </p></td><td id="b5bd4de1"><p> required </p></td><td id="b13707ce"><p> Issue number in project. Should be unique </p></td></tr><tr id="5011195f" class="ijRowEven"><td id="4f1b25e2"><p> summary </p></td><td id="cf728cd8"><p> string </p></td><td id="9de9d582"><p> single </p></td><td id="505831e7"><p> required </p></td><td id="9c3944d5"><p> Issue summary </p></td></tr><tr id="1633f760" class="ijRowOdd"><td id="84a461ef"><p> description </p></td><td id="43b46599"><p> string </p></td><td id="24834b28"><p> single </p></td><td id="30d22f84"><p> optional </p></td><td id="993ffcf7"><p> Full issue description </p></td></tr><tr id="747021b8" class="ijRowEven"><td id="956ed000"><p> created </p></td><td id="887ba948"><p> UNIX Epoch timestamp </p></td><td id="3cc54db6"><p> single </p></td><td id="ccb3c749"><p> required </p></td><td id="046de6ba"><p> Issue creation time </p></td></tr><tr id="f2e6bb4e" class="ijRowOdd"><td id="a0594d5e"><p> updated </p></td><td id="9379ff4e"><p> UNIX Epoch timestamp </p></td><td id="92d68d58"><p> single </p></td><td id="196171c5"><p> optional </p></td><td id="5063656e"><p> Last issue update time </p></td></tr><tr id="0e71ce51" class="ijRowEven"><td id="41e76ba5"><p> updaterName </p></td><td id="924ae41d"><p> string </p></td><td id="6086cddc"><p> single </p></td><td id="ce8f0e5a"><p> optional </p></td><td id="2c5c272e"><p> Login name of last issue updater </p></td></tr><tr id="499f1b97" class="ijRowOdd"><td id="637f6507"><p> resolved </p></td><td id="3f2933ad"><p> UNIX Epoch timestamp </p></td><td id="8de109b3"><p> single </p></td><td id="62f308e2"><p> optional </p></td><td id="3381c107"><p> Issue resolve time </p></td></tr><tr id="14212a6e" class="ijRowEven"><td id="b932c96e"><p> reporterName </p></td><td id="906007c4"><p> string </p></td><td id="6f177d95"><p> single </p></td><td id="f1f134b5"><p> required </p></td><td id="58c546dc"><p> Login name of issue reporter </p></td></tr><tr id="cd0c4e02" class="ijRowOdd"><td id="ed0188b9"><p> voterName </p></td><td id="4e5d53da"><p> string </p></td><td id="192e0e67"><p> multi </p></td><td id="5d9a690d"><p> optional </p></td><td id="4c813aac"><p> Login names of users who voted for the issue. </p></td></tr><tr id="22ecf421" class="ijRowEven"><td id="2795446a"><p> watcherName </p></td><td id="9f67d1ec"><p> string </p></td><td id="3e481721"><p> multi </p></td><td id="104cafd5"><p> optional </p></td><td id="89dd91a8"><p> Login names of users who enabled watching issue changes. </p></td></tr><tr id="729473e2" class="ijRowOdd"><td id="05005f8b"><p> permittedGroup </p></td><td id="73d01d20"><p> string </p></td><td id="f1a2526b"><p> single </p></td><td id="0f895daf"><p> optional </p></td><td id="2624fe89"><p> Name of group that has an access to the issue. See <a href="GET-Groups.html">GET Groups</a>                  </p></td></tr></tbody></table></div>   <div class="code-block" data-lang="none">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;xs:element name="issues"&gt;
-    &lt;xs:complexType&gt;
-      &lt;xs:sequence&gt;
-        &lt;xs:element name="issue" minOccurs="0" maxOccurs="unbounded"&gt;
-          &lt;xs:complexType&gt;
-            &lt;xs:sequence&gt;
-              &lt;xs:element name="field" minOccurs="0" maxOccurs="unbounded"&gt;
-                &lt;xs:complexType&gt;
-                  &lt;xs:sequence&gt;
-                    &lt;xs:element name="value" type="xs:string" maxOccurs="unbounded"/&gt;
-                  &lt;/xs:sequence&gt;
-                  &lt;xs:attribute type="xs:string" name="name" use="required"/&gt;
-                &lt;/xs:complexType&gt;
-              &lt;/xs:element&gt;
-              &lt;xs:element name="comment" minOccurs="0" maxOccurs="unbounded"&gt;
-                &lt;xs:complexType&gt;
-                  &lt;xs:attribute type="xs:string" name="author" use="optional"/&gt;
-                  &lt;xs:attribute type="xs:string" name="text" use="optional"/&gt;
-                  &lt;xs:attribute type="xs:string" name="created" use="optional"/&gt;
-                  &lt;xs:attribute type="xs:string" name="updated" use="optional"/&gt;
-                &lt;/xs:complexType&gt;
-              &lt;/xs:element&gt;
-            &lt;/xs:sequence&gt;
-          &lt;/xs:complexType&gt;
-        &lt;/xs:element&gt;
-      &lt;/xs:sequence&gt;
-    &lt;/xs:complexType&gt;
-  &lt;/xs:element&gt;
-&lt;/xs:schema&gt;</div>   <p id="68dcae50">         <b id="ff538516">Response body:</b>         <br>Response contains an 'item' element for every issue from the request. If issue can be imported then attribute 'imported' of the respective 'item' element is 'true'. Otherwise the 'imported' attribute is 'false' and there are 'error' subelements with additional information about nature of the import problem. <br>If request query parameter 'test' is true, then no issues are actually saved to database. With such requests one can check if import data is correct.</p>   <div class="code-block" data-lang="none">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;xs:element name="importReport"&gt;
-    &lt;xs:complexType&gt;
-      &lt;xs:sequence&gt;
-        &lt;xs:element name="item" minOccurs="0" maxOccurs="unbounded"&gt;
-          &lt;xs:complexType&gt;
-            &lt;xs:sequence&gt;
-              &lt;xs:element name="error" minOccurs="0" maxOccurs="unbounded"&gt;
-                &lt;xs:complexType&gt;
-                  &lt;xs:simpleContent&gt;
-                    &lt;xs:extension base="xs:string"&gt;
-                      &lt;xs:attribute type="xs:string" name="fieldName" use="optional"/&gt;
-                      &lt;xs:attribute type="xs:string" name="value" use="optional"/&gt;
-                    &lt;/xs:extension&gt;
-                  &lt;/xs:simpleContent&gt;
-                &lt;/xs:complexType&gt;
-              &lt;/xs:element&gt;
-            &lt;/xs:sequence&gt;
-            &lt;xs:attribute type="xs:string" name="id"/&gt;
-            &lt;xs:attribute type="xs:boolean" name="imported"/&gt;
-          &lt;/xs:complexType&gt;
-        &lt;/xs:element&gt;
-      &lt;/xs:sequence&gt;
-    &lt;/xs:complexType&gt;
-  &lt;/xs:element&gt;
-&lt;/xs:schema&gt;</div>   <h3 id="ed9db7a9">Sample</h3>   <a name="Correct"></a>   <h4 id="736f7795">Correct</h4>   <p id="2091b7c9">      <b id="ae466108">Request:</b>   </p>   <div class="code-block" data-lang="none">PUT /rest/import/CMN/issues
-&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
-&lt;issues&gt;
-&lt;issue&gt;
-    &lt;field name="numberInProject"&gt;
-        &lt;value&gt;1917&lt;/value&gt;
-    &lt;/field&gt;
-    &lt;field name="summary"&gt;
-        &lt;value&gt;Exterminate tsar&lt;/value&gt;
-    &lt;/field&gt;
-    &lt;field name="description"&gt;
-        &lt;value&gt;The Russian Revolution is the collective term for the series of revolutions in Russia in 1917, which destroyed the Tsarist autocracy and led to the creation of the Soviet Union. In the first revolution of February 1917 (March in the Gregorian calendar), the Tsar was deposed and replaced by a Provisional government. In the second revolution, during October, the Provisional Government was removed and replaced with a Bolshevik (Communist) government.&lt;/value&gt;
-    &lt;/field&gt;
-    &lt;field name="created"&gt;
-        &lt;value&gt;1149678852000&lt;/value&gt;
-    &lt;/field&gt;
-    &lt;field name="updated"&gt;
-        &lt;value&gt;1159374446000&lt;/value&gt;
-    &lt;/field&gt;
-    &lt;field name="updaterName"&gt;
-        &lt;value&gt;stalin&lt;/value&gt;
-    &lt;/field&gt;
-    &lt;field name="resolved"&gt;
-        &lt;value&gt;1260367510059&lt;/value&gt;
-    &lt;/field&gt;
-    &lt;field name="reporterName"&gt;
-        &lt;value&gt;lenin&lt;/value&gt;
-    &lt;/field&gt;
-    &lt;field name="victims"&gt;
-      &lt;value&gt;11&lt;/value&gt;
-    &lt;/field&gt;
-    &lt;field name="party"&gt;
-      &lt;value&gt;РСДРП (б) 1912 - 1917&lt;/value&gt;
-    &lt;/field&gt;
-
-    &lt;comment author="stalin" text="It is enough that the people know there was an election. The people who cast the votes decide nothing. The people who count the votes decide everything." created="1267030230127"/&gt;
-    &lt;comment author="khrushchev" text="Support by United States rulers is rather in the nature of the support that the rope gives to a hanged man." created="1267030238721" updated="1267030230127"/&gt;
-&lt;/issue&gt;
-&lt;issue&gt;
-    &lt;field name="numberInProject"&gt;
-        &lt;value&gt;1928&lt;/value&gt;
-    &lt;/field&gt;
-    &lt;field name="summary"&gt;
-        &lt;value&gt;Implement collectivization&lt;/value&gt;
-    &lt;/field&gt;
-    &lt;field name="created"&gt;
-        &lt;value&gt;1149678852000&lt;/value&gt;
-    &lt;/field&gt;
-    &lt;field name="reporterName"&gt;
-        &lt;value&gt;stalin&lt;/value&gt;
-    &lt;/field&gt;
-    &lt;field name="victims"&gt;
-        &lt;value&gt;1300000&lt;/value&gt;
-    &lt;/field&gt;
-    &lt;field name="party"&gt;
-        &lt;value&gt;ВКП (б) 1925 - 1952&lt;/value&gt;
-    &lt;/field&gt;
-&lt;/issue&gt;
-&lt;/issues&gt;</div>   <p id="04cf2e69">      <b id="73e44c16">Response:</b>   </p>   <div class="code-block" data-lang="none">
-&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
-&lt;importReport&gt;
-  &lt;item imported="true" id="1917"/&gt;
-  &lt;item imported="true" id="1928"/&gt;
-&lt;/importReport&gt;
-</div>   <a name="Error"></a>   <h4 id="8c927d6e">Error</h4>   <p id="8cd5f3cd">      <b id="6341d767">Request:</b>   </p>   <div class="code-block" data-lang="none">PUT /rest/import/CMN/issues?test=true
-&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
-&lt;issues&gt;
-  &lt;issue&gt;
-    &lt;field name="numberInProject"&gt;
-      &lt;value&gt;1917&lt;/value&gt;
-    &lt;/field&gt;
-    &lt;field name="summary"&gt;
-      &lt;value&gt;Exterminate tsar&lt;/value&gt;
-    &lt;/field&gt;
-    &lt;field name="description"&gt;
-      &lt;value&gt;The Russian Revolution is the collective term for the series of revolutions in Russia in 1917, which
-        destroyed the Tsarist autocracy and led to the creation of the Soviet Union. In the first revolution of February
-        1917 (March in the Gregorian calendar), the Tsar was deposed and replaced by a Provisional government. In the
-        second revolution, during October, the Provisional Government was removed and replaced with a Bolshevik
-        (Communist) government.
-      &lt;/value&gt;
-    &lt;/field&gt;
-    &lt;field name="created"&gt;
-      &lt;value&gt;1149678852000&lt;/value&gt;
-    &lt;/field&gt;
-    &lt;field name="updated"&gt;
-      &lt;value&gt;1159374446000&lt;/value&gt;
-    &lt;/field&gt;
-    &lt;field name="updaterName"&gt;
-      &lt;value&gt;stalin&lt;/value&gt;
-    &lt;/field&gt;
-    &lt;field name="resolved"&gt;
-      &lt;value&gt;1260367510059&lt;/value&gt;
-    &lt;/field&gt;
-    &lt;field name="reporterName"&gt;
-      &lt;value&gt;lenin&lt;/value&gt;
-    &lt;/field&gt;
-    &lt;field name="Build"&gt;
-      &lt;value&gt;Some Read Only&lt;/value&gt;
-      &lt;value&gt;Value&lt;/value&gt;
-    &lt;/field&gt;
-    &lt;field name="scf"&gt;
-      &lt;value&gt;1260317512059&lt;/value&gt;
-    &lt;/field&gt;
-    &lt;field name="cf"&gt;
-      &lt;value&gt;1&lt;/value&gt;
-    &lt;/field&gt;
-    &lt;comment author="who!" text="It is enough that the people know there was an election. The people who cast the votes decide nothing. The people who count the votes decide everything." created="1267030230127"/&gt;
-    &lt;comment author="root" text="Support by United States rulers is rather in the nature of the support that the rope gives to a hanged man." created="1267030238721" updated="1267030230127"/&gt;
-  &lt;/issue&gt;
-  &lt;issue&gt;
-    &lt;field name="numberInProject"&gt;
-      &lt;value&gt;1987&lt;/value&gt;
-    &lt;/field&gt;
-    &lt;field name="summary"&gt;
-      &lt;value&gt;Perestroyka&lt;/value&gt;
-    &lt;/field&gt;
-    &lt;field name="description"&gt;
-      &lt;value&gt;# Reduce GDP
-        # Split USSR into separate states
-        # Reduce population
-      &lt;/value&gt;
-    &lt;/field&gt;
-    &lt;field name="created"&gt;
-      &lt;value&gt;1149678852000&lt;/value&gt;
-    &lt;/field&gt;
-    &lt;field name="reporterName"&gt;
-      &lt;value&gt;gorbachev&lt;/value&gt;
-    &lt;/field&gt;
-    &lt;field name="party"&gt;
-        &lt;value&gt;КПСС 1952 - 1993&lt;/value&gt;
-    &lt;/field&gt;
-  &lt;/issue&gt;
-&lt;/issues&gt;</div>   <p id="c66c0e8e">      <b id="aa4b5373">Response:</b>   </p>   <div class="code-block" data-lang="none">
-&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
-&lt;importReport&gt;
-  &lt;item imported="false" id="1917"&gt;
-    &lt;error fieldName="numberInProject" value="1917"&gt;Value is not unique&lt;/error&gt;
-    &lt;error fieldName="comment.author" value="who!"&gt;Value is unknown&lt;/error&gt;
-    &lt;error fieldName="Build"&gt;Field is unknown&lt;/error&gt;
-    &lt;error fieldName="scf"&gt;Field is unknown&lt;/error&gt;
-    &lt;error fieldName="cf"&gt;Field is unknown&lt;/error&gt;
-  &lt;/item&gt;
-  &lt;item imported="true" id="1987"/&gt;
-&lt;/importReport&gt;
-</div><div class="last-modified" data-skip-index="skip">Last modified: 29 November 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="Import-Users.html">Import Users</a><a class="navigation-links__next" href="Import-Links.html">Import Links</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="//resources.jetbrains.com/storage/help-app/v3/app.js"></script></body></html>
+                    </script><script src="//resources.jetbrains.com/storage/help-app/v3/analytics.js"></script><title>导入问题-帮助| YouTrack单机版</title><link rel="stylesheet" href="//resources.jetbrains.com/storage/help-app/v3/app.css"></head><body  data-id="Import-Issues" data-breadcrumbs="Resources-for-Developers.xml|Resources for Developers/deprecated-rest-api-reference.xml|Old REST API/Import-REST-API.xml|Import REST API/Import-Issues.xml|Import Issues" data-main-title="Import Issues"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label class="search-box__label" for="search-box__input"><input type="text" class="search-box__input" id="search-box__input" placeholder="搜索YouTrack独立帮助"></label><div class="search-box__clear" title="明确"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">发送反馈</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>YouTrack Standalone 2019.2帮助</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">按键图：</label><select id="switch-shortcuts" class="select _shortcuts" height="1"></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 id="Import-Issues.xml" data-toc="Import-Issues">进口问题</h1>   <a name="PUT_/import/{project}/issues"></a>   <h2 id="de20f97f">PUT / import / {project} /问题</h2>   <p id="a3b752fd">批量发布问题</p>   <p id="ee31939e">      </p><div class="code-block" data-lang="none">输入/ rest / import / {project} /问题？{AssigneeGroup}＆{test}</div>   <p></p>   <p id="529dd33f">         <b id="b87607b8">参数：</b></p><div class="table-wrapper"><table class=" wide" width="100%" id="dbd1a408"><thead><tr id="3fda7e6b" class="ijRowHead"><th id="13dc4236"><p>名称</p></th><th id="4ba9ae5d"><p>类型</p></th><th id="9572d189"><p>描述</p></th></tr></thead><tbody><tr id="41c28799" class="ijRowOdd"><td id="4eacc529"><p>项目</p></td><td id="74b5ccad"><p>串</p></td><td id="ae027a89"><p>导入的项目简称</p></td></tr><tr id="d05e6a0a" class="ijRowEven"><td id="89443eb8"><p>受让人集团</p></td><td id="c4e36f97"><p>串</p></td><td id="7e77acf4"><p>将受让人添加到的可选组。如果未提供此参数，则使用默认项目受让人组</p></td></tr><tr id="2a34365b" class="ijRowOdd"><td id="493f3951"><p>测试</p></td><td id="5b410f59"><p>布尔值</p></td><td id="182c18c6"><p>如果为true，则不会保存问题，但会验证请求。</p></td></tr></tbody></table></div>   <p id="36d615be">         <b id="12d877bf">要求正文：</b>         <br>预定义和自定义字段使用相同的符号表示：</p><div class="code-block" data-lang="none">
+<field name="Field name">
+  <value>第一值</value> <value>第二值</value> <value>...</value>
+</field>
+</div>如果字段为单值，则仅采用第一个值元素。可选字段的“字段”元素可以省略。<br>以下预定义字段可用：<div class="table-wrapper"><table class=" wide" width="100%" id="9ed44e3f"><thead><tr id="f7862894" class="ijRowHead"><th id="c90e627e"><p>名称</p></th><th id="2fceb119"><p>类型</p></th><th id="63e3e94c"><p>基数</p></th><th id="787f1825"><p>需要</p></th><th id="213230df"><p>描述</p></th></tr></thead><tbody><tr id="cc782bfa" class="ijRowOdd"><td id="0c170caa"><p>numberInProject</p></td><td id="943f4cfb"><p>长</p></td><td id="d150c84e"><p>单</p></td><td id="b5bd4de1"><p>需要</p></td><td id="b13707ce"><p>项目中的发行编号。应该是唯一的</p></td></tr><tr id="5011195f" class="ijRowEven"><td id="4f1b25e2"><p>摘要</p></td><td id="cf728cd8"><p>串</p></td><td id="9de9d582"><p>单</p></td><td id="505831e7"><p>需要</p></td><td id="9c3944d5"><p>问题摘要</p></td></tr><tr id="1633f760" class="ijRowOdd"><td id="84a461ef"><p>描述</p></td><td id="43b46599"><p>串</p></td><td id="24834b28"><p>单</p></td><td id="30d22f84"><p>可选的</p></td><td id="993ffcf7"><p>完整的问题描述</p></td></tr><tr id="747021b8" class="ijRowEven"><td id="956ed000"><p>被创造</p></td><td id="887ba948"><p>UNIX时代时间戳记</p></td><td id="3cc54db6"><p>单</p></td><td id="ccb3c749"><p>需要</p></td><td id="046de6ba"><p>问题创建时间</p></td></tr><tr id="f2e6bb4e" class="ijRowOdd"><td id="a0594d5e"><p>更新</p></td><td id="9379ff4e"><p>UNIX时代时间戳记</p></td><td id="92d68d58"><p>单</p></td><td id="196171c5"><p>可选的</p></td><td id="5063656e"><p>上一期更新时间</p></td></tr><tr id="0e71ce51" class="ijRowEven"><td id="41e76ba5"><p>updaterName</p></td><td id="924ae41d"><p>串</p></td><td id="6086cddc"><p>单</p></td><td id="ce8f0e5a"><p>可选的</p></td><td id="2c5c272e"><p>上次更新的登录名</p></td></tr><tr id="499f1b97" class="ijRowOdd"><td id="637f6507"><p>解决</p></td><td id="3f2933ad"><p>UNIX时代时间戳记</p></td><td id="8de109b3"><p>单</p></td><td id="62f308e2"><p>可选的</p></td><td id="3381c107"><p>问题解决时间</p></td></tr><tr id="14212a6e" class="ijRowEven"><td id="b932c96e"><p>报名者</p></td><td id="906007c4"><p>串</p></td><td id="6f177d95"><p>单</p></td><td id="f1f134b5"><p>需要</p></td><td id="58c546dc"><p>问题记者的登录名</p></td></tr><tr id="cd0c4e02" class="ijRowOdd"><td id="ed0188b9"><p>选民名</p></td><td id="4e5d53da"><p>串</p></td><td id="192e0e67"><p>多</p></td><td id="5d9a690d"><p>可选的</p></td><td id="4c813aac"><p>对问题进行投票的用户的登录名。</p></td></tr><tr id="22ecf421" class="ijRowEven"><td id="2795446a"><p>watcherName</p></td><td id="9f67d1ec"><p>串</p></td><td id="3e481721"><p>多</p></td><td id="104cafd5"><p>可选的</p></td><td id="89dd91a8"><p>启用观看问题的用户的登录名更改。</p></td></tr><tr id="729473e2" class="ijRowOdd"><td id="05005f8b"><p>allowedGroup</p></td><td id="73d01d20"><p>串</p></td><td id="f1a2526b"><p>单</p></td><td id="0f895daf"><p>可选的</p></td><td id="2624fe89"><p>有权访问该问题的组的名称。查看<a href="GET-Groups.html">GET组</a>                  </p></td></tr></tbody></table></div>   <div class="code-block" data-lang="none"><!--?xml version="1.0" encoding="UTF-8" ?=""-->
+<xs:schema attributeformdefault="unqualified" elementformdefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="issues">
+    <xs:complextype>
+      <xs:sequence>
+        <xs:element name="issue" minoccurs="0" maxoccurs="unbounded">
+          <xs:complextype>
+            <xs:sequence>
+              <xs:element name="field" minoccurs="0" maxoccurs="unbounded">
+                <xs:complextype>
+                  <xs:sequence>
+                    <xs:element name="value" type="xs:string" maxoccurs="unbounded"></xs:element>
+                  </xs:sequence>
+                  <xs:attribute type="xs:string" name="name" use="required"></xs:attribute>
+                </xs:complextype>
+              </xs:element>
+              <xs:element name="comment" minoccurs="0" maxoccurs="unbounded">
+                <xs:complextype>
+                  <xs:attribute type="xs:string" name="author" use="optional"></xs:attribute>
+                  <xs:attribute type="xs:string" name="text" use="optional"></xs:attribute>
+                  <xs:attribute type="xs:string" name="created" use="optional"></xs:attribute>
+                  <xs:attribute type="xs:string" name="updated" use="optional"></xs:attribute>
+                </xs:complextype>
+              </xs:element>
+            </xs:sequence>
+          </xs:complextype>
+        </xs:element>
+      </xs:sequence>
+    </xs:complextype>
+  </xs:element>
+</xs:schema><!--?xml--></div>   <p id="68dcae50">         <b id="ff538516">响应主体：</b>         <br>对于请求中的每个问题，响应都包含一个“ item”元素。如果可以导入问题，则相应“ item”元素的“ imported”属性为“ true”。否则，“导入”属性为“假”，并且存在“错误”子元素，其中包含有关导入问题性质的其他信息。<br>如果请求查询参数“ test”为true，则实际上不会将任何问题保存到数据库。通过此类请求，可以检查导入数据是否正确。</p>   <div class="code-block" data-lang="none"><!--?xml version="1.0" encoding="UTF-8" ?=""-->
+<xs:schema attributeformdefault="unqualified" elementformdefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="importReport">
+    <xs:complextype>
+      <xs:sequence>
+        <xs:element name="item" minoccurs="0" maxoccurs="unbounded">
+          <xs:complextype>
+            <xs:sequence>
+              <xs:element name="error" minoccurs="0" maxoccurs="unbounded">
+                <xs:complextype>
+                  <xs:simplecontent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute type="xs:string" name="fieldName" use="optional"></xs:attribute>
+                      <xs:attribute type="xs:string" name="value" use="optional"></xs:attribute>
+                    </xs:extension>
+                  </xs:simplecontent>
+                </xs:complextype>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute type="xs:string" name="id"></xs:attribute>
+            <xs:attribute type="xs:boolean" name="imported"></xs:attribute>
+          </xs:complextype>
+        </xs:element>
+      </xs:sequence>
+    </xs:complextype>
+  </xs:element>
+</xs:schema><!--?xml--></div>   <h3 id="ed9db7a9">样品</h3>   <a name="Correct"></a>   <h4 id="736f7795">正确</h4>   <p id="2091b7c9">      <b id="ae466108">请求：</b>   </p>   <div class="code-block" data-lang="none">PUT / rest / import / CMN / issues <!--?xml version="1.0" encoding="UTF-8" standalone="yes" ?=""--><issues><issue><field name="numberInProject"><value>1917年，</value></field> <field name="summary"><value>沙皇灭绝</value></field> <field name="description"><value>俄罗斯大革命是 <field name="numberInProject"><value>1917年</value></field> <field name="description"><value>俄国一系列革命的总称，这一系列革命摧毁了沙皇专制制度，并导致了苏联的建立。在1917年2月的第一次革命（公历3月）中，沙皇被罢免，由临时政府取代。在第二次革命中，10月，临时政府被撤职，由布尔什维克（共产党）政府取代。</value>
+    </field> <field name="created"><value>1149678852000</value></field> <field name="updated"><value>1159374446000</value></field> <field name="updaterName"><value>斯大林</value></field> <field name="resolved"><value>1260367510059</value></field> <field name="reporterName"><value>列宁</value></field> <field name="party"><value><field name="victims"><value>11РСДРП（б）1912</value></field>年至1917年</value></field> <comment author="stalin" text="It is enough that the people know there was an election. The people who cast the votes decide nothing. The people who count the votes decide everything." created="1267030230127"></comment><comment author="khrushchev" text="Support by United States rulers is rather in the nature of the support that the rope gives to a hanged man." created="1267030238721" updated="1267030230127"></comment></value></field></issue> <issue><field name="numberInProject"><value>1928年</value></field> <field name="summary"><value>实行集体化</value></field> <field name="created"><value>1149678852000</value></field> <field name="reporterName"><value>斯大林</value></field> <field name="party"><value><field name="victims"><value>1300000ВКП（б）1925</value></field>年至1952年</value></field></issue>
+</issues><!--?xml--></div>   <p id="04cf2e69">      <b id="73e44c16">响应：</b>   </p>   <div class="code-block" data-lang="none">
+<!--?xml version="1.0" encoding="UTF-8" standalone="yes" ?=""-->
+<importreport>
+  <item id="1917" imported="true"></item>
+  <item id="1928" imported="true"></item>
+</importreport>
+<!--?xml--></div>   <a name="Error"></a>   <h4 id="8c927d6e">错误</h4>   <p id="8cd5f3cd">      <b id="6341d767">请求：</b>   </p>   <div class="code-block" data-lang="none">输入/ rest / rest / import / CMN / issues？test = true <!--?xml version="1.0" encoding="UTF-8" standalone="yes" ?=""--><issues><issue><field name="numberInProject"><value>1917年，</value></field> <field name="summary"><value>沙皇灭绝</value></field> <field name="description"><value>俄罗斯大革命是 <field name="numberInProject"><value>1917年</value></field> <field name="description"><value>俄国一系列革命的总称，它摧毁了沙皇专制制度，并导致了苏联的建立。在1917年2月的第一次革命（公历3月）中，沙皇被罢免，由临时政府取代。在第二次革命中，10月，临时政府被撤职，由布尔什维克（共产党）政府取代。
+      </value></field> <field name="created"><value>1149678852000</value></field> <field name="updated"><value>1159374446000</value></field> <field name="updaterName"><value>斯大林</value></field> <field name="resolved"><value>1260367510059</value></field> <field name="reporterName"><value>列宁</value></field> <field name="Build"><value>一些只读</value> <value>值</value></field> <field name="scf"><value>1260317512059</value></field> <field name="cf"><value>1</value></field> <comment author="who!" text="It is enough that the people know there was an election. The people who cast the votes decide nothing. The people who count the votes decide everything." created="1267030230127"></comment><comment author="root" text="Support by United States rulers is rather in the nature of the support that the rope gives to a hanged man." created="1267030238721" updated="1267030230127"></comment></value></field></issue> <issue><field name="numberInProject"><value>1987年</value></field> <field name="description"><value><field name="summary"><value>Perestroyka＃</value></field>降低GDP＃分割成苏联各自的状态＃降低人口</value></field> <field name="created"><value>1149678852000</value></field> <field name="reporterName"><value>戈尔巴乔夫</value></field> <field name="party"><value>КПСС1952年至1993年</value></field></issue>
+</issues><!--?xml--></div>   <p id="c66c0e8e">      <b id="aa4b5373">响应：</b>   </p>   <div class="code-block" data-lang="none">
+<!--?xml version="1.0" encoding="UTF-8" standalone="yes" ?=""-->
+<importreport>
+  <item id="1917" imported="false"><error value="1917" fieldname="numberInProject">值不唯一</error> <error value="who!" fieldname="comment.author">值未知</error> <error fieldname="Build">字段未知</error> <error fieldname="scf">字段未知</error> <error fieldname="cf">字段未知</error></item> <item id="1987" imported="true"></item>
+</importreport>
+<!--?xml--></div><div class="last-modified" data-skip-index="skip">上次修改时间：2019年11月29日</div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="Import-Users.html">导入用户</a> <a class="navigation-links__next" href="Import-Links.html">导入链接</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="//resources.jetbrains.com/storage/help-app/v3/app.js"></script></body></html>

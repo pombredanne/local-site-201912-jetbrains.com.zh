@@ -1,87 +1,9 @@
-<!DOCTYPE html
-  SYSTEM "about:legacy-compat">
-<html lang="en-US"><head><meta charset="UTF-8"><meta content="noindex" name="robots"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+<html lang="en-US" ><head><meta charset="UTF-8"><meta name="robots" content="noindex"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
                         new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
                         j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                         '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
                         })(window,document,'script','dataLayer','GTM-5P98');
-                    </script><script src="//resources.jetbrains.com/storage/help-app/v3/analytics.js"></script><title>Create a decorator - Help | ReSharper</title><link rel="stylesheet" href="//resources.jetbrains.com/storage/help-app/v3/app.css"></head><body data-id="Create_a_Decorator" data-breadcrumbs="Getting_Started.xml|Getting Started and Tutorials/Cookbook.xml|ReSharper Cookbook/Create_a_Decorator.xml|Create a decorator" data-main-title="Create a decorator" data-article-props="&#xA;                {&#xA;                &#xA;            &#34;seeAlso&#34;:[&#xA;            &#xA;                {&#34;title&#34;: &#34;Concepts&#34;,&#xA;                 &#34;links&#34;: [&#xA;                &#xA;        {&#34;url&#34;:&#34;Refactorings__Index.html&#34;,&#34;text&#34;:&#34;Refactorings&#34;}&#xA;    ,&#xA;        {&#34;url&#34;:&#34;Refactor_This.html&#34;,&#34;text&#34;:&#34;Refactor This&#34;}&#xA;    ,&#xA;        {&#34;url&#34;:&#34;Refactorings__Extract_Interface.html&#34;,&#34;text&#34;:&#34;Extract Interface refactoring&#34;}&#xA;    ,&#xA;        {&#34;url&#34;:&#34;Code_Analysis__Quick-Fixes.html&#34;,&#34;text&#34;:&#34;Quick-Fixes for Code Issues&#34;}&#xA;    &#xA;                    ]},&#xA;                {&#34;title&#34;: &#34;Procedures&#34;,&#xA;                 &#34;links&#34;: [&#xA;                &#xA;        {&#34;url&#34;:&#34;Generating_Type_Members.html&#34;,&#34;text&#34;:&#34;Generate Type Members&#34;}&#xA;    ,&#xA;        {&#34;url&#34;:&#34;Code_Generation__Delegating_Members.html&#34;,&#34;text&#34;:&#34;Generate Delegating Members&#34;}&#xA;    &#xA;                    ]}&#xA;            ]&#xA;        &#xA;                }&#xA;            " data-disqus-id="Create_a_Decorator_10"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search ReSharper Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>ReSharper 2019.3 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="secondary" value="rs">ReSharper 2.x/IntelliJ IDEA</option><option data-group="primary" value="vs">Visual Studio</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="active"><h1 data-toc="Create_a_Decorator" id="Create_a_Decorator.xml">Create a decorator</h1>    <p id="57653151">        The Decorator design pattern is used to dynamically add additional behavior to an object. In addition, by using        interfaces, a decorator can be used to unify types in a manner similar to multiple inheritance.    </p>    <aside data-type="tip" class="prompt" data-title="" rel="57653151" id="6faabdb0">        <p id="db721097">            For more information on the decorator pattern, check out this            <a href="https://en.wikipedia.org/wiki/Decorator_pattern" data-external="true" target="_blank" rel="noopener noreferrer">Wikipedia article</a>.        </p>    </aside>    <p id="385027dc">        Let’s take an example – suppose you have two objects, called        <code class="code">Bird</code>        and        <code class="code">Lizard</code>, that you want to put into a        Decorator:    </p>    <div class="code-block" data-lang="csharp">
-class Bird
-{
-  public void Fly()
-  {
-    ...
-  }
-}
-class Lizard
-{
-  public void Walk()
-  {
-    ...
-  }
-}
-    </div>    <div class="chapter"><h2 id="1-get-object-interfaces-with-the-extract-interface-refactoring" data-toc="Create_a_Decorator#1-get-object-interfaces-with-the-extract-interface-refactoring">1. Get object interfaces with the extract interface refactoring</h2>        <p id="4201bf3a">            Since a decorator cannot be inheriting from both of these classes, we can invoke the            <a href="Refactorings__Extract_Interface.html">Extract Interface refactoring</a> from the            <span class="control">Refactor this</span> menu            <kbd data-rs="Ctrl+Shift+R" data-vs="Ctrl+Shift+R">Ctrl+Shift+R</kbd>            for both of these objects to get their interfaces:        </p>        <figure><img alt="Creating a decorator with ReSharper" title="Creating a decorator with ReSharper" src="/help/img/dotnet/2019.3/cookbook_decorator_1.png" id="46ae76fd" width="332" height="310"></figure>        <p id="65d417e9">            Calling this refactoring pops up a window asking us which members should appear in the interface:        </p>        <figure><img alt="Creating a decorator with ReSharper" title="Creating a decorator with ReSharper" src="/help/img/dotnet/2019.3/cookbook_decorator_2.png" id="2726743d" width="655" height="399"></figure>        <p id="789fbca6">            After we do this for both our classes, we end up with the following code:        </p>        <div class="code-block" data-lang="csharp">
-internal interface IBird
-{
-  void Fly();
-}
-class Bird : IBird
-{
-  public void Fly()
-  {
-    ...
-  }
-}
-internal interface ILizard
-{
-  void Walk();
-}
-class Lizard : ILizard
-{
-  public void Walk()
-  {
-    ...
-  }
-}
-        </div>    </div>    <div class="chapter"><h2 id="2-declare-a-decorator-class" data-toc="Create_a_Decorator#2-declare-a-decorator-class">2. Declare a decorator class</h2>        <p id="a8dc453d">            With these interfaces, we can make a decorator. First, we declare a class called            <code class="code">Dragon</code>, indicating that it            implements both            <code class="code">IBird</code>            and            <code class="code">ILizard</code>:        </p>        <div class="code-block" data-lang="csharp">
-class Dragon : IBird, ILizard
-{
-  ...
-}
-</div>        <p id="07b4e9c1">            Now for the aggregated members.            The easiest thing to do is to declare both of these as fields first, that is:        </p>        <div class="code-block" data-lang="csharp">
-class Dragon : IBird, ILizard
-{
-  private Bird bird;
-  private Lizard lizard;
-}
-        </div>    </div>    <div class="chapter"><h2 id="3-use-quick-fix-to-initialize-unused-fields" data-toc="Create_a_Decorator#3-use-quick-fix-to-initialize-unused-fields">3. Use quick-fix to initialize unused fields</h2>        <p id="5e787afa">            Now, we can use apply a            <a href="Code_Analysis__Quick-Fixes.html">quick-fix</a>            to unused fields and initialize both of them from constructor parameters:        </p>        <figure><img alt="Creating a decorator with ReSharper" title="Creating a decorator with ReSharper" src="/help/img/dotnet/2019.3/cookbook_decorator_3.png" id="54f90b63" width="276" height="223"></figure>        <p id="159233a4">            After this, our class will look as follows:        </p>        <div class="code-block" data-lang="csharp">
-class Dragon : IBird, ILizard
-{
-  private Bird bird;
-  private Lizard lizard;
-  public Dragon(Bird bird, Lizard lizard)
-  {
-    this.bird = bird;
-    this.lizard = lizard;
-  }
-}
-        </div>    </div>    <div class="chapter"><h2 id="4-generate-delegating-members-for-source-objects" data-toc="Create_a_Decorator#4-generate-delegating-members-for-source-objects">4. Generate delegating members for source objects.</h2>        <p id="47ca0333">            And now for the finishing touch – we want to generate delegating members for both bird and lizard.            This is easy — we open the Generate menu            <kbd data-rs="Alt+Insert" data-vs="Alt+Insert">Alt+Insert</kbd>            and choose            <a href="Code_Generation__Delegating_Members.html">Delegating Members</a>:        </p>        <figure><img alt="Creating a decorator with ReSharper" title="Creating a decorator with ReSharper" src="/help/img/dotnet/2019.3/cookbook_decorator_4.png" id="5c72d4b4" width="336" height="279"></figure>        <p id="1f23002a">ReSharper then asks us which members we need to delegate:</p>        <figure><img alt="Creating a decorator with ReSharper" title="Creating a decorator with ReSharper" src="/help/img/dotnet/2019.3/cookbook_decorator_5.png" id="bf6dde16" width="400" height="400"></figure>        <p id="372f6be2">And here is the end result:</p>        <div class="code-block" data-lang="csharp">
-class Dragon : IBird, ILizard
-{
-  public void Fly()
-  {
-    bird.Fly();
-  }
-  public void Walk()
-  {
-    lizard.Walk();
-  }
-  private Bird bird;
-  private Lizard lizard;
-  public Dragon(Bird bird, Lizard lizard)
-  {
-    this.bird = bird;
-    this.lizard = lizard;
-  }
-}
-        </div>        <p id="dc6baa1a">That’s it! Our decorator is ready.</p>    </div>    <div class="last-modified" data-skip-index="skip">Last modified: 28 November 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="Automatically_import_namespaces.html">Automatically import namespaces</a><a class="navigation-links__next" href="Deal_with_a_lot_of_entries_in_resource_files.html">Deal with a lot of entries in resource files</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="//resources.jetbrains.com/storage/help-app/v3/app.js"></script></body></html>
+                    </script><script src="//resources.jetbrains.com/storage/help-app/v3/analytics.js"></script><title>创建装饰器-帮助|帮助锐化器</title><link rel="stylesheet" href="//resources.jetbrains.com/storage/help-app/v3/app.css"></head><body type=""  data-id="Create_a_Decorator" data-breadcrumbs="Getting_Started.xml|Getting Started and Tutorials/Cookbook.xml|ReSharper Cookbook/Create_a_Decorator.xml|Create a decorator" data-main-title="Create a decorator" data-article-props="
+                {
+                
+            " seeals=":[=" titl=":=" concept=",=" link=":=" ur=":" refactorings__index.htm="," tex=":" refactoring="}=" refactor_this.htm="," refactor="" thi="}=" refactorings__extract_interface.htm="," extract="" interface="" refactorin="}=" code_analysis__quick-fixes.htm="," quick-fixes="" for="" issue="}=" procedure=",=" generating_type_members.htm="," generate="" member="}=" code_generation__delegating_members.htm="," delegating="" ]}="" ]="" }="" create_a_decorator_1=""><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label class="search-box__label" for="search-box__input"><input type="text" class="search-box__input" id="search-box__input" placeholder="搜索ReSharper帮助"></label><div class="search-box__clear" title="明确"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">发送反馈</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>ReSharper 2019.3帮助</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">按键图：</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option value="rs" data-group="secondary">ReSharper 2.x / IntelliJ IDEA</option><option value="vs" data-group="primary">视觉工作室</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="active"><h1 id="Create_a_Decorator.xml" data-toc="Create_a_Decorator">创建一个装饰器</h1>    <p id="57653151">装饰器设计模式用于向对象动态添加其他行为。另外，通过使用接口，可以使用修饰器以类似于多重继承的方式来统一类型。</p>    <aside class="prompt" rel="57653151" id="6faabdb0" data-type="tip" data-title="">        <p id="db721097">有关装饰器模式的更多信息，请查看<a href="https://en.wikipedia.org/wiki/Decorator_pattern" rel="noopener noreferrer" data-external="true" target="_blank">Wikipedia文章</a> 。</p>    </aside>    <p id="385027dc">让我们举个例子–假设您有两个对象，称为<code class="code">Bird</code>和<code class="code">Lizard</code> ，要放入装饰器中：</p>    <div class="code-block" data-lang="csharp">类Bird {公共无效Fly（）{...}}类蜥蜴{public void Walk（）{...}}</div>    <div class="chapter"><h2 id="1-get-object-interfaces-with-the-extract-interface-refactoring" data-toc="Create_a_Decorator#1-get-object-interfaces-with-the-extract-interface-refactoring">1。使用提取接口重构获取对象接口</h2>        <p id="4201bf3a">由于装饰器不能同时从这两个类继承，因此我们可以从“ <span class="control">重构”</span>菜单中调用“ <a href="Refactorings__Extract_Interface.html">提取接口”重构</a> 。 <kbd data-rs="Ctrl+Shift+R" data-vs="Ctrl+Shift+R">Ctrl+Shift+R</kbd>这两个对象都可以获取其接口：</p>        <figure><img alt="使用ReSharper创建装饰器" title="使用ReSharper创建装饰器" src="/help/img/dotnet/2019.3/cookbook_decorator_1.png" id="46ae76fd" width="332" height="310"></figure>        <p id="65d417e9">调用此重构会弹出一个窗口，询问我们哪些成员应出现在界面中：</p>        <figure><img alt="使用ReSharper创建装饰器" title="使用ReSharper创建装饰器" src="/help/img/dotnet/2019.3/cookbook_decorator_2.png" id="2726743d" width="655" height="399"></figure>        <p id="789fbca6">在对两个类都执行完此操作之后，我们将得到以下代码：</p>        <div class="code-block" data-lang="csharp">内部接口IBird {void Fly（）; }类Bird：IBird {public void Fly（）{...内部接口ILizard {void Walk（）; }类蜥蜴：ILizard {public void Walk（）{...}}</div>    </div>    <div class="chapter"><h2 id="2-declare-a-decorator-class" data-toc="Create_a_Decorator#2-declare-a-decorator-class">2。声明一个装饰器类</h2>        <p id="a8dc453d">使用这些接口，我们可以制作一个装饰器。首先，我们声明一个名为<code class="code">Dragon</code> ，表示它既实现了<code class="code">IBird</code>和<code class="code">ILizard</code> ：</p>        <div class="code-block" data-lang="csharp">类Dragon：IBird，ILizard {...}</div>        <p id="07b4e9c1">现在是聚集成员。最简单的事情是首先将这两个都声明为字段，即：</p>        <div class="code-block" data-lang="csharp">龙类：IBird，ILizard {私人鸟鸟；私人蜥蜴蜥蜴； }</div>    </div>    <div class="chapter"><h2 id="3-use-quick-fix-to-initialize-unused-fields" data-toc="Create_a_Decorator#3-use-quick-fix-to-initialize-unused-fields">3。使用快速修复来初始化未使用的字段</h2>        <p id="5e787afa">现在，我们可以对未使用的字段应用<a href="Code_Analysis__Quick-Fixes.html">快速修复</a> ，并通过构造函数参数将它们初始化：</p>        <figure><img alt="使用ReSharper创建装饰器" title="使用ReSharper创建装饰器" src="/help/img/dotnet/2019.3/cookbook_decorator_3.png" id="54f90b63" width="276" height="223"></figure>        <p id="159233a4">此后，我们的类将如下所示：</p>        <div class="code-block" data-lang="csharp">龙类：IBird，ILizard {私人鸟鸟；私人蜥蜴蜥蜴；公众龙（Bird bird，Lizard lizard）{this.bird = bird; this.lizard =蜥蜴； }}</div>    </div>    <div class="chapter"><h2 id="4-generate-delegating-members-for-source-objects" data-toc="Create_a_Decorator#4-generate-delegating-members-for-source-objects">4。生成源对象的委派成员。</h2>        <p id="47ca0333">现在为画龙点睛–我们想为鸟类和蜥蜴组建一个代表成员。这很容易-我们打开“生成”菜单<kbd data-rs="Alt+Insert" data-vs="Alt+Insert">Alt+Insert</kbd>并选择<a href="Code_Generation__Delegating_Members.html">委派成员</a> ：</p>        <figure><img alt="使用ReSharper创建装饰器" title="使用ReSharper创建装饰器" src="/help/img/dotnet/2019.3/cookbook_decorator_4.png" id="5c72d4b4" width="336" height="279"></figure>        <p id="1f23002a">然后，ReSharper询问我们需要委派哪些成员：</p>        <figure><img alt="使用ReSharper创建装饰器" title="使用ReSharper创建装饰器" src="/help/img/dotnet/2019.3/cookbook_decorator_5.png" id="bf6dde16" width="400" height="400"></figure>        <p id="372f6be2">这是最终结果：</p>        <div class="code-block" data-lang="csharp">类Dragon：IBird，ILizard {public void Fly（）{鸟。飞（）; } public void Walk（）{蜥蜴。步行（）; }私人鸟鸟；私人蜥蜴蜥蜴；公众龙（Bird bird，Lizard lizard）{this.bird = bird; this.lizard =蜥蜴； }}</div>        <p id="dc6baa1a">而已！我们的装饰师已经准备好了。</p>    </div>    <div class="last-modified" data-skip-index="skip">上次修改时间：2019年11月28日</div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="Automatically_import_namespaces.html">自动导入名称空间</a> <a class="navigation-links__next" href="Deal_with_a_lot_of_entries_in_resource_files.html">处理资源文件中的很多条目</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="//resources.jetbrains.com/storage/help-app/v3/app.js"></script></body></html>

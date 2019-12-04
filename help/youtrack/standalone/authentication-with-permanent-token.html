@@ -1,58 +1,6 @@
-<!DOCTYPE html
-  SYSTEM "about:legacy-compat">
-<html lang="en-US"><head><meta charset="UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+<html lang="en-US" ><head><meta charset="UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
                         new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
                         j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                         '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
                         })(window,document,'script','dataLayer','GTM-5P98');
-                    </script><script src="//resources.jetbrains.com/storage/help-app/v3/analytics.js"></script><title>Permanent Token Authorization - Help | YouTrack Standalone</title><link rel="stylesheet" href="//resources.jetbrains.com/storage/help-app/v3/app.css"></head><body data-id="authentication-with-permanent-token" data-breadcrumbs="Resources-for-Developers.xml|Resources for Developers/api-log-in-to-youtrack.xml|Log in to YouTrack/authentication-with-permanent-token.xml|Permanent Token Authorization" data-main-title="Permanent Token Authorization"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack Standalone Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>YouTrack Standalone 2019.2 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="authentication-with-permanent-token" id="authentication-with-permanent-token.xml">Permanent Token Authorization</h1>        <p id="23d686fb">Permanent tokens give you secure access to YouTrack from your client applications and scripts.          Compared to OAuth 2.0, authorization with a permanent token has the following advantages:</p>          <ul class="list _ul"><li class="list__item" id="402404b9"><p><b id="12bae0db">Secure token-based authorization</b> — authorize access without implementing a complex OAuth&nbsp;2.0 authorization flow to obtain access tokens.</p></li><li class="list__item" id="22675a2f"><p><b id="8eef8d89">Simple management</b> — create your own permanent tokens in your user profile. If you suspect that your                        connection has been compromised, you can delete the token at any time and generate a new one.</p></li><li class="list__item" id="e8269ff2"><p><b id="8792d393">Granular access</b> — leverage the permission scheme to restrict the scope for different users.                  Permanent tokens only authorize actions that are allowed for the user who the token belongs to.                  You can create dedicated accounts for API users and grant a specific set of permissions to each.</p></li></ul>        <p id="66237929">To learn how to create or delete a permanent token in your user profile, see <a href="Manage-Permanent-Token.html">Manage Permanent Tokens</a>.</p>        <div class="chapter"><h2 id="permanent-token-sample">Sample Request</h2>        <p id="e5334c12">The following sample shows a REST API call which utilizes a permanent token as the            <code class="code">Bearer</code> attribute of the <code class="code">Authorization</code> header.        </p>        <p id="1fda864f">            <b id="937cbe68">Request:</b>        </p>                        <div class="code-block" data-lang="http">
-                    curl -X GET \
-                    'https://youtrack.example.com/api/admin/projects?fields=id,name,shortName,createdBy%28login,name,id%29,leader%28login,name,id%29' \
-                    -H 'Authorization: Bearer perm:cm9vdA==.dG9rZW4=.rNZ38ije7uiWwnUTRDdyFDdUkoPUPi' \
-                    -H 'Accept: application/json' \
-                    -H 'Content-Type: application/json'
-                </div>                        <p id="f0ab032f">            <b id="2193fffd">Response:</b>        </p>        <div class="code-block" data-lang="json">
-HTTP 200 OK
-Cache-Control → no-cache, no-store, no-transform, must-revalidate
-Content-Encoding → gzip
-Content-Length → 208
-Content-Type → application/json;charset=utf-8
-Date →Tue, 07 Aug 2018 11:01:17 GMT
-Server → YouTrack
-Vary →Accept-Encoding, User-Agent
-X-Content-Type-Options →nosniff
-X-Frame-Options →SAMEORIGIN
-X-XSS-Protection →1; mode=block
-[
-    {
-        "shortName": "RAP",
-        "leader": {
-            "login": "john.doe",
-            "name": "John Doe",
-            "id": "1-2"
-        },
-        "createdBy": {
-            "login": "john.doe",
-            "name": "John Doe",
-            "id": "1-2"
-        },
-        "name": "Rest Api Project",
-        "id": "0-2"
-    },
-    {
-        "shortName": "SP",
-        "leader": {
-            "login": "root",
-            "name": "John Smith",
-            "id": "1-1"
-        },
-        "createdBy": {
-            "login": "root",
-            "name": "John Smith",
-            "id": "1-1"
-        },
-        "name": "Sample Project",
-        "id": "0-0"
-    }
-]
-</div>        </div><div class="last-modified" data-skip-index="skip">Last modified: 29 November 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="api-log-in-to-youtrack.html">Log in to YouTrack</a><a class="navigation-links__next" href="OAuth-Authorization.html">OAuth 2.0 Authorization</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="//resources.jetbrains.com/storage/help-app/v3/app.js"></script></body></html>
+                    </script><script src="//resources.jetbrains.com/storage/help-app/v3/analytics.js"></script><title>永久令牌授权-帮助|帮助YouTrack单机版</title><link rel="stylesheet" href="//resources.jetbrains.com/storage/help-app/v3/app.css"></head><body  data-id="authentication-with-permanent-token" data-breadcrumbs="Resources-for-Developers.xml|Resources for Developers/api-log-in-to-youtrack.xml|Log in to YouTrack/authentication-with-permanent-token.xml|Permanent Token Authorization" data-main-title="Permanent Token Authorization"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label class="search-box__label" for="search-box__input"><input type="text" class="search-box__input" id="search-box__input" placeholder="搜索YouTrack独立帮助"></label><div class="search-box__clear" title="明确"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">发送反馈</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>YouTrack Standalone 2019.2帮助</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">按键图：</label><select id="switch-shortcuts" class="select _shortcuts" height="1"></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 id="authentication-with-permanent-token.xml" data-toc="authentication-with-permanent-token">永久令牌授权</h1>        <p id="23d686fb">永久令牌使您可以从客户端应用程序和脚本安全访问YouTrack。与OAuth 2.0相比，使用永久令牌的授权具有以下优点：</p>          <ul class="list _ul"><li class="list__item" id="402404b9"><p><b id="12bae0db">基于安全令牌的授权</b> -在不实施复杂的OAuth 2.0授权流程即可获取访问令牌的情况下授权访问。</p></li><li class="list__item" id="22675a2f"><p><b id="8eef8d89">简单的管理</b> -在用户个人资料中创建自己的永久令牌。如果您怀疑您的连接已受到威胁，则可以随时删除该令牌并生成一个新令牌。</p></li><li class="list__item" id="e8269ff2"><p><b id="8792d393">粒度访问</b> -利用权限方案来限制不同用户的范围。永久令牌仅授权令牌所属用户所允许的操作。您可以为API用户创建专用帐户，并为每个用户授予一组特定的权限。</p></li></ul>        <p id="66237929">要了解如何在用户个人资料中创建或删除永久令牌，请参阅<a href="Manage-Permanent-Token.html">管理永久令牌</a> 。</p>        <div class="chapter"><h2 id="permanent-token-sample">样品申请</h2>        <p id="e5334c12">以下示例显示了一个REST API调用，该调用利用永久令牌作为<code class="code">Bearer</code>的属性<code class="code">Authorization</code>标头。</p>        <p id="1fda864f">            <b id="937cbe68">请求：</b>        </p>                        <div class="code-block" data-lang="http">curl -X GET \'https://youtrack.example.com/api/admin/projects?fields=id,name,shortName,createdBy%28login,name,id%29,leader%28login,name,id%29' \ -H'授权：承载权限：cm9vdA ==。dG9rZW4 = .rNZ38ije7uiWwnUTRDdyFDdUkoPUPi'--H'接受：application / json'\ -H'内容类型：application / json'</div>                        <p id="f0ab032f">            <b id="2193fffd">响应：</b>        </p>        <div class="code-block" data-lang="json">HTTP 200 OK缓存控制→不缓存，不存储，不转换，必须重新验证内容编码→gzip内容长度→208内容类型→application / json; charset = utf-8日期→星期二，07 2018年8月11:01:17 GMT服务器→YouTrack Vary→接受编码，用户代理X内容类型选项→nosniff X帧选项→SAMORIGIN X-XSS保护→1; mode = block [{“ shortName”：“ RAP”，“ leader”：{“ login”：“ john.doe”，“ name”：“ John Doe”，“ id”：“ 1-2”}，“ createdBy “：{” login“：” john.doe“，” name“：” John Doe“，” id“：” 1-2“}，” name“：” Rest Api Project“，” id“：” 0- 2“}，{” shortName“：” SP“，” leader“：{” login“：” root“，” name“：” John Smith“，” id“：” 1-1“}，” createdBy“： {“ login”：“ root”，“ name”：“ John Smith”，“ id”：“ 1-1”}，“ name”：“ Sample Project”，“ id”：“ 0-0”}]</div>        </div><div class="last-modified" data-skip-index="skip">上次修改时间：2019年11月29日</div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="api-log-in-to-youtrack.html">登录到YouTrack</a> <a class="navigation-links__next" href="OAuth-Authorization.html">OAuth 2.0授权</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="//resources.jetbrains.com/storage/help-app/v3/app.js"></script></body></html>

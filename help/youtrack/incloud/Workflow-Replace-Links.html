@@ -1,52 +1,6 @@
-<!DOCTYPE html
-  SYSTEM "about:legacy-compat">
-<html lang="en-US"><head><meta charset="UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+<html lang="en-US" ><head><meta charset="UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
                         new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
                         j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                         '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
                         })(window,document,'script','dataLayer','GTM-5P98');
-                    </script><script src="//resources.jetbrains.com/storage/help-app/v3/analytics.js"></script><title>Replace Links - Help | YouTrack InCloud</title><link rel="stylesheet" href="//resources.jetbrains.com/storage/help-app/v3/app.css"></head><body data-id="Workflow-Replace-Links" data-breadcrumbs="Administration.xml|Administration/Workflow-Guide.xml|Workflows/Default-Workflows.xml|Default Workflows/Workflow-Replace-Links.xml|Replace Links" data-main-title="Replace Links"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search YouTrack InCloud Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>YouTrack InCloud 2019.2 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="Workflow-Replace-Links" id="Workflow-Replace-Links.xml">Replace Links</h1>  <p id="448e730e">This workflow checks the list of linked issues when a new link type is added and replaces existing links to an    issue if another link type is used.  </p>  <div class="table-wrapper"><table class="left_header" width="100%" id="7425c08a"><tbody><tr id="4bc5efac" class="ijRowOdd"><th id="95c35021" width="20%"><p>Name</p></th><td id="20e684b6"><p>@jetbrains/youtrack-workflow-replace-links</p></td></tr><tr id="b9dfc96a" class="ijRowEven"><th id="7fb1e18f"><p>Auto-attached</p></th><td id="76106f74"><p>no</p></td></tr><tr id="9ae3f27c" class="ijRowOdd"><th id="5f812b1e"><p>Modules</p></th><td id="15366860"><p>        <a href="#replace-links">Replace existing link when a link that uses a different link type is added to the same issue</a>        (on-change rule)      </p></td></tr></tbody></table></div>  <div class="chapter"><h2 id="cb250f52">Use Case</h2>    <p id="5be9781e">This workflow prevents you from having two different link types for the same issue, which can create a conflict      in your process.    </p>  </div>  <div class="chapter"><h2 id="3c19cc42">Modules</h2>    <p id="bd47a257">This on-change rule checks the list of linked issues for a link to an issue that is added as a link when the issue is      updated.      If the new link is duplicated by a link to the same issue with a different link type, the link is replaced with      the link specified in the update.    </p>    <div class="chapter"><h3 id="replace-links">Replace existing link when a link that uses a different link type is added to the same issue</h3>      <div class="code-block" data-lang="javascript">var entities = require('@jetbrains/youtrack-scripting-api/entities');
-var workflow = require('@jetbrains/youtrack-scripting-api/workflow');
-
-function hasAddedLinks(links) {
-  return links &amp;&amp; links.added &amp;&amp; links.added.isNotEmpty();
-}
-
-exports.rule = entities.Issue.onChange({
-  title: workflow.i18n('Replace existing link when a link that uses a different link type is added to the same issue'),
-  action: function(ctx) {
-    var issue = ctx.issue;
-
-    var relatesTo = issue.links['relates to'];
-
-    var duplicates = issue.links.duplicates;
-    var isDuplicated = issue.links['is duplicated by'];
-
-    var dependsOn = issue.links['depends on'];
-    var isRequiredFor = issue.links['is required for'];
-
-    var subtasks = issue.links['subtask of'];
-    var parent = issue.links['parent for'];
-
-    var allLinks = [duplicates, isDuplicated, relatesTo, dependsOn, subtasks, isRequiredFor, parent];
-
-    function cleanup(target) {
-      if (hasAddedLinks(target)) {
-        target.forEach(function(issue) {
-          allLinks.filter(function(link) {
-            return link &amp;&amp; link !== target;
-          }).forEach(function(links) {
-            links.delete(issue);
-          });
-        });
-      }
-    }
-
-    if (hasAddedLinks(duplicates) || hasAddedLinks(relatesTo) || hasAddedLinks(dependsOn) || hasAddedLinks(subtasks)) {
-      cleanup(duplicates);
-      cleanup(relatesTo);
-      cleanup(subtasks);
-      cleanup(dependsOn);
-    }
-  }
-});</div>    </div>  </div><div class="last-modified" data-skip-index="skip">Last modified: 29 November 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="Workflow-Referred-Issues.html">Referred Issues</a><a class="navigation-links__next" href="Workflow-Scrum.html">Scrum</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="//resources.jetbrains.com/storage/help-app/v3/app.js"></script></body></html>
+                    </script><script src="//resources.jetbrains.com/storage/help-app/v3/analytics.js"></script><title>替换链接-帮助| YouTrack InCloud</title><link rel="stylesheet" href="//resources.jetbrains.com/storage/help-app/v3/app.css"></head><body  data-id="Workflow-Replace-Links" data-breadcrumbs="Administration.xml|Administration/Workflow-Guide.xml|Workflows/Default-Workflows.xml|Default Workflows/Workflow-Replace-Links.xml|Replace Links" data-main-title="Replace Links"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label class="search-box__label" for="search-box__input"><input type="text" class="search-box__input" id="search-box__input" placeholder="搜索YouTrack InCloud帮助"></label><div class="search-box__clear" title="明确"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">发送反馈</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>YouTrack InCloud 2019.2帮助</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">按键图：</label><select id="switch-shortcuts" class="select _shortcuts" height="1"></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 id="Workflow-Replace-Links.xml" data-toc="Workflow-Replace-Links">替换链接</h1>  <p id="448e730e">当添加新的链接类型时，此工作流将检查链接问题的列表，如果使用其他链接类型，则替换现有的问题链接。</p>  <div class="table-wrapper"><table class="left_header" width="100%" id="7425c08a"><tbody><tr id="4bc5efac" class="ijRowOdd"><th id="95c35021" width="20%"><p>名称</p></th><td id="20e684b6"><p>@ jetbrains / youtrack-workflow-replace-links</p></td></tr><tr id="b9dfc96a" class="ijRowEven"><th id="7fb1e18f"><p>自动连接</p></th><td id="76106f74"><p>没有</p></td></tr><tr id="9ae3f27c" class="ijRowOdd"><th id="5f812b1e"><p>模组</p></th><td id="15366860"><p>        <a href="#replace-links">当将使用不同链接类型的链接添加到同一问题时，请替换现有链接</a> （更改规则）</p></td></tr></tbody></table></div>  <div class="chapter"><h2 id="cb250f52">用例</h2>    <p id="5be9781e">此工作流程可防止您针对同一问题使用两种不同的链接类型，这可能会在您的流程中造成冲突。</p>  </div>  <div class="chapter"><h2 id="3c19cc42">模组</h2>    <p id="bd47a257">此更改规则检查链接的问题列表中是否存在指向该问题的链接，该问题在更新问题时作为链接添加。如果新链接被指向具有不同链接类型的相同问题的链接复制，则该链接将替换为更新中指定的链接。</p>    <div class="chapter"><h3 id="replace-links">将使用其他链接类型的链接添加到同一问题时，请替换现有链接</h3>      <div class="code-block" data-lang="javascript">var实体= require（'@ jetbrains / youtrack-scripting-api / entities'）; var工作流程= require（'@ jetbrains / youtrack-scripting-api / workflow'）;函数ha⚓Links（links）{返回链接&& links.added && links.added.isNotEmpty（）; } exports.rule =实体。Issue.onChange（{title：workflow.i18n（'当使用不同链接类型的链接添加到同一问题时，替换现有链接'），操作：function（ctx）{var issue = ctx.issue; var relatedTo = issue.links ['relates to']; var重复= issue.links.duplicates; var isDuplicated = issue.links ['被重复']; vardependOn = issue.links ['取决于']; var isRequiredFor =问题.links ['required for']; var subtasks = issue.links ['subtask of]; var parent = issue.links ['parent for']; var allLinks = [duplicates，isDuplicated，relatedTo，取决于，子对象， isRequiredFor，父项）；函数cleanup（target）{if（ha TransactionsLinks（target））{target.forEach（function（issue）{allLinks.filter（function（link）{返回链接&&链接！==目标； }）。forEach（function（links）{links.delete（issue）;}）; }）; }}}（if（ha☎联系人（重复）|| ha☎联系人（相对于）||ha⚓Link（依赖）|| ha☎联系人（子任务））{清理（重复）； cleanup（relatesTo）;清理（子任务）; cleanup（dependsOn）; }}}）;</div>    </div>  </div><div class="last-modified" data-skip-index="skip">上次修改时间：2019年11月29日</div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="Workflow-Referred-Issues.html">推荐问题</a> <a class="navigation-links__next" href="Workflow-Scrum.html">Scrum</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="//resources.jetbrains.com/storage/help-app/v3/app.js"></script></body></html>

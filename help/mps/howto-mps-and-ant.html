@@ -1,121 +1,111 @@
-<!DOCTYPE html
-  SYSTEM "about:legacy-compat">
-<html lang="en-US"><head><meta charset="UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+<html lang="en-US" ><head><meta charset="UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
                         new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
                         j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                         '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
                         })(window,document,'script','dataLayer','GTM-5P98');
-                    </script><script src="//resources.jetbrains.com/storage/help-app/v3/analytics.js"></script><title>HowTo -- MPS and ant - Help | MPS</title><link rel="stylesheet" href="//resources.jetbrains.com/storage/help-app/v3/app.css"></head><body data-id="HowTo+--+MPS+and+ant.html"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search MPS Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>MPS 2019.2 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="primary" value="primary_default" selected>Default</option><option data-group="primary" value="primary_default_for_gnome">Default for GNOME</option><option data-group="primary" value="primary_default_for_kde">Default for KDE</option><option data-group="primary" value="primary_default_for_xwin">Default for XWin</option><option data-group="primary" value="primary_eclipse">Eclipse</option><option data-group="primary" value="primary_eclipse_mac_os_x">Eclipse (Mac OS X)</option><option data-group="primary" value="primary_emacs">Emacs</option><option data-group="primary" value="primary_jbuilder">JBuilder</option><option data-group="primary" value="primary_mac_os_x">Mac OS X</option><option data-group="primary" value="primary_mac_os_x_10.5_">Mac OS X 10.5+</option><option data-group="primary" value="primary_netbeans">NetBeans</option><option data-group="primary" value="primary_visual_studio">Visual Studio</option><option data-group="secondary" value="secondary_default">Default</option><option data-group="secondary" value="secondary_default_for_gnome">Default for GNOME</option><option data-group="secondary" value="secondary_default_for_kde">Default for KDE</option><option data-group="secondary" value="secondary_default_for_xwin">Default for XWin</option><option data-group="secondary" value="secondary_eclipse">Eclipse</option><option data-group="secondary" value="secondary_eclipse_mac_os_x">Eclipse (Mac OS X)</option><option data-group="secondary" value="secondary_emacs">Emacs</option><option data-group="secondary" value="secondary_jbuilder">JBuilder</option><option data-group="secondary" value="secondary_mac_os_x">Mac OS X</option><option data-group="secondary" value="secondary_mac_os_x_10.5_">Mac OS X 10.5+</option><option data-group="secondary" value="secondary_netbeans">NetBeans</option><option data-group="secondary" value="secondary_visual_studio">Visual Studio</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="HowTo+--+MPS+and+ant.html" id="howto-mps-and-ant.xml">HowTo -- MPS and ant</h1>   <h2 id="workingwithmpsandant">Working with MPS and ant</h2>   <p id="ef6fb7a9">Editing code of course requires the MPS editor. But generating models and<br> running tests can be done from the command line to integrate it with automatic<br> builds. Ant is used as the basis. In this section we explain how to use MPS<br> from the command line via ant.</p>   <p id="184f364f">For all of the examples we use a <span class="filepath">build.properties</span> file that defines the<br> following two properties:</p>   <div class="code-block" data-lang="none">mps.home = // installation directory of MPS itself
-mbeddr.home = // the root directory relative to which all other directories
-              // to projects etc. are specified
-</div>   <p id="3b18d4d7">This <span class="filepath">build.properties</span> file is included in all the build scripts we discuss<br> in this section. In addition, we have to define a set of MPS-specific tasks<br> using the <code class="code">taskdef</code> element in ant. Also, a couple of JVM options are reused<br> over and over. Consequently, the following is a skeleton of all the build files<br> we will discuss:</p>   <div class="code-block" data-lang="none">&lt;project name="com.mbeddr.core build and test" default="all"&gt;
+                    </script><script src="//resources.jetbrains.com/storage/help-app/v3/analytics.js"></script><title>HowTo-MPS和蚂蚁-帮助|帮助MPS</title><link rel="stylesheet" href="//resources.jetbrains.com/storage/help-app/v3/app.css"></head><body  data-id="HowTo+--+MPS+and+ant.html"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label class="search-box__label" for="search-box__input"><input type="text" class="search-box__input" id="search-box__input" placeholder="搜索MPS帮助"></label><div class="search-box__clear" title="明确"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">发送反馈</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>MPS 2019.2帮助</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">按键图：</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option value="primary_default" data-group="primary" selected>默认</option><option value="primary_default_for_gnome" data-group="primary">GNOME的默认设置</option><option value="primary_default_for_kde" data-group="primary">KDE的默认值</option><option value="primary_default_for_xwin" data-group="primary">XWin的默认设置</option><option value="primary_eclipse" data-group="primary">日食</option><option value="primary_eclipse_mac_os_x" data-group="primary">Eclipse（Mac OS X）</option><option value="primary_emacs" data-group="primary">埃马克斯</option><option value="primary_jbuilder" data-group="primary">JBuilder的</option><option value="primary_mac_os_x" data-group="primary">Mac OS X</option><option value="primary_mac_os_x_10.5_" data-group="primary">Mac OS X 10.5以上</option><option value="primary_netbeans" data-group="primary">NetBeans</option><option value="primary_visual_studio" data-group="primary">视觉工作室</option><option value="secondary_default" data-group="secondary">默认</option><option value="secondary_default_for_gnome" data-group="secondary">GNOME的默认设置</option><option value="secondary_default_for_kde" data-group="secondary">KDE的默认值</option><option value="secondary_default_for_xwin" data-group="secondary">XWin的默认设置</option><option value="secondary_eclipse" data-group="secondary">日食</option><option value="secondary_eclipse_mac_os_x" data-group="secondary">Eclipse（Mac OS X）</option><option value="secondary_emacs" data-group="secondary">埃马克斯</option><option value="secondary_jbuilder" data-group="secondary">JBuilder的</option><option value="secondary_mac_os_x" data-group="secondary">Mac OS X</option><option value="secondary_mac_os_x_10.5_" data-group="secondary">Mac OS X 10.5以上</option><option value="secondary_netbeans" data-group="secondary">NetBeans</option><option value="secondary_visual_studio" data-group="secondary">视觉工作室</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 id="howto-mps-and-ant.xml" data-toc="HowTo+--+MPS+and+ant.html">如何-MPS和蚂蚁</h1>   <h2 id="workingwithmpsandant">使用MPS和蚂蚁</h2>   <p id="ef6fb7a9">编辑代码当然需要MPS编辑器。但是生成模型并<br>可以从命令行进行运行测试以将其与自动<br>建立。蚂蚁被用作基础。在本节中，我们说明如何使用MPS<br>从命令行通过ant。</p>   <p id="184f364f">对于所有示例，我们使用<span class="filepath">build.properties</span>文件定义<br>以下两个属性：</p>   <div class="code-block" data-lang="none">mps.home = // MPS本身的安装目录mbeddr.home = //与之相对的根目录，//项目等的所有其他目录均已指定</div>   <p id="3b18d4d7">这个<span class="filepath">build.properties</span>文件包含在我们讨论的所有构建脚本中<br>在这个部分。另外，我们必须定义一组特定于MPS的任务<br>使用<code class="code">taskdef</code>蚂蚁中的元素。另外，几个JVM选项被重用<br>一遍又一遍。因此，以下是所有构建文件的框架<br>我们会讨论：</p>   <div class="code-block" data-lang="none"><project name="com.mbeddr.core build and test" default="all">
 
-  &lt;property file="build.properties"/&gt;
+  <property file="build.properties"></property>
 
-  &lt;path id="mps.ant.path"&gt;
-      &lt;pathelement location="${mps.home}/lib/mps-backend.jar"/&gt;
-      &lt;pathelement location="${mps.home}/lib/jdom.jar"/&gt;
-      &lt;pathelement location="${mps.home}/lib/log4j.jar"/&gt;
-      &lt;pathelement location="${mps.home}/lib/mps-core.jar"/&gt;
-  &lt;/path&gt;
+  <path id="mps.ant.path">
+      <pathelement location="${mps.home}/lib/mps-backend.jar"></pathelement>
+      <pathelement location="${mps.home}/lib/jdom.jar"></pathelement>
+      <pathelement location="${mps.home}/lib/log4j.jar"></pathelement>
+      <pathelement location="${mps.home}/lib/mps-core.jar"></pathelement>
+  </path>
   
-  &lt;taskdef resource="jetbrains/mps/build/ant/antlib.xml"
-           classpathref="mps.ant.path"/&gt;
+  <taskdef resource="jetbrains/mps/build/ant/antlib.xml" classpathref="mps.ant.path"></taskdef>
 
-  &lt;jvmargs id="myargs"&gt;
-      &lt;arg value="-ea"/&gt;
-      &lt;arg value="-Xss1024k"/&gt;
-      &lt;arg value="-Xmx1024m"/&gt;
-      &lt;arg value="-XX:MaxPermSize=92m"/&gt;
-      &lt;arg value="-XX:+HeapDumpOnOutOfMemoryError"/&gt;
-  &lt;/jvmargs&gt;
+  <jvmargs id="myargs">
+      <arg value="-ea"></arg>
+      <arg value="-Xss1024k"></arg>
+      <arg value="-Xmx1024m"></arg>
+      <arg value="-XX:MaxPermSize=92m"></arg>
+      <arg value="-XX:+HeapDumpOnOutOfMemoryError"></arg>
+  </jvmargs>
 
-  &lt;!-- here is the place where all the following example code goes --&gt;
+  <!-- here is the place where all the following example code goes -->
 
-&lt;/project&gt;
-</div>   <h2 id="buildingthelanguagesinaproject">Building the Languages in a Project</h2>   <p id="29eb8d6e">We start by building the contents of a project. Here is the necessary ant code<br> that has to be surrounded by the skeleton ant file shown above:</p>   <div class="code-block" data-lang="none">&lt;property name="project.mpr" value="relative/path/to/project/project.mpr"/&gt;
+</project>
+</div>   <h2 id="buildingthelanguagesinaproject">在项目中建立语言</h2>   <p id="29eb8d6e">我们从构建项目的内容开始。这是必要的蚂蚁代码<br>必须由上面显示的骨架ant文件包围：</p>   <div class="code-block" data-lang="none"><property name="project.mpr" value="relative/path/to/project/project.mpr"></property>
 
-&lt;target name="build-languages-in-project"&gt;
-  &lt;mps.generate&gt;
-    &lt;jvmargs refid="myargs"/&gt;
-    &lt;project file="${mbeddr.home}/${project.mpr}"/&gt;
-  &lt;/mps.generate&gt;
-&lt;/target&gt;
-</div>   <p id="be217f53">All modules within the project are generated. If only a subset of the modules in<br> the project should be       generated, a <span class="filepath">modules</span> fileset can be used. The<br> following code generates all the languages in a project; typically they reside<br> in the <span class="filepath">languages</span> directory below the project. Note how we define a<br>      <b id="bdb75b27">different</b> property that points to the project directory as opposed to the<br> project <span class="filepath">.mps</span>       file.</p>   <div class="code-block" data-lang="none">&lt;property name="project.mpr" value="relative/path/to/project/project.mpr"/&gt;
-&lt;property name="project.dir" value="relative/path/to/project"/&gt;
+<target name="build-languages-in-project">
+  <mps.generate>
+    <jvmargs refid="myargs"></jvmargs>
+    <project file="${mbeddr.home}/${project.mpr}"></project>
+  </mps.generate>
+</target>
+</div>   <p id="be217f53">生成项目中的所有模块。如果仅模块中的一部分<br>应该生成项目，可以使用<span class="filepath">模块</span>文件集。的<br>以下代码生成项目中的所有语言；通常他们居住<br>在项目下面的<span class="filepath">language</span>目录中。请注意我们如何定义<br>      指向项目目录的<b id="bdb75b27">不同</b>属性，而不是<br>项目<span class="filepath">.mps</span>文件。</p>   <div class="code-block" data-lang="none"><property name="project.mpr" value="relative/path/to/project/project.mpr"></property>
+<property name="project.dir" value="relative/path/to/project"></property>
 
-&lt;mps.generate&gt;
-  &lt;jvmargs refid="myargs"/&gt;
-  &lt;project file="${mbeddr.home}/${project.mpr}"/&gt;
-  &lt;modules dir="${mbeddr.home}/${project.dir}/languages"/&gt;
-&lt;/mps.generate&gt;
-</div>   <p id="5463636d">Sometimes a project needs access to other languages in order to be compilable.<br> These can be added with <span class="emphasis">       library</span> elements, whose <code class="code">dir</code> attribute has to<br> point to a directory that (directly, or further below) contains the required<br> languages.</p>   <div class="code-block" data-lang="none">&lt;property name="some.other.project.dir" value="relative/p/to/other/project"/&gt;
+<mps.generate>
+  <jvmargs refid="myargs"></jvmargs>
+  <project file="${mbeddr.home}/${project.mpr}"></project>
+  <modules></modules>
+</mps.generate>
+</div>   <p id="5463636d">有时，一个项目需要使用其他语言才能被编译。<br>这些可以与<span class="emphasis">库</span>元素一起添加， <code class="code">dir</code>属性必须<br>指向一个目录（直接或在其下）包含所需的目录<br>语言。</p>   <div class="code-block" data-lang="none"><property name="some.other.project.dir" value="relative/p/to/other/project"></property>
 
-&lt;mps.generate&gt;
-  &lt;jvmargs refid="myargs"/&gt;
-  &lt;project file="${mbeddr.home}/${project.mpr}"/&gt;
-  &lt;library name="irrelevantName"
-         dir="${mbeddr.home}/${some.other.project.dir}/languages"/&gt;
-&lt;/mps.generate&gt;
-</div>   <h2 id="generating/buildingsolutions">Generating/Building Solutions</h2>   <p id="d375f682">Building solutions that contain code written in a DSL is not fundamentally<br> different from building languages. However, it is important to set up the<br> libraries correctly so they point to the directories that contain the languages<br> used in the solutions.</p>   <div class="code-block" data-lang="none">&lt;!-- project with solutions that should be built --&gt;
-  &lt;property name="solutionproject.dir" value="path/to/some/solution/project"/&gt;
+<mps.generate>
+  <jvmargs refid="myargs"></jvmargs>
+  <project file="${mbeddr.home}/${project.mpr}"></project>
+  <library name="irrelevantName"></library>
+</mps.generate>
+</div>   <h2 id="generating/buildingsolutions">生成/构建解决方案</h2>   <p id="d375f682">从根本上讲，构建包含用DSL编写的代码的解决方案不是<br>与建筑语言不同。但是，设置<br>库正确，因此它们指向包含语言的目录<br>在解决方案中使用。</p>   <div class="code-block" data-lang="none"><!-- project with solutions that should be built -->
+  <property name="solutionproject.dir" value="path/to/some/solution/project"></property>
 
-  &lt;!-- two projects that contain languages used by solutionproject --&gt;
-  &lt;property name="langproject.dir" value="path/to/some/project"/&gt;
-  &lt;property name="other.langproject.dir" value="path/to/other/project"/&gt;
+  <!-- two projects that contain languages used by solutionproject -->
+  <property name="langproject.dir" value="path/to/some/project"></property>
+  <property name="other.langproject.dir" value="path/to/other/project"></property>
 
-  &lt;target name="build-solutions"&gt;
-    &lt;mps.generate&gt;
-      &lt;jvmargs refid="myargs"/&gt;
+  <target name="build-solutions">
+    <mps.generate>
+      <jvmargs refid="myargs"></jvmargs>
 
-      &lt;!-- set up libs to point to the lang projects --&gt;
-      &lt;library name="langproject" dir="${mbeddr.home}/${langproject.dir}"/&gt;
-      &lt;library name="other.langproject"
-                 dir="${mbeddr.home}/${other.langproject.dir}"/&gt;
+      <!-- set up libs to point to the lang projects -->
+      <library name="langproject"></library>
+      <library name="other.langproject"></library>
 
-      &lt;!-- generate two solutions in the project --&gt;
-      &lt;modules dir="${mbeddr.home}/${solutionproject.fit}/solutions/solution1"/&gt;
-      &lt;modules dir="${mbeddr.home}/${solutionproject.fit}/solutions/solution2"/&gt;
-    &lt;/mps.generate&gt;
-  &lt;/target&gt;
-</div>   <h2 id="runningtests">Running Tests</h2>   <p id="4443cde0">MPS supports a special testing language that can be used for testing<br> constraints, type system rules and       editor functionality. These tests can be run<br> from the UI using the <span class="control">Run</span> option from the       solution or model context menu<br> (see the figure below).</p>   <p id="13869e7f">      <figure><img alt="runtests" title="runtests" src="/help/img/idea/2019.2/runtests.jpg" id="db478b66" width="1366" height="748"></figure>   </p>   <p id="3b44f453">These tests can also be run from the command line. Here is the code you need:</p>   <div class="code-block" data-lang="none">&lt;!-- make this point to some temp directory --&gt;
-  &lt;property name="mps.platform.caches" value="tmp"/&gt;
+      <!-- generate two solutions in the project -->
+      <modules></modules>
+      <modules></modules>
+    </mps.generate>
+  </target>
+</div>   <h2 id="runningtests">运行测试</h2>   <p id="4443cde0">MPS支持一种可用于测试的特殊测试语言<br>约束，类型系统规则和编辑器功能。这些测试可以运行<br>从UI使用解决方案或模型上下文菜单中的<span class="control">“运行”</span>选项<br>（请参见下图）。</p>   <p id="13869e7f">      </p><figure><img alt="运行测试" title="运行测试" src="/help/img/idea/2019.2/runtests.jpg" id="db478b66" width="1366" height="748"></figure>   <p></p>   <p id="3b44f453">这些测试也可以从命令行运行。这是您需要的代码：</p>   <div class="code-block" data-lang="none"><!-- make this point to some temp directory -->
+  <property name="mps.platform.caches" value="tmp"></property>
 
-  &lt;!-- path to project .mpr with the tests in it --&gt;
-  &lt;property name="project.mpr" value="relative/path/to/project/project.mpr"/&gt;
+  <!-- path to project .mpr with the tests in it -->
+  <property name="project.mpr" value="relative/path/to/project/project.mpr"></property>
 
 
-  &lt;target name="run-tests"&gt;
-    &lt;delete dir="${mps.platform.caches}"/&gt;
+  <target name="run-tests">
+    <delete></delete>
 
-    &lt;junit haltonfailure="true" showoutput="true" fork="true" dir="${mps.home}"&gt;
-      &lt;jvmarg value="-ea"/&gt;
-      &lt;jvmarg value="-Xss1024k"/&gt;
-      &lt;jvmarg value="-Xmx1200m"/&gt;
-      &lt;jvmarg value="-XX:MaxPermSize=128m"/&gt;
-      &lt;jvmarg value="-XX:+HeapDumpOnOutOfMemoryError"/&gt;
+    <junit haltonfailure="true" showoutput="true" fork="true">
+      <jvmarg value="-ea"></jvmarg>
+      <jvmarg value="-Xss1024k"></jvmarg>
+      <jvmarg value="-Xmx1200m"></jvmarg>
+      <jvmarg value="-XX:MaxPermSize=128m"></jvmarg>
+      <jvmarg value="-XX:+HeapDumpOnOutOfMemoryError"></jvmarg>
 
-      &lt;sysproperty key="idea.system.path" value="${mps.platform.caches}/system"/&gt;
-      &lt;sysproperty key="idea.config.path" value="${mps.platform.caches}/config"/&gt;
-      &lt;sysproperty key="idea.plugins.path" value="${mps.platform.caches}/plugins"/&gt;
+      <sysproperty value="${mps.platform.caches}/system" key="idea.system.path"></sysproperty>
+      <sysproperty value="${mps.platform.caches}/config" key="idea.config.path"></sysproperty>
+      <sysproperty value="${mps.platform.caches}/plugins" key="idea.plugins.path"></sysproperty>
 
-	  &lt;sysproperty key="mps.junit.project"
-	  			value="${mbeddr.home}/${project.mpr}"/&gt;
+	  <sysproperty value="${mbeddr.home}/${project.mpr}" key="mps.junit.project"></sysproperty>
 
-      &lt;sysproperty key="mps.junit.pathmacro.mbeddr.home"
-                value="${mbeddr.home}"/&gt;
+      <sysproperty value="${mbeddr.home}" key="mps.junit.pathmacro.mbeddr.home"></sysproperty>
 
-      &lt;classpath&gt;
-        &lt;fileset dir="${mps.home}/lib"&gt;
-          &lt;include name="**/*.jar"/&gt;
-        &lt;/fileset&gt;
-        &lt;fileset dir="${mps.home}/plugins"&gt;
-          &lt;include name="**/*.jar"/&gt;
-        &lt;/fileset&gt;
-      &lt;/classpath&gt;
+      <classpath>
+        <fileset>
+          <include name="**/*.jar"></include>
+        </fileset>
+        <fileset>
+          <include name="**/*.jar"></include>
+        </fileset>
+      </classpath>
 
-      &lt;test name="jetbrains.mps.testbench.junit.suites.DefaultTestSuite"/&gt;
-      &lt;formatter type="xml"/&gt;
-    &lt;/junit&gt;
-  &lt;/target&gt;
-</div>   <p id="0c66db7f">The important ingredients here are the two system properties<br>       <code class="code">mps.junit.project</code> and <code class="code">mps.junit.pathmacro.mbeddr.home</code>. The first one<br> specifies the project that contains the tests. The second one is a bit more<br> involved. The syntax <code class="code">mps.junit.pathmacro.XXX</code> sets a value for a path<br> variable <code class="code">XXX</code> in an MPS project. To make the tests run correctly, there has<br> to be a <code class="code">TestInfo</code> node in the project that points to the project file. This<br> one uses a path variable (defined in MPS settings) to make it portable between<br> different machines and various locations in the file system. The<br>       <code class="code">mps.junit.pathmacro.mbeddr.home</code> thingy is used to supply a value for the<br> macro from the command line.</p>   <p id="5312fc2a">      <figure><img alt="testinfo" title="testinfo" src="/help/img/idea/2019.2/testinfo.jpg" id="bfa80f34" width="1133" height="323"></figure>   </p><div class="last-modified" data-skip-index="skip">Last modified: 30 August 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="build-language.html">Build Language</a><a class="navigation-links__next" href="building-intellij-idea-language-plugins.html">Building IntelliJ IDEA language plugins</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="//resources.jetbrains.com/storage/help-app/v3/app.js"></script></body></html>
+      <test name="jetbrains.mps.testbench.junit.suites.DefaultTestSuite"></test>
+      <formatter type="xml"></formatter>
+    </junit>
+  </target>
+</div>   <p id="0c66db7f">这里的重要成分是两个系统属性<br>       <code class="code">mps.junit.project</code>和<code class="code">mps.junit.pathmacro.mbeddr.home</code> 。第一个<br>指定包含测试的项目。第二个要多一点<br>参与。语法<code class="code">mps.junit.pathmacro.XXX</code>为路径设置值<br>变量<code class="code">XXX</code>在MPS项目中。为了使测试正常运行，<br>成为一个<code class="code">TestInfo</code>项目中指向项目文件的节点。这个<br>一个使用路径变量（在MPS设置中定义）使之可移植<br>文件系统中的不同机器和不同位置。的<br>       <code class="code">mps.junit.pathmacro.mbeddr.home</code> whaty用于提供值<br>命令行中的宏。</p>   <p id="5312fc2a">      </p><figure><img alt="测试信息" title="测试信息" src="/help/img/idea/2019.2/testinfo.jpg" id="bfa80f34" width="1133" height="323"></figure>   <p></p><div class="last-modified" data-skip-index="skip">上次修改时间：2019年8月30日</div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="build-language.html">构建语言</a> <a class="navigation-links__next" href="building-intellij-idea-language-plugins.html">构建IntelliJ IDEA语言插件</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="//resources.jetbrains.com/storage/help-app/v3/app.js"></script></body></html>

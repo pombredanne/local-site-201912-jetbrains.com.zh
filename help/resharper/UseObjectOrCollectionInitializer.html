@@ -1,89 +1,9 @@
-<!DOCTYPE html
-  SYSTEM "about:legacy-compat">
-<html lang="en-US"><head><meta charset="UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+<html lang="en-US" ><head><meta charset="UTF-8"><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
                         new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
                         j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                         '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
                         })(window,document,'script','dataLayer','GTM-5P98');
-                    </script><script src="//resources.jetbrains.com/storage/help-app/v3/analytics.js"></script><title>Code Inspection: Use object or collection initializer when possible - Help | ReSharper</title><link rel="stylesheet" href="//resources.jetbrains.com/storage/help-app/v3/app.css"></head><body data-id="UseObjectOrCollectionInitializer" data-article-props="&#xA;                {&#xA;                &#xA;            &#34;seeAlso&#34;:[&#xA;            &#xA;                {&#34;title&#34;: &#34;Concepts&#34;,&#xA;                 &#34;links&#34;: [&#xA;                &#xA;        {&#34;url&#34;:&#34;Finding_Code_Issues.html&#34;,&#34;text&#34;:&#34;Find Code Issues with Code Inspection&#34;}&#xA;    ,&#xA;        {&#34;url&#34;:&#34;Code_Analysis__Code_Inspections.html&#34;,&#34;text&#34;:&#34;Code Inspections&#34;}&#xA;    ,&#xA;        {&#34;url&#34;:&#34;Design_time_Inspection.html&#34;,&#34;text&#34;:&#34;Detect Code Issues in Design Time&#34;}&#xA;    &#xA;                    ]}&#xA;            ]&#xA;        &#xA;                }&#xA;            " data-disqus-id="UseObjectOrCollectionInitializer_10"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label for="search-box__input" class="search-box__label"><input type="text" class="search-box__input" id="search-box__input" placeholder="Search ReSharper Help"></label><div class="search-box__clear" title="Clear"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">Send feedback</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>ReSharper 2019.2 Help</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">Keymap:</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option data-group="secondary" value="rs">ReSharper 2.x/IntelliJ IDEA</option><option data-group="primary" value="vs">Visual Studio</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="active"><h1 data-toc="UseObjectOrCollectionInitializer" id="UseObjectOrCollectionInitializer.xml">Code Inspection: Use object or collection initializer when possible</h1>    <a name="tip_disable"></a>        <aside data-type="tip" class="prompt" data-title="" rel="UseObjectOrCollectionInitializer.xml" id="03dd9a8e">            <p id="931d3aa8">                You can configure this inspection:            </p>            <ul class="list _ul"><li class="list__item" id="d0421af1"><a href="Code_Analysis__Configuring_Warnings.html#disable">disable it to ignore all related issues</a></li><li class="list__item" id="4258c3e2"><a href="Code_Analysis__Configuring_Warnings.html#suppress">suppress it in any place in the code to ignore specific issues</a></li><li class="list__item" id="dfcea489"><a href="Code_Analysis__Configuring_Warnings.html#change_severity">change its severity level                    to make the detected issues less or more noticeable</a>                </li></ul>        </aside>        <p id="100ddf2a">        Object and collection initializers offer more concise syntax. Besides, initializers are useful in        multi-threading.    </p>    <p id="ee4ab163">        Object initializers are used to assign values to an object’s properties or fields at creation time without        invoking the constructor.        If you create an object and then right after that assign values to its properties,        ReSharper suggests using an object initializer.    </p>    <p id="15725d07">        In the example below,        <code class="code">GetCurrentData()</code> can return a partly initialized        <code class="code">Data</code> if        <code class="code">CreateNewData()</code> does not use the object initializer, so        ReSharper suggests rewriting the field-assignment statements with the object initializer:    </p>    <div class="table-wrapper"><table class="  _layout-fixed" width="100%" id="70cfe1a7"><thead><tr id="5a5de25d" class="ijRowHead"><th id="55ce4137"><p>Suboptimal code</p></th><th id="99f605f9"><p>After the quick-fix</p></th></tr></thead><tbody><tr id="634880ca" class="ijRowOdd"><td id="c8246c93">                <div class="code-block" data-lang="csharp">
-          
-public class DataHandler
-{
-  private volatile Data _myData;
-
-  public void CreateNewData(
-  {
-    _myData = new Data(); // warning
-    _myData.Value1 = "Value1";
-    _myData.Value2 = "Value2";
-  }
-
-  public Data GetCurrentData()
-  {
-    return _myData;
-  }
-}
-
-public class Data
-{
-  public string Value1 { get;set; }
-  public string Value2 { get; set; }
-}
-
-                </div>            </td><td id="36082f9e">                <div class="code-block" data-lang="csharp">
-          
-public class DataHandler
-{
-  private volatile Data _myData;
-
-  public void CreateNewData(
-  {
-    _myData = new Data
-    {
-      Value1 = "Value1",
-      Value2 = "Value2"
-    };
-  }
-
-  public Data GetCurrentData()
-  {
-    return _myData;
-  }
-}
-
-public class Data
-{
-  public string Value1 { get;set; }
-  public string Value2 { get; set; }
-}
-
-                </div>            </td></tr></tbody></table></div>    <p id="b0c20ed1">        Collection initializers can be used if a collection class implements        <code class="code">IEnumerable</code>        or has an        <code class="code">Add</code>        method.        If you create a collection and then immediately populate it with items, ReSharper suggests using a        collection initializer.    </p>    <p id="19fecd62">        In the following, ReSharper replaces invocations of the        <code class="code">Add</code>        method with a collection initializer:    </p>    <div class="table-wrapper"><table class="  _layout-fixed" width="100%" id="024c88c7"><thead><tr id="3283affc" class="ijRowHead"><th id="b0ae22d6"><p>Suboptimal code</p></th><th id="b323fd30"><p>After the quick-fix</p></th></tr></thead><tbody><tr id="a6f69dda" class="ijRowOdd"><td id="56f685df">        <div class="code-block" data-lang="csharp">
-          
-public void ViewCategories()
-{
-  var categories =
-    new Dictionary&lt;int, string&gt;();
-  categories.Add(1, "Books");
-  categories.Add(2, "Electronics");
-  foreach (var c in categories)
-  {
-    Console.WriteLine($"{c.Key}, " +
-                        $"{c.Value}");
-  }
-}
-
-        </div>            </td><td id="3e039a91">                <div class="code-block" data-lang="csharp">
+                    </script><script src="//resources.jetbrains.com/storage/help-app/v3/analytics.js"></script><title>代码检查：尽可能使用对象或集合初始化程序-帮助|帮助锐化器</title><link rel="stylesheet" href="//resources.jetbrains.com/storage/help-app/v3/app.css"></head><body  data-id="UseObjectOrCollectionInitializer" data-article-props="
+                {
                 
-public void ViewCategories()
-{
-  var categories =
-    new Dictionary&lt;int, string&gt;
-      {{1, "Books"}, {2, "Electronics"}};
-  foreach (var c in categories)
-  {
-    Console.WriteLine($"{c.Key}, " +
-                        $"{c.Value}");
-  }
-}
-
-                </div>            </td></tr></tbody></table></div>    <p id="17dfa96f">        If you decide to disable this inspection for some reason, you can convert selected assignments to        the collection initializer with a        <a href="Coding_Assistance__Context_Actions.html">context action</a>        <kbd data-rs="Alt+Enter" data-vs="Alt+Enter">Alt+Enter</kbd>:    </p>    <figure><img alt="ReSharper: Converting assignments to object initializer" title="ReSharper: Converting assignments to object initializer" src="/help/img/dotnet/2019.2/ca_use_object_initializer.png" id="061985f9" width="433" height="149"></figure>    <a name="tip_reverse"></a>        <aside data-type="tip" class="prompt" data-title="" rel="UseObjectOrCollectionInitializer.xml" id="d71771d1">            <p id="451ca78a">                Reverse transformation is available with a                <a href="Coding_Assistance__Context_Actions.html">context action</a>                <kbd data-rs="Alt+Enter" data-vs="Alt+Enter">Alt+Enter</kbd>.            </p>        </aside>        <a name="seealso_inspection_default"></a>            <div class="last-modified" data-skip-index="skip">Last modified: 18 November 2019 </div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="UseCollectionCountProperty.html">Code Inspection: Use collection’s count property</a><a class="navigation-links__next" href="Asp.DeadCode.html">Code Inspection: ASP.NET dead code</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="//resources.jetbrains.com/storage/help-app/v3/app.js"></script></body></html>
+            " seeals=":[=" titl=":=" concept=",=" link=":=" ur=":" finding_code_issues.htm="," tex=":" find="" issues="" with="" inspectio="}=" code_analysis__code_inspections.htm="," code="" inspection="}=" design_time_inspection.htm="," detect="" in="" design="" tim="}=" ="" data-disqus-id="UseObjectOrCollectionInitializer_10"><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5P98" height="0" width="0" style="display:none"></iframe></noscript><div class="wrapper"><section class="panel _nav" data-skip-index="skip"><header class="panel__header"><div class="container"><form class="search-box"><label class="search-box__label" for="search-box__input"><input type="text" class="search-box__input" id="search-box__input" placeholder="搜索ReSharper帮助"></label><div class="search-box__clear" title="明确"></div></form></div></header><nav class="panel__content"><div class="container _nav"><menu class="nav-tree"></menu></div><div class="container _footer panel__footer"><p><a href="#">发送反馈</a></p></div></nav></section><main class="panel _main"><header class="panel__header" data-skip-index="skip"><div class="container"><h3>ReSharper 2019.2帮助</h3><div class="shortcuts-switcher" data-skip-index="skip"><label for="switch-shortcuts">按键图：</label><select id="switch-shortcuts" class="select _shortcuts" height="1"><option value="rs" data-group="secondary">ReSharper 2.x / IntelliJ IDEA</option><option value="vs" data-group="primary">视觉工作室</option></select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="active"><h1 id="UseObjectOrCollectionInitializer.xml" data-toc="UseObjectOrCollectionInitializer">代码检查：尽可能使用对象或集合初始化程序</h1>    <a name="tip_disable"></a>        <aside class="prompt" rel="UseObjectOrCollectionInitializer.xml" id="03dd9a8e" data-type="tip" data-title="">            <p id="931d3aa8">您可以配置此检查：</p>            <ul class="list _ul"><li class="list__item" id="d0421af1"><a href="Code_Analysis__Configuring_Warnings.html#disable">禁用它以忽略所有相关问题</a></li><li class="list__item" id="4258c3e2"><a href="Code_Analysis__Configuring_Warnings.html#suppress">在代码中的任何位置都禁止显示它以忽略特定问题</a></li><li class="list__item" id="dfcea489"><a href="Code_Analysis__Configuring_Warnings.html#change_severity">更改其严重性级别，以使检测到的问题更少或更明显</a>                </li></ul>        </aside>        <p id="100ddf2a">对象和集合初始化器提供更简洁的语法。此外，初始化器在多线程中很有用。</p>    <p id="ee4ab163">对象初始化程序用于在创建时将值分配给对象的属性或字段，而无需调用构造函数。如果创建对象，然后在此之后立即为其属性分配值，则ReSharper建议使用对象初始化程序。</p>    <p id="15725d07">在下面的示例中， <code class="code">GetCurrentData()</code>可以返回部分初始化的<code class="code">Data</code>如果<code class="code">CreateNewData()</code>不使用对象初始化程序，因此ReSharper建议使用对象初始化程序重写字段分配语句：</p>    <div class="table-wrapper"><table class="  _layout-fixed" width="100%" id="70cfe1a7"><thead><tr id="5a5de25d" class="ijRowHead"><th id="55ce4137"><p>次优代码</p></th><th id="99f605f9"><p>快速修复后</p></th></tr></thead><tbody><tr id="634880ca" class="ijRowOdd"><td id="c8246c93">                <div class="code-block" data-lang="csharp">公共类DataHandler {私有volatile数据_myData; public void CreateNewData（{_myData = new Data（）; //警告_myData。Value1 =“ Value1”; _myData。Value2 =“ Value2”; }公共数据GetCurrentData（）{return _myData; }}公共类Data {公共字符串Value1 {get; set; }公用字串Value2 {get;组; }}</div>            </td><td id="36082f9e">                <div class="code-block" data-lang="csharp">公共类DataHandler {私有volatile数据_myData; public void CreateNewData（{_myData = new Data {Value1 =“ Value1”，Value2 =“ Value2”};} public Data GetCurrentData（）{return _myData;}} public class Data {public string Value1 {get; set;} public string值2 {get; set;}}</div>            </td></tr></tbody></table></div>    <p id="b0c20ed1">如果集合类实现，则可以使用集合初始化器<code class="code">IEnumerable</code>或有一个<code class="code">Add</code>方法。如果您创建一个集合，然后立即使用项目填充它，则ReSharper建议使用集合初始化程序。</p>    <p id="19fecd62">在以下内容中，ReSharper替换了对<code class="code">Add</code>集合初始值设定项的方法：</p>    <div class="table-wrapper"><table class="  _layout-fixed" width="100%" id="024c88c7"><thead><tr id="3283affc" class="ijRowHead"><th id="b0ae22d6"><p>次优代码</p></th><th id="b323fd30"><p>快速修复后</p></th></tr></thead><tbody><tr id="a6f69dda" class="ijRowOdd"><td id="56f685df">        <div class="code-block" data-lang="csharp">public void ViewCategories（）{var Categories = new Dictionary <int, string="">（）;类别。Add（1，“ Books”）;类别。Add（2，“电子”）; foreach（类别为var c）{控制台。WriteLine（$“ {c。键}，“ + $” {c。值}“）;}}</int,></div>            </td><td id="3e039a91">                <div class="code-block" data-lang="csharp">public void ViewCategories（）{var Categories = new Dictionary <int, string="">{{1，“ Books”}，{2，“ Electronics”}}; foreach（类别为var c）{控制台。WriteLine（$“ {c。键}，“ + $” {c。值}“）;}}</int,></div>            </td></tr></tbody></table></div>    <p id="17dfa96f">如果出于某种原因决定禁用此检查，则可以使用<a href="Coding_Assistance__Context_Actions.html">上下文操作</a>将选定的分配转换为集合初始值设定项<kbd data-rs="Alt+Enter" data-vs="Alt+Enter">Alt+Enter</kbd> ：</p>    <figure><img alt="ReSharper：将分配转换为对象初始值设定项" title="ReSharper：将分配转换为对象初始值设定项" src="/help/img/dotnet/2019.2/ca_use_object_initializer.png" id="061985f9" width="433" height="149"></figure>    <a name="tip_reverse"></a>        <aside class="prompt" rel="UseObjectOrCollectionInitializer.xml" id="d71771d1" data-type="tip" data-title="">            <p id="451ca78a">逆向转换可与<a href="Coding_Assistance__Context_Actions.html">上下文动作一起使用</a> <kbd data-rs="Alt+Enter" data-vs="Alt+Enter">Alt+Enter</kbd> 。</p>        </aside>        <a name="seealso_inspection_default"></a>            <div class="last-modified" data-skip-index="skip">上次修改时间：2019年11月18日</div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom" data-skip-index="skip"><a class="navigation-links__prev" href="UseCollectionCountProperty.html">代码检查：使用集合的计数属性</a> <a class="navigation-links__next" href="Asp.DeadCode.html">代码检查：ASP.NET无效代码</a></div></article><div id="disqus_thread" data-skip-index="skip"></div></div></section></main></div><script src="//resources.jetbrains.com/storage/help-app/v3/app.js"></script></body></html>
