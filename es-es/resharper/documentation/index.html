@@ -219,7 +219,7 @@
             <meta property="og:title" content="Documentación - ReSharper"/>
     
                     <meta property="og:description" content="Complemento de productividad y refactorización de código para Visual Studio 2019, 2017, 2015, 2013, 2012 y 2010. Compatible con C#, XAML, ASP.NET, ASP.NET MVC, JavaScript, TypeScript, VB.NET y los script de compilación."/>
-    <meta property="og:image" content="http://resources.jetbrains.com/storage/products/resharper/img/meta/resharper_1280x800.png"/>
+    <meta property="og:image" content="/resources.jetbrains.com/storage/products/resharper/img/meta/resharper_1280x800.png"/>
 
     <meta property="og:site_name" content="JetBrains"/>
     <meta property="og:type" content="website"/>

@@ -218,7 +218,7 @@
             <meta property="og:title" content="Documentation - IntelliJ IDEA"/>
     
                     <meta property="og:description" content="Code-centric IDE, focused on your productivity. Full Java EE support, deep code understanding, best debugger, refactorings, everything right out of the box..."/>
-    <meta property="og:image" content="http://resources.jetbrains.com/storage/products/intellij-idea/img/meta/intellij-idea_1280x800.png"/>
+    <meta property="og:image" content="/resources.jetbrains.com/storage/products/intellij-idea/img/meta/intellij-idea_1280x800.png"/>
 
     <meta property="og:site_name" content="JetBrains"/>
     <meta property="og:type" content="website"/>
@@ -386,7 +386,7 @@ if (!Modernizr.flexbox && !Modernizr.flexboxtweener) {
 <p><a href="/help/idea/?mastering_keyboard_shortcuts" target="_blank">Mastering IntelliJ IDEA Keyboard Shortcuts</a></p>
 <p><a href="/help/idea/?Migrating_from_Eclipse_to_IntelliJ_IDEA" target="_blank"><strong>IntelliJ IDEA for Eclipse Users</strong></a></p>
 <p><a href="/help/idea/?NetBeans" target="_blank">IntelliJ IDEA for NetBeans Users</a></p>
-<p><a href="//resources.jetbrains.com/storage/products/intellij-idea/docs/IntelliJIDEA_ReferenceCard.pdf" target="_blank">Keymap for Windows/macOS/Linux</a> (PDF)</p>
+<p><a href="/resources.jetbrains.com/storage/products/intellij-idea/docs/IntelliJIDEA_ReferenceCard.pdf" target="_blank">Keymap for Windows/macOS/Linux</a> (PDF)</p>
 </div>
 </div>
 </div>

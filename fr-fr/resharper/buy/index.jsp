@@ -219,7 +219,7 @@
             <meta property="og:title" content="ReSharper pour Visual Studio : abonnement JetBrains Toolbox"/>
     
                     <meta property="og:description" content="Extension de productivité et de refactorisation de code pour Visual Studio 2019, 2017, 2015, 2013, 2012 et 2010. Prend en charge C#, XAML, ASP.NET, ASP.NET MVC, JavaScript, TypeScript, VB.NET et les scripts de builds."/>
-    <meta property="og:image" content="http://resources.jetbrains.com/storage/products/resharper/img/meta/resharper_1280x800.png"/>
+    <meta property="og:image" content="/resources.jetbrains.com/storage/products/resharper/img/meta/resharper_1280x800.png"/>
 
     <meta property="og:site_name" content="JetBrains"/>
     <meta property="og:type" content="website"/>

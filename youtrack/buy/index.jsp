@@ -228,7 +228,7 @@
             <meta property="og:title" content="Buy YouTrack"/>
     
                     <meta property="og:description" content="Free keyboard-centric, fully customizable issue and bug tracker with query-based issue search and batch modification commands."/>
-    <meta property="og:image" content="http://resources.jetbrains.com/storage/products/youtrack/img/meta/youtrack_1280x800.png"/>
+    <meta property="og:image" content="/resources.jetbrains.com/storage/products/youtrack/img/meta/youtrack_1280x800.png"/>
 
     <meta property="og:site_name" content="JetBrains"/>
     <meta property="og:type" content="website"/>

@@ -228,7 +228,7 @@
             <meta property="og:title" content="Buy TeamCity"/>
     
                     <meta property="og:description" content="Continuous Integration and build server for developers and DevOps alike from JetBrains, creators of IntelliJ IDEA and ReSharper. Free professional edition available."/>
-    <meta property="og:image" content="http://resources.jetbrains.com/storage/products/teamcity/img/meta/teamcity_1280x800.png"/>
+    <meta property="og:image" content="/resources.jetbrains.com/storage/products/teamcity/img/meta/teamcity_1280x800.png"/>
 
     <meta property="og:site_name" content="JetBrains"/>
     <meta property="og:type" content="website"/>

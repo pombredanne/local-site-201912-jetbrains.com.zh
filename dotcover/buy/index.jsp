@@ -217,7 +217,7 @@
             <meta property="og:title" content="Licensing &amp; Upgrade - dotCover"/>
     
                     <meta property="og:description" content=".NET code coverage and continuous testing tool. Supports MSTest, NUnit, xUnit, and MSpec. Integrates with Visual Studio and ReSharper"/>
-    <meta property="og:image" content="http://resources.jetbrains.com/storage/products/dotcover/img/meta/dotcover_1280x800.png"/>
+    <meta property="og:image" content="/resources.jetbrains.com/storage/products/dotcover/img/meta/dotcover_1280x800.png"/>
 
     <meta property="og:site_name" content="JetBrains"/>
     <meta property="og:type" content="website"/>
