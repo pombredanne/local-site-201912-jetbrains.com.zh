@@ -80,7 +80,7 @@ dispatcher.domReady(() => {
   const content =
     '<ol>\n' +
     '    <li>1. &nbsp; Register YouTrack InCloud or download a Standalone version.</li>\n' +
-    '    <li>2. &nbsp;<a href="https://www.jetbrains.com/buy/competitive/?product=youtrack" target="_blank">Fill the form</a> and provide a receipt of the license certificate.</li>\n' +
+    '    <li>2. &nbsp;<a href="/buy/competitive/?product=youtrack" target="_blank">Fill the form</a> and provide a receipt of the license certificate.</li>\n' +
     '</ol>';
 
   // eslint-disable-next-line no-new

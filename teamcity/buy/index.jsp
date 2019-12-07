@@ -167,23 +167,23 @@
 <meta name="apple-mobile-web-app-title" content="JetBrains">
 <meta name="application-name" content="JetBrains">
 <meta name="msapplication-TileColor" content="#000000">
-<meta name="theme-color" content="#000000">    <link rel="canonical" href="https://www.jetbrains.com/teamcity/buy/" />    <!-- .61-->
+<meta name="theme-color" content="#000000">    <link rel="canonical" href="/teamcity/buy/" />    <!-- .61-->
                             <meta name="description" content="Continuous Integration and build server for developers and DevOps alike from JetBrains, creators of IntelliJ IDEA and ReSharper. Free professional edition available."/>
         
                     <meta name="keywords" content="Continuous integration, build management, build server, build automation, continuous deployment, continuous delivery, DevOps"/>
         
             
-        <link rel="alternate" hreflang="x-default" href="https://www.jetbrains.com/teamcity/buy/" />
+        <link rel="alternate" hreflang="x-default" href="/teamcity/buy/" />
 
-                        <link rel="alternate" hreflang="en" href="https://www.jetbrains.com/teamcity/buy/" />
-                                <link rel="alternate" hreflang="de" href="https://www.jetbrains.com/de-de/teamcity/buy/" />
-                                <link rel="alternate" hreflang="es" href="https://www.jetbrains.com/es-es/teamcity/buy/" />
-                                <link rel="alternate" hreflang="fr" href="https://www.jetbrains.com/fr-fr/teamcity/buy/" />
-                                <link rel="alternate" hreflang="ja" href="https://www.jetbrains.com/ja-jp/teamcity/buy/" />
-                                <link rel="alternate" hreflang="ko" href="https://www.jetbrains.com/ko-kr/teamcity/buy/" />
-                                <link rel="alternate" hreflang="ru" href="https://www.jetbrains.com/ru-ru/teamcity/buy/" />
-                                <link rel="alternate" hreflang="zh-CN" href="https://www.jetbrains.com/zh-cn/teamcity/buy/" />
-                                            <link rel="alternate" hreflang="x-klingon" href="https://www.jetbrains.com/tl-aa/teamcity/buy/" />
+                        <link rel="alternate" hreflang="en" href="/teamcity/buy/" />
+                                <link rel="alternate" hreflang="de" href="/de-de/teamcity/buy/" />
+                                <link rel="alternate" hreflang="es" href="/es-es/teamcity/buy/" />
+                                <link rel="alternate" hreflang="fr" href="/fr-fr/teamcity/buy/" />
+                                <link rel="alternate" hreflang="ja" href="/ja-jp/teamcity/buy/" />
+                                <link rel="alternate" hreflang="ko" href="/ko-kr/teamcity/buy/" />
+                                <link rel="alternate" hreflang="ru" href="/ru-ru/teamcity/buy/" />
+                                <link rel="alternate" hreflang="zh-CN" href="/zh-cn/teamcity/buy/" />
+                                            <link rel="alternate" hreflang="x-klingon" href="/tl-aa/teamcity/buy/" />
             
     
     

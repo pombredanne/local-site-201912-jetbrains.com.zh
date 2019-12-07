@@ -167,23 +167,23 @@
 <meta name="apple-mobile-web-app-title" content="JetBrains">
 <meta name="application-name" content="JetBrains">
 <meta name="msapplication-TileColor" content="#000000">
-<meta name="theme-color" content="#000000">    <link rel="canonical" href="https://www.jetbrains.com/youtrack/buy/" />    <!-- .61-->
+<meta name="theme-color" content="#000000">    <link rel="canonical" href="/youtrack/buy/" />    <!-- .61-->
                             <meta name="description" content="Free keyboard-centric, fully customizable issue and bug tracker with query-based issue search and batch modification commands."/>
         
                     <meta name="keywords" content="bug tracker, bug tracking software, issue tracking, issue tracker, track issues, bug track software, track bugs, bug search, software bug, fast bug track, fast bugs, defect tracking tools, feature request management, track tasks, task tracker, simple bug tracker, search bug, web bugs, bug report, ajax bugs, bug search, Charisma"/>
         
             
-        <link rel="alternate" hreflang="x-default" href="https://www.jetbrains.com/youtrack/buy/index.jsp" />
+        <link rel="alternate" hreflang="x-default" href="/youtrack/buy/index.jsp" />
 
-                        <link rel="alternate" hreflang="en" href="https://www.jetbrains.com/youtrack/buy/index.jsp" />
-                                <link rel="alternate" hreflang="de" href="https://www.jetbrains.com/de-de/youtrack/buy/index.jsp" />
-                                <link rel="alternate" hreflang="es" href="https://www.jetbrains.com/es-es/youtrack/buy/index.jsp" />
-                                <link rel="alternate" hreflang="fr" href="https://www.jetbrains.com/fr-fr/youtrack/buy/index.jsp" />
-                                <link rel="alternate" hreflang="ja" href="https://www.jetbrains.com/ja-jp/youtrack/buy/index.jsp" />
-                                <link rel="alternate" hreflang="ko" href="https://www.jetbrains.com/ko-kr/youtrack/buy/index.jsp" />
-                                <link rel="alternate" hreflang="ru" href="https://www.jetbrains.com/ru-ru/youtrack/buy/index.jsp" />
-                                <link rel="alternate" hreflang="zh-CN" href="https://www.jetbrains.com/zh-cn/youtrack/buy/index.jsp" />
-                                            <link rel="alternate" hreflang="x-klingon" href="https://www.jetbrains.com/tl-aa/youtrack/buy/index.jsp" />
+                        <link rel="alternate" hreflang="en" href="/youtrack/buy/index.jsp" />
+                                <link rel="alternate" hreflang="de" href="/de-de/youtrack/buy/index.jsp" />
+                                <link rel="alternate" hreflang="es" href="/es-es/youtrack/buy/index.jsp" />
+                                <link rel="alternate" hreflang="fr" href="/fr-fr/youtrack/buy/index.jsp" />
+                                <link rel="alternate" hreflang="ja" href="/ja-jp/youtrack/buy/index.jsp" />
+                                <link rel="alternate" hreflang="ko" href="/ko-kr/youtrack/buy/index.jsp" />
+                                <link rel="alternate" hreflang="ru" href="/ru-ru/youtrack/buy/index.jsp" />
+                                <link rel="alternate" hreflang="zh-CN" href="/zh-cn/youtrack/buy/index.jsp" />
+                                            <link rel="alternate" hreflang="x-klingon" href="/tl-aa/youtrack/buy/index.jsp" />
             
     
     

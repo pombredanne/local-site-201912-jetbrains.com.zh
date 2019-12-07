@@ -167,23 +167,23 @@
 <meta name="apple-mobile-web-app-title" content="JetBrains">
 <meta name="application-name" content="JetBrains">
 <meta name="msapplication-TileColor" content="#000000">
-<meta name="theme-color" content="#000000">    <link rel="canonical" href="https://www.jetbrains.com/es-es/resharper/buy/" />    <!-- .61-->
+<meta name="theme-color" content="#000000">    <link rel="canonical" href="/es-es/resharper/buy/" />    <!-- .61-->
                             <meta name="description" content="Complemento de productividad y refactorización de código para Visual Studio 2019, 2017, 2015, 2013, 2012 y 2010. Compatible con C#, XAML, ASP.NET, ASP.NET MVC, JavaScript, TypeScript, VB.NET y los script de compilación."/>
         
                     <meta name="keywords" content="C#, VB.NET, XAML, JavaScript, TypeScript, complemento de Visual Studio, refactorización de código, refactorización, ASP.NET, ASP.NET MVC, .NET, .NET Core, dot net, productividad"/>
         
             
-        <link rel="alternate" hreflang="x-default" href="https://www.jetbrains.com/resharper/buy/index.jsp" />
+        <link rel="alternate" hreflang="x-default" href="/resharper/buy/index.jsp" />
 
-                        <link rel="alternate" hreflang="en" href="https://www.jetbrains.com/resharper/buy/index.jsp?product=ultimate" />
-                                <link rel="alternate" hreflang="de" href="https://www.jetbrains.com/de-de/resharper/buy/index.jsp?product=ultimate" />
-                                <link rel="alternate" hreflang="es" href="https://www.jetbrains.com/es-es/resharper/buy/index.jsp?product=ultimate" />
-                                <link rel="alternate" hreflang="fr" href="https://www.jetbrains.com/fr-fr/resharper/buy/index.jsp?product=ultimate" />
-                                <link rel="alternate" hreflang="ja" href="https://www.jetbrains.com/ja-jp/resharper/buy/index.jsp?product=ultimate" />
-                                <link rel="alternate" hreflang="ko" href="https://www.jetbrains.com/ko-kr/resharper/buy/index.jsp?product=ultimate" />
-                                <link rel="alternate" hreflang="ru" href="https://www.jetbrains.com/ru-ru/resharper/buy/index.jsp?product=ultimate" />
-                                <link rel="alternate" hreflang="zh-CN" href="https://www.jetbrains.com/zh-cn/resharper/buy/index.jsp?product=ultimate" />
-                                            <link rel="alternate" hreflang="x-klingon" href="https://www.jetbrains.com/tl-aa/resharper/buy/index.jsp?product=ultimate" />
+                        <link rel="alternate" hreflang="en" href="/resharper/buy/index.jsp?product=ultimate" />
+                                <link rel="alternate" hreflang="de" href="/de-de/resharper/buy/index.jsp?product=ultimate" />
+                                <link rel="alternate" hreflang="es" href="/es-es/resharper/buy/index.jsp?product=ultimate" />
+                                <link rel="alternate" hreflang="fr" href="/fr-fr/resharper/buy/index.jsp?product=ultimate" />
+                                <link rel="alternate" hreflang="ja" href="/ja-jp/resharper/buy/index.jsp?product=ultimate" />
+                                <link rel="alternate" hreflang="ko" href="/ko-kr/resharper/buy/index.jsp?product=ultimate" />
+                                <link rel="alternate" hreflang="ru" href="/ru-ru/resharper/buy/index.jsp?product=ultimate" />
+                                <link rel="alternate" hreflang="zh-CN" href="/zh-cn/resharper/buy/index.jsp?product=ultimate" />
+                                            <link rel="alternate" hreflang="x-klingon" href="/tl-aa/resharper/buy/index.jsp?product=ultimate" />
             
     
     

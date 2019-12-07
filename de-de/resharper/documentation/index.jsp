@@ -167,23 +167,23 @@
 <meta name="apple-mobile-web-app-title" content="JetBrains">
 <meta name="application-name" content="JetBrains">
 <meta name="msapplication-TileColor" content="#000000">
-<meta name="theme-color" content="#000000">    <link rel="canonical" href="https://www.jetbrains.com/de-de/resharper/documentation/documentation.html" />    <!-- .61-->
+<meta name="theme-color" content="#000000">    <link rel="canonical" href="/de-de/resharper/documentation/documentation.html" />    <!-- .61-->
                             <meta name="description" content="Produktivitäts- und Refaktorierungs-Plug-in für Visual Studio 2019, 2017, 2015, 2013, 2012 und 2010. Unterstützt C#, XAML, ASP.NET, ASP.NET MVC, JavaScript, TypeScript, VB.NET und Build-Skripte."/>
         
                     <meta name="keywords" content="C#, VB.NET, XAML, JavaScript, TypeScript, Visual Studio Plugin, Code-Refaktorierung, Refactoring, ASP.NET, ASP.NET MVC, .NET, .NET Core, dot net, Produktivität"/>
         
             
-        <link rel="alternate" hreflang="x-default" href="https://www.jetbrains.com/resharper/documentation/documentation.html" />
+        <link rel="alternate" hreflang="x-default" href="/resharper/documentation/documentation.html" />
 
-                        <link rel="alternate" hreflang="en" href="https://www.jetbrains.com/resharper/documentation/documentation.html" />
-                                <link rel="alternate" hreflang="de" href="https://www.jetbrains.com/de-de/resharper/documentation/documentation.html" />
-                                <link rel="alternate" hreflang="es" href="https://www.jetbrains.com/es-es/resharper/documentation/documentation.html" />
-                                <link rel="alternate" hreflang="fr" href="https://www.jetbrains.com/fr-fr/resharper/documentation/documentation.html" />
-                                <link rel="alternate" hreflang="ja" href="https://www.jetbrains.com/ja-jp/resharper/documentation/documentation.html" />
-                                <link rel="alternate" hreflang="ko" href="https://www.jetbrains.com/ko-kr/resharper/documentation/documentation.html" />
-                                <link rel="alternate" hreflang="ru" href="https://www.jetbrains.com/ru-ru/resharper/documentation/documentation.html" />
-                                <link rel="alternate" hreflang="zh-CN" href="https://www.jetbrains.com/zh-cn/resharper/documentation/documentation.html" />
-                                            <link rel="alternate" hreflang="x-klingon" href="https://www.jetbrains.com/tl-aa/resharper/documentation/documentation.html" />
+                        <link rel="alternate" hreflang="en" href="/resharper/documentation/documentation.html" />
+                                <link rel="alternate" hreflang="de" href="/de-de/resharper/documentation/documentation.html" />
+                                <link rel="alternate" hreflang="es" href="/es-es/resharper/documentation/documentation.html" />
+                                <link rel="alternate" hreflang="fr" href="/fr-fr/resharper/documentation/documentation.html" />
+                                <link rel="alternate" hreflang="ja" href="/ja-jp/resharper/documentation/documentation.html" />
+                                <link rel="alternate" hreflang="ko" href="/ko-kr/resharper/documentation/documentation.html" />
+                                <link rel="alternate" hreflang="ru" href="/ru-ru/resharper/documentation/documentation.html" />
+                                <link rel="alternate" hreflang="zh-CN" href="/zh-cn/resharper/documentation/documentation.html" />
+                                            <link rel="alternate" hreflang="x-klingon" href="/tl-aa/resharper/documentation/documentation.html" />
             
     
     

@@ -167,23 +167,23 @@
 <meta name="apple-mobile-web-app-title" content="JetBrains">
 <meta name="application-name" content="JetBrains">
 <meta name="msapplication-TileColor" content="#000000">
-<meta name="theme-color" content="#000000">    <link rel="canonical" href="https://www.jetbrains.com/idea/documentation/" />    <!-- .61-->
+<meta name="theme-color" content="#000000">    <link rel="canonical" href="/idea/documentation/" />    <!-- .61-->
                             <meta name="description" content="Code-centric IDE, focused on your productivity. Full Java EE support, deep code understanding, best debugger, refactorings, everything right out of the box..."/>
         
                     <meta name="keywords" content="IntelliJ IDEA, Java IDE, Java editor, Java debugger, Java code generator, Java code coverage, Java GUI builder, Java EE, Java programming"/>
         
             
-        <link rel="alternate" hreflang="x-default" href="https://www.jetbrains.com/idea/documentation/" />
+        <link rel="alternate" hreflang="x-default" href="/idea/documentation/" />
 
-                        <link rel="alternate" hreflang="en" href="https://www.jetbrains.com/idea/documentation/" />
-                                <link rel="alternate" hreflang="de" href="https://www.jetbrains.com/de-de/idea/documentation/" />
-                                <link rel="alternate" hreflang="es" href="https://www.jetbrains.com/es-es/idea/documentation/" />
-                                <link rel="alternate" hreflang="fr" href="https://www.jetbrains.com/fr-fr/idea/documentation/" />
-                                <link rel="alternate" hreflang="ja" href="https://www.jetbrains.com/ja-jp/idea/documentation/" />
-                                <link rel="alternate" hreflang="ko" href="https://www.jetbrains.com/ko-kr/idea/documentation/" />
-                                <link rel="alternate" hreflang="ru" href="https://www.jetbrains.com/ru-ru/idea/documentation/" />
-                                <link rel="alternate" hreflang="zh-CN" href="https://www.jetbrains.com/zh-cn/idea/documentation/" />
-                                            <link rel="alternate" hreflang="x-klingon" href="https://www.jetbrains.com/tl-aa/idea/documentation/" />
+                        <link rel="alternate" hreflang="en" href="/idea/documentation/" />
+                                <link rel="alternate" hreflang="de" href="/de-de/idea/documentation/" />
+                                <link rel="alternate" hreflang="es" href="/es-es/idea/documentation/" />
+                                <link rel="alternate" hreflang="fr" href="/fr-fr/idea/documentation/" />
+                                <link rel="alternate" hreflang="ja" href="/ja-jp/idea/documentation/" />
+                                <link rel="alternate" hreflang="ko" href="/ko-kr/idea/documentation/" />
+                                <link rel="alternate" hreflang="ru" href="/ru-ru/idea/documentation/" />
+                                <link rel="alternate" hreflang="zh-CN" href="/zh-cn/idea/documentation/" />
+                                            <link rel="alternate" hreflang="x-klingon" href="/tl-aa/idea/documentation/" />
             
     
     
@@ -374,18 +374,18 @@ if (!Modernizr.flexbox && !Modernizr.flexboxtweener) {
                                 IDEA features.</p>
 </div>
 <div class="wt-col-6">
-<p><a href="https://www.jetbrains.com/help/idea/?Installing_and_Launching" target="_blank">Installing and Launching</a></p>
-<p><a href="https://www.jetbrains.com/help/idea/?Discover_IntelliJ_IDEA" target="_blank"><strong>Discover IntelliJ IDEA</strong></a></p>
+<p><a href="/help/idea/?Installing_and_Launching" target="_blank">Installing and Launching</a></p>
+<p><a href="/help/idea/?Discover_IntelliJ_IDEA" target="_blank"><strong>Discover IntelliJ IDEA</strong></a></p>
 <p><a href="https://youtu.be/eq3KiAH4IBI" target="_blank"><strong>42 IntelliJ IDEA Tips and Tricks</strong></a></p>
 <p><a href="https://javaspecialists.teachable.com/p/intellij-wizardry" target="_blank"><strong>IntelliJ Wizardry</strong> Video Course with Heinz Kabutz</a></p>
-<p><a href="https://www.jetbrains.com/help/idea/?Pro_Tips" target="_blank">IntelliJ IDEA Pro Tips</a></p>
-<p><a href="https://www.jetbrains.com/help/idea/?top" target="_blank">Help</a></p>
-<!--<p><a target="_blank" href="https://www.jetbrains.com/help/idea/intellij-idea-help.pdf">Help</a> (PDF)</p>-->
+<p><a href="/help/idea/?Pro_Tips" target="_blank">IntelliJ IDEA Pro Tips</a></p>
+<p><a href="/help/idea/?top" target="_blank">Help</a></p>
+<!--<p><a target="_blank" href="/help/idea/intellij-idea-help.pdf">Help</a> (PDF)</p>-->
 </div>
 <div class="wt-col-6">
-<p><a href="https://www.jetbrains.com/help/idea/?mastering_keyboard_shortcuts" target="_blank">Mastering IntelliJ IDEA Keyboard Shortcuts</a></p>
-<p><a href="https://www.jetbrains.com/help/idea/?Migrating_from_Eclipse_to_IntelliJ_IDEA" target="_blank"><strong>IntelliJ IDEA for Eclipse Users</strong></a></p>
-<p><a href="https://www.jetbrains.com/help/idea/?NetBeans" target="_blank">IntelliJ IDEA for NetBeans Users</a></p>
+<p><a href="/help/idea/?mastering_keyboard_shortcuts" target="_blank">Mastering IntelliJ IDEA Keyboard Shortcuts</a></p>
+<p><a href="/help/idea/?Migrating_from_Eclipse_to_IntelliJ_IDEA" target="_blank"><strong>IntelliJ IDEA for Eclipse Users</strong></a></p>
+<p><a href="/help/idea/?NetBeans" target="_blank">IntelliJ IDEA for NetBeans Users</a></p>
 <p><a href="//resources.jetbrains.com/storage/products/intellij-idea/docs/IntelliJIDEA_ReferenceCard.pdf" target="_blank">Keymap for Windows/macOS/Linux</a> (PDF)</p>
 </div>
 </div>
@@ -397,26 +397,26 @@ if (!Modernizr.flexbox && !Modernizr.flexboxtweener) {
 <p class="sub-title">Learn how to use IntelliJ IDEA with your favorite language, platform or framework.</p>
 </div>
 <div class="wt-col-4">
-<p><a href="https://www.jetbrains.com/help/idea/?Creating_and_running_your_first_Java_EE_application" target="_blank"><strong>Java EE</strong></a></p>
-<p><a href="https://www.jetbrains.com/help/idea/?IntelliJ.IDEA.Concepts.Java.EE.Development.Spring" target="_blank"><strong>Spring</strong></a></p>
-<p><a href="https://www.jetbrains.com/help/idea/?topicId100000077" target="_blank">GWT</a></p>
-<p><a href="https://www.jetbrains.com/help/idea/?Getting_Started_with_Vaadin" target="_blank">Vaadin</a></p>
-<p><a href="https://www.jetbrains.com/help/idea/?topicId571950" target="_blank">Grails</a></p>
-<p><a href="https://www.jetbrains.com/help/idea/?Getting_Started_with_Play_2_x" target="_blank">Play</a></p>
+<p><a href="/help/idea/?Creating_and_running_your_first_Java_EE_application" target="_blank"><strong>Java EE</strong></a></p>
+<p><a href="/help/idea/?IntelliJ.IDEA.Concepts.Java.EE.Development.Spring" target="_blank"><strong>Spring</strong></a></p>
+<p><a href="/help/idea/?topicId100000077" target="_blank">GWT</a></p>
+<p><a href="/help/idea/?Getting_Started_with_Vaadin" target="_blank">Vaadin</a></p>
+<p><a href="/help/idea/?topicId571950" target="_blank">Grails</a></p>
+<p><a href="/help/idea/?Getting_Started_with_Play_2_x" target="_blank">Play</a></p>
 </div>
 <div class="wt-col-4">
 <p><a href="https://kotlinlang.org/docs/tutorials/getting-started.html" target="_blank"><strong>Kotlin</strong></a></p>
-<p><a href="https://www.jetbrains.com/help/idea/?Getting_Started_with_Groovy" target="_blank">Groovy</a></p>
-<p><a href="https://www.jetbrains.com/help/idea/?Discover_Intellij_IDEA_for_Scala" target="_blank">Scala</a></p>
-<p><a href="https://www.jetbrains.com/help/idea/?Android_Support_Overview" target="_blank"><strong>Android</strong></a></p>
+<p><a href="/help/idea/?Getting_Started_with_Groovy" target="_blank">Groovy</a></p>
+<p><a href="/help/idea/?Discover_Intellij_IDEA_for_Scala" target="_blank">Scala</a></p>
+<p><a href="/help/idea/?Android_Support_Overview" target="_blank"><strong>Android</strong></a></p>
 </div>
 <div class="wt-col-4">
-<p><a href="https://www.jetbrains.com/help/idea/?topicId1000000103" target="_blank"><strong>JavaScript</strong></a></p>
-<p><a href="https://www.jetbrains.com/help/idea/?TypeScript_Support" target="_blank">TypeScript</a></p>
-<p><a href="https://www.jetbrains.com/help/idea/?Using_AngularJS" target="_blank">AngularJS</a></p>
-<p><a href="https://www.jetbrains.com/help/idea/?React_JSX_and_TSX" target="_blank">React</a></p>
-<p><a href="https://www.jetbrains.com/help/idea/?Developing_Node_JS_Applications" target="_blank">Node.js</a></p>
-<p><a href="https://www.jetbrains.com/help/idea/?Using_PhoneGap_Cordova" target="_blank">PhoneGap</a></p>
+<p><a href="/help/idea/?topicId1000000103" target="_blank"><strong>JavaScript</strong></a></p>
+<p><a href="/help/idea/?TypeScript_Support" target="_blank">TypeScript</a></p>
+<p><a href="/help/idea/?Using_AngularJS" target="_blank">AngularJS</a></p>
+<p><a href="/help/idea/?React_JSX_and_TSX" target="_blank">React</a></p>
+<p><a href="/help/idea/?Developing_Node_JS_Applications" target="_blank">Node.js</a></p>
+<p><a href="/help/idea/?Using_PhoneGap_Cordova" target="_blank">PhoneGap</a></p>
 </div>
 </div>
 </div>
